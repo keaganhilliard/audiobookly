@@ -29,25 +29,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   int _counter = 0;
-  List<Widget> _cards = [];
 
   void _incrementCounter() {
     setState(() {
       _counter++;
-      _cards = [..._cards, new Card(
-        child: Padding(
-          padding: EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have added $_counter cards to the list',
-              ),
-            ],
-          ),
-        ),
-      )];
     });
   }
 
@@ -57,10 +42,29 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView(
+      body: ListView.builder(
         shrinkWrap: false,
         padding: EdgeInsets.all(8.0),
-        children: _cards,
+        itemCount: _counter,
+        itemBuilder: (context, position) {
+          return new Card(
+            child: Padding(
+              padding: EdgeInsets.all(25.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'You have added $position cards to the list',
+                  ),
+                  Text(
+                    'Try this one'
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
