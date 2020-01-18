@@ -36,29 +36,29 @@ class PlexHeaders {
 
   PlexHeaders({
     @required this.clientIdentifier,
-    this.platform = "",
-    this.platformVersion = "",
-    this.provides = "",
-    this.product = "",
-    this.version = "",
-    this.device = "",
-    this.containerSize = "",
-    this.token = "",
-    this.accept = "application/json",
-    this.contentType = "application/json"
-  }) : assert(clientIdentifier != null && clientIdentifier != "");
+    this.platform = '',
+    this.platformVersion = '',
+    this.provides = '',
+    this.product = '',
+    this.version = '',
+    this.device = '',
+    this.containerSize = '',
+    this.token = '',
+    this.accept = 'application/json',
+    this.contentType = 'application/json'
+  }) : assert(clientIdentifier != null && clientIdentifier != '');
 
   Map<String, String> toMap() => {
-        "X-Plex-Platform": this.platform,
-        "X-Plex-Platform-Version": this.platformVersion,
-        "X-Plex-Provides": this.provides,
-        "X-Plex-Client-Identifier": this.clientIdentifier,
-        "X-Plex-Product": this.product,
-        "X-Plex-Version": this.version,
-        "X-Plex-Device": this.device,
-        "X-Plex-Container-Size": this.containerSize,
-        "X-Plex-Token": this.token,
-        "Accept": this.accept,
-        "Content-Type": this.contentType
+        'X-Plex-Platform': this.platform,
+        'X-Plex-Platform-Version': this.platformVersion,
+        'X-Plex-Provides': this.provides,
+        'X-Plex-Client-Identifier': this.clientIdentifier,
+        'X-Plex-Product': this.product,
+        'X-Plex-Version': this.version,
+        'X-Plex-Device': this.device,
+        'X-Plex-Container-Size': this.containerSize,
+        'X-Plex-Token': this.token,
+        'Accept': this.accept,
+        'Content-Type': this.contentType
       };
 }

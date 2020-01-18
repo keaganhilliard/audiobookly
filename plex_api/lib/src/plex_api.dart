@@ -66,7 +66,7 @@ class PlexApi {
   }
 
   Future<List<PlexArtist>> getArtists(String libraryKey) async {
-    Uri endpoint = await getUsableUri("/library/sections/$libraryKey/all");
+    Uri endpoint = await getUsableUri('/library/sections/$libraryKey/all');
     http.Response response = await http.get(endpoint,
         headers: headers.toMap());
     print(response.request.url);
@@ -75,7 +75,7 @@ class PlexApi {
   }
 
   Future<List<PlexAlbum>> getAlbums(String artistRatingKey) async {
-    Uri endpoint = await getUsableUri("/library/metadata/$artistRatingKey/children");
+    Uri endpoint = await getUsableUri('/library/metadata/$artistRatingKey/children');
     http.Response response = await http.get(endpoint,
         headers: headers.toMap());
     print(response.request.url);
@@ -84,7 +84,7 @@ class PlexApi {
   }
 
   Future<List<PlexTrack>> getTracks(String albumRatingKey) async {
-    Uri endpoint = await getUsableUri("/library/metadata/$albumRatingKey/children");
+    Uri endpoint = await getUsableUri('/library/metadata/$albumRatingKey/children');
     http.Response response = await http.get(endpoint,
         headers: headers.toMap());
     print(response.request.url);
@@ -97,13 +97,13 @@ class PlexApi {
   }
 
   Future<String> getUsableUrl(String path) async {
-    return "http://${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}/$path?X-Plex-Token=${user.authToken}";
+    return 'http://${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}/$path?X-Plex-Token=${user.authToken}';
   }
 
-  Future<Uri> getUsableUri(path) async => Uri.http("${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}", path);
+  Future<Uri> getUsableUri(path) async => Uri.http('${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}', path);
 
   Future<String> getCurrentIP() async {
-    http.Response res = await http.get(Uri.https("plex.tv", "/pms/:/ip"));
+    http.Response res = await http.get(Uri.https('plex.tv', '/pms/:/ip'));
     return res.body.trim();
   }
 }
