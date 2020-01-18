@@ -128,13 +128,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-  plex_api:
-    dependency: "direct main"
-    description:
-      path: plex_api
-      relative: true
-    source: path
-    version: "0.0.1"
   quiver:
     dependency: transitive
     description:
@@ -143,7 +136,7 @@ packages:
     source: hosted
     version: "2.0.5"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
