@@ -6,11 +6,12 @@ import 'package:flutter/foundation.dart';
 
 const String PLEX_USER_TOKEN = 'plexUserToken';
 const String PLEX_SERVER = 'plexServer';
+const String PLEX_LIBRARY_KEY = 'plexLibraryKey';
 
-class PlexBloc {
+class Plex with ChangeNotifier {
   PlexApi _api;
 
-  PlexBloc() {
+  Plex() {
     _api = PlexApi(headers: PlexHeaders(clientIdentifier: 'Audiobookly', device: 'Android'));
   }
 
