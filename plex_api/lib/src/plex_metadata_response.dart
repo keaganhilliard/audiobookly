@@ -59,31 +59,33 @@ class MediaContainer {
     viewMode = json['viewMode'];
     if (json['Metadata'] != null) {
       dynamic jsonMetadata = json['Metadata'];
-      switch (viewGroup) {
-        case 'track':
-          metadata = new List<PlexTrack>();
-          jsonMetadata.forEach((v) {
-            metadata.add(new PlexTrack.fromJson(v));
-          });
-          break;
-        case 'album':
-          metadata = new List<PlexAlbum>();
-          jsonMetadata.forEach((v) {
-            metadata.add(new PlexAlbum.fromJson(v));
-          });
-          break;
-        case 'artist':
-          metadata = new List<PlexArtist>();
-          jsonMetadata.forEach((v) {
-            metadata.add(new PlexArtist.fromJson(v));
-          });
-          break;
-        default:
-          metadata = new List<PlexMetadata>();
-          jsonMetadata.forEach((v) {
-            metadata.add(new PlexMetadata.fromJson(v));
-          });
-      }
+      jsonMetadata.forEach((v) {
+        switch (v['type']) {
+          case 'track':
+            metadata = new List<PlexTrack>();
+            jsonMetadata.forEach((v) {
+              metadata.add(new PlexTrack.fromJson(v));
+            });
+            break;
+          case 'album':
+            metadata = new List<PlexAlbum>();
+            jsonMetadata.forEach((v) {
+              metadata.add(new PlexAlbum.fromJson(v));
+            });
+            break;
+          case 'artist':
+            metadata = new List<PlexArtist>();
+            jsonMetadata.forEach((v) {
+              metadata.add(new PlexArtist.fromJson(v));
+            });
+            break;
+          default:
+            metadata = new List<PlexMetadata>();
+            jsonMetadata.forEach((v) {
+              metadata.add(new PlexMetadata.fromJson(v));
+            });
+        }
+      });
     }
   }
 
