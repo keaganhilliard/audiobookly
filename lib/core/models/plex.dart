@@ -10,33 +10,35 @@ const String PLEX_LIBRARY_KEY = 'plexLibraryKey';
 
 class Plex with ChangeNotifier {
   PlexApi _api;
+  bool connectionAttempted;
 
-  Plex() {
+  Plex(PlexHeaders headers) {
     _api = PlexApi(headers: PlexHeaders(clientIdentifier: 'Audiobookly', device: 'Android'));
+    connectionAttempted = false;
   }
 
   get connection => _api;
   get isAuthorized => _api.isAuthorized();
 
-  Future<bool> connect() async {
+  void connect() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String authToken = prefs.getString(PLEX_USER_TOKEN);
     print(authToken);
     if (authToken != null) {
+      connectionAttempted = true;
       await _api.authenticate(authToken);
-      return true;
     }
-    return false;
+    notifyListeners();
   }
 
-  Future<bool> login({@required String username, @required String password}) async {
+  void login({@required String username, @required String password}) async {
     await _api.login(username, password);
-    if (_api.isAuthorized()) {
+    connectionAttempted = true;
+    if (isAuthorized) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(PLEX_USER_TOKEN, _api.user.authToken);
-      return true;
     }
-    return false;
+    notifyListeners();
   }
 
   void getAuthors() async {

@@ -38,7 +38,7 @@ class PlexHeaders {
     @required this.clientIdentifier,
     this.platform = '',
     this.platformVersion = '',
-    this.provides = '',
+    this.provides = 'player',
     this.product = '',
     this.version = '',
     this.device = '',

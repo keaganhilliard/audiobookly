@@ -1,15 +1,44 @@
 import 'package:audiobookly/blocs/plex_bloc.dart';
+import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/screens/authors.dart';
 import 'package:audiobookly/screens/home.dart';
 import 'package:audiobookly/screens/login_form.dart';
+import 'package:audiobookly/ui/router.dart';
+import 'package:audiobookly/widgets/now_playing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
+import 'package:device_info/device_info.dart';
+import 'dart:io';
+import 'dart:async';
+// import 'models/plex.dart';
 
 PlexApi api;
 
 void main() async {
-  runApp(MyApp());
+  runApp(App());
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+        providers: providers,
+        child: MaterialApp(
+          title: 'Audiobookly',
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primarySwatch: Colors.deepPurple,
+          ),
+          darkTheme: ThemeData(
+              accentColor: Colors.deepPurple, brightness: Brightness.dark),
+          home: MyHomePage(title: 'Audiobookly'),
+        ));
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -24,10 +53,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
           accentColor: Colors.deepPurple, brightness: Brightness.dark),
-      home: Provider(
-        child: MyHomePage(title: 'Audiobookly'),
-        create: (context) => PlexBloc(),
-      ),
+      home: MyHomePage(title: 'Audiobookly'),
     );
   }
 }
@@ -41,153 +67,109 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  List<PlexServer> _servers = [];
-  List<PlexArtist> _authors = [];
-  List<PlexAlbum> _albums = [];
+  final _navigatorKey = GlobalKey<NavigatorState>();
   int _currentIndex = 0;
-  PlexApi api;
 
-  bool _showAuthors = false;
-  bool _showAlbums = false;
+  Future<void> getPlatformData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString(SharedPrefStrings.PLEX_TOKEN);
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    PlexHeaders headers;
 
-  void _getServers() async {
-    setState(() {
-      _servers = [];
-      _authors = [];
-      _albums = [];
-      _showAuthors = false;
-      _showAlbums = false;
-    });
-    List<PlexServer> servers = await api.getServers();
-    setState(() {
-      _servers = servers;
-    });
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      headers = PlexHeaders(
+          clientIdentifier: androidDeviceInfo.androidId,
+          device: androidDeviceInfo.model,
+          product: 'Audiobookly',
+          platform: 'Android',
+          platformVersion: androidDeviceInfo.version.release
+      );
+    }
+
+    if (authToken == null && headers != null) {
+      api = PlexApi(headers: headers);
+      PlexPin pin = await api.getPin();
+      String oAuthUrl = api.getOauthUrl(pin.code);
+      print(oAuthUrl);
+      if (await urlLauncher.canLaunch(oAuthUrl)) {
+        await urlLauncher.launch(oAuthUrl);
+        int count = 0;
+        Timer.periodic(Duration(seconds: 5), (timer) async {
+          count++;
+          PlexPin authToken = await api.getAuthToken(pin.id);
+          if (authToken.authToken != null) {
+            preferences.setString(SharedPrefStrings.PLEX_TOKEN, authToken.authToken);
+            urlLauncher.closeWebView();
+            timer.cancel();
+          }
+          print('In Timer: ${authToken.error}');
+          if (count > 5) timer.cancel();
+        });
+      }
+    }
+    else if (headers != null) {
+      headers.token = authToken;
+      api = PlexApi(headers: headers);
+      api.getServersV2().then((servers) {
+        servers.where((server) => server.provides == 'server').forEach((f) => print(f.name));
+      });
+    }
   }
 
-  void _setServer(PlexServer server) {
-    api.setServer(server);
-  }
-
-  void _getArtists() async {
-    List<PlexArtist> artists = await api.getArtists("4");
-    setState(() {
-      _showAuthors = true;
-      _authors = artists;
-    });
-  }
-
-  void _getAlbums(String key) async {
-    List<PlexAlbum> albums = await api.getAlbums(key);
-    setState(() {
-      _showAlbums = true;
-      _albums = albums;
-    });
-  }
-
-  void _goBack() {
-    setState(() {
-      _showAlbums = false;
-      _albums = [];
-    });
-  }
-
-  Widget getImage(int position) {
-    String url;
-    if (_showAlbums)
-      url =
-          'http://${api.server.address}:${api.server.port}${_albums[position].thumb}?X-Plex-Token=${api.server.accessToken}';
-    if (_showAuthors)
-      url =
-          'http://${api.server.address}:${api.server.port}${_authors[position].thumb}?X-Plex-Token=${api.server.accessToken}';
-    return url != null ? Image.network(url) : Text("Nothing to see here");
-  }
+  // Widget getImage(int position) {
+  //   String url;
+  //   if (_showAlbums)
+  //     url =
+  //         'http://${api.server.address}:${api.server.port}${_albums[position].thumb}?X-Plex-Token=${api.server.accessToken}';
+  //   if (_showAuthors)
+  //     url =
+  //         'http://${api.server.address}:${api.server.port}${_authors[position].thumb}?X-Plex-Token=${api.server.accessToken}';
+  //   return url != null ? Image.network(url) : Text("Nothing to see here");
+  // }
 
   void onNavigationTap(int index) {
     setState(() {
       _currentIndex = index;
     });
+    String route;
+    switch (index) {
+      case 0:
+        route = Routes.Home;
+        break;
+      case 1:
+        route = Routes.Authors;
+        break;
+      default:
+        route = Routes.Home;
+    }
+    _navigatorKey.currentState.pushReplacementNamed(route);
   }
 
-  List<Widget> tabs = [Home(), Authors(), Home(), Home()];
-
-  bool built = false;
+  @override
+  void initState() {
+    super.initState();
+    getPlatformData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (!built) {
-      () async {
-        if (api == null) {
-          setState(() {
-            built = true;
-          });
-          PlexBloc plexBloc = Provider.of<PlexBloc>(context);
-          if (await plexBloc.connect()) {
-            api = plexBloc.connection;
-          } else {
-            Navigator.push(
-                context,
-                MaterialPageRoute<Null>(
-                  builder: (BuildContext context) {
-                    return Provider(
-                      child: Scaffold(
-                        appBar: AppBar(
-                          title: Text('Login to Plex'),
-                        ),
-                        body: LoginForm(),
-                      ),
-                      create: (context) => plexBloc,
-                    );
-                  },
-                  fullscreenDialog: true,
-                ));
-          }
-        }
-      }();
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Stack(children: [
-        Padding(padding: EdgeInsets.only(bottom: 40), child: tabs[_currentIndex]),
+        Padding(
+            padding: EdgeInsets.only(bottom: 40),
+            child: Navigator(
+              key: _navigatorKey,
+              onGenerateRoute: Router.generateRoute,
+              initialRoute: Routes.Home,
+            )),
         Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Card(
-                  color: Theme.of(context).accentColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Text('Now Playing')),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.play_arrow),
-                            iconSize: 20,
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
-                            autofocus: false,
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.close),
-                            iconSize: 20,
-                            padding:
-                                EdgeInsets.only(top: 10, bottom: 10, right: 10),
-                            autofocus: false,
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  borderOnForeground: true,
-                  elevation: 20)
-            ]),
+            children: [NowPlaying()]),
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -204,11 +186,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               title: Text('Collections')),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _getServers,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.adb),
-      // ),
     );
   }
 }
@@ -249,3 +226,53 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         },
       )
  */
+
+// List<PlexServer> _servers = [];
+// List<PlexArtist> _authors = [];
+// List<PlexAlbum> _albums = [];
+// int _currentIndex = 0;
+// PlexApi api;
+
+// bool _showAuthors = false;
+// bool _showAlbums = false;
+
+// void _getServers() async {
+//   setState(() {
+//     _servers = [];
+//     _authors = [];
+//     _albums = [];
+//     _showAuthors = false;
+//     _showAlbums = false;
+//   });
+//   List<PlexServer> servers = await api.getServers();
+//   setState(() {
+//     _servers = servers;
+//   });
+// }
+
+// void _setServer(PlexServer server) {
+//   api.setServer(server);
+// }
+
+// void _getArtists() async {
+//   List<PlexArtist> artists = await api.getArtists("4");
+//   setState(() {
+//     _showAuthors = true;
+//     _authors = artists;
+//   });
+// }
+
+// void _getAlbums(String key) async {
+//   List<PlexAlbum> albums = await api.getAllAlbums(key);
+//   setState(() {
+//     _showAlbums = true;
+//     _albums = albums;
+//   });
+// }
+
+// void _goBack() {
+//   setState(() {
+//     _showAlbums = false;
+//     _albums = [];
+//   });
+// }

@@ -5,14 +5,14 @@ author:
 homepage:
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   http: ^0.12.0+4
   flutter:
     sdk: flutter
   plex_api:
-    path: ./lib/plex_api
+    path: ./plex_api
   provider: ^3.1.0
 
 dev_dependencies:
