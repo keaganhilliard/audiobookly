@@ -9,20 +9,36 @@ class NowPlaying extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(padding: EdgeInsets.all(10), child: Text('Now Playing')),
+            Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Listening',
+                  style: TextStyle(color: Colors.white),
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(Icons.play_arrow),
-                  iconSize: 20,
+                  //forward_10/forward_30
+                  color: Colors.white,
+                  icon: Icon(Icons.replay_30),
+                  iconSize: 25,
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   autofocus: false,
                   onPressed: () {},
                 ),
                 IconButton(
+                  color: Colors.white,
+                  icon: Icon(Icons.play_arrow),
+                  iconSize: 25,
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  autofocus: false,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  color: Colors.white,
                   icon: Icon(Icons.close),
-                  iconSize: 20,
+                  iconSize: 25,
                   padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
                   autofocus: false,
                   onPressed: () {},

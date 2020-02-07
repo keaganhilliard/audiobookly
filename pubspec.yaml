@@ -14,6 +14,7 @@ dependencies:
   plex_api:
     path: ./plex_api
   provider: ^3.1.0
+  cached_network_image: ^2.0.0
 
 dev_dependencies:
   flutter_test:

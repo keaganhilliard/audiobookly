@@ -11,7 +11,9 @@ class PlexBloc {
   PlexApi _api;
 
   PlexBloc() {
-    _api = PlexApi(headers: PlexHeaders(clientIdentifier: 'Audiobookly', device: 'Android'));
+    _api = PlexApi(
+        headers:
+            PlexHeaders(clientIdentifier: 'Audiobookly', device: 'Android'));
   }
 
   get connection => _api;
@@ -28,7 +30,8 @@ class PlexBloc {
     return false;
   }
 
-  Future<bool> login({@required String username, @required String password}) async {
+  Future<bool> login(
+      {@required String username, @required String password}) async {
     await _api.login(username, password);
     if (_api.isAuthorized()) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,11 +42,10 @@ class PlexBloc {
   }
 
   void getAuthors() async {
-    _authors = await _api.getArtists('4');
+    // _authors = await _api.getArtists('4');
   }
 
   List<PlexArtist> _authors = [];
 
   get authors => _authors;
-
 }

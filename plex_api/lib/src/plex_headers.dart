@@ -34,21 +34,21 @@ class PlexHeaders {
   // In case we need to use something other than application/json
   String contentType;
 
-  PlexHeaders({
-    @required this.clientIdentifier,
-    this.platform = '',
-    this.platformVersion = '',
-    this.provides = 'player',
-    this.product = '',
-    this.version = '',
-    this.device = '',
-    this.containerSize = '',
-    this.token = '',
-    this.accept = 'application/json',
-    this.contentType = 'application/json'
-  }) : assert(clientIdentifier != null && clientIdentifier != '');
+  PlexHeaders(
+      {@required this.clientIdentifier,
+      this.platform = '',
+      this.platformVersion = '',
+      this.provides = 'player',
+      this.product = '',
+      this.version = '',
+      this.device = '',
+      this.containerSize = '',
+      this.token = '',
+      this.accept = 'application/json',
+      this.contentType = 'application/json'})
+      : assert(clientIdentifier != null && clientIdentifier != '');
 
-  Map<String, String> toMap() => {
+  Map<String, String> toMap({String overrideToken}) => {
         'X-Plex-Platform': this.platform,
         'X-Plex-Platform-Version': this.platformVersion,
         'X-Plex-Provides': this.provides,
@@ -57,7 +57,7 @@ class PlexHeaders {
         'X-Plex-Version': this.version,
         'X-Plex-Device': this.device,
         'X-Plex-Container-Size': this.containerSize,
-        'X-Plex-Token': this.token,
+        'X-Plex-Token': overrideToken ?? this.token,
         'Accept': this.accept,
         'Content-Type': this.contentType
       };

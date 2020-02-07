@@ -1,4 +1,5 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/models/search.dart';
 import 'package:audiobookly/core/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,8 @@ List<SingleChildCloneableWidget> providers = [
 ];
 
 List<SingleChildCloneableWidget> independentServices = [
-  Provider.value(value: PlexApi(headers: PlexSettings.headers))
+  Provider.value(value: PlexApi(headers: PlexSettings.headers)),
+  ChangeNotifierProvider.value(value: Search())
 ];
 
 List<SingleChildCloneableWidget> dependentServices = [

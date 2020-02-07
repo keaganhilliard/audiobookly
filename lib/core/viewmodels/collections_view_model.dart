@@ -3,18 +3,18 @@ import 'package:flutter/foundation.dart';
 
 import 'package:plex_api/plex_api.dart';
 
+class CollectionsViewModel extends BaseModel {
+  PlexServerV2 _server;
 
-class CollectionsModel extends BaseModel {
-  PlexApi _api;
-  
-  CollectionsModel({@required PlexApi api}) : _api = api;
+  CollectionsViewModel({@required PlexServerV2 server}) : _server = server;
 
   List<PlexCollection> collections;
 
+  PlexServerV2 get server => _server;
+
   Future fetchCollections(String libraryKey) async {
     setBusy(true);
-    collections = await _api.getCollections(libraryKey);
+    collections = await _server.getCollections(libraryKey);
     setBusy(false);
   }
-
 }

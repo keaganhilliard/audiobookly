@@ -16,6 +16,7 @@ class PlexTrack extends PlexMetadata {
   String grandparentArt;
   int duration;
   String chapterSource;
+  int viewOffset;
   List<Media> media;
 
   PlexTrack.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
@@ -34,6 +35,7 @@ class PlexTrack extends PlexMetadata {
     grandparentArt = json['grandparentArt'];
     duration = json['duration'];
     chapterSource = json['chapterSource'];
+    viewOffset = json['viewOffset'];
     if (json['Media'] != null) {
       media = new List<Media>();
       json['Media'].forEach((v) {
@@ -59,6 +61,7 @@ class PlexTrack extends PlexMetadata {
     data['grandparentArt'] = this.grandparentArt;
     data['duration'] = this.duration;
     data['chapterSource'] = this.chapterSource;
+    data['viewOffset'] = this.viewOffset;
     if (this.media != null) {
       data['Media'] = this.media.map((v) => v.toJson()).toList();
     }

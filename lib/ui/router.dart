@@ -1,5 +1,6 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/screens/authors.dart';
+import 'package:audiobookly/screens/books_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,8 +16,9 @@ class Router {
         return MaterialPageRoute(builder: (_) => LoginForm());
       case Routes.Authors:
         return MaterialPageRoute(builder: (_) => Authors());
-      case Routes.Collections:
       case Routes.Books:
+        return MaterialPageRoute(builder: (_) => BooksView());
+      case Routes.Collections:
       default:
         return MaterialPageRoute(builder: (_) => Home());
     }

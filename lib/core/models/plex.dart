@@ -13,7 +13,9 @@ class Plex with ChangeNotifier {
   bool connectionAttempted;
 
   Plex(PlexHeaders headers) {
-    _api = PlexApi(headers: PlexHeaders(clientIdentifier: 'Audiobookly', device: 'Android'));
+    _api = PlexApi(
+        headers:
+            PlexHeaders(clientIdentifier: 'Audiobookly', device: 'Android'));
     connectionAttempted = false;
   }
 
@@ -42,11 +44,10 @@ class Plex with ChangeNotifier {
   }
 
   void getAuthors() async {
-    _authors = await _api.getArtists('4');
+    // _authors = await _api.getArtists('4');
   }
 
   List<PlexArtist> _authors = [];
 
   get authors => _authors;
-
 }
