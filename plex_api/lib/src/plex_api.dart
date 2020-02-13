@@ -72,8 +72,6 @@ class PlexApi {
     http.Response response = await http.get(
         Uri.https('plex.tv', '/api/v2/resources', {'includeHttps': '1'}),
         headers: headers.toMap());
-    print(response.request.headers);
-    print(response.request.url);
     List<PlexServerV2> servers = [];
     jsonDecode(response.body).toList().forEach((v) {
       PlexServerV2 server = PlexServerV2.fromJson(v);
@@ -104,69 +102,94 @@ class PlexApi {
 
   Future<List<PlexArtist>> getArtists(
       PlexServerV2 server, String libraryKey) async {
-    // http.Response response = await http.get(
-    //     '${server.mainConnection.uri}/library/sections/$libraryKey/all',
-    //     headers: headers.toMap(overrideToken: server.accessToken));
-    // print(response.request.url);
-    // PlexMetadataResponse sections =
-    //     PlexMetadataResponse.fromJson(jsonDecode(response.body));
-    // return sections.mediaContainer.metadata;
-    return getMetadata(server, '/library/sections/$libraryKey/all');
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/sections/$libraryKey/all',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    return sections.mediaContainer.metadata;
   }
 
   Future<List<PlexAlbum>> getAllAlbums(
       PlexServerV2 server, String libraryKey) async {
-     http.Response response = await http.get(
-         '${server.mainConnection.uri}/library/sections/$libraryKey/all?type=9',
-         headers: headers.toMap(overrideToken: server.accessToken));
-     print(response.request.url);
-     PlexMetadataResponse sections =
-         PlexMetadataResponse.fromJson(jsonDecode(response.body));
-     return sections.mediaContainer.metadata;
-//    return getMetadata(server, '/library/sections/$libraryKey/all?type=9');
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/sections/$libraryKey/all?type=9',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    return sections.mediaContainer.metadata;
+  }
+
+  Future<PlexAlbum> getAlbumFromKey(
+      PlexServerV2 server, String albumKey) async {
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/metadata/$albumKey/',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    return sections.mediaContainer.metadata[0];
+  }
+
+  Future<List<PlexAlbum>> getRecentlyAdded(
+      PlexServerV2 server, String libraryKey) async {
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/sections/$libraryKey/recentlyAdded',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    return sections.mediaContainer.metadata;
+  }
+
+  Future<List<PlexAlbum>> getRecentlyViewed(
+      PlexServerV2 server, String libraryKey) async {
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/sections/$libraryKey/recentlyViewed',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    sections.mediaContainer.metadata.forEach((f) {});
+    return sections.mediaContainer.metadata;
   }
 
   Future<List<PlexAlbum>> getAlbumsFromArtist(
       PlexServerV2 server, String artistRatingKey) async {
-    // http.Response response = await http.get(
-    //     '${server.mainConnection.uri}/library/metadata/$artistRatingKey/children',
-    //     headers: headers.toMap(overrideToken: server.accessToken));
-    // print(response.request.url);
-    // PlexMetadataResponse sections =
-    //     PlexMetadataResponse.fromJson(jsonDecode(response.body));
-    // return sections.mediaContainer.metadata;
-    return getMetadata(server, '/library/metadata/$artistRatingKey/children');
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/metadata/$artistRatingKey/children',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    print('Getting albums for $artistRatingKey');
+    print(response.body);
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    return sections.mediaContainer.metadata;
   }
 
   Future<List<PlexAlbum>> getAlbumsFromCollection(
       PlexServerV2 server, String collectionFastKey) async {
     http.Response response = await http.get(
-        '${server.mainConnection.uri}$collectionFastKey',
+        '${server.mainConnection.uri}$collectionFastKey&type=9',
         headers: headers.toMap(overrideToken: server.accessToken));
     print(response.request.url);
     PlexMetadataResponse sections =
         PlexMetadataResponse.fromJson(jsonDecode(response.body));
     return sections.mediaContainer.metadata;
-    // return await getMetadata(server, collectionFastKey);
   }
 
   Future<List<PlexTrack>> getTracks(
       PlexServerV2 server, String albumRatingKey) async {
-    // http.Response response = await http.get(
-    //     '${server.mainConnection.uri}/library/metadata/$albumRatingKey/children',
-    //     headers: headers.toMap());
-    // print(response.request.url);
-    // PlexMetadataResponse sections =
-    //     PlexMetadataResponse.fromJson(jsonDecode(response.body));
-    // return sections.mediaContainer.metadata;
-    return getMetadata(server, '/library/metadata/$albumRatingKey/children');
+    http.Response response = await http.get(
+        '${server.mainConnection.uri}/library/metadata/$albumRatingKey/children',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    print(response.request.url);
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    return sections.mediaContainer.metadata;
   }
 
   Future<List<PlexCollection>> getCollections(
       PlexServerV2 server, String libraryKey) async {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/collection/?type=9',
-        headers: headers.toMap());
+        headers: headers.toMap(overrideToken: server.accessToken));
     print(response.request.url);
     PlexCollectionsResponse collectionsResponse =
         PlexCollectionsResponse.fromJson(jsonDecode(response.body));

@@ -1,6 +1,5 @@
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:plex_api/plex_api.dart';
 
 class CollectionsViewModel extends BaseModel {

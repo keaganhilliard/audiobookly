@@ -3,6 +3,7 @@ import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class LibraryListViewModel extends BaseModel {
   PlexServerV2 _server;
 
@@ -20,7 +21,7 @@ class LibraryListViewModel extends BaseModel {
 
   Future<void> setLibrary(int position) async {
     PlexLibrary lib = libraries[position];
-    SharedPreferences prefs = await  SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(SharedPrefStrings.PLEX_LIBRARY, lib.key);
   }
 }

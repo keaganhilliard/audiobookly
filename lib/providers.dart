@@ -13,7 +13,7 @@ List<SingleChildCloneableWidget> providers = [
 
 List<SingleChildCloneableWidget> independentServices = [
   Provider.value(value: PlexApi(headers: PlexSettings.headers)),
-  ChangeNotifierProvider.value(value: Search())
+  Provider.value(value: Search()),
 ];
 
 List<SingleChildCloneableWidget> dependentServices = [

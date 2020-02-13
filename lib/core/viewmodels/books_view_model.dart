@@ -12,7 +12,19 @@ class BooksViewModel extends BaseModel {
 
   Future fetchAllAlbums(String libraryKey) async {
     setBusy(true);
-     books = await _server.getAllAlbums(libraryKey);
+    books = await _server.getAllAlbums(libraryKey);
+    setBusy(false);
+  }
+
+  Future fetchAlbumsByArtist(String artistKey) async {
+    setBusy(true);
+    books = await _server.getAlbumsFromArtist(artistKey);
+    setBusy(false);
+  }
+
+  Future fetchAlbumsFromCollection(String collectionFastKey) async {
+    setBusy(true);
+    books = await _server.getAlbumsFromCollection(collectionFastKey);
     setBusy(false);
   }
 }

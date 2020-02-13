@@ -1,25 +1,18 @@
-import 'package:audiobookly/core/services/authentication_service.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:plex_api/plex_api.dart';
 
 class AuthorsViewModel extends BaseModel {
-  PlexApi _api;
+  PlexServerV2 _server;
 
-  AuthorsViewModel({@required PlexApi plexApi}) : _api = plexApi;
+  AuthorsViewModel({@required PlexServerV2 server}) : _server = server;
 
-  List<PlexArtist> collections;
+  List<PlexArtist> authors = [];
 
-  Future<List<PlexArtist>> getAuthors(
-      String authToken, String serverUrl, String libraryKey) async {
+  Future<void> getAuthors(String libraryKey) async {
     setBusy(true);
-    // var success = await _authenticationService.login(username, password);
+    authors = await _server.getArtists(libraryKey);
     setBusy(false);
-    return collections;
   }
-
-  // Future<bool> checkAuth() {
-  //   return true;
-  // }
 }

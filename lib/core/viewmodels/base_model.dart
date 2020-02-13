@@ -6,6 +6,10 @@ class BaseModel extends ChangeNotifier {
 
   void setBusy(bool value) {
     _busy = value;
-    notifyListeners();
+    try {
+      notifyListeners();
+    } catch (e) {
+      print('Some shit caught: $e');
+    }
   }
 }

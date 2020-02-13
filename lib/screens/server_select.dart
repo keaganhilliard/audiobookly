@@ -6,7 +6,9 @@ import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
 
 class ServerSelect extends StatelessWidget {
   final ServerListViewModel _model;
-  ServerSelect({@required ServerListViewModel model}) : _model = model;
+  ServerSelect({
+    @required ServerListViewModel model,
+  }) : _model = model;
 
   @override
   Widget build(BuildContext context) {

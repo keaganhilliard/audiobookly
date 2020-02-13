@@ -134,8 +134,22 @@ class PlexServerV2 {
     return await api.getArtists(this, libraryKey);
   }
 
+  Future<PlexAlbum> getAlbumFromKey(String albumKey) async {
+    return await api.getAlbumFromKey(this, albumKey);
+  }
+
   Future<List<PlexAlbum>> getAllAlbums(String libraryKey) async {
     List<PlexAlbum> albums = await api.getAllAlbums(this, libraryKey);
+    return albums;
+  }
+
+  Future<List<PlexAlbum>> getRecentlyAdded(String libraryKey) async {
+    List<PlexAlbum> albums = await api.getRecentlyAdded(this, libraryKey);
+    return albums;
+  }
+
+  Future<List<PlexAlbum>> getRecentlyViewed(String libraryKey) async {
+    List<PlexAlbum> albums = await api.getRecentlyViewed(this, libraryKey);
     return albums;
   }
 

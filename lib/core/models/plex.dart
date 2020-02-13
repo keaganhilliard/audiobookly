@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:plex_api/plex_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:meta/meta.dart';

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-class Search extends ChangeNotifier {
+class Search {
   final List<SearchResult> results = [];
 
   Future<List<SearchResult>> query(String query) async {

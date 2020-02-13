@@ -9,6 +9,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="audio_service_example"
         android:icon="@mipmap/ic_launcher">
+        <service android:name=".MediaPlaybackService">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -20,6 +25,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
