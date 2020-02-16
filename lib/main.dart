@@ -1,26 +1,14 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/utils/plex_search_delegate.dart';
-import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
-import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/screens/library_select.dart';
-import 'package:audiobookly/screens/server_select.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart';
 import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:plex_api/plex_api.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart' as urlLauncher;
-import 'package:device_info/device_info.dart';
-import 'dart:io';
-import 'dart:async';
-
-PlexApi api;
 
 void main() async {
   runApp(App());
@@ -69,93 +57,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final _navigatorKey = GlobalKey<NavigatorState>();
   int _currentIndex = 0;
-  PlexServerV2 _server;
-  PlexLibrary _library;
-  SharedPreferences _prefs;
-
-  bool nowPlaying = false;
-
-  // Future<void> getPlatformData() async {
-  //   _prefs = await SharedPreferences.getInstance();
-  //   String authToken = _prefs.getString(SharedPrefStrings.PLEX_TOKEN);
-  //   String serverId = _prefs.getString(SharedPrefStrings.PLEX_SERVER);
-  //   String libraryKey = _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
-  //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  //   PlexHeaders headers;
-
-  //   if (Platform.isAndroid) {
-  //     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-  //     headers = PlexHeaders(
-  //       clientIdentifier: androidDeviceInfo.androidId,
-  //       device: androidDeviceInfo.model,
-  //       product: 'Audiobookly',
-  //       platform: 'Android',
-  //       platformVersion: androidDeviceInfo.version.release,
-  //     );
-  //   }
-
-  //   if (authToken == null && headers != null) {
-  //     api = Provider.of(context);
-  //     api.headers = headers;
-  //     PlexPin pin = await api.getPin();
-  //     String oAuthUrl = api.getOauthUrl(pin.code);
-  //     print(oAuthUrl);
-  //     if (await urlLauncher.canLaunch(oAuthUrl)) {
-  //       urlLauncher.launch(oAuthUrl);
-  //       int count = 0;
-  //       Timer.periodic(Duration(seconds: 5), (timer) async {
-  //         count++;
-  //         PlexPin authToken = await api.getAuthToken(pin.id);
-  //         if (authToken.authToken != null) {
-  //           _prefs.setString(SharedPrefStrings.PLEX_TOKEN, authToken.authToken);
-  //           urlLauncher.closeWebView();
-  //           timer.cancel();
-  //           getPlatformData();
-  //         }
-  //         print('In Timer: ${authToken.error}');
-  //         if (count > 20) timer.cancel();
-  //       });
-  //     }
-  //   } else if (headers != null) {
-  //     headers.token = authToken;
-  //     print('AuthToken: $authToken');
-  //     api = Provider.of(context);
-  //     api.headers = headers;
-  //     if (serverId == null) {
-  //       Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) =>
-  //                 ServerSelect(model: ServerListViewModel(api: api)),
-  //           ));
-  //     } else if (libraryKey == null) {
-  //       List<PlexServerV2> servers = await api.getServersV2();
-  //       PlexServerV2 server = servers.firstWhere(
-  //           (server) => server.clientIdentifier == serverId,
-  //           orElse: () => null);
-  //       Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) =>
-  //                 LibrarySelect(model: LibraryListViewModel(server: server)),
-  //           ));
-  //     } else {
-  //       List<PlexServerV2> servers = await api.getServersV2();
-  //       PlexServerV2 server = servers.firstWhere(
-  //           (server) => server.clientIdentifier == serverId,
-  //           orElse: () => null);
-  //       List<PlexLibrary> libraries = await server.getLibraries();
-  //       PlexLibrary library = libraries.firstWhere(
-  //           (library) => library.key == libraryKey,
-  //           orElse: () => null);
-
-  //       setState(() {
-  //         _server = server;
-  //         _library = library;
-  //       });
-  //     }
-  //   }
-  // }
+  bool nowPlaying = true;
 
   void onNavigationTap(int index) {
     if (index != _currentIndex) {
