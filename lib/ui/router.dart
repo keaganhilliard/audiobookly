@@ -22,14 +22,18 @@ class Router {
       case Routes.Collections:
         return MaterialPageRoute(builder: (_) => CollectionsView());
       case Routes.Author:
+        Map<String, dynamic> args = settings.arguments;
         return MaterialPageRoute(
             builder: (_) => BooksView(
-                  artistId: settings.arguments,
+                  artistId: args['authorId'],
+                  title: args['authorName'],
                 ));
       case Routes.Collection:
+        Map<String, dynamic> args = settings.arguments;
         return MaterialPageRoute(
             builder: (_) => BooksView(
-                  collectionFastKey: settings.arguments,
+                  collectionFastKey: args['collectionId'],
+                  title: args['title'],
                 ));
       case Routes.Book:
         Map<String, dynamic> args = settings.arguments;

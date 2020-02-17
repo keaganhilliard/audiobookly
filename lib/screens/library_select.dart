@@ -1,7 +1,6 @@
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
 
 class LibrarySelect extends StatelessWidget {
   final LibraryListViewModel _model;
@@ -16,23 +15,27 @@ class LibrarySelect extends StatelessWidget {
       },
       builder: (context, model, child) {
         return model.busy
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
             : Scaffold(
-          appBar: AppBar(
-            title: Text('Select a Plex library'),
-            automaticallyImplyLeading: false,
-          ),
-          body: ListView.builder(
-              itemCount: model.libraries.length,
-              itemBuilder: (context, position) {
-                return ListTile(
-                    title: Text(model.libraries[position].title),
-                    onTap: () {
-                      model.setLibrary(position);
-                      Navigator.pop(context);
-                    });
-              }),
-        );
+                appBar: AppBar(
+                  title: Text('Select a Plex library'),
+                  automaticallyImplyLeading: false,
+                ),
+                body: ListView.builder(
+                  itemCount: model.libraries.length,
+                  itemBuilder: (context, position) {
+                    return ListTile(
+                      title: Text(model.libraries[position].title),
+                      onTap: () {
+                        model.setLibrary(position);
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                ),
+              );
       },
     );
   }

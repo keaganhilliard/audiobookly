@@ -12,10 +12,20 @@ class BookViewModel extends BaseModel {
 
   List<PlexTrack> tracks = [];
   String duration;
+  PlexTrack currentTrack;
 
   Future getAllTracks(String albumRatingKey) async {
     setBusy(true);
     tracks = await _server.getTracks(albumRatingKey);
+    _genDurationString();
+
+    currentTrack = tracks.firstWhere((track) => track.viewOffset != null,
+        orElse: () => null);
+
+    setBusy(false);
+  }
+
+  void _genDurationString() {
     int total = tracks.fold(0, (total, track) => total + track.duration);
     Duration durObj = Duration(milliseconds: total);
 
@@ -23,7 +33,5 @@ class BookViewModel extends BaseModel {
     int minutes = durObj.inMinutes - (60 * durObj.inHours);
 
     duration = '$hours hours and $minutes minutes';
-
-    setBusy(false);
   }
 }

@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:provider/provider.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/ui/scaffold_without_footer.dart';
 
 class Home extends StatelessWidget {
-  final List<String> items = ['Harry Potter', 'Riyria', 'Bible'];
-  final List<String> authors = ['J.K. Rowling', 'Michael J. Sullivan', 'God'];
-
   @override
   Widget build(BuildContext context) {
     final PlexServerV2 _server = Provider.of(context);
@@ -23,25 +21,28 @@ class Home extends StatelessWidget {
         model.getRecentPlayed(_library.key);
       },
       builder: (context, model, child) {
-        return model.busy
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView(
-                padding: EdgeInsets.only(bottom: 30.0),
-                children: [
-                  BookRow(
-                    books: model.recentlyPlayed,
-                    title: 'In Progress',
-                    server: _server,
-                  ),
-                  BookRow(
-                    books: model.recentlyAdded,
-                    title: 'Recently Added',
-                    server: _server,
-                  ),
-                ],
-              );
+        return ScaffoldWithoutFooter(
+          title: Text('Audiobookly'),
+          body: model.busy
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  padding: EdgeInsets.only(bottom: 30.0),
+                  children: [
+                    BookRow(
+                      books: model.recentlyPlayed,
+                      title: 'In Progress',
+                      server: _server,
+                    ),
+                    BookRow(
+                      books: model.recentlyAdded,
+                      title: 'Recently Added',
+                      server: _server,
+                    ),
+                  ],
+                ),
+        );
       },
     );
   }
@@ -64,7 +65,7 @@ class BookRow extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15, 20, 10, 0),
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.headline6,
               )),
           SizedBox(
               height: MediaQuery.of(context).orientation == Orientation.portrait

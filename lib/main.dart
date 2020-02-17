@@ -1,6 +1,5 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
-import 'package:audiobookly/core/utils/plex_search_delegate.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/ui/base_widget.dart';
@@ -101,24 +100,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       );
     } else {
       return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: PlexSearchDelegate(),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {},
-            )
-          ],
-        ),
         body: Stack(children: [
           Padding(
               padding:
