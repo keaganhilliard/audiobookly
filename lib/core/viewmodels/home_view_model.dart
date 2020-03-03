@@ -1,28 +1,37 @@
+import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/services/audio_service.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:plex_api/plex_api.dart';
-
 class HomeViewModel extends BaseModel {
-  PlexServerV2 _server;
+  ServerCommunicator _communicator;
 
-  HomeViewModel({@required PlexServerV2 server}) : _server = server;
+  HomeViewModel({@required ServerCommunicator communicator})
+      : _communicator = communicator;
 
-  List<PlexAlbum> recentlyAdded = [];
-  List<PlexAlbum> recentlyPlayed = [];
+  List<MediaItem> recentlyAdded = [];
+  List<MediaItem> recentlyPlayed = [];
 
-  Future<void> getRecentlyAdded(String libraryKey) async {
+  Future<void> getRecentlyAdded() async {
     setBusy(true);
-    recentlyAdded = await _server.getRecentlyAdded(libraryKey);
+    recentlyAdded =
+        await _communicator.getChildren(AudioPlayerTask.RECENTLY_ADDED);
     setBusy(false);
   }
 
-  Future<void> getRecentPlayed(String libraryKey) async {
+  Future<void> getRecentPlayed() async {
     setBusy(true);
-    recentlyPlayed = await _server.getRecentlyViewed(libraryKey);
-    recentlyPlayed = await Future.wait(recentlyPlayed.map((album) async {
-      return await _server.getAlbumFromKey(album.ratingKey);
-    }));
+    recentlyPlayed =
+        await _communicator.getChildren(AudioPlayerTask.RECENTLY_PLAYED);
     setBusy(false);
+  }
+
+  Future<void> onRefresh() async {
+    recentlyAdded =
+        await _communicator.getChildren(AudioPlayerTask.RECENTLY_ADDED);
+    recentlyPlayed =
+        await _communicator.getChildren(AudioPlayerTask.RECENTLY_PLAYED);
+    notifyListeners();
   }
 }

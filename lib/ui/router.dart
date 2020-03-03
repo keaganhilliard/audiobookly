@@ -4,7 +4,7 @@ import 'package:audiobookly/screens/books_view.dart';
 import 'package:audiobookly/screens/book_view.dart';
 import 'package:audiobookly/screens/collections_view.dart';
 import 'package:audiobookly/screens/login_view.dart';
-import 'package:audiobookly/screens/home.dart';
+import 'package:audiobookly/screens/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -12,7 +12,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.Home:
-        return MaterialPageRoute(builder: (_) => Home());
+        return MaterialPageRoute(builder: (_) => HomeView());
       case Routes.Login:
         return MaterialPageRoute(builder: (_) => LoginView());
       case Routes.Authors:
@@ -25,25 +25,23 @@ class Router {
         Map<String, dynamic> args = settings.arguments;
         return MaterialPageRoute(
             builder: (_) => BooksView(
-                  artistId: args['authorId'],
+                  mediaId: args['authorId'],
                   title: args['authorName'],
                 ));
       case Routes.Collection:
         Map<String, dynamic> args = settings.arguments;
         return MaterialPageRoute(
             builder: (_) => BooksView(
-                  collectionFastKey: args['collectionId'],
+                  mediaId: args['collectionId'],
                   title: args['title'],
                 ));
       case Routes.Book:
-        Map<String, dynamic> args = settings.arguments;
         return MaterialPageRoute(
             builder: (_) => BookView(
-                  book: args['book'],
-                  server: args['server'],
+                  bookId: settings.arguments,
                 ));
       default:
-        return MaterialPageRoute(builder: (_) => Home());
+        return MaterialPageRoute(builder: (_) => HomeView());
     }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/plex_server_communicator.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
@@ -18,6 +20,7 @@ class RootViewModel extends BaseModel {
   SharedPreferences _prefs;
   PlexServerV2 server;
   PlexLibrary library;
+  ServerCommunicator communicator;
 
   RootViewModel();
 
@@ -91,6 +94,8 @@ class RootViewModel extends BaseModel {
             orElse: () => null);
         this.server = server;
         this.library = library;
+        communicator =
+            PlexServerCommunicator(server: server, libraryKey: libraryKey);
         setBusy(false);
       }
     }

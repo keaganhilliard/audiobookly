@@ -1,5 +1,7 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/ui/base_widget.dart';
@@ -7,7 +9,9 @@ import 'package:audiobookly/ui/router.dart';
 import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
+import 'package:audio_service/audio_service.dart';
 
 void main() async {
   runApp(App());
@@ -23,8 +27,9 @@ class App extends StatelessWidget {
           navigatorKey: NavigationService().navigatorKey,
           onGenerateRoute: Router.generateRoute,
           theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.deepPurple,
+            brightness: Brightness.dark,
+            accentColor: Colors.deepPurple,
+            canvasColor: Colors.grey[900],
           ),
           darkTheme: ThemeData(
             accentColor: Colors.deepPurple,
@@ -86,8 +91,40 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    // startAudioService();
+    FlutterDownloader.initialize();
+    connect();
     super.initState();
-    // getPlatformData();
+  }
+
+  @override
+  void dispose() {
+    disconnect();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void connect() async {
+    await AudioService.connect();
+  }
+
+  void disconnect() {
+    AudioService.disconnect();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        connect();
+        break;
+      case AppLifecycleState.paused:
+        disconnect();
+        break;
+      default:
+        break;
+    }
   }
 
   @override
@@ -112,6 +149,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   Provider.value(
                     value: model.library,
                   ),
+                  Provider.value(
+                    value: model.communicator,
+                  )
                 ],
                 child: Navigator(
                   key: _navigatorKey,
@@ -123,7 +163,28 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              nowPlaying ? NowPlaying() : Container(),
+              MultiProvider(
+                  providers: [
+                    StreamProvider<PlaybackState>(
+                      create: (context) => AudioService.playbackStateStream,
+                      initialData: PlaybackState(
+                        basicState: BasicPlaybackState.none,
+                        actions: null,
+                      ),
+                    ),
+                    StreamProvider<MediaItem>(
+                      create: (context) => AudioService.currentMediaItemStream,
+                    ),
+                  ],
+                  child: Consumer<PlaybackState>(
+                    builder: (context, state, child) {
+                      if (state != null &&
+                          state.basicState != BasicPlaybackState.none)
+                        return NowPlaying();
+                      else
+                        return Container();
+                    },
+                  )),
             ],
           ),
         ]),

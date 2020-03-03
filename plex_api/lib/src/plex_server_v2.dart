@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:plex_api/plex_api.dart';
 
 class PlexServerV2 {
@@ -26,10 +28,12 @@ class PlexServerV2 {
   bool natLoopbackSupported;
   List<PlexConnection> connections;
   PlexApi api;
+  String currentIp;
 
   PlexConnection get mainConnection {
     if (connections != null) {
-      return connections.singleWhere((connection) => !connection.local,
+      return connections.firstWhere(
+          (connection) => !publicAddressMatches && !connection.local,
           orElse: () => connections[0]);
     } else {
       return null;
@@ -61,7 +65,13 @@ class PlexServerV2 {
       this.dnsRebindingProtection,
       this.natLoopbackSupported,
       this.connections,
-      this.api});
+      this.api}) {
+    // setCurrentIP();
+    // Timer.periodic(Duration(seconds: 30), (timer) async {
+    //   print(currentIp);
+    //   setCurrentIP();
+    // });
+  }
 
   PlexServerV2.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -126,6 +136,10 @@ class PlexServerV2 {
     return data;
   }
 
+  void setCurrentIP() async {
+    this.currentIp = await api.getCurrentIP();
+  }
+
   Future<List<PlexLibrary>> getLibraries() async {
     return await api.getLibraries(this);
   }
@@ -158,8 +172,8 @@ class PlexServerV2 {
   }
 
   Future<List<PlexAlbum>> getAlbumsFromCollection(
-      String collectionFastKey) async {
-    return await api.getAlbumsFromCollection(this, collectionFastKey);
+      String libraryKey, String collectionKey) async {
+    return await api.getAlbumsFromCollection(this, libraryKey, collectionKey);
   }
 
   Future<List<PlexTrack>> getTracks(String albumRatingKey) async {
@@ -168,6 +182,11 @@ class PlexServerV2 {
 
   Future<List<PlexCollection>> getCollections(String libraryKey) async {
     return await api.getCollections(this, libraryKey);
+  }
+
+  Future savePosition(String key, int currentTime, int duration,
+      PlexPlaybackState state) async {
+    return await api.savePosition(this, key, currentTime, duration, state);
   }
 
   String getUrlWithToken(String path) {

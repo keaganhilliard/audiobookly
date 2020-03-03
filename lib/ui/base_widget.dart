@@ -33,6 +33,12 @@ class _BaseWidgetState<T extends ChangeNotifier> extends State<BaseWidget<T>> {
   }
 
   @override
+  void dispose() {
+    // model.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>(
       create: (context) => model,

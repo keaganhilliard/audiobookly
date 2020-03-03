@@ -26,4 +26,15 @@ class Controls {
     label: 'Stop',
     action: MediaAction.stop,
   );
+  static const MediaControl fastForwardControl = MediaControl(
+    androidIcon: 'drawable/ic_forward_30',
+    label: 'Skip 30 seconds',
+    action: MediaAction.fastForward,
+  );
+
+  static const MediaControl rewindControl = MediaControl(
+    androidIcon: 'drawable/ic_replay_30',
+    label: 'Rewind 30 seconds',
+    action: MediaAction.rewind,
+  );
 }

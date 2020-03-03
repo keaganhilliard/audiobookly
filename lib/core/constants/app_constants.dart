@@ -15,6 +15,15 @@ class SharedPrefStrings {
   static const PLEX_TOKEN = 'plexToken';
   static const PLEX_SERVER = 'plexServer';
   static const PLEX_LIBRARY = 'plexLibrary';
+  static const PLAYBACK_SPEED = 'playbackSpeed';
+}
+
+class MediaIds {
+  static const String AUTHORS_ID = '@authors';
+  static const String BOOKS_ID = '@books';
+  static const String COLLECTIONS_ID = '@collections';
+  static const String RECENTLY_PLAYED = '@recentlyPlayed';
+  static const String RECENTLY_ADDED = '@recentlyAdded';
 }
 
 class PlexSettings {

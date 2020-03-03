@@ -12,6 +12,8 @@ import 'package:meta/meta.dart';
 
 import '../plex_api.dart';
 
+enum PlexPlaybackState { PLAYING, STOPPED, PAUSED, BUFFERING }
+
 class PlexApi {
   String authToken;
   Uri loginUrl = Uri.https('plex.tv', '/users/sign_in.json');
@@ -84,11 +86,16 @@ class PlexApi {
   }
 
   Future<List<PlexLibrary>> getLibraries(PlexServerV2 server) async {
-    http.Response response = await http.get(
-        '${server.mainConnection.uri}/library/sections',
-        headers: headers.toMap(overrideToken: server.accessToken));
-    PlexSections sections = PlexSections.fromJson(jsonDecode(response.body));
-    return sections.mediaContainer.directory;
+    try {
+      http.Response response = await http.get(
+          '${server.mainConnection.uri}/library/sections',
+          headers: headers.toMap(overrideToken: server.accessToken));
+      PlexSections sections = PlexSections.fromJson(jsonDecode(response.body));
+      return sections.mediaContainer.directory;
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   Future<List<PlexMetadata>> getMetadata(
@@ -164,11 +171,10 @@ class PlexApi {
   }
 
   Future<List<PlexAlbum>> getAlbumsFromCollection(
-      PlexServerV2 server, String collectionFastKey) async {
+      PlexServerV2 server, String libraryKey, String collectionKey) async {
     http.Response response = await http.get(
-        '${server.mainConnection.uri}$collectionFastKey&type=9',
+        '${server.mainConnection.uri}/library/sections/$libraryKey/all?collection=$collectionKey&type=9',
         headers: headers.toMap(overrideToken: server.accessToken));
-    print(response.request.url);
     PlexMetadataResponse sections =
         PlexMetadataResponse.fromJson(jsonDecode(response.body));
     return sections.mediaContainer.metadata;
@@ -179,7 +185,6 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/metadata/$albumRatingKey/children',
         headers: headers.toMap(overrideToken: server.accessToken));
-    print(response.request.url);
     PlexMetadataResponse sections =
         PlexMetadataResponse.fromJson(jsonDecode(response.body));
     return sections.mediaContainer.metadata;
@@ -190,12 +195,36 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/collection/?type=9',
         headers: headers.toMap(overrideToken: server.accessToken));
-    print(response.request.url);
     PlexCollectionsResponse collectionsResponse =
         PlexCollectionsResponse.fromJson(jsonDecode(response.body));
     return collectionsResponse.mediaContainer.directory;
   }
 
+  String playbackStateToString(PlexPlaybackState state) {
+    switch (state) {
+      case PlexPlaybackState.PAUSED:
+        return 'paused';
+      case PlexPlaybackState.PLAYING:
+        return 'playing';
+      case PlexPlaybackState.BUFFERING:
+        return 'buffering';
+      default:
+        return 'stopped';
+    }
+  }
+
+  Future savePosition(PlexServerV2 server, String key, int currentTime,
+      int duration, PlexPlaybackState state) async {
+    http.Response response = await http.post(
+        '${server.mainConnection.uri}/:/timeline?ratingKey=$key&$key={Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime',
+        headers: headers.toMap());
+    print('Save position response: ${response.body}');
+    print(
+        'Url: ${server.mainConnection.uri}/:/timeline?ratingKey=$key&key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime');
+  }
+
+  ///:/timeline?ratingKey=26117&key=%2Flibrary%2Fmetadata%2F26117&state=stopped&hasMDE=1&time=1650000&duration=46141000
+// :/timeline?key=26117&%2Flibrary%2Fmetadata%2F26117&state=paused&duration=92283768&time=1660989
   void setServer(PlexServer server) {
     this.server = server;
   }

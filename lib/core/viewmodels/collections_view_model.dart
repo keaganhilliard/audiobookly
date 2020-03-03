@@ -1,19 +1,21 @@
+import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/services/audio_service.dart';
+import 'package:audiobookly/core/services/audio_service_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
-import 'package:flutter/foundation.dart';
-import 'package:plex_api/plex_api.dart';
 
 class CollectionsViewModel extends BaseModel {
-  PlexServerV2 _server;
+  List<MediaItem> collections;
 
-  CollectionsViewModel({@required PlexServerV2 server}) : _server = server;
-
-  List<PlexCollection> collections;
-
-  PlexServerV2 get server => _server;
-
-  Future fetchCollections(String libraryKey) async {
+  Future fetchCollections() async {
     setBusy(true);
-    collections = await _server.getCollections(libraryKey);
+    collections = await AudioServiceCommunicator.getChildren(
+        AudioPlayerTask.COLLECTIONS_ID);
     setBusy(false);
+  }
+
+  Future onRefresh() async {
+    collections = await AudioServiceCommunicator.getChildren(
+        AudioPlayerTask.COLLECTIONS_ID);
+    notifyListeners();
   }
 }

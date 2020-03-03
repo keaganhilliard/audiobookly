@@ -1,4 +1,8 @@
+import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/plex_server_communicator.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/ui/book_grid_item.dart';
 import 'package:flutter/material.dart';
 import 'package:plex_api/plex_api.dart';
@@ -9,70 +13,60 @@ import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/ui/scaffold_without_footer.dart';
 
 class BooksView extends StatelessWidget {
-  final String collectionFastKey;
-  final String artistId;
+  final String mediaId;
   final String title;
 
   BooksView({
-    this.collectionFastKey,
-    this.artistId,
+    this.mediaId,
     this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    final PlexLibrary _library = Provider.of(context);
-    final PlexServerV2 _server = Provider.of(context);
+    final ServerCommunicator communicator = Provider.of(context);
 
     return ScaffoldWithoutFooter(
       title: Text(title ?? 'Books'),
       body: BaseWidget<BooksViewModel>(
-          model: BooksViewModel(server: _server),
+          model: BooksViewModel(communicator: communicator),
           onModelReady: (model) {
-            if (collectionFastKey != null) {
-              model.fetchAlbumsFromCollection(collectionFastKey);
-            } else if (artistId != null) {
-              model.fetchAlbumsByArtist(artistId);
-            } else {
-              model.fetchAllAlbums(_library.key);
-            }
+            model.getAlbums(mediaId);
+            // if (collectionFastKey != null) {
+            //   model.fetchAlbumsFromCollection(_library.key, collectionFastKey);
+            // } else if (artistId != null) {
+            //   model.fetchAlbumsByArtist(artistId);
+            // } else {
+            //   model.fetchAllAlbums(_library.key);
+            // }
           },
           builder: (context, model, child) {
-            return
-                // WillPopScope(
-                //   onWillPop: () async => !await Navigator.of(context).maybePop(),
-                //   child:
-                model.busy
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : GridView.count(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        padding: EdgeInsets.all(10.0),
-                        children: model.books.map((book) {
-                          return BookGridItem(
-                            onTap: () {
-                              // Navigator.of(
-                              //   context,
-                              // )
-                              NavigationService().pushNamed(
-                                Routes.Book,
-                                arguments: {
-                                  'server': _server,
-                                  'library': _library,
-                                  'book': book,
-                                },
-                              );
-                            },
-                            thumbnailUrl: _server.getUrlWithToken(book
-                                .thumb), // '${_server.mainConnection.uri}/photo/:/transcode?width=200&height=200&X-Plex-Token=${_server.accessToken}&upscale=1&url=${Uri.encodeComponent(book.thumb)}',
-                            title: book.title,
-                            subtitle: book.parentTitle,
-                          );
-                        }).toList(),
-                      );
-            // );
+            if (model.busy)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            else {
+              return RefreshIndicator(
+                onRefresh: () => model.onRefresh(mediaId),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  padding: EdgeInsets.all(10.0),
+                  children: model.books.map((book) {
+                    return BookGridItem(
+                      onTap: () {
+                        NavigationService().pushNamed(
+                          Routes.Book,
+                          arguments: book.id,
+                        );
+                      },
+                      thumbnailUrl: book.artUri,
+                      title: book.title,
+                      subtitle: book.artist,
+                    );
+                  }).toList(),
+                ),
+              );
+            }
           }),
     );
   }

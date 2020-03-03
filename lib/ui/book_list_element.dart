@@ -23,10 +23,11 @@ class BookListElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).orientation == Orientation.portrait
-            ? MediaQuery.of(context).size.width * 0.4
-            : MediaQuery.of(context).size.width * 0.25,
+    return AspectRatio(
+        aspectRatio: 1 / 1.4,
+        // width: MediaQuery.of(context).orientation == Orientation.portrait
+        //     ? MediaQuery.of(context).size.width * 0.4
+        //     : MediaQuery.of(context).size.width * 0.25,
         child: Card(
           color: Colors.black,
           clipBehavior: Clip.antiAlias,
@@ -56,11 +57,12 @@ class BookListElement extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(8.0, 2.0, 0, 1.0),
+                  Expanded(
+                      child: ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
                     subtitle: subTitle,
                     title: title,
-                  ),
+                  )),
                 ],
               ),
             ]),

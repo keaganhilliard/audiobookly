@@ -10,6 +10,7 @@ class PlexAlbum extends PlexMetadata {
   int year;
   String parentThumb;
   String originallyAvailableAt;
+  int viewOffset;
   List<PlexTag> genre;
   List<PlexTag> collection;
 
@@ -22,6 +23,7 @@ class PlexAlbum extends PlexMetadata {
     year = json['year'];
     parentThumb = json['parentThumb'];
     originallyAvailableAt = json['originallyAvailableAt'];
+    viewOffset = json['viewOffset'];
     if (json['Genre'] != null) {
       genre = new List<PlexTag>();
       json['Genre'].forEach((v) {
@@ -40,6 +42,7 @@ class PlexAlbum extends PlexMetadata {
     data['year'] = this.year;
     data['parentThumb'] = this.parentThumb;
     data['originallyAvailableAt'] = this.originallyAvailableAt;
+    data['viewOffset'] = this.viewOffset;
     if (this.genre != null) {
       data['Genre'] = this.genre.map((v) => v.toJson()).toList();
     }
