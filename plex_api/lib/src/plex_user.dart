@@ -1,4 +1,4 @@
-class User {
+class PlexUser {
   int id;
   String uuid;
   String email;
@@ -16,7 +16,7 @@ class User {
   String forumId;
   bool rememberMe;
 
-  User(
+  PlexUser(
       {this.id,
       this.uuid,
       this.email,
@@ -34,7 +34,7 @@ class User {
       this.forumId,
       this.rememberMe});
 
-  User.fromJson(Map<String, dynamic> json) {
+  PlexUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     uuid = json['uuid'];
     email = json['email'];

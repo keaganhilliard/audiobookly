@@ -1,6 +1,8 @@
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
+import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LibrarySelect extends StatelessWidget {
   final LibraryListViewModel _model;
@@ -31,6 +33,7 @@ class LibrarySelect extends StatelessWidget {
                       onTap: () {
                         model.setLibrary(position);
                         Navigator.pop(context);
+                        // Provider.of<RootViewModel>(context).init();
                       },
                     );
                   },

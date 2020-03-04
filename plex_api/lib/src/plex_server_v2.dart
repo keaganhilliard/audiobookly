@@ -176,6 +176,10 @@ class PlexServerV2 {
     return await api.getAlbumsFromCollection(this, libraryKey, collectionKey);
   }
 
+  Future<List<PlexAlbum>> searchAlbums(String libraryKey, String search) async {
+    return await api.searchAlbums(this, libraryKey, search);
+  }
+
   Future<List<PlexTrack>> getTracks(String albumRatingKey) async {
     return await api.getTracks(this, albumRatingKey);
   }

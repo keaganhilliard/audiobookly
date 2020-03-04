@@ -69,6 +69,12 @@ class PlexServerCommunicator extends ServerCommunicator {
         .toList();
   }
 
+  Future<List<PlexMediaItem>> search(String search) async {
+    return (await _server.searchAlbums(_libraryKey, search))
+        ?.map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+        ?.toList();
+  }
+
   Future<PlexMediaItem> getAlbumFromId(String mediaId) async {
     return PlexMediaItem.fromPlexAlbum(
         await _server.getAlbumFromKey(mediaId), _server);
@@ -78,5 +84,9 @@ class PlexServerCommunicator extends ServerCommunicator {
       String mediaId, int position, int duration, dynamic state) async {
     return await _server.savePosition(
         mediaId, position, duration, state as PlexPlaybackState);
+  }
+
+  void stopRefresh() {
+    if (_refreshServer != null) _refreshServer.cancel();
   }
 }

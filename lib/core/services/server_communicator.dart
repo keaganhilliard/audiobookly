@@ -71,6 +71,7 @@ abstract class ServerCommunicator {
   Future<List<MediaItem>> getBooksFromAuthor(String authorId);
   Future<List<MediaItem>> getCollections();
   Future<List<MediaItem>> getBooksFromCollection(String collectionId);
+  Future<List<MediaItem>> search(String search);
   Future<MediaItem> getAlbumFromId(String mediaId);
   Future savePosition(String key, int position, int duration, dynamic state);
 }

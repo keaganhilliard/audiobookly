@@ -3,6 +3,7 @@ import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/ui/scaffold_without_footer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CollectionsView extends StatelessWidget {
   @override
@@ -11,7 +12,7 @@ class CollectionsView extends StatelessWidget {
       title: Text('Collections'),
       body: BaseWidget<CollectionsViewModel>(
           onModelReady: (model) => model.fetchCollections(),
-          model: CollectionsViewModel(),
+          model: CollectionsViewModel(communicator: Provider.of(context)),
           builder: (context, model, child) {
             if (model.busy)
               return Center(

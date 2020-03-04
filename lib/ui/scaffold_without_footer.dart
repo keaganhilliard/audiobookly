@@ -1,5 +1,5 @@
+import 'package:audiobookly/core/utils/book_search_delegate.dart';
 import 'package:flutter/material.dart';
-import 'package:audiobookly/core/utils/plex_search_delegate.dart';
 
 class ScaffoldWithoutFooter extends StatelessWidget {
   final Widget title;
@@ -18,7 +18,7 @@ class ScaffoldWithoutFooter extends StatelessWidget {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: PlexSearchDelegate(),
+                delegate: BookSearchDelegate(),
               );
             },
           ),

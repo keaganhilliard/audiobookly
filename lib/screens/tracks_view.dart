@@ -56,7 +56,7 @@ class TracksView extends StatelessWidget {
                                       },
                                       trailing:
                                           item.hasData && track == item.data
-                                              ? Icon(Icons.bookmark_border)
+                                              ? Icon(Icons.speaker)
                                               : null,
                                       title: Text(
                                         '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title == null || track.title.isEmpty ? '' : ' - ' + track.title}',

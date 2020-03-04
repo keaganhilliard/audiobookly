@@ -7,9 +7,9 @@ class AuthenticationService {
 
   AuthenticationService({PlexApi api}) : _api = api;
 
-  StreamController<User> _userController = StreamController<User>();
+  StreamController<PlexUser> _userController = StreamController<PlexUser>();
 
-  Stream<User> get user => _userController.stream;
+  Stream<PlexUser> get user => _userController.stream;
 
   Future<bool> login(String username, String password) async {
     var fetchedUser = await _api.login(username, password);

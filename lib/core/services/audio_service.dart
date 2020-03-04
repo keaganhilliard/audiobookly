@@ -1,24 +1,19 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:audiobookly/core/models/plex_media_item.dart';
-import 'package:audiobookly/core/services/downloader.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audiobookly/core/constants/media_controls.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'dart:io';
 import 'package:audiobookly/core/database/database.dart';
-import 'package:path/path.dart' as p;
 
 class AudioPlayerTask extends BackgroundAudioTask {
   var _completer = Completer();
@@ -33,7 +28,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
   Timer _updater;
   String _currentMedia;
   BookDatabase _db = BookDatabase();
-  Downloader dl = Downloader(); //('audiobookly_background_task');
   Timer _refreshServer;
 
   BasicPlaybackState _stateToBasicState(AudioPlaybackState state) {
@@ -220,21 +214,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
     } else {
       onStop();
     }
-  }
-
-  void handleDownload(List<PlexMediaItem> items) async {
-    var dir = await getExternalStorageDirectory();
-    (await dl.connect()).listen((event) {
-      print('Downloading ${event.id}: ${event.progress}%');
-    });
-    items.forEach((item) {
-      dl.downloadFile(
-          item.id,
-          p.join(dir.absolute.path, 'cache', item.artist, item.album),
-          item.title ??
-              item.key +
-                  item.id.substring(item.id.lastIndexOf('.')).split('?')[0]);
-    });
   }
 
   void updateProgress(int position, PlexPlaybackState state,
@@ -500,7 +479,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
 }
 
 Future startAudioService() async {
-  await AudioService.start(
+  return await AudioService.start(
     backgroundTaskEntrypoint: _audioPlayerTaskEntrypoint,
     androidNotificationChannelName: 'Audiobookly',
     notificationColor: Colors.deepPurple.value,

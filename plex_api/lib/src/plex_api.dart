@@ -18,7 +18,7 @@ class PlexApi {
   String authToken;
   Uri loginUrl = Uri.https('plex.tv', '/users/sign_in.json');
   PlexHeaders headers;
-  User user;
+  PlexUser user;
   PlexServer server;
 
   PlexApi({@required this.headers});
@@ -27,7 +27,7 @@ class PlexApi {
     return this.user != null;
   }
 
-  Future<User> authenticate(String authToken) async {
+  Future<PlexUser> authenticate(String authToken) async {
     headers.token = authToken;
     http.Response response = await http.get(
         Uri.https('plex.tv', '/users/account.json'),
@@ -38,7 +38,7 @@ class PlexApi {
     return user;
   }
 
-  Future<User> login(String username, String password) async {
+  Future<PlexUser> login(String username, String password) async {
     user = null;
     http.Response response =
         await http.post(loginUrl, headers: headers.toMap(), body: '''
@@ -198,6 +198,24 @@ class PlexApi {
     PlexCollectionsResponse collectionsResponse =
         PlexCollectionsResponse.fromJson(jsonDecode(response.body));
     return collectionsResponse.mediaContainer.directory;
+  }
+
+  Future<List<PlexAlbum>> searchAlbums(
+      PlexServerV2 server, String libraryKey, String search) async {
+    http.Response albumTitleResponse = await http.get(
+        '${server.mainConnection.uri}/library/sections/$libraryKey/all?album.title=$search&type=9',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse albumSections =
+        PlexMetadataResponse.fromJson(jsonDecode(albumTitleResponse.body));
+    http.Response artistTitleResponse = await http.get(
+        '${server.mainConnection.uri}/library/sections/$libraryKey/all?artist.title=$search&type=9',
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse artistSections =
+        PlexMetadataResponse.fromJson(jsonDecode(artistTitleResponse.body));
+    return [
+      ...albumSections.mediaContainer.metadata ?? [],
+      ...artistSections.mediaContainer.metadata ?? []
+    ];
   }
 
   String playbackStateToString(PlexPlaybackState state) {

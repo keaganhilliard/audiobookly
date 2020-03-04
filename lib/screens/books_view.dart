@@ -1,11 +1,7 @@
-import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
-import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/ui/book_grid_item.dart';
 import 'package:flutter/material.dart';
-import 'package:plex_api/plex_api.dart';
 import 'package:provider/provider.dart';
 import 'package:audiobookly/core/viewmodels/books_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
@@ -31,13 +27,6 @@ class BooksView extends StatelessWidget {
           model: BooksViewModel(communicator: communicator),
           onModelReady: (model) {
             model.getAlbums(mediaId);
-            // if (collectionFastKey != null) {
-            //   model.fetchAlbumsFromCollection(_library.key, collectionFastKey);
-            // } else if (artistId != null) {
-            //   model.fetchAlbumsByArtist(artistId);
-            // } else {
-            //   model.fetchAllAlbums(_library.key);
-            // }
           },
           builder: (context, model, child) {
             if (model.busy)

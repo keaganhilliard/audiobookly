@@ -1,7 +1,7 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
+import 'package:audiobookly/core/viewmodels/book_row_view_model.dart';
 import 'package:flutter/foundation.dart';
 
 class HomeViewModel extends BaseModel {
@@ -10,28 +10,22 @@ class HomeViewModel extends BaseModel {
   HomeViewModel({@required ServerCommunicator communicator})
       : _communicator = communicator;
 
-  List<MediaItem> recentlyAdded = [];
-  List<MediaItem> recentlyPlayed = [];
+  BookRowViewModel recentlyAddedModel;
+  BookRowViewModel recentlyPlayedModel;
 
-  Future<void> getRecentlyAdded() async {
-    setBusy(true);
-    recentlyAdded =
-        await _communicator.getChildren(AudioPlayerTask.RECENTLY_ADDED);
-    setBusy(false);
-  }
-
-  Future<void> getRecentPlayed() async {
-    setBusy(true);
-    recentlyPlayed =
-        await _communicator.getChildren(AudioPlayerTask.RECENTLY_PLAYED);
-    setBusy(false);
+  Future init() async {
+    recentlyAddedModel = BookRowViewModel(
+      communicator: _communicator,
+      parentMediaId: AudioPlayerTask.RECENTLY_ADDED,
+    );
+    recentlyPlayedModel = BookRowViewModel(
+      communicator: _communicator,
+      parentMediaId: AudioPlayerTask.RECENTLY_PLAYED,
+    );
   }
 
   Future<void> onRefresh() async {
-    recentlyAdded =
-        await _communicator.getChildren(AudioPlayerTask.RECENTLY_ADDED);
-    recentlyPlayed =
-        await _communicator.getChildren(AudioPlayerTask.RECENTLY_PLAYED);
-    notifyListeners();
+    await recentlyAddedModel?.refresh();
+    await recentlyPlayedModel?.refresh();
   }
 }

@@ -1,12 +1,12 @@
 import 'package:plex_api/plex_api.dart';
 
 class PlexLoginResponse {
-  User user;
+  PlexUser user;
 
   PlexLoginResponse({this.user});
 
   PlexLoginResponse.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? new PlexUser.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
