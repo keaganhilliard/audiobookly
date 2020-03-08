@@ -20,9 +20,9 @@ class BookViewModel extends BaseModel {
     setBusy(true);
     if (!await AudioService.running) await startAudioService();
     await AudioService.playFromMediaId(bookId);
-    downloadSub = (await dl.connect('book_view_port')).listen((event) {
-      print('BookView: ${event.id}');
-    });
+    // downloadSub = (await dl.connect('book_view_port')).listen((event) {
+    //   print('BookView: ${event.id}');
+    // });
     setBusy(false);
   }
 

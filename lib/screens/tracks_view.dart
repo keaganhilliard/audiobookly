@@ -25,7 +25,10 @@ class TracksView extends StatelessWidget {
                         ),
                         IconButton(
                           icon: Icon(Icons.file_download),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (snapshot.hasData)
+                              model.downloadAllTracks(snapshot.data);
+                          },
                         )
                       ],
                     ),
