@@ -1,5 +1,16 @@
+import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/utils/book_search_delegate.dart';
+import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
+import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
+import 'package:audiobookly/screens/library_select.dart';
+import 'package:audiobookly/screens/server_select.dart';
 import 'package:flutter/material.dart';
+import 'package:plex_api/plex_api.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:device_info/device_info.dart';
+import 'dart:io';
 
 class ScaffoldWithoutFooter extends StatelessWidget {
   final Widget title;
@@ -24,7 +35,99 @@ class ScaffoldWithoutFooter extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () async {
+              PlexApi api;
+              var _prefs = await SharedPreferences.getInstance();
+              String authToken = _prefs.getString(SharedPrefStrings.PLEX_TOKEN);
+              String serverId = _prefs.getString(SharedPrefStrings.PLEX_SERVER);
+              String libraryKey =
+                  _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
+              DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+              PlexHeaders headers;
+
+              if (Platform.isAndroid) {
+                AndroidDeviceInfo androidDeviceInfo =
+                    await deviceInfo.androidInfo;
+                headers = PlexHeaders(
+                  clientIdentifier: androidDeviceInfo.androidId,
+                  device: androidDeviceInfo.model,
+                  product: 'Audiobookly',
+                  platform: 'Android',
+                  platformVersion: androidDeviceInfo.version.release,
+                );
+              }
+
+              if (authToken != null) {
+                headers.token = authToken;
+                api = PlexApi(headers: headers);
+              }
+
+              showModalBottomSheet(
+                  context: context,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15.0),
+                      topRight: Radius.circular(15.0),
+                      // bottomLeft: Radius.circular(15.0),
+                      // bottomRight: Radius.circular(15.0),
+                    ),
+                  ),
+                  builder: (context) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        DropdownButton<String>(
+                          onChanged: (value) {
+                            print(value);
+                          },
+                          value: 'Plex',
+                          items: [
+                            DropdownMenuItem(
+                              child: ListTile(
+                                  leading: Icon(Icons.play_arrow),
+                                  title: Text('Plex')),
+                              value: 'Plex',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Emby'),
+                              value: 'Emby',
+                            ),
+                          ],
+                        ),
+                        RaisedButton(
+                          color: Theme.of(context).accentColor,
+                          child: Text('Select Server'),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ServerSelect(
+                                    model: ServerListViewModel(api: api),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                        RaisedButton(
+                          color: Theme.of(context).accentColor,
+                          child: Text('Select Library'),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LibrarySelect(
+                                          model: LibraryListViewModel(
+                                              server: Provider.of(context)),
+                                        )));
+                          },
+                        )
+                      ],
+                    );
+                  });
+            },
           )
         ],
       ),

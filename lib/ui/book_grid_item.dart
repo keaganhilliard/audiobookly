@@ -20,7 +20,7 @@ class BookGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 195,
+              height: 175,
               width: 200,
               child: CachedNetworkImage(
                 imageUrl: thumbnailUrl,

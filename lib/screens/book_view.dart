@@ -1,5 +1,7 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/utils/utils.dart';
 import 'package:audiobookly/screens/tracks_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -86,15 +88,40 @@ class BookView extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.4,
                           child: Card(
                             clipBehavior: Clip.antiAlias,
-                            child: Hero(
-                              tag: item?.title ?? '',
-                              child: CachedNetworkImage(
-                                fit: BoxFit.scaleDown,
-                                imageUrl: item?.artUri,
-                                placeholder: (context, url) => Center(
-                                  child: CircularProgressIndicator(),
+                            child: Stack(
+                              children: [
+                                CachedNetworkImage(
+                                  fit: BoxFit.scaleDown,
+                                  imageUrl: item?.artUri,
+                                  placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
                                 ),
-                              ),
+                                Positioned(
+                                  bottom: 5.0,
+                                  right: 5.0,
+                                  child: IconButton(
+                                    color: Colors.grey[400],
+                                    icon: Icon(Icons.info_outline),
+                                    onPressed: () async {
+                                      print(item.title);
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(18.0),
+                                                child: Text(model
+                                                    .book.displayDescription),
+                                              ),
+                                            );
+                                          });
+                                      print(model.book.displayDescription);
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -117,11 +144,11 @@ class BookView extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   item?.album ?? '',
-                                  style: Theme.of(context).textTheme.headline6,
+                                  style: Theme.of(context).textTheme.headline,
                                 ),
                                 Text(
                                   item?.artist ?? '',
-                                  style: Theme.of(context).textTheme.subtitle2,
+                                  style: Theme.of(context).textTheme.subtitle,
                                 ),
                                 StreamBuilder<List<MediaItem>>(
                                     stream: AudioService.queueStream,
@@ -133,7 +160,7 @@ class BookView extends StatelessWidget {
                                             : 'Calculating...',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .subtitle2,
+                                            .subtitle,
                                       );
                                     }),
                               ],

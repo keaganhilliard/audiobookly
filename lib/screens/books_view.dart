@@ -1,6 +1,7 @@
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/ui/book_grid_item.dart';
+import 'package:audiobookly/ui/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audiobookly/core/viewmodels/books_view_model.dart';
@@ -36,10 +37,7 @@ class BooksView extends StatelessWidget {
             else {
               return RefreshIndicator(
                 onRefresh: () => model.onRefresh(mediaId),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.7,
-                  padding: EdgeInsets.all(10.0),
+                child: ResponsiveGridView(
                   children: model.books.map((book) {
                     return BookGridItem(
                       onTap: () {

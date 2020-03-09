@@ -19,8 +19,8 @@ import 'dart:async';
 class RootViewModel extends BaseModel {
   PlexApi api;
   SharedPreferences _prefs;
-  PlexServerV2 server;
-  PlexLibrary library;
+  // PlexServerV2 server;
+  // PlexLibrary library;
   ServerCommunicator communicator;
 
   RootViewModel();
@@ -100,18 +100,18 @@ class RootViewModel extends BaseModel {
               LibrarySelect(model: LibraryListViewModel(server: server)),
         ));
       } else {
-        List<PlexServerV2> servers = await api.getServersV2();
-        PlexServerV2 server = servers.firstWhere(
-            (server) => server.clientIdentifier == serverId,
-            orElse: () => null);
-        List<PlexLibrary> libraries = await server.getLibraries();
-        PlexLibrary library = libraries.firstWhere(
-            (library) => library.key == libraryKey,
-            orElse: () => null);
-        this.server = server;
-        this.library = library;
-        communicator =
-            PlexServerCommunicator(server: server, libraryKey: libraryKey);
+        // List<PlexServerV2> servers = await api.getServersV2();
+        // PlexServerV2 server = servers.firstWhere(
+        //     (server) => server.clientIdentifier == serverId,
+        //     orElse: () => null);
+        // List<PlexLibrary> libraries = await server.getLibraries();
+        // PlexLibrary library = libraries.firstWhere(
+        //     (library) => library.key == libraryKey,
+        //     orElse: () => null);
+        // this.server = server;
+        // this.library = library;
+        communicator = PlexServerCommunicator();
+        await communicator.getServerAndLibrary();
         setBusy(false);
       }
     }

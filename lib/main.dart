@@ -141,12 +141,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   nowPlaying ? EdgeInsets.only(bottom: 40) : EdgeInsets.only(),
               child: MultiProvider(
                 providers: [
-                  Provider.value(
-                    value: model.server,
-                  ),
-                  Provider.value(
-                    value: model.library,
-                  ),
+                  // Provider.value(
+                  //   value: model.server,
+                  // ),
+                  // Provider.value(
+                  //   value: model.library,
+                  // ),
                   Provider.value(
                     value: model.communicator,
                   )

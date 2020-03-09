@@ -1,38 +1,44 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/models/library.dart';
 
 abstract class ServerCommunicator {
-  Future<List<MediaItem>> getChildren(String parentMediaId) async {
+  Future<List<AudiobooklyMediaItem>> getChildren(String parentMediaId) async {
     var pieces = parentMediaId.split('/');
     switch (pieces[0]) {
       case AudioService.MEDIA_ROOT_ID:
-        var items = <MediaItem>[
-          MediaItem(
+        var items = <AudiobooklyMediaItem>[
+          AudiobooklyMediaItem(
+            serverKey: MediaIds.RECENTLY_PLAYED,
             id: MediaIds.RECENTLY_PLAYED,
             album: '',
             title: 'In Progress',
             playable: false,
           ),
-          MediaItem(
+          AudiobooklyMediaItem(
+            serverKey: MediaIds.RECENTLY_ADDED,
             id: MediaIds.RECENTLY_ADDED,
             album: '',
             title: 'Recently Added',
             playable: false,
           ),
-          MediaItem(
+          AudiobooklyMediaItem(
+            serverKey: MediaIds.AUTHORS_ID,
             id: MediaIds.AUTHORS_ID,
             album: '',
             title: 'Authors',
             playable: false,
           ),
-          MediaItem(
+          AudiobooklyMediaItem(
+            serverKey: MediaIds.BOOKS_ID,
             id: MediaIds.BOOKS_ID,
             album: '',
             title: 'All Books',
             playable: false,
           ),
-          MediaItem(
+          AudiobooklyMediaItem(
+            serverKey: MediaIds.COLLECTIONS_ID,
             id: MediaIds.COLLECTIONS_ID,
             album: '',
             title: 'Collections',
@@ -61,19 +67,21 @@ abstract class ServerCommunicator {
       case MediaIds.RECENTLY_ADDED:
         return await getRecentlyAdded();
       default:
-        return Future.value(<MediaItem>[]);
+        return Future.value(<AudiobooklyMediaItem>[]);
     }
   }
 
-  Future<List<MediaItem>> getRecentlyAdded();
-  Future<List<MediaItem>> getRecentPlayed();
-  Future<List<MediaItem>> getAllBooks();
-  Future<List<MediaItem>> getAuthors();
-  Future<List<MediaItem>> getBooksFromAuthor(String authorId);
-  Future<List<MediaItem>> getCollections();
-  Future<List<MediaItem>> getBooksFromCollection(String collectionId);
-  Future<List<MediaItem>> search(String search);
+  Future<List<AudiobooklyMediaItem>> getRecentlyAdded();
+  Future<List<AudiobooklyMediaItem>> getRecentPlayed();
+  Future<List<AudiobooklyMediaItem>> getAllBooks();
+  Future<List<AudiobooklyMediaItem>> getAuthors();
+  Future<List<AudiobooklyMediaItem>> getBooksFromAuthor(String authorId);
+  Future<List<AudiobooklyMediaItem>> getCollections();
+  Future<List<AudiobooklyMediaItem>> getBooksFromCollection(
+      String collectionId);
+  Future<List<AudiobooklyMediaItem>> search(String search);
   // Future<List<Library>> getLibraries();
-  Future<MediaItem> getAlbumFromId(String mediaId);
+  Future<AudiobooklyMediaItem> getAlbumFromId(String mediaId);
   Future savePosition(String key, int position, int duration, dynamic state);
+  Future getServerAndLibrary();
 }

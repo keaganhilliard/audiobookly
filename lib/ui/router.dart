@@ -14,7 +14,8 @@ class Router {
       case Routes.Home:
         return MaterialPageRoute(builder: (_) => HomeView());
       case Routes.Login:
-        return MaterialPageRoute(builder: (_) => LoginView());
+        return MaterialPageRoute(
+            builder: (_) => LoginView(url: settings.arguments));
       case Routes.Authors:
         return MaterialPageRoute(builder: (_) => AuthorsView());
       case Routes.Books:

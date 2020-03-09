@@ -1,25 +1,39 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/services/downloader.dart';
+import 'package:audiobookly/core/services/plex_server_communicator.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookViewModel extends BaseModel {
+  ServerCommunicator communicator;
   BookViewModel();
 
   Downloader dl = Downloader();
 
   StreamSubscription downloadSub;
+  AudiobooklyMediaItem book;
+
+  Future createCommunicator() async {
+    communicator = PlexServerCommunicator();
+    await communicator.getServerAndLibrary();
+  }
 
   Future init(String bookId) async {
+    await createCommunicator();
     if (bookId == null) return;
     setBusy(true);
     if (!await AudioService.running) await startAudioService();
     await AudioService.playFromMediaId(bookId);
+    await createCommunicator();
+    book = await communicator.getAlbumFromId(bookId);
     // downloadSub = (await dl.connect('book_view_port')).listen((event) {
     //   print('BookView: ${event.id}');
     // });
@@ -38,7 +52,9 @@ class BookViewModel extends BaseModel {
 
   @override
   void dispose() {
-    downloadSub.cancel();
+    if (downloadSub == null) {
+      downloadSub.cancel();
+    }
     super.dispose();
   }
 
