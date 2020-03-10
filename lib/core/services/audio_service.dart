@@ -294,15 +294,18 @@ class AudioPlayerTask extends BackgroundAudioTask {
   @override
   Future onSeekTo(int position) async {
     int newPosition = setQueueIndexFromPosition(position);
-    _skip(0, newPosition);
-    // await _audioPlayer.seek(Duration(milliseconds: position));
+    int index = _queueIndex;
+    if (index != _queueIndex)
+      _skip(0, newPosition);
+    else
+      await _audioPlayer.seek(Duration(milliseconds: newPosition));
   }
 
   int setQueueIndexFromPosition(int position) {
     int index = 0;
     int finalIndex = 0;
     int trackPosition = 0;
-    int currentPosition = 0;
+    int currentPosition = position ?? 0;
     _queue.forEach((track) {
       if (currentPosition != 0 && currentPosition - track.duration <= 0) {
         finalIndex = index;
@@ -313,6 +316,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
       }
       index++;
     });
+    print(_queueIndex);
     _queueIndex = finalIndex;
     return trackPosition;
   }

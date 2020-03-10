@@ -13,71 +13,77 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Text(
-                  'Server Type',
-                  style: Theme.of(context).textTheme.subtitle,
+      padding: const EdgeInsets.only(
+        left: 24.0,
+        right: 24.0,
+        top: 24.0,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Text(
+                    'Server Type',
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
                 ),
-              ),
-              DropdownButton<String>(
-                focusColor: Theme.of(context).accentColor,
-                onChanged: (value) {
-                  print(value);
-                },
-                value: 'Plex',
-                items: [
-                  DropdownMenuItem(
-                    child: Text('Plex'),
-                    value: 'Plex',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Emby'),
-                    value: 'Emby',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          RaisedButton(
-            color: Theme.of(context).accentColor,
-            child: Text('Select Server'),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ServerSelect(
-                      model: ServerListViewModel(api: null),
-                    );
+                DropdownButton<String>(
+                  focusColor: Theme.of(context).accentColor,
+                  onChanged: (value) {
+                    print(value);
                   },
+                  value: 'Plex',
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('Plex'),
+                      value: 'Plex',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Emby'),
+                      value: 'Emby',
+                    ),
+                  ],
                 ),
-              );
-            },
-          ),
-          RaisedButton(
-            color: Theme.of(context).accentColor,
-            child: Text('Select Library'),
-            onPressed: () {
-              Navigator.pushReplacement(
+              ],
+            ),
+            RaisedButton(
+              color: Theme.of(context).accentColor,
+              child: Text('Select Server'),
+              onPressed: () {
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => LibrarySelect(
-                            model: LibraryListViewModel(
-                                server: Provider.of(context)),
-                          )));
-            },
-          )
-        ],
+                    builder: (context) {
+                      return ServerSelect(
+                        model: ServerListViewModel(api: null),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            RaisedButton(
+              color: Theme.of(context).accentColor,
+              child: Text('Select Library'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LibrarySelect(
+                              model: LibraryListViewModel(
+                                  server: Provider.of(context)),
+                            )));
+              },
+            )
+          ],
+        ),
       ),
     );
     ;
