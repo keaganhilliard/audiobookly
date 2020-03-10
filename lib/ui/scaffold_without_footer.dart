@@ -5,6 +5,7 @@ import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
 import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
 import 'package:audiobookly/screens/library_select.dart';
 import 'package:audiobookly/screens/server_select.dart';
+import 'package:audiobookly/screens/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:provider/provider.dart';
@@ -64,68 +65,18 @@ class ScaffoldWithoutFooter extends StatelessWidget {
 
               showModalBottomSheet(
                   context: context,
+                  useRootNavigator: true,
                   clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15.0),
                       topRight: Radius.circular(15.0),
-                      // bottomLeft: Radius.circular(15.0),
-                      // bottomRight: Radius.circular(15.0),
+                      bottomLeft: Radius.circular(15.0),
+                      bottomRight: Radius.circular(15.0),
                     ),
                   ),
                   builder: (context) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        DropdownButton<String>(
-                          onChanged: (value) {
-                            print(value);
-                          },
-                          value: 'Plex',
-                          items: [
-                            DropdownMenuItem(
-                              child: ListTile(
-                                  leading: Icon(Icons.play_arrow),
-                                  title: Text('Plex')),
-                              value: 'Plex',
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Emby'),
-                              value: 'Emby',
-                            ),
-                          ],
-                        ),
-                        RaisedButton(
-                          color: Theme.of(context).accentColor,
-                          child: Text('Select Server'),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ServerSelect(
-                                    model: ServerListViewModel(api: api),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                        RaisedButton(
-                          color: Theme.of(context).accentColor,
-                          child: Text('Select Library'),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LibrarySelect(
-                                          model: LibraryListViewModel(
-                                              server: Provider.of(context)),
-                                        )));
-                          },
-                        )
-                      ],
-                    );
+                    return SettingsView();
                   });
             },
           )

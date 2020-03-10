@@ -81,6 +81,7 @@ abstract class ServerCommunicator {
       String collectionId);
   Future<List<AudiobooklyMediaItem>> search(String search);
   // Future<List<Library>> getLibraries();
+  Future<List<AudiobooklyMediaItem>> getTracksForBook(String bookId);
   Future<AudiobooklyMediaItem> getAlbumFromId(String mediaId);
   Future savePosition(String key, int position, int duration, dynamic state);
   Future getServerAndLibrary();

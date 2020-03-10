@@ -125,6 +125,12 @@ class PlexServerCommunicator extends ServerCommunicator {
         mediaId, position, duration, state as PlexPlaybackState);
   }
 
+  Future<List<PlexMediaItem>> getTracksForBook(String bookId) async {
+    return (await _server.getTracks(bookId))
+        .map((track) => PlexMediaItem.fromPlexTrack(track, _server))
+        .toList();
+  }
+
   void stopRefresh() {
     if (_refreshServer != null) _refreshServer.cancel();
   }

@@ -197,7 +197,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
   int _queueIndex = -1;
   bool get hasNext => _queueIndex + 1 < _queue.length;
   bool get hasPrevious => _queueIndex > 0;
-  PlexMediaItem get mediaItem => _queue[_queueIndex];
+  PlexMediaItem _mediaItem;
+  PlexMediaItem get mediaItem => _mediaItem;
   int get totalDuration =>
       _queue.fold(0, (total, item) => total + item.duration);
   int get currentPosition =>
@@ -245,10 +246,11 @@ class AudioPlayerTask extends BackgroundAudioTask {
     // Load next item
     _queueIndex = newPos;
     AudioServiceBackground.setMediaItem(mediaItem);
+    var currentQueueItem = _queue[_queueIndex];
     _skipState = offset > 0
         ? BasicPlaybackState.skippingToNext
         : BasicPlaybackState.skippingToPrevious;
-    await _audioPlayer.setUrl(mediaItem.id);
+    await _audioPlayer.setUrl(currentQueueItem.id);
     if (trackPosition != null)
       await _audioPlayer.seek(Duration(milliseconds: trackPosition));
     _skipState = null;
@@ -262,29 +264,57 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future onFastForward() async {
-    int desiredPosition =
-        _audioPlayer.playbackEvent.position.inMilliseconds + (30 * 1000);
-    if (desiredPosition > mediaItem.duration) {
-      _skip(1, desiredPosition - mediaItem.duration);
-    } else {
-      await onSeekTo(desiredPosition);
-    }
+    // int desiredPosition =
+    //     _audioPlayer.playbackEvent.position.inMilliseconds + (30 * 1000);
+    // if (desiredPosition > mediaItem.duration) {
+    //   _skip(1, desiredPosition - mediaItem.duration);
+    // } else {
+    //   await onSeekTo(desiredPosition);
+    // }
+    await onSeekTo(currentPosition + (30 * 1000));
   }
 
   @override
   Future onRewind() async {
-    int desiredPosition =
-        _audioPlayer.playbackEvent.position.inMilliseconds - (30 * 1000);
-    if (desiredPosition < 0) {
-      if (_queueIndex == 0)
-        onSeekTo(0);
-      else {
-        MediaItem newItem = _queue[_queueIndex - 1];
-        _skip(-1, newItem.duration + desiredPosition);
+    // int desiredPosition =
+    //     _audioPlayer.playbackEvent.position.inMilliseconds - (30 * 1000);
+    // if (desiredPosition < 0) {
+    //   if (_queueIndex == 0)
+    //     onSeekTo(0);
+    //   else {
+    //     MediaItem newItem = _queue[_queueIndex - 1];
+    //     _skip(-1, newItem.duration + desiredPosition);
+    //   }
+    // } else {
+    //   await onSeekTo(desiredPosition);
+    // }
+    await onSeekTo(currentPosition - (30 * 1000));
+  }
+
+  @override
+  Future onSeekTo(int position) async {
+    int newPosition = setQueueIndexFromPosition(position);
+    _skip(0, newPosition);
+    // await _audioPlayer.seek(Duration(milliseconds: position));
+  }
+
+  int setQueueIndexFromPosition(int position) {
+    int index = 0;
+    int finalIndex = 0;
+    int trackPosition = 0;
+    int currentPosition = 0;
+    _queue.forEach((track) {
+      if (currentPosition != 0 && currentPosition - track.duration <= 0) {
+        finalIndex = index;
+        trackPosition = currentPosition;
+        currentPosition = 0;
+      } else if (currentPosition != 0) {
+        currentPosition -= track.duration;
       }
-    } else {
-      await onSeekTo(desiredPosition);
-    }
+      index++;
+    });
+    _queueIndex = finalIndex;
+    return trackPosition;
   }
 
   @override
@@ -372,11 +402,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   @override
-  Future onSeekTo(int position) async {
-    await _audioPlayer.seek(Duration(milliseconds: position));
-  }
-
-  @override
   Future<void> onPlay() async {
     print(_queue);
     if (_skipState == null && mediaItem != null) {
@@ -430,6 +455,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
     }).toList();
     // handleDownload(queue.sublist(lastPlayedIndex + 1, lastPlayedIndex + 2));
     setQueue(queue: queue, startingIndex: lastPlayedIndex);
+    _mediaItem = PlexMediaItem.fromPlexAlbum(album, _server, totalDuration);
+    print('Setting duration: ${_mediaItem.duration}');
+    AudioServiceBackground.setMediaItem(mediaItem);
     await _skip(0, trackPosition);
   }
 
@@ -437,13 +465,15 @@ class AudioPlayerTask extends BackgroundAudioTask {
     _queue = queue;
     if (startingIndex != null) _queueIndex = startingIndex;
     AudioServiceBackground.setQueue(_queue);
-    AudioServiceBackground.setMediaItem(mediaItem);
   }
 
   void _setState(
       {@required BasicPlaybackState state, int position, double speed}) {
+    print('Current position: $currentPosition');
+    print('Current media item duration: $totalDuration');
     if (position == null) {
-      position = _audioPlayer.playbackEvent.position.inMilliseconds;
+      position =
+          currentPosition ?? _audioPlayer.playbackEvent.position.inMilliseconds;
     }
     AudioServiceBackground.setState(
       controls: getControls(state),
@@ -456,7 +486,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
         MediaAction.rewind
       ],
       basicState: state,
-      position: position,
+      position: currentPosition,
       speed: speed ?? 1.0,
     );
   }

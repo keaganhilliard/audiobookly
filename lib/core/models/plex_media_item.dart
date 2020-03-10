@@ -29,7 +29,8 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           artUri: server.getUrlWithToken(artist.thumb),
           playable: false,
         );
-  PlexMediaItem.fromPlexAlbum(PlexAlbum album, PlexServerV2 server)
+  PlexMediaItem.fromPlexAlbum(PlexAlbum album, PlexServerV2 server,
+      [int duration])
       : key = album.ratingKey,
         super(
           serverKey: album.ratingKey,
@@ -39,6 +40,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           artist: album.parentTitle,
           artUri: server.getUrlWithToken(album.thumb),
           displayDescription: album.summary,
+          duration: duration,
         );
   PlexMediaItem.fromPlexCollection(
       PlexCollection collection, PlexServerV2 server)

@@ -1,10 +1,15 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/viewmodels/tracks_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/core/utils/utils.dart';
 
 class TracksView extends StatelessWidget {
+  final List<AudiobooklyMediaItem> items;
+
+  TracksView({this.items});
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<TracksViewModel>(
