@@ -173,7 +173,7 @@ class PlexApi {
   Future<List<PlexAlbum>> getAlbumsFromCollection(
       PlexServerV2 server, String libraryKey, String collectionKey) async {
     http.Response response = await http.get(
-        '${server.mainConnection.uri}/library/sections/$libraryKey/all?collection=$collectionKey&type=9',
+        '${server.mainConnection.uri}/library/sections/$libraryKey/all?collection=$collectionKey&type=9&sort=originallyAvailableAt',
         headers: headers.toMap(overrideToken: server.accessToken));
     PlexMetadataResponse sections =
         PlexMetadataResponse.fromJson(jsonDecode(response.body));
