@@ -13,6 +13,8 @@ class PlexServerCommunicator extends ServerCommunicator {
   PlexServerV2 _server;
   String _libraryKey;
   Timer _refreshServer;
+  bool needsRefresh = false;
+  SharedPreferences prefs;
 
   PlexServerCommunicator({PlexServerV2 server, String libraryKey})
       : _server = server,
@@ -20,21 +22,15 @@ class PlexServerCommunicator extends ServerCommunicator {
     setRefreshTimer();
   }
 
-  Future setRefreshTimer() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) async {
-      String serverId = prefs.getString(SharedPrefStrings.PLEX_SERVER);
-      _server = (await _server.api.getServersV2()).firstWhere(
-          (server) => server.clientIdentifier == serverId,
-          orElse: () => null);
-      print(
-          'Server ${_server.clientIdentifier}:${_server.publicAddressMatches}');
+  void setRefreshTimer() {
+    _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) {
+      needsRefresh = true;
     });
   }
 
   Future getServerAndLibrary() async {
     if (_server == null || _libraryKey == null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs = await SharedPreferences.getInstance();
       String authToken = prefs.getString(SharedPrefStrings.PLEX_TOKEN);
       String serverId = prefs.getString(SharedPrefStrings.PLEX_SERVER);
       _libraryKey = prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
@@ -56,17 +52,30 @@ class PlexServerCommunicator extends ServerCommunicator {
       PlexApi api = PlexApi(headers: headers);
       _server = (await api.getServersV2())
           .firstWhere((server) => server.clientIdentifier == serverId);
-      await setRefreshTimer();
+      setRefreshTimer();
+    }
+  }
+
+  Future refreshServer() async {
+    if (needsRefresh) {
+      if (prefs == null) prefs = await SharedPreferences.getInstance();
+      String serverId = prefs.getString(SharedPrefStrings.PLEX_SERVER);
+      _server = (await _server.api.getServersV2()).firstWhere(
+          (server) => server.clientIdentifier == serverId,
+          orElse: () => null);
+      if (_server != null) needsRefresh = false;
     }
   }
 
   Future<List<PlexMediaItem>> getRecentlyAdded() async {
+    await refreshServer();
     return (await _server.getRecentlyAdded(_libraryKey))
         .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getRecentPlayed() async {
+    await refreshServer();
     List<PlexMediaItem> items = (await _server.getRecentlyViewed(_libraryKey))
         .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
         .toList();
@@ -77,24 +86,28 @@ class PlexServerCommunicator extends ServerCommunicator {
   }
 
   Future<List<PlexMediaItem>> getAllBooks() async {
+    await refreshServer();
     return (await _server.getAllAlbums(_libraryKey))
         .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getAuthors() async {
+    await refreshServer();
     return (await _server.getArtists(_libraryKey))
         .map((artist) => PlexMediaItem.fromPlexArtist(artist, _server))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getBooksFromAuthor(String authorId) async {
+    await refreshServer();
     return (await _server.getAlbumsFromArtist(authorId))
         .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getCollections() async {
+    await refreshServer();
     return (await _server.getCollections(_libraryKey))
         .map((collection) =>
             PlexMediaItem.fromPlexCollection(collection, _server))
@@ -103,18 +116,21 @@ class PlexServerCommunicator extends ServerCommunicator {
 
   Future<List<PlexMediaItem>> getBooksFromCollection(
       String collectionId) async {
+    await refreshServer();
     return (await _server.getAlbumsFromCollection(_libraryKey, collectionId))
         .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
         .toList();
   }
 
   Future<List<PlexMediaItem>> search(String search) async {
+    await refreshServer();
     return (await _server.searchAlbums(_libraryKey, search))
         ?.map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
         ?.toList();
   }
 
   Future<PlexMediaItem> getAlbumFromId(String mediaId) async {
+    await refreshServer();
     return PlexMediaItem.fromPlexAlbum(
         await _server.getAlbumFromKey(mediaId), _server);
   }
@@ -126,6 +142,7 @@ class PlexServerCommunicator extends ServerCommunicator {
   }
 
   Future<List<PlexMediaItem>> getTracksForBook(String bookId) async {
+    await refreshServer();
     return (await _server.getTracks(bookId))
         .map((track) => PlexMediaItem.fromPlexTrack(track, _server))
         .toList();

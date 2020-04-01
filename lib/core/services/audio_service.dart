@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
+import 'package:audiobookly/core/services/download_service.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:flutter/foundation.dart';
@@ -29,6 +31,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   String _currentMedia;
   BookDatabase _db = BookDatabase();
   Timer _refreshServer;
+  DownloadService downloadService = DownloadService();
 
   BasicPlaybackState _stateToBasicState(AudioPlaybackState state) {
     switch (state) {
@@ -94,11 +97,11 @@ class AudioPlayerTask extends BackgroundAudioTask {
         (server) => server.clientIdentifier == serverId,
         orElse: () => null);
     _server = server;
-    _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) {
-      PlexServerV2 server = servers.firstWhere(
-          (server) => server.clientIdentifier == serverId,
+    _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) async {
+      PlexServerV2 server = (await _api.getServersV2()).firstWhere(
+          (server) => _server.clientIdentifier == serverId,
           orElse: () => null);
-      _server = server;
+      if (server != null) _server = server;
     });
   }
 
@@ -197,8 +200,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
   int _queueIndex = -1;
   bool get hasNext => _queueIndex + 1 < _queue.length;
   bool get hasPrevious => _queueIndex > 0;
-  PlexMediaItem _mediaItem;
-  PlexMediaItem get mediaItem => _mediaItem;
+  AudiobooklyMediaItem _mediaItem;
+  AudiobooklyMediaItem get mediaItem => _mediaItem;
+  AudiobooklyMediaItem get currentQueueItem => _queue[_queueIndex];
   int get totalDuration =>
       _queue.fold(0, (total, item) => total + item.duration);
   int get currentPosition =>
@@ -223,8 +227,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
         PlexServerCommunicator(server: _server, libraryKey: _libraryKey);
     communicator.savePosition(_currentMedia, currentPosition, totalDuration * 2,
         PlexPlaybackState.STOPPED);
-    communicator.savePosition(
-        mediaItem.key, position, mediaItem.duration, state);
+    // communicator.savePosition(
+    //     mediaItem.key, position, mediaItem.duration, state);
   }
 
   @override
@@ -233,7 +237,23 @@ class AudioPlayerTask extends BackgroundAudioTask {
   @override
   Future<void> onSkipToPrevious() => onRewind();
 
-  Future<void> _skip(int offset, [int trackPosition]) async {
+  Future<void> playFromQueueIndex(
+      [int trackPosition, bool startPlaying]) async {
+    if (_playing == null) {
+      // First time, we want to start playing
+      _playing = true;
+    } else if (_playing) {
+      // Stop current item
+      await _audioPlayer.stop();
+    }
+    AudioServiceBackground.setMediaItem(mediaItem);
+    if (trackPosition != null) {
+      await _audioPlayer.seek(Duration(milliseconds: trackPosition));
+    }
+  }
+
+  Future<void> _skip(
+      [int offset = 0, int trackPosition, bool startPlaying = false]) async {
     final newPos = _queueIndex + offset;
     if (!(newPos >= 0 && newPos < _queue.length)) return;
     if (_playing == null) {
@@ -250,12 +270,13 @@ class AudioPlayerTask extends BackgroundAudioTask {
     _skipState = offset > 0
         ? BasicPlaybackState.skippingToNext
         : BasicPlaybackState.skippingToPrevious;
+    print(currentQueueItem.id);
     await _audioPlayer.setUrl(currentQueueItem.id);
     if (trackPosition != null)
       await _audioPlayer.seek(Duration(milliseconds: trackPosition));
     _skipState = null;
-    // Resume playback if we were playing
-    if (_playing) {
+    // Resume playback if we were playing or if we want to start playing
+    if (_playing || startPlaying) {
       await onPlay();
     } else {
       _setState(state: BasicPlaybackState.paused);
@@ -264,67 +285,47 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future onFastForward() async {
-    // int desiredPosition =
-    //     _audioPlayer.playbackEvent.position.inMilliseconds + (30 * 1000);
-    // if (desiredPosition > mediaItem.duration) {
-    //   _skip(1, desiredPosition - mediaItem.duration);
-    // } else {
-    //   await onSeekTo(desiredPosition);
-    // }
     await onSeekTo(currentPosition + (30 * 1000));
   }
 
   @override
   Future onRewind() async {
-    // int desiredPosition =
-    //     _audioPlayer.playbackEvent.position.inMilliseconds - (30 * 1000);
-    // if (desiredPosition < 0) {
-    //   if (_queueIndex == 0)
-    //     onSeekTo(0);
-    //   else {
-    //     MediaItem newItem = _queue[_queueIndex - 1];
-    //     _skip(-1, newItem.duration + desiredPosition);
-    //   }
-    // } else {
-    //   await onSeekTo(desiredPosition);
-    // }
     await onSeekTo(currentPosition - (30 * 1000));
   }
 
   @override
-  Future onSeekTo(int position) async {
-    int newPosition = setQueueIndexFromPosition(position);
+  Future onSeekTo(int position, [bool startPlaying]) async {
     int index = _queueIndex;
-    if (index != _queueIndex)
-      _skip(0, newPosition);
+    int newPosition = setQueueIndexFromPosition(position);
+    if (index != _queueIndex ||
+        _audioPlayer.playbackState == AudioPlaybackState.none ||
+        _audioPlayer.playbackState == AudioPlaybackState.connecting)
+      await _skip(0, newPosition, startPlaying ?? false);
     else
       await _audioPlayer.seek(Duration(milliseconds: newPosition));
   }
 
   int setQueueIndexFromPosition(int position) {
-    int index = 0;
-    int finalIndex = 0;
     int trackPosition = 0;
     int currentPosition = position ?? 0;
-    _queue.forEach((track) {
-      if (currentPosition != 0 && currentPosition - track.duration <= 0) {
-        finalIndex = index;
+    PlexMediaItem item = _queue.firstWhere((track) {
+      if (currentPosition - track.duration <= 0) {
         trackPosition = currentPosition;
-        currentPosition = 0;
+        return true;
       } else if (currentPosition != 0) {
         currentPosition -= track.duration;
       }
-      index++;
+      return false;
     });
-    print(_queueIndex);
-    _queueIndex = finalIndex;
+    _queueIndex = _queue.indexOf(item);
     return trackPosition;
   }
 
   @override
   void onSkipToQueueItem(String mediaId) {
     _queueIndex = _queue.indexWhere((element) => element.id == mediaId);
-    _skip(0);
+    _playing = true;
+    _skip(0, null, true);
   }
 
   @override
@@ -332,31 +333,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
     _queue.add(mediaItem);
   }
 
-  MediaItem _raw2mediaItem(Map raw) => MediaItem(
-        id: raw['id'],
-        album: raw['album'],
-        title: raw['title'],
-        artist: raw['artist'],
-        genre: raw['genre'],
-        duration: raw['duration'],
-        artUri: raw['artUri'],
-        displayTitle: raw['displayTitle'],
-        displaySubtitle: raw['displaySubtitle'],
-        displayDescription: raw['displayDescription'],
-      );
-
   @override
   void onCustomAction(String name, arguments) {
     switch (name) {
-      case 'enqueue':
-        Map args = arguments as Map;
-        _queue = (args['queue'] as List)
-            .map((item) => _raw2mediaItem(item))
-            .toList();
-        _queueIndex = args['index'];
-        AudioServiceBackground.setQueue(_queue);
-        _skip(0);
-        break;
       case 'downloaded':
         handleTrackDownloaded(arguments);
         break;
@@ -400,14 +379,12 @@ class AudioPlayerTask extends BackgroundAudioTask {
   Future onStop() async {
     _audioPlayer.stop();
     _setState(state: BasicPlaybackState.stopped);
-    // AudioServiceBackground.setMediaItem(null);
     _refreshServer.cancel();
     _completer.complete();
   }
 
   @override
   Future<void> onPlay() async {
-    print(_queue);
     if (_skipState == null && mediaItem != null) {
       _playing = true;
       _audioPlayer.play();
@@ -435,40 +412,23 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future onPlayFromMediaId(String mediaId) async {
+    if (_currentMedia == mediaId) {
+      return;
+    }
     if (_playing ?? false) {
       updateProgress(_audioPlayer.playbackEvent.position.inMilliseconds,
           PlexPlaybackState.STOPPED);
       _audioPlayer.stop();
     }
-    int index = 0;
-    int lastPlayedIndex = 0;
-    int trackPosition;
     _currentMedia = mediaId;
     PlexAlbum album = await _server.getAlbumFromKey(mediaId);
-    int currentPosition = album.viewOffset ?? 0;
-    List<PlexMediaItem> queue = (await _server.getTracks(mediaId)).map((track) {
-      if (currentPosition != 0 && currentPosition - track.duration <= 0) {
-        lastPlayedIndex = index;
-        trackPosition = currentPosition;
-        currentPosition = 0;
-      } else if (currentPosition != 0) {
-        currentPosition -= track.duration;
-      }
-      index++;
-      return PlexMediaItem.fromPlexTrack(track, _server);
-    }).toList();
-    // handleDownload(queue.sublist(lastPlayedIndex + 1, lastPlayedIndex + 2));
-    setQueue(queue: queue, startingIndex: lastPlayedIndex);
+    _queue = (await _server.getTracks(mediaId))
+        .map((track) => PlexMediaItem.fromPlexTrack(track, _server))
+        .toList();
     _mediaItem = PlexMediaItem.fromPlexAlbum(album, _server, totalDuration);
-    print('Setting duration: ${_mediaItem.duration}');
-    AudioServiceBackground.setMediaItem(mediaItem);
-    await _skip(0, trackPosition);
-  }
-
-  void setQueue({List<PlexMediaItem> queue, int startingIndex}) {
-    _queue = queue;
-    if (startingIndex != null) _queueIndex = startingIndex;
-    AudioServiceBackground.setQueue(_queue);
+    await AudioServiceBackground.setQueue(_queue);
+    await AudioServiceBackground.setMediaItem(mediaItem);
+    await onSeekTo(album.viewOffset ?? 0, true);
   }
 
   void _setState(
@@ -522,6 +482,6 @@ Future startAudioService() async {
   );
 }
 
-void _audioPlayerTaskEntrypoint() async {
-  AudioServiceBackground.run(() => AudioPlayerTask());
+Future _audioPlayerTaskEntrypoint() async {
+  return await AudioServiceBackground.run(() => AudioPlayerTask());
 }

@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
                 )
               : RefreshIndicator(
                   child: SingleChildScrollView(
-                    padding: EdgeInsets.only(bottom: 40),
+                    // padding: EdgeInsets.only(bottom: 40),
                     physics: AlwaysScrollableScrollPhysics(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,

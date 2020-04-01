@@ -91,7 +91,9 @@ class PlexApi {
           '${server.mainConnection.uri}/library/sections',
           headers: headers.toMap(overrideToken: server.accessToken));
       PlexSections sections = PlexSections.fromJson(jsonDecode(response.body));
-      return sections.mediaContainer.directory;
+      return sections.mediaContainer.directory
+          .where((lib) => lib.type == 'artist')
+          .toList();
     } catch (e) {
       print(e);
     }

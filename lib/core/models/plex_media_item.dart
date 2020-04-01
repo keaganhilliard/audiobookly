@@ -5,19 +5,20 @@ import 'package:plex_api/plex_api.dart';
 class PlexMediaItem extends AudiobooklyMediaItem {
   final String key;
 
-  PlexMediaItem.fromPlexTrack(PlexTrack track, PlexServerV2 server)
+  PlexMediaItem.fromPlexTrack(PlexTrack track, PlexServerV2 server,
+      [int duration])
       : key = track.ratingKey,
         super(
           serverKey: track.ratingKey,
           uri: server.getUrlWithToken(track.media[0].part[0].key),
           fileName: track.media[0].part[0].file
-              .substring(track.media[0].part[0].file.lastIndexOf('/')),
+              .substring(track.media[0].part[0].file.lastIndexOf('/') + 1),
           id: server.getUrlWithToken(track.media[0].part[0].key),
           title: track.title,
           album: track.parentTitle,
           artist: track.grandparentTitle,
           artUri: server.getUrlWithToken(track.parentThumb),
-          duration: track.duration,
+          duration: duration ?? track.duration,
         );
   PlexMediaItem.fromPlexArtist(PlexArtist artist, PlexServerV2 server)
       : key = artist.ratingKey,

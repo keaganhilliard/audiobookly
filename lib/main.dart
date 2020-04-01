@@ -61,29 +61,22 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   int _currentIndex = 0;
   bool nowPlaying = true;
 
+  final routeMap = [
+    Routes.Home,
+    Routes.Authors,
+    Routes.Books,
+    Routes.Collections,
+  ];
+
   void onNavigationTap(int index) {
     if (index != _currentIndex) {
+      String oldRoute = routeMap[_currentIndex];
+      String newRoute = routeMap[index];
       setState(() {
         _currentIndex = index;
       });
-      String route;
-      switch (index) {
-        case 0:
-          route = Routes.Home;
-          break;
-        case 1:
-          route = Routes.Authors;
-          break;
-        case 2:
-          route = Routes.Books;
-          break;
-        case 3:
-          route = Routes.Collections;
-          break;
-        default:
-          route = Routes.Home;
-      }
-      _navigatorKey.currentState.pushReplacementNamed(route);
+      _navigatorKey.currentState
+          .pushNamedAndRemoveUntil(newRoute, ModalRoute.withName(oldRoute));
     }
   }
 
@@ -91,7 +84,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     // startAudioService();
-    FlutterDownloader.initialize();
     connect();
     super.initState();
   }
@@ -134,84 +126,80 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         child: CircularProgressIndicator(),
       );
     } else {
-      return Scaffold(
-        body: Stack(children: [
-          Padding(
-              padding:
-                  nowPlaying ? EdgeInsets.only(bottom: 40) : EdgeInsets.only(),
-              child: MultiProvider(
-                providers: [
-                  // Provider.value(
-                  //   value: model.server,
-                  // ),
-                  // Provider.value(
-                  //   value: model.library,
-                  // ),
-                  Provider.value(
-                    value: model.communicator,
-                  )
-                ],
-                child: Navigator(
-                  key: _navigatorKey,
-                  onGenerateRoute: Router.generateRoute,
-                  initialRoute: Routes.Home,
+      return WillPopScope(
+        onWillPop: () async {
+          return !await _navigatorKey.currentState.maybePop();
+        },
+        child: Scaffold(
+          body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: MultiProvider(
+                    providers: [
+                      Provider.value(
+                        value: model.communicator,
+                      )
+                    ],
+                    child: Navigator(
+                      key: _navigatorKey,
+                      onGenerateRoute: Router.generateRoute,
+                      initialRoute: Routes.Home,
+                    ),
+                  ),
                 ),
-              )),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              MultiProvider(
-                  providers: [
-                    StreamProvider<PlaybackState>(
-                      create: (context) => AudioService.playbackStateStream,
-                      initialData: PlaybackState(
-                        basicState: BasicPlaybackState.none,
-                        actions: null,
+                MultiProvider(
+                    providers: [
+                      StreamProvider<PlaybackState>(
+                        create: (context) => AudioService.playbackStateStream,
+                        initialData: PlaybackState(
+                          basicState: BasicPlaybackState.none,
+                          actions: null,
+                        ),
                       ),
-                    ),
-                    StreamProvider<MediaItem>(
-                      create: (context) => AudioService.currentMediaItemStream,
-                    ),
-                  ],
-                  child: Consumer<PlaybackState>(
-                    builder: (context, state, child) {
-                      if (state != null &&
-                          state.basicState != BasicPlaybackState.none)
-                        return NowPlaying();
-                      else
-                        return Container();
-                    },
-                  )),
+                      StreamProvider<MediaItem>(
+                        create: (context) =>
+                            AudioService.currentMediaItemStream,
+                      ),
+                    ],
+                    child: Consumer<PlaybackState>(
+                      builder: (context, state, child) {
+                        if (state != null &&
+                            state.basicState != BasicPlaybackState.none)
+                          return NowPlaying();
+                        else
+                          return Container();
+                      },
+                    )),
+              ]),
+          bottomNavigationBar: BottomNavigationBar(
+            showUnselectedLabels: true,
+            currentIndex: _currentIndex,
+            onTap: onNavigationTap,
+            // unselectedItemColor: Theme.of(context).textTheme.title.color,
+            selectedItemColor: Colors.deepPurpleAccent,
+            // backgroundColor: Theme.of(context).accentColor,
+            elevation: 40.0,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                title: Text('Home'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                title: Text('Authors'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.book),
+                title: Text('Books'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.collections_bookmark),
+                title: Text('Collections'),
+              ),
             ],
           ),
-        ]),
-        bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          currentIndex: _currentIndex,
-          onTap: onNavigationTap,
-          // unselectedItemColor: Theme.of(context).textTheme.title.color,
-          selectedItemColor: Colors.deepPurpleAccent,
-          // backgroundColor: Theme.of(context).accentColor,
-          elevation: 40.0,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text('Authors'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              title: Text('Books'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.collections_bookmark),
-              title: Text('Collections'),
-            ),
-          ],
         ),
       );
     }
