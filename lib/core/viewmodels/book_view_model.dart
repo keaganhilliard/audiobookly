@@ -12,6 +12,7 @@ class BookViewModel extends BaseModel {
   MediaItem currentItem;
   BookViewModel({MediaItem item}) : currentItem = item;
   AudiobooklyMediaItem book;
+  List<AudiobooklyMediaItem> tracks;
 
   Future createCommunicator() async {
     if (communicator == null) {
@@ -22,19 +23,21 @@ class BookViewModel extends BaseModel {
 
   Future init(String bookId) async {
     setBusy(true);
+    if (!await AudioService.running) await startAudioService();
     await createCommunicator();
     currentItem = AudioService.currentMediaItem;
 
-    if (currentItem != null) {
+    if (bookId == null && currentItem != null) {
       book = await communicator.getAlbumFromId(currentItem.id);
+      tracks = await communicator.getTracksForBook(currentItem.id);
     }
     if (bookId == null) {
       setBusy(false);
       return;
     } else {
       book = await communicator.getAlbumFromId(bookId);
+      tracks = await communicator.getTracksForBook(bookId);
     }
-    if (!await AudioService.running) await startAudioService();
 
     if (currentItem?.id != bookId) {
       await AudioService.playFromMediaId(bookId);

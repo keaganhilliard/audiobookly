@@ -43,7 +43,7 @@ class BooksView extends StatelessWidget {
                       onTap: () {
                         NavigationService().pushNamed(
                           Routes.Book,
-                          arguments: book.id,
+                          arguments: book,
                         );
                       },
                       thumbnailUrl: book.artUri,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/services/download_service.dart';
 import 'package:audiobookly/core/services/downloader.dart';
 import 'package:flutter/foundation.dart';
@@ -32,8 +33,9 @@ class TracksViewModel extends ChangeNotifier {
     }
   }
 
-  Future downloadAllTracks(List<MediaItem> items) async {
+  Future downloadAllTracks(List<AudiobooklyMediaItem> items) async {
     var dir = await getExternalStorageDirectory();
+    print('Starting download all');
     compute(
         handleDownloadAll,
         items
@@ -53,10 +55,9 @@ class DownloaderWrapper {
   String downloadUrl;
   String fileName;
 
-  DownloaderWrapper.fromMediaItem(MediaItem item, Directory dir) {
+  DownloaderWrapper.fromMediaItem(AudiobooklyMediaItem item, Directory dir) {
     downloadUrl = item.id;
     path = p.join(dir.absolute.path, 'cache', item.artist, item.album);
-    fileName =
-        item.title + item.id.substring(item.id.lastIndexOf('.')).split('?')[0];
+    fileName = item.fileName;
   }
 }

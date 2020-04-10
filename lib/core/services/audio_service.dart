@@ -16,6 +16,8 @@ import 'package:device_info/device_info.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'dart:io';
 import 'package:audiobookly/core/database/database.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 class AudioPlayerTask extends BackgroundAudioTask {
   var _completer = Completer();
@@ -32,6 +34,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   BookDatabase _db = BookDatabase();
   Timer _refreshServer;
   DownloadService downloadService = DownloadService();
+  Directory storage;
 
   BasicPlaybackState _stateToBasicState(AudioPlaybackState state) {
     switch (state) {
@@ -162,9 +165,10 @@ class AudioPlayerTask extends BackgroundAudioTask {
       final state = _stateToBasicState(event.state);
       if (state != BasicPlaybackState.stopped) {
         _setState(
-            state: state,
-            position: event.position.inMilliseconds,
-            speed: event.speed ?? 1.0);
+          state: state,
+          position: event.position.inMilliseconds,
+          speed: event.speed ?? 1.0,
+        );
       }
       switch (state) {
         // case BasicPlaybackState.playing:
@@ -188,6 +192,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
       }
     });
 
+    storage = await getExternalStorageDirectory();
     await initPlexApi();
     initPlaybackSpeed();
 
@@ -208,7 +213,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   int get currentPosition =>
       _queue
               .getRange(0, _queueIndex > 0 ? _queueIndex : 0)
-              .fold(0, (total, item) => (total as int) + item.duration) +
+              .fold<int>(0, (total, item) => total + item.duration) +
           _audioPlayer.playbackEvent?.position?.inMilliseconds ??
       0;
 
@@ -271,7 +276,19 @@ class AudioPlayerTask extends BackgroundAudioTask {
         ? BasicPlaybackState.skippingToNext
         : BasicPlaybackState.skippingToPrevious;
     print(currentQueueItem.id);
-    await _audioPlayer.setUrl(currentQueueItem.id);
+    String path = p.join(
+        storage.absolute.path,
+        'cache',
+        currentQueueItem.artist,
+        currentQueueItem.album,
+        currentQueueItem.fileName);
+    print('here be the path $path');
+    if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
+      print('Found local! $path');
+      await _audioPlayer.setUrl(path);
+    } else {
+      await _audioPlayer.setUrl(currentQueueItem.id);
+    }
     if (trackPosition != null)
       await _audioPlayer.seek(Duration(milliseconds: trackPosition));
     _skipState = null;

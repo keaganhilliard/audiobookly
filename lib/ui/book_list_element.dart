@@ -47,14 +47,11 @@ class BookListElement extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Hero(
-                    tag: title,
-                    child: CachedNetworkImage(
-                      imageUrl: thumbnailUrl,
-                      fit: BoxFit.contain,
-                      placeholder: (context, url) => Center(
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
+                  CachedNetworkImage(
+                    imageUrl: thumbnailUrl,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) => Center(
+                      child: Center(child: CircularProgressIndicator()),
                     ),
                   ),
                   Expanded(

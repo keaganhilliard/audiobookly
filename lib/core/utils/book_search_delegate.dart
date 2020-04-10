@@ -54,35 +54,27 @@ class BookSearchDelegate extends SearchDelegate {
       future: theSearch.search(query),
       builder: (context, results) {
         if (!results.hasData) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                child: CircularProgressIndicator(),
-              )
-            ],
+          return Center(
+            child: CircularProgressIndicator(),
           );
         } else {
           if (results.data.length > 0) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 30.0),
-              child: ListView.builder(
-                itemCount: results.data.length,
-                itemBuilder: (context, index) {
-                  MediaItem result = results.data[index];
-                  return ListTile(
-                    leading: CachedNetworkImage(imageUrl: result.artUri),
-                    title: Text(result.title),
-                    subtitle: Text(result.artist),
-                    onTap: () {
-                      NavigationService().pushNamed(
-                        Routes.Book,
-                        arguments: result.id,
-                      );
-                    },
-                  );
-                },
-              ),
+            return ListView.builder(
+              itemCount: results.data.length,
+              itemBuilder: (context, index) {
+                MediaItem result = results.data[index];
+                return ListTile(
+                  leading: CachedNetworkImage(imageUrl: result.artUri),
+                  title: Text(result.title),
+                  subtitle: Text(result.artist),
+                  onTap: () {
+                    NavigationService().pushNamed(
+                      Routes.Book,
+                      arguments: result.id,
+                    );
+                  },
+                );
+              },
             );
           } else {
             return Column(

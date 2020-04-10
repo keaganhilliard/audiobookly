@@ -39,7 +39,7 @@ class Router {
       case Routes.Book:
         return MaterialPageRoute(
             builder: (_) => BookView(
-                  bookId: settings.arguments,
+                  book: settings.arguments,
                 ));
       default:
         return MaterialPageRoute(builder: (_) => HomeView());

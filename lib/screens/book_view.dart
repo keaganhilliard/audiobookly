@@ -12,10 +12,10 @@ import 'package:audiobookly/core/viewmodels/book_view_model.dart';
 import 'package:provider/provider.dart';
 
 class BookView extends StatelessWidget {
-  final String bookId;
+  final AudiobooklyMediaItem book;
 
   BookView({
-    this.bookId,
+    this.book,
   });
 
   @override
@@ -35,7 +35,7 @@ class BookView extends StatelessWidget {
         builder: (context) {
           return BaseWidget<BookViewModel>(
             onModelReady: (model) {
-              model.init(bookId);
+              model.init(book?.id);
             },
             model: BookViewModel(),
             builder: (context, model, child) {
@@ -44,7 +44,7 @@ class BookView extends StatelessWidget {
                 stream: AudioService.currentMediaItemStream,
                 builder: (context, snapshot) {
                   MediaItem item = snapshot.data;
-                  if (item == null || model.book == null) {
+                  if (book == null || model.book == null) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
@@ -52,7 +52,7 @@ class BookView extends StatelessWidget {
                   return Scaffold(
                     appBar: AppBar(
                       title: Text(
-                        item?.title ?? '',
+                        book?.title ?? '',
                       ),
                       actions: <Widget>[
                         IconButton(
@@ -60,7 +60,9 @@ class BookView extends StatelessWidget {
                           onPressed: () {
                             NavigationService().push(MaterialPageRoute(
                               builder: (context) {
-                                return TracksView();
+                                return TracksView(
+                                  items: model.tracks,
+                                );
                               },
                             ));
                           },
@@ -96,7 +98,7 @@ class BookView extends StatelessWidget {
                                       children: [
                                         CachedNetworkImage(
                                           fit: BoxFit.scaleDown,
-                                          imageUrl: item?.artUri,
+                                          imageUrl: book?.artUri,
                                           placeholder: (context, url) => Center(
                                             child: CircularProgressIndicator(),
                                           ),
@@ -108,7 +110,6 @@ class BookView extends StatelessWidget {
                                             color: Colors.grey[400],
                                             icon: Icon(Icons.info_outline),
                                             onPressed: () async {
-                                              print(item.title);
                                               showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) {
@@ -122,8 +123,6 @@ class BookView extends StatelessWidget {
                                                       ),
                                                     );
                                                   });
-                                              print(model
-                                                  .book.displayDescription);
                                             },
                                           ),
                                         ),
@@ -151,22 +150,22 @@ class BookView extends StatelessWidget {
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          item?.title ?? '',
+                                          model?.book?.title ?? '',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline,
+                                              .headline6,
                                         ),
                                         Text(
-                                          item?.artist ?? '',
+                                          model?.book?.artist ?? '',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle,
+                                              .subtitle2,
                                         ),
                                         Text(
                                           model.genDuration(item.duration),
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle,
+                                              .subtitle2,
                                         ),
                                       ],
                                     ),
