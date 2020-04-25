@@ -45,21 +45,29 @@ class BookListElement extends StatelessWidget {
                 ],
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  CachedNetworkImage(
-                    imageUrl: thumbnailUrl,
-                    fit: BoxFit.contain,
-                    placeholder: (context, url) => Center(
-                      child: Center(child: CircularProgressIndicator()),
+                  Flexible(
+                    flex: 3,
+                    child: FractionallySizedBox(
+                      heightFactor: .95,
+                      child: CachedNetworkImage(
+                        imageUrl: thumbnailUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                      ),
                     ),
                   ),
-                  Expanded(
-                      child: ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-                    subtitle: subTitle,
-                    title: title,
-                  )),
+                  Flexible(
+                    flex: 1,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 0, 1.0),
+                      subtitle: subTitle,
+                      title: title,
+                    ),
+                  ),
                 ],
               ),
             ]),

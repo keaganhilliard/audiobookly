@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:path/path.dart' as p;
 
 class DownloadService {
-  static Stream<double> downloadFile(
-      String url, String path, String fileName) async* {
+  static Stream<double> downloadFile(String url, String path, String fileName,
+      [double saved = 0.0, int tries = 0]) async* {
     HttpClient client = HttpClient();
 
     await createDirIfNotExists(path);
 
     var fileSaver = File(p.join(path, fileName));
-    var saved = 0.0;
 
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
+    // if (saved > 0) request.headers.set('Range', 'bytes=${saved.toInt()}-');
     HttpClientResponse response = await request.close();
     var total = response.headers.contentLength;
 
@@ -26,6 +26,12 @@ class DownloadService {
         yield saved / total;
       }
     } catch (e) {
+      print('Try try again: $tries');
+      // if (tries < 2)
+      //   await for (double d
+      //       in downloadFile(url, path, fileName, saved, ++tries)) {
+      //     yield d;
+      //   }
       print(e.toString());
     }
   }

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
 import 'package:audiobookly/core/services/download_service.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
+import 'package:audiobookly/core/viewmodels/tracks_view_model.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:audio_service/audio_service.dart';
@@ -22,9 +22,6 @@ import 'package:path_provider/path_provider.dart';
 class AudioPlayerTask extends BackgroundAudioTask {
   var _completer = Completer();
   var _audioPlayer = AudioPlayer();
-  PlexServerV2 _server;
-  String _libraryKey;
-  PlexApi _api;
   BasicPlaybackState _skipState;
   SharedPreferences _prefs;
   bool _playing;
@@ -32,7 +29,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   Timer _updater;
   String _currentMedia;
   BookDatabase _db = BookDatabase();
-  Timer _refreshServer;
+  ServerCommunicator _communicator;
   DownloadService downloadService = DownloadService();
   Directory storage;
 
@@ -46,8 +43,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
         return BasicPlaybackState.paused;
       case AudioPlaybackState.playing:
         return BasicPlaybackState.playing;
-      case AudioPlaybackState.buffering:
-        return BasicPlaybackState.buffering;
+      // case AudioPlaybackState.buffering:
+      // return BasicPlaybackState.buffering;
       case AudioPlaybackState.connecting:
         return _skipState ?? BasicPlaybackState.connecting;
       case AudioPlaybackState.completed:
@@ -86,26 +83,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   Future initPlexApi() async {
     await getSharedPrefs();
-    String authToken = _prefs.getString(SharedPrefStrings.PLEX_TOKEN);
-    String serverId = _prefs.getString(SharedPrefStrings.PLEX_SERVER);
-    _libraryKey = _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
-    PlexHeaders headers = await getHeaders();
-
-    if (authToken == null || serverId == null || _libraryKey == null) return;
-
-    headers.token = authToken;
-    _api = PlexApi(headers: headers);
-    List<PlexServerV2> servers = await _api.getServersV2();
-    PlexServerV2 server = servers.firstWhere(
-        (server) => server.clientIdentifier == serverId,
-        orElse: () => null);
-    _server = server;
-    _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) async {
-      PlexServerV2 server = (await _api.getServersV2()).firstWhere(
-          (server) => _server.clientIdentifier == serverId,
-          orElse: () => null);
-      if (server != null) _server = server;
-    });
+    _communicator = PlexServerCommunicator();
+    await _communicator.getServerAndLibrary();
   }
 
   void initPlaybackSpeed() {
@@ -192,7 +171,10 @@ class AudioPlayerTask extends BackgroundAudioTask {
       }
     });
 
-    storage = await getExternalStorageDirectory();
+    if (Platform.isIOS)
+      storage = await getApplicationDocumentsDirectory();
+    else
+      storage = await getExternalStorageDirectory();
     await initPlexApi();
     initPlaybackSpeed();
 
@@ -205,9 +187,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
   int _queueIndex = -1;
   bool get hasNext => _queueIndex + 1 < _queue.length;
   bool get hasPrevious => _queueIndex > 0;
-  AudiobooklyMediaItem _mediaItem;
-  AudiobooklyMediaItem get mediaItem => _mediaItem;
-  AudiobooklyMediaItem get currentQueueItem => _queue[_queueIndex];
+  MediaItem _mediaItem;
+  MediaItem get mediaItem => _mediaItem;
+  MediaItem get currentQueueItem => _queue[_queueIndex];
   int get totalDuration =>
       _queue.fold(0, (total, item) => total + item.duration);
   int get currentPosition =>
@@ -228,10 +210,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   void updateProgress(int position, PlexPlaybackState state,
       [bool finished = false]) async {
-    ServerCommunicator communicator =
-        PlexServerCommunicator(server: _server, libraryKey: _libraryKey);
-    communicator.savePosition(_currentMedia, currentPosition, totalDuration * 2,
-        PlexPlaybackState.STOPPED);
+    _communicator.savePosition(_currentMedia, currentPosition,
+        totalDuration * 2, PlexPlaybackState.STOPPED);
     // communicator.savePosition(
     //     mediaItem.key, position, mediaItem.duration, state);
   }
@@ -270,24 +250,31 @@ class AudioPlayerTask extends BackgroundAudioTask {
     }
     // Load next item
     _queueIndex = newPos;
-    AudioServiceBackground.setMediaItem(mediaItem);
-    var currentQueueItem = _queue[_queueIndex];
+    // MediaItem combined = currentQueueItem.copyWith(duration: mediaItem.duration);
+    AudioServiceBackground.setMediaItem(mediaItem.copyWith(
+      title: currentQueueItem.title,
+      album: mediaItem.title,
+      extras: <String, dynamic>{'currentTrack': currentQueueItem.id},
+    ));
     _skipState = offset > 0
         ? BasicPlaybackState.skippingToNext
         : BasicPlaybackState.skippingToPrevious;
     print(currentQueueItem.id);
-    String path = p.join(
-        storage.absolute.path,
-        'cache',
-        currentQueueItem.artist,
-        currentQueueItem.album,
-        currentQueueItem.fileName);
+    String path = getMediaItemFilePath(currentQueueItem);
     print('here be the path $path');
     if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
       print('Found local! $path');
       await _audioPlayer.setUrl(path);
     } else {
       await _audioPlayer.setUrl(currentQueueItem.id);
+      cacheTrack(currentQueueItem).then((value) {
+        if (value)
+          _skip(0, _audioPlayer.playbackEvent?.position?.inMilliseconds);
+        else {
+          if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound)
+            File(path).deleteSync();
+        }
+      });
     }
     if (trackPosition != null)
       await _audioPlayer.seek(Duration(milliseconds: trackPosition));
@@ -298,6 +285,51 @@ class AudioPlayerTask extends BackgroundAudioTask {
     } else {
       _setState(state: BasicPlaybackState.paused);
     }
+    // cacheNextTwoTracks();
+  }
+
+  Future cacheNextTwoTracks() async {
+    bool success = await cacheTrack(_queue[_queueIndex + 1]);
+    print('...Did not wait for sure $success');
+    if (success) await cacheTrack(_queue[_queueIndex + 2]);
+  }
+
+  List<MediaItem> toDownload = [];
+
+  static Future<bool> handleDownload(DownloaderWrapper dw) async {
+    try {
+      await for (double progress in DownloadService.downloadFile(
+          dw.downloadUrl, dw.path, dw.fileName)) {
+        print('Downloading... ${dw.fileName} Progress: $progress');
+        if (progress == 1) return true;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
+
+  Future<bool> cacheTrack(MediaItem item) async {
+    try {
+      String filePath = getMediaItemFilePath(item);
+      if (FileSystemEntity.typeSync(filePath) ==
+          FileSystemEntityType.notFound) {
+        DownloaderWrapper dw = DownloaderWrapper.fromMediaItem(item, storage);
+        return await compute(handleDownload, dw);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
+
+  String getMediaItemFilePath(MediaItem item) {
+    return p.join(storage.absolute.path, 'cache', item.artist, item.album,
+        item.extras['fileName']);
+  }
+
+  String getMediaItemPath(MediaItem item) {
+    return p.join(storage.absolute.path, 'cache', item.artist, item.album);
   }
 
   @override
@@ -370,7 +402,11 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   @override
-  void onAudioBecomingNoisy() {}
+  void onAudioBecomingNoisy() {
+    if (_playing) {
+      onPause();
+    }
+  }
 
   @override
   void onClick(button) {
@@ -385,18 +421,20 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   @override
-  void onPause() {
+  void onPause() async {
     if (_skipState == null) {
       _playing = false;
-      _audioPlayer.pause();
+      await _audioPlayer.pause();
+      onSeekTo(currentPosition - 2000);
     }
   }
 
   @override
   Future onStop() async {
     _audioPlayer.stop();
+    _currentMedia = null;
     _setState(state: BasicPlaybackState.stopped);
-    _refreshServer.cancel();
+    // _refreshServer.cancel();
     _completer.complete();
   }
 
@@ -417,9 +455,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   @override
   Future<List<MediaItem>> onLoadChildren(String parentMediaId) async {
     print(parentMediaId);
-    ServerCommunicator communicator =
-        PlexServerCommunicator(server: _server, libraryKey: _libraryKey);
-    return await communicator.getChildren(parentMediaId);
+    return await _communicator.getChildren(parentMediaId);
   }
 
   @override
@@ -438,14 +474,16 @@ class AudioPlayerTask extends BackgroundAudioTask {
       _audioPlayer.stop();
     }
     _currentMedia = mediaId;
-    PlexAlbum album = await _server.getAlbumFromKey(mediaId);
-    _queue = (await _server.getTracks(mediaId))
-        .map((track) => PlexMediaItem.fromPlexTrack(track, _server))
-        .toList();
-    _mediaItem = PlexMediaItem.fromPlexAlbum(album, _server, totalDuration);
+    if (_communicator == null)
+      await initPlexApi();
+    else
+      await _communicator.getServerAndLibrary();
+    _queue = await _communicator.getTracksForBook(mediaId);
+    _mediaItem = (await _communicator.getAlbumFromId(mediaId))
+        .copyWith(duration: totalDuration);
     await AudioServiceBackground.setQueue(_queue);
     await AudioServiceBackground.setMediaItem(mediaItem);
-    await onSeekTo(album.viewOffset ?? 0, true);
+    await onSeekTo(_mediaItem.extras['viewOffset'] ?? 0, true);
   }
 
   void _setState(

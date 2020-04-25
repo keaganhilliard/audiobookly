@@ -17,29 +17,35 @@ class BookGridItem extends StatelessWidget {
         onTap: onTap,
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
-              height: 175,
-              width: 200,
-              child: CachedNetworkImage(
-                imageUrl: thumbnailUrl,
-                fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
+            Flexible(
+              flex: 3,
+              child: FractionallySizedBox(
+                heightFactor: .95,
+                child: CachedNetworkImage(
+                  imageUrl: thumbnailUrl,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                ),
               ),
             ),
-            ListTile(
-              contentPadding: EdgeInsets.fromLTRB(8.0, 2.0, 0, 1.0),
-              subtitle: subtitle != null
-                  ? Text(
-                      subtitle,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  : null,
-              title: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
+            Flexible(
+              flex: 1,
+              child: ListTile(
+                contentPadding: EdgeInsets.fromLTRB(8.0, 2.0, 0, 1.0),
+                subtitle: subtitle != null
+                    ? Text(
+                        subtitle,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : null,
+                title: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],

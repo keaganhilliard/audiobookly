@@ -1,114 +1,102 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/viewmodels/tracks_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/core/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class TracksView extends StatelessWidget {
-  final List<AudiobooklyMediaItem> items;
-
-  TracksView({this.items});
+  TracksView();
 
   @override
   Widget build(BuildContext context) {
     return BaseWidget<TracksViewModel>(
         model: TracksViewModel(),
         builder: (context, model, child) {
-          return StreamBuilder<List<MediaItem>>(
-              stream: AudioService.queueStream,
-              builder: (context, snapshot) {
-                return Scaffold(
-                    appBar: AppBar(
-                      title: Text('Tracks'),
-                      actions: <Widget>[
+          return MultiProvider(
+            providers: [
+              StreamProvider.value(value: AudioService.queueStream),
+              StreamProvider.value(value: AudioService.playbackStateStream),
+              StreamProvider.value(value: AudioService.currentMediaItemStream),
+            ],
+            child: Builder(builder: (context) {
+              PlaybackState state = Provider.of(context);
+              List<MediaItem> items = Provider.of(context);
+              return Scaffold(
+                  appBar: AppBar(
+                    title: Text('Tracks'),
+                    actions: <Widget>[
+                      if (state?.basicState != BasicPlaybackState.none)
                         IconButton(
                           icon: Icon(Icons.replay_30),
                           onPressed: () {
                             model.rewind();
                           },
                         ),
+                      if (state?.basicState == BasicPlaybackState.paused)
                         IconButton(
-                          icon: Icon(Icons.file_download),
+                          icon: Icon(Icons.play_arrow),
                           onPressed: () {
-                            if (items.isNotEmpty)
-                              model.downloadAllTracks(items);
-                            else
-                              print('Fucking empty');
+                            model.play();
+                          },
+                        ),
+                      if (state?.basicState == BasicPlaybackState.playing)
+                        IconButton(
+                          icon: Icon(Icons.pause),
+                          onPressed: () {
+                            model.pause();
+                          },
+                        ),
+                      IconButton(
+                        icon: Icon(Icons.file_download),
+                        onPressed: () {
+                          if (items.isNotEmpty)
+                            model.downloadAllTracks(items);
+                          else
+                            print('Fucking empty');
+                        },
+                      )
+                    ],
+                  ),
+                  body: items == null
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            MediaItem item = Provider.of(context);
+                            final MediaItem track = items[index];
+                            final totalTrackDigits =
+                                items.length.toString().length;
+                            final bool currentTrack = item != null &&
+                                track.id == item.extras['currentTrack'];
+                            return Container(
+                              color: currentTrack
+                                  ? Colors.black
+                                  : Theme.of(context).canvasColor,
+                              child: ListTile(
+                                onTap: () {
+                                  print('Skipping to ${item.id}');
+                                  if (track.id != item.id)
+                                    AudioService.skipToQueueItem(track.id);
+                                },
+                                trailing:
+                                    currentTrack ? Icon(Icons.poll) : null,
+                                title: Text(
+                                  '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title == null || track.title.isEmpty ? '' : ' - ' + track.title}',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                    '${Utils.format(Duration(milliseconds: track.duration))}'),
+                              ),
+                            );
                           },
                         )
-                      ],
-                    ),
-                    body: !snapshot.hasData
-                        ? Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : StreamBuilder<PlaybackState>(
-                            stream: AudioService.playbackStateStream,
-                            builder: (context, playbackStateSnapshot) {
-                              if (!playbackStateSnapshot.hasData) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else
-                                return StreamBuilder<double>(
-                                    stream: Stream.periodic(
-                                      Duration(milliseconds: 200),
-                                    ),
-                                    builder: (context, _) {
-                                      var currentPosition =
-                                          playbackStateSnapshot
-                                              .data.currentPosition;
-                                      MediaItem item =
-                                          snapshot.data.firstWhere((track) {
-                                        if (currentPosition - track.duration <=
-                                            0) {
-                                          currentPosition = 0;
-                                          return true;
-                                        } else if (currentPosition != 0) {
-                                          currentPosition -= track.duration;
-                                        }
-                                        return false;
-                                      });
-                                      return ListView.builder(
-                                        itemCount: snapshot.data.length,
-                                        itemBuilder: (context, index) {
-                                          final MediaItem track =
-                                              snapshot.data[index];
-                                          final totalTrackDigits = snapshot
-                                              .data.length
-                                              .toString()
-                                              .length;
-                                          final bool currentTrack =
-                                              item != null && track == item;
-
-                                          return Container(
-                                            color: currentTrack
-                                                ? Colors.grey[900]
-                                                : Colors.black,
-                                            child: ListTile(
-                                              onTap: () {
-                                                print('Skipping to ${item.id}');
-                                                if (track.id != item.id)
-                                                  AudioService.skipToQueueItem(
-                                                      track.id);
-                                              },
-                                              trailing: currentTrack
-                                                  ? Icon(Icons.poll)
-                                                  : null,
-                                              title: Text(
-                                                '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title == null || track.title.isEmpty ? '' : ' - ' + track.title}',
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              subtitle: Text(
-                                                  '${Utils.format(Duration(milliseconds: track.duration))}'),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    });
-                            }));
-              });
+                  // });
+                  );
+            }),
+          );
         });
   }
 }

@@ -4,8 +4,6 @@ PODS:
   - device_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_downloader (0.0.1):
-    - Flutter
   - flutter_isolate (0.0.1):
     - Flutter
   - FMDB (2.7.5):
@@ -16,6 +14,8 @@ PODS:
   - moor_ffi (0.0.1):
     - Flutter
   - path_provider (0.0.1):
+    - Flutter
+  - path_provider_macos (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
@@ -39,11 +39,11 @@ DEPENDENCIES:
   - audio_service (from `.symlinks/plugins/audio_service/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
-  - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
   - flutter_isolate (from `.symlinks/plugins/flutter_isolate/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - moor_ffi (from `.symlinks/plugins/moor_ffi/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
   - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
@@ -64,8 +64,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
     :path: Flutter
-  flutter_downloader:
-    :path: ".symlinks/plugins/flutter_downloader/ios"
   flutter_isolate:
     :path: ".symlinks/plugins/flutter_isolate/ios"
   just_audio:
@@ -74,6 +72,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/moor_ffi/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_macos:
+    :path: ".symlinks/plugins/path_provider_macos/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   shared_preferences_macos:
@@ -95,12 +95,12 @@ SPEC CHECKSUMS:
   audio_service: f509d65da41b9521a61f1c404dd58651f265a567
   device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_downloader: 058b9c41564a90500f67f3e432e3524613a7fd83
   flutter_isolate: 0edf5081826d071adf21759d1eb10ff5c24503b5
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  just_audio: c695d6e7e37f9e96672dd84039d7530e7fd5c205
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   moor_ffi: d66c9470c18e9cb333423bbcb493c105c6c774c6
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9

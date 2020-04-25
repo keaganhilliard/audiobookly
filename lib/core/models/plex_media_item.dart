@@ -10,15 +10,18 @@ class PlexMediaItem extends AudiobooklyMediaItem {
       : key = track.ratingKey,
         super(
           serverKey: track.ratingKey,
-          uri: server.getUrlWithToken(track.media[0].part[0].key),
-          fileName: track.media[0].part[0].file
-              .substring(track.media[0].part[0].file.lastIndexOf('/') + 1),
           id: server.getUrlWithToken(track.media[0].part[0].key),
           title: track.title,
           album: track.parentTitle,
           artist: track.grandparentTitle,
           artUri: server.getUrlWithToken(track.parentThumb),
           duration: duration ?? track.duration,
+          extras: <String, dynamic>{
+            'fileName': track.media[0].part[0].file
+                .substring(track.media[0].part[0].file.lastIndexOf('/') + 1),
+            'uri': server.getUrlWithToken(track.media[0].part[0].key),
+            'serverKey': track.ratingKey,
+          },
         );
   PlexMediaItem.fromPlexArtist(PlexArtist artist, PlexServerV2 server)
       : key = artist.ratingKey,
@@ -42,6 +45,9 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           artUri: server.getUrlWithToken(album.thumb),
           displayDescription: album.summary,
           duration: duration,
+          extras: <String, dynamic>{
+            'viewOffset': album.viewOffset,
+          },
         );
   PlexMediaItem.fromPlexCollection(
       PlexCollection collection, PlexServerV2 server)

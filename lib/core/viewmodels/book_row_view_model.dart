@@ -1,5 +1,4 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/models/audiobookly_media_item.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +12,7 @@ class BookRowViewModel extends BaseModel {
       : _communicator = communicator,
         _parentMediaId = parentMediaId;
 
-  List<AudiobooklyMediaItem> items = [];
+  List<MediaItem> items = [];
 
   Future<void> init() async {
     setBusy(true);

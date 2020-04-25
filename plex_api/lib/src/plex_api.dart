@@ -157,7 +157,7 @@ class PlexApi {
     PlexMetadataResponse sections =
         PlexMetadataResponse.fromJson(jsonDecode(response.body));
     sections.mediaContainer.metadata.forEach((f) {});
-    return sections.mediaContainer.metadata;
+    return sections.mediaContainer.metadata.getRange(0, 3).toList();
   }
 
   Future<List<PlexAlbum>> getAlbumsFromArtist(

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
@@ -45,6 +44,16 @@ class PlexServerCommunicator extends ServerCommunicator {
           product: 'Audiobookly',
           platform: 'Android',
           platformVersion: androidDeviceInfo.version.release,
+          token: authToken,
+        );
+      } else {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        headers = PlexHeaders(
+          clientIdentifier: iosInfo.identifierForVendor,
+          device: iosInfo.model,
+          product: 'Audiobookly',
+          platform: 'iOS',
+          platformVersion: iosInfo.systemVersion,
           token: authToken,
         );
       }
@@ -137,6 +146,7 @@ class PlexServerCommunicator extends ServerCommunicator {
 
   Future savePosition(
       String mediaId, int position, int duration, dynamic state) async {
+    await refreshServer();
     return await _server.savePosition(
         mediaId, position, duration, state as PlexPlaybackState);
   }

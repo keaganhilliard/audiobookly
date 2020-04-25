@@ -2,7 +2,6 @@ import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
-import 'package:audiobookly/screens/login_view.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
@@ -42,6 +41,16 @@ class RootViewModel extends BaseModel {
         product: 'Audiobookly',
         platform: 'Android',
         platformVersion: androidDeviceInfo.version.release,
+      );
+    } else {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      headers = PlexHeaders(
+        clientIdentifier: iosInfo.identifierForVendor,
+        device: iosInfo.model,
+        product: 'Audiobookly',
+        platform: 'iOS',
+        platformVersion: iosInfo.systemVersion,
+        token: authToken,
       );
     }
 

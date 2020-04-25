@@ -6,8 +6,8 @@ import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart';
 import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
 
@@ -18,6 +18,7 @@ void main() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // timeDilation = 7.0;
     return MultiProvider(
         providers: providers,
         child: MaterialApp(

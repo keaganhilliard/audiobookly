@@ -22,27 +22,27 @@ class BookViewModel extends BaseModel {
   }
 
   Future init(String bookId) async {
-    setBusy(true);
-    if (!await AudioService.running) await startAudioService();
-    await createCommunicator();
-    currentItem = AudioService.currentMediaItem;
+    // setBusy(true);
+    // if (!AudioService.running) await startAudioService();
+    // await createCommunicator();
+    // currentItem = AudioService.currentMediaItem;
 
-    if (bookId == null && currentItem != null) {
-      book = await communicator.getAlbumFromId(currentItem.id);
-      tracks = await communicator.getTracksForBook(currentItem.id);
-    }
-    if (bookId == null) {
-      setBusy(false);
-      return;
-    } else {
-      book = await communicator.getAlbumFromId(bookId);
-      tracks = await communicator.getTracksForBook(bookId);
-    }
-
-    if (currentItem?.id != bookId) {
-      await AudioService.playFromMediaId(bookId);
-    }
-    setBusy(false);
+    // if (bookId == null && currentItem != null) {
+    //   book = await communicator.getAlbumFromId(currentItem.id);
+    //   tracks = await communicator.getTracksForBook(currentItem.id);
+    // }
+    // if (bookId == null) {
+    //   setBusy(false);
+    //   return;
+    // } else {
+    //   book = await communicator.getAlbumFromId(bookId);
+    //   tracks = await communicator.getTracksForBook(bookId);
+    // }
+    // print('Freaking play...');
+    // if (currentItem?.id != bookId) {
+    //   await AudioService.playFromMediaId(bookId);
+    // }
+    // setBusy(false);
   }
 
   String genDurationString(List<MediaItem> tracks) {
