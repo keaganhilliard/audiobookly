@@ -58,29 +58,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  Future<PlexHeaders> getHeaders() async {
-    if (_prefs == null) await getSharedPrefs();
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      return PlexHeaders(
-        clientIdentifier: androidDeviceInfo.androidId,
-        device: androidDeviceInfo.model,
-        product: 'Audiobookly',
-        platform: 'Android',
-        platformVersion: androidDeviceInfo.version.release,
-      );
-    } else
-      return PlexHeaders(
-        clientIdentifier: 'TODO',
-        device: 'Probably iPhone',
-        product: 'Audiobookly',
-        platform: 'iPhone',
-        platformVersion: '',
-      );
-  }
-
   Future initPlexApi() async {
     await getSharedPrefs();
     _communicator = PlexServerCommunicator();
@@ -265,6 +242,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
     if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
       print('Found local! $path');
       await _audioPlayer.setUrl(path);
+      cacheNextTwoTracks();
     } else {
       await _audioPlayer.setUrl(currentQueueItem.id);
       cacheTrack(currentQueueItem).then((value) {
@@ -285,13 +263,12 @@ class AudioPlayerTask extends BackgroundAudioTask {
     } else {
       _setState(state: BasicPlaybackState.paused);
     }
-    // cacheNextTwoTracks();
   }
 
   Future cacheNextTwoTracks() async {
     bool success = await cacheTrack(_queue[_queueIndex + 1]);
     print('...Did not wait for sure $success');
-    if (success) await cacheTrack(_queue[_queueIndex + 2]);
+    return await cacheTrack(_queue[_queueIndex + 2]);
   }
 
   List<MediaItem> toDownload = [];
@@ -310,12 +287,20 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   Future<bool> cacheTrack(MediaItem item) async {
+    if (item == null || toDownload.contains(item)) return false;
+    toDownload.add(item);
     try {
       String filePath = getMediaItemFilePath(item);
       if (FileSystemEntity.typeSync(filePath) ==
           FileSystemEntityType.notFound) {
         DownloaderWrapper dw = DownloaderWrapper.fromMediaItem(item, storage);
-        return await compute(handleDownload, dw);
+        bool success = await compute(handleDownload, dw);
+        if (!success) {
+          if (FileSystemEntity.typeSync(filePath) !=
+              FileSystemEntityType.notFound) File(filePath).deleteSync();
+          return await cacheTrack(item);
+        }
+        return success;
       }
     } catch (e) {
       print(e);

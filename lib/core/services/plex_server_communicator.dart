@@ -24,6 +24,7 @@ class PlexServerCommunicator extends ServerCommunicator {
   void setRefreshTimer() {
     _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) {
       needsRefresh = true;
+      _refreshServer.cancel();
     });
   }
 
@@ -73,6 +74,7 @@ class PlexServerCommunicator extends ServerCommunicator {
           (server) => server.clientIdentifier == serverId,
           orElse: () => null);
       if (_server != null) needsRefresh = false;
+      setRefreshTimer();
     }
   }
 

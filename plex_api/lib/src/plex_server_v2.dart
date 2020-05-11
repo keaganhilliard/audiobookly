@@ -34,7 +34,9 @@ class PlexServerV2 {
     if (connections != null) {
       return connections.firstWhere(
           (connection) => !publicAddressMatches && !connection.local,
-          orElse: () => connections[0]);
+          orElse: () => connections.firstWhere((connection) =>
+              connection.address.startsWith('192.') ||
+              connection.address.startsWith('10.')));
     } else {
       return null;
     }

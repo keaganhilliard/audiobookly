@@ -4,7 +4,7 @@ import 'package:path/path.dart' as p;
 
 class DownloadService {
   static Stream<double> downloadFile(String url, String path, String fileName,
-      [double saved = 0.0, int tries = 0]) async* {
+      [double saved = 0.0, int tries = 0, int total]) async* {
     HttpClient client = HttpClient();
 
     await createDirIfNotExists(path);
@@ -12,9 +12,10 @@ class DownloadService {
     var fileSaver = File(p.join(path, fileName));
 
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
-    // if (saved > 0) request.headers.set('Range', 'bytes=${saved.toInt()}-');
+    request.headers.set('Connection', 'keep-alive');
+    if (saved > 0) request.headers.set('Range', 'bytes=${saved.toInt()}-');
     HttpClientResponse response = await request.close();
-    var total = response.headers.contentLength;
+    total = total ?? response.headers.contentLength;
 
     bool first = true;
     try {
@@ -27,9 +28,10 @@ class DownloadService {
       }
     } catch (e) {
       print('Try try again: $tries');
-      // if (tries < 2)
+      if (tries < 2)
+        yield* downloadFile(url, path, fileName, saved, ++tries, total);
       //   await for (double d
-      //       in downloadFile(url, path, fileName, saved, ++tries)) {
+      //       in downloadFile(url, path, fileName, saved, ++tries, total)) {
       //     yield d;
       //   }
       print(e.toString());

@@ -28,9 +28,6 @@ class BookView extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return BaseWidget<BookViewModel>(
-            onModelReady: (model) {
-              model.init(book?.id);
-            },
             model: BookViewModel(),
             builder: (context, model, child) {
               PlaybackState state = Provider.of(context);
@@ -105,13 +102,15 @@ class BookView extends StatelessWidget {
                                             showModalBottomSheet(
                                                 context: context,
                                                 builder: (context) {
-                                                  return Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              18.0),
-                                                      child: Text(book
-                                                          .displayDescription),
+                                                  return SingleChildScrollView(
+                                                    child: Container(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(18.0),
+                                                        child: Text(book
+                                                            .displayDescription),
+                                                      ),
                                                     ),
                                                   );
                                                 });
@@ -143,7 +142,7 @@ class BookView extends StatelessWidget {
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          book?.album ?? item?.album ?? '',
+                                          item?.album ?? book?.album ?? '',
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6,
@@ -188,20 +187,10 @@ class BookView extends StatelessWidget {
                                           stream: Stream.periodic(
                                               Duration(milliseconds: 200)),
                                           builder: (context, snapshot) {
-                                            String text = '';
-                                            if (state?.currentPosition !=
-                                                null) {
-                                              int durationLeft = item.duration -
-                                                  state.currentPosition;
-                                              String durationLeftText = model
-                                                  .genDuration(durationLeft);
-                                              text = (state.currentPosition /
-                                                          item?.duration *
-                                                          100)
-                                                      .toStringAsFixed(0) +
-                                                  '% ($durationLeftText left)';
-                                            }
-                                            return Text(text);
+                                            return Text(
+                                                model.getDurationLeftText(
+                                                    state?.currentPosition,
+                                                    item?.duration));
                                           }),
                                     ),
                                   ),
