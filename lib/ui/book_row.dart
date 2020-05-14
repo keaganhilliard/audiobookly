@@ -27,7 +27,7 @@ class BookRow extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(15.0, 20.0, 10.0, 8.0),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.headline,
                 )),
             Padding(
               padding: EdgeInsets.only(left: 5.0),

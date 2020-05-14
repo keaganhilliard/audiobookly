@@ -18,7 +18,7 @@ class Book extends DataClass implements Insertable<Book> {
       @required this.title,
       @required this.author,
       @required this.duration,
-      @required this.savedPosition});
+      this.savedPosition});
   factory Book.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -36,6 +36,27 @@ class Book extends DataClass implements Insertable<Book> {
           .mapFromDatabaseResponse(data['${effectivePrefix}saved_position']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<String>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || author != null) {
+      map['author'] = Variable<String>(author);
+    }
+    if (!nullToAbsent || duration != null) {
+      map['duration'] = Variable<int>(duration);
+    }
+    if (!nullToAbsent || savedPosition != null) {
+      map['saved_position'] = Variable<int>(savedPosition);
+    }
+    return map;
+  }
+
   factory Book.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -57,23 +78,6 @@ class Book extends DataClass implements Insertable<Book> {
       'duration': serializer.toJson<int>(duration),
       'savedPosition': serializer.toJson<int>(savedPosition),
     };
-  }
-
-  @override
-  BooksCompanion createCompanion(bool nullToAbsent) {
-    return BooksCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-      author:
-          author == null && nullToAbsent ? const Value.absent() : Value(author),
-      duration: duration == null && nullToAbsent
-          ? const Value.absent()
-          : Value(duration),
-      savedPosition: savedPosition == null && nullToAbsent
-          ? const Value.absent()
-          : Value(savedPosition),
-    );
   }
 
   Book copyWith(
@@ -137,12 +141,27 @@ class BooksCompanion extends UpdateCompanion<Book> {
     @required String title,
     @required String author,
     @required int duration,
-    @required int savedPosition,
+    this.savedPosition = const Value.absent(),
   })  : id = Value(id),
         title = Value(title),
         author = Value(author),
-        duration = Value(duration),
-        savedPosition = Value(savedPosition);
+        duration = Value(duration);
+  static Insertable<Book> custom({
+    Expression<String> id,
+    Expression<String> title,
+    Expression<String> author,
+    Expression<int> duration,
+    Expression<int> savedPosition,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (author != null) 'author': author,
+      if (duration != null) 'duration': duration,
+      if (savedPosition != null) 'saved_position': savedPosition,
+    });
+  }
+
   BooksCompanion copyWith(
       {Value<String> id,
       Value<String> title,
@@ -156,6 +175,27 @@ class BooksCompanion extends UpdateCompanion<Book> {
       duration: duration ?? this.duration,
       savedPosition: savedPosition ?? this.savedPosition,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (author.present) {
+      map['author'] = Variable<String>(author.value);
+    }
+    if (duration.present) {
+      map['duration'] = Variable<int>(duration.value);
+    }
+    if (savedPosition.present) {
+      map['saved_position'] = Variable<int>(savedPosition.value);
+    }
+    return map;
   }
 }
 
@@ -192,11 +232,8 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   @override
   GeneratedTextColumn get author => _author ??= _constructAuthor();
   GeneratedTextColumn _constructAuthor() {
-    return GeneratedTextColumn(
-      'author',
-      $tableName,
-      false,
-    );
+    return GeneratedTextColumn('author', $tableName, false,
+        $customConstraints: 'REFERENCES authors(id)');
   }
 
   final VerificationMeta _durationMeta = const VerificationMeta('duration');
@@ -221,7 +258,7 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
     return GeneratedIntColumn(
       'saved_position',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -235,39 +272,38 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   @override
   final String actualTableName = 'books';
   @override
-  VerificationContext validateIntegrity(BooksCompanion d,
+  VerificationContext validateIntegrity(Insertable<Book> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
-    if (d.title.present) {
+    if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableValue(d.title.value, _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (d.author.present) {
-      context.handle(
-          _authorMeta, author.isAcceptableValue(d.author.value, _authorMeta));
+    if (data.containsKey('author')) {
+      context.handle(_authorMeta,
+          author.isAcceptableOrUnknown(data['author'], _authorMeta));
     } else if (isInserting) {
       context.missing(_authorMeta);
     }
-    if (d.duration.present) {
+    if (data.containsKey('duration')) {
       context.handle(_durationMeta,
-          duration.isAcceptableValue(d.duration.value, _durationMeta));
+          duration.isAcceptableOrUnknown(data['duration'], _durationMeta));
     } else if (isInserting) {
       context.missing(_durationMeta);
     }
-    if (d.savedPosition.present) {
+    if (data.containsKey('saved_position')) {
       context.handle(
           _savedPositionMeta,
-          savedPosition.isAcceptableValue(
-              d.savedPosition.value, _savedPositionMeta));
-    } else if (isInserting) {
-      context.missing(_savedPositionMeta);
+          savedPosition.isAcceptableOrUnknown(
+              data['saved_position'], _savedPositionMeta));
     }
     return context;
   }
@@ -278,27 +314,6 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   Book map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Book.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(BooksCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<String, StringType>(d.id.value);
-    }
-    if (d.title.present) {
-      map['title'] = Variable<String, StringType>(d.title.value);
-    }
-    if (d.author.present) {
-      map['author'] = Variable<String, StringType>(d.author.value);
-    }
-    if (d.duration.present) {
-      map['duration'] = Variable<int, IntType>(d.duration.value);
-    }
-    if (d.savedPosition.present) {
-      map['saved_position'] = Variable<int, IntType>(d.savedPosition.value);
-    }
-    return map;
   }
 
   @override
@@ -321,6 +336,18 @@ class Author extends DataClass implements Insertable<Author> {
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<String>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    return map;
+  }
+
   factory Author.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -336,15 +363,6 @@ class Author extends DataClass implements Insertable<Author> {
       'id': serializer.toJson<String>(id),
       'title': serializer.toJson<String>(title),
     };
-  }
-
-  @override
-  AuthorsCompanion createCompanion(bool nullToAbsent) {
-    return AuthorsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-    );
   }
 
   Author copyWith({String id, String title}) => Author(
@@ -380,11 +398,33 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
     @required String title,
   })  : id = Value(id),
         title = Value(title);
+  static Insertable<Author> custom({
+    Expression<String> id,
+    Expression<String> title,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+    });
+  }
+
   AuthorsCompanion copyWith({Value<String> id, Value<String> title}) {
     return AuthorsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    return map;
   }
 }
 
@@ -425,17 +465,18 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
   @override
   final String actualTableName = 'authors';
   @override
-  VerificationContext validateIntegrity(AuthorsCompanion d,
+  VerificationContext validateIntegrity(Insertable<Author> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
-    if (d.title.present) {
+    if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableValue(d.title.value, _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
@@ -448,18 +489,6 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
   Author map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Author.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(AuthorsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<String, StringType>(d.id.value);
-    }
-    if (d.title.present) {
-      map['title'] = Variable<String, StringType>(d.title.value);
-    }
-    return map;
   }
 
   @override
@@ -479,13 +508,13 @@ class Track extends DataClass implements Insertable<Track> {
   final int savedPosition;
   Track(
       {@required this.id,
-      @required this.title,
+      this.title,
       @required this.book,
-      @required this.cachedPath,
+      this.cachedPath,
       @required this.fileUrl,
       @required this.cached,
       @required this.duration,
-      @required this.savedPosition});
+      this.savedPosition});
   factory Track.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -509,6 +538,36 @@ class Track extends DataClass implements Insertable<Track> {
           .mapFromDatabaseResponse(data['${effectivePrefix}saved_position']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<String>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || book != null) {
+      map['book'] = Variable<String>(book);
+    }
+    if (!nullToAbsent || cachedPath != null) {
+      map['cached_path'] = Variable<String>(cachedPath);
+    }
+    if (!nullToAbsent || fileUrl != null) {
+      map['file_url'] = Variable<String>(fileUrl);
+    }
+    if (!nullToAbsent || cached != null) {
+      map['cached'] = Variable<bool>(cached);
+    }
+    if (!nullToAbsent || duration != null) {
+      map['duration'] = Variable<int>(duration);
+    }
+    if (!nullToAbsent || savedPosition != null) {
+      map['saved_position'] = Variable<int>(savedPosition);
+    }
+    return map;
+  }
+
   factory Track.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -536,30 +595,6 @@ class Track extends DataClass implements Insertable<Track> {
       'duration': serializer.toJson<int>(duration),
       'savedPosition': serializer.toJson<int>(savedPosition),
     };
-  }
-
-  @override
-  TracksCompanion createCompanion(bool nullToAbsent) {
-    return TracksCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-      book: book == null && nullToAbsent ? const Value.absent() : Value(book),
-      cachedPath: cachedPath == null && nullToAbsent
-          ? const Value.absent()
-          : Value(cachedPath),
-      fileUrl: fileUrl == null && nullToAbsent
-          ? const Value.absent()
-          : Value(fileUrl),
-      cached:
-          cached == null && nullToAbsent ? const Value.absent() : Value(cached),
-      duration: duration == null && nullToAbsent
-          ? const Value.absent()
-          : Value(duration),
-      savedPosition: savedPosition == null && nullToAbsent
-          ? const Value.absent()
-          : Value(savedPosition),
-    );
   }
 
   Track copyWith(
@@ -646,21 +681,39 @@ class TracksCompanion extends UpdateCompanion<Track> {
   });
   TracksCompanion.insert({
     @required String id,
-    @required String title,
+    this.title = const Value.absent(),
     @required String book,
-    @required String cachedPath,
+    this.cachedPath = const Value.absent(),
     @required String fileUrl,
-    @required bool cached,
+    this.cached = const Value.absent(),
     @required int duration,
-    @required int savedPosition,
+    this.savedPosition = const Value.absent(),
   })  : id = Value(id),
-        title = Value(title),
         book = Value(book),
-        cachedPath = Value(cachedPath),
         fileUrl = Value(fileUrl),
-        cached = Value(cached),
-        duration = Value(duration),
-        savedPosition = Value(savedPosition);
+        duration = Value(duration);
+  static Insertable<Track> custom({
+    Expression<String> id,
+    Expression<String> title,
+    Expression<String> book,
+    Expression<String> cachedPath,
+    Expression<String> fileUrl,
+    Expression<bool> cached,
+    Expression<int> duration,
+    Expression<int> savedPosition,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (book != null) 'book': book,
+      if (cachedPath != null) 'cached_path': cachedPath,
+      if (fileUrl != null) 'file_url': fileUrl,
+      if (cached != null) 'cached': cached,
+      if (duration != null) 'duration': duration,
+      if (savedPosition != null) 'saved_position': savedPosition,
+    });
+  }
+
   TracksCompanion copyWith(
       {Value<String> id,
       Value<String> title,
@@ -680,6 +733,36 @@ class TracksCompanion extends UpdateCompanion<Track> {
       duration: duration ?? this.duration,
       savedPosition: savedPosition ?? this.savedPosition,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (book.present) {
+      map['book'] = Variable<String>(book.value);
+    }
+    if (cachedPath.present) {
+      map['cached_path'] = Variable<String>(cachedPath.value);
+    }
+    if (fileUrl.present) {
+      map['file_url'] = Variable<String>(fileUrl.value);
+    }
+    if (cached.present) {
+      map['cached'] = Variable<bool>(cached.value);
+    }
+    if (duration.present) {
+      map['duration'] = Variable<int>(duration.value);
+    }
+    if (savedPosition.present) {
+      map['saved_position'] = Variable<int>(savedPosition.value);
+    }
+    return map;
   }
 }
 
@@ -707,7 +790,7 @@ class $TracksTable extends Tracks with TableInfo<$TracksTable, Track> {
     return GeneratedTextColumn(
       'title',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -728,7 +811,7 @@ class $TracksTable extends Tracks with TableInfo<$TracksTable, Track> {
     return GeneratedTextColumn(
       'cached_path',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -749,11 +832,8 @@ class $TracksTable extends Tracks with TableInfo<$TracksTable, Track> {
   @override
   GeneratedBoolColumn get cached => _cached ??= _constructCached();
   GeneratedBoolColumn _constructCached() {
-    return GeneratedBoolColumn(
-      'cached',
-      $tableName,
-      false,
-    );
+    return GeneratedBoolColumn('cached', $tableName, false,
+        defaultValue: const Constant(false));
   }
 
   final VerificationMeta _durationMeta = const VerificationMeta('duration');
@@ -778,7 +858,7 @@ class $TracksTable extends Tracks with TableInfo<$TracksTable, Track> {
     return GeneratedIntColumn(
       'saved_position',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -792,57 +872,52 @@ class $TracksTable extends Tracks with TableInfo<$TracksTable, Track> {
   @override
   final String actualTableName = 'tracks';
   @override
-  VerificationContext validateIntegrity(TracksCompanion d,
+  VerificationContext validateIntegrity(Insertable<Track> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
-    if (d.title.present) {
+    if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableValue(d.title.value, _titleMeta));
-    } else if (isInserting) {
-      context.missing(_titleMeta);
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     }
-    if (d.book.present) {
+    if (data.containsKey('book')) {
       context.handle(
-          _bookMeta, book.isAcceptableValue(d.book.value, _bookMeta));
+          _bookMeta, book.isAcceptableOrUnknown(data['book'], _bookMeta));
     } else if (isInserting) {
       context.missing(_bookMeta);
     }
-    if (d.cachedPath.present) {
-      context.handle(_cachedPathMeta,
-          cachedPath.isAcceptableValue(d.cachedPath.value, _cachedPathMeta));
-    } else if (isInserting) {
-      context.missing(_cachedPathMeta);
+    if (data.containsKey('cached_path')) {
+      context.handle(
+          _cachedPathMeta,
+          cachedPath.isAcceptableOrUnknown(
+              data['cached_path'], _cachedPathMeta));
     }
-    if (d.fileUrl.present) {
+    if (data.containsKey('file_url')) {
       context.handle(_fileUrlMeta,
-          fileUrl.isAcceptableValue(d.fileUrl.value, _fileUrlMeta));
+          fileUrl.isAcceptableOrUnknown(data['file_url'], _fileUrlMeta));
     } else if (isInserting) {
       context.missing(_fileUrlMeta);
     }
-    if (d.cached.present) {
-      context.handle(
-          _cachedMeta, cached.isAcceptableValue(d.cached.value, _cachedMeta));
-    } else if (isInserting) {
-      context.missing(_cachedMeta);
+    if (data.containsKey('cached')) {
+      context.handle(_cachedMeta,
+          cached.isAcceptableOrUnknown(data['cached'], _cachedMeta));
     }
-    if (d.duration.present) {
+    if (data.containsKey('duration')) {
       context.handle(_durationMeta,
-          duration.isAcceptableValue(d.duration.value, _durationMeta));
+          duration.isAcceptableOrUnknown(data['duration'], _durationMeta));
     } else if (isInserting) {
       context.missing(_durationMeta);
     }
-    if (d.savedPosition.present) {
+    if (data.containsKey('saved_position')) {
       context.handle(
           _savedPositionMeta,
-          savedPosition.isAcceptableValue(
-              d.savedPosition.value, _savedPositionMeta));
-    } else if (isInserting) {
-      context.missing(_savedPositionMeta);
+          savedPosition.isAcceptableOrUnknown(
+              data['saved_position'], _savedPositionMeta));
     }
     return context;
   }
@@ -853,36 +928,6 @@ class $TracksTable extends Tracks with TableInfo<$TracksTable, Track> {
   Track map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Track.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(TracksCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<String, StringType>(d.id.value);
-    }
-    if (d.title.present) {
-      map['title'] = Variable<String, StringType>(d.title.value);
-    }
-    if (d.book.present) {
-      map['book'] = Variable<String, StringType>(d.book.value);
-    }
-    if (d.cachedPath.present) {
-      map['cached_path'] = Variable<String, StringType>(d.cachedPath.value);
-    }
-    if (d.fileUrl.present) {
-      map['file_url'] = Variable<String, StringType>(d.fileUrl.value);
-    }
-    if (d.cached.present) {
-      map['cached'] = Variable<bool, BoolType>(d.cached.value);
-    }
-    if (d.duration.present) {
-      map['duration'] = Variable<int, IntType>(d.duration.value);
-    }
-    if (d.savedPosition.present) {
-      map['saved_position'] = Variable<int, IntType>(d.savedPosition.value);
-    }
-    return map;
   }
 
   @override
@@ -905,6 +950,18 @@ class Collection extends DataClass implements Insertable<Collection> {
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<String>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    return map;
+  }
+
   factory Collection.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -920,15 +977,6 @@ class Collection extends DataClass implements Insertable<Collection> {
       'id': serializer.toJson<String>(id),
       'title': serializer.toJson<String>(title),
     };
-  }
-
-  @override
-  CollectionsCompanion createCompanion(bool nullToAbsent) {
-    return CollectionsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-    );
   }
 
   Collection copyWith({String id, String title}) => Collection(
@@ -964,11 +1012,33 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     @required String title,
   })  : id = Value(id),
         title = Value(title);
+  static Insertable<Collection> custom({
+    Expression<String> id,
+    Expression<String> title,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+    });
+  }
+
   CollectionsCompanion copyWith({Value<String> id, Value<String> title}) {
     return CollectionsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    return map;
   }
 }
 
@@ -1010,17 +1080,18 @@ class $CollectionsTable extends Collections
   @override
   final String actualTableName = 'collections';
   @override
-  VerificationContext validateIntegrity(CollectionsCompanion d,
+  VerificationContext validateIntegrity(Insertable<Collection> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
-    if (d.title.present) {
+    if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableValue(d.title.value, _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
@@ -1033,18 +1104,6 @@ class $CollectionsTable extends Collections
   Collection map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Collection.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(CollectionsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<String, StringType>(d.id.value);
-    }
-    if (d.title.present) {
-      map['title'] = Variable<String, StringType>(d.title.value);
-    }
-    return map;
   }
 
   @override
@@ -1069,6 +1128,18 @@ class CollectionMember extends DataClass
       book: stringType.mapFromDatabaseResponse(data['${effectivePrefix}book']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || collection != null) {
+      map['collection'] = Variable<String>(collection);
+    }
+    if (!nullToAbsent || book != null) {
+      map['book'] = Variable<String>(book);
+    }
+    return map;
+  }
+
   factory CollectionMember.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -1084,16 +1155,6 @@ class CollectionMember extends DataClass
       'collection': serializer.toJson<String>(collection),
       'book': serializer.toJson<String>(book),
     };
-  }
-
-  @override
-  CollectionMembersCompanion createCompanion(bool nullToAbsent) {
-    return CollectionMembersCompanion(
-      collection: collection == null && nullToAbsent
-          ? const Value.absent()
-          : Value(collection),
-      book: book == null && nullToAbsent ? const Value.absent() : Value(book),
-    );
   }
 
   CollectionMember copyWith({String collection, String book}) =>
@@ -1132,12 +1193,34 @@ class CollectionMembersCompanion extends UpdateCompanion<CollectionMember> {
     @required String book,
   })  : collection = Value(collection),
         book = Value(book);
+  static Insertable<CollectionMember> custom({
+    Expression<String> collection,
+    Expression<String> book,
+  }) {
+    return RawValuesInsertable({
+      if (collection != null) 'collection': collection,
+      if (book != null) 'book': book,
+    });
+  }
+
   CollectionMembersCompanion copyWith(
       {Value<String> collection, Value<String> book}) {
     return CollectionMembersCompanion(
       collection: collection ?? this.collection,
       book: book ?? this.book,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (collection.present) {
+      map['collection'] = Variable<String>(collection.value);
+    }
+    if (book.present) {
+      map['book'] = Variable<String>(book.value);
+    }
+    return map;
   }
 }
 
@@ -1151,11 +1234,8 @@ class $CollectionMembersTable extends CollectionMembers
   @override
   GeneratedTextColumn get collection => _collection ??= _constructCollection();
   GeneratedTextColumn _constructCollection() {
-    return GeneratedTextColumn(
-      'collection',
-      $tableName,
-      false,
-    );
+    return GeneratedTextColumn('collection', $tableName, false,
+        $customConstraints: 'REFERENCES collections(id)');
   }
 
   final VerificationMeta _bookMeta = const VerificationMeta('book');
@@ -1179,18 +1259,21 @@ class $CollectionMembersTable extends CollectionMembers
   @override
   final String actualTableName = 'collection_members';
   @override
-  VerificationContext validateIntegrity(CollectionMembersCompanion d,
+  VerificationContext validateIntegrity(Insertable<CollectionMember> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.collection.present) {
-      context.handle(_collectionMeta,
-          collection.isAcceptableValue(d.collection.value, _collectionMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('collection')) {
+      context.handle(
+          _collectionMeta,
+          collection.isAcceptableOrUnknown(
+              data['collection'], _collectionMeta));
     } else if (isInserting) {
       context.missing(_collectionMeta);
     }
-    if (d.book.present) {
+    if (data.containsKey('book')) {
       context.handle(
-          _bookMeta, book.isAcceptableValue(d.book.value, _bookMeta));
+          _bookMeta, book.isAcceptableOrUnknown(data['book'], _bookMeta));
     } else if (isInserting) {
       context.missing(_bookMeta);
     }
@@ -1203,18 +1286,6 @@ class $CollectionMembersTable extends CollectionMembers
   CollectionMember map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return CollectionMember.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(CollectionMembersCompanion d) {
-    final map = <String, Variable>{};
-    if (d.collection.present) {
-      map['collection'] = Variable<String, StringType>(d.collection.value);
-    }
-    if (d.book.present) {
-      map['book'] = Variable<String, StringType>(d.book.value);
-    }
-    return map;
   }
 
   @override

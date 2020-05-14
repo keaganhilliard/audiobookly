@@ -31,7 +31,7 @@ class SettingsView extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 16.0),
                   child: Text(
                     'Server Type',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.subtitle,
                   ),
                 ),
                 DropdownButton<String>(

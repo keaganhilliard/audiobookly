@@ -518,6 +518,7 @@ Future startAudioService() async {
     androidNotificationChannelName: 'Audiobookly',
     notificationColor: Colors.deepPurple.value,
     androidNotificationIcon: 'mipmap/audiobookly_launcher',
+    androidStopForegroundOnPause: true,
     enableQueue: true,
   );
 }

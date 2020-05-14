@@ -145,13 +145,13 @@ class BookView extends StatelessWidget {
                                           item?.album ?? book?.album ?? '',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline6,
+                                              .headline,
                                         ),
                                         Text(
                                           book?.artist ?? '',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle2,
+                                              .subtitle,
                                         ),
                                         Text(
                                           model.genDuration(book?.duration ??
@@ -159,7 +159,7 @@ class BookView extends StatelessWidget {
                                               0),
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle2,
+                                              .subtitle,
                                         ),
                                       ],
                                     ),

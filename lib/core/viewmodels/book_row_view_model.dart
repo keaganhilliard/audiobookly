@@ -22,5 +22,6 @@ class BookRowViewModel extends BaseModel {
 
   Future<void> refresh() async {
     items = await _communicator.getChildren(_parentMediaId);
+    notifyListeners();
   }
 }
