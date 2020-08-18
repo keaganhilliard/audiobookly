@@ -1,4 +1,5 @@
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/now_playing_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
@@ -72,13 +73,13 @@ class NowPlaying extends StatelessWidget {
                     ),
                     IconButton(
                       color: Colors.white,
-                      icon: state?.basicState == BasicPlaybackState.playing
+                      icon: state?.playing ?? false
                           ? Icon(Icons.pause)
                           : Icon(Icons.play_arrow),
                       iconSize: 25,
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       autofocus: false,
-                      onPressed: state?.basicState == BasicPlaybackState.playing
+                      onPressed: state?.playing ?? false
                           ? AudioService.pause
                           : AudioService.play,
                     ),
@@ -88,7 +89,7 @@ class NowPlaying extends StatelessWidget {
                       iconSize: 25,
                       padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
                       autofocus: false,
-                      onPressed: AudioService.stop,
+                      onPressed: NowPlayingController.to.stop,
                     )
                   ],
                 ),

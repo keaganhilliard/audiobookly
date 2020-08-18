@@ -8,6 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
 import 'dart:io';
 
+class ServerAndLibrary {
+  PlexServerV2 server;
+  String library;
+
+  ServerAndLibrary(this.server, this.library);
+}
+
 class PlexServerCommunicator extends ServerCommunicator {
   PlexServerV2 _server;
   String _libraryKey;
@@ -26,6 +33,24 @@ class PlexServerCommunicator extends ServerCommunicator {
       needsRefresh = true;
       _refreshServer.cancel();
     });
+  }
+
+  Future<PlexServerV2> get server async {
+    await refreshServer();
+    return _server;
+  }
+
+  Future<ServerAndLibrary> get serverAndLibrary async =>
+      ServerAndLibrary(await server, _libraryKey);
+
+  String get libraryKey => _libraryKey;
+
+  String getServerUrl(String path) {
+    return _server.getUrlWithToken(path);
+  }
+
+  String getThumbnailUrl(String path) {
+    return _server.getThumbnailUrl(path);
   }
 
   Future getServerAndLibrary() async {

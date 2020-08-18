@@ -1,17 +1,25 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/now_playing_controller.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart';
 import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Repository rep = Repository();
+  // await rep.connect();
+  // print('Connected Refreshing database');
+  // rep.refreshDatabase();
   runApp(App());
 }
 
@@ -35,16 +43,20 @@ class App extends StatelessWidget {
             brightness: Brightness.dark,
             canvasColor: Colors.grey[900],
           ),
-          home: BaseWidget<RootViewModel>(
-            model: RootViewModel(),
-            onModelReady: (model) => model.init(),
-            builder: (context, model, child) {
-              return MyHomePage(
-                title: 'Audiobookly',
-                model: model,
-              );
-            },
-          ),
+          home: GetBuilder<NowPlayingController>(
+              init: NowPlayingController(),
+              builder: (np) {
+                return BaseWidget<RootViewModel>(
+                  model: RootViewModel(),
+                  onModelReady: (model) => model.init(),
+                  builder: (context, model, child) {
+                    return MyHomePage(
+                      title: 'Audiobookly',
+                      model: model,
+                    );
+                  },
+                );
+              }),
         ));
   }
 }
@@ -98,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   void connect() async {
     await AudioService.connect();
+    NowPlayingController.to.handleResume();
   }
 
   void disconnect() {
@@ -155,8 +168,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       StreamProvider<PlaybackState>(
                         create: (context) => AudioService.playbackStateStream,
                         initialData: PlaybackState(
-                          basicState: BasicPlaybackState.none,
+                          processingState: AudioProcessingState.none,
                           actions: null,
+                          playing: false,
                         ),
                       ),
                       StreamProvider<MediaItem>(
@@ -167,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     child: Consumer<PlaybackState>(
                       builder: (context, state, child) {
                         if (state != null &&
-                            state.basicState != BasicPlaybackState.none)
+                            state.processingState != AudioProcessingState.none)
                           return NowPlaying();
                         else
                           return Container();

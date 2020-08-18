@@ -77,4 +77,6 @@ abstract class ServerCommunicator {
   Future<MediaItem> getAlbumFromId(String mediaId);
   Future savePosition(String key, int position, int duration, dynamic state);
   Future getServerAndLibrary();
+  String getServerUrl(String path);
+  String getThumbnailUrl(String path);
 }

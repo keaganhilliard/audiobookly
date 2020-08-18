@@ -159,6 +159,11 @@ class PlexServerV2 {
     return albums;
   }
 
+  Future<List<PlexTrack>> getAllTracks(String libraryKey) async {
+    List<PlexTrack> albums = await api.getAllTracks(this, libraryKey);
+    return albums;
+  }
+
   Future<List<PlexAlbum>> getRecentlyAdded(String libraryKey) async {
     List<PlexAlbum> albums = await api.getRecentlyAdded(this, libraryKey);
     return albums;
@@ -197,6 +202,10 @@ class PlexServerV2 {
 
   String getUrlWithToken(String path) {
     return api.getUrlWithToken(this, path);
+  }
+
+  String getThumbnailUrl(String path) {
+    return api.getThumbnailUrl(this, path);
   }
 }
 

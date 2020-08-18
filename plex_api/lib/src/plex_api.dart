@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:plex_api/src/plex_collections_response.dart';
 import 'package:plex_api/src/plex_metadata_response.dart';
@@ -33,7 +35,7 @@ class PlexApi {
         Uri.https('plex.tv', '/users/account.json'),
         headers: headers.toMap());
     PlexLoginResponse plexLoginResponse =
-        PlexLoginResponse.fromJson(jsonDecode(response.body));
+        PlexLoginResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     user = plexLoginResponse.user;
     return user;
   }
@@ -51,8 +53,8 @@ class PlexApi {
       ''');
     if (response.statusCode != 201) throw Exception('Bull shit');
     if (response.statusCode == 201) {
-      PlexLoginResponse plexLoginResponse =
-          PlexLoginResponse.fromJson(jsonDecode(response.body));
+      PlexLoginResponse plexLoginResponse = PlexLoginResponse.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
       user = plexLoginResponse.user;
       headers.token = user.authToken;
     }
@@ -75,7 +77,7 @@ class PlexApi {
         Uri.https('plex.tv', '/api/v2/resources', {'includeHttps': '1'}),
         headers: headers.toMap());
     List<PlexServerV2> servers = [];
-    jsonDecode(response.body).toList().forEach((v) {
+    jsonDecode(utf8.decode(response.bodyBytes)).toList().forEach((v) {
       PlexServerV2 server = PlexServerV2.fromJson(v);
       server.api = this;
       if (server.provides == 'server') {
@@ -90,7 +92,8 @@ class PlexApi {
       http.Response response = await http.get(
           '${server.mainConnection.uri}/library/sections',
           headers: headers.toMap(overrideToken: server.accessToken));
-      PlexSections sections = PlexSections.fromJson(jsonDecode(response.body));
+      PlexSections sections =
+          PlexSections.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       return sections.mediaContainer.directory
           .where((lib) => lib.type == 'artist')
           .toList();
@@ -104,8 +107,8 @@ class PlexApi {
       PlexServerV2 server, String path) async {
     http.Response response = await http.get('${server.mainConnection.uri}$path',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
   }
 
@@ -114,8 +117,8 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/all',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
   }
 
@@ -124,9 +127,37 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/all?type=9',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
+  }
+
+  static List<PlexTrack> decodeTracks(Uint8List body) {
+    print('Trying to decode');
+    PlexMetadataResponse sections =
+        PlexMetadataResponse.fromJson(jsonDecode(utf8.decode(body)));
+    return sections.mediaContainer.metadata;
+  }
+
+  Future<List<PlexTrack>> getAllTracks(
+      PlexServerV2 server, String libraryKey) async {
+    Uri u = Uri.parse(server.mainConnection.uri);
+
+    http.Response response = await http.get(
+        Uri.https(
+            u.authority, 'library/sections/$libraryKey/all', <String, String>{
+          'type': '10',
+          // 'X-Plex-Container-Start': '0',
+          // 'X-Plex-Container-Size': '2000'
+        }),
+        headers: headers.toMap(overrideToken: server.accessToken));
+    print(response.request.url);
+    print(response.body);
+    print('Got the response: ${DateTime.now()}');
+    return await compute(decodeTracks, response.bodyBytes);
+    // PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+    //     jsonDecode(utf8.decode(response.bodyBytes)));
+    // return sections.mediaContainer.metadata;
   }
 
   Future<PlexAlbum> getAlbumFromKey(
@@ -134,8 +165,8 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/metadata/$albumKey/',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata[0];
   }
 
@@ -144,8 +175,8 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/recentlyAdded',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
   }
 
@@ -154,8 +185,8 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/recentlyViewed',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     sections.mediaContainer.metadata.forEach((f) {});
     return sections.mediaContainer.metadata.getRange(0, 3).toList();
   }
@@ -167,8 +198,8 @@ class PlexApi {
         headers: headers.toMap(overrideToken: server.accessToken));
     print('Getting albums for $artistRatingKey');
     print(response.body);
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
   }
 
@@ -177,8 +208,8 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/sections/$libraryKey/all?collection=$collectionKey&type=9&sort=originallyAvailableAt',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
   }
 
@@ -187,8 +218,8 @@ class PlexApi {
     http.Response response = await http.get(
         '${server.mainConnection.uri}/library/metadata/$albumRatingKey/children',
         headers: headers.toMap(overrideToken: server.accessToken));
-    PlexMetadataResponse sections =
-        PlexMetadataResponse.fromJson(jsonDecode(response.body));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer.metadata;
   }
 
@@ -198,7 +229,8 @@ class PlexApi {
         '${server.mainConnection.uri}/library/sections/$libraryKey/collection/?type=9',
         headers: headers.toMap(overrideToken: server.accessToken));
     PlexCollectionsResponse collectionsResponse =
-        PlexCollectionsResponse.fromJson(jsonDecode(response.body));
+        PlexCollectionsResponse.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
     return collectionsResponse.mediaContainer.directory;
   }
 
@@ -236,7 +268,7 @@ class PlexApi {
   Future savePosition(PlexServerV2 server, String key, int currentTime,
       int duration, PlexPlaybackState state) async {
     http.Response response = await http.post(
-        '${server.mainConnection.uri}/:/timeline?ratingKey=$key&$key={Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime',
+        '${server.mainConnection.uri}/:/timeline?ratingKey=$key&$key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime',
         headers: headers.toMap());
     print('Save position response: ${response.body}');
     print(
@@ -254,7 +286,11 @@ class PlexApi {
   }
 
   String getUrlWithToken(PlexServerV2 server, String path) {
-    return '${server.mainConnection.uri}$path?X-Plex-Token=${server.accessToken}';
+    return '${server.mainConnection.uri}$path?X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
+  }
+
+  String getThumbnailUrl(PlexServerV2 server, String path) {
+    return '${server.mainConnection.uri}/photo/:/transcode?width=400&height=400&minSize=1&upscale=1&url=${Uri.encodeComponent(path ?? '')}&X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
   }
 
   Future<Uri> getUsableUri(path) async => Uri.http(
@@ -273,7 +309,7 @@ class PlexApi {
   Future<PlexPin> getPin() async {
     http.Response response = await http
         .post(getPinUri(headers.clientIdentifier), headers: headers.toMap());
-    PlexPin pin = PlexPin.fromJson(jsonDecode(response.body));
+    PlexPin pin = PlexPin.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     return pin;
   }
 
@@ -293,7 +329,7 @@ class PlexApi {
     http.Response response = await http.get(
         Uri.https('plex.tv', '/api/v2/pins/$pinId'),
         headers: headers.toMap());
-    PlexPin pin = PlexPin.fromJson(jsonDecode(response.body));
+    PlexPin pin = PlexPin.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     return pin;
   }
 }

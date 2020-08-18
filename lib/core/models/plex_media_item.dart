@@ -1,5 +1,6 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/models/audiobookly_media_item.dart';
+import 'package:audiobookly/core/utils/utils.dart';
 import 'package:plex_api/plex_api.dart';
 
 class PlexMediaItem extends AudiobooklyMediaItem {
@@ -10,17 +11,18 @@ class PlexMediaItem extends AudiobooklyMediaItem {
       : key = track.ratingKey,
         super(
           serverKey: track.ratingKey,
-          id: server.getUrlWithToken(track.media[0].part[0].key),
+          id: track.ratingKey,
           title: track.title,
           album: track.parentTitle,
           artist: track.grandparentTitle,
-          artUri: server.getUrlWithToken(track.parentThumb),
-          duration: duration ?? track.duration,
+          artUri: server.getThumbnailUrl(track.parentThumb),
+          duration: Duration(milliseconds: duration ?? track.duration),
           extras: <String, dynamic>{
-            'fileName': track.media[0].part[0].file
-                .substring(track.media[0].part[0].file.lastIndexOf('/') + 1),
-            'uri': server.getUrlWithToken(track.media[0].part[0].key),
+            'fileName': Utils.cleanFileName(track.media[0].part[0].file
+                .substring(track.media[0].part[0].file.lastIndexOf('/') + 1)),
+            'partKey': track.media[0].part[0].key,
             'serverKey': track.ratingKey,
+            'viewOffset': track.viewOffset
           },
         );
   PlexMediaItem.fromPlexArtist(PlexArtist artist, PlexServerV2 server)
@@ -30,7 +32,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           id: '${MediaIds.AUTHORS_ID}/${artist.ratingKey}',
           title: artist.title,
           album: '',
-          artUri: server.getUrlWithToken(artist.thumb),
+          artUri: server.getThumbnailUrl(artist.thumb),
           playable: false,
         );
   PlexMediaItem.fromPlexAlbum(PlexAlbum album, PlexServerV2 server,
@@ -40,11 +42,11 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           serverKey: album.ratingKey,
           id: album.ratingKey,
           title: album.title,
-          album: '',
+          album: album.title,
           artist: album.parentTitle,
-          artUri: server.getUrlWithToken(album.thumb),
+          artUri: server.getThumbnailUrl(album.thumb),
           displayDescription: album.summary,
-          duration: duration,
+          duration: duration != null ? Duration(milliseconds: duration) : null,
           extras: <String, dynamic>{
             'viewOffset': album.viewOffset,
           },

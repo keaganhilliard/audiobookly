@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 
@@ -10,7 +8,8 @@ class BookViewModel extends BaseModel {
   List<MediaItem> tracks;
 
   String genDurationString(List<MediaItem> tracks) {
-    int total = tracks.fold(0, (total, track) => total + track.duration);
+    int total =
+        tracks.fold(0, (total, track) => total + track.duration.inMilliseconds);
     return genDuration(total);
   }
 
@@ -35,7 +34,7 @@ class BookViewModel extends BaseModel {
     return text;
   }
 
-  String get duration => genDuration(book?.duration);
+  String get duration => genDuration(book?.duration?.inMilliseconds);
 
   @override
   void dispose() {

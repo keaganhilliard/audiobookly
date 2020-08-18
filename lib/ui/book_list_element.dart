@@ -55,8 +55,13 @@ class BookListElement extends StatelessWidget {
                         imageUrl: thumbnailUrl,
                         fit: BoxFit.cover,
                         alignment: Alignment.center,
-                        placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator()),
+                        placeholder: (context, url) => Container(
+                          color: Theme.of(context).canvasColor,
+                          child: Icon(
+                            Icons.book,
+                            size: 50.0,
+                          ),
+                        ),
                       ),
                     ),
                   ),

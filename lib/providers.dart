@@ -12,7 +12,7 @@ List<SingleChildCloneableWidget> providers = [
 
 List<SingleChildCloneableWidget> independentServices = [
   Provider.value(value: PlexApi(headers: PlexSettings.headers)),
-  Provider.value(value: startAudioService()),
+  // Provider.value(value: startAudioService()),
 ];
 
 List<SingleChildCloneableWidget> dependentServices = [];

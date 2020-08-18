@@ -22,32 +22,63 @@ class BookGridItem extends StatelessWidget {
             Flexible(
               flex: 3,
               child: FractionallySizedBox(
-                heightFactor: .95,
+                heightFactor: 1,
                 child: CachedNetworkImage(
-                  imageUrl: thumbnailUrl,
+                  imageUrl: thumbnailUrl ?? '',
                   fit: BoxFit.cover,
                   alignment: Alignment.center,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
+                  placeholder: (context, url) => Center(
+                    child: Container(
+                      constraints: BoxConstraints.expand(),
+                      color: Colors.black,
+                      child: Icon(
+                        subtitle == null ? Icons.person : Icons.book,
+                        size: 50.0,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
             Flexible(
-              flex: 1,
-              child: ListTile(
-                contentPadding: EdgeInsets.fromLTRB(8.0, 2.0, 0, 1.0),
-                subtitle: subtitle != null
-                    ? Text(
-                        subtitle,
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
                         overflow: TextOverflow.ellipsis,
-                      )
-                    : null,
-                title: Text(
-                  title,
-                  overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      if (subtitle != null)
+                        Text(
+                          subtitle,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              TextStyle(fontSize: 10, color: Colors.grey[400]),
+                        )
+                    ],
+                  ),
+                )
+                // child: ListTile(
+                //   contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 0, 1.0),
+                //   subtitle: subtitle != null
+                //       ? Text(
+                //           subtitle,
+                //           overflow: TextOverflow.ellipsis,
+                //           style: TextStyle(fontSize: 10),
+                //         )
+                //       : null,
+                //   title: Text(
+                //     title,
+                //     overflow: TextOverflow.ellipsis,
+                //     style: TextStyle(fontSize: 11),
+                //   ),
+                // ),
                 ),
-              ),
-            ),
           ],
         ),
       ),

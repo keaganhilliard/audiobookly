@@ -11,7 +11,7 @@ import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/core/viewmodels/book_view_model.dart';
 import 'package:provider/provider.dart';
 
-class BookView extends StatelessWidget {
+class BookView extends StatelessWidget with WidgetsBindingObserver {
   final MediaItem book;
 
   BookView({
@@ -43,7 +43,7 @@ class BookView extends StatelessWidget {
                 child: Scaffold(
                   appBar: AppBar(
                     title: Text(
-                      item?.album ?? '',
+                      book?.album ?? book?.title ?? '',
                     ),
                     actions: <Widget>[
                       IconButton(
@@ -145,21 +145,22 @@ class BookView extends StatelessWidget {
                                           item?.album ?? book?.album ?? '',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline,
+                                              .headline5,
                                         ),
                                         Text(
                                           book?.artist ?? '',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle,
+                                              .subtitle2,
                                         ),
                                         Text(
-                                          model.genDuration(book?.duration ??
-                                              item?.duration ??
+                                          model.genDuration(book
+                                                  ?.duration?.inMilliseconds ??
+                                              item?.duration?.inMilliseconds ??
                                               0),
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle,
+                                              .subtitle2,
                                         ),
                                       ],
                                     ),
@@ -189,8 +190,10 @@ class BookView extends StatelessWidget {
                                           builder: (context, snapshot) {
                                             return Text(
                                                 model.getDurationLeftText(
-                                                    state?.currentPosition,
-                                                    item?.duration));
+                                                    state?.currentPosition
+                                                        ?.inMilliseconds,
+                                                    item?.duration
+                                                        ?.inMilliseconds));
                                           }),
                                     ),
                                   ),
@@ -206,13 +209,16 @@ class BookView extends StatelessWidget {
                                         builder: (context, snapshot) {
                                           return ProgressSlider(
                                             value: state?.currentPosition
+                                                    ?.inMilliseconds
                                                     ?.toDouble() ??
                                                 0,
                                             onChangeEnd: (val) async {
-                                              AudioService.seekTo(val.toInt());
+                                              AudioService.seekTo(Duration(
+                                                  milliseconds: val.toInt()));
                                             },
                                             min: 0,
-                                            max: item?.duration?.toDouble() ??
+                                            max: item?.duration?.inMilliseconds
+                                                    ?.toDouble() ??
                                                 100,
                                           );
                                         }),
@@ -233,32 +239,33 @@ class BookView extends StatelessWidget {
                                       Stack(
                                         children: [
                                           Positioned.fill(
-                                            child: state?.basicState ==
-                                                        BasicPlaybackState
+                                            child: state?.processingState ==
+                                                        AudioProcessingState
                                                             .buffering ||
-                                                    state?.basicState ==
-                                                        BasicPlaybackState
-                                                            .fastForwarding
+                                                    state?.processingState ==
+                                                        AudioProcessingState
+                                                            .fastForwarding ||
+                                                    state?.processingState ==
+                                                        AudioProcessingState
+                                                            .rewinding
                                                 ? CircularProgressIndicator()
                                                 : Container(),
                                           ),
                                           getIconButton(
-                                            icon: state?.basicState ==
-                                                        BasicPlaybackState
-                                                            .playing ||
-                                                    state?.basicState ==
-                                                        BasicPlaybackState
-                                                            .buffering
+                                            icon: state?.playing ??
+                                                    false ||
+                                                        state?.processingState ==
+                                                            AudioProcessingState
+                                                                .buffering
                                                 ? Icon(
                                                     Icons.pause_circle_filled)
                                                 : Icon(
                                                     Icons.play_circle_filled),
-                                            onPressed: state?.basicState ==
-                                                        BasicPlaybackState
-                                                            .playing ||
-                                                    state?.basicState ==
-                                                        BasicPlaybackState
-                                                            .buffering
+                                            onPressed: state?.playing ??
+                                                    false ||
+                                                        state?.processingState ==
+                                                            AudioProcessingState
+                                                                .buffering
                                                 ? AudioService.pause
                                                 : AudioService.play,
                                             color:

@@ -1,7 +1,9 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/now_playing_controller.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:audiobookly/ui/book_grid_item.dart';
+import 'package:audiobookly/ui/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
@@ -50,7 +52,7 @@ class BookSearchDelegate extends SearchDelegate {
     ServerCommunicator theSearch = Provider.of<ServerCommunicator>(context);
     // theSearch.query(query);
 
-    return FutureBuilder(
+    return FutureBuilder<List<MediaItem>>(
       future: theSearch.search(query),
       builder: (context, results) {
         if (!results.hasData) {
@@ -59,23 +61,24 @@ class BookSearchDelegate extends SearchDelegate {
           );
         } else {
           if (results.data.length > 0) {
-            return ListView.builder(
-              itemCount: results.data.length,
-              itemBuilder: (context, index) {
-                MediaItem result = results.data[index];
-                return ListTile(
-                  leading: CachedNetworkImage(imageUrl: result.artUri),
-                  title: Text(result.title),
-                  subtitle: Text(result.artist),
-                  onTap: () {
-                    NavigationService().pushNamed(
-                      Routes.Book,
-                      arguments: result.id,
-                    );
-                  },
-                );
-              },
-            );
+            return ResponsiveGridView<MediaItem>(
+                items: results.data,
+                itemBuilder: (book) {
+                  return BookGridItem(
+                    onTap: () async {
+                      await NowPlayingController.to.playItem(book);
+                      // if (!AudioService.running) await startAudioService();
+                      // await AudioService.playFromMediaId(book.id);
+                      NavigationService().pushNamed(
+                        Routes.Book,
+                        arguments: book,
+                      );
+                    },
+                    thumbnailUrl: book.artUri,
+                    title: book.title,
+                    subtitle: book.artist,
+                  );
+                });
           } else {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,

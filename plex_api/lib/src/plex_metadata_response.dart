@@ -25,6 +25,7 @@ class PlexMetadataResponse {
 
 class MediaContainer {
   int size;
+  int totalSize;
   bool allowSync;
   String art;
   String key;
@@ -43,6 +44,7 @@ class MediaContainer {
 
   MediaContainer.fromJson(Map<String, dynamic> json) {
     size = json['size'];
+    totalSize = json['totalSize'];
     allowSync = json['allowSync'];
     art = json['art'];
     key = json['key'];
@@ -92,6 +94,7 @@ class MediaContainer {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['size'] = this.size;
+    data['totalSize'] = this.totalSize;
     data['allowSync'] = this.allowSync;
     data['art'] = this.art;
     data['key'] = this.key;

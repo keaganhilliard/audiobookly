@@ -26,21 +26,21 @@ class TracksView extends StatelessWidget {
                   appBar: AppBar(
                     title: Text('Tracks'),
                     actions: <Widget>[
-                      if (state?.basicState != BasicPlaybackState.none)
+                      if (state?.processingState != AudioProcessingState.none)
                         IconButton(
                           icon: Icon(Icons.replay_30),
                           onPressed: () {
                             model.rewind();
                           },
                         ),
-                      if (state?.basicState == BasicPlaybackState.paused)
+                      if (!(state?.playing ?? false))
                         IconButton(
                           icon: Icon(Icons.play_arrow),
                           onPressed: () {
                             model.play();
                           },
                         ),
-                      if (state?.basicState == BasicPlaybackState.playing)
+                      if ((state?.playing ?? true))
                         IconButton(
                           icon: Icon(Icons.pause),
                           onPressed: () {
@@ -81,14 +81,26 @@ class TracksView extends StatelessWidget {
                                   if (track.id != item.id)
                                     AudioService.skipToQueueItem(track.id);
                                 },
-                                trailing:
-                                    currentTrack ? Icon(Icons.poll) : null,
+                                trailing: currentTrack
+                                    ? IconButton(
+                                        icon: Icon(Icons.poll),
+                                        onPressed: () {},
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.file_download),
+                                        onPressed: () {
+                                          print('Something');
+                                          model.downloadAllTracks(
+                                              items.sublist(index));
+                                          // model.handleDownload(track);
+                                        },
+                                      ),
                                 title: Text(
                                   '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title == null || track.title.isEmpty ? '' : ' - ' + track.title}',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 subtitle: Text(
-                                    '${Utils.format(Duration(milliseconds: track.duration))}'),
+                                    '${Utils.format(Duration(milliseconds: track.duration.inMilliseconds))}'),
                               ),
                             );
                           },

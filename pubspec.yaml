@@ -19,21 +19,27 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.0+4
+  http: 
   plex_api:
     path: ./plex_api
-  provider: ^3.1.0
-  cached_network_image: ^2.0.0
-  audio_service: ^0.7.2
+  provider: 
+  cached_network_image: 
+  audio_service: 
   just_audio:
   shared_preferences:
   marquee_widget:
   path:
   path_provider:
   moor:
-  moor_ffi:
+  moor_ffi: 
   animations:
   dart_chromecast:
+  get:
+  dio: 
+  url_launcher:
+  rxdart:
+  flutter_inappwebview:
+  freezed_annotation:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -42,6 +48,7 @@ dependencies:
 dev_dependencies:
   moor_generator:
   build_runner:
+  freezed:
   flutter_test:
     sdk: flutter
 

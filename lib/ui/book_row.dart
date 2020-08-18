@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/now_playing_controller.dart';
 import 'package:audiobookly/core/viewmodels/book_row_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/book_list_element.dart';
@@ -49,9 +50,7 @@ class BookRow extends StatelessWidget {
                           final MediaItem book = model.items[index];
                           return BookListElement(
                             onTap: () async {
-                              if (!AudioService.running)
-                                await startAudioService();
-                              await AudioService.playFromMediaId(book.id);
+                              NowPlayingController.to.playItem(book);
                               NavigationService()
                                   .pushNamed(Routes.Book, arguments: book);
                             },
