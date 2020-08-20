@@ -14,8 +14,10 @@ class NowPlayingController extends GetxController {
 
   Future playFromId(String id) async {
     currentItemId = id;
-    if (!AudioService.running) await startAudioService();
-    return await AudioService.playFromMediaId(id);
+    if (!AudioService.running)
+      return await startAudioService(itemId: id, play: true);
+    else
+      return await AudioService.playFromMediaId(id);
   }
 
   Future handleResume() async {

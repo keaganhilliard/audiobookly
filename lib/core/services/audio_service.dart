@@ -132,11 +132,17 @@ class AudioPlayerTask extends BackgroundAudioTask {
     await initPlexApi();
     initPlaybackSpeed();
 
-    initDB();
+    // initDB();
 
     if (params['item'] != null) {
       //handle queueing
-      onPlayFromMediaId(params['item']);
+      final play = params['play'] ?? false;
+      final itemId = params['item'];
+      print('Should${play ? '' : ' not'} play: $itemId');
+      if (play)
+        await onPlayFromMediaId(itemId);
+      else
+        await onPrepareFromMediaId(itemId);
     }
   }
 
@@ -393,17 +399,21 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   @override
-  Future onStop() async {
-    await _audioPlayer.stop();
+  Future<void> onStop() async {
+    print('Something bad happened');
+    await _audioPlayer.pause();
     await _audioPlayer.dispose();
-    _currentMedia = null;
+    print('disposed');
+    // _currentMedia = null;
+    // await _playerStateSubscription.cancel();
+    await _eventSubscription.cancel();
     await _broadcastState();
     // await _setState(processingState: AudioProcessingState.stopped);
     // _refreshServer.cancel();
     // _completer.complete();
-    _playerStateSubscription.cancel();
-    _eventSubscription.cancel();
+    print('Awaiting super!');
     await super.onStop();
+    print('Done');
   }
 
   @override
@@ -458,21 +468,27 @@ class AudioPlayerTask extends BackgroundAudioTask {
                 Uri.parse(_communicator.getServerUrl(item.partKey))))
             .toList()));
     // await AudioServiceBackground.setMediaItem(mediaItem);
+    final latestTrackPosition = findLatestTrackPosition();
     await onSeekTo(
-        _mediaItem.viewOffset == Duration.zero
-            ? findLatestTrackPosition()
-            : Duration.zero,
+        latestTrackPosition == Duration.zero
+            ? _mediaItem.viewOffset
+            : latestTrackPosition,
         true);
   }
 
   Duration findLatestTrackPosition() {
-    int positionInMilliseconds = 0;
     final item = _queue.lastWhere((element) {
-      positionInMilliseconds += element.duration.inMilliseconds;
       return element.viewOffset != Duration.zero;
     });
 
     if (item != null) {
+      int positionInMilliseconds = 0;
+
+      _queue.firstWhere((element) {
+        positionInMilliseconds += element.duration.inMilliseconds;
+        return element.id == item.id;
+      });
+
       positionInMilliseconds -= item.duration.inMilliseconds;
       positionInMilliseconds += item.extras['viewOffset'];
       return Duration(milliseconds: positionInMilliseconds);
@@ -481,6 +497,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   Future<void> _broadcastState() async {
+    print('Brodcasting State: ${_audioPlayer.playing}');
     await AudioServiceBackground.setState(
       controls: [
         Controls.rewindControl,
@@ -526,15 +543,15 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 }
 
-Future startAudioService({String itemId}) async {
+Future startAudioService({String itemId, bool play}) async {
   return await AudioService.start(
-    params: {'item': itemId},
+    params: {'item': itemId, 'play': play},
     backgroundTaskEntrypoint: _audioPlayerTaskEntrypoint,
     androidNotificationChannelName: 'Audiobookly',
     // notificationColor: Colors.deepPurple.value,
     androidNotificationIcon: 'mipmap/audiobookly_launcher',
-    androidStopForegroundOnPause: true,
-    // enableQueue: true,
+    // androidStopForegroundOnPause: true,
+    androidEnableQueue: true,
     androidNotificationOngoing: false,
   );
 }

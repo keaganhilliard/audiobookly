@@ -95,26 +95,29 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                       Positioned(
                                         bottom: 5.0,
                                         right: 5.0,
-                                        child: IconButton(
-                                          color: Colors.grey[400],
-                                          icon: Icon(Icons.info_outline),
-                                          onPressed: () async {
-                                            showModalBottomSheet(
-                                                context: context,
-                                                builder: (context) {
-                                                  return SingleChildScrollView(
-                                                    child: Container(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(18.0),
-                                                        child: Text(book
-                                                            .displayDescription),
+                                        child: Opacity(
+                                          opacity: 1,
+                                          child: IconButton(
+                                            color: Colors.grey[100],
+                                            icon: Icon(Icons.info_outline),
+                                            onPressed: () async {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SingleChildScrollView(
+                                                      child: Container(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(18.0),
+                                                          child: Text(book
+                                                              .displayDescription),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
-                                                });
-                                          },
+                                                    );
+                                                  });
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ],

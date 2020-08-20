@@ -5,7 +5,7 @@ import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/ui/base_widget.dart';
-import 'package:audiobookly/ui/router.dart';
+import 'package:audiobookly/ui/router.dart' as r;
 import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -32,7 +32,7 @@ class App extends StatelessWidget {
         child: MaterialApp(
           title: 'Audiobookly',
           navigatorKey: NavigationService().navigatorKey,
-          onGenerateRoute: Router.generateRoute,
+          onGenerateRoute: r.Router.generateRoute,
           theme: ThemeData(
             brightness: Brightness.dark,
             accentColor: Colors.deepPurple,
@@ -158,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     ],
                     child: Navigator(
                       key: _navigatorKey,
-                      onGenerateRoute: Router.generateRoute,
+                      onGenerateRoute: r.Router.generateRoute,
                       initialRoute: Routes.Home,
                     ),
                   ),
@@ -192,26 +192,26 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             showUnselectedLabels: true,
             currentIndex: _currentIndex,
             onTap: onNavigationTap,
-            // unselectedItemColor: Theme.of(context).textTheme.title.color,
+            unselectedItemColor: Theme.of(context).textTheme.headline6.color,
             selectedItemColor: Colors.deepPurpleAccent,
             // backgroundColor: Theme.of(context).accentColor,
             elevation: 40.0,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                title: Text('Home'),
+                label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                title: Text('Authors'),
+                label: 'Authors',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.book),
-                title: Text('Books'),
+                label: 'Books',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.collections_bookmark),
-                title: Text('Collections'),
+                label: 'Collections',
               ),
             ],
           ),
