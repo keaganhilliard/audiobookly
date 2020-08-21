@@ -29,7 +29,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
   // BookDatabase _db = BookDatabase();
   ServerCommunicator _communicator;
   DownloadService downloadService = DownloadService();
-  StreamSubscription _playerStateSubscription;
   StreamSubscription _eventSubscription;
   Directory storage;
 
@@ -490,7 +489,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
       });
 
       positionInMilliseconds -= item.duration.inMilliseconds;
-      positionInMilliseconds += item.extras['viewOffset'];
+      positionInMilliseconds += item.viewOffset.inMilliseconds;
       return Duration(milliseconds: positionInMilliseconds);
     }
     return Duration.zero;
