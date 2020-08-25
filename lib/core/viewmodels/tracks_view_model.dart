@@ -6,7 +6,6 @@ import 'package:audiobookly/core/services/download_service.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/utils/utils.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ import 'package:flutter/material.dart';
 class TracksViewModel extends ChangeNotifier {
   // DownloadService _downloader = Downloader();
   // StreamSubscription _downloadSub;
-  ServerCommunicator _communicator = Get.find();
+  ServerCommunicator _communicator;
 
   onReady() async {
     // _downloadSub = (await _downloader.connect()).listen((event) {});

@@ -1,9 +1,15 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/services/audio_service.dart';
-import 'package:get/get.dart';
 
-class NowPlayingController extends GetxController {
-  static NowPlayingController get to => Get.find();
+class PlaybackController {
+  static PlaybackController _instance;
+
+  factory PlaybackController() {
+    if (_instance == null) _instance = PlaybackController._internal();
+    return _instance;
+  }
+
+  PlaybackController._internal();
 
   MediaItem currentItem;
   String currentItemId;
@@ -22,8 +28,7 @@ class NowPlayingController extends GetxController {
 
   Future handleResume() async {
     if (currentItem != null && !AudioService.running) {
-      await startAudioService();
-      return await AudioService.prepareFromMediaId(currentItem.id);
+      await startAudioService(itemId: currentItem.id, play: false);
     }
   }
 
@@ -31,4 +36,6 @@ class NowPlayingController extends GetxController {
     await AudioService.stop();
     currentItem = null;
   }
+
+  Future fastForward() async {}
 }

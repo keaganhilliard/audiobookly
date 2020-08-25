@@ -8,7 +8,7 @@ class TestDbViewModel extends BaseModel {
   Stream<BookWithTracks> books;
 
   init() {
-    books = Repository.to.allBooks;
+    // books = Repository.to.allBooks;
     notifyListeners();
   }
 }

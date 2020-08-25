@@ -4,7 +4,6 @@ import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/screens/welcome_view.dart';
-import 'package:get/get.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
@@ -77,13 +76,6 @@ class RootViewModel extends BaseModel {
           url: oAuthUrl,
         );
       }));
-      // if (await urlLauncher.canLaunch(oAuthUrl)) {
-      // urlLauncher.launch(oAuthUrl);
-      // NavigationService().push(MaterialPageRoute(builder: (context) {
-      //   return LoginView(
-      //     url: oAuthUrl,
-      //   );
-      // }));
       int count = 0;
       Timer.periodic(Duration(seconds: 5), (timer) async {
         count++;
@@ -98,7 +90,6 @@ class RootViewModel extends BaseModel {
         print('In Timer: ${authToken.error}');
         if (count > 20) timer.cancel();
       });
-      // }
     } else if (headers != null) {
       headers.token = authToken;
       print('AuthToken: $authToken');
@@ -129,23 +120,10 @@ class RootViewModel extends BaseModel {
               LibrarySelect(model: LibraryListViewModel(server: server)),
         ));
       } else {
-        // List<PlexServerV2> servers = await api.getServersV2();
-        // PlexServerV2 server = servers.firstWhere(
-        //     (server) => server.clientIdentifier == serverId,
-        //     orElse: () => null);
-        // List<PlexLibrary> libraries = await server.getLibraries();
-        // PlexLibrary library = libraries.firstWhere(
-        //     (library) => library.key == libraryKey,
-        //     orElse: () => null);
-        // this.server = server;
-        // this.library = library;
         communicator = PlexServerCommunicator();
         await communicator.getServerAndLibrary();
         repo = new Repository();
-        Get.put(communicator);
-        Get.put(repo);
         repo.connect();
-        // repo.refreshDatabase();
         setBusy(false);
       }
     }

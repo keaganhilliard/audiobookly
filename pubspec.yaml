@@ -34,7 +34,6 @@ dependencies:
   moor_ffi:
   animations:
   dart_chromecast:
-  get:
   dio:
   url_launcher:
   rxdart:

@@ -1,6 +1,6 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
-import 'package:audiobookly/core/services/now_playing_controller.dart';
+import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/repository/repository.dart';
@@ -10,7 +10,6 @@ import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
 
@@ -28,36 +27,33 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     // timeDilation = 7.0;
     return MultiProvider(
-        providers: providers,
-        child: MaterialApp(
-          title: 'Audiobookly',
-          navigatorKey: NavigationService().navigatorKey,
-          onGenerateRoute: r.Router.generateRoute,
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            accentColor: Colors.deepPurple,
-            canvasColor: Colors.grey[900],
-          ),
-          darkTheme: ThemeData(
-            accentColor: Colors.deepPurple,
-            brightness: Brightness.dark,
-            canvasColor: Colors.grey[900],
-          ),
-          home: GetBuilder<NowPlayingController>(
-              init: NowPlayingController(),
-              builder: (np) {
-                return BaseWidget<RootViewModel>(
-                  model: RootViewModel(),
-                  onModelReady: (model) => model.init(),
-                  builder: (context, model, child) {
-                    return MyHomePage(
-                      title: 'Audiobookly',
-                      model: model,
-                    );
-                  },
-                );
-              }),
-        ));
+      providers: providers,
+      child: MaterialApp(
+        title: 'Audiobookly',
+        navigatorKey: NavigationService().navigatorKey,
+        onGenerateRoute: r.Router.generateRoute,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          accentColor: Colors.deepPurple,
+          canvasColor: Colors.grey[900],
+        ),
+        darkTheme: ThemeData(
+          accentColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+          canvasColor: Colors.grey[900],
+        ),
+        home: BaseWidget<RootViewModel>(
+          model: RootViewModel(),
+          onModelReady: (model) => model.init(),
+          builder: (context, model, child) {
+            return MyHomePage(
+              title: 'Audiobookly',
+              model: model,
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 
@@ -110,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   void connect() async {
     await AudioService.connect();
-    NowPlayingController.to.handleResume();
+    PlaybackController().handleResume();
   }
 
   void disconnect() {

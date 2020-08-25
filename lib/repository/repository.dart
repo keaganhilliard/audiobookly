@@ -3,15 +3,12 @@ import 'dart:async';
 import 'package:audiobookly/core/database/database.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:moor/isolate.dart';
 import 'package:moor/moor.dart';
 import 'package:plex_api/plex_api.dart';
 
 class Repository {
   BookDatabase _bookDatabase;
-
-  static Repository get to => Get.find();
 
   Stream get allBooks => _bookDatabase?.allBooksWithTracks();
 

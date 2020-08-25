@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NavigationService {
-  static final NavigationService _instance = NavigationService._internal();
+  static NavigationService _instance;
 
   factory NavigationService() {
+    if (_instance == null) _instance = NavigationService._internal();
     return _instance;
   }
 
