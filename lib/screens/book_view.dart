@@ -396,10 +396,6 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
       color: color,
     );
   }
-
-  static RectTween _createRectTween(Rect begin, Rect end) {
-    return CircularRectTween(begin: begin, end: end);
-  }
 }
 
 class CircularRectTween extends RectTween {

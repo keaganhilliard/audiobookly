@@ -15,21 +15,21 @@ class PlaybackController {
   String currentItemId;
 
   Future playItem(MediaItem item) async {
-    playFromId(item.id);
+    return playFromId(item.id);
   }
 
-  Future playFromId(String id) async {
+  Future playFromId(String id, [bool play = true]) async {
+    if (id == currentItemId && AudioService.running) return;
+
     currentItemId = id;
     if (!AudioService.running)
-      return await startAudioService(itemId: id, play: true);
+      return await startAudioService(itemId: id, play: play);
     else
       return await AudioService.playFromMediaId(id);
   }
 
   Future handleResume() async {
-    if (currentItem != null && !AudioService.running) {
-      await startAudioService(itemId: currentItem.id, play: false);
-    }
+    if (currentItemId != null) return playFromId(currentItemId, false);
   }
 
   Future stop() async {

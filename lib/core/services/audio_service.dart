@@ -1,17 +1,17 @@
 import 'dart:async';
-import 'package:audiobookly/core/database/database.dart';
+// import 'package:audiobookly/core/database/database.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
 import 'package:audiobookly/core/services/download_service.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/utils/utils.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audiobookly/core/constants/media_controls.dart';
-import 'package:moor/isolate.dart';
-import 'package:moor/moor.dart';
+// import 'package:moor/isolate.dart';
+// import 'package:moor/moor.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
@@ -146,11 +146,11 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   Future initDB() async {
-    MoorIsolate i = await getMoorIsolate();
-    DatabaseConnection dbConn = await i.connect();
-    BookDatabase books = BookDatabase.connect(dbConn);
-    print(books.allTables);
-    print(books.allAuthors);
+    // MoorIsolate i = await getMoorIsolate();
+    // DatabaseConnection dbConn = await i.connect();
+    // BookDatabase books = BookDatabase.connect(dbConn);
+    // print(books.allTables);
+    // print(books.allAuthors);
   }
 
   int _queueIndex = -1;
@@ -192,60 +192,60 @@ class AudioPlayerTask extends BackgroundAudioTask {
       await _audioPlayer.seek(Duration.zero, index: _queueIndex);
   }
 
-  Future<void> _skip(
-      [int offset = 0, int trackPosition, bool startPlaying = false]) async {
-    final newPos = _queueIndex + offset;
-    if (!(newPos >= 0 && newPos < _queue.length)) return;
-    if (_audioPlayer.playing) {
-      // Stop current item
-      await _audioPlayer.stop();
-    }
-    // Load next item
-    _queueIndex = newPos;
-    // MediaItem combined = currentQueueItem.copyWith(duration: mediaItem.duration);
-    AudioServiceBackground.setMediaItem(mediaItem.copyWith(
-      title: currentQueueItem.title,
-      album: mediaItem.title,
-      extras: <String, dynamic>{'currentTrack': currentQueueItem.id},
-    ));
-    _skipState = offset > 0
-        ? AudioProcessingState.skippingToNext
-        : AudioProcessingState.skippingToPrevious;
-    print(currentQueueItem.id);
-    String path = getMediaItemFilePath(currentQueueItem);
-    print('here be the path $path');
-    if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
-      print('Found local! $path');
-      await _audioPlayer.setUrl(path).catchError((v, e) {
-        print('We got an error');
-        print(v);
-        print(e);
-      });
-      // cacheNextTwoTracks();
-    } else {
-      final path = _communicator.getServerUrl(currentQueueItem.partKey);
-      await _audioPlayer.setUrl(path);
-      // cacheTrack(currentQueueItem).then((value) {
-      //   if (value)
-      //     _skip(0, _audioPlayer.playbackEvent?.position?.inMilliseconds);
-      //   else {
-      //     if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound)
-      //       File(path).deleteSync();
-      //   }
-      // });
-    }
-    if (trackPosition != null) {
-      await _audioPlayer.seek(Duration(milliseconds: trackPosition));
-      updateProgress(trackPosition, PlexPlaybackState.PLAYING);
-    }
-    _skipState = null;
-    // Resume playback if we were playing or if we want to start playing
-    if (_audioPlayer.playing || startPlaying) {
-      await onPlay();
-    } else {
-      // _setState(processingState: AudioProcessingState.ready);
-    }
-  }
+  // Future<void> _skip(
+  //     [int offset = 0, int trackPosition, bool startPlaying = false]) async {
+  //   final newPos = _queueIndex + offset;
+  //   if (!(newPos >= 0 && newPos < _queue.length)) return;
+  //   if (_audioPlayer.playing) {
+  //     // Stop current item
+  //     await _audioPlayer.stop();
+  //   }
+  //   // Load next item
+  //   _queueIndex = newPos;
+  //   // MediaItem combined = currentQueueItem.copyWith(duration: mediaItem.duration);
+  //   AudioServiceBackground.setMediaItem(mediaItem.copyWith(
+  //     title: currentQueueItem.title,
+  //     album: mediaItem.title,
+  //     extras: <String, dynamic>{'currentTrack': currentQueueItem.id},
+  //   ));
+  //   _skipState = offset > 0
+  //       ? AudioProcessingState.skippingToNext
+  //       : AudioProcessingState.skippingToPrevious;
+  //   print(currentQueueItem.id);
+  //   String path = getMediaItemFilePath(currentQueueItem);
+  //   print('here be the path $path');
+  //   if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
+  //     print('Found local! $path');
+  //     await _audioPlayer.setUrl(path).catchError((v, e) {
+  //       print('We got an error');
+  //       print(v);
+  //       print(e);
+  //     });
+  //     // cacheNextTwoTracks();
+  //   } else {
+  //     final path = _communicator.getServerUrl(currentQueueItem.partKey);
+  //     await _audioPlayer.setUrl(path);
+  //     // cacheTrack(currentQueueItem).then((value) {
+  //     //   if (value)
+  //     //     _skip(0, _audioPlayer.playbackEvent?.position?.inMilliseconds);
+  //     //   else {
+  //     //     if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound)
+  //     //       File(path).deleteSync();
+  //     //   }
+  //     // });
+  //   }
+  //   if (trackPosition != null) {
+  //     await _audioPlayer.seek(Duration(milliseconds: trackPosition));
+  //     updateProgress(trackPosition, PlexPlaybackState.PLAYING);
+  //   }
+  //   _skipState = null;
+  //   // Resume playback if we were playing or if we want to start playing
+  //   if (_audioPlayer.playing || startPlaying) {
+  //     await onPlay();
+  //   } else {
+  //     // _setState(processingState: AudioProcessingState.ready);
+  //   }
+  // }
 
   // Future cacheNextTwoTracks() async {
   //   if (_queueIndex + 1 < _queue.length) {

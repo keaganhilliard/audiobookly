@@ -1,8 +1,10 @@
-import 'package:audiobookly/core/services/navigation_service.dart';
+// import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyInAppBrowser extends InAppBrowser {
   @override
@@ -69,15 +71,21 @@ class _WelcomeViewState extends State<WelcomeView> {
         child: RaisedButton(
             color: Colors.amber,
             onPressed: () async {
-              await widget.browser.open(
-                url: widget.url,
-                options: ChromeSafariBrowserClassOptions(
-                  android: AndroidChromeCustomTabsOptions(
-                    addDefaultShareMenuItem: false,
+              if (kIsWeb) {
+                if (await canLaunch(widget.url)) {
+                  launch(widget.url);
+                }
+              } else {
+                await widget.browser.open(
+                  url: widget.url,
+                  options: ChromeSafariBrowserClassOptions(
+                    android: AndroidChromeCustomTabsOptions(
+                      addDefaultShareMenuItem: false,
+                    ),
+                    ios: IOSSafariOptions(barCollapsingEnabled: true),
                   ),
-                  ios: IOSSafariOptions(barCollapsingEnabled: true),
-                ),
-              );
+                );
+              }
             },
             child: Text('Login to Plex')),
       ),

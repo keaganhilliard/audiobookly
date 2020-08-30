@@ -4,6 +4,7 @@ import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/screens/welcome_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
@@ -34,8 +35,16 @@ class RootViewModel extends BaseModel {
     String serverId = _prefs.getString(SharedPrefStrings.PLEX_SERVER);
     String libraryKey = _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
     PlexHeaders headers;
-
-    if (Platform.isAndroid) {
+    if (kIsWeb) {
+      headers = PlexHeaders(
+        clientIdentifier: 'AUDIOBOOKLY_WEB',
+        device: 'WEB',
+        product: 'Audiobookly',
+        platform: 'Chrome',
+        platformVersion: 'UNKOWN',
+        token: authToken,
+      );
+    } else if (Platform.isAndroid) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
       headers = PlexHeaders(

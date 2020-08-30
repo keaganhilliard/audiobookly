@@ -1,4 +1,4 @@
-import 'package:audio_service/audio_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ResponsiveGridView<T> extends StatelessWidget {
@@ -8,24 +8,25 @@ class ResponsiveGridView<T> extends StatelessWidget {
   ResponsiveGridView({this.items, this.itemBuilder});
 
   Widget build(context) {
+    var screenSize = MediaQuery.of(context).size;
+    var crossCount = 3;
+    var deviceOrientation = MediaQuery.of(context).orientation;
+
+    if (deviceOrientation == Orientation.landscape) crossCount = 4;
+
+    crossCount = (screenSize.width / 160).floor();
+    print(crossCount);
+    print(screenSize.width);
+
     return GridView.builder(
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.7,
-          crossAxisCount:
-              MediaQuery.of(context).orientation == Orientation.portrait
-                  ? 3
-                  : 4),
+        childAspectRatio: 0.7,
+        crossAxisCount: crossCount,
+      ),
       itemBuilder: (context, index) {
         return itemBuilder(items[index]);
       },
     );
-    // return GridView.count(
-    //   crossAxisCount:
-    //       MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 4,
-    //   childAspectRatio: 0.745,
-    //   padding: EdgeInsets.all(10.0),
-    //   children: children,
-    // );
   }
 }

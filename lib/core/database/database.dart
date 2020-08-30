@@ -217,7 +217,7 @@ LazyDatabase _openConnection() {
   });
 }
 
-final String _PORT_NAME = 'BOOK_DB_ISOLATE_NAME';
+const String _PORT_NAME = 'BOOK_DB_ISOLATE_NAME';
 
 Future<MoorIsolate> getMoorIsolate() async {
   SendPort isolateSendPort = IsolateNameServer.lookupPortByName(_PORT_NAME);

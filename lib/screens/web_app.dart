@@ -1,33 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
-import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/providers.dart';
 // import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart' as r;
-import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/screens/web_app.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Repository rep = Repository();
-  // await rep.connect();
-  // print('Connected Refreshing database');
-  // rep.refreshDatabase();
-  if (kIsWeb) {
-    runApp(WebApp());
-  }
-  runApp(App());
-}
-
-class App extends StatelessWidget {
+class WebApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // timeDilation = 7.0;
@@ -38,11 +21,13 @@ class App extends StatelessWidget {
         navigatorKey: NavigationService().navigatorKey,
         onGenerateRoute: r.Router.generateRoute,
         theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
           brightness: Brightness.dark,
           accentColor: Colors.deepPurple,
           canvasColor: Colors.grey[900],
         ),
         darkTheme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
           accentColor: Colors.deepPurple,
           brightness: Brightness.dark,
           canvasColor: Colors.grey[900],
@@ -96,40 +81,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
+    // WidgetsBinding.instance.addObserver(this);
     // startAudioService();
-    connect();
+    // connect();
     super.initState();
   }
 
   @override
   void dispose() {
-    disconnect();
-    WidgetsBinding.instance.removeObserver(this);
+    // disconnect();
+    // WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-
-  void connect() async {
-    await AudioService.connect();
-    PlaybackController().handleResume();
-  }
-
-  void disconnect() {
-    AudioService.disconnect();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        connect();
-        break;
-      case AppLifecycleState.paused:
-        disconnect();
-        break;
-      default:
-        break;
-    }
   }
 
   @override
@@ -146,25 +108,61 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           return !await _navigatorKey.currentState.maybePop();
         },
         child: Scaffold(
-          body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: MultiProvider(
-                    providers: [
-                      Provider.value(
-                        value: model.communicator,
-                      )
-                    ],
-                    child: Navigator(
-                      key: _navigatorKey,
-                      onGenerateRoute: r.Router.generateRoute,
-                      initialRoute: Routes.Home,
+          body: Row(
+            children: <Widget>[
+              NavigationRail(
+                backgroundColor: Theme.of(context).canvasColor,
+                selectedIconTheme: Theme.of(context).iconTheme.copyWith(
+                      color: Theme.of(context).accentColor,
                     ),
-                  ),
+                selectedLabelTextStyle: TextStyle(
+                  color: Theme.of(context).accentColor,
                 ),
-                MultiProvider(
+                selectedIndex: _currentIndex,
+                onDestinationSelected: onNavigationTap,
+                labelType: NavigationRailLabelType.all,
+                destinations: [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.person),
+                    label: Text('Authors'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.book),
+                    label: Text('Books'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.collections_bookmark),
+                    label: Text('Collections'),
+                  ),
+                ],
+              ),
+              VerticalDivider(thickness: 1, width: 1),
+              // This is the main content.
+              Expanded(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: MultiProvider(
+                          providers: [
+                            Provider.value(
+                              value: model.communicator,
+                            )
+                          ],
+                          child: Navigator(
+                            key: _navigatorKey,
+                            onGenerateRoute: r.Router.generateRoute,
+                            initialRoute: Routes.Home,
+                          ),
+                        ),
+                      ),
+
+                      /*MultiProvider(
                     providers: [
                       StreamProvider<PlaybackState>(
                         create: (context) => AudioService.playbackStateStream,
@@ -189,32 +187,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         else
                           return Container();
                       },
-                    )),
-              ]),
-          bottomNavigationBar: BottomNavigationBar(
-            showUnselectedLabels: true,
-            currentIndex: _currentIndex,
-            onTap: onNavigationTap,
-            unselectedItemColor: Theme.of(context).textTheme.headline6.color,
-            selectedItemColor: Colors.deepPurpleAccent,
-            // backgroundColor: Theme.of(context).accentColor,
-            elevation: 40.0,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Authors',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.book),
-                label: 'Books',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.collections_bookmark),
-                label: 'Collections',
+                    )),*/
+                    ]),
               ),
             ],
           ),

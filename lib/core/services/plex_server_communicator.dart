@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
@@ -62,7 +63,16 @@ class PlexServerCommunicator extends ServerCommunicator {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       PlexHeaders headers;
 
-      if (Platform.isAndroid) {
+      if (kIsWeb) {
+        headers = PlexHeaders(
+          clientIdentifier: 'AUDIOBOOKLY_WEB',
+          device: 'WEB',
+          product: 'Audiobookly',
+          platform: 'Chrome',
+          platformVersion: 'UNKOWN',
+          token: authToken,
+        );
+      } else if (Platform.isAndroid) {
         AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
         headers = PlexHeaders(
           clientIdentifier: androidDeviceInfo.androidId,

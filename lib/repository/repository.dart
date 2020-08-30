@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:audiobookly/core/database/database.dart';
+// import 'package:audiobookly/core/database/database.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:moor/isolate.dart';
@@ -8,15 +8,15 @@ import 'package:moor/moor.dart';
 import 'package:plex_api/plex_api.dart';
 
 class Repository {
-  BookDatabase _bookDatabase;
+  // BookDatabase _bookDatabase;
 
-  Stream get allBooks => _bookDatabase?.allBooksWithTracks();
+  // Stream get allBooks => _bookDatabase?.allBooksWithTracks();
 
   Future connect() async {
-    if (_bookDatabase != null) return;
-    MoorIsolate i = await getMoorIsolate();
-    DatabaseConnection dbConn = await i.connect();
-    _bookDatabase = BookDatabase.connect(dbConn);
+    // if (_bookDatabase != null) return;
+    // MoorIsolate i = await getMoorIsolate();
+    // DatabaseConnection dbConn = await i.connect();
+    // _bookDatabase = BookDatabase.connect(dbConn);
   }
 
   static Future<List<PlexTrack>> getAllTracks(ServerAndLibrary sl) async {
@@ -61,49 +61,49 @@ class Repository {
     // }
     print('Tracks got! ${plexTracks.length}');
     print('Finished decode: ${DateTime.now()}');
-    Map<String, Author> authors = Map();
-    Map<String, Book> books = Map();
-    Map<String, List<Track>> tracks = Map();
+    // Map<String, Author> authors = Map();
+    // Map<String, Book> books = Map();
+    // Map<String, List<Track>> tracks = Map();
 
-    plexTracks.forEach((track) {
-      authors.putIfAbsent(
-        track.grandparentRatingKey,
-        () => Author(
-          id: track.grandparentRatingKey,
-          title: track.grandparentTitle,
-          artUrl: track.grandparentThumb,
-        ),
-      );
-      books.putIfAbsent(
-        track.parentRatingKey,
-        () => Book(
-          id: track.parentRatingKey,
-          title: track.parentTitle,
-          artUrl: track.parentThumb ?? track.grandparentThumb ?? 'placeholder',
-          author: track.grandparentRatingKey,
-        ),
-      );
-      tracks.putIfAbsent(track.parentRatingKey, () => []).add(
-            Track(
-              id: track.ratingKey,
-              book: track.parentRatingKey,
-              fileUrl: track.media[0].part[0].file,
-              cached: false,
-              duration: track.duration,
-              index: track.index,
-            ),
-          );
-    });
-    await connect();
-    var res =
-        await _bookDatabase.insertMultipleAuthors(authors.values.toList());
-    print(res);
-    await _bookDatabase.insertMultipleBooks(books.values.toList());
-    await _bookDatabase.insertMultipleTracks(
-      tracks.values.fold([], (previousValue, element) {
-        previousValue.addAll(element);
-        return previousValue;
-      }),
-    );
+    // plexTracks.forEach((track) {
+    //   authors.putIfAbsent(
+    //     track.grandparentRatingKey,
+    //     () => Author(
+    //       id: track.grandparentRatingKey,
+    //       title: track.grandparentTitle,
+    //       artUrl: track.grandparentThumb,
+    //     ),
+    //   );
+    //   books.putIfAbsent(
+    //     track.parentRatingKey,
+    //     () => Book(
+    //       id: track.parentRatingKey,
+    //       title: track.parentTitle,
+    //       artUrl: track.parentThumb ?? track.grandparentThumb ?? 'placeholder',
+    //       author: track.grandparentRatingKey,
+    //     ),
+    //   );
+    //   tracks.putIfAbsent(track.parentRatingKey, () => []).add(
+    //         Track(
+    //           id: track.ratingKey,
+    //           book: track.parentRatingKey,
+    //           fileUrl: track.media[0].part[0].file,
+    //           cached: false,
+    //           duration: track.duration,
+    //           index: track.index,
+    //         ),
+    //       );
+    // });
+    // await connect();
+    // var res =
+    //     await _bookDatabase.insertMultipleAuthors(authors.values.toList());
+    // print(res);
+    // await _bookDatabase.insertMultipleBooks(books.values.toList());
+    // await _bookDatabase.insertMultipleTracks(
+    //   tracks.values.fold([], (previousValue, element) {
+    //     previousValue.addAll(element);
+    //     return previousValue;
+    //   }),
+    // );
   }
 }

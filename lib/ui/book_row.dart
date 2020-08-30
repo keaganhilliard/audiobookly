@@ -1,5 +1,5 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/services/audio_service.dart';
+// import 'package:audiobookly/core/services/audio_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/viewmodels/book_row_view_model.dart';
@@ -16,6 +16,8 @@ class BookRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var deviceData = MediaQuery.of(context);
+    print(deviceData.size.width);
     return BaseWidget<BookRowViewModel>(
       model: model,
       onModelReady: (model) => model.init(),
@@ -28,15 +30,15 @@ class BookRow extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(15.0, 20.0, 10.0, 8.0),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.headline,
+                  style: Theme.of(context).textTheme.headline5,
                 )),
             Padding(
               padding: EdgeInsets.only(left: 5.0),
               child: SizedBox(
-                height:
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                        ? MediaQuery.of(context).size.height * 0.3
-                        : MediaQuery.of(context).size.height * 0.71,
+                height: deviceData.orientation == Orientation.portrait ||
+                        deviceData.size.width < 600
+                    ? deviceData.size.height * 0.3
+                    : deviceData.size.height * 0.71,
                 // Expanded(
                 child: model.busy
                     ? Center(

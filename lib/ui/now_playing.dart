@@ -1,11 +1,11 @@
-import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:animations/animations.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
+import 'package:audiobookly/screens/book_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:marquee_widget/marquee_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:audiobookly/core/constants/app_constants.dart';
 
 class NowPlaying extends StatelessWidget {
   @override
@@ -13,15 +13,28 @@ class NowPlaying extends StatelessWidget {
     MediaItem item = Provider.of(context);
     PlaybackState state = Provider.of(context);
 
-    return Hero(
-      tag: 'book_view',
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        color: Theme.of(context).accentColor,
-        child: InkWell(
+    return Padding(
+      padding: const EdgeInsets.only(left: 2.0, right: 2.0, bottom: 2.0),
+      child: OpenContainer(
+        openBuilder: (_, closeContainer) {
+          MediaItem item = Provider.of(context);
+          return BookView(
+            book: item,
+          );
+        },
+        // clipBehavior: Clip.antiAlias,
+        closedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        closedColor: Theme.of(context).accentColor,
+        closedElevation: 20,
+        closedBuilder: (context, openContainer) => InkWell(
           radius: 2000,
           onTap: () {
-            NavigationService().pushNamed(Routes.Book, arguments: item);
+            // if (openContainer != null)
+            openContainer();
+            // else
+            // NavigationService().pushNamed(Routes.Book, arguments: item);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -96,8 +109,7 @@ class NowPlaying extends StatelessWidget {
             ],
           ),
         ),
-        borderOnForeground: true,
-        elevation: 20,
+        // borderOnForeground: true,
       ),
     );
   }
