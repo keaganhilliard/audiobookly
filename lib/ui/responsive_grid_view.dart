@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class ResponsiveGridView<T> extends StatelessWidget {
   final List<T> items;
@@ -14,7 +15,8 @@ class ResponsiveGridView<T> extends StatelessWidget {
 
     if (deviceOrientation == Orientation.landscape) crossCount = 4;
 
-    crossCount = (screenSize.width / 160).floor();
+    crossCount =
+        max((screenSize.width / 160).floor(), 3); // Always at least 3 columns
     print(crossCount);
     print(screenSize.width);
 

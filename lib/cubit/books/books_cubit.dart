@@ -5,10 +5,12 @@ import 'package:bloc/bloc.dart';
 
 class BooksCubit extends Cubit<BooksState> {
   final ServerCommunicator _communicator;
+  String currentParent;
 
   BooksCubit(this._communicator) : super(BooksState.initial());
 
   Future<void> getBooks(String parentId) async {
+    currentParent = parentId;
     try {
       emit(BooksState.loading());
       final books =

@@ -16,64 +16,64 @@ import 'package:audiobookly/ui/scaffold_without_footer.dart';
 class AuthorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ServerCommunicator _communicator = Provider.of(context);
+    // final ServerCommunicator _communicator = Provider.of(context);
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
     return ScaffoldWithoutFooter(
       title: Text('Authors'),
-      body: BlocProvider(
-        create: (context) => AuthorsCubit(_communicator),
-        child: Builder(
-          builder: (context) => RefreshIndicator(
-            key: _refresher,
-            onRefresh: () async {
-              print('refreshing');
-              return BlocProvider.of<AuthorsCubit>(context).getAuthors();
-            },
-            child: BlocConsumer<AuthorsCubit, AuthorsState>(
-              builder: (context, state) {
-                if (state is AuthorsStateInitial)
-                  _refresher.currentState.show();
-                if (state is AuthorsStateLoaded)
-                  return ResponsiveGridView<MediaItem>(
-                    items: state.authors,
-                    itemBuilder: (author) {
-                      return OpenContainer(
-                        closedElevation: 0.0,
-                        closedColor: Theme.of(context).canvasColor,
-                        openColor: Theme.of(context).canvasColor,
-                        openBuilder: (context, closeContainer) =>
-                            BooksView(mediaId: author.id, title: author.title),
-                        closedBuilder: (context, openContainer) => BookGridItem(
-                          onTap: () async {
-                            openContainer();
-                            // Navigator.of(context)
-                            //     .pushNamed(Routes.Author, arguments: {
-                            //   'authorId': author.id,
-                            //   'authorName': author.title,
-                            // });
-                          },
-                          thumbnailUrl: author.artUri,
-                          title: author.title,
-                        ),
-                      );
-                    },
+      body: RefreshIndicator(
+        key: _refresher,
+        onRefresh: () async {
+          print('refreshing');
+          return context.bloc<AuthorsCubit>().getAuthors();
+        },
+        child: BlocConsumer<AuthorsCubit, AuthorsState>(
+          builder: (context, state) {
+            if (state is AuthorsStateInitial) _refresher.currentState.show();
+            if (state is AuthorsStateLoaded)
+              return ResponsiveGridView<MediaItem>(
+                items: state.authors,
+                itemBuilder: (author) {
+                  return OpenContainer(
+                    closedElevation: 0.0,
+                    closedColor: Theme.of(context).canvasColor,
+                    openColor: Theme.of(context).canvasColor,
+                    openBuilder: (context, closeContainer) =>
+                        BooksView(mediaId: author.id, title: author.title),
+                    closedBuilder: (context, openContainer) => BookGridItem(
+                      onTap: openContainer,
+                      thumbnailUrl: author.artUri,
+                      title: author.title,
+                    ),
                   );
-                else if (state is AuthorsStateErrorDetails)
-                  return Center(
-                    child: Text(state.message),
-                  );
-                else
-                  return Container();
-              },
-              listener: (context, state) {
-                if (state is AuthorsStateInitial) {
-                  _refresher.currentState.show();
-                }
-              },
-            ),
-          ),
+                },
+              );
+            else if (state is AuthorsStateErrorDetails)
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Text(state.message),
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      onPressed: _refresher.currentState.show,
+                      child: Text('Retry'),
+                    )
+                  ],
+                ),
+              );
+            else
+              return Container();
+          },
+          listener: (context, state) {
+            if (state is AuthorsStateInitial) {
+              _refresher.currentState.show();
+            }
+          },
         ),
       ),
     );

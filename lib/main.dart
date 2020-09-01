@@ -2,6 +2,8 @@ import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/viewmodels/root_view_model.dart';
+import 'package:audiobookly/cubit/authors/authors_cubit.dart';
+import 'package:audiobookly/cubit/books/books_cubit.dart';
 import 'package:audiobookly/providers.dart';
 // import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/ui/base_widget.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/screens/web_app.dart';
@@ -153,6 +156,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 Expanded(
                   child: MultiProvider(
                     providers: [
+                      BlocProvider.value(
+                        value: AuthorsCubit(model.communicator),
+                      ),
+                      BlocProvider.value(
+                        value: BooksCubit(model.communicator),
+                      ),
                       Provider.value(
                         value: model.communicator,
                       )

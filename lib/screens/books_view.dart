@@ -21,75 +21,57 @@ class BooksView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ServerCommunicator _communicator = Provider.of(context);
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
     return ScaffoldWithoutFooter(
       title: Text(title ?? 'Books'),
-      body: BlocProvider(
-        create: (context) => BooksCubit(_communicator),
-        child: Builder(
-          builder: (context) => RefreshIndicator(
-            key: _refresher,
-            onRefresh: () async {
-              print('refreshing');
-              return context.bloc<BooksCubit>().getBooks(mediaId);
-            },
-            child: BlocConsumer<BooksCubit, BooksState>(
-              builder: (context, state) {
-                if (state is BooksStateInitial) _refresher.currentState.show();
-                if (state is BooksStateLoaded)
-                  return ResponsiveGridView<MediaItem>(
-                    items: state.books,
-                    itemBuilder: (book) {
-                      return OpenContainer(
-                        closedElevation: 0,
-                        useRootNavigator: true,
-                        closedColor: Theme.of(context).canvasColor,
-                        openColor: Theme.of(context).canvasColor,
-                        openBuilder: (context, closeContainer) =>
-                            BookView(book: book),
-                        closedBuilder: (context, openContainer) => BookGridItem(
-                          onTap: () async {
-                            await PlaybackController().playItem(book);
-                            openContainer();
-                            // NavigationService().pushNamed(
-                            //   Routes.Book,
-                            //   arguments: book,
-                            // );
-                          },
-                          thumbnailUrl: book.artUri,
-                          title: book.title,
-                          subtitle: book.artist,
-                        ),
-                      );
-                    },
+      body: RefreshIndicator(
+        key: _refresher,
+        onRefresh: () async {
+          print('refreshing');
+          return context.bloc<BooksCubit>().getBooks(mediaId);
+        },
+        child: BlocConsumer<BooksCubit, BooksState>(
+          builder: (context, state) {
+            if (context.bloc<BooksCubit>().currentParent != mediaId)
+              _refresher.currentState.show();
+            else if (state is BooksStateInitial) _refresher.currentState.show();
+            if (state is BooksStateLoaded)
+              return ResponsiveGridView<MediaItem>(
+                items: state.books,
+                itemBuilder: (book) {
+                  return OpenContainer(
+                    closedElevation: 0,
+                    useRootNavigator: true,
+                    closedColor: Theme.of(context).canvasColor,
+                    openColor: Theme.of(context).canvasColor,
+                    openBuilder: (context, closeContainer) =>
+                        BookView(book: book),
+                    closedBuilder: (context, openContainer) => BookGridItem(
+                      onTap: () async {
+                        await PlaybackController().playItem(book);
+                        openContainer();
+                        // NavigationService().pushNamed(
+                        //   Routes.Book,
+                        //   arguments: book,
+                        // );
+                      },
+                      thumbnailUrl: book.artUri,
+                      title: book.title,
+                      subtitle: book.artist,
+                    ),
                   );
-                //     BookGridItem(
-                //       onTap: () async {
-                //         await PlaybackController().playItem(book);
-                //         NavigationService().pushNamed(
-                //           Routes.Book,
-                //           arguments: book,
-                //         );
-                //       },
-                //       thumbnailUrl: book.artUri,
-                //       title: book.title,
-                //       subtitle: book.artist,
-                //     );
-                //   },
-                // );
-                else
-                  return Container();
-              },
-              listener: (context, state) {
-                if (state is BooksStateInitial) {
-                  _refresher.currentState.show();
-                }
-              },
-            ),
-          ),
+                },
+              );
+            else
+              return Container();
+          },
+          listener: (context, state) {
+            if (state is BooksStateInitial) {
+              _refresher.currentState.show();
+            }
+          },
         ),
       ),
     );
