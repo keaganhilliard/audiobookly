@@ -19,7 +19,9 @@ class PlaybackController {
   }
 
   Future playFromId(String id, [bool play = true]) async {
+    print('Playing $id ${AudioService.running}');
     if (id == currentItemId && AudioService.running) return;
+    print('Playing ${AudioService.running}');
 
     currentItemId = id;
     if (!AudioService.running)
@@ -37,5 +39,25 @@ class PlaybackController {
     currentItem = null;
   }
 
-  Future fastForward() async {}
+  Future fastForward() async {
+    await AudioService.fastForward();
+  }
+
+  Future rewind() async {
+    await AudioService.rewind();
+  }
+
+  Future play() async {
+    await AudioService.play();
+  }
+
+  Future pause() async {
+    await AudioService.pause();
+  }
+
+  Future seekTo(int position) async {
+    await AudioService.seekTo(
+      Duration(milliseconds: position),
+    );
+  }
 }

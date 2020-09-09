@@ -27,7 +27,7 @@ class BookRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-                padding: EdgeInsets.fromLTRB(15.0, 20.0, 10.0, 8.0),
+                padding: EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
                 child: Text(
                   title,
                   style: Theme.of(context).textTheme.headline5,
@@ -36,7 +36,7 @@ class BookRow extends StatelessWidget {
               padding: EdgeInsets.only(left: 5.0),
               child: SizedBox(
                 height: deviceData.orientation == Orientation.portrait ||
-                        deviceData.size.width < 600
+                        deviceData.size.width > 600
                     ? deviceData.size.height * 0.3
                     : deviceData.size.height * 0.71,
                 // Expanded(

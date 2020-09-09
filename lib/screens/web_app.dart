@@ -1,3 +1,8 @@
+import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/services/playback_controller.dart';
+import 'package:audiobookly/cubit/authors/authors_cubit.dart';
+import 'package:audiobookly/cubit/books/books_cubit.dart';
+import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
@@ -8,6 +13,7 @@ import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart' as r;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class WebApp extends StatelessWidget {
@@ -81,17 +87,26 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    // WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     // startAudioService();
-    // connect();
+    connect();
     super.initState();
   }
 
   @override
   void dispose() {
-    // disconnect();
-    // WidgetsBinding.instance.removeObserver(this);
+    disconnect();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void connect() async {
+    await AudioService.connect();
+    PlaybackController().handleResume();
+  }
+
+  void disconnect() {
+    AudioService.disconnect();
   }
 
   @override
@@ -109,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         },
         child: Scaffold(
           body: Row(
-            children: <Widget>[
+            children: [
               NavigationRail(
                 backgroundColor: Theme.of(context).canvasColor,
                 selectedIconTheme: Theme.of(context).iconTheme.copyWith(
@@ -150,6 +165,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       Expanded(
                         child: MultiProvider(
                           providers: [
+                            BlocProvider.value(
+                              value: AuthorsCubit(model.communicator),
+                            ),
+                            BlocProvider.value(
+                              value: BooksCubit(model.communicator),
+                            ),
                             Provider.value(
                               value: model.communicator,
                             )
@@ -161,33 +182,34 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-
-                      /*MultiProvider(
-                    providers: [
-                      StreamProvider<PlaybackState>(
-                        create: (context) => AudioService.playbackStateStream,
-                        initialData: PlaybackState(
-                          processingState: AudioProcessingState.none,
-                          actions: null,
-                          playing: false,
-                        ),
-                      ),
-                      StreamProvider<MediaItem>(
-                        create: (context) =>
-                            AudioService.currentMediaItemStream,
-                      ),
-                    ],
-                    child: Consumer<PlaybackState>(
-                      builder: (context, state, child) {
-                        MediaItem item = Provider.of(context);
-                        if (item != null &&
-                            state != null &&
-                            state.processingState != AudioProcessingState.none)
-                          return NowPlaying();
-                        else
-                          return Container();
-                      },
-                    )),*/
+                      MultiProvider(
+                          providers: [
+                            StreamProvider<PlaybackState>(
+                              create: (context) =>
+                                  AudioService.playbackStateStream,
+                              initialData: PlaybackState(
+                                processingState: AudioProcessingState.none,
+                                actions: null,
+                                playing: false,
+                              ),
+                            ),
+                            StreamProvider<MediaItem>(
+                              create: (context) =>
+                                  AudioService.currentMediaItemStream,
+                            ),
+                          ],
+                          child: Consumer<PlaybackState>(
+                            builder: (context, state, child) {
+                              MediaItem item = Provider.of(context);
+                              if (item != null &&
+                                  state != null &&
+                                  state.processingState !=
+                                      AudioProcessingState.none)
+                                return NowPlaying();
+                              else
+                                return Container();
+                            },
+                          )),
                     ]),
               ),
             ],

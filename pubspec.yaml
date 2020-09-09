@@ -24,14 +24,17 @@ dependencies:
     path: ./plex_api
   provider:
   cached_network_image:
+  audio_session:
   audio_service:
+    git:
+      url: https://github.com/keaganhilliard/audio_service.git
+      ref: web_support_bugs
   just_audio:
   shared_preferences:
   marquee_widget:
   path:
   path_provider:
-  moor:
-  moor_ffi:
+  moor: ^3.3.1
   animations:
   dart_chromecast:
   dio:

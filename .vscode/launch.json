@@ -13,7 +13,10 @@
             "name": "Flutter Profile",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": [
+                // "--dart-define=FLUTTER_WEB_USE_SKIA=true"
+            ]
         }
     ]
 }

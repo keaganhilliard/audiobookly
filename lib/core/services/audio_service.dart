@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'package:audiobookly/core/database/database.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
 import 'package:audiobookly/core/services/download_service.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
@@ -8,6 +9,7 @@ import 'package:audiobookly/core/utils/utils.dart';
 // import 'package:flutter/foundation.dart';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audiobookly/core/constants/media_controls.dart';
 // import 'package:moor/isolate.dart';
@@ -30,6 +32,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
   ServerCommunicator _communicator;
   DownloadService downloadService = DownloadService();
   StreamSubscription _eventSubscription;
+  StreamSubscription _interruptionSub;
+  StreamSubscription _noisySub;
   Directory storage;
 
   Future getSharedPrefs() async {
@@ -48,35 +52,35 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   bool _shouldStartPlayingAgain = false;
 
-  @override
-  Future onAudioFocusLost(AudioInterruption interruption) async {
-    if (_audioPlayer.playing) {
-      _shouldStartPlayingAgain = true;
-    }
-    switch (interruption) {
-      case AudioInterruption.pause:
-      case AudioInterruption.temporaryPause:
-      case AudioInterruption.unknownPause:
-      case AudioInterruption.temporaryDuck:
-        await onPause();
-        break;
-      default:
-        break;
-    }
-  }
+  // @override
+  // Future onAudioFocusLost(AudioInterruption interruption) async {
+  //   if (_audioPlayer.playing) {
+  //     _shouldStartPlayingAgain = true;
+  //   }
+  //   switch (interruption) {
+  //     case AudioInterruption.pause:
+  //     case AudioInterruption.temporaryPause:
+  //     case AudioInterruption.unknownPause:
+  //     case AudioInterruption.temporaryDuck:
+  //       await onPause();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
-  @override
-  Future onAudioFocusGained(AudioInterruption interruption) async {
-    switch (interruption) {
-      case AudioInterruption.temporaryPause:
-      case AudioInterruption.temporaryDuck:
-        if (!_audioPlayer.playing && _shouldStartPlayingAgain) await onPlay();
-        break;
-      default:
-        break;
-    }
-    _shouldStartPlayingAgain = false;
-  }
+  // @override
+  // Future onAudioFocusGained(AudioInterruption interruption) async {
+  //   switch (interruption) {
+  //     case AudioInterruption.temporaryPause:
+  //     case AudioInterruption.temporaryDuck:
+  //       if (!_audioPlayer.playing && _shouldStartPlayingAgain) await onPlay();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   _shouldStartPlayingAgain = false;
+  // }
 
   @override
   Future onPrepare() async {
@@ -120,16 +124,57 @@ class AudioPlayerTask extends BackgroundAudioTask {
       }
     });
 
+    if (!kIsWeb) {
+      final session = await AudioSession.instance;
+      await session.configure(AudioSessionConfiguration.speech());
+
+      _interruptionSub = session.interruptionEventStream.listen((event) {
+        if (event.begin) {
+          switch (event.type) {
+            case AudioInterruptionType.duck:
+            case AudioInterruptionType.pause:
+            case AudioInterruptionType.unknown:
+              if (_audioPlayer.playing) {
+                onPause();
+                _shouldStartPlayingAgain = true;
+              }
+              break;
+          }
+        } else {
+          switch (event.type) {
+            case AudioInterruptionType.duck:
+            case AudioInterruptionType.pause:
+              if (_shouldStartPlayingAgain) {
+                onPlay();
+                _shouldStartPlayingAgain = false;
+              }
+              break;
+            case AudioInterruptionType.unknown:
+              // The interruption ended but we should not resume.
+              break;
+          }
+        }
+      });
+
+      _noisySub = session.becomingNoisyEventStream.listen((event) {
+        onPause();
+      });
+    }
+
     _eventSubscription = _audioPlayer.playbackEventStream.listen((event) {
       _broadcastState();
     });
 
-    if (Platform.isIOS)
+    if (kIsWeb) {
+    } else if (Platform.isIOS)
       storage = await getApplicationDocumentsDirectory();
     else
       storage = await getExternalStorageDirectory();
     await initPlexApi();
     initPlaybackSpeed();
+
+    print('HERE WE ARE');
+    print(params);
 
     // initDB();
 
@@ -143,6 +188,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
       else
         await onPrepareFromMediaId(itemId);
     }
+
+    print('started!');
   }
 
   Future initDB() async {
@@ -191,99 +238,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
     } else
       await _audioPlayer.seek(Duration.zero, index: _queueIndex);
   }
-
-  // Future<void> _skip(
-  //     [int offset = 0, int trackPosition, bool startPlaying = false]) async {
-  //   final newPos = _queueIndex + offset;
-  //   if (!(newPos >= 0 && newPos < _queue.length)) return;
-  //   if (_audioPlayer.playing) {
-  //     // Stop current item
-  //     await _audioPlayer.stop();
-  //   }
-  //   // Load next item
-  //   _queueIndex = newPos;
-  //   // MediaItem combined = currentQueueItem.copyWith(duration: mediaItem.duration);
-  //   AudioServiceBackground.setMediaItem(mediaItem.copyWith(
-  //     title: currentQueueItem.title,
-  //     album: mediaItem.title,
-  //     extras: <String, dynamic>{'currentTrack': currentQueueItem.id},
-  //   ));
-  //   _skipState = offset > 0
-  //       ? AudioProcessingState.skippingToNext
-  //       : AudioProcessingState.skippingToPrevious;
-  //   print(currentQueueItem.id);
-  //   String path = getMediaItemFilePath(currentQueueItem);
-  //   print('here be the path $path');
-  //   if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound) {
-  //     print('Found local! $path');
-  //     await _audioPlayer.setUrl(path).catchError((v, e) {
-  //       print('We got an error');
-  //       print(v);
-  //       print(e);
-  //     });
-  //     // cacheNextTwoTracks();
-  //   } else {
-  //     final path = _communicator.getServerUrl(currentQueueItem.partKey);
-  //     await _audioPlayer.setUrl(path);
-  //     // cacheTrack(currentQueueItem).then((value) {
-  //     //   if (value)
-  //     //     _skip(0, _audioPlayer.playbackEvent?.position?.inMilliseconds);
-  //     //   else {
-  //     //     if (FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound)
-  //     //       File(path).deleteSync();
-  //     //   }
-  //     // });
-  //   }
-  //   if (trackPosition != null) {
-  //     await _audioPlayer.seek(Duration(milliseconds: trackPosition));
-  //     updateProgress(trackPosition, PlexPlaybackState.PLAYING);
-  //   }
-  //   _skipState = null;
-  //   // Resume playback if we were playing or if we want to start playing
-  //   if (_audioPlayer.playing || startPlaying) {
-  //     await onPlay();
-  //   } else {
-  //     // _setState(processingState: AudioProcessingState.ready);
-  //   }
-  // }
-
-  // Future cacheNextTwoTracks() async {
-  //   if (_queueIndex + 1 < _queue.length) {
-  //     await cacheTrack(_queue[_queueIndex + 1]);
-  //   }
-  //   if (_queueIndex + 2 < _queue.length) {
-  //     return await cacheTrack(_queue[_queueIndex + 2]);
-  //   }
-  // }
-
-  List<MediaItem> toDownload = [];
-
-  // static Future<bool> handleDownload(DownloaderWrapper dw) async {
-  //   return DownloadService.download(dw.downloadUrl, dw.path, dw.fileName);
-  // }
-
-  // Future<bool> cacheTrack(MediaItem item) async {
-  //   if (item == null || toDownload.contains(item)) return false;
-  //   toDownload.add(item);
-  //   try {
-  //     String filePath = getMediaItemFilePath(item);
-  //     if (FileSystemEntity.typeSync(filePath) ==
-  //         FileSystemEntityType.notFound) {
-  //       DownloaderWrapper dw = DownloaderWrapper.fromMediaItem(
-  //           _communicator.getServerUrl(item.partKey), item, storage);
-  //       bool success = await compute(handleDownload, dw);
-  //       if (!success) {
-  //         if (FileSystemEntity.typeSync(filePath) !=
-  //             FileSystemEntityType.notFound) File(filePath).deleteSync();
-  //         return await cacheTrack(item);
-  //       }
-  //       return success;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   return false;
-  // }
 
   String getMediaItemFilePath(MediaItem item) {
     return Utils.cleanPath(p.join(storage.absolute.path, 'cache', item.artist,
@@ -368,12 +322,12 @@ class AudioPlayerTask extends BackgroundAudioTask {
     _audioPlayer.setSpeed(rate);
   }
 
-  @override
-  Future onAudioBecomingNoisy() async {
-    if (_audioPlayer.playing) {
-      await onPause();
-    }
-  }
+  // @override
+  // Future onAudioBecomingNoisy() async {
+  //   if (_audioPlayer.playing) {
+  //     await onPause();
+  //   }
+  // }
 
   @override
   Future onClick(button) async {
@@ -406,6 +360,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
     // _currentMedia = null;
     // await _playerStateSubscription.cancel();
     await _eventSubscription.cancel();
+    await _noisySub?.cancel();
+    await _interruptionSub?.cancel();
     await _broadcastState();
     // await _setState(processingState: AudioProcessingState.stopped);
     // _refreshServer.cancel();
@@ -444,6 +400,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future onPlayFromMediaId(String mediaId) async {
+    print('ONPLAY');
     if (_currentMedia == mediaId) {
       return;
     }

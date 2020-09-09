@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class ResponsiveGridView<T> extends StatelessWidget {
+  final ScrollController _controller = ScrollController();
   final List<T> items;
   final Widget Function(T item) itemBuilder;
 
@@ -20,15 +21,20 @@ class ResponsiveGridView<T> extends StatelessWidget {
     print(crossCount);
     print(screenSize.width);
 
-    return GridView.builder(
-      itemCount: items.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.7,
-        crossAxisCount: crossCount,
+    return Scrollbar(
+      radius: Radius.circular(5.0),
+      controller: _controller,
+      child: GridView.builder(
+        controller: _controller,
+        itemCount: items.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 0.7,
+          crossAxisCount: crossCount,
+        ),
+        itemBuilder: (context, index) {
+          return itemBuilder(items[index]);
+        },
       ),
-      itemBuilder: (context, index) {
-        return itemBuilder(items[index]);
-      },
     );
   }
 }

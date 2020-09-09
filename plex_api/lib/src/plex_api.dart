@@ -268,7 +268,7 @@ class PlexApi {
   Future savePosition(PlexServerV2 server, String key, int currentTime,
       int duration, PlexPlaybackState state) async {
     http.Response response = await http.post(
-        '${server.mainConnection.uri}/:/timeline?ratingKey=$key&$key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime',
+        '${server.mainConnection.uri}/:/timeline?ratingKey=$key&key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime',
         headers: headers.toMap());
     print('Save position response: ${response.body}');
     print(
