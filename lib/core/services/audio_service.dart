@@ -52,36 +52,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   bool _shouldStartPlayingAgain = false;
 
-  // @override
-  // Future onAudioFocusLost(AudioInterruption interruption) async {
-  //   if (_audioPlayer.playing) {
-  //     _shouldStartPlayingAgain = true;
-  //   }
-  //   switch (interruption) {
-  //     case AudioInterruption.pause:
-  //     case AudioInterruption.temporaryPause:
-  //     case AudioInterruption.unknownPause:
-  //     case AudioInterruption.temporaryDuck:
-  //       await onPause();
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
-  // @override
-  // Future onAudioFocusGained(AudioInterruption interruption) async {
-  //   switch (interruption) {
-  //     case AudioInterruption.temporaryPause:
-  //     case AudioInterruption.temporaryDuck:
-  //       if (!_audioPlayer.playing && _shouldStartPlayingAgain) await onPlay();
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   _shouldStartPlayingAgain = false;
-  // }
-
   @override
   Future onPrepare() async {
     print('Preparing!!');
@@ -101,6 +71,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
           album: mediaItem.title,
           extras: <String, dynamic>{'currentTrack': currentQueueItem.id},
         ));
+        initPlaybackSpeed();
         if (_audioPlayer.playing) {
           updateProgress(
               mediaItem.duration.inMilliseconds, PlexPlaybackState.PLAYING);
@@ -171,7 +142,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
     else
       storage = await getExternalStorageDirectory();
     await initPlexApi();
-    initPlaybackSpeed();
 
     print('HERE WE ARE');
     print(params);
@@ -188,6 +158,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
       else
         await onPrepareFromMediaId(itemId);
     }
+    initPlaybackSpeed();
 
     print('started!');
   }

@@ -16,7 +16,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/screens/web_app.dart';
+import 'package:audiobookly/screens/web_app.dart' as web;
+import 'package:responsive_builder/responsive_builder.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,9 +25,9 @@ void main() async {
   // await rep.connect();
   // print('Connected Refreshing database');
   // rep.refreshDatabase();
-  if (kIsWeb) {
-    runApp(WebApp());
-  }
+  // if (kIsWeb) {
+  //   runApp(WebApp());
+  // }
   runApp(App());
 }
 
@@ -54,9 +55,13 @@ class App extends StatelessWidget {
           model: RootViewModel(),
           onModelReady: (model) => model.init(),
           builder: (context, model, child) {
-            return MyHomePage(
-              title: 'Audiobookly',
-              model: model,
+            return ResponsiveBuilder(
+              builder: (context, sizingInfo) => sizingInfo.isDesktop
+                  ? web.MyHomePage(title: 'Audiobookly', model: model)
+                  : MyHomePage(
+                      title: 'Audiobookly',
+                      model: model,
+                    ),
             );
           },
         ),
@@ -107,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    disconnect();
+    if (!kIsWeb) disconnect();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

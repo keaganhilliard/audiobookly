@@ -18,4 +18,6 @@ extension MediaHelpers on MediaItem {
         ? Duration.zero
         : Duration(milliseconds: extras['viewOffset']);
   }
+
+  String get largeThumbnail => extras['largeThumbnail'];
 }

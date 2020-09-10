@@ -289,8 +289,9 @@ class PlexApi {
     return '${server.mainConnection.uri}$path?X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
   }
 
-  String getThumbnailUrl(PlexServerV2 server, String path) {
-    return '${server.mainConnection.uri}/photo/:/transcode?width=400&height=400&minSize=1&upscale=1&url=${Uri.encodeComponent(path ?? '')}&X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
+  String getThumbnailUrl(PlexServerV2 server, String path,
+      [int dimension = 400]) {
+    return '${server.mainConnection.uri}/photo/:/transcode?width=$dimension&height=$dimension&minSize=1&upscale=1&url=${Uri.encodeComponent(path ?? '')}&X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
   }
 
   Future<Uri> getUsableUri(path) async => Uri.http(

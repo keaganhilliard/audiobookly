@@ -49,6 +49,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           duration: duration != null ? Duration(milliseconds: duration) : null,
           extras: <String, dynamic>{
             'viewOffset': album.viewOffset,
+            'largeThumbnail': server.getThumbnailUrl(album.thumb, 600)
           },
         );
   PlexMediaItem.fromPlexCollection(

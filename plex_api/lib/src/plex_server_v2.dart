@@ -204,8 +204,8 @@ class PlexServerV2 {
     return api.getUrlWithToken(this, path);
   }
 
-  String getThumbnailUrl(String path) {
-    return api.getThumbnailUrl(this, path);
+  String getThumbnailUrl(String path, [int dimension = 400]) {
+    return api.getThumbnailUrl(this, path, dimension);
   }
 }
 

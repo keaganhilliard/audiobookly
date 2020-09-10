@@ -5,6 +5,7 @@ import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/utils/utils.dart';
 import 'package:audiobookly/screens/tracks_view.dart';
+import 'package:audiobookly/ui/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee_widget/marquee_widget.dart';
@@ -57,121 +58,91 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                     )
                   ],
                 ),
-                body: Flex(
-                  direction:
-                      MediaQuery.of(context).orientation == Orientation.portrait
-                          ? Axis.vertical
-                          : Axis.horizontal,
+                body: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              // left: 32.0,
-                              // right: 32.0,
-                              // bottom: 16.0,
-                              top: 16.0,
-                            ),
-                            child: FractionallySizedBox(
-                              widthFactor: 0.5,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  // left: 32.0,
+                                  // right: 32.0,
+                                  bottom: 16.0,
+                                  top: 16.0,
                                 ),
-                                clipBehavior: Clip.antiAlias,
-                                child: Stack(
-                                  children: [
-                                    CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: book?.artUri,
-                                      placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 5.0,
-                                      right: 5.0,
-                                      child: Opacity(
-                                        opacity: 1,
-                                        child: IconButton(
-                                          color: Colors.grey[100],
-                                          icon: Icon(Icons.info_outline),
-                                          onPressed: () async {
-                                            showModalBottomSheet(
-                                                context: context,
-                                                builder: (context) {
-                                                  return SingleChildScrollView(
-                                                    child: Container(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(18.0),
-                                                        child: Text(book
-                                                            .displayDescription),
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
-                                          },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Stack(
+                                    children: [
+                                      CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: book?.largeThumbnail ??
+                                            book?.artUri,
+                                        placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator(),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (item != null)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 18.0,
-                              right: 18.0,
-                              bottom: 8.0,
-                              top: 8.0,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        item?.album ?? book?.album ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline5,
-                                      ),
-                                      Text(
-                                        book?.artist ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2,
-                                      ),
-                                      Text(
-                                        model.genDuration(book
-                                                ?.duration?.inMilliseconds ??
-                                            item?.duration?.inMilliseconds ??
-                                            0),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2,
+                                      Positioned(
+                                        bottom: 5.0,
+                                        right: 5.0,
+                                        child: Opacity(
+                                          opacity: 1,
+                                          child: IconButton(
+                                            color: Colors.grey[100],
+                                            icon: Icon(Icons.info_outline),
+                                            onPressed: () async {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SingleChildScrollView(
+                                                      child: Container(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(18.0),
+                                                          child: Text(book
+                                                              .displayDescription),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  });
+                                            },
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                      ],
+                          if (item != null) ...[
+                            Text(
+                              item?.album ?? book?.album ?? '',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            Text(
+                              book?.artist ?? '',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            Text(
+                              model.genDuration(
+                                  book?.duration?.inMilliseconds ??
+                                      item?.duration?.inMilliseconds ??
+                                      0),
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          ],
+                        ],
+                      ),
                     ),
                     if (item != null)
                       Expanded(
@@ -208,20 +179,27 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                         Duration(milliseconds: 200),
                                       ),
                                       builder: (context, snapshot) {
-                                        return ProgressSlider(
-                                          value: state?.currentPosition
-                                                  ?.inMilliseconds
-                                                  ?.toDouble() ??
-                                              0,
-                                          onChangeEnd: (val) async {
-                                            PlaybackController()
-                                                .seekTo(val.toInt());
-                                          },
-                                          min: 0,
-                                          max: item?.duration?.inMilliseconds
-                                                  ?.toDouble() ??
-                                              100,
-                                        );
+                                        return SeekBar(
+                                            duration: item?.duration,
+                                            position: state?.currentPosition,
+                                            onChangeEnd: (val) async {
+                                              await PlaybackController()
+                                                  .seekTo(val.inMilliseconds);
+                                            });
+                                        // ProgressSlider(
+                                        //   value: state?.currentPosition
+                                        //           ?.inMilliseconds
+                                        //           ?.toDouble() ??
+                                        //       0,
+                                        //   onChangeEnd: (val) async {
+                                        //     PlaybackController()
+                                        //         .seekTo(val.toInt());
+                                        //   },
+                                        //   min: 0,
+                                        //   max: item?.duration?.inMilliseconds
+                                        //           ?.toDouble() ??
+                                        //       100,
+                                        // );
                                       }),
                                 ),
                                 Row(
@@ -282,10 +260,8 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                           Duration(milliseconds: 200),
                                         ),
                                         builder: (context, snapshot) {
-                                          return InkWell(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(100)),
-                                            onTap: () => {
+                                          return IconButton(
+                                            onPressed: () => {
                                               showModalBottomSheet(
                                                   clipBehavior: Clip.antiAlias,
                                                   shape: RoundedRectangleBorder(
@@ -332,24 +308,12 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                                     );
                                                   })
                                             },
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                top: 15.0,
-                                                bottom: 15.0,
-                                                left: 10.0,
-                                                right: 10.0,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0),
-                                              ),
-                                              child: Text(
-                                                '${state.speed.toStringAsFixed(2)}x',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.0,
-                                                ),
+                                            icon: Text(
+                                              '${state.speed.toStringAsFixed(2)}x',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                // color: Colors.white,
+                                                fontSize: 12.0,
                                               ),
                                             ), //............
                                           );
@@ -380,21 +344,6 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
       onPressed: onPressed,
       color: color,
     );
-  }
-}
-
-class CircularRectTween extends RectTween {
-  CircularRectTween({Rect begin, Rect end}) : super(begin: begin, end: end);
-
-  @override
-  Rect lerp(double t) {
-    final double width = lerpDouble(begin.width, end.width, t);
-    double startWidthCenter = begin.left + (begin.width / 2);
-    double startHeightCenter = begin.top + (begin.height / 2);
-
-    return Rect.fromCircle(
-        center: Offset(startWidthCenter, startHeightCenter),
-        radius: width * 1.7);
   }
 }
 
