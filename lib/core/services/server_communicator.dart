@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/models/user.dart';
 
 abstract class ServerCommunicator {
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
@@ -75,6 +76,8 @@ abstract class ServerCommunicator {
   // Future<List<Library>> getLibraries();
   Future<List<MediaItem>> getTracksForBook(String bookId);
   Future<MediaItem> getAlbumFromId(String mediaId);
+  Future<User> getUser();
+  Future<String> getLoginUrl();
   Future savePosition(String key, int position, int duration, dynamic state);
   Future getServerAndLibrary();
   String getServerUrl(String path);

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -23,21 +26,51 @@ class BookGridItem extends StatelessWidget {
               flex: 3,
               child: FractionallySizedBox(
                 heightFactor: 1,
-                child: CachedNetworkImage(
-                  imageUrl: thumbnailUrl ?? '',
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  placeholder: (context, url) => Center(
-                    child: Container(
-                      constraints: BoxConstraints.expand(),
-                      color: Colors.black,
-                      child: Icon(
-                        subtitle == null ? Icons.person : Icons.book,
-                        size: 50.0,
+                child: !kIsWeb && Platform.isWindows
+                    ? Image.network(thumbnailUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center, frameBuilder:
+                            (context, child, frame, wasSynchronouslyLoaded) {
+                        return wasSynchronouslyLoaded || frame != null
+                            ? child
+                            : Container(
+                                constraints: BoxConstraints.expand(),
+                                color: Colors.black,
+                                child: Icon(
+                                  subtitle == null ? Icons.person : Icons.book,
+                                  size: 50.0,
+                                ),
+                              );
+                      })
+                    : CachedNetworkImage(
+                        imageUrl: thumbnailUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        errorWidget: (context, message, thing) => Text(message),
+                        placeholder: (context, url) => Container(
+                          constraints: BoxConstraints.expand(),
+                          color: Colors.black,
+                          child: Icon(
+                            subtitle == null ? Icons.person : Icons.book,
+                            size: 50.0,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                // child: CachedNetworkImage(
+                //   imageUrl: thumbnailUrl ?? '',
+                //   fit: BoxFit.cover,
+                //   alignment: Alignment.center,
+                //   placeholder: (context, url) => Center(
+                //     child: Container(
+                //       constraints: BoxConstraints.expand(),
+                //       color: Colors.black,
+                //       child: Icon(
+                //         subtitle == null ? Icons.person : Icons.book,
+                //         size: 50.0,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ),
             ),
             Flexible(

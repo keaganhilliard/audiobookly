@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
@@ -55,14 +57,16 @@ class App extends StatelessWidget {
           model: RootViewModel(),
           onModelReady: (model) => model.init(),
           builder: (context, model, child) {
-            return ResponsiveBuilder(
-              builder: (context, sizingInfo) => sizingInfo.isDesktop
-                  ? web.MyHomePage(title: 'Audiobookly', model: model)
-                  : MyHomePage(
-                      title: 'Audiobookly',
-                      model: model,
-                    ),
-            );
+            return ResponsiveBuilder(builder: (context, sizingInfo) {
+              print(sizingInfo.screenSize);
+              print(sizingInfo.deviceScreenType);
+              if (sizingInfo.isTablet || sizingInfo.isDesktop)
+                return web.MyHomePage(title: 'Audiobookly', model: model);
+              return MyHomePage(
+                title: 'Audiobookly',
+                model: model,
+              );
+            });
           },
         ),
       ),
@@ -106,13 +110,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     // startAudioService();
-    connect();
+    if (!Platform.isWindows) connect();
     super.initState();
   }
 
   @override
   void dispose() {
-    if (!kIsWeb) disconnect();
+    if (!kIsWeb && !Platform.isWindows) disconnect();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -128,15 +132,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        connect();
-        break;
-      case AppLifecycleState.paused:
-        disconnect();
-        break;
-      default:
-        break;
+    if (!Platform.isWindows) {
+      switch (state) {
+        case AppLifecycleState.resumed:
+          connect();
+          break;
+        case AppLifecycleState.paused:
+          disconnect();
+          break;
+        default:
+          break;
+      }
     }
   }
 

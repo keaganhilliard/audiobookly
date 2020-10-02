@@ -1,4 +1,7 @@
 // import 'package:audiobookly/core/services/navigation_service.dart';
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,9 +33,11 @@ class MyInAppBrowser extends InAppBrowser {
 
 class MyChromeSafariBrowser extends ChromeSafariBrowser {
   MyChromeSafariBrowser(browserFallback) : super(bFallback: browserFallback);
+  Completer closed;
 
   @override
   void onOpened() {
+    closed = Completer();
     print("ChromeSafari browser opened");
   }
 
@@ -43,13 +48,13 @@ class MyChromeSafariBrowser extends ChromeSafariBrowser {
 
   @override
   void onClosed() {
+    closed.complete();
     print("ChromeSafari browser closed");
   }
 }
 
 class WelcomeView extends StatefulWidget {
-  final ChromeSafariBrowser browser =
-      new MyChromeSafariBrowser(new MyInAppBrowser());
+  final ChromeSafariBrowser browser = MyChromeSafariBrowser(MyInAppBrowser());
 
   final String url;
 
@@ -71,7 +76,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         child: RaisedButton(
             color: Colors.amber,
             onPressed: () async {
-              if (kIsWeb) {
+              if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
                 if (await canLaunch(widget.url)) {
                   launch(widget.url);
                 }

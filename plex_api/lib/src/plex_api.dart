@@ -40,6 +40,17 @@ class PlexApi {
     return user;
   }
 
+  Future<PlexUser> getUser(PlexServerV2 server) async {
+    headers.token = authToken;
+    http.Response response = await http.get(
+        Uri.https('plex.tv', '/users/account.json'),
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexLoginResponse plexLoginResponse =
+        PlexLoginResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    user = plexLoginResponse.user;
+    return user;
+  }
+
   Future<PlexUser> login(String username, String password) async {
     user = null;
     http.Response response =

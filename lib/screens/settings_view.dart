@@ -1,8 +1,16 @@
+import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
 import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
+import 'package:audiobookly/cubit/settings/settings_cubit.dart';
+import 'package:audiobookly/cubit/settings/settings_state.dart';
 import 'package:audiobookly/screens/library_select.dart';
 import 'package:audiobookly/screens/server_select.dart';
+import 'package:audiobookly/screens/welcome_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class SettingsView extends StatelessWidget {
@@ -12,79 +20,58 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 24.0,
-        right: 24.0,
-        top: 24.0,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Text(
-                    'Server Type',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                ),
-                DropdownButton<String>(
-                  focusColor: Theme.of(context).accentColor,
-                  onChanged: (value) {
-                    print(value);
-                  },
-                  value: 'Plex',
-                  items: [
-                    DropdownMenuItem(
-                      child: Text('Plex'),
-                      value: 'Plex',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('Emby'),
-                      value: 'Emby',
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            RaisedButton(
-              color: Theme.of(context).accentColor,
-              child: Text('Select Server'),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ServerSelect(
-                        model: ServerListViewModel(api: null),
+    final ServerCommunicator communicator = context.watch();
+    return BlocProvider.value(
+      value: SettingsCubit(communicator)..getUser(),
+      child: Builder(builder: (context) {
+        return BlocConsumer<SettingsCubit, SettingsState>(
+          listener: (context, state) {
+            // if (state is BooksStateInitial) {
+            //   _refresher.currentState.show();
+            // }
+          },
+          builder: (context, state) {
+            if (state is SettingsStateLoaded)
+              return ListView(
+                children: [
+                  ListTile(
+                      title: Text('Account'),
+                      subtitle: Text(state.user.userName),
+                      onTap: () async {
+                        await context.bloc<SettingsCubit>().signOut();
+                        final loginUrl = await communicator.getLoginUrl();
+                        NavigationService().pushReplacement(
+                          MaterialPageRoute(builder: (context) {
+                            return WelcomeView(
+                              url: loginUrl,
+                            );
+                          }),
+                        );
+                      },
+                      trailing: Image.network(
+                        state.user.thumb,
+                        fit: BoxFit.contain,
+                      )),
+                  ListTile(
+                    title: Text('About'),
+                    onTap: () {
+                      showAboutDialog(
+                        context: context,
+                        applicationName: 'Audiobookly',
+                        applicationVersion: '1.0.0',
+                        applicationIcon:
+                            Image.asset('audiobookly_launcher_round.png'),
+                        useRootNavigator: true,
                       );
                     },
                   ),
-                );
-              },
-            ),
-            RaisedButton(
-              color: Theme.of(context).accentColor,
-              child: Text('Select Library'),
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LibrarySelect(
-                              model: LibraryListViewModel(
-                                  server: Provider.of(context)),
-                            )));
-              },
-            )
-          ],
-        ),
-      ),
+                ],
+              );
+            else
+              return Center(child: CircularProgressIndicator());
+          },
+        );
+      }),
     );
   }
 }

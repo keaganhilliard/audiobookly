@@ -142,6 +142,10 @@ class PlexServerV2 {
     this.currentIp = await api.getCurrentIP();
   }
 
+  Future<PlexUser> getUser() async {
+    return await api.getUser(this);
+  }
+
   Future<List<PlexLibrary>> getLibraries() async {
     return await api.getLibraries(this);
   }

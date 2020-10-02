@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
+import 'package:audiobookly/core/models/user.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
@@ -63,7 +64,7 @@ class PlexServerCommunicator extends ServerCommunicator {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       PlexHeaders headers;
 
-      if (kIsWeb) {
+      if (kIsWeb || Platform.isWindows) {
         headers = PlexHeaders(
           clientIdentifier: 'AUDIOBOOKLY_WEB',
           device: 'WEB',
@@ -193,6 +194,18 @@ class PlexServerCommunicator extends ServerCommunicator {
     return (await _server.getTracks(bookId))
         .map((track) => PlexMediaItem.fromPlexTrack(track, _server))
         .toList();
+  }
+
+  Future<User> getUser() async {
+    await refreshServer();
+    PlexUser u = await _server.getUser();
+    print(u.toJson());
+    return User(name: u.title, userName: u.username, thumb: u.thumb);
+  }
+
+  Future<String> getLoginUrl() async {
+    PlexPin pin = await _server.api.getPin();
+    return _server.api.getOauthUrl(pin.code);
   }
 
   void stopRefresh() {

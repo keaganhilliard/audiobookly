@@ -35,10 +35,10 @@ class RootViewModel extends BaseModel {
     String serverId = _prefs.getString(SharedPrefStrings.PLEX_SERVER);
     String libraryKey = _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
     PlexHeaders headers;
-    if (kIsWeb) {
+    if (kIsWeb || Platform.isWindows) {
       headers = PlexHeaders(
         clientIdentifier: 'AUDIOBOOKLY_WEB',
-        device: 'WEB',
+        device: 'Chrome',
         product: 'Audiobookly',
         platform: 'Chrome',
         platformVersion: 'UNKOWN',
