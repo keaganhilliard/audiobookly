@@ -55,8 +55,12 @@ class BookDetailsView extends StatelessWidget {
     );
   }
 
-  IconButton getIconButton(
-      {Icon icon, Function onPressed, double size = 35.0, Color color}) {
+  IconButton getIconButton({
+    Icon icon,
+    Function onPressed,
+    double size = 35.0,
+    Color color,
+  }) {
     return IconButton(
       icon: icon,
       iconSize: size,

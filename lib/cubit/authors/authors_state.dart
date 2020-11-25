@@ -4,8 +4,6 @@ import 'package:flutter/foundation.dart';
 
 part 'authors_state.freezed.dart';
 
-// part of 'books_cubit.dart';
-
 @freezed
 abstract class AuthorsState with _$AuthorsState {
   const factory AuthorsState.initial() = AuthorsStateInitial;

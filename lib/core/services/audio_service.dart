@@ -73,8 +73,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
         ));
         initPlaybackSpeed();
         if (_audioPlayer.playing) {
-          updateProgress(
-              mediaItem.duration.inMilliseconds, PlexPlaybackState.PLAYING);
+          updateProgress(currentPositionDuration.inMilliseconds,
+              PlexPlaybackState.PLAYING);
         }
       }
     });
@@ -302,6 +302,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future onClick(button) async {
+    if (button == MediaButton.next)
+      return onSkipToNext();
+    else if (button == MediaButton.previous) return onSkipToPrevious();
     return playPause();
   }
 

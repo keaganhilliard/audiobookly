@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:audiobookly/core/constants/app_constants.dart';
@@ -57,16 +58,17 @@ class App extends StatelessWidget {
           model: RootViewModel(),
           onModelReady: (model) => model.init(),
           builder: (context, model, child) {
-            return ResponsiveBuilder(builder: (context, sizingInfo) {
-              print(sizingInfo.screenSize);
-              print(sizingInfo.deviceScreenType);
-              if (sizingInfo.isTablet || sizingInfo.isDesktop)
-                return web.MyHomePage(title: 'Audiobookly', model: model);
-              return MyHomePage(
-                title: 'Audiobookly',
-                model: model,
-              );
-            });
+            return MediaQuery.of(context).size.width > 600
+                ?
+                // return ResponsiveBuilder(builder: (context, sizingInfo) {
+                // print(sizingInfo.screenSize);
+                // print(sizingInfo.deviceScreenType);
+                // if (sizingInfo.isTablet || sizingInfo.isDesktop)
+                web.MyHomePage(title: 'Audiobookly', model: model)
+                : MyHomePage(
+                    title: 'Audiobookly',
+                    model: model,
+                  );
           },
         ),
       ),
@@ -84,6 +86,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  StreamSubscription notificationSub;
   int _currentIndex = 0;
   bool nowPlaying = true;
 
@@ -118,21 +121,30 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void dispose() {
     if (!kIsWeb && !Platform.isWindows) disconnect();
     WidgetsBinding.instance.removeObserver(this);
+    notificationSub?.cancel();
     super.dispose();
   }
 
   void connect() async {
     await AudioService.connect();
+    notificationSub ??=
+        AudioService.notificationClickEventStream.listen((event) {
+      print(event);
+      if (AudioService.currentMediaItem != null && event)
+        NavigationService().pushNamedAndRemoveUntilHome(Routes.Book,
+            arguments: AudioService.currentMediaItem);
+    });
     PlaybackController().handleResume();
   }
 
   void disconnect() {
+    // notificationSub?.cancel();
     AudioService.disconnect();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!Platform.isWindows) {
+    if (!kIsWeb && !Platform.isWindows) {
       switch (state) {
         case AppLifecycleState.resumed:
           connect();
@@ -175,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       ),
                       Provider.value(
                         value: model.communicator,
-                      )
+                      ),
                     ],
                     child: Navigator(
                       key: _navigatorKey,

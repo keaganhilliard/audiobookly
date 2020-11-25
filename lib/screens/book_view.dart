@@ -7,6 +7,7 @@ import 'package:audiobookly/core/utils/utils.dart';
 import 'package:audiobookly/screens/tracks_view.dart';
 import 'package:audiobookly/ui/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cast/cast.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee_widget/marquee_widget.dart';
 import 'package:audiobookly/ui/base_widget.dart';
@@ -67,14 +68,11 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Expanded(
+                            flex: 1,
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                  // left: 32.0,
-                                  // right: 32.0,
-                                  bottom: 16.0,
-                                  top: 16.0,
-                                ),
+                                    bottom: 16.0, left: 16.0, right: 16.0),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15.0),
@@ -146,181 +144,218 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                     ),
                     if (item != null)
                       Expanded(
+                        flex: 0,
                         child: Padding(
                           padding: const EdgeInsets.only(
-                            top: 40.0,
+                            top: 30.0,
                             // left: 80.0,
                             // right: 80.0,
                           ),
                           child: Center(
-                            child: Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Marquee(
-                                    child: StreamBuilder<double>(
-                                        stream: Stream.periodic(
-                                            Duration(milliseconds: 200)),
-                                        builder: (context, snapshot) {
-                                          return Text(model.getDurationLeftText(
-                                              state?.currentPosition
-                                                  ?.inMilliseconds,
-                                              item?.duration?.inMilliseconds));
-                                        }),
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 16.0, bottom: 16.0, right: 16.0),
+                                    child: Marquee(
+                                      child: StreamBuilder<double>(
+                                          stream: Stream.periodic(
+                                              Duration(milliseconds: 200)),
+                                          builder: (context, snapshot) {
+                                            return Text(
+                                                model.getDurationLeftText(
+                                                    state?.currentPosition
+                                                        ?.inMilliseconds,
+                                                    item?.duration
+                                                        ?.inMilliseconds));
+                                          }),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    right: 8.0,
-                                  ),
-                                  child: StreamBuilder<double>(
-                                      stream: Stream.periodic(
-                                        Duration(milliseconds: 200),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.skip_previous),
+                                        onPressed: () {},
                                       ),
-                                      builder: (context, snapshot) {
-                                        return SeekBar(
-                                            duration: item?.duration,
-                                            position: state?.currentPosition,
-                                            onChangeEnd: (val) async {
-                                              await PlaybackController()
-                                                  .seekTo(val.inMilliseconds);
-                                            });
-                                        // ProgressSlider(
-                                        //   value: state?.currentPosition
-                                        //           ?.inMilliseconds
-                                        //           ?.toDouble() ??
-                                        //       0,
-                                        //   onChangeEnd: (val) async {
-                                        //     PlaybackController()
-                                        //         .seekTo(val.toInt());
-                                        //   },
-                                        //   min: 0,
-                                        //   max: item?.duration?.inMilliseconds
-                                        //           ?.toDouble() ??
-                                        //       100,
-                                        // );
-                                      }),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    getIconButton(
-                                      icon: Icon(Icons.alarm),
-                                      onPressed: () {},
-                                      size: 25.0,
+                                      Expanded(
+                                          child: Center(
+                                              child: Text('${item.title} ()'))),
+                                      IconButton(
+                                        icon: Icon(Icons.skip_next),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 8.0,
+                                      right: 8.0,
                                     ),
-                                    getIconButton(
-                                      icon: Icon(Icons.replay_30),
-                                      onPressed: PlaybackController().rewind,
-                                    ),
-                                    Stack(
-                                      children: [
-                                        Positioned.fill(
-                                          child: state?.processingState ==
-                                                      AudioProcessingState
-                                                          .buffering ||
-                                                  state?.processingState ==
-                                                      AudioProcessingState
-                                                          .fastForwarding ||
-                                                  state?.processingState ==
-                                                      AudioProcessingState
-                                                          .rewinding
-                                              ? CircularProgressIndicator()
-                                              : Container(),
-                                        ),
-                                        getIconButton(
-                                          icon: state?.playing ??
-                                                  false ||
-                                                      state?.processingState ==
-                                                          AudioProcessingState
-                                                              .buffering
-                                              ? Icon(Icons.pause_circle_filled)
-                                              : Icon(Icons.play_circle_filled),
-                                          onPressed: state?.playing ??
-                                                  false ||
-                                                      state?.processingState ==
-                                                          AudioProcessingState
-                                                              .buffering
-                                              ? PlaybackController().pause
-                                              : PlaybackController().play,
-                                          color: Theme.of(context).accentColor,
-                                          size: 60,
-                                        ),
-                                      ],
-                                    ),
-                                    getIconButton(
-                                      icon: Icon(Icons.forward_30),
-                                      onPressed:
-                                          PlaybackController().fastForward,
-                                    ),
-                                    StreamBuilder<double>(
+                                    child: StreamBuilder<double>(
                                         stream: Stream.periodic(
                                           Duration(milliseconds: 200),
                                         ),
                                         builder: (context, snapshot) {
-                                          return IconButton(
-                                            onPressed: () => {
-                                              showModalBottomSheet(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(15.0),
-                                                      topRight:
-                                                          Radius.circular(15.0),
-                                                      bottomLeft:
-                                                          Radius.circular(15.0),
-                                                      bottomRight:
-                                                          Radius.circular(15.0),
-                                                    ),
-                                                  ),
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        top: 40.0,
-                                                        bottom: 40.0,
-                                                        left: 16.0,
-                                                        right: 16.0,
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          Text(
-                                                              'Playback Speed'),
-                                                          PlaybackSpeedSlider(
-                                                            value: state.speed,
-                                                            onChangeEnd: (val) {
-                                                              AudioService
-                                                                  .setSpeed(
-                                                                      val);
-                                                            },
-                                                            max: 2.0,
-                                                            min: 1.0,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    );
-                                                  })
-                                            },
-                                            icon: Text(
-                                              '${state.speed.toStringAsFixed(2)}x',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                // color: Colors.white,
-                                                fontSize: 12.0,
-                                              ),
-                                            ), //............
-                                          );
+                                          return SeekBar(
+                                              duration: item?.duration,
+                                              position: state?.currentPosition,
+                                              onChangeEnd: (val) async {
+                                                await PlaybackController()
+                                                    .seekTo(val.inMilliseconds);
+                                              });
+                                          // ProgressSlider(
+                                          //   value: state?.currentPosition
+                                          //           ?.inMilliseconds
+                                          //           ?.toDouble() ??
+                                          //       0,
+                                          //   onChangeEnd: (val) async {
+                                          //     PlaybackController()
+                                          //         .seekTo(val.toInt());
+                                          //   },
+                                          //   min: 0,
+                                          //   max: item?.duration?.inMilliseconds
+                                          //           ?.toDouble() ??
+                                          //       100,
+                                          // );
                                         }),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      getIconButton(
+                                        icon: Icon(Icons.alarm),
+                                        onPressed: () {},
+                                        size: 25.0,
+                                      ),
+                                      getIconButton(
+                                        icon: Icon(Icons.replay_30),
+                                        onPressed: PlaybackController().rewind,
+                                      ),
+                                      Stack(
+                                        children: [
+                                          Positioned.fill(
+                                            child: state?.processingState ==
+                                                        AudioProcessingState
+                                                            .buffering ||
+                                                    state?.processingState ==
+                                                        AudioProcessingState
+                                                            .fastForwarding ||
+                                                    state?.processingState ==
+                                                        AudioProcessingState
+                                                            .rewinding
+                                                ? CircularProgressIndicator()
+                                                : Container(),
+                                          ),
+                                          getIconButton(
+                                            icon: state?.playing ??
+                                                    false ||
+                                                        state?.processingState ==
+                                                            AudioProcessingState
+                                                                .buffering
+                                                ? Icon(
+                                                    Icons.pause_circle_filled)
+                                                : Icon(
+                                                    Icons.play_circle_filled),
+                                            onPressed: state?.playing ??
+                                                    false ||
+                                                        state?.processingState ==
+                                                            AudioProcessingState
+                                                                .buffering
+                                                ? PlaybackController().pause
+                                                : PlaybackController().play,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 60,
+                                          ),
+                                        ],
+                                      ),
+                                      getIconButton(
+                                        icon: Icon(Icons.forward_30),
+                                        onPressed:
+                                            PlaybackController().fastForward,
+                                      ),
+                                      StreamBuilder<double>(
+                                          stream: Stream.periodic(
+                                            Duration(milliseconds: 200),
+                                          ),
+                                          builder: (context, snapshot) {
+                                            return IconButton(
+                                              onPressed: () => {
+                                                showModalBottomSheet(
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                15.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                15.0),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                15.0),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                15.0),
+                                                      ),
+                                                    ),
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          top: 40.0,
+                                                          bottom: 40.0,
+                                                          left: 16.0,
+                                                          right: 16.0,
+                                                        ),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: <Widget>[
+                                                            Text(
+                                                                'Playback Speed'),
+                                                            PlaybackSpeedSlider(
+                                                              value:
+                                                                  state.speed,
+                                                              onChangeEnd:
+                                                                  (val) {
+                                                                AudioService
+                                                                    .setSpeed(
+                                                                        val);
+                                                              },
+                                                              max: 2.0,
+                                                              min: 1.0,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      );
+                                                    })
+                                              },
+                                              icon: Text(
+                                                '${state.speed.toStringAsFixed(2)}x',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  // color: Colors.white,
+                                                  fontSize: 11.0,
+                                                ),
+                                              ), //............
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

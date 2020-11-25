@@ -9,6 +9,7 @@ part of 'settings_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$SettingsStateTearOff {
   const _$SettingsStateTearOff();
 
@@ -37,9 +38,11 @@ class _$SettingsStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $SettingsState = _$SettingsStateTearOff();
 
+/// @nodoc
 mixin _$SettingsState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -73,12 +76,14 @@ mixin _$SettingsState {
   });
 }
 
+/// @nodoc
 abstract class $SettingsStateCopyWith<$Res> {
   factory $SettingsStateCopyWith(
           SettingsState value, $Res Function(SettingsState) then) =
       _$SettingsStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$SettingsStateCopyWithImpl<$Res>
     implements $SettingsStateCopyWith<$Res> {
   _$SettingsStateCopyWithImpl(this._value, this._then);
@@ -88,12 +93,14 @@ class _$SettingsStateCopyWithImpl<$Res>
   final $Res Function(SettingsState) _then;
 }
 
+/// @nodoc
 abstract class $SettingsStateInitialCopyWith<$Res> {
   factory $SettingsStateInitialCopyWith(SettingsStateInitial value,
           $Res Function(SettingsStateInitial) then) =
       _$SettingsStateInitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$SettingsStateInitialCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
     implements $SettingsStateInitialCopyWith<$Res> {
@@ -105,6 +112,7 @@ class _$SettingsStateInitialCopyWithImpl<$Res>
   SettingsStateInitial get _value => super._value as SettingsStateInitial;
 }
 
+/// @nodoc
 class _$SettingsStateInitial
     with DiagnosticableTreeMixin
     implements SettingsStateInitial {
@@ -196,6 +204,7 @@ abstract class SettingsStateInitial implements SettingsState {
   const factory SettingsStateInitial() = _$SettingsStateInitial;
 }
 
+/// @nodoc
 abstract class $SettingsStateLoadedCopyWith<$Res> {
   factory $SettingsStateLoadedCopyWith(
           SettingsStateLoaded value, $Res Function(SettingsStateLoaded) then) =
@@ -203,6 +212,7 @@ abstract class $SettingsStateLoadedCopyWith<$Res> {
   $Res call({User user});
 }
 
+/// @nodoc
 class _$SettingsStateLoadedCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
     implements $SettingsStateLoadedCopyWith<$Res> {
@@ -223,6 +233,7 @@ class _$SettingsStateLoadedCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$SettingsStateLoaded
     with DiagnosticableTreeMixin
     implements SettingsStateLoaded {
@@ -330,12 +341,14 @@ abstract class SettingsStateLoaded implements SettingsState {
   $SettingsStateLoadedCopyWith<SettingsStateLoaded> get copyWith;
 }
 
+/// @nodoc
 abstract class $SettingsStateLoadingCopyWith<$Res> {
   factory $SettingsStateLoadingCopyWith(SettingsStateLoading value,
           $Res Function(SettingsStateLoading) then) =
       _$SettingsStateLoadingCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$SettingsStateLoadingCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
     implements $SettingsStateLoadingCopyWith<$Res> {
@@ -347,6 +360,7 @@ class _$SettingsStateLoadingCopyWithImpl<$Res>
   SettingsStateLoading get _value => super._value as SettingsStateLoading;
 }
 
+/// @nodoc
 class _$SettingsStateLoading
     with DiagnosticableTreeMixin
     implements SettingsStateLoading {
@@ -438,6 +452,7 @@ abstract class SettingsStateLoading implements SettingsState {
   const factory SettingsStateLoading() = _$SettingsStateLoading;
 }
 
+/// @nodoc
 abstract class $SettingsStateErrorDetailsCopyWith<$Res> {
   factory $SettingsStateErrorDetailsCopyWith(SettingsStateErrorDetails value,
           $Res Function(SettingsStateErrorDetails) then) =
@@ -445,6 +460,7 @@ abstract class $SettingsStateErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class _$SettingsStateErrorDetailsCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
     implements $SettingsStateErrorDetailsCopyWith<$Res> {
@@ -466,6 +482,7 @@ class _$SettingsStateErrorDetailsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$SettingsStateErrorDetails
     with DiagnosticableTreeMixin
     implements SettingsStateErrorDetails {

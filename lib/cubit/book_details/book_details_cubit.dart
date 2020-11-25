@@ -7,7 +7,7 @@ class BookDetailsCubit extends Cubit<BookDetailsState> {
 
   BookDetailsCubit(this._communicator) : super(BookDetailsState.initial());
 
-  Future<void> getAuthors(String mediaId) async {
+  Future<void> getBook(String mediaId) async {
     try {
       emit(BookDetailsState.loading());
       final book = await _communicator.getAlbumFromId(mediaId);

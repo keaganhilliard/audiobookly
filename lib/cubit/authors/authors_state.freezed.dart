@@ -9,6 +9,7 @@ part of 'authors_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$AuthorsStateTearOff {
   const _$AuthorsStateTearOff();
 
@@ -37,9 +38,11 @@ class _$AuthorsStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $AuthorsState = _$AuthorsStateTearOff();
 
+/// @nodoc
 mixin _$AuthorsState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -73,12 +76,14 @@ mixin _$AuthorsState {
   });
 }
 
+/// @nodoc
 abstract class $AuthorsStateCopyWith<$Res> {
   factory $AuthorsStateCopyWith(
           AuthorsState value, $Res Function(AuthorsState) then) =
       _$AuthorsStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$AuthorsStateCopyWithImpl<$Res> implements $AuthorsStateCopyWith<$Res> {
   _$AuthorsStateCopyWithImpl(this._value, this._then);
 
@@ -87,12 +92,14 @@ class _$AuthorsStateCopyWithImpl<$Res> implements $AuthorsStateCopyWith<$Res> {
   final $Res Function(AuthorsState) _then;
 }
 
+/// @nodoc
 abstract class $AuthorsStateInitialCopyWith<$Res> {
   factory $AuthorsStateInitialCopyWith(
           AuthorsStateInitial value, $Res Function(AuthorsStateInitial) then) =
       _$AuthorsStateInitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$AuthorsStateInitialCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
     implements $AuthorsStateInitialCopyWith<$Res> {
@@ -104,6 +111,7 @@ class _$AuthorsStateInitialCopyWithImpl<$Res>
   AuthorsStateInitial get _value => super._value as AuthorsStateInitial;
 }
 
+/// @nodoc
 class _$AuthorsStateInitial
     with DiagnosticableTreeMixin
     implements AuthorsStateInitial {
@@ -195,6 +203,7 @@ abstract class AuthorsStateInitial implements AuthorsState {
   const factory AuthorsStateInitial() = _$AuthorsStateInitial;
 }
 
+/// @nodoc
 abstract class $AuthorsStateLoadedCopyWith<$Res> {
   factory $AuthorsStateLoadedCopyWith(
           AuthorsStateLoaded value, $Res Function(AuthorsStateLoaded) then) =
@@ -202,6 +211,7 @@ abstract class $AuthorsStateLoadedCopyWith<$Res> {
   $Res call({List<MediaItem> authors});
 }
 
+/// @nodoc
 class _$AuthorsStateLoadedCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
     implements $AuthorsStateLoadedCopyWith<$Res> {
@@ -222,6 +232,7 @@ class _$AuthorsStateLoadedCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$AuthorsStateLoaded
     with DiagnosticableTreeMixin
     implements AuthorsStateLoaded {
@@ -330,12 +341,14 @@ abstract class AuthorsStateLoaded implements AuthorsState {
   $AuthorsStateLoadedCopyWith<AuthorsStateLoaded> get copyWith;
 }
 
+/// @nodoc
 abstract class $AuthorsStateLoadingCopyWith<$Res> {
   factory $AuthorsStateLoadingCopyWith(
           AuthorsStateLoading value, $Res Function(AuthorsStateLoading) then) =
       _$AuthorsStateLoadingCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$AuthorsStateLoadingCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
     implements $AuthorsStateLoadingCopyWith<$Res> {
@@ -347,6 +360,7 @@ class _$AuthorsStateLoadingCopyWithImpl<$Res>
   AuthorsStateLoading get _value => super._value as AuthorsStateLoading;
 }
 
+/// @nodoc
 class _$AuthorsStateLoading
     with DiagnosticableTreeMixin
     implements AuthorsStateLoading {
@@ -438,6 +452,7 @@ abstract class AuthorsStateLoading implements AuthorsState {
   const factory AuthorsStateLoading() = _$AuthorsStateLoading;
 }
 
+/// @nodoc
 abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
   factory $AuthorsStateErrorDetailsCopyWith(AuthorsStateErrorDetails value,
           $Res Function(AuthorsStateErrorDetails) then) =
@@ -445,6 +460,7 @@ abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
     implements $AuthorsStateErrorDetailsCopyWith<$Res> {
@@ -466,6 +482,7 @@ class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$AuthorsStateErrorDetails
     with DiagnosticableTreeMixin
     implements AuthorsStateErrorDetails {

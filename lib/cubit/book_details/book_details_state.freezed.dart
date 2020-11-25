@@ -9,6 +9,7 @@ part of 'book_details_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$BookDetailsStateTearOff {
   const _$BookDetailsStateTearOff();
 
@@ -18,9 +19,10 @@ class _$BookDetailsStateTearOff {
   }
 
 // ignore: unused_element
-  BookDetailsStateLoaded loaded({MediaItem book}) {
+  BookDetailsStateLoaded loaded({MediaItem book, List<MediaItem> chapters}) {
     return BookDetailsStateLoaded(
       book: book,
+      chapters: chapters,
     );
   }
 
@@ -37,21 +39,23 @@ class _$BookDetailsStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $BookDetailsState = _$BookDetailsStateTearOff();
 
+/// @nodoc
 mixin _$BookDetailsState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(MediaItem book),
+    @required Result loaded(MediaItem book, List<MediaItem> chapters),
     @required Result loading(),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(MediaItem book),
+    Result loaded(MediaItem book, List<MediaItem> chapters),
     Result loading(),
     Result error(String message),
     @required Result orElse(),
@@ -73,12 +77,14 @@ mixin _$BookDetailsState {
   });
 }
 
+/// @nodoc
 abstract class $BookDetailsStateCopyWith<$Res> {
   factory $BookDetailsStateCopyWith(
           BookDetailsState value, $Res Function(BookDetailsState) then) =
       _$BookDetailsStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$BookDetailsStateCopyWithImpl<$Res>
     implements $BookDetailsStateCopyWith<$Res> {
   _$BookDetailsStateCopyWithImpl(this._value, this._then);
@@ -88,12 +94,14 @@ class _$BookDetailsStateCopyWithImpl<$Res>
   final $Res Function(BookDetailsState) _then;
 }
 
+/// @nodoc
 abstract class $BookDetailsStateInitialCopyWith<$Res> {
   factory $BookDetailsStateInitialCopyWith(BookDetailsStateInitial value,
           $Res Function(BookDetailsStateInitial) then) =
       _$BookDetailsStateInitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$BookDetailsStateInitialCopyWithImpl<$Res>
     extends _$BookDetailsStateCopyWithImpl<$Res>
     implements $BookDetailsStateInitialCopyWith<$Res> {
@@ -105,6 +113,7 @@ class _$BookDetailsStateInitialCopyWithImpl<$Res>
   BookDetailsStateInitial get _value => super._value as BookDetailsStateInitial;
 }
 
+/// @nodoc
 class _$BookDetailsStateInitial
     with DiagnosticableTreeMixin
     implements BookDetailsStateInitial {
@@ -133,7 +142,7 @@ class _$BookDetailsStateInitial
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(MediaItem book),
+    @required Result loaded(MediaItem book, List<MediaItem> chapters),
     @required Result loading(),
     @required Result error(String message),
   }) {
@@ -148,7 +157,7 @@ class _$BookDetailsStateInitial
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(MediaItem book),
+    Result loaded(MediaItem book, List<MediaItem> chapters),
     Result loading(),
     Result error(String message),
     @required Result orElse(),
@@ -196,13 +205,15 @@ abstract class BookDetailsStateInitial implements BookDetailsState {
   const factory BookDetailsStateInitial() = _$BookDetailsStateInitial;
 }
 
+/// @nodoc
 abstract class $BookDetailsStateLoadedCopyWith<$Res> {
   factory $BookDetailsStateLoadedCopyWith(BookDetailsStateLoaded value,
           $Res Function(BookDetailsStateLoaded) then) =
       _$BookDetailsStateLoadedCopyWithImpl<$Res>;
-  $Res call({MediaItem book});
+  $Res call({MediaItem book, List<MediaItem> chapters});
 }
 
+/// @nodoc
 class _$BookDetailsStateLoadedCopyWithImpl<$Res>
     extends _$BookDetailsStateCopyWithImpl<$Res>
     implements $BookDetailsStateLoadedCopyWith<$Res> {
@@ -216,24 +227,30 @@ class _$BookDetailsStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object book = freezed,
+    Object chapters = freezed,
   }) {
     return _then(BookDetailsStateLoaded(
       book: book == freezed ? _value.book : book as MediaItem,
+      chapters:
+          chapters == freezed ? _value.chapters : chapters as List<MediaItem>,
     ));
   }
 }
 
+/// @nodoc
 class _$BookDetailsStateLoaded
     with DiagnosticableTreeMixin
     implements BookDetailsStateLoaded {
-  const _$BookDetailsStateLoaded({this.book});
+  const _$BookDetailsStateLoaded({this.book, this.chapters});
 
   @override
   final MediaItem book;
+  @override
+  final List<MediaItem> chapters;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookDetailsState.loaded(book: $book)';
+    return 'BookDetailsState.loaded(book: $book, chapters: $chapters)';
   }
 
   @override
@@ -241,7 +258,8 @@ class _$BookDetailsStateLoaded
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BookDetailsState.loaded'))
-      ..add(DiagnosticsProperty('book', book));
+      ..add(DiagnosticsProperty('book', book))
+      ..add(DiagnosticsProperty('chapters', chapters));
   }
 
   @override
@@ -249,12 +267,17 @@ class _$BookDetailsStateLoaded
     return identical(this, other) ||
         (other is BookDetailsStateLoaded &&
             (identical(other.book, book) ||
-                const DeepCollectionEquality().equals(other.book, book)));
+                const DeepCollectionEquality().equals(other.book, book)) &&
+            (identical(other.chapters, chapters) ||
+                const DeepCollectionEquality()
+                    .equals(other.chapters, chapters)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(book);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(book) ^
+      const DeepCollectionEquality().hash(chapters);
 
   @override
   $BookDetailsStateLoadedCopyWith<BookDetailsStateLoaded> get copyWith =>
@@ -265,7 +288,7 @@ class _$BookDetailsStateLoaded
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(MediaItem book),
+    @required Result loaded(MediaItem book, List<MediaItem> chapters),
     @required Result loading(),
     @required Result error(String message),
   }) {
@@ -273,21 +296,21 @@ class _$BookDetailsStateLoaded
     assert(loaded != null);
     assert(loading != null);
     assert(error != null);
-    return loaded(book);
+    return loaded(book, chapters);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(MediaItem book),
+    Result loaded(MediaItem book, List<MediaItem> chapters),
     Result loading(),
     Result error(String message),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
-      return loaded(book);
+      return loaded(book, chapters);
     }
     return orElse();
   }
@@ -325,19 +348,22 @@ class _$BookDetailsStateLoaded
 }
 
 abstract class BookDetailsStateLoaded implements BookDetailsState {
-  const factory BookDetailsStateLoaded({MediaItem book}) =
-      _$BookDetailsStateLoaded;
+  const factory BookDetailsStateLoaded(
+      {MediaItem book, List<MediaItem> chapters}) = _$BookDetailsStateLoaded;
 
   MediaItem get book;
+  List<MediaItem> get chapters;
   $BookDetailsStateLoadedCopyWith<BookDetailsStateLoaded> get copyWith;
 }
 
+/// @nodoc
 abstract class $BookDetailsStateLoadingCopyWith<$Res> {
   factory $BookDetailsStateLoadingCopyWith(BookDetailsStateLoading value,
           $Res Function(BookDetailsStateLoading) then) =
       _$BookDetailsStateLoadingCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$BookDetailsStateLoadingCopyWithImpl<$Res>
     extends _$BookDetailsStateCopyWithImpl<$Res>
     implements $BookDetailsStateLoadingCopyWith<$Res> {
@@ -349,6 +375,7 @@ class _$BookDetailsStateLoadingCopyWithImpl<$Res>
   BookDetailsStateLoading get _value => super._value as BookDetailsStateLoading;
 }
 
+/// @nodoc
 class _$BookDetailsStateLoading
     with DiagnosticableTreeMixin
     implements BookDetailsStateLoading {
@@ -377,7 +404,7 @@ class _$BookDetailsStateLoading
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(MediaItem book),
+    @required Result loaded(MediaItem book, List<MediaItem> chapters),
     @required Result loading(),
     @required Result error(String message),
   }) {
@@ -392,7 +419,7 @@ class _$BookDetailsStateLoading
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(MediaItem book),
+    Result loaded(MediaItem book, List<MediaItem> chapters),
     Result loading(),
     Result error(String message),
     @required Result orElse(),
@@ -440,6 +467,7 @@ abstract class BookDetailsStateLoading implements BookDetailsState {
   const factory BookDetailsStateLoading() = _$BookDetailsStateLoading;
 }
 
+/// @nodoc
 abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
   factory $AuthorsStateErrorDetailsCopyWith(AuthorsStateErrorDetails value,
           $Res Function(AuthorsStateErrorDetails) then) =
@@ -447,6 +475,7 @@ abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
     extends _$BookDetailsStateCopyWithImpl<$Res>
     implements $AuthorsStateErrorDetailsCopyWith<$Res> {
@@ -468,6 +497,7 @@ class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$AuthorsStateErrorDetails
     with DiagnosticableTreeMixin
     implements AuthorsStateErrorDetails {
@@ -510,7 +540,7 @@ class _$AuthorsStateErrorDetails
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(MediaItem book),
+    @required Result loaded(MediaItem book, List<MediaItem> chapters),
     @required Result loading(),
     @required Result error(String message),
   }) {
@@ -525,7 +555,7 @@ class _$AuthorsStateErrorDetails
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(MediaItem book),
+    Result loaded(MediaItem book, List<MediaItem> chapters),
     Result loading(),
     Result error(String message),
     @required Result orElse(),

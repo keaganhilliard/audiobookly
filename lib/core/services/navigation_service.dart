@@ -1,3 +1,4 @@
+import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class NavigationService {
@@ -19,6 +20,12 @@ class NavigationService {
 
   Future pushNamed(String routeName, {arguments}) {
     return navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
+  }
+
+  Future pushNamedAndRemoveUntilHome(String routeName, {arguments}) {
+    return navigatorKey.currentState.pushNamedAndRemoveUntil(
+        routeName, ModalRoute.withName(Routes.Home),
+        arguments: arguments);
   }
 
   Future push(Route route) {

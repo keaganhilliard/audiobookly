@@ -9,6 +9,7 @@ part of 'books_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$BooksStateTearOff {
   const _$BooksStateTearOff();
 
@@ -37,9 +38,11 @@ class _$BooksStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $BooksState = _$BooksStateTearOff();
 
+/// @nodoc
 mixin _$BooksState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -73,12 +76,14 @@ mixin _$BooksState {
   });
 }
 
+/// @nodoc
 abstract class $BooksStateCopyWith<$Res> {
   factory $BooksStateCopyWith(
           BooksState value, $Res Function(BooksState) then) =
       _$BooksStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$BooksStateCopyWithImpl<$Res> implements $BooksStateCopyWith<$Res> {
   _$BooksStateCopyWithImpl(this._value, this._then);
 
@@ -87,12 +92,14 @@ class _$BooksStateCopyWithImpl<$Res> implements $BooksStateCopyWith<$Res> {
   final $Res Function(BooksState) _then;
 }
 
+/// @nodoc
 abstract class $BooksStateInitialCopyWith<$Res> {
   factory $BooksStateInitialCopyWith(
           BooksStateInitial value, $Res Function(BooksStateInitial) then) =
       _$BooksStateInitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$BooksStateInitialCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
     implements $BooksStateInitialCopyWith<$Res> {
@@ -104,6 +111,7 @@ class _$BooksStateInitialCopyWithImpl<$Res>
   BooksStateInitial get _value => super._value as BooksStateInitial;
 }
 
+/// @nodoc
 class _$BooksStateInitial
     with DiagnosticableTreeMixin
     implements BooksStateInitial {
@@ -195,6 +203,7 @@ abstract class BooksStateInitial implements BooksState {
   const factory BooksStateInitial() = _$BooksStateInitial;
 }
 
+/// @nodoc
 abstract class $BooksStateLoadedCopyWith<$Res> {
   factory $BooksStateLoadedCopyWith(
           BooksStateLoaded value, $Res Function(BooksStateLoaded) then) =
@@ -202,6 +211,7 @@ abstract class $BooksStateLoadedCopyWith<$Res> {
   $Res call({List<MediaItem> books});
 }
 
+/// @nodoc
 class _$BooksStateLoadedCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
     implements $BooksStateLoadedCopyWith<$Res> {
@@ -222,6 +232,7 @@ class _$BooksStateLoadedCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$BooksStateLoaded
     with DiagnosticableTreeMixin
     implements BooksStateLoaded {
@@ -329,12 +340,14 @@ abstract class BooksStateLoaded implements BooksState {
   $BooksStateLoadedCopyWith<BooksStateLoaded> get copyWith;
 }
 
+/// @nodoc
 abstract class $BooksStateLoadingCopyWith<$Res> {
   factory $BooksStateLoadingCopyWith(
           BooksStateLoading value, $Res Function(BooksStateLoading) then) =
       _$BooksStateLoadingCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$BooksStateLoadingCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
     implements $BooksStateLoadingCopyWith<$Res> {
@@ -346,6 +359,7 @@ class _$BooksStateLoadingCopyWithImpl<$Res>
   BooksStateLoading get _value => super._value as BooksStateLoading;
 }
 
+/// @nodoc
 class _$BooksStateLoading
     with DiagnosticableTreeMixin
     implements BooksStateLoading {
@@ -437,6 +451,7 @@ abstract class BooksStateLoading implements BooksState {
   const factory BooksStateLoading() = _$BooksStateLoading;
 }
 
+/// @nodoc
 abstract class $BooksStateErrorDetailsCopyWith<$Res> {
   factory $BooksStateErrorDetailsCopyWith(BooksStateErrorDetails value,
           $Res Function(BooksStateErrorDetails) then) =
@@ -444,6 +459,7 @@ abstract class $BooksStateErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class _$BooksStateErrorDetailsCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
     implements $BooksStateErrorDetailsCopyWith<$Res> {
@@ -464,6 +480,7 @@ class _$BooksStateErrorDetailsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$BooksStateErrorDetails
     with DiagnosticableTreeMixin
     implements BooksStateErrorDetails {
