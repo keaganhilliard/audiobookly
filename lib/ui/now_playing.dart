@@ -82,7 +82,7 @@ class NowPlaying extends StatelessWidget {
                     iconSize: 25,
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     autofocus: false,
-                    onPressed: AudioService.rewind,
+                    onPressed: PlaybackController().rewind,
                   ),
                   IconButton(
                     color: Colors.white,
@@ -93,8 +93,8 @@ class NowPlaying extends StatelessWidget {
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     autofocus: false,
                     onPressed: state?.playing ?? false
-                        ? AudioService.pause
-                        : AudioService.play,
+                        ? PlaybackController().pause
+                        : PlaybackController().play,
                   ),
                   IconButton(
                     color: Colors.white,

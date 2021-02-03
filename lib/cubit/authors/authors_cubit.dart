@@ -1,4 +1,5 @@
-import 'package:audiobookly/core/services/audio_service.dart';
+import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/services/audio_handler.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/cubit/authors/authors_state.dart';
 import 'package:bloc/bloc.dart';
@@ -11,8 +12,7 @@ class AuthorsCubit extends Cubit<AuthorsState> {
   Future<void> getAuthors() async {
     try {
       emit(AuthorsState.loading());
-      final authors =
-          await _communicator.getChildren(AudioPlayerTask.AUTHORS_ID);
+      final authors = await _communicator.getChildren(MediaIds.AUTHORS_ID);
       emit(AuthorsState.loaded(authors: authors));
     } on Exception {
       emit(AuthorsState.error("Couldn't fetch authors. Is the device online?"));

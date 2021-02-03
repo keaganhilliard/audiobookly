@@ -1,4 +1,5 @@
-import 'package:audiobookly/core/services/audio_service.dart';
+import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/services/audio_handler.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:audiobookly/core/viewmodels/book_row_view_model.dart';
@@ -16,11 +17,11 @@ class HomeViewModel extends BaseModel {
   Future init() async {
     recentlyAddedModel = BookRowViewModel(
       communicator: _communicator,
-      parentMediaId: AudioPlayerTask.RECENTLY_ADDED,
+      parentMediaId: MediaIds.RECENTLY_ADDED,
     );
     recentlyPlayedModel = BookRowViewModel(
       communicator: _communicator,
-      parentMediaId: AudioPlayerTask.RECENTLY_PLAYED,
+      parentMediaId: MediaIds.RECENTLY_PLAYED,
     );
   }
 

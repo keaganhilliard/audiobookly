@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
@@ -8,29 +6,19 @@ import 'package:audiobookly/core/viewmodels/root_view_model.dart';
 import 'package:audiobookly/cubit/authors/authors_cubit.dart';
 import 'package:audiobookly/cubit/books/books_cubit.dart';
 import 'package:audiobookly/providers.dart';
-// import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart' as r;
 import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/screens/web_app.dart' as web;
-import 'package:responsive_builder/responsive_builder.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Repository rep = Repository();
-  // await rep.connect();
-  // print('Connected Refreshing database');
-  // rep.refreshDatabase();
-  // if (kIsWeb) {
-  //   runApp(WebApp());
-  // }
+Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
 }
 
@@ -111,51 +99,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
-    // startAudioService();
-    if (!Platform.isWindows) connect();
+    PlaybackController().init();
+
     super.initState();
   }
 
-  @override
-  void dispose() {
-    if (!kIsWeb && !Platform.isWindows) disconnect();
-    WidgetsBinding.instance.removeObserver(this);
-    notificationSub?.cancel();
-    super.dispose();
-  }
-
   void connect() async {
-    await AudioService.connect();
     notificationSub ??=
         AudioService.notificationClickEventStream.listen((event) {
       print(event);
-      if (AudioService.currentMediaItem != null && event)
+      if (PlaybackController().currentMediaItem != null && event)
         NavigationService().pushNamedAndRemoveUntilHome(Routes.Book,
-            arguments: AudioService.currentMediaItem);
+            arguments: PlaybackController().currentMediaItem);
     });
     PlaybackController().handleResume();
-  }
-
-  void disconnect() {
-    // notificationSub?.cancel();
-    AudioService.disconnect();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!kIsWeb && !Platform.isWindows) {
-      switch (state) {
-        case AppLifecycleState.resumed:
-          connect();
-          break;
-        case AppLifecycleState.paused:
-          disconnect();
-          break;
-        default:
-          break;
-      }
-    }
   }
 
   @override
@@ -199,24 +156,23 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 MultiProvider(
                     providers: [
                       StreamProvider<PlaybackState>(
-                        create: (context) => AudioService.playbackStateStream,
+                        create: (context) =>
+                            PlaybackController().playbackStateStream,
                         initialData: PlaybackState(
-                          processingState: AudioProcessingState.none,
-                          actions: null,
                           playing: false,
                         ),
                       ),
                       StreamProvider<MediaItem>(
                         create: (context) =>
-                            AudioService.currentMediaItemStream,
+                            PlaybackController().currentMediaItemStream,
                       ),
                     ],
                     child: Consumer<PlaybackState>(
                       builder: (context, state, child) {
                         MediaItem item = Provider.of(context);
                         if (item != null &&
-                            state != null &&
-                            state.processingState != AudioProcessingState.none)
+                            PlaybackController().currentMediaItem != null &&
+                            state.processingState != AudioProcessingState.idle)
                           return NowPlaying();
                         else
                           return Container();

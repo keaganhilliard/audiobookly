@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/services/download_service.dart';
+import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/utils/utils.dart';
 import 'package:flutter/foundation.dart';
@@ -49,16 +50,22 @@ class TracksViewModel extends ChangeNotifier {
             .toList());
   }
 
+  int get currentItemIndex {
+    final currentItem = PlaybackController().currentMediaItem;
+    final queue = PlaybackController().currentQueue;
+    return queue?.indexOf(currentItem) ?? 0;
+  }
+
   void rewind() {
-    AudioService.rewind();
+    PlaybackController().rewind();
   }
 
   void pause() {
-    AudioService.pause();
+    PlaybackController().pause();
   }
 
   void play() {
-    AudioService.play();
+    PlaybackController().play();
   }
 
   Future handleDownload(MediaItem item) async {

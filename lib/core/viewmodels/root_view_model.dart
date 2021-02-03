@@ -2,7 +2,7 @@ import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/plex_server_communicator.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
-import 'package:audiobookly/repository/repository.dart';
+// import 'package:audiobookly/repository/repository.dart';
 import 'package:audiobookly/screens/welcome_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
@@ -23,7 +23,7 @@ class RootViewModel extends BaseModel {
   // PlexServerV2 server;
   // PlexLibrary library;
   ServerCommunicator communicator;
-  Repository repo;
+  // Repository repo;
   bool welcome = true;
 
   RootViewModel();
@@ -131,8 +131,8 @@ class RootViewModel extends BaseModel {
       } else {
         communicator = PlexServerCommunicator();
         await communicator.getServerAndLibrary();
-        repo = new Repository();
-        repo.connect();
+        // repo = new Repository();
+        // repo.connect();
         setBusy(false);
       }
     }

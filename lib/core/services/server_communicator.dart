@@ -5,8 +5,9 @@ import 'package:audiobookly/core/models/user.dart';
 abstract class ServerCommunicator {
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
     var pieces = parentMediaId.split('/');
+    print('Parent media id!');
     switch (pieces[0]) {
-      case AudioService.MEDIA_ROOT_ID:
+      case AudioService.browsableRootId:
         var items = <MediaItem>[
           MediaItem(
             id: MediaIds.RECENTLY_PLAYED,
@@ -40,6 +41,8 @@ abstract class ServerCommunicator {
           ),
         ];
         return await Future.value(items);
+      case AudioService.recentRootId:
+        return (await getRecentPlayed()).take(1).toList();
       case MediaIds.AUTHORS_ID:
         if (pieces.length > 1) {
           return await getBooksFromAuthor(pieces[1]);

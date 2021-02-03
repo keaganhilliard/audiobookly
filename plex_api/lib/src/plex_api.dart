@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
@@ -344,4 +346,122 @@ class PlexApi {
     PlexPin pin = PlexPin.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     return pin;
   }
+}
+
+class _ProxyHttpServer {
+  HttpServer _server;
+
+  /// Maps request keys to [_ProxyRequest]s.
+  final Map<String, _ProxyRequest> _uriMap = {};
+
+  /// The port this server is bound to on localhost. This is set only after
+  /// [start] has completed.
+  int get port => _server.port;
+
+  /// Associate headers with a URL. This may be called only after [start] has
+  /// completed.
+  Uri addUrl(Uri url, Map<String, String> headers) {
+    final path = _requestKey(url);
+    _uriMap[path] = _ProxyRequest(url, headers);
+    return url.replace(
+      scheme: 'http',
+      host: InternetAddress.loopbackIPv4.address,
+      port: port,
+    );
+  }
+
+  /// A unique key for each request that can be processed by this proxy,
+  /// made up of the URL path and query string. It is not possible to
+  /// simultaneously track requests that have the same URL path and query
+  /// but differ in other respects such as the port or headers.
+  String _requestKey(Uri uri) => '${uri.path}?${uri.query}';
+
+  /// Starts the server.
+  Future start() async {
+    _server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    _server.listen((request) async {
+      if (request.method == 'GET') {
+        final path = _requestKey(request.uri);
+        final proxyRequest = _uriMap[path];
+        final originRequest = await HttpClient().getUrl(proxyRequest.uri);
+
+        // Rewrite request headers
+        final host = originRequest.headers.value('host');
+        originRequest.headers.clear();
+        request.headers.forEach((name, value) {
+          originRequest.headers.set(name, value);
+        });
+        for (var name in proxyRequest.headers.keys) {
+          originRequest.headers.set(name, proxyRequest.headers[name]);
+        }
+        originRequest.headers.set('host', host);
+
+        // Try to make normal request
+        try {
+          final originResponse = await originRequest.close();
+
+          request.response.headers.clear();
+          originResponse.headers.forEach((name, value) {
+            request.response.headers.set(name, value);
+          });
+          request.response.statusCode = originResponse.statusCode;
+
+          // Pipe response
+          await originResponse.pipe(request.response);
+          await request.response.close();
+        } on HttpException {
+          // We likely are dealing with a streaming protocol
+          if (proxyRequest.uri.scheme == 'http') {
+            // Try parsing HTTP 0.9 response
+            //request.response.headers.clear();
+            final socket = await Socket.connect(
+                proxyRequest.uri.host, proxyRequest.uri.port);
+            final clientSocket =
+                await request.response.detachSocket(writeHeaders: false);
+            Completer done = Completer();
+            socket.listen(
+              clientSocket.add,
+              onDone: () async {
+                await clientSocket.flush();
+                socket.close();
+                clientSocket.close();
+                done.complete();
+              },
+            );
+            // Rewrite headers
+            final headers = <String, String>{};
+            request.headers.forEach((name, value) {
+              if (name.toLowerCase() != 'host') {
+                headers[name] = value.join(",");
+              }
+            });
+            for (var name in proxyRequest.headers.keys) {
+              headers[name] = proxyRequest.headers[name];
+            }
+            socket.write("GET ${proxyRequest.uri.path} HTTP/1.1\n");
+            if (host != null) {
+              socket.write("Host: $host\n");
+            }
+            for (var name in headers.keys) {
+              socket.write("$name: ${headers[name]}\n");
+            }
+            socket.write("\n");
+            await socket.flush();
+            await done.future;
+          }
+        }
+      }
+    });
+  }
+
+  /// Stops the server
+  Future stop() => _server.close();
+}
+
+/// A request for a URL and headers made by a [_ProxyHttpServer].
+class _ProxyRequest {
+  final Uri uri;
+  final Map<String, String> headers;
+
+  _ProxyRequest(this.uri, this.headers);
 }

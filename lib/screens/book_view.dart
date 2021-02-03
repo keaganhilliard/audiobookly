@@ -25,8 +25,9 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
   Widget build(context) {
     return MultiProvider(
       providers: [
-        StreamProvider.value(value: AudioService.playbackStateStream),
-        StreamProvider.value(value: AudioService.currentMediaItemStream),
+        StreamProvider.value(value: PlaybackController().playbackStateStream),
+        StreamProvider.value(
+            value: PlaybackController().currentMediaItemStream),
       ],
       child: Builder(
         builder: (context) {
@@ -161,14 +162,14 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                     padding: const EdgeInsets.only(
                                         left: 16.0, bottom: 16.0, right: 16.0),
                                     child: Marquee(
-                                      child: StreamBuilder<double>(
-                                          stream: Stream.periodic(
-                                              Duration(milliseconds: 200)),
+                                      child: StreamBuilder<Duration>(
+                                          stream:
+                                              AudioService.getPositionStream(),
                                           builder: (context, snapshot) {
                                             return Text(
                                                 model.getDurationLeftText(
-                                                    state?.currentPosition
-                                                        ?.inMilliseconds,
+                                                    snapshot
+                                                        ?.data?.inMilliseconds,
                                                     item?.duration
                                                         ?.inMilliseconds));
                                           }),
@@ -183,8 +184,29 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                         onPressed: () {},
                                       ),
                                       Expanded(
-                                          child: Center(
-                                              child: Text('${item.title} ()'))),
+                                          child: StreamBuilder<Duration>(
+                                              stream: AudioService
+                                                  .getPositionStream(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.data != null &&
+                                                    item != null) {
+                                                  final timeLeft =
+                                                      model.getDurationLeftText(
+                                                    snapshot.data
+                                                            .inMilliseconds -
+                                                        item.extras[
+                                                            'currentTrackStartingPosition'],
+                                                    item.extras[
+                                                        'currentTrackLength'],
+                                                  );
+                                                  return Center(
+                                                      child: Text(
+                                                          '${item.title} ($timeLeft)'));
+                                                }
+                                                return Center(
+                                                    child:
+                                                        Text('${item.title}'));
+                                              })),
                                       IconButton(
                                         icon: Icon(Icons.skip_next),
                                         onPressed: () {},
@@ -196,32 +218,17 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                       left: 8.0,
                                       right: 8.0,
                                     ),
-                                    child: StreamBuilder<double>(
-                                        stream: Stream.periodic(
-                                          Duration(milliseconds: 200),
-                                        ),
+                                    child: StreamBuilder<Duration>(
+                                        stream:
+                                            AudioService.getPositionStream(),
                                         builder: (context, snapshot) {
                                           return SeekBar(
                                               duration: item?.duration,
-                                              position: state?.currentPosition,
+                                              position: snapshot?.data,
                                               onChangeEnd: (val) async {
                                                 await PlaybackController()
-                                                    .seekTo(val.inMilliseconds);
+                                                    .seek(val.inMilliseconds);
                                               });
-                                          // ProgressSlider(
-                                          //   value: state?.currentPosition
-                                          //           ?.inMilliseconds
-                                          //           ?.toDouble() ??
-                                          //       0,
-                                          //   onChangeEnd: (val) async {
-                                          //     PlaybackController()
-                                          //         .seekTo(val.toInt());
-                                          //   },
-                                          //   min: 0,
-                                          //   max: item?.duration?.inMilliseconds
-                                          //           ?.toDouble() ??
-                                          //       100,
-                                          // );
                                         }),
                                   ),
                                   Row(
@@ -245,10 +252,7 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                                             .buffering ||
                                                     state?.processingState ==
                                                         AudioProcessingState
-                                                            .fastForwarding ||
-                                                    state?.processingState ==
-                                                        AudioProcessingState
-                                                            .rewinding
+                                                            .loading
                                                 ? CircularProgressIndicator()
                                                 : Container(),
                                           ),
@@ -280,10 +284,9 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                         onPressed:
                                             PlaybackController().fastForward,
                                       ),
-                                      StreamBuilder<double>(
-                                          stream: Stream.periodic(
-                                            Duration(milliseconds: 200),
-                                          ),
+                                      StreamBuilder<Duration>(
+                                          stream:
+                                              AudioService.getPositionStream(),
                                           builder: (context, snapshot) {
                                             return IconButton(
                                               onPressed: () => {
@@ -330,7 +333,7 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                                                   state.speed,
                                                               onChangeEnd:
                                                                   (val) {
-                                                                AudioService
+                                                                PlaybackController()
                                                                     .setSpeed(
                                                                         val);
                                                               },

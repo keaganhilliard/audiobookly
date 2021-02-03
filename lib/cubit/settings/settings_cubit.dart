@@ -1,6 +1,6 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/core/models/user.dart';
-import 'package:audiobookly/core/services/audio_service.dart';
+import 'package:audiobookly/core/services/audio_handler.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/cubit/settings/settings_state.dart';
 import 'package:bloc/bloc.dart';

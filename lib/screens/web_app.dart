@@ -87,27 +87,27 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
-    // startAudioService();
-    connect();
+    // WidgetsBinding.instance.addObserver(this);
+    // // startAudioService();
+    // connect();
     super.initState();
   }
 
   @override
   void dispose() {
-    disconnect();
-    WidgetsBinding.instance.removeObserver(this);
+    // disconnect();
+    // WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  void connect() async {
-    await AudioService.connect();
-    PlaybackController().handleResume();
-  }
+  // void connect() async {
+  //   // await AudioService.connect();
+  //   PlaybackController().handleResume();
+  // }
 
-  void disconnect() {
-    AudioService.disconnect();
-  }
+  // void disconnect() {
+  //   // AudioService.disconnect();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -186,16 +186,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                           providers: [
                             StreamProvider<PlaybackState>(
                               create: (context) =>
-                                  AudioService.playbackStateStream,
+                                  PlaybackController().playbackStateStream,
                               initialData: PlaybackState(
-                                processingState: AudioProcessingState.none,
-                                actions: null,
                                 playing: false,
                               ),
                             ),
                             StreamProvider<MediaItem>(
                               create: (context) =>
-                                  AudioService.currentMediaItemStream,
+                                  PlaybackController().currentMediaItemStream,
                             ),
                           ],
                           child: Consumer<PlaybackState>(
@@ -204,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                               if (item != null &&
                                   state != null &&
                                   state.processingState !=
-                                      AudioProcessingState.none)
+                                      AudioProcessingState.ready)
                                 return NowPlaying();
                               else
                                 return Container();

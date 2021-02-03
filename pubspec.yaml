@@ -16,6 +16,7 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.6.0 <3.0.0"
 
+publish_to: none
 dependencies:
   flutter:
     sdk: flutter
@@ -25,7 +26,10 @@ dependencies:
   provider:
   cached_network_image:
   audio_session: 
-  audio_service: ^0.15.2
+  audio_service: 
+    git:
+      url: https://github.com/RyanHeise/audio_service.git
+      ref: one-isolate
   just_audio:
   just_audio_web:
   shared_preferences:
@@ -34,16 +38,14 @@ dependencies:
   path_provider:
   moor: ^3.3.1
   animations:
-  # dart_chromecast:
   dio:
-#  cast:
   url_launcher:
   rxdart:
   flutter_inappwebview:
   freezed_annotation:
   bloc:
   flutter_bloc:
-  responsive_builder:
+  scrollable_positioned_list:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

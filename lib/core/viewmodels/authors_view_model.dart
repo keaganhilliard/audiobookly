@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/services/audio_service.dart';
+import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/services/audio_handler.dart';
 import 'package:audiobookly/core/services/server_communicator.dart';
 import 'package:audiobookly/core/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
@@ -16,12 +17,12 @@ class AuthorsViewModel extends BaseModel {
 
   Future<void> getAuthors() async {
     setBusy(true);
-    items = await _communicator.getChildren(AudioPlayerTask.AUTHORS_ID);
+    items = await _communicator.getChildren(MediaIds.AUTHORS_ID);
     setBusy(false);
   }
 
   Future<void> onRefresh() async {
-    items = await _communicator.getChildren(AudioPlayerTask.AUTHORS_ID);
+    items = await _communicator.getChildren(MediaIds.AUTHORS_ID);
     notifyListeners();
   }
 }

@@ -1,32 +1,45 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/viewmodels/tracks_view_model.dart';
 import 'package:audiobookly/ui/base_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/core/utils/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TracksView extends StatelessWidget {
   TracksView();
 
   @override
   Widget build(BuildContext context) {
+    final ItemScrollController itemScrollController = ItemScrollController();
+    final ItemPositionsListener itemPositionsListener =
+        ItemPositionsListener.create();
     return BaseWidget<TracksViewModel>(
         model: TracksViewModel(),
+        onModelReady: (model) => itemScrollController.scrollTo(
+            index: model.currentItemIndex,
+            duration: Duration(milliseconds: 500)),
         builder: (context, model, child) {
           return MultiProvider(
             providers: [
-              StreamProvider.value(value: AudioService.queueStream),
-              StreamProvider.value(value: AudioService.playbackStateStream),
-              StreamProvider.value(value: AudioService.currentMediaItemStream),
+              StreamProvider.value(value: PlaybackController().queueStream),
+              StreamProvider.value(
+                  value: PlaybackController().playbackStateStream),
+              StreamProvider.value(
+                  value: PlaybackController().currentMediaItemStream),
             ],
             child: Builder(builder: (context) {
               PlaybackState state = Provider.of(context);
               List<MediaItem> items = Provider.of(context);
+              MediaItem item = Provider.of(context);
+              final currentTrackIndex = items.indexWhere(
+                  (current) => current.id == item.extras['currentTrack']);
               return Scaffold(
                   appBar: AppBar(
                     title: Text('Tracks'),
                     actions: <Widget>[
-                      if (state?.processingState != AudioProcessingState.none)
+                      if ((state != null))
                         IconButton(
                           icon: Icon(Icons.replay_30),
                           onPressed: () {
@@ -40,7 +53,7 @@ class TracksView extends StatelessWidget {
                             model.play();
                           },
                         ),
-                      if ((state?.playing ?? true))
+                      if ((state?.playing ?? false))
                         IconButton(
                           icon: Icon(Icons.pause),
                           onPressed: () {
@@ -62,15 +75,16 @@ class TracksView extends StatelessWidget {
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
+                      : ScrollablePositionedList.builder(
+                          itemScrollController: itemScrollController,
+                          itemPositionsListener: itemPositionsListener,
                           itemCount: items.length,
                           itemBuilder: (context, index) {
-                            MediaItem item = Provider.of(context);
                             final MediaItem track = items[index];
                             final totalTrackDigits =
                                 items.length.toString().length;
-                            final bool currentTrack = item != null &&
-                                track.id == item.extras['currentTrack'];
+                            final bool currentTrack =
+                                index == currentTrackIndex;
                             return Container(
                               color: currentTrack
                                   ? Colors.black
@@ -79,7 +93,8 @@ class TracksView extends StatelessWidget {
                                 onTap: () {
                                   print('Skipping to ${item.id}');
                                   if (track.id != item.id)
-                                    AudioService.skipToQueueItem(track.id);
+                                    PlaybackController()
+                                        .skipToQueueItem(track.id);
                                 },
                                 trailing: currentTrack
                                     ? IconButton(

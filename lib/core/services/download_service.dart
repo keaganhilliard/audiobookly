@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:path/path.dart' as p;
 
 class DownloadService {
-  static List<String> ports = List();
+  static List<String> ports = [];
   static bool isSpawned = false;
 
   static void connect(String portName) {}
@@ -48,7 +48,7 @@ class DownloadService {
 
     bool first = true;
     try {
-      List<List<int>> datas = List<List<int>>();
+      List<List<int>> datas = [];
       await for (final data in response) {
         datas.add(data);
         fileSaver = await fileSaver.writeAsBytes(data,
