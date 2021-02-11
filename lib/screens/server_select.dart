@@ -32,13 +32,14 @@ class ServerSelect extends StatelessWidget {
                           title: Text(model.servers[position].name),
                           onTap: () {
                             model.selectServer(position);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LibrarySelect(
-                                          model: LibraryListViewModel(
-                                              server: model.servers[position]),
-                                        )));
+                            Navigator.pop(context, model.servers[position]);
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => LibrarySelect(
+                            //               model: LibraryListViewModel(
+                            //                   server: model.servers[position]),
+                            //             )));
                           });
                     }),
               );

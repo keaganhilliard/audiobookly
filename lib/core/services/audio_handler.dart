@@ -288,9 +288,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> prepareFromMediaId(String mediaId,
       [Map<String, dynamic> extras]) async {
-    if (mediaItem?.value?.id == mediaId && _player != null) {
-      return;
-    }
+    // if (mediaItem?.value?.id == mediaId && _player != null) {
+    //   return;
+    // }
     _currentMedia = mediaId;
     if (_player?.playing ?? false) {
       updateProgress(
@@ -301,6 +301,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     queue.add(await _communicator.getTracksForBook(mediaId));
     _currentMediaItem = (await _communicator.getAlbumFromId(mediaId))
         .copyWith(duration: Duration(milliseconds: totalDuration));
+    print('Prepare from mediaId:' + '${_currentMediaItem.id}');
+    queue.value.forEach((element) {
+      print('QUEUE: ${element.title}');
+    });
     final latestItem = findLatestTrack();
     final latestTrackPosition = findLatestTrackPosition(latestItem);
     try {

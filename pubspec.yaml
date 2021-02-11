@@ -23,7 +23,12 @@ dependencies:
   http:
   plex_api:
     path: ./plex_api
+  emby_api:
+    path: ./emby_api
   provider:
+  flutter_hooks:
+  hooks_riverpod:
+  expandable:
   cached_network_image:
   audio_session: 
   audio_service: 

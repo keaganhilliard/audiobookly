@@ -86,6 +86,7 @@ class RootViewModel extends BaseModel {
         );
       }));
       int count = 0;
+      Completer waitForIt = Completer();
       Timer.periodic(Duration(seconds: 5), (timer) async {
         count++;
         PlexPin authToken = await api.getAuthToken(pin.id);
@@ -94,47 +95,42 @@ class RootViewModel extends BaseModel {
           // urlLauncher.closeWebView();
           NavigationService().pop();
           timer.cancel();
-          init();
+          waitForIt.complete();
         }
         print('In Timer: ${authToken.error}');
         if (count > 20) timer.cancel();
       });
-    } else if (headers != null) {
+      await waitForIt.future;
+    }
+
+    if (headers != null) {
       headers.token = authToken;
       print('AuthToken: $authToken');
       api = PlexApi(headers: headers);
       if (serverId == null) {
-        NavigationService().push(MaterialPageRoute(
-          builder: (context) =>
-              ServerSelect(model: ServerListViewModel(api: api)),
+        PlexServerV2 server = await NavigationService().push(MaterialPageRoute(
+          builder: (context) => ServerSelect(
+            model: ServerListViewModel(api: api),
+          ),
         ));
-        int count = 0;
-        Timer.periodic(Duration(seconds: 5), (timer) async {
-          count++;
-          libraryKey = _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
-          print('checking library :$libraryKey');
-          if (libraryKey != null) {
-            timer.cancel();
-            init();
-          }
-          if (count > 20) timer.cancel();
-        });
-      } else if (libraryKey == null) {
+        libraryKey = _prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
+      }
+
+      if (libraryKey == null) {
         List<PlexServerV2> servers = await api.getServersV2();
         PlexServerV2 server = servers.firstWhere(
             (server) => server.clientIdentifier == serverId,
             orElse: () => null);
-        NavigationService().push(MaterialPageRoute(
-          builder: (context) =>
-              LibrarySelect(model: LibraryListViewModel(server: server)),
+        await NavigationService().push(MaterialPageRoute(
+          builder: (context) => LibrarySelect(
+            model: LibraryListViewModel(server: server),
+          ),
         ));
-      } else {
-        communicator = PlexServerCommunicator();
-        await communicator.getServerAndLibrary();
-        // repo = new Repository();
-        // repo.connect();
-        setBusy(false);
       }
+
+      communicator = PlexServerCommunicator();
+      await communicator.getServerAndLibrary();
+      setBusy(false);
     }
   }
 }

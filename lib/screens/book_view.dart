@@ -201,7 +201,7 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                                   );
                                                   return Center(
                                                       child: Text(
-                                                          '${item.title} ($timeLeft)'));
+                                                          '${item.title}'));
                                                 }
                                                 return Center(
                                                     child:

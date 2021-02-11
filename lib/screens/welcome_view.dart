@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiobookly/core/services/navigation_service.dart';
+import 'package:audiobookly/screens/emby_login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -73,26 +75,45 @@ class _WelcomeViewState extends State<WelcomeView> {
         title: const Text('Audiobookly'),
       ),
       body: Center(
-        child: RaisedButton(
-            color: Colors.amber,
-            onPressed: () async {
-              if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
-                if (await canLaunch(widget.url)) {
-                  launch(widget.url);
-                }
-              } else {
-                await widget.browser.open(
-                  url: widget.url,
-                  options: ChromeSafariBrowserClassOptions(
-                    android: AndroidChromeCustomTabsOptions(
-                      addDefaultShareMenuItem: false,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.amber,
+                onPrimary: Colors.white,
+              ),
+              onPressed: () async {
+                if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
+                  if (await canLaunch(widget.url)) {
+                    launch(widget.url);
+                  }
+                } else {
+                  await widget.browser.open(
+                    url: widget.url,
+                    options: ChromeSafariBrowserClassOptions(
+                      android: AndroidChromeCustomTabsOptions(
+                        addDefaultShareMenuItem: false,
+                      ),
+                      ios: IOSSafariOptions(barCollapsingEnabled: true),
                     ),
-                    ios: IOSSafariOptions(barCollapsingEnabled: true),
-                  ),
-                );
-              }
-            },
-            child: Text('Login to Plex')),
+                  );
+                }
+              },
+              child: Text('Login to Plex'),
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                  onPrimary: Colors.white,
+                ),
+                onPressed: () {
+                  NavigationService().push(
+                      MaterialPageRoute(builder: (context) => EmbyLogin()));
+                },
+                child: Text('Login to Emby'))
+          ],
+        ),
       ),
     );
   }

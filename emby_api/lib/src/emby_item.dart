@@ -21,6 +21,9 @@ class EmbyItem {
     this.albumArtist,
     this.albumArtists,
     this.imageTags,
+    this.album,
+    this.albumId,
+    this.mediaType,
   });
 
   String name;
@@ -29,17 +32,20 @@ class EmbyItem {
   String id;
   bool supportsResume;
   bool supportsSync;
-  int runTimeTicks;
+  double runTimeTicks;
   bool isFolder;
   String parentId;
   String type;
   EmbyUserData userData;
-  int primaryImageAspectRatio;
+  double primaryImageAspectRatio;
   List<String> artists;
   List<EmbyArtist> artistItems;
   String albumArtist;
   List<EmbyArtist> albumArtists;
   EmbyImageTag imageTags;
+  String album;
+  String albumId;
+  String mediaType;
 
   factory EmbyItem.fromJson(Map<String, dynamic> json) => EmbyItem(
         name: json["Name"],
@@ -48,12 +54,14 @@ class EmbyItem {
         id: json["Id"],
         supportsResume: json["SupportsResume"],
         supportsSync: json["SupportsSync"],
-        runTimeTicks: json["RunTimeTicks"],
+        runTimeTicks: json["RunTimeTicks"]?.toDouble(),
         isFolder: json["IsFolder"],
         parentId: json["ParentId"],
         type: json["Type"],
-        userData: EmbyUserData.fromJson(json["UserData"]),
-        primaryImageAspectRatio: json["PrimaryImageAspectRatio"],
+        userData: json["UserData"] != null
+            ? EmbyUserData.fromJson(json["UserData"])
+            : null,
+        primaryImageAspectRatio: json["PrimaryImageAspectRatio"]?.toDouble(),
         artists: json["Artists"] != null
             ? List<String>.from(json["Artists"].map((x) => x))
             : [],
@@ -66,6 +74,9 @@ class EmbyItem {
             ? List<EmbyArtist>.from(
                 json["AlbumArtists"].map((x) => EmbyArtist.fromJson(x)))
             : [],
+        album: json['Album'],
+        albumId: json['AlbumId'],
+        mediaType: json['MediaType'],
         imageTags: EmbyImageTag.fromJson(json["ImageTags"]),
       );
 
@@ -87,5 +98,8 @@ class EmbyItem {
         "AlbumArtist": albumArtist,
         "AlbumArtists": List<dynamic>.from(albumArtists.map((x) => x.toJson())),
         "ImageTags": imageTags.toJson(),
+        "Album": album,
+        "AlbumId": albumId,
+        "MediaType": mediaType,
       };
 }

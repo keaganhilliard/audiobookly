@@ -14,8 +14,8 @@ class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
-  Future pop() {
-    return navigatorKey.currentState.maybePop();
+  Future pop([dynamic result]) {
+    return navigatorKey.currentState.maybePop(result);
   }
 
   Future pushNamed(String routeName, {arguments}) {

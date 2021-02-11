@@ -12,6 +12,7 @@ dependencies:
   http: 
   device_info: 
   xml:
+  uuid:
   flutter:
     sdk: flutter
 

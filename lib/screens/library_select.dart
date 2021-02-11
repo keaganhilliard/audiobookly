@@ -28,9 +28,9 @@ class LibrarySelect extends StatelessWidget {
                   itemBuilder: (context, position) {
                     return ListTile(
                       title: Text(model.libraries[position].title),
-                      onTap: () {
-                        model.setLibrary(position);
-                        Navigator.pop(context);
+                      onTap: () async {
+                        await model.setLibrary(position);
+                        Navigator.pop(context, model.libraries[position]);
                         // Provider.of<RootViewModel>(context).init();
                       },
                     );

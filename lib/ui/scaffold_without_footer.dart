@@ -1,6 +1,5 @@
-import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/utils/book_search_delegate.dart';
-import 'package:audiobookly/screens/settings_view.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWithoutFooter extends StatelessWidget {
@@ -27,12 +26,16 @@ class ScaffoldWithoutFooter extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () async {
-              Navigator.of(context).push(MaterialPageRoute(
+              Navigator.of(context).push(
+                MaterialPageRoute(
                   builder: (context) => Scaffold(
-                      appBar: AppBar(
-                        title: Text('Settings'),
-                      ),
-                      body: SettingsView())));
+                    appBar: AppBar(
+                      title: Text('Settings'),
+                    ),
+                    body: SettingsView(),
+                  ),
+                ),
+              );
               // showModalBottomSheet(
               //     context: context,
               //     useRootNavigator: true,

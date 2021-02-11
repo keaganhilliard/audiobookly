@@ -2,5 +2,6 @@ class User {
   String userName;
   String name;
   String thumb;
-  User({this.userName, this.name, this.thumb});
+  String token;
+  User({this.userName, this.name, this.thumb, this.token});
 }

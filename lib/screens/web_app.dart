@@ -20,34 +20,31 @@ class WebApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // timeDilation = 7.0;
-    return MultiProvider(
-      providers: providers,
-      child: MaterialApp(
-        title: 'Audiobookly',
-        navigatorKey: NavigationService().navigatorKey,
-        onGenerateRoute: r.Router.generateRoute,
-        theme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          brightness: Brightness.dark,
-          accentColor: Colors.deepPurple,
-          canvasColor: Colors.grey[900],
-        ),
-        darkTheme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          accentColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-          canvasColor: Colors.grey[900],
-        ),
-        home: BaseWidget<RootViewModel>(
-          model: RootViewModel(),
-          onModelReady: (model) => model.init(),
-          builder: (context, model, child) {
-            return MyHomePage(
-              title: 'Audiobookly',
-              model: model,
-            );
-          },
-        ),
+    return MaterialApp(
+      title: 'Audiobookly',
+      navigatorKey: NavigationService().navigatorKey,
+      onGenerateRoute: r.Router.generateRoute,
+      theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.dark,
+        accentColor: Colors.deepPurple,
+        canvasColor: Colors.grey[900],
+      ),
+      darkTheme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        accentColor: Colors.deepPurple,
+        brightness: Brightness.dark,
+        canvasColor: Colors.grey[900],
+      ),
+      home: BaseWidget<RootViewModel>(
+        model: RootViewModel(),
+        onModelReady: (model) => model.init(),
+        builder: (context, model, child) {
+          return MyHomePage(
+            title: 'Audiobookly',
+            model: model,
+          );
+        },
       ),
     );
   }

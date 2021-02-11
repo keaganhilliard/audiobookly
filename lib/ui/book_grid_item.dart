@@ -28,25 +28,45 @@ class BookGridItem extends StatelessWidget {
                 heightFactor: 1,
                 child: !kIsWeb && Platform.isWindows
                     ? Image.network(thumbnailUrl,
+                        errorBuilder: (context, exception, stackTrace) {
+                          return Container(
+                            constraints: BoxConstraints.expand(),
+                            color: Colors.black,
+                            child: Icon(
+                              subtitle == null ? Icons.person : Icons.book,
+                              size: 50.0,
+                            ),
+                          );
+                        },
                         fit: BoxFit.cover,
-                        alignment: Alignment.center, frameBuilder:
+                        alignment: Alignment.center,
+                        frameBuilder:
                             (context, child, frame, wasSynchronouslyLoaded) {
-                        return wasSynchronouslyLoaded || frame != null
-                            ? child
-                            : Container(
-                                constraints: BoxConstraints.expand(),
-                                color: Colors.black,
-                                child: Icon(
-                                  subtitle == null ? Icons.person : Icons.book,
-                                  size: 50.0,
-                                ),
-                              );
-                      })
+                          return wasSynchronouslyLoaded || frame != null
+                              ? child
+                              : Container(
+                                  constraints: BoxConstraints.expand(),
+                                  color: Colors.black,
+                                  child: Icon(
+                                    subtitle == null
+                                        ? Icons.person
+                                        : Icons.book,
+                                    size: 50.0,
+                                  ),
+                                );
+                        })
                     : CachedNetworkImage(
                         imageUrl: thumbnailUrl,
                         fit: BoxFit.cover,
                         alignment: Alignment.center,
-                        errorWidget: (context, message, thing) => Text(message),
+                        errorWidget: (context, message, thing) => Container(
+                          constraints: BoxConstraints.expand(),
+                          color: Colors.black,
+                          child: Icon(
+                            subtitle == null ? Icons.person : Icons.book,
+                            size: 50.0,
+                          ),
+                        ),
                         placeholder: (context, url) => Container(
                           constraints: BoxConstraints.expand(),
                           color: Colors.black,
