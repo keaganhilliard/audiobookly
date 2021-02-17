@@ -1,9 +1,8 @@
 import 'package:audiobookly/core/constants/app_constants.dart';
-import 'package:audiobookly/cubit/books/books_state.dart';
 import 'package:audiobookly/new_project_structure/repositories/media/media_repository.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/home/home_state.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final homeStateProvider = StateNotifierProvider<HomeNotifier>((ref) {
   return HomeNotifier(ref.watch(mediaRepositoryProdiver));

@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/player/player_view.dart';
 import 'package:audiobookly/screens/book_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class NowPlaying extends StatelessWidget {
       child: OpenContainer(
         openBuilder: (_, closeContainer) {
           MediaItem item = Provider.of(context);
-          return BookView(
+          return PlayerView(
             book: item,
           );
         },

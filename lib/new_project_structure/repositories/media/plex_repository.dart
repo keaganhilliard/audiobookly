@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/models/library.dart';
 import 'package:audiobookly/core/models/plex_media_item.dart';
 import 'package:audiobookly/core/models/user.dart';
 import 'package:audiobookly/new_project_structure/repositories/media/media_repository.dart';
@@ -197,6 +198,13 @@ class PlexRepository extends MediaRepository {
         }[state]);
   }
 
+  Future playbackStarted(String key, Duration position, Duration duration,
+      double playbackRate) async {}
+  Future playbackCheckin(String key, Duration position, Duration duration,
+      double playbackRate, AudiobooklyEvent event) async {}
+  Future playbackStopped(String key, Duration position, Duration duration,
+      double playbackRate) async {}
+
   Future<List<PlexMediaItem>> getTracksForBook(String bookId) async {
     await refreshServer();
     return (await _server.getTracks(bookId))
@@ -214,6 +222,12 @@ class PlexRepository extends MediaRepository {
   Future<String> getLoginUrl() async {
     PlexPin pin = await _server.api.getPin();
     return _server.api.getOauthUrl(pin.code);
+  }
+
+  Future<List<Library>> getLibraries() async {
+    await refreshServer();
+    final libraries = await _server.getLibraries();
+    return libraries.map((lib) => Library(lib.key, lib.title)).toList();
   }
 
   Future logout() {}

@@ -20,27 +20,28 @@ class PlexLibrary {
   int contentChangedAt;
   List<Location> location;
 
-  PlexLibrary(
-      {this.allowSync,
-      this.art,
-      this.composite,
-      this.filters,
-      this.refreshing,
-      this.thumb,
-      this.key,
-      this.type,
-      this.title,
-      this.agent,
-      this.scanner,
-      this.language,
-      this.uuid,
-      this.updatedAt,
-      this.createdAt,
-      this.scannedAt,
-      this.content,
-      this.directory,
-      this.contentChangedAt,
-      this.location});
+  PlexLibrary({
+    this.allowSync,
+    this.art,
+    this.composite,
+    this.filters,
+    this.refreshing,
+    this.thumb,
+    this.key,
+    this.type,
+    this.title,
+    this.agent,
+    this.scanner,
+    this.language,
+    this.uuid,
+    this.updatedAt,
+    this.createdAt,
+    this.scannedAt,
+    this.content,
+    this.directory,
+    this.contentChangedAt,
+    this.location,
+  });
 
   PlexLibrary.fromJson(Map<String, dynamic> json) {
     allowSync = json['allowSync'];
@@ -63,7 +64,7 @@ class PlexLibrary {
     directory = json['directory'];
     contentChangedAt = json['contentChangedAt'];
     if (json['Location'] != null) {
-      location = new List<Location>();
+      location = [];
       json['Location'].forEach((v) {
         location.add(new Location.fromJson(v));
       });

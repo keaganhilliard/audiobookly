@@ -6,19 +6,16 @@ import 'package:audiobookly/core/services/shared_preferences_service.dart';
 import 'package:audiobookly/core/utils/in_app_browser.dart';
 import 'package:audiobookly/core/viewmodels/library_list_view_model.dart';
 import 'package:audiobookly/core/viewmodels/server_list_view_model.dart';
-import 'package:audiobookly/new_project_structure/repositories/authentication/authentication_repository.dart';
 import 'package:audiobookly/new_project_structure/repositories/authentication/emby_auth_repository.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/auth/auth_state.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/library_select/library_select_view.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/screens/library_select.dart';
 import 'package:audiobookly/screens/server_select.dart';
-import 'package:audiobookly/screens/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plex_api/plex_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart';
-import 'package:riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authNotifierProvider = StateNotifierProvider<AuthNotifier>((ref) {
   return AuthNotifier(ref);
@@ -47,18 +44,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
       return false;
     }
   }
-
-  // Future<bool> login(String token) async {
-  //   try {
-  //     // final user = await _userRepository.getUser(token);
-  //     // NavigationService().push()
-  //     // _sharedPreferencesService.setUserToken(user.token);
-  //     // print('Token!: ${user.token}');
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
 
   Future<bool> embyLogin(
     String baseUrl,
@@ -130,6 +115,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (_prefs.getServerType() == SERVER_TYPE.EMBY) {
         final _userRepo = _ref.read(embyAuthRepoProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
+        print('LibraryId: ${_prefs.getLibraryId()}');
+        if (_prefs.getLibraryId().isEmpty) {
+          await NavigationService().push(
+            MaterialPageRoute(builder: (context) {
+              return LibrarySelectView();
+            }),
+          );
+        }
       } else {}
 
       if (user != null)

@@ -4,6 +4,8 @@ import 'package:audiobookly/new_project_structure/state_notifiers/authors/author
 import 'package:audiobookly/new_project_structure/state_notifiers/authors/authors_state.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/books/books_state.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/books/books_view.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/collections/collections_notifier.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/collections/collections_state.dart';
 import 'package:audiobookly/ui/book_grid_item.dart';
 import 'package:audiobookly/ui/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
@@ -11,31 +13,32 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/ui/scaffold_without_footer.dart';
 
-class AuthorsView extends HookWidget {
-  AuthorsView();
+class CollectionsView extends HookWidget {
+  CollectionsView();
 
   @override
   Widget build(BuildContext context) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(authorsStateProvider);
+    final booksProvider = useProvider(collectionsStateProvider);
 
     return ScaffoldWithoutFooter(
-      title: Text('Authors'),
+      title: Text('Collections'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
           print('refreshing');
-          return booksProvider.getAuthors();
+          return booksProvider.getCollections();
         },
         child: Consumer(
-          builder: (context, reader, child) {
-            final state = reader(authorsStateProvider.state);
-            if (state is AuthorsStateInitial) _refresher.currentState.show();
-            if (state is AuthorsStateLoaded) {
+          builder: (context, read, child) {
+            final state = read(collectionsStateProvider.state);
+            if (state is CollectionsStateInitial)
+              _refresher.currentState.show();
+            if (state is CollectionsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
-                items: state.authors,
+                items: state.collections,
                 itemBuilder: (author) {
                   return OpenContainer(
                     closedElevation: 0.0,

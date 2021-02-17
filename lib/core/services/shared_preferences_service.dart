@@ -57,5 +57,5 @@ class SharedPreferencesService {
     await sharedPreferences.setString(libraryKey, libraryId);
   }
 
-  String getLibraryId() => sharedPreferences.getString(libraryKey);
+  String getLibraryId() => sharedPreferences.getString(libraryKey) ?? '';
 }

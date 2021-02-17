@@ -80,7 +80,7 @@ class EmbyLogin extends HookWidget {
                     onChanged: (val) {
                       _login.value.password = val;
                     },
-                    // obscureText: true,
+                    obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
@@ -121,7 +121,7 @@ class EmbyLogin extends HookWidget {
                                       content: Text(
                                           'Username or password invalid')));
                             } else {
-                              _auth.checkToken();
+                              await _auth.checkToken();
                               NavigationService().pop();
                             }
                             _loading.value = false;

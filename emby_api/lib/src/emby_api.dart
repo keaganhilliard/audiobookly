@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:emby_api/src/emby_item.dart';
+import 'package:flutter/foundation.dart';
 
 import 'emby_user.dart';
 import 'emby_login_response.dart';
@@ -129,7 +130,16 @@ class EmbyApi {
   }
 
   Future<List<EmbyItem>> getItemsForCollection(String collectionId) async {
-    return await getAll(collectionId);
+    return await _getItems('/Users/$userId/Items', {
+      'ParentId': collectionId,
+      'Fields': 'Overview',
+      'IncludeItemTypes': 'MusicAlbum',
+      // 'Limit': '$limit',
+      // 'SortBy': 'AlbumArtist,ProductionYear',
+      // 'SortOrder': 'Ascending,Ascending',
+      'EnableImageTypes': 'Primary',
+      // 'Recursive': 'true'
+    });
   }
 
   Future<List<EmbyItem>> getItemsForAlbum(String albumId) async {
@@ -137,8 +147,6 @@ class EmbyApi {
       'ParentId': albumId,
       'Fields': 'Overview,Chapters',
       'IncludeItemTypes': 'Audio',
-      // 'SortBy': 'AlbumArtist,ProductionYear',
-      // 'SortOrder': 'Ascending,Ascending',
       'EnableImageTypes': 'Primary',
       'Recursive': 'true'
     });
@@ -155,7 +163,7 @@ class EmbyApi {
             'BasicSyncInfo,CanDelete,PrimaryImageAspectRatio,Overview,RunTimeTicks',
         'ImageTypeLimit': '1',
         'EnableImageTypes': 'Primary',
-        'ParentId': '48af3bb0f5988d3cd867a245b7ef32d1',
+        'ParentId': libraryId,
         'ArtistType': 'AlbumArtist',
         'userId': userId,
       },
@@ -215,7 +223,9 @@ class EmbyApi {
 
   Future<List<EmbyItem>> _getItems(
       String path, Map<String, dynamic> parameters) async {
+    print('Emby Path: $path');
     http.Response response = await getResponse(path, parameters);
+    print('Emby Response body: ${response.body}');
     return List<EmbyItem>.from(
       _getItemsFromBody(
         jsonDecode(
@@ -240,23 +250,88 @@ class EmbyApi {
     );
   }
 
+  Future<http.Response> makePost(
+      String path, Map<String, dynamic> parameters, dynamic body) async {
+    return await http.post(
+      Uri.https(
+        baseUrl,
+        path,
+        _appendParameters(parameters),
+      ),
+      headers: {
+        'content-type': 'application/json',
+        ...headers,
+      },
+      body: utf8.encode(jsonEncode(body)),
+    );
+  }
+
   List<EmbyItem> _getItemsFromBody(Map<String, dynamic> json) {
     return json['Items'].map<EmbyItem>((x) => EmbyItem.fromJson(x)).toList();
   }
 
-  String _playSession;
-  String get playSession {
-    if (_playSession == null) _playSession = uuid.v4();
-    return _playSession;
-  }
+  Map<String, String> playSessions = {};
 
   String getServerUrl(String itemId) {
+    String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
     return Uri.https(baseUrl, '/Audio/$itemId/stream', {
       'static': 'true',
       'UserId': userId,
       'DevceId': deviceId,
-      'PlaySessionId': playSession,
-      'MaxStremingBitrate': '140000000',
+      'PlaySessionId': sessionId,
+      'MaxStreamingBitrate': '140000000',
     }).toString();
   }
+
+  Future<void> playbackStarted(
+      String itemId, Duration position, Duration duration,
+      [double playbackRate = 1.0]) async {
+    return await makePost('/Sessions/Playing', {}, {
+      'ItemId': itemId,
+      'CanSeek': true,
+      'PlaySessionId': playSessions[itemId],
+      'PositionTicks': position.inMicroseconds * 10,
+      'PlaybackRate': playbackRate,
+    });
+  }
+
+  Future<void> playbackCheckin(
+      String itemId, Duration position, Duration duration, EmbyEvent event,
+      [double playbackRate = 1.0]) async {
+    print(
+        'Checking in bitches ${position.inMinutes}: Event ${describeEnum(event)}');
+    final res = await makePost('/Sessions/Playing/Progress', {}, {
+      'ItemId': itemId,
+      'CanSeek': true,
+      'PlaySessionId': playSessions[itemId],
+      'EventName': describeEnum(event).toLowerCase(),
+      'IsPaused': event == EmbyEvent.Pause,
+      'PositionTicks': position.inMicroseconds * 10,
+      'PlaybackRate': playbackRate,
+    });
+    print(res.body);
+  }
+
+  Future<void> playbackStopped(
+      String itemId, Duration position, Duration duration,
+      [double playbackRate = 1.0]) async {
+    return await makePost('/Sessions/Playing/Stopped', {}, {
+      'ItemId': itemId,
+      'CanSeek': true,
+      'PlaySessionId': playSessions[itemId],
+      'PositionTicks': position.inMicroseconds * 10,
+      'PlaybackRate': playbackRate,
+    });
+  }
+
+  Future<List<EmbyItem>> getLibraries() async {
+    return await _getItems(
+      '/Users/$userId/Items',
+      {
+        'EnableImageTypes': 'Primary',
+      },
+    );
+  }
 }
+
+enum EmbyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange }

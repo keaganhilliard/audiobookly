@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class SeekBar extends StatefulWidget {
+class SeekBar extends HookWidget {
   final Duration duration;
   final Duration position;
   final Future<void> Function(Duration) onChanged;
@@ -16,14 +17,13 @@ class SeekBar extends StatefulWidget {
   });
 
   @override
-  _SeekBarState createState() => _SeekBarState();
-}
-
-class _SeekBarState extends State<SeekBar> {
-  double _dragValue;
-
-  @override
   Widget build(BuildContext context) {
+    final _dragValue = useState<double>(null);
+    final _dragPosition =
+        Duration(milliseconds: _dragValue.value?.toInt() ?? 0);
+    final _position = _dragValue.value == null
+        ? position
+        : Duration(milliseconds: _dragValue.value?.toInt() ?? 0);
     return Stack(
       children: [
         Slider(
@@ -33,22 +33,20 @@ class _SeekBarState extends State<SeekBar> {
                   .firstMatch("$_dragPosition")
                   ?.group(1) ??
               '$_dragPosition',
-          max: widget.duration.inMilliseconds.toDouble(),
-          value: min(_dragValue ?? widget.position.inMilliseconds.toDouble(),
-              widget.duration.inMilliseconds.toDouble()),
+          max: duration.inMilliseconds.toDouble(),
+          value: min(_dragValue.value ?? position.inMilliseconds.toDouble(),
+              duration.inMilliseconds.toDouble()),
           onChanged: (value) {
-            setState(() {
-              _dragValue = value;
-            });
-            if (widget.onChanged != null) {
-              widget.onChanged(Duration(milliseconds: value.round()));
+            _dragValue.value = value;
+            if (onChanged != null) {
+              onChanged(Duration(milliseconds: value.round()));
             }
           },
           onChangeEnd: (value) async {
-            if (widget.onChangeEnd != null) {
-              await widget.onChangeEnd(Duration(milliseconds: value.round()));
+            if (onChangeEnd != null && _dragValue.value != null) {
+              await onChangeEnd(Duration(milliseconds: value.round()));
             }
-            _dragValue = null;
+            _dragValue.value = null;
           },
         ),
         Positioned(
@@ -56,9 +54,9 @@ class _SeekBarState extends State<SeekBar> {
           bottom: 0.0,
           child: Text(
               RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                      .firstMatch("$_duration")
+                      .firstMatch("$duration")
                       ?.group(1) ??
-                  '$_duration',
+                  '$duration',
               style: Theme.of(context).textTheme.caption),
         ),
         Positioned(
@@ -74,11 +72,4 @@ class _SeekBarState extends State<SeekBar> {
       ],
     );
   }
-
-  Duration get _dragPosition =>
-      Duration(milliseconds: _dragValue?.toInt() ?? 0);
-  Duration get _duration => widget.duration;
-  Duration get _position => _dragValue == null
-      ? widget.position
-      : Duration(milliseconds: _dragValue?.toInt() ?? 0);
 }

@@ -2,6 +2,8 @@ import 'package:audiobookly/core/constants/app_constants.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/books/books_view.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/home/home_view.dart';
 import 'package:audiobookly/new_project_structure/state_notifiers/authors/authors_view.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/player/player_view.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/collections/collections_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,8 +16,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => AuthorsView());
       case Routes.Books:
         return MaterialPageRoute(builder: (_) => BooksView());
-      // case Routes.Collections:
-      //   return MaterialPageRoute(builder: (_) => CollectionsView());
+      case Routes.Collections:
+        return MaterialPageRoute(builder: (_) => CollectionsView());
       // case Routes.Author:
       //   Map<String, dynamic> args = settings.arguments;
       //   return MaterialPageRoute(
@@ -30,11 +32,11 @@ class Router {
       //             mediaId: args['collectionId'],
       //             title: args['title'],
       //           ));
-      // case Routes.Book:
-      //   return MaterialPageRoute(
-      //       builder: (_) => BookView(
-      //             book: settings.arguments,
-      //           ));
+      case Routes.Book:
+        return MaterialPageRoute(
+            builder: (_) => PlayerView(
+                  book: settings.arguments,
+                ));
       default:
         return MaterialPageRoute(builder: (_) => HomeView());
     }

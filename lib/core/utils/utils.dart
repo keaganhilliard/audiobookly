@@ -40,6 +40,7 @@ class Utils {
         artUri: repo.getThumbnailUrl(item.id),
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
+          'played': item.userData.played ?? false,
           'narrator': _getNarrator(item),
           'viewOffset': item.userData.playbackPositionTicks != null
               ? Duration(
@@ -65,6 +66,7 @@ class Utils {
 
 extension MediaHelpers on MediaItem {
   String get narrator => extras['narrator'];
+  bool get played => extras['played'] ?? false;
 
   String get partKey => extras['partKey'];
 

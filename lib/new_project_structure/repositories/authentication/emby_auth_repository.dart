@@ -1,14 +1,8 @@
-import 'dart:io';
-
 import 'package:audiobookly/core/models/user.dart';
-import 'package:audiobookly/core/services/device_info_service.dart';
 import 'package:audiobookly/core/services/shared_preferences_service.dart';
 import 'package:audiobookly/new_project_structure/repositories/authentication/authentication_repository.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:emby_api/emby_api.dart';
-import 'package:device_info/device_info.dart';
-import 'package:flutter/foundation.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final embyAuthRepoProvider = Provider<EmbyAuthRepository>((ref) {
   return EmbyAuthRepository(ref);
@@ -36,6 +30,7 @@ class EmbyAuthRepository extends AuthenticationRepository {
     await _prefs.setBaseUrl('');
     await _prefs.setUserToken('');
     await _prefs.setServerId('');
+    await _prefs.setLibraryId('');
     await _prefs.setServerType(null);
     return true;
   }

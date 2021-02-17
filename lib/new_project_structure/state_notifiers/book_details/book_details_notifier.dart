@@ -22,7 +22,8 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
       state = BookDetailsState.loading();
       print('getting book: $_mediaId');
       final book = await _repository.getAlbumFromId(_mediaId);
-      state = BookDetailsState.loaded(book: book);
+      final chapters = await _repository.getTracksForBook(_mediaId);
+      state = BookDetailsState.loaded(book: book, chapters: chapters);
     } on Exception {
       state = BookDetailsState.error(
           "Couldn't fetch book details. Is the device online?");
