@@ -5,31 +5,21 @@ import 'package:audiobookly/core/services/device_info_service.dart';
 import 'package:audiobookly/core/services/navigation_service.dart';
 import 'package:audiobookly/core/services/playback_controller.dart';
 import 'package:audiobookly/core/services/shared_preferences_service.dart';
-import 'package:audiobookly/core/viewmodels/root_view_model.dart';
-import 'package:audiobookly/cubit/authors/authors_cubit.dart';
-import 'package:audiobookly/cubit/books/books_cubit.dart';
-import 'package:audiobookly/new_project_structure/state_notifiers/home/home_view.dart';
-import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/new_project_structure/state_notifiers/books/books_view.dart';
+import 'package:audiobookly/new_project_structure/state_notifiers/player/mini_player.dart';
 import 'package:audiobookly/screens/welcome_view.dart';
 import 'package:audiobookly/ui/adaptive_scaffold.dart';
 import 'package:audiobookly/ui/auth_widget.dart';
-import 'package:audiobookly/ui/base_widget.dart';
 import 'package:audiobookly/ui/router.dart' as r;
-import 'package:audiobookly/ui/now_playing.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/all.dart';
-// import 'package:provider/provider.dart';
-import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/screens/web_app.dart' as web;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(
@@ -83,8 +73,6 @@ Future<DeviceInfo> getDeviceInfo() async {
   }
 }
 
-onDestinationChanged(int index) {}
-
 class AudiobooklyApp extends HookWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final routeMap = [
@@ -114,53 +102,55 @@ class AudiobooklyApp extends HookWidget {
       ),
       home: AuthWidget(
         authorizedBuilder: (context) {
-          return AdaptiveScaffold(
-              title: Text('Audiobookly'),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: Navigator(
-                      key: _navigatorKey,
-                      onGenerateRoute: r.Router.generateRoute,
-                      initialRoute: Routes.Home,
+          return WillPopScope(
+            onWillPop: () async {
+              return !await _navigatorKey.currentState.maybePop();
+            },
+            child: AdaptiveScaffold(
+                title: Text('Audiobookly'),
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Navigator(
+                        key: _navigatorKey,
+                        onGenerateRoute: r.Router.generateRoute,
+                        initialRoute: Routes.Home,
+                      ),
                     ),
+                    MiniPlayer(),
+                  ],
+                ),
+                currentIndex: _currentIndex.value,
+                onNavigationIndexChange: (index) {
+                  if (index != _currentIndex.value) {
+                    String oldRoute = routeMap[_currentIndex.value];
+                    String newRoute = routeMap[index];
+                    _currentIndex.value = index;
+                    _navigatorKey.currentState.pushNamedAndRemoveUntil(
+                        newRoute, ModalRoute.withName(oldRoute));
+                  }
+                },
+                destinations: [
+                  Destination(
+                    title: 'Home',
+                    icon: Icons.home,
                   ),
-                  Container(
-                    height: 50,
-                    color: Colors.deepPurple,
-                  )
-                ],
-              ),
-              currentIndex: _currentIndex.value,
-              onNavigationIndexChange: (index) {
-                if (index != _currentIndex.value) {
-                  String oldRoute = routeMap[_currentIndex.value];
-                  String newRoute = routeMap[index];
-                  _currentIndex.value = index;
-                  _navigatorKey.currentState.pushNamedAndRemoveUntil(
-                      newRoute, ModalRoute.withName(oldRoute));
-                }
-              },
-              destinations: [
-                Destination(
-                  title: 'Home',
-                  icon: Icons.home,
-                ),
-                Destination(
-                  title: 'Authors',
-                  icon: Icons.person,
-                ),
-                Destination(
-                  title: 'Books',
-                  icon: Icons.book,
-                ),
-                Destination(
-                  title: 'Collections',
-                  icon: Icons.collections_bookmark,
-                ),
-              ]);
+                  Destination(
+                    title: 'Authors',
+                    icon: Icons.person,
+                  ),
+                  Destination(
+                    title: 'Books',
+                    icon: Icons.book,
+                  ),
+                  Destination(
+                    title: 'Collections',
+                    icon: Icons.collections_bookmark,
+                  ),
+                ]),
+          );
         },
         unauthorizedBuilder: (context) => WelcomeView(),
       ),

@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/services/audio_handler.dart';
+import 'package:audiobookly/core/services/audio_handler_with_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PlaybackController {
   static PlaybackController _instance;
@@ -9,12 +10,14 @@ class PlaybackController {
     return _instance;
   }
 
-  PlaybackController._internal();
+  PlaybackController._internal() {
+    _ensureHandler();
+  }
 
   AudioHandler _audioHandler;
 
-  Future init() async {
-    await _ensureHandler();
+  Future<bool> init() async {
+    return await _ensureHandler();
   }
 
   MediaItem currentItem;
@@ -22,9 +25,9 @@ class PlaybackController {
 
   bool ensured = false;
 
-  Future<void> _ensureHandler() async {
+  Future<bool> _ensureHandler() async {
+    print('Ensuring');
     if (_audioHandler == null && !ensured) {
-      ensured = true;
       _audioHandler = await AudioService.init(
         builder: () => AudiobooklyAudioHandler(),
         config: AudioServiceConfig(
@@ -38,16 +41,26 @@ class PlaybackController {
           androidNotificationIcon: 'mipmap/audiobookly_launcher',
         ),
       );
+      ensured = true;
+      _audioHandler.playbackState.listen((state) {
+        localPlaybackState.add(state);
+      });
+      _audioHandler.mediaItem.listen((item) {
+        localMediaItem.add(item);
+      });
     }
+    print('Ensured');
+    return ensured;
   }
 
-  Stream<PlaybackState> get playbackStateStream =>
-      _audioHandler.playbackState.stream;
-  Stream<MediaItem> get currentMediaItemStream =>
-      _audioHandler.mediaItem.stream;
-  MediaItem get currentMediaItem => _audioHandler.mediaItem.value;
-  List<MediaItem> get currentQueue => _audioHandler.queue.value;
-  Stream<List<MediaItem>> get queueStream => _audioHandler.queue.stream;
+  final BehaviorSubject<PlaybackState> localPlaybackState = BehaviorSubject();
+  final BehaviorSubject<MediaItem> localMediaItem = BehaviorSubject();
+
+  Stream<PlaybackState> get playbackStateStream => localPlaybackState.stream;
+  Stream<MediaItem> get currentMediaItemStream => localMediaItem;
+  MediaItem get currentMediaItem => _audioHandler?.mediaItem?.value;
+  List<MediaItem> get currentQueue => _audioHandler?.queue?.value;
+  Stream<List<MediaItem>> get queueStream => _audioHandler?.queue?.stream;
 
   Future playItem(MediaItem item) async {
     await _ensureHandler();
@@ -108,5 +121,15 @@ class PlaybackController {
   Future skipToQueueItem(String mediaId) async {
     await _ensureHandler();
     await _audioHandler.skipToQueueItem(mediaId);
+  }
+
+  Future skipToNext() async {
+    await _ensureHandler();
+    await _audioHandler.customAction('skip', {});
+  }
+
+  Future skipToPrevious() async {
+    await _ensureHandler();
+    await _audioHandler.customAction('previous', {});
   }
 }

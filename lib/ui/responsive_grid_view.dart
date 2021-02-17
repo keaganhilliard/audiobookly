@@ -25,6 +25,8 @@ class ResponsiveGridView<T> extends StatelessWidget {
       radius: Radius.circular(5.0),
       controller: _controller,
       child: GridView.builder(
+        physics: AlwaysScrollableScrollPhysics(),
+        key: PageStorageKey('responsive-grid'),
         controller: _controller,
         itemCount: items.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

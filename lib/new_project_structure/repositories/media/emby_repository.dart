@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/core/models/library.dart';
 import 'package:audiobookly/core/models/user.dart';
 import 'package:audiobookly/new_project_structure/repositories/media/media_repository.dart';
 import 'package:audiobookly/repository/base_repository.dart';
@@ -21,7 +22,7 @@ class EmbyRepository extends MediaRepository {
   EmbyApi _api;
   String _libraryId;
 
-  EmbyRepository(this._api);
+  EmbyRepository(this._api, this._libraryId);
 
   Future<List<MediaItem>> getRecentlyAdded() async {
     return getItemsFromEmbyItems(
@@ -79,7 +80,13 @@ class EmbyRepository extends MediaRepository {
     );
   }
 
-  // // Future<List<Library>> getLibraries();
+  Future<List<Library>> getLibraries() async {
+    final libraries = await _api.getLibraries();
+    return libraries
+        .map((library) => Library(library.id, library.name))
+        .toList();
+  }
+
   Future<List<MediaItem>> getTracksForBook(String bookId) async {
     return getItemsFromEmbyItems(
       (await _api.getItemsForAlbum(bookId)),
@@ -102,10 +109,40 @@ class EmbyRepository extends MediaRepository {
 
   Future savePosition(
       String key, int position, int duration, dynamic state) async {
-    throw UnimplementedError();
+//    throw UnimplementedError();
   }
 
-  Future getServerAndLibrary() async {}
+  Future playbackStarted(String key, Duration position, Duration duration,
+      double playbackRate) async {
+    await _api.playbackStarted(key, position, duration, playbackRate);
+  }
+
+  Future playbackCheckin(String key, Duration position, Duration duration,
+      double playbackRate, AudiobooklyEvent event) async {
+    print('Checking in batches: $playbackRate');
+    await _api.playbackCheckin(
+      key,
+      position,
+      duration,
+      {
+        AudiobooklyEvent.TimeUpdate: EmbyEvent.TimeUpdate,
+        AudiobooklyEvent.Pause: EmbyEvent.Pause,
+        AudiobooklyEvent.Unpause: EmbyEvent.Unpause,
+        AudiobooklyEvent.PlaybackRateChange: EmbyEvent.PlaybackRateChange,
+      }[event],
+    );
+  }
+
+  Future playbackStopped(String key, Duration position, Duration duration,
+      double playbackRate) async {}
+
+  Future getServerAndLibrary() async {
+    // this._libraryId =
+  }
+
+  void setLibraryId(String libraryId) {
+    this._libraryId = libraryId;
+  }
 
   String getServerUrl(String path) {
     return _api.getServerUrl(path);

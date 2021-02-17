@@ -18,12 +18,14 @@ final embyApiProvider = Provider<EmbyApi>((ref) {
 
   final _info = infoService.info;
   return EmbyApi(
-      baseUrl: sharedPreferencesService.getBaseUrl(),
-      client: 'Audiobookly',
-      clientVersion: _info.version,
-      deviceId: _info.uniqueId,
-      deviceName: _info.model,
-      token: sharedPreferencesService.getCurrentToken());
+    userId: sharedPreferencesService.getUserId(),
+    baseUrl: sharedPreferencesService.getBaseUrl(),
+    client: 'Audiobookly',
+    clientVersion: _info.version,
+    deviceId: _info.uniqueId,
+    deviceName: _info.model,
+    token: sharedPreferencesService.getCurrentToken(),
+  );
 });
 
 final plexApiProvider = Provider<PlexApi>((ref) {
@@ -58,7 +60,7 @@ final mediaRepositoryProdiver = Provider<MediaRepository>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);
-    return EmbyRepository(embyApi);
+    return EmbyRepository(embyApi, sharedPreferencesService.getLibraryId());
   } else if (sharedPreferencesService.getServerType() == SERVER_TYPE.PLEX) {
     return PlexRepository()..getServerAndLibrary();
   } else
@@ -69,7 +71,7 @@ final audioHandlerProvider = FutureProvider<AudioHandler>((ref) async {
   final repo = ref.watch(mediaRepositoryProdiver);
   if (repo != null) {
     return await AudioService.init(
-      builder: () => AudiobooklyAudioHandler(repo),
+      builder: () => AudiobooklyAudioHandler(),
       config: AudioServiceConfig(
         androidNotificationChannelName: 'Audiobookly',
         androidNotificationOngoing: true,
@@ -85,10 +87,10 @@ final audioHandlerProvider = FutureProvider<AudioHandler>((ref) async {
     return null;
 });
 
-final playbackStateProvider = StreamProvider<PlaybackState>((ref) {
+final playbackStateProvider = AutoDisposeStreamProvider<PlaybackState>((ref) {
   return PlaybackController().playbackStateStream;
 });
 
-final currentItemProvider = StreamProvider<MediaItem>((ref) {
+final currentItemProvider = AutoDisposeStreamProvider<MediaItem>((ref) {
   return PlaybackController().currentMediaItemStream;
 });

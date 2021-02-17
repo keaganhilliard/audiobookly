@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/core/constants/app_constants.dart';
+import 'package:audiobookly/core/models/library.dart';
 import 'package:audiobookly/core/models/user.dart';
 
 enum AudiobooklyPlaybackState {
@@ -9,6 +10,8 @@ enum AudiobooklyPlaybackState {
   COMPLETED,
   BUFFERING,
 }
+
+enum AudiobooklyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange }
 
 abstract class MediaRepository {
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
@@ -84,14 +87,21 @@ abstract class MediaRepository {
   Future<List<MediaItem>> getCollections();
   Future<List<MediaItem>> getBooksFromCollection(String collectionId);
   Future<List<MediaItem>> search(String search);
-  // Future<List<Library>> getLibraries();
+  Future<List<Library>> getLibraries();
   Future<List<MediaItem>> getTracksForBook(String bookId);
   Future<MediaItem> getAlbumFromId(String mediaId);
   Future<User> getUser();
   Future<String> getLoginUrl();
   Future savePosition(
       String key, int position, int duration, AudiobooklyPlaybackState state);
+  Future playbackStarted(
+      String key, Duration position, Duration duration, double playbackRate);
+  Future playbackCheckin(String key, Duration position, Duration duration,
+      double playbackRate, AudiobooklyEvent event);
+  Future playbackStopped(
+      String key, Duration position, Duration duration, double playbackRate);
   Future getServerAndLibrary();
   String getServerUrl(String path);
   String getThumbnailUrl(String path);
+  void setLibraryId(String libraryId) {}
 }

@@ -181,7 +181,9 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                     children: [
                                       IconButton(
                                         icon: Icon(Icons.skip_previous),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          PlaybackController().skipToPrevious();
+                                        },
                                       ),
                                       Expanded(
                                           child: StreamBuilder<Duration>(
@@ -209,7 +211,9 @@ class BookView extends StatelessWidget with WidgetsBindingObserver {
                                               })),
                                       IconButton(
                                         icon: Icon(Icons.skip_next),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          PlaybackController().skipToNext();
+                                        },
                                       ),
                                     ],
                                   ),
