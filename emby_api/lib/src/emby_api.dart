@@ -197,8 +197,7 @@ class EmbyApi {
   }
 
   Future<EmbyItem> getItem(String itemId) async {
-    http.Response response =
-        await getResponse('/Users/$userId/Items/$itemId', {});
+    http.Response response = await makeGet('/Users/$userId/Items/$itemId', {});
     print(response.body);
     return EmbyItem.fromJson(jsonDecode(
       utf8.decode(response.bodyBytes),
@@ -206,7 +205,7 @@ class EmbyApi {
   }
 
   Future<EmbyUser> getUser() async {
-    http.Response response = await getResponse('/Users/$userId', {});
+    http.Response response = await makeGet('/Users/$userId', {});
     print(response.body);
     return EmbyUser.fromJson(jsonDecode(
       utf8.decode(response.bodyBytes),
@@ -223,9 +222,7 @@ class EmbyApi {
 
   Future<List<EmbyItem>> _getItems(
       String path, Map<String, dynamic> parameters) async {
-    print('Emby Path: $path');
-    http.Response response = await getResponse(path, parameters);
-    print('Emby Response body: ${response.body}');
+    http.Response response = await makeGet(path, parameters);
     return List<EmbyItem>.from(
       _getItemsFromBody(
         jsonDecode(
@@ -235,9 +232,24 @@ class EmbyApi {
     );
   }
 
-  Future<http.Response> getResponse(
+  Future<http.Response> makeGet(
       String path, Map<String, dynamic> parameters) async {
     return await http.get(
+      Uri.https(
+        baseUrl,
+        path,
+        _appendParameters(parameters),
+      ),
+      headers: {
+        'content-type': 'application/json',
+        ...headers,
+      },
+    );
+  }
+
+  Future<http.Response> makeDelete(
+      String path, Map<String, dynamic> parameters) async {
+    return await http.delete(
       Uri.https(
         baseUrl,
         path,
@@ -272,14 +284,46 @@ class EmbyApi {
 
   Map<String, String> playSessions = {};
 
+  // String getServerUrl(String itemId) {
+  //   String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
+  //   return Uri.https(baseUrl, '/Audio/$itemId/stream', {
+  //     'static': 'true',
+  //     'UserId': userId,
+  //     'DevceId': deviceId,
+  //     'PlaySessionId': sessionId,
+  //     'MaxStreamingBitrate': '140000000',
+  //   }).toString();
+  // }
+
   String getServerUrl(String itemId) {
     String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
-    return Uri.https(baseUrl, '/Audio/$itemId/stream', {
-      'static': 'true',
+    final uri = Uri.https(baseUrl, '/Audio/$itemId/universal', {
       'UserId': userId,
       'DevceId': deviceId,
       'PlaySessionId': sessionId,
       'MaxStreamingBitrate': '140000000',
+      'Container': [
+        'opus',
+        'mp3',
+        'aac',
+        'm4a',
+        'flac',
+        'webma',
+        'webm',
+        'wav',
+        'ogg',
+        'oga',
+        'm4b',
+        'mp4',
+      ].join(',')
+    }).toString();
+    print('The URI!: $uri');
+    return uri;
+  }
+
+  String getDownloadUrl(String itemId) {
+    return Uri.https(baseUrl, '/Items/$itemId/Download', {
+      'X-Emby-Token': token,
     }).toString();
   }
 
@@ -292,12 +336,13 @@ class EmbyApi {
       'PlaySessionId': playSessions[itemId],
       'PositionTicks': position.inMicroseconds * 10,
       'PlaybackRate': playbackRate,
+      'IsPaused': false
     });
   }
 
   Future<void> playbackCheckin(
       String itemId, Duration position, Duration duration, EmbyEvent event,
-      [double playbackRate = 1.0]) async {
+      [double playbackRate = 1.0, bool paused = false]) async {
     print(
         'Checking in bitches ${position.inMinutes}: Event ${describeEnum(event)}');
     final res = await makePost('/Sessions/Playing/Progress', {}, {
@@ -305,7 +350,7 @@ class EmbyApi {
       'CanSeek': true,
       'PlaySessionId': playSessions[itemId],
       'EventName': describeEnum(event).toLowerCase(),
-      'IsPaused': event == EmbyEvent.Pause,
+      'IsPaused': paused,
       'PositionTicks': position.inMicroseconds * 10,
       'PlaybackRate': playbackRate,
     });
@@ -322,6 +367,20 @@ class EmbyApi {
       'PositionTicks': position.inMicroseconds * 10,
       'PlaybackRate': playbackRate,
     });
+  }
+
+  ///Users/{UserId}/PlayedItems/{Id}
+  Future<void> markPlayed(String itemId) async {
+    final response =
+        await makePost('/Users/$userId/PlayedItems/$itemId', {}, {});
+    print(response.statusCode);
+    return response;
+  }
+
+  Future<void> markUnplayed(String itemId) async {
+    final response = await makeDelete('/Users/$userId/PlayedItems/$itemId', {});
+    print(response.statusCode);
+    return response;
   }
 
   Future<List<EmbyItem>> getLibraries() async {

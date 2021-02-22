@@ -1,15 +1,15 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/core/services/audio_handler_with_repository.dart';
-import 'package:audiobookly/core/services/device_info_service.dart';
-import 'package:audiobookly/core/services/playback_controller.dart';
-import 'package:audiobookly/core/services/shared_preferences_service.dart';
-import 'package:audiobookly/new_project_structure/repositories/media/media_repository.dart';
-// import 'package:audiobookly/repository/base_repository.dart';
-import 'package:audiobookly/new_project_structure/repositories/media/emby_repository.dart';
-import 'package:audiobookly/new_project_structure/repositories/media/plex_repository.dart';
+import 'package:audiobookly/services/device_info/device_info_service.dart';
+import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
+import 'package:audiobookly/repositories/media/media_repository.dart';
+import 'package:audiobookly/repositories/media/emby_repository.dart';
+import 'package:audiobookly/repositories/media/plex_repository.dart';
+import 'package:audiobookly/services/download/download_service.dart';
+import 'package:audiobookly/services/download/emby_download_service.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:plex_api/plex_api.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final embyApiProvider = Provider<EmbyApi>((ref) {
   DeviceInfoService infoService = ref.watch(deviceInfoServiceProvider);
@@ -67,30 +67,26 @@ final mediaRepositoryProdiver = Provider<MediaRepository>((ref) {
     return null;
 });
 
-final audioHandlerProvider = FutureProvider<AudioHandler>((ref) async {
-  final repo = ref.watch(mediaRepositoryProdiver);
-  if (repo != null) {
-    return await AudioService.init(
-      builder: () => AudiobooklyAudioHandler(),
-      config: AudioServiceConfig(
-        androidNotificationChannelName: 'Audiobookly',
-        androidNotificationOngoing: true,
-        androidEnableQueue: true,
-        androidNotificationClickStartsActivity: true,
-        androidStopForegroundOnPause: true,
-        rewindInterval: Duration(seconds: 30),
-        fastForwardInterval: Duration(seconds: 30),
-        androidNotificationIcon: 'mipmap/audiobookly_launcher',
-      ),
-    );
-  } else
-    return null;
+final downloadServiceProvider = Provider<DownloadService>((ref) {
+  final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
+  if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
+    final embyApi = ref.watch(embyApiProvider);
+    return EmbyDownloadService(embyApi);
+  }
+  // else if (sharedPreferencesService.getServerType() == SERVER_TYPE.PLEX) {
+  //   return PlexRepository()..getServerAndLibrary();
+  // } else
+  return null;
 });
 
-final playbackStateProvider = AutoDisposeStreamProvider<PlaybackState>((ref) {
+final playbackStateProvider = StreamProvider<PlaybackState>((ref) {
   return PlaybackController().playbackStateStream;
 });
 
-final currentItemProvider = AutoDisposeStreamProvider<MediaItem>((ref) {
+final currentItemProvider = StreamProvider<MediaItem>((ref) {
   return PlaybackController().currentMediaItemStream;
+});
+
+final queueProvider = StreamProvider<List<MediaItem>>((ref) {
+  return PlaybackController().queueStream;
 });

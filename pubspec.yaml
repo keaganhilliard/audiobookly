@@ -25,7 +25,6 @@ dependencies:
     path: ./plex_api
   emby_api:
     path: ./emby_api
-  provider:
   flutter_hooks:
   hooks_riverpod:
   expandable:
@@ -33,7 +32,7 @@ dependencies:
   audio_session: 
   audio_service: 
     git:
-      url: https://github.com/RyanHeise/audio_service.git
+      url: https://github.com/keaganhilliard/audio_service.git
       ref: one-isolate
   just_audio:
   just_audio_web:
@@ -41,24 +40,22 @@ dependencies:
   marquee_widget:
   path:
   path_provider:
-  moor: ^3.3.1
   animations:
-  dio:
   url_launcher:
   rxdart:
   flutter_inappwebview:
   freezed_annotation:
-  bloc:
-  flutter_bloc:
   scrollable_positioned_list:
+  objectbox:
+  objectbox_flutter_libs:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
-  moor_generator:
   build_runner:
+  objectbox_generator:
   freezed:
   flutter_test:
     sdk: flutter
