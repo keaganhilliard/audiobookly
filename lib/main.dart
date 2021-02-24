@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final store = await getStore();
   runApp(
     ProviderScope(
       overrides: [
@@ -26,6 +28,9 @@ Future<void> main() async {
         ),
         deviceInfoServiceProvider.overrideWithValue(
           DeviceInfoService(info),
+        ),
+        databaseServiceProvider.overrideWithValue(
+          DatabaseService(store),
         )
       ],
       child: AudiobooklyApp(),

@@ -37,7 +37,7 @@ ModelDefinition getObjectBoxModel() {
       },
       {
         "id": "2:3744221835344948983",
-        "lastPropertyId": "4:438735009237650167",
+        "lastPropertyId": "6:4586161345339671471",
         "name": "DownloadTask",
         "properties": [
           {"id": "1:6374727733805080173", "name": "id", "type": 6, "flags": 1},
@@ -50,7 +50,9 @@ ModelDefinition getObjectBoxModel() {
             "indexId": "1:1265909808686125968",
             "relationTarget": "Track"
           },
-          {"id": "4:438735009237650167", "name": "status", "type": 9}
+          {"id": "4:438735009237650167", "name": "status", "type": 9},
+          {"id": "5:4419907167810871129", "name": "path", "type": 9},
+          {"id": "6:4586161345339671471", "name": "url", "type": 9}
         ],
         "relations": [],
         "backlinks": []
@@ -150,11 +152,17 @@ ModelDefinition getObjectBoxModel() {
       objectToFB: (DownloadTask object, fb.Builder fbb) {
         final offsetstatus =
             object.status == null ? null : fbb.writeString(object.status);
+        final offsetpath =
+            object.path == null ? null : fbb.writeString(object.path);
+        final offseturl =
+            object.url == null ? null : fbb.writeString(object.url);
         fbb.startTable();
         fbb.addInt64(0, object.id ?? 0);
         fbb.addFloat64(1, object.progress);
         fbb.addInt64(2, object.track.targetId);
         fbb.addOffset(3, offsetstatus);
+        fbb.addOffset(4, offsetpath);
+        fbb.addOffset(5, offseturl);
         fbb.finish(fbb.endTable());
         return object.id ?? 0;
       },
@@ -169,6 +177,8 @@ ModelDefinition getObjectBoxModel() {
             fb.Int64Reader().vTableGet(buffer, rootOffset, 8);
         object.track.attach(store);
         object.status = fb.StringReader().vTableGet(buffer, rootOffset, 10);
+        object.path = fb.StringReader().vTableGet(buffer, rootOffset, 12);
+        object.url = fb.StringReader().vTableGet(buffer, rootOffset, 14);
         return object;
       });
   bindings[Track] = EntityDefinition<Track>(
@@ -243,6 +253,10 @@ class DownloadTask_ {
       targetEntityId: 3, sourceEntityId: 2, propertyId: 3, obxType: 11);
   static final status =
       QueryStringProperty(entityId: 2, propertyId: 4, obxType: 9);
+  static final path =
+      QueryStringProperty(entityId: 2, propertyId: 5, obxType: 9);
+  static final url =
+      QueryStringProperty(entityId: 2, propertyId: 6, obxType: 9);
 }
 
 class Track_ {

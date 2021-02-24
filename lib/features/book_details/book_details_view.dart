@@ -91,15 +91,15 @@ class BookDetailsView extends HookWidget {
                                 IconButton(
                                   icon: Icon(Icons.file_download),
                                   onPressed: () async {
-                                    for (final chapter in state.chapters) {
-                                      await downloadService
-                                          .downloadItem(chapter);
-                                    }
+                                    // for (final chapter in state.chapters) {
+                                    //   await downloadService
+                                    //       .downloadItem(chapter);
+                                    // }
                                   },
                                 ),
                                 if (state.book.played)
                                   IconButton(
-                                    color: Colors.green,
+                                    color: Colors.deepPurple,
                                     icon: Icon(Icons.check),
                                     onPressed: () async {
                                       await bookDetails.markUnplayed();

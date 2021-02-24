@@ -30,6 +30,8 @@ class DownloadTask {
   int id;
   double progress;
   String status;
+  String path;
+  String url;
 
   final track = ToOne<Track>();
 }
