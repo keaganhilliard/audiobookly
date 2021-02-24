@@ -51,6 +51,7 @@ class PlayerView extends HookWidget {
   Widget build(context) {
     final playbackState = useProvider(playbackStateProvider);
     final mediaItem = useProvider(currentItemProvider);
+    final playbackController = useProvider(playbackControllerProvider);
 
     final state = playbackState.data.value;
     final item = mediaItem.data.value;
@@ -196,7 +197,7 @@ class PlayerView extends HookWidget {
                             IconButton(
                               icon: Icon(Icons.skip_previous),
                               onPressed: () {
-                                PlaybackController().skipToPrevious();
+                                playbackController.skipToPrevious();
                               },
                             ),
                             Expanded(
@@ -220,7 +221,7 @@ class PlayerView extends HookWidget {
                             IconButton(
                               icon: Icon(Icons.skip_next),
                               onPressed: () {
-                                PlaybackController().skipToNext();
+                                playbackController.skipToNext();
                               },
                             ),
                           ],
@@ -237,7 +238,7 @@ class PlayerView extends HookWidget {
                                     duration: item?.duration,
                                     position: snapshot?.data,
                                     onChangeEnd: (val) async {
-                                      await PlaybackController()
+                                      await playbackController
                                           .seek(val.inMilliseconds);
                                     });
                               }),
@@ -253,7 +254,7 @@ class PlayerView extends HookWidget {
                             ),
                             getIconButton(
                               icon: Icon(Icons.replay_30),
-                              onPressed: PlaybackController().rewind,
+                              onPressed: playbackController.rewind,
                             ),
                             Stack(
                               children: [
@@ -276,8 +277,8 @@ class PlayerView extends HookWidget {
                                           false ||
                                               state?.processingState ==
                                                   AudioProcessingState.buffering
-                                      ? PlaybackController().pause
-                                      : PlaybackController().play,
+                                      ? playbackController.pause
+                                      : playbackController.play,
                                   color: Theme.of(context).accentColor,
                                   size: 60,
                                 ),
@@ -285,7 +286,7 @@ class PlayerView extends HookWidget {
                             ),
                             getIconButton(
                               icon: Icon(Icons.forward_30),
-                              onPressed: PlaybackController().fastForward,
+                              onPressed: playbackController.fastForward,
                             ),
                             StreamBuilder<Duration>(
                                 stream: AudioService.getPositionStream(),
@@ -320,7 +321,7 @@ class PlayerView extends HookWidget {
                                                     prefix: Text('1.00'),
                                                     value: state.speed,
                                                     onChangeEnd: (val) {
-                                                      PlaybackController()
+                                                      playbackController
                                                           .setSpeed(val);
                                                     },
                                                     max: 2.0,
@@ -356,8 +357,8 @@ class PlayerView extends HookWidget {
 
     // return StreamBuilder(
     //   stream: Rx.combineLatest2(
-    //     PlaybackController().playbackStateStream,
-    //     PlaybackController().currentMediaItemStream,
+    //     playbackController.playbackStateStream,
+    //     playbackController.currentMediaItemStream,
     //     (PlaybackState a, MediaItem b) => PlayerState(b, a),
     //   ),
     //   builder: (context, AsyncSnapshot<PlayerState> snapshot) {
@@ -501,7 +502,7 @@ class PlayerView extends HookWidget {
     //                               IconButton(
     //                                 icon: Icon(Icons.skip_previous),
     //                                 onPressed: () {
-    //                                   PlaybackController().skipToPrevious();
+    //                                   playbackController.skipToPrevious();
     //                                 },
     //                               ),
     //                               Expanded(
@@ -528,7 +529,7 @@ class PlayerView extends HookWidget {
     //                               IconButton(
     //                                 icon: Icon(Icons.skip_next),
     //                                 onPressed: () {
-    //                                   PlaybackController().skipToNext();
+    //                                   playbackController.skipToNext();
     //                                 },
     //                               ),
     //                             ],
@@ -545,7 +546,7 @@ class PlayerView extends HookWidget {
     //                                       duration: item?.duration,
     //                                       position: snapshot?.data,
     //                                       onChangeEnd: (val) async {
-    //                                         await PlaybackController()
+    //                                         await playbackController
     //                                             .seek(val.inMilliseconds);
     //                                       });
     //                                 }),
@@ -561,7 +562,7 @@ class PlayerView extends HookWidget {
     //                               ),
     //                               getIconButton(
     //                                 icon: Icon(Icons.replay_30),
-    //                                 onPressed: PlaybackController().rewind,
+    //                                 onPressed: playbackController.rewind,
     //                               ),
     //                               Stack(
     //                                 children: [
@@ -587,8 +588,8 @@ class PlayerView extends HookWidget {
     //                                                 state?.processingState ==
     //                                                     AudioProcessingState
     //                                                         .buffering
-    //                                         ? PlaybackController().pause
-    //                                         : PlaybackController().play,
+    //                                         ? playbackController.pause
+    //                                         : playbackController.play,
     //                                     color: Theme.of(context).accentColor,
     //                                     size: 60,
     //                                   ),
@@ -596,7 +597,7 @@ class PlayerView extends HookWidget {
     //                               ),
     //                               getIconButton(
     //                                 icon: Icon(Icons.forward_30),
-    //                                 onPressed: PlaybackController().fastForward,
+    //                                 onPressed: playbackController.fastForward,
     //                               ),
     //                               StreamBuilder<Duration>(
     //                                   stream: AudioService.getPositionStream(),
@@ -637,7 +638,7 @@ class PlayerView extends HookWidget {
     //                                                       prefix: Text('1.00'),
     //                                                       value: state.speed,
     //                                                       onChangeEnd: (val) {
-    //                                                         PlaybackController()
+    //                                                         playbackController
     //                                                             .setSpeed(val);
     //                                                       },
     //                                                       max: 2.0,

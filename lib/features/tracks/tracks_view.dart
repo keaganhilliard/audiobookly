@@ -19,6 +19,8 @@ class TracksView extends HookWidget {
     final playbackState = useProvider(playbackStateProvider);
     final queue = useProvider(queueProvider);
     final currentItem = useProvider(currentItemProvider);
+    final playbackController = useProvider(playbackControllerProvider);
+
     PlaybackState state = playbackState?.data?.value;
     List<MediaItem> items = queue?.data?.value;
     MediaItem item = currentItem?.data?.value;
@@ -33,28 +35,28 @@ class TracksView extends HookWidget {
               IconButton(
                 icon: Icon(Icons.replay_30),
                 onPressed: () {
-                  PlaybackController().rewind();
+                  playbackController.rewind();
                 },
               ),
             if (!(state?.playing ?? false))
               IconButton(
                 icon: Icon(Icons.play_arrow),
                 onPressed: () {
-                  PlaybackController().play();
+                  playbackController.play();
                 },
               ),
             if ((state?.playing ?? false))
               IconButton(
                 icon: Icon(Icons.pause),
                 onPressed: () {
-                  PlaybackController().pause();
+                  playbackController.pause();
                 },
               ),
             IconButton(
               icon: Icon(Icons.file_download),
               onPressed: () {
                 // if (items.isNotEmpty)
-                //   PlaybackController().downloadAllTracks(items);
+                //   playbackController.downloadAllTracks(items);
                 // else
                 //   print('Fucking empty');
               },
@@ -82,7 +84,7 @@ class TracksView extends HookWidget {
                       onTap: () {
                         print('Skipping to ${item.id}');
                         if (track.id != item.id)
-                          PlaybackController().skipToQueueItem(track.id);
+                          playbackController.skipToQueueItem(track.id);
                       },
                       trailing: currentTrack
                           ? IconButton(

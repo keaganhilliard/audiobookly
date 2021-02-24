@@ -11,6 +11,7 @@ final embyAuthRepoProvider = Provider<EmbyAuthRepository>((ref) {
 class EmbyAuthRepository extends AuthenticationRepository {
   ProviderReference _ref;
   EmbyAuthRepository(this._ref);
+
   Future<User> getUser(String token) async {
     final _embyApi = _ref.read(embyApiProvider);
     final _prefs = _ref.read(sharedPreferencesServiceProvider);

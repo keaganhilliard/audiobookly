@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:audiobookly/features/server_select/server_select.dart';
+import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/user.dart';
+import 'package:audiobookly/repositories/authentication/plex_auth_repository.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:audiobookly/utils/in_app_browser.dart';
@@ -65,6 +68,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     int count = 0;
     Completer waitForIt = Completer();
     Timer.periodic(Duration(seconds: 5), (timer) async {
+      print('Timering');
       count++;
       PlexPin authToken = await _plexApi.getAuthToken(pin.id);
       if (authToken.authToken != null) {
@@ -82,21 +86,21 @@ class AuthNotifier extends StateNotifier<AuthState> {
       }
     });
     await waitForIt.future;
-    // PlexServerV2 server = await NavigationService().push(
-    //   MaterialPageRoute(
-    //     builder: (context) => ServerSelect(
-    //       model: ServerListViewModel(api: _plexApi),
-    //     ),
-    //   ),
-    // );
+    final servers = (await _plexApi.getServersV2())
+        .map((server) => Library(server.clientIdentifier, server.name))
+        .toList();
+    final server = await NavigationService().push(
+      MaterialPageRoute(
+        builder: (context) => ServerSelect(servers),
+      ),
+    );
+    print(server.id);
 
-    // PlexLibrary library = await NavigationService().push(
-    //   MaterialPageRoute(
-    //     builder: (context) => LibrarySelect(
-    //       model: LibraryListViewModel(server: server),
-    //     ),
-    //   ),
-    // );
+    PlexLibrary library = await NavigationService().push(
+      MaterialPageRoute(
+        builder: (context) => LibrarySelectView(),
+      ),
+    );
 
     return false; //server != null && library != null;
   }
@@ -119,7 +123,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
             }),
           );
         }
-      } else {}
+      } else {
+        final _userRepo = _ref.read(plexAuthRepoProvider);
+        user = await _userRepo.getUser(_prefs.getCurrentToken());
+        if (_prefs.getServerId().isEmpty) {
+          final thing = await NavigationService().push(
+            MaterialPageRoute(builder: (context) {
+              return LibrarySelectView();
+            }),
+          );
+        }
+        if (_prefs.getLibraryId().isEmpty) {
+          await NavigationService().push(
+            MaterialPageRoute(builder: (context) {
+              return LibrarySelectView();
+            }),
+          );
+        }
+      }
 
       if (user != null)
         state = AuthStateLoaded(user: user);

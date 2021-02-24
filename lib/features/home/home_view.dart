@@ -42,14 +42,13 @@ class HomeView extends HookWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeRow(
-                        height:
-                            math.min(((constraints.maxHeight - 120) / 2), 300),
+                        height: 250,
+                        // math.min(((constraints.maxHeight - 120) / 2), 250),
                         title: 'In Progress',
                         items: state.recentlyPlayed,
                       ),
                       HomeRow(
-                        height:
-                            math.min(((constraints.maxHeight - 120) / 2), 300),
+                        height: 250,
                         title: 'Recently Added',
                         items: state.recentlyAdded,
                       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/database/database.dart';
+import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
@@ -20,9 +21,13 @@ Future<void> main() async {
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final store = await getStore();
+  final handler = await initAudioHandler();
   runApp(
     ProviderScope(
       overrides: [
+        playbackControllerProvider.overrideWithValue(
+          PlaybackController(handler),
+        ),
         sharedPreferencesServiceProvider.overrideWithValue(
           SharedPreferencesService(prefs),
         ),

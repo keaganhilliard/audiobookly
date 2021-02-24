@@ -5,8 +5,10 @@ import 'package:audiobookly/widgets/book_list_element.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/utils/utils.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomeRow extends StatelessWidget {
+class HomeRow extends HookWidget {
   // final List<MediaItem> books;
   final String title;
   final List<MediaItem> items;
@@ -16,6 +18,8 @@ class HomeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final playbackController = useProvider(playbackControllerProvider);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +42,7 @@ class HomeRow extends StatelessWidget {
                 final MediaItem book = items[index];
                 return BookListElement(
                   onTap: () async {
-                    PlaybackController().playItem(book);
+                    playbackController.playItem(book);
                     NavigationService().pushNamed(Routes.Book, arguments: book);
                   },
                   progress: book.viewOffset.inMilliseconds /

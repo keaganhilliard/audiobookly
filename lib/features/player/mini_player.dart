@@ -14,6 +14,7 @@ class MiniPlayer extends HookWidget {
   Widget build(BuildContext context) {
     final playbackState = useProvider(playbackStateProvider);
     final mediaItem = useProvider(currentItemProvider);
+    final playbackController = useProvider(playbackControllerProvider);
 
     if (playbackState.data != null &&
         playbackState.data.value?.processingState !=
@@ -83,7 +84,7 @@ class MiniPlayer extends HookWidget {
                       iconSize: 25,
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       autofocus: false,
-                      onPressed: PlaybackController().rewind,
+                      onPressed: playbackController.rewind,
                     ),
                     IconButton(
                       color: Colors.white,
@@ -94,8 +95,8 @@ class MiniPlayer extends HookWidget {
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       autofocus: false,
                       onPressed: state?.playing ?? false
-                          ? PlaybackController().pause
-                          : PlaybackController().play,
+                          ? playbackController.pause
+                          : playbackController.play,
                     ),
                     IconButton(
                       color: Colors.white,
@@ -103,7 +104,7 @@ class MiniPlayer extends HookWidget {
                       iconSize: 25,
                       padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
                       autofocus: false,
-                      onPressed: PlaybackController().stop,
+                      onPressed: playbackController.stop,
                     )
                   ],
                 ),

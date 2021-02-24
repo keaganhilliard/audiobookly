@@ -57,7 +57,7 @@ class Browser {
   Future close() async {
     if (_browser != null)
       await _browser.close();
-    else
+    else if (!kIsWeb && !Platform.isWindows && !Platform.isLinux)
       await closeWebView();
   }
 }

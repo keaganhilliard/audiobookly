@@ -1,46 +1,27 @@
+import 'package:audiobookly/models/library.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ServerSelect extends StatelessWidget {
-  // final ServerListViewModel _model;
-  // ServerSelect({
-  //   @required ServerListViewModel model,
-  // }) : _model = model;
+class ServerSelect extends HookWidget {
+  final List<Library> _servers;
+  ServerSelect(this._servers);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // return BaseWidget<ServerListViewModel>(
-    //   model: _model,
-    //   onModelReady: (model) {
-    //     model.getServers();
-    //   },
-    //   builder: (context, model, child) {
-    //     return model.busy
-    //         ? Center(child: CircularProgressIndicator())
-    //         : Scaffold(
-    //             appBar: AppBar(
-    //               title: Text('Select a Plex server'),
-    //               automaticallyImplyLeading: false,
-    //             ),
-    //             body: ListView.builder(
-    //                 itemCount: model.servers.length,
-    //                 itemBuilder: (context, position) {
-    //                   return ListTile(
-    //                       title: Text(model.servers[position].name),
-    //                       onTap: () {
-    //                         model.selectServer(position);
-    //                         Navigator.pop(context, model.servers[position]);
-    //                         // Navigator.pushReplacement(
-    //                         //     context,
-    //                         //     MaterialPageRoute(
-    //                         //         builder: (context) => LibrarySelect(
-    //                         //               model: LibraryListViewModel(
-    //                         //                   server: model.servers[position]),
-    //                         //             )));
-    //                       });
-    //                 }),
-    //           );
-    //   },
-    // );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Select a Plex server'),
+        automaticallyImplyLeading: false,
+      ),
+      body: ListView.builder(
+          itemCount: _servers.length,
+          itemBuilder: (context, position) {
+            return ListTile(
+                title: Text(_servers[position].title),
+                onTap: () {
+                  Navigator.pop(context, _servers[position]);
+                });
+          }),
+    );
   }
 }

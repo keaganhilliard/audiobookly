@@ -46,17 +46,6 @@ final plexApiProvider = Provider<PlexApi>((ref) {
   );
 });
 
-// final baseRepositoryProdiver = Provider<BaseRepository>((ref) {
-//   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
-//   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
-//     final embyApi = ref.watch(embyApiProvider);
-//     return EmbyRepository(embyApi);
-//   } else if (sharedPreferencesService.getServerType() == SERVER_TYPE.PLEX) {
-//     return PlexRepository()..getServerAndLibrary();
-//   } else
-//     return null;
-// });
-
 final mediaRepositoryProdiver = Provider<MediaRepository>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
@@ -75,20 +64,20 @@ final downloadServiceProvider = Provider.autoDispose<DownloadService>((ref) {
     final db = ref.watch(databaseServiceProvider);
     return EmbyDownloadService(embyApi, db);
   }
-  // else if (sharedPreferencesService.getServerType() == SERVER_TYPE.PLEX) {
-  //   return PlexRepository()..getServerAndLibrary();
-  // } else
   return null;
 });
 
 final playbackStateProvider = StreamProvider<PlaybackState>((ref) {
-  return PlaybackController().playbackStateStream;
+  final playbackController = ref.watch(playbackControllerProvider);
+  return playbackController.playbackStateStream;
 });
 
 final currentItemProvider = StreamProvider<MediaItem>((ref) {
-  return PlaybackController().currentMediaItemStream;
+  final playbackController = ref.watch(playbackControllerProvider);
+  return playbackController.currentMediaItemStream;
 });
 
 final queueProvider = StreamProvider<List<MediaItem>>((ref) {
-  return PlaybackController().queueStream;
+  final playbackController = ref.watch(playbackControllerProvider);
+  return playbackController.queueStream;
 });

@@ -90,14 +90,14 @@ class BookListElement extends StatelessWidget {
                             Text(
                               title,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(fontSize: 16),
                             ),
                             if (subtitle != null)
                               Text(
                                 subtitle,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
                               )

@@ -2,73 +2,22 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiobookly/features/auth/auth_notifier.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/features/emby_login/emby_login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MyInAppBrowser extends InAppBrowser {
-  @override
-  Future onLoadStart(String url) async {
-    print("\n\nStarted $url\n\n");
-  }
-
-  @override
-  Future onLoadStop(String url) async {
-    print("\n\nStopped $url\n\n");
-  }
-
-  @override
-  void onLoadError(String url, int code, String message) {
-    print("\n\nCan't load $url.. Error: $message\n\n");
-  }
-
-  @override
-  void onExit() {
-    print("\n\nBrowser closed!\n\n");
-  }
-}
-
-class MyChromeSafariBrowser extends ChromeSafariBrowser {
-  MyChromeSafariBrowser(browserFallback) : super(bFallback: browserFallback);
-  Completer closed;
-
-  @override
-  void onOpened() {
-    closed = Completer();
-    print("ChromeSafari browser opened");
-  }
-
-  @override
-  void onCompletedInitialLoad() {
-    print("ChromeSafari browser initial load completed");
-  }
-
-  @override
-  void onClosed() {
-    closed.complete();
-    print("ChromeSafari browser closed");
-  }
-}
-
-class WelcomeView extends StatefulWidget {
-  final ChromeSafariBrowser browser = MyChromeSafariBrowser(MyInAppBrowser());
-
-  final String url;
-
-  WelcomeView({this.url});
-
-  @override
-  _WelcomeViewState createState() => _WelcomeViewState();
-}
-
-class _WelcomeViewState extends State<WelcomeView> {
+class WelcomeView extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final auth = useProvider(authNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -84,21 +33,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                 onPrimary: Colors.white,
               ),
               onPressed: () async {
-                if (kIsWeb || Platform.isWindows || Platform.isMacOS) {
-                  if (await canLaunch(widget.url)) {
-                    launch(widget.url);
-                  }
-                } else {
-                  await widget.browser.open(
-                    url: widget.url,
-                    options: ChromeSafariBrowserClassOptions(
-                      android: AndroidChromeCustomTabsOptions(
-                        addDefaultShareMenuItem: false,
-                      ),
-                      ios: IOSSafariOptions(barCollapsingEnabled: true),
-                    ),
-                  );
-                }
+                await auth.plexLogin();
               },
               child: Text('Login to Plex'),
             ),

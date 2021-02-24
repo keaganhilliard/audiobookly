@@ -23,7 +23,7 @@ class PlexApi {
   Uri loginUrl = Uri.https('plex.tv', '/users/sign_in.json');
   PlexHeaders headers;
   PlexUser user;
-  PlexServer server;
+  PlexServerV2 server;
 
   PlexApi({@required this.headers});
 
@@ -42,11 +42,12 @@ class PlexApi {
     return user;
   }
 
-  Future<PlexUser> getUser(PlexServerV2 server) async {
+  Future<PlexUser> getUser([PlexServerV2 server]) async {
     headers.token = authToken;
     http.Response response = await http.get(
         Uri.https('plex.tv', '/users/account.json'),
-        headers: headers.toMap(overrideToken: server.accessToken));
+        headers: headers.toMap(
+            overrideToken: server?.accessToken ?? this.headers.token));
     PlexLoginResponse plexLoginResponse =
         PlexLoginResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     user = plexLoginResponse.user;
@@ -290,13 +291,13 @@ class PlexApi {
 
   ///:/timeline?ratingKey=26117&key=%2Flibrary%2Fmetadata%2F26117&state=stopped&hasMDE=1&time=1650000&duration=46141000
 // :/timeline?key=26117&%2Flibrary%2Fmetadata%2F26117&state=paused&duration=92283768&time=1660989
-  void setServer(PlexServer server) {
-    this.server = server;
-  }
+  // void setServer(PlexServer server) {
+  //   this.server = server;
+  // }
 
-  Future<String> getUsableUrl(String path) async {
-    return 'http://${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}/$path?X-Plex-Token=${user.authToken}';
-  }
+  // Future<String> getUsableUrl(String path) async {
+  //   return 'http://${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}/$path?X-Plex-Token=${user.authToken}';
+  // }
 
   String getUrlWithToken(PlexServerV2 server, String path) {
     return '${server.mainConnection.uri}$path?X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
@@ -307,9 +308,9 @@ class PlexApi {
     return '${server.mainConnection.uri}/photo/:/transcode?width=$dimension&height=$dimension&minSize=1&upscale=1&url=${Uri.encodeComponent(path ?? '')}&X-Plex-Token=${server.accessToken}&X-Plex-Client-Identifier=${headers.clientIdentifier}';
   }
 
-  Future<Uri> getUsableUri(path) async => Uri.http(
-      '${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}',
-      path);
+  // Future<Uri> getUsableUri(path) async => Uri.http(
+  //     '${server.address == await getCurrentIP() ? server.localAddresses[0] : server.address}:${server.port}',
+  //     path);
 
   Future<String> getCurrentIP() async {
     http.Response res = await http.get(Uri.https('plex.tv', '/pms/:/ip'));

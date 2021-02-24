@@ -22,6 +22,7 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
   Future<void> setLibrary(String id) async {
     _sharedPreferencesService.setLibraryId(id);
     _repository.setLibraryId(id);
+    _repository.getServerAndLibrary();
   }
 
   Future<void> getLibraries() async {

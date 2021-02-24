@@ -21,6 +21,7 @@ class BookDetailsView extends HookWidget {
     final bookDetails = useProvider(bookDetailsStateProvider(mediaId));
     final state = useProvider(bookDetailsStateProvider(mediaId).state);
     final downloadService = useProvider(downloadServiceProvider);
+    final playbackController = useProvider(playbackControllerProvider);
 
     if (state is BookDetailsStateLoading)
       return Center(
@@ -61,7 +62,7 @@ class BookDetailsView extends HookWidget {
                           FloatingActionButton(
                               child: Icon(Icons.play_arrow),
                               onPressed: () {
-                                PlaybackController().playFromId(state.book.id);
+                                playbackController.playFromId(state.book.id);
                                 NavigationService().pushNamed(Routes.Book,
                                     arguments: state.book);
                               }),
@@ -178,8 +179,8 @@ class BookDetailsView extends HookWidget {
                     (context, index) {
                       return ListTile(
                         onTap: () async {
-                          await PlaybackController().playFromId(state.book.id);
-                          await PlaybackController()
+                          await playbackController.playFromId(state.book.id);
+                          await playbackController
                               .skipToQueueItem(state.chapters[index].id);
                         },
                         title: Text(
