@@ -30,7 +30,7 @@ class HomeView extends HookWidget {
           builder: (context, constraints) => Consumer(
             builder: (context, watch, child) {
               final state = watch(homeStateProvider.state);
-              print(constraints);
+
               if (state is HomeStateInitial) _refresher.currentState.show();
               if (state is HomeStateLoaded)
                 return SingleChildScrollView(
@@ -42,21 +42,26 @@ class HomeView extends HookWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeRow(
-                        height: 250,
+                        height: constraints.maxHeight > constraints.maxWidth
+                            ? math.min(((constraints.maxHeight - 120) / 2), 250)
+                            : 225,
                         // math.min(((constraints.maxHeight - 120) / 2), 250),
                         title: 'In Progress',
                         items: state.recentlyPlayed,
                       ),
                       HomeRow(
-                        height: 250,
+                        height: constraints.maxHeight > constraints.maxWidth
+                            ? math.min(((constraints.maxHeight - 120) / 2), 250)
+                            : 225,
                         title: 'Recently Added',
                         items: state.recentlyAdded,
                       ),
                     ],
                   ),
                 );
-              else
+              else {
                 return Container();
+              }
             },
           ),
         ),
