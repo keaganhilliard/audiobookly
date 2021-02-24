@@ -54,11 +54,12 @@ class AudiobooklyApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigationService = useProvider(navigationServiceProvider);
     final _currentIndex = useState(0);
     // timeDilation = 7.0;
     return MaterialApp(
       title: 'Audiobookly',
-      navigatorKey: NavigationService().navigatorKey,
+      navigatorKey: navigationService.navigatorKey,
       onGenerateRoute: r.Router.generateRoute,
       theme: ThemeData(
         brightness: Brightness.dark,

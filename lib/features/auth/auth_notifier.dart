@@ -89,14 +89,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final servers = (await _plexApi.getServersV2())
         .map((server) => Library(server.clientIdentifier, server.name))
         .toList();
-    final server = await NavigationService().push(
+    final navigationService = _ref.read(navigationServiceProvider);
+    final server = await navigationService.push(
       MaterialPageRoute(
         builder: (context) => ServerSelect(servers),
       ),
     );
     print(server.id);
 
-    PlexLibrary library = await NavigationService().push(
+    PlexLibrary library = await navigationService.push(
       MaterialPageRoute(
         builder: (context) => LibrarySelectView(),
       ),
@@ -109,6 +110,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       state = AuthStateLoading();
       final _prefs = _ref.read(sharedPreferencesServiceProvider);
+      final navigationService = _ref.read(navigationServiceProvider);
       print('Checking token: ${_prefs.getCurrentToken()}');
 
       User user;
@@ -117,7 +119,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         user = await _userRepo.getUser(_prefs.getCurrentToken());
         print('LibraryId: ${_prefs.getLibraryId()}');
         if (_prefs.getLibraryId().isEmpty) {
-          await NavigationService().push(
+          await navigationService.push(
             MaterialPageRoute(builder: (context) {
               return LibrarySelectView();
             }),
@@ -127,14 +129,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
         final _userRepo = _ref.read(plexAuthRepoProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
         if (_prefs.getServerId().isEmpty) {
-          final thing = await NavigationService().push(
+          final thing = await navigationService.push(
             MaterialPageRoute(builder: (context) {
               return LibrarySelectView();
             }),
           );
         }
         if (_prefs.getLibraryId().isEmpty) {
-          await NavigationService().push(
+          await navigationService.push(
             MaterialPageRoute(builder: (context) {
               return LibrarySelectView();
             }),

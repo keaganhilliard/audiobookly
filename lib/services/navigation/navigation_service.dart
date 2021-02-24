@@ -1,16 +1,11 @@
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final navigationServiceProvider =
+    Provider<NavigationService>((ref) => NavigationService());
 
 class NavigationService {
-  static NavigationService _instance;
-
-  factory NavigationService() {
-    if (_instance == null) _instance = NavigationService._internal();
-    return _instance;
-  }
-
-  NavigationService._internal();
-
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 

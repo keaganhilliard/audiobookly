@@ -19,6 +19,7 @@ class HomeRow extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final playbackController = useProvider(playbackControllerProvider);
+    final navigationService = useProvider(navigationServiceProvider);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -43,7 +44,7 @@ class HomeRow extends HookWidget {
                 return BookListElement(
                   onTap: () async {
                     playbackController.playItem(book);
-                    NavigationService().pushNamed(Routes.Book, arguments: book);
+                    navigationService.pushNamed(Routes.Book, arguments: book);
                   },
                   progress: book.viewOffset.inMilliseconds /
                       book.duration.inMilliseconds,

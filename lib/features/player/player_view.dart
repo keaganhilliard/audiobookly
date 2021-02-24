@@ -52,6 +52,7 @@ class PlayerView extends HookWidget {
     final playbackState = useProvider(playbackStateProvider);
     final mediaItem = useProvider(currentItemProvider);
     final playbackController = useProvider(playbackControllerProvider);
+    final navigationService = useProvider(navigationServiceProvider);
 
     final state = playbackState.data.value;
     final item = mediaItem.data.value;
@@ -65,7 +66,7 @@ class PlayerView extends HookWidget {
           IconButton(
             icon: Icon(Icons.list),
             onPressed: () {
-              NavigationService().push(MaterialPageRoute(
+              navigationService.push(MaterialPageRoute(
                 builder: (context) {
                   return TracksView();
                 },

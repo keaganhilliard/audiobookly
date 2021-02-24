@@ -25,6 +25,7 @@ class EmbyLogin extends HookWidget {
     final _loading = useState(false);
     final _login = useState(LoginState());
     final _auth = useProvider(authNotifierProvider);
+    final _navigationService = useProvider(navigationServiceProvider);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -121,7 +122,7 @@ class EmbyLogin extends HookWidget {
                                           'Username or password invalid')));
                             } else {
                               await _auth.checkToken();
-                              NavigationService().pop();
+                              _navigationService.pop();
                             }
                             _loading.value = false;
                           }

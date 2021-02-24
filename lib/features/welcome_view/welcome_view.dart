@@ -18,6 +18,8 @@ class WelcomeView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final auth = useProvider(authNotifierProvider);
+    final navigationService = useProvider(navigationServiceProvider);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -43,7 +45,7 @@ class WelcomeView extends HookWidget {
                   onPrimary: Colors.white,
                 ),
                 onPressed: () {
-                  NavigationService().push(
+                  navigationService.push(
                       MaterialPageRoute(builder: (context) => EmbyLogin()));
                 },
                 child: Text('Login to Emby'))

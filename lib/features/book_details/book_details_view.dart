@@ -22,6 +22,7 @@ class BookDetailsView extends HookWidget {
     final state = useProvider(bookDetailsStateProvider(mediaId).state);
     final downloadService = useProvider(downloadServiceProvider);
     final playbackController = useProvider(playbackControllerProvider);
+    final navigationService = useProvider(navigationServiceProvider);
 
     if (state is BookDetailsStateLoading)
       return Center(
@@ -63,7 +64,7 @@ class BookDetailsView extends HookWidget {
                               child: Icon(Icons.play_arrow),
                               onPressed: () {
                                 playbackController.playFromId(state.book.id);
-                                NavigationService().pushNamed(Routes.Book,
+                                navigationService.pushNamed(Routes.Book,
                                     arguments: state.book);
                               }),
                         ],

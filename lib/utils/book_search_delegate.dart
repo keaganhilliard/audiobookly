@@ -51,6 +51,7 @@ class BookSearchDelegate extends SearchDelegate {
     return Consumer(
       builder: (context, watch, child) {
         final _repo = watch(mediaRepositoryProdiver);
+        final _navigationService = watch(navigationServiceProvider);
         return FutureBuilder<List<MediaItem>>(
           future: _repo.search(query),
           builder: (context, results) {
@@ -66,7 +67,7 @@ class BookSearchDelegate extends SearchDelegate {
                       return BookGridItem(
                         onTap: () async {
                           if (book.playable) {
-                            NavigationService().pushNamed(
+                            _navigationService.pushNamed(
                               Routes.Book,
                               arguments: book,
                             );
