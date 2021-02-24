@@ -50,6 +50,7 @@ class BookListElement extends StatelessWidget {
                   children: <Widget>[
                     progress > 0
                         ? LinearProgressIndicator(
+                            minHeight: 8,
                             value: progress,
                             backgroundColor: Colors.black,
                           )

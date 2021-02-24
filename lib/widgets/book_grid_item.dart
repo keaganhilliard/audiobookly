@@ -35,6 +35,7 @@ class BookGridItem extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: LinearProgressIndicator(
+                  minHeight: 6.0,
                   value: progress,
                   backgroundColor: Colors.black,
                 ),
