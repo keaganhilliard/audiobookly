@@ -1,7 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/audio_handler_with_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
 
 final playbackControllerProvider =
     Provider<PlaybackController>((ref) => throw UnimplementedError());
