@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/database/database.dart';
+import 'package:audiobookly/database/entities.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookly/services/download/download_service.dart';
 import 'package:emby_api/emby_api.dart';
@@ -10,15 +12,14 @@ import 'package:path_provider/path_provider.dart';
 
 class EmbyDownloadService extends DownloadService {
   final EmbyApi _api;
-  EmbyDownloadService(this._api);
+  final DatabaseService _db;
+  EmbyDownloadService(this._api, this._db);
 
-  Future<bool> downloadItem(MediaItem item) async {
-    String downloadUrl = _api.getDownloadUrl(item.id);
-    var path = await getApplicationDocumentsDirectory();
-    print(p.join(path.path, '${item.artist}', '${item.album}'));
+  Future<bool> downloadItem(DownloadTask task) async {
+    print(task.path);
     await for (double progress in downloadFile(
-      downloadUrl,
-      p.join(path.path, '${item.artist}', '${item.album}'),
+      task.url,
+      task.path,
     )) {
       print('Downloaded $progress');
     }
@@ -35,10 +36,6 @@ class EmbyDownloadService extends DownloadService {
 
   Stream<double> downloadFile(String url, String path) async* {
     HttpClient client = HttpClient();
-
-    path = Utils.cleanPath(path);
-    await createDirIfNotExists(path);
-
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
     request.headers.set('Accept', '*/*');
     request.headers.set('Connection', 'keep-alive');

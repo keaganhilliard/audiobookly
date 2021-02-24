@@ -4,15 +4,16 @@ import 'package:audiobookly/objectbox.g.dart';
 import 'package:path_provider/path_provider.dart';
 
 final databaseServiceProvider =
-    FutureProvider.autoDispose<DatabaseService>((ref) async {
+    Provider.autoDispose<DatabaseService>((ref) => throw UnimplementedError());
+
+Future<Store> getStore() async {
   final dir = await getApplicationDocumentsDirectory();
   final _store = Store(getObjectBoxModel(), directory: dir.path + '/box');
-  ref.onDispose(_store.close);
-  return DatabaseService(_store);
-});
+  return _store;
+}
 
 class DatabaseService {
-  final Store _store;
+  Store _store;
   DatabaseService(this._store);
 
   List<DownloadTask> getDownloadTasks() {
@@ -23,5 +24,15 @@ class DatabaseService {
   List<int> createOrUpdateDownloadTasks(List<DownloadTask> tasks) {
     final taskBox = _store.box<DownloadTask>();
     return taskBox.putMany(tasks);
+  }
+
+  List<Book> getBooks() {
+    final bookBox = _store.box<Book>();
+    return bookBox.getAll();
+  }
+
+  List<int> createOrUpdateBooks(List<Book> books) {
+    final bookBox = _store.box<Book>();
+    return bookBox.putMany(books);
   }
 }
