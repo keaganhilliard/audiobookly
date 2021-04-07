@@ -44,7 +44,7 @@ class HomeRow extends HookWidget {
                 return BookListElement(
                   onTap: () async {
                     playbackController.playItem(book);
-                    navigationService.pushNamed(Routes.Book, arguments: book);
+                    navigationService.pushNamed(Routes.Player, arguments: book);
                   },
                   progress: book.viewOffset.inMilliseconds /
                       book.duration.inMilliseconds,

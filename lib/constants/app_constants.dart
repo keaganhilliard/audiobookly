@@ -9,6 +9,7 @@ class Routes {
   static const String Collection = '/collection';
   static const String Books = '/books';
   static const String Book = '/book';
+  static const String Player = '/player';
 }
 
 class SharedPrefStrings {

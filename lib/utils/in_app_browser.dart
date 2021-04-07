@@ -7,17 +7,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AudiobooklyInAppBrowser extends InAppBrowser {
   @override
-  Future onLoadStart(String url) async {
+  Future onLoadStart(Uri url) async {
     print("\n\nStarted $url\n\n");
   }
 
   @override
-  Future onLoadStop(String url) async {
+  Future onLoadStop(Uri url) async {
     print("\n\nStopped $url\n\n");
   }
 
   @override
-  void onLoadError(String url, int code, String message) {
+  void onLoadError(Uri url, int code, String message) {
     print("\n\nCan't load $url.. Error: $message\n\n");
   }
 
@@ -28,8 +28,7 @@ class AudiobooklyInAppBrowser extends InAppBrowser {
 }
 
 class AudiobooklyChromeSafariBrowser extends ChromeSafariBrowser {
-  AudiobooklyChromeSafariBrowser(browserFallback)
-      : super(bFallback: browserFallback);
+  AudiobooklyChromeSafariBrowser(browserFallback) : super();
   Completer closed;
 
   @override
@@ -71,7 +70,7 @@ Future<Browser> openUrl(String url) async {
     return Browser();
   } else {
     await browser.open(
-      url: url,
+      url: Uri.parse(url),
       options: ChromeSafariBrowserClassOptions(
         android: AndroidChromeCustomTabsOptions(
           addDefaultShareMenuItem: false,

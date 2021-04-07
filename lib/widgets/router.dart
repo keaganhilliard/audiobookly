@@ -1,4 +1,5 @@
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/features/book_details/book_details_view.dart';
 import 'package:audiobookly/features/books/books_view.dart';
 import 'package:audiobookly/features/home/home_view.dart';
 import 'package:audiobookly/features/authors/authors_view.dart';
@@ -18,13 +19,13 @@ class Router {
         return MaterialPageRoute(builder: (_) => BooksView());
       case Routes.Collections:
         return MaterialPageRoute(builder: (_) => CollectionsView());
-      // case Routes.Author:
-      //   Map<String, dynamic> args = settings.arguments;
-      //   return MaterialPageRoute(
-      //       builder: (_) => BooksView(
-      //             mediaId: args['authorId'],
-      //             title: args['authorName'],
-      //           ));
+      case Routes.Author:
+        Map<String, dynamic> args = settings.arguments;
+        return MaterialPageRoute(
+            builder: (_) => BooksView(
+                  mediaId: args['id'],
+                  title: args['title'],
+                ));
       // case Routes.Collection:
       //   Map<String, dynamic> args = settings.arguments;
       //   return MaterialPageRoute(
@@ -33,6 +34,12 @@ class Router {
       //             title: args['title'],
       //           ));
       case Routes.Book:
+        return MaterialPageRoute(
+          builder: (_) => BookDetailsView(
+            mediaId: settings.arguments,
+          ),
+        );
+      case Routes.Player:
         return MaterialPageRoute(
             builder: (_) => PlayerView(
                   book: settings.arguments,

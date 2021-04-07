@@ -61,8 +61,8 @@ final downloadServiceProvider = Provider.autoDispose<DownloadService>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);
-    final db = ref.watch(databaseServiceProvider);
-    return EmbyDownloadService(embyApi, db);
+    // final db = ref.watch(databaseServiceProvider);
+    return EmbyDownloadService(embyApi, null);
   }
   return null;
 });

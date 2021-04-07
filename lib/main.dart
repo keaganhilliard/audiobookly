@@ -20,7 +20,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final store = await getStore();
+  // final store = await getStore();
   final handler = await initAudioHandler();
   runApp(
     ProviderScope(
@@ -34,9 +34,9 @@ Future<void> main() async {
         deviceInfoServiceProvider.overrideWithValue(
           DeviceInfoService(info),
         ),
-        databaseServiceProvider.overrideWithValue(
-          DatabaseService(store),
-        )
+        // databaseServiceProvider.overrideWithValue(
+        //   DatabaseService(store),
+        // )
       ],
       child: AudiobooklyApp(),
     ),

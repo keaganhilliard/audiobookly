@@ -63,21 +63,26 @@ class BookSearchDelegate extends SearchDelegate {
               if (results.data.length > 0) {
                 return ResponsiveGridView<MediaItem>(
                     items: results.data,
-                    itemBuilder: (book) {
+                    itemBuilder: (item) {
                       return BookGridItem(
                         onTap: () async {
-                          if (book.playable) {
+                          if (item.playable) {
                             _navigationService.pushNamed(
                               Routes.Book,
-                              arguments: book,
+                              arguments: item.id,
                             );
                           } else
-                            Navigator.of(context)
-                                .pushNamed(Routes.Author, arguments: book.id);
+                            Navigator.of(context).pushNamed(
+                              Routes.Author,
+                              arguments: {
+                                'id': item.id,
+                                'title': item.title,
+                              },
+                            );
                         },
-                        thumbnailUrl: book.artUri,
-                        title: book.title,
-                        subtitle: book.artist,
+                        thumbnailUrl: item.artUri,
+                        title: item.title,
+                        subtitle: item.artist,
                       );
                     });
               } else {

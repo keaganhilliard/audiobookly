@@ -64,8 +64,10 @@ class BookDetailsView extends HookWidget {
                               child: Icon(Icons.play_arrow),
                               onPressed: () {
                                 playbackController.playFromId(state.book.id);
-                                navigationService.pushNamed(Routes.Book,
-                                    arguments: state.book);
+                                navigationService.pushNamed(
+                                  Routes.Player,
+                                  arguments: state.book,
+                                );
                               }),
                         ],
                       ),
