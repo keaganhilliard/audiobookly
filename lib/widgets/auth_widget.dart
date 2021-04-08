@@ -15,7 +15,7 @@ class AuthWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final authState = watch(authNotifierProvider.state);
+    final authState = watch(authNotifierProvider);
     if (authState is AuthStateInitial) {
       return unauthorizedBuilder(context);
     } else if (authState is AuthStateLoading) {
@@ -37,7 +37,7 @@ class AuthWidget extends ConsumerWidget {
             ElevatedButton(
               child: Text('Log out'),
               onPressed: () {
-                context.read(authNotifierProvider).logout();
+                context.read(authNotifierProvider.notifier).logout();
               },
             )
           ],

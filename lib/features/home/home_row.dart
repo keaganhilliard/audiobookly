@@ -48,7 +48,7 @@ class HomeRow extends HookWidget {
                   },
                   progress: book.viewOffset.inMilliseconds /
                       book.duration.inMilliseconds,
-                  thumbnailUrl: book.artUri,
+                  thumbnailUrl: book.artUri.toString(),
                   title: book.title,
                   subtitle: book?.artist ?? '',
                   played: book.played,

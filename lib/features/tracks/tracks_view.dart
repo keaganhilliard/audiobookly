@@ -84,7 +84,7 @@ class TracksView extends HookWidget {
                       onTap: () {
                         print('Skipping to ${item.id}');
                         if (track.id != item.id)
-                          playbackController.skipToQueueItem(track.id);
+                          playbackController.skipToQueueItem(index);
                       },
                       trailing: currentTrack
                           ? IconButton(

@@ -80,7 +80,7 @@ class BookSearchDelegate extends SearchDelegate {
                               },
                             );
                         },
-                        thumbnailUrl: item.artUri,
+                        thumbnailUrl: item.artUri.toString(),
                         title: item.title,
                         subtitle: item.artist,
                       );

@@ -1,37 +1,37 @@
-import 'package:objectbox/objectbox.dart';
+// import 'package:objectbox/objectbox.dart';
 
-@Entity()
-class Book {
-  int id;
-  String exId;
-  String title;
-  String author;
-  String description;
-  int durationInMilliseconds;
+// @Entity()
+// class Book {
+//   int id;
+//   String exId;
+//   String title;
+//   String author;
+//   String description;
+//   int durationInMilliseconds;
 
-  @Backlink()
-  final tracks = ToMany<Track>();
-}
+//   @Backlink()
+//   final tracks = ToMany<Track>();
+// }
 
-@Entity()
-class Track {
-  int id;
-  String exId;
-  String title;
+// @Entity()
+// class Track {
+//   int id;
+//   String exId;
+//   String title;
 
-  final book = ToOne<Book>();
+//   final book = ToOne<Book>();
 
-  @Backlink()
-  final downloadTasks = ToMany<DownloadTask>();
-}
+//   @Backlink()
+//   final downloadTasks = ToMany<DownloadTask>();
+// }
 
-@Entity()
-class DownloadTask {
-  int id;
-  double progress;
-  String status;
-  String path;
-  String url;
+// @Entity()
+// class DownloadTask {
+//   int id;
+//   double progress;
+//   String status;
+//   String path;
+//   String url;
 
-  final track = ToOne<Track>();
-}
+//   final track = ToOne<Track>();
+// }

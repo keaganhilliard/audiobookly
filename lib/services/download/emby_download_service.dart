@@ -15,16 +15,16 @@ class EmbyDownloadService extends DownloadService {
   final DatabaseService _db;
   EmbyDownloadService(this._api, this._db);
 
-  Future<bool> downloadItem(DownloadTask task) async {
-    print(task.path);
-    await for (double progress in downloadFile(
-      task.url,
-      task.path,
-    )) {
-      print('Downloaded $progress');
-    }
-    return true;
-  }
+  // Future<bool> downloadItem(DownloadTask task) async {
+  //   print(task.path);
+  //   await for (double progress in downloadFile(
+  //     task.url,
+  //     task.path,
+  //   )) {
+  //     print('Downloaded $progress');
+  //   }
+  //   return true;
+  // }
 
   Future createDirIfNotExists(String path) async {
     final dir = new Directory(path);

@@ -35,7 +35,7 @@ class Utils {
             : Duration.zero,
         album: item.album ?? item.name,
         displayDescription: item.overview,
-        artUri: repo.getThumbnailUrl(item.id),
+        artUri: Uri.parse(repo.getThumbnailUrl(item.id)),
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
           'played': item.userData.played ?? false,

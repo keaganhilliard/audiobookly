@@ -21,12 +21,12 @@ Future<void> main() async {
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   // final store = await getStore();
-  final handler = await initAudioHandler();
+  // final handler = await initAudioHandler();
   runApp(
     ProviderScope(
       overrides: [
         playbackControllerProvider.overrideWithValue(
-          PlaybackController(handler),
+          AudioHandlerPlaybackController(null),
         ),
         sharedPreferencesServiceProvider.overrideWithValue(
           SharedPreferencesService(prefs),

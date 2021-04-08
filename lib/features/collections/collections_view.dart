@@ -18,7 +18,7 @@ class CollectionsView extends HookWidget {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(collectionsStateProvider);
+    final booksProvider = useProvider(collectionsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       title: Text('Collections'),
@@ -30,7 +30,7 @@ class CollectionsView extends HookWidget {
         },
         child: Consumer(
           builder: (context, read, child) {
-            final state = read(collectionsStateProvider.state);
+            final state = read(collectionsStateProvider);
             if (state is CollectionsStateInitial)
               _refresher.currentState.show();
             if (state is CollectionsStateLoaded) {
@@ -45,7 +45,7 @@ class CollectionsView extends HookWidget {
                         BooksView(mediaId: author.id, title: author.title),
                     closedBuilder: (context, openContainer) => BookGridItem(
                       onTap: openContainer,
-                      thumbnailUrl: author.artUri,
+                      thumbnailUrl: author.artUri.toString(),
                       title: author.title,
                     ),
                   );

@@ -22,7 +22,7 @@ class BooksView extends HookWidget {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(booksStateProvider(mediaId));
+    final booksProvider = useProvider(booksStateProvider(mediaId).notifier);
 
     return ScaffoldWithoutFooter(
       title: Text(title ?? 'Books'),
@@ -34,7 +34,7 @@ class BooksView extends HookWidget {
         },
         child: Consumer(
           builder: (context, watch, child) {
-            final state = watch(booksStateProvider(mediaId).state);
+            final state = watch(booksStateProvider(mediaId));
             if (state is BooksStateInitial) _refresher.currentState.show();
             if (state is BooksStateLoaded) {
               if (state.currentParent != mediaId)
@@ -58,7 +58,7 @@ class BooksView extends HookWidget {
                         //   arguments: book,
                         // );
                       },
-                      thumbnailUrl: book.artUri,
+                      thumbnailUrl: book.artUri.toString(),
                       title: book.title,
                       subtitle: book.artist,
                       progress: book.viewOffset.inMilliseconds /

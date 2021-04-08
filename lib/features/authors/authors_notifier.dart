@@ -4,7 +4,8 @@ import 'package:audiobookly/features/authors/authors_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final authorsStateProvider = StateNotifierProvider<AuthorsNotifier>((ref) {
+final authorsStateProvider =
+    StateNotifierProvider<AuthorsNotifier, AuthorsState>((ref) {
   return AuthorsNotifier(ref.watch(mediaRepositoryProdiver));
 });
 

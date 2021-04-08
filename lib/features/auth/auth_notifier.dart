@@ -16,7 +16,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final authNotifierProvider = StateNotifierProvider<AuthNotifier>((ref) {
+final authNotifierProvider =
+    StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   return AuthNotifier(ref);
 });
 

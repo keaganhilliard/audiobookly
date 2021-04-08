@@ -183,7 +183,7 @@ class PlayerView extends HookWidget {
                               left: 16.0, bottom: 16.0, right: 16.0),
                           child: Marquee(
                             child: StreamBuilder<Duration>(
-                                stream: AudioService.getPositionStream(),
+                                stream: playbackController.positionStream,
                                 builder: (context, snapshot) {
                                   return Text(getDurationLeftText(
                                       snapshot?.data?.inMilliseconds,
@@ -203,7 +203,7 @@ class PlayerView extends HookWidget {
                             ),
                             Expanded(
                                 child: StreamBuilder<Duration>(
-                                    stream: AudioService.getPositionStream(),
+                                    stream: playbackController.positionStream,
                                     builder: (context, snapshot) {
                                       if (snapshot.data != null &&
                                           item != null) {
@@ -233,7 +233,7 @@ class PlayerView extends HookWidget {
                             right: 8.0,
                           ),
                           child: StreamBuilder<Duration>(
-                              stream: AudioService.getPositionStream(),
+                              stream: playbackController.positionStream,
                               builder: (context, snapshot) {
                                 return SeekBar(
                                     duration: item?.duration,
@@ -290,7 +290,7 @@ class PlayerView extends HookWidget {
                               onPressed: playbackController.fastForward,
                             ),
                             StreamBuilder<Duration>(
-                                stream: AudioService.getPositionStream(),
+                                stream: playbackController.positionStream,
                                 builder: (context, snapshot) {
                                   return IconButton(
                                     onPressed: () => {

@@ -18,8 +18,8 @@ class BookDetailsView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // final stateProvider = useProvider(bookDetailsStateProvider(mediaId));
-    final bookDetails = useProvider(bookDetailsStateProvider(mediaId));
-    final state = useProvider(bookDetailsStateProvider(mediaId).state);
+    final bookDetails = useProvider(bookDetailsStateProvider(mediaId).notifier);
+    final state = useProvider(bookDetailsStateProvider(mediaId));
     final downloadService = useProvider(downloadServiceProvider);
     final playbackController = useProvider(playbackControllerProvider);
     final navigationService = useProvider(navigationServiceProvider);
@@ -56,7 +56,7 @@ class BookDetailsView extends HookWidget {
                             ),
                             clipBehavior: Clip.antiAlias,
                             child: CachedNetworkImage(
-                              imageUrl: state.book.artUri,
+                              imageUrl: state.book.artUri.toString(),
                               fit: BoxFit.scaleDown,
                             ),
                           ),
@@ -183,8 +183,7 @@ class BookDetailsView extends HookWidget {
                       return ListTile(
                         onTap: () async {
                           await playbackController.playFromId(state.book.id);
-                          await playbackController
-                              .skipToQueueItem(state.chapters[index].id);
+                          await playbackController.skipToQueueItem(index);
                         },
                         title: Text(
                           state.chapters[index].title,

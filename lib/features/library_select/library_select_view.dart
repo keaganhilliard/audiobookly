@@ -9,8 +9,8 @@ class LibrarySelectView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = useProvider(libraryStateProvider);
-    final state = useProvider(libraryStateProvider.state);
+    final notifier = useProvider(libraryStateProvider.notifier);
+    final state = useProvider(libraryStateProvider);
 
     if (state is LibrarySelectStateLoading)
       return Center(

@@ -232,13 +232,13 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future fastForward([Duration interval = const Duration(seconds: 30)]) async {
     await seek(currentPosition + interval);
-    await super.fastForward(interval);
+    await super.fastForward();
   }
 
   @override
   Future rewind([Duration interval = const Duration(seconds: 30)]) async {
     await seek(currentPosition - interval);
-    await super.rewind(interval);
+    await super.rewind();
   }
 
   @override
@@ -253,7 +253,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future<void> click([MediaButton button]) async {
+  Future<void> click([MediaButton button = MediaButton.media]) async {
     switch (button) {
       case MediaButton.media:
         if (playbackState?.value?.playing == true) {
@@ -272,10 +272,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future<void> skipToQueueItem(String mediaId) async {
-    var _index = queue.value.indexWhere((element) => element.id == mediaId);
-    await _player.seek(Duration.zero, index: _index);
-    await super.skipToQueueItem(mediaId);
+  Future<void> skipToQueueItem(int index) async {
+    await _player.seek(Duration.zero, index: index);
   }
 
   @override

@@ -18,7 +18,7 @@ class AuthorsView extends HookWidget {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(authorsStateProvider);
+    final booksProvider = useProvider(authorsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       title: Text('Authors'),
@@ -30,7 +30,7 @@ class AuthorsView extends HookWidget {
         },
         child: Consumer(
           builder: (context, reader, child) {
-            final state = reader(authorsStateProvider.state);
+            final state = reader(authorsStateProvider);
             if (state is AuthorsStateInitial) _refresher.currentState.show();
             if (state is AuthorsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
@@ -44,7 +44,7 @@ class AuthorsView extends HookWidget {
                         BooksView(mediaId: author.id, title: author.title),
                     closedBuilder: (context, openContainer) => BookGridItem(
                       onTap: openContainer,
-                      thumbnailUrl: author.artUri,
+                      thumbnailUrl: author.artUri.toString(),
                       title: author.title,
                     ),
                   );

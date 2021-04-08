@@ -49,7 +49,7 @@ class MiniPlayer extends HookWidget {
                     child: Row(children: [
                       CachedNetworkImage(
                         fit: BoxFit.contain,
-                        imageUrl: item?.artUri,
+                        imageUrl: item?.artUri.toString(),
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),

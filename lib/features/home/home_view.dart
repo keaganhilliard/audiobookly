@@ -15,7 +15,7 @@ class HomeView extends HookWidget {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final homeProvider = useProvider(homeStateProvider);
+    final homeProvider = useProvider(homeStateProvider.notifier);
     // final state = useProvider(homeStateProvider.state);
 
     return ScaffoldWithoutFooter(
@@ -29,7 +29,7 @@ class HomeView extends HookWidget {
         child: LayoutBuilder(
           builder: (context, constraints) => Consumer(
             builder: (context, watch, child) {
-              final state = watch(homeStateProvider.state);
+              final state = watch(homeStateProvider);
 
               if (state is HomeStateInitial) _refresher.currentState.show();
               if (state is HomeStateLoaded)

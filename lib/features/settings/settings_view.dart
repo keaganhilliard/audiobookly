@@ -13,8 +13,8 @@ class SettingsView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = useProvider(settingsStateProvider.state);
-    final auth = useProvider(authNotifierProvider);
+    final state = useProvider(settingsStateProvider);
+    final auth = useProvider(authNotifierProvider.notifier);
     // if (state is SettingsStateInitial) Future.value(settings.getUser());
     if (state is SettingsStateLoaded) {
       print(state.user.name);

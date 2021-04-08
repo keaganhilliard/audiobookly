@@ -4,7 +4,8 @@ import 'package:audiobookly/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final bookDetailsStateProvider =
-    StateNotifierProviderFamily<BookDetailsNotifier, String>((ref, mediaId) {
+    StateNotifierProviderFamily<BookDetailsNotifier, BookDetailsState, String>(
+        (ref, mediaId) {
   return BookDetailsNotifier(ref.watch(mediaRepositoryProdiver), mediaId);
 });
 

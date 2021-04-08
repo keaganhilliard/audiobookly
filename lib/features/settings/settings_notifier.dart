@@ -6,7 +6,8 @@ import 'package:audiobookly/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final settingsStateProvider = StateNotifierProvider<SettingsNotifier>((ref) {
+final settingsStateProvider =
+    StateNotifierProvider<SettingsNotifier, SettingsState>((ref) {
   return SettingsNotifier(ref.watch(mediaRepositoryProdiver));
 });
 

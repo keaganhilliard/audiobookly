@@ -24,7 +24,7 @@ class EmbyLogin extends HookWidget {
     final _formKey = GlobalKey<FormState>();
     final _loading = useState(false);
     final _login = useState(LoginState());
-    final _auth = useProvider(authNotifierProvider);
+    final _auth = useProvider(authNotifierProvider.notifier);
     final _navigationService = useProvider(navigationServiceProvider);
 
     return Scaffold(

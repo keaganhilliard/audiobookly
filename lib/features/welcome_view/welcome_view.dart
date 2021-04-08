@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 class WelcomeView extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final auth = useProvider(authNotifierProvider);
+    final auth = useProvider(authNotifierProvider.notifier);
     final navigationService = useProvider(navigationServiceProvider);
 
     return Scaffold(
