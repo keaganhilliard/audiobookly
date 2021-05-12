@@ -1,7 +1,7 @@
 class PlexCollection {
-  String fastKey;
-  String key;
-  String title;
+  String? fastKey;
+  String? key;
+  String? title;
 
   PlexCollection({this.fastKey, this.key, this.title});
 

@@ -26,26 +26,26 @@ class EmbyItem {
     this.mediaType,
   });
 
-  String name;
-  String overview;
-  String serverId;
-  String id;
-  bool supportsResume;
-  bool supportsSync;
-  double runTimeTicks;
-  bool isFolder;
-  String parentId;
-  String type;
-  EmbyUserData userData;
-  double primaryImageAspectRatio;
-  List<String> artists;
-  List<EmbyArtist> artistItems;
-  String albumArtist;
-  List<EmbyArtist> albumArtists;
-  EmbyImageTag imageTags;
-  String album;
-  String albumId;
-  String mediaType;
+  String? name;
+  String? overview;
+  String? serverId;
+  String? id;
+  bool? supportsResume;
+  bool? supportsSync;
+  double? runTimeTicks;
+  bool? isFolder;
+  String? parentId;
+  String? type;
+  EmbyUserData? userData;
+  double? primaryImageAspectRatio;
+  List<String>? artists;
+  List<EmbyArtist>? artistItems;
+  String? albumArtist;
+  List<EmbyArtist>? albumArtists;
+  EmbyImageTag? imageTags;
+  String? album;
+  String? albumId;
+  String? mediaType;
 
   factory EmbyItem.fromJson(Map<String, dynamic> json) => EmbyItem(
         name: json["Name"],
@@ -91,13 +91,13 @@ class EmbyItem {
         "IsFolder": isFolder,
         "ParentId": parentId,
         "Type": type,
-        "UserData": userData.toJson(),
+        "UserData": userData!.toJson(),
         "PrimaryImageAspectRatio": primaryImageAspectRatio,
-        "Artists": List<dynamic>.from(artists.map((x) => x)),
-        "ArtistItems": List<dynamic>.from(artistItems.map((x) => x.toJson())),
+        "Artists": List<dynamic>.from(artists!.map((x) => x)),
+        "ArtistItems": List<dynamic>.from(artistItems!.map((x) => x.toJson())),
         "AlbumArtist": albumArtist,
-        "AlbumArtists": List<dynamic>.from(albumArtists.map((x) => x.toJson())),
-        "ImageTags": imageTags.toJson(),
+        "AlbumArtists": List<dynamic>.from(albumArtists!.map((x) => x.toJson())),
+        "ImageTags": imageTags!.toJson(),
         "Album": album,
         "AlbumId": albumId,
         "MediaType": mediaType,

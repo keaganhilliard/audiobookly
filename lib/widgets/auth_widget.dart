@@ -1,6 +1,5 @@
 import 'package:audiobookly/features/auth/auth_notifier.dart';
 import 'package:audiobookly/features/auth/auth_state.dart';
-import 'package:audiobookly/features/welcome_view/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -3,40 +3,40 @@ import 'dart:async';
 import 'package:plex_api/plex_api.dart';
 
 class PlexServerV2 {
-  String name;
-  String product;
-  String productVersion;
-  String platform;
-  String platformVersion;
-  String device;
-  String clientIdentifier;
-  String createdAt;
-  String lastSeenAt;
-  String provides;
-  int ownerId;
-  String sourceTitle;
-  String publicAddress;
-  String accessToken;
-  bool owned;
-  bool home;
-  bool synced;
-  bool relay;
-  bool presence;
-  bool httpsRequired;
-  bool publicAddressMatches;
-  bool dnsRebindingProtection;
-  bool natLoopbackSupported;
-  List<PlexConnection> connections;
-  PlexApi api;
-  String currentIp;
+  String? name;
+  String? product;
+  String? productVersion;
+  String? platform;
+  String? platformVersion;
+  String? device;
+  String? clientIdentifier;
+  String? createdAt;
+  String? lastSeenAt;
+  String? provides;
+  int? ownerId;
+  String? sourceTitle;
+  String? publicAddress;
+  String? accessToken;
+  bool? owned;
+  bool? home;
+  bool? synced;
+  bool? relay;
+  bool? presence;
+  bool? httpsRequired;
+  bool? publicAddressMatches;
+  bool? dnsRebindingProtection;
+  bool? natLoopbackSupported;
+  List<PlexConnection>? connections;
+  PlexApi? api;
+  String? currentIp;
 
-  PlexConnection get mainConnection {
+  PlexConnection? get mainConnection {
     if (connections != null) {
-      return connections.firstWhere(
-          (connection) => !publicAddressMatches && !connection.local,
-          orElse: () => connections.firstWhere((connection) =>
-              connection.address.startsWith('192.') ||
-              connection.address.startsWith('10.')));
+      return connections!.firstWhere(
+          (connection) => !publicAddressMatches! && !connection.local!,
+          orElse: () => connections!.firstWhere((connection) =>
+              connection.address!.startsWith('192.') ||
+              connection.address!.startsWith('10.')));
     } else {
       return null;
     }
@@ -100,9 +100,9 @@ class PlexServerV2 {
     dnsRebindingProtection = json['dnsRebindingProtection'];
     natLoopbackSupported = json['natLoopbackSupported'];
     if (json['connections'] != null) {
-      connections = new List<PlexConnection>();
+      connections = [];
       json['connections'].forEach((v) {
-        connections.add(new PlexConnection.fromJson(v));
+        connections!.add(new PlexConnection.fromJson(v));
       });
     }
   }
@@ -133,94 +133,94 @@ class PlexServerV2 {
     data['dnsRebindingProtection'] = this.dnsRebindingProtection;
     data['natLoopbackSupported'] = this.natLoopbackSupported;
     if (this.connections != null) {
-      data['connections'] = this.connections.map((v) => v.toJson()).toList();
+      data['connections'] = this.connections!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 
   void setCurrentIP() async {
-    this.currentIp = await api.getCurrentIP();
+    this.currentIp = await api!.getCurrentIP();
   }
 
-  Future<PlexUser> getUser() async {
-    return await api.getUser(this);
+  Future<PlexUser?> getUser() async {
+    return await api!.getUser(this);
   }
 
-  Future<List<PlexLibrary>> getLibraries() async {
-    return await api.getLibraries(this);
+  Future<List<PlexLibrary>?> getLibraries() async {
+    return await api!.getLibraries(this);
   }
 
-  Future<List<PlexArtist>> getArtists(String libraryKey) async {
-    return await api.getArtists(this, libraryKey);
+  Future<List<PlexArtist>?> getArtists(String libraryKey) async {
+    return await api!.getArtists(this, libraryKey);
   }
 
   Future<PlexAlbum> getAlbumFromKey(String albumKey) async {
-    return await api.getAlbumFromKey(this, albumKey);
+    return await api!.getAlbumFromKey(this, albumKey);
   }
 
-  Future<List<PlexAlbum>> getAllAlbums(String libraryKey) async {
-    List<PlexAlbum> albums = await api.getAllAlbums(this, libraryKey);
+  Future<List<PlexAlbum>?> getAllAlbums(String libraryKey) async {
+    List<PlexAlbum>? albums = await api!.getAllAlbums(this, libraryKey);
     return albums;
   }
 
-  Future<List<PlexTrack>> getAllTracks(String libraryKey) async {
-    List<PlexTrack> albums = await api.getAllTracks(this, libraryKey);
-    return albums;
-  }
+  // Future<List<PlexTrack>> getAllTracks(String libraryKey) async {
+  //   List<PlexTrack> albums = await api!.getAllTracks(this, libraryKey);
+  //   return albums;
+  // }
 
-  Future<List<PlexAlbum>> getRecentlyAdded(String libraryKey) async {
-    List<PlexAlbum> albums = await api.getRecentlyAdded(this, libraryKey);
+  Future<List<PlexAlbum>?> getRecentlyAdded(String libraryKey) async {
+    List<PlexAlbum>? albums = await api!.getRecentlyAdded(this, libraryKey);
     return albums;
   }
 
   Future<List<PlexAlbum>> getRecentlyViewed(String libraryKey) async {
-    List<PlexAlbum> albums = await api.getRecentlyViewed(this, libraryKey);
+    List<PlexAlbum> albums = await api!.getRecentlyViewed(this, libraryKey);
     return albums;
   }
 
-  Future<List<PlexAlbum>> getAlbumsFromArtist(String artistRatingKey) async {
-    return await api.getAlbumsFromArtist(this, artistRatingKey);
+  Future<List<PlexAlbum>?> getAlbumsFromArtist(String artistRatingKey) async {
+    return await api!.getAlbumsFromArtist(this, artistRatingKey);
   }
 
-  Future<List<PlexAlbum>> getAlbumsFromCollection(
+  Future<List<PlexAlbum>?> getAlbumsFromCollection(
       String libraryKey, String collectionKey) async {
-    return await api.getAlbumsFromCollection(this, libraryKey, collectionKey);
+    return await api!.getAlbumsFromCollection(this, libraryKey, collectionKey);
   }
 
   Future<List<PlexAlbum>> searchAlbums(String libraryKey, String search) async {
-    return await api.searchAlbums(this, libraryKey, search);
+    return await api!.searchAlbums(this, libraryKey, search);
   }
 
-  Future<List<PlexTrack>> getTracks(String albumRatingKey) async {
-    return await api.getTracks(this, albumRatingKey);
+  Future<List<PlexTrack>?> getTracks(String albumRatingKey) async {
+    return await api!.getTracks(this, albumRatingKey);
   }
 
-  Future<List<PlexCollection>> getCollections(String libraryKey) async {
-    return await api.getCollections(this, libraryKey);
+  Future<List<PlexCollection>?> getCollections(String libraryKey) async {
+    return await api!.getCollections(this, libraryKey);
   }
 
   Future savePosition(String key, int currentTime, int duration,
       PlexPlaybackState state) async {
-    return await api.savePosition(this, key, currentTime, duration, state);
+    return await api!.savePosition(this, key, currentTime, duration, state);
   }
 
   String getUrlWithToken(String path) {
-    return api.getUrlWithToken(this, path);
+    return api!.getUrlWithToken(this, path);
   }
 
   String getThumbnailUrl(String path, [int dimension = 400]) {
-    return api.getThumbnailUrl(this, path, dimension);
+    return api!.getThumbnailUrl(this, path, dimension);
   }
 }
 
 class PlexConnection {
-  String protocol;
-  String address;
-  int port;
-  String uri;
-  bool local;
-  bool relay;
-  bool iPv6;
+  String? protocol;
+  String? address;
+  int? port;
+  String? uri;
+  bool? local;
+  bool? relay;
+  bool? iPv6;
 
   PlexConnection(
       {this.protocol,

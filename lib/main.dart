@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:audio_service_platform_interface/audio_service_platform_interface.dart';
+import 'package:audio_service_platform_interface/no_op_audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
-import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
@@ -10,6 +12,7 @@ import 'package:audiobookly/features/welcome_view/welcome_view.dart';
 import 'package:audiobookly/widgets/adaptive_scaffold.dart';
 import 'package:audiobookly/widgets/auth_widget.dart';
 import 'package:audiobookly/widgets/router.dart' as r;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,13 +24,23 @@ Future<void> main() async {
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   // final store = await getStore();
-  // final handler = await initAudioHandler();
+
+  PlaybackController controller;
+  if (kIsWeb || (!Platform.isWindows && !Platform.isLinux)) {
+    final handler = await initAudioHandler();
+    controller = AudioHandlerPlaybackController(handler);
+  } else {
+    final handler = await initDesktopAudioHandler();
+    controller = AudioHandlerPlaybackController(handler);
+  }
+
   runApp(
     ProviderScope(
       overrides: [
-        playbackControllerProvider.overrideWithValue(
-          AudioHandlerPlaybackController(null),
-        ),
+        if (controller != null)
+          playbackControllerProvider.overrideWithValue(
+            controller,
+          ),
         sharedPreferencesServiceProvider.overrideWithValue(
           SharedPreferencesService(prefs),
         ),
@@ -63,11 +76,23 @@ class AudiobooklyApp extends HookWidget {
       onGenerateRoute: r.Router.generateRoute,
       theme: ThemeData(
         brightness: Brightness.dark,
+        indicatorColor: Colors.deepPurple,
         accentColor: Colors.deepPurple,
+        sliderTheme: SliderThemeData(
+          overlayColor: Colors.deepPurple,
+          thumbColor: Colors.deepPurple,
+          activeTrackColor: Colors.deepPurple,
+        ),
         canvasColor: Colors.grey[900],
       ),
       darkTheme: ThemeData(
         accentColor: Colors.deepPurple,
+        indicatorColor: Colors.deepPurple,
+        sliderTheme: SliderThemeData(
+          overlayColor: Colors.deepPurple,
+          thumbColor: Colors.deepPurple,
+          activeTrackColor: Colors.deepPurple,
+        ),
         brightness: Brightness.dark,
         canvasColor: Colors.grey[900],
       ),

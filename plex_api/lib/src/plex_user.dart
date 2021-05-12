@@ -1,20 +1,20 @@
 class PlexUser {
-  int id;
-  String uuid;
-  String email;
-  String joinedAt;
-  String username;
-  String title;
-  String thumb;
-  bool hasPassword;
-  String authToken;
-  String authenticationToken;
-  Subscription subscription;
-  Roles roles;
-  List<String> entitlements;
-  String confirmedAt;
-  String forumId;
-  bool rememberMe;
+  int? id;
+  String? uuid;
+  String? email;
+  String? joinedAt;
+  String? username;
+  String? title;
+  String? thumb;
+  bool? hasPassword;
+  String? authToken;
+  String? authenticationToken;
+  Subscription? subscription;
+  Roles? roles;
+  List<String>? entitlements;
+  String? confirmedAt;
+  String? forumId;
+  bool? rememberMe;
 
   PlexUser(
       {this.id,
@@ -68,10 +68,10 @@ class PlexUser {
     data['authToken'] = this.authToken;
     data['authentication_token'] = this.authenticationToken;
     if (this.subscription != null) {
-      data['subscription'] = this.subscription.toJson();
+      data['subscription'] = this.subscription!.toJson();
     }
     if (this.roles != null) {
-      data['roles'] = this.roles.toJson();
+      data['roles'] = this.roles!.toJson();
     }
     data['entitlements'] = this.entitlements;
     data['confirmedAt'] = this.confirmedAt;
@@ -82,10 +82,10 @@ class PlexUser {
 }
 
 class Subscription {
-  bool active;
-  String status;
-  String plan;
-  List<String> features;
+  bool? active;
+  String? status;
+  String? plan;
+  List<String>? features;
 
   Subscription({this.active, this.status, this.plan, this.features});
 
@@ -107,7 +107,7 @@ class Subscription {
 }
 
 class Roles {
-  List<String> roles;
+  List<String>? roles;
 
   Roles({this.roles});
 

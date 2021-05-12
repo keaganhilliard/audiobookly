@@ -16,10 +16,17 @@ class SharedPreferencesService {
   static const serverIdKey = 'SERVER_ID_KEY';
   static const libraryKey = 'LIBRARY_KEY';
   static const baseUrlKey = 'BASE_URL_KEY';
+  static const speedKey = 'playbackSpeed';
 
   // init() async {
   //   sharedPreferences = await SharedPreferences.getInstance();
   // }
+
+  Future<void> setSpeed(double speed) async {
+    await sharedPreferences.setDouble(speedKey, speed);
+  }
+
+  double get speed => sharedPreferences.getDouble(speedKey);
 
   Future<void> setBaseUrl(String baseUrl) async {
     await sharedPreferences.setString(baseUrlKey, baseUrl);

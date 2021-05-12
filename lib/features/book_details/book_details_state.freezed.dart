@@ -32,8 +32,8 @@ class _$BookDetailsStateTearOff {
   }
 
 // ignore: unused_element
-  AuthorsStateErrorDetails error([String message]) {
-    return AuthorsStateErrorDetails(
+  BookDetailsStateErrorDetails error([String message]) {
+    return BookDetailsStateErrorDetails(
       message,
     );
   }
@@ -65,14 +65,14 @@ mixin _$BookDetailsState {
     @required TResult initial(BookDetailsStateInitial value),
     @required TResult loaded(BookDetailsStateLoaded value),
     @required TResult loading(BookDetailsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+    @required TResult error(BookDetailsStateErrorDetails value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult initial(BookDetailsStateInitial value),
     TResult loaded(BookDetailsStateLoaded value),
     TResult loading(BookDetailsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
+    TResult error(BookDetailsStateErrorDetails value),
     @required TResult orElse(),
   });
 }
@@ -175,7 +175,7 @@ class _$BookDetailsStateInitial
     @required TResult initial(BookDetailsStateInitial value),
     @required TResult loaded(BookDetailsStateLoaded value),
     @required TResult loading(BookDetailsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+    @required TResult error(BookDetailsStateErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -190,7 +190,7 @@ class _$BookDetailsStateInitial
     TResult initial(BookDetailsStateInitial value),
     TResult loaded(BookDetailsStateLoaded value),
     TResult loading(BookDetailsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
+    TResult error(BookDetailsStateErrorDetails value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -322,7 +322,7 @@ class _$BookDetailsStateLoaded
     @required TResult initial(BookDetailsStateInitial value),
     @required TResult loaded(BookDetailsStateLoaded value),
     @required TResult loading(BookDetailsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+    @required TResult error(BookDetailsStateErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -337,7 +337,7 @@ class _$BookDetailsStateLoaded
     TResult initial(BookDetailsStateInitial value),
     TResult loaded(BookDetailsStateLoaded value),
     TResult loading(BookDetailsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
+    TResult error(BookDetailsStateErrorDetails value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -439,7 +439,7 @@ class _$BookDetailsStateLoading
     @required TResult initial(BookDetailsStateInitial value),
     @required TResult loaded(BookDetailsStateLoaded value),
     @required TResult loading(BookDetailsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+    @required TResult error(BookDetailsStateErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -454,7 +454,7 @@ class _$BookDetailsStateLoading
     TResult initial(BookDetailsStateInitial value),
     TResult loaded(BookDetailsStateLoaded value),
     TResult loading(BookDetailsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
+    TResult error(BookDetailsStateErrorDetails value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -470,40 +470,42 @@ abstract class BookDetailsStateLoading implements BookDetailsState {
 }
 
 /// @nodoc
-abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
-  factory $AuthorsStateErrorDetailsCopyWith(AuthorsStateErrorDetails value,
-          $Res Function(AuthorsStateErrorDetails) then) =
-      _$AuthorsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class $BookDetailsStateErrorDetailsCopyWith<$Res> {
+  factory $BookDetailsStateErrorDetailsCopyWith(
+          BookDetailsStateErrorDetails value,
+          $Res Function(BookDetailsStateErrorDetails) then) =
+      _$BookDetailsStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
+class _$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
     extends _$BookDetailsStateCopyWithImpl<$Res>
-    implements $AuthorsStateErrorDetailsCopyWith<$Res> {
-  _$AuthorsStateErrorDetailsCopyWithImpl(AuthorsStateErrorDetails _value,
-      $Res Function(AuthorsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as AuthorsStateErrorDetails));
+    implements $BookDetailsStateErrorDetailsCopyWith<$Res> {
+  _$BookDetailsStateErrorDetailsCopyWithImpl(
+      BookDetailsStateErrorDetails _value,
+      $Res Function(BookDetailsStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as BookDetailsStateErrorDetails));
 
   @override
-  AuthorsStateErrorDetails get _value =>
-      super._value as AuthorsStateErrorDetails;
+  BookDetailsStateErrorDetails get _value =>
+      super._value as BookDetailsStateErrorDetails;
 
   @override
   $Res call({
     Object message = freezed,
   }) {
-    return _then(AuthorsStateErrorDetails(
+    return _then(BookDetailsStateErrorDetails(
       message == freezed ? _value.message : message as String,
     ));
   }
 }
 
 /// @nodoc
-class _$AuthorsStateErrorDetails
+class _$BookDetailsStateErrorDetails
     with DiagnosticableTreeMixin
-    implements AuthorsStateErrorDetails {
-  const _$AuthorsStateErrorDetails([this.message]);
+    implements BookDetailsStateErrorDetails {
+  const _$BookDetailsStateErrorDetails([this.message]);
 
   @override
   final String message;
@@ -524,7 +526,7 @@ class _$AuthorsStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is AuthorsStateErrorDetails &&
+        (other is BookDetailsStateErrorDetails &&
             (identical(other.message, message) ||
                 const DeepCollectionEquality().equals(other.message, message)));
   }
@@ -535,9 +537,9 @@ class _$AuthorsStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $AuthorsStateErrorDetailsCopyWith<AuthorsStateErrorDetails> get copyWith =>
-      _$AuthorsStateErrorDetailsCopyWithImpl<AuthorsStateErrorDetails>(
-          this, _$identity);
+  $BookDetailsStateErrorDetailsCopyWith<BookDetailsStateErrorDetails>
+      get copyWith => _$BookDetailsStateErrorDetailsCopyWithImpl<
+          BookDetailsStateErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -576,7 +578,7 @@ class _$AuthorsStateErrorDetails
     @required TResult initial(BookDetailsStateInitial value),
     @required TResult loaded(BookDetailsStateLoaded value),
     @required TResult loading(BookDetailsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+    @required TResult error(BookDetailsStateErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -591,7 +593,7 @@ class _$AuthorsStateErrorDetails
     TResult initial(BookDetailsStateInitial value),
     TResult loaded(BookDetailsStateLoaded value),
     TResult loading(BookDetailsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
+    TResult error(BookDetailsStateErrorDetails value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -602,11 +604,12 @@ class _$AuthorsStateErrorDetails
   }
 }
 
-abstract class AuthorsStateErrorDetails implements BookDetailsState {
-  const factory AuthorsStateErrorDetails([String message]) =
-      _$AuthorsStateErrorDetails;
+abstract class BookDetailsStateErrorDetails implements BookDetailsState {
+  const factory BookDetailsStateErrorDetails([String message]) =
+      _$BookDetailsStateErrorDetails;
 
   String get message;
   @JsonKey(ignore: true)
-  $AuthorsStateErrorDetailsCopyWith<AuthorsStateErrorDetails> get copyWith;
+  $BookDetailsStateErrorDetailsCopyWith<BookDetailsStateErrorDetails>
+      get copyWith;
 }

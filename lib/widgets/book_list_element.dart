@@ -52,6 +52,7 @@ class BookListElement extends StatelessWidget {
                         ? LinearProgressIndicator(
                             minHeight: 8,
                             value: progress,
+                            color: Theme.of(context).accentColor,
                             backgroundColor: Colors.black,
                           )
                         : Container(),
@@ -68,8 +69,8 @@ class BookListElement extends StatelessWidget {
                           imageUrl: thumbnailUrl,
                           fit: BoxFit.cover,
                           alignment: Alignment.center,
-                          errorWidget: (context, message, thing) =>
-                              Text(message),
+                          errorWidget: (context, error, child) =>
+                              Icon(Icons.book),
                           placeholder: (context, url) => Container(
                             color: Theme.of(context).canvasColor,
                             child: Icon(

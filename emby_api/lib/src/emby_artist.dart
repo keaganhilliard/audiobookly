@@ -4,8 +4,8 @@ class EmbyArtist {
     this.id,
   });
 
-  String name;
-  String id;
+  String? name;
+  String? id;
 
   factory EmbyArtist.fromJson(Map<String, dynamic> json) => EmbyArtist(
         name: json["Name"],

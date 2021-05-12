@@ -1,24 +1,24 @@
 class PlexLibrary {
-  bool allowSync;
-  String art;
-  String composite;
-  bool filters;
-  bool refreshing;
-  String thumb;
-  String key;
-  String type;
-  String title;
-  String agent;
-  String scanner;
-  String language;
-  String uuid;
-  int updatedAt;
-  int createdAt;
-  int scannedAt;
-  bool content;
-  bool directory;
-  int contentChangedAt;
-  List<Location> location;
+  bool? allowSync;
+  String? art;
+  String? composite;
+  bool? filters;
+  bool? refreshing;
+  String? thumb;
+  String? key;
+  String? type;
+  String? title;
+  String? agent;
+  String? scanner;
+  String? language;
+  String? uuid;
+  int? updatedAt;
+  int? createdAt;
+  int? scannedAt;
+  bool? content;
+  bool? directory;
+  int? contentChangedAt;
+  List<Location>? location;
 
   PlexLibrary({
     this.allowSync,
@@ -66,7 +66,7 @@ class PlexLibrary {
     if (json['Location'] != null) {
       location = [];
       json['Location'].forEach((v) {
-        location.add(new Location.fromJson(v));
+        location!.add(new Location.fromJson(v));
       });
     }
   }
@@ -93,7 +93,7 @@ class PlexLibrary {
     data['directory'] = this.directory;
     data['contentChangedAt'] = this.contentChangedAt;
     if (this.location != null) {
-      data['Location'] = this.location.map((v) => v.toJson()).toList();
+      data['Location'] = this.location!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -104,8 +104,8 @@ class PlexLibrary {
 }
 
 class Location {
-  int id;
-  String path;
+  int? id;
+  String? path;
 
   Location({this.id, this.path});
 

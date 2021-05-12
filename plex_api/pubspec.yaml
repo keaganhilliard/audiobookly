@@ -5,11 +5,11 @@ author:
 homepage:
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  http: 
-  xml:
+  http: ^0.13.3 
+  xml: ^5.1.0
   flutter:
     sdk: flutter
 

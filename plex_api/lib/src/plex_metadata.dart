@@ -1,15 +1,15 @@
 class PlexMetadata {
-  String ratingKey;
-  String key;
-  String guid;
-  String type;
-  String title;
-  String summary;
-  int index;
-  String thumb;
-  String art;
-  int addedAt;
-  int updatedAt;
+  String? ratingKey;
+  String? key;
+  String? guid;
+  String? type;
+  String? title;
+  String? summary;
+  int? index;
+  String? thumb;
+  String? art;
+  int? addedAt;
+  int? updatedAt;
 
   PlexMetadata(
       {this.ratingKey,

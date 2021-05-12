@@ -20,7 +20,7 @@ class BookDetailsView extends HookWidget {
     // final stateProvider = useProvider(bookDetailsStateProvider(mediaId));
     final bookDetails = useProvider(bookDetailsStateProvider(mediaId).notifier);
     final state = useProvider(bookDetailsStateProvider(mediaId));
-    final downloadService = useProvider(downloadServiceProvider);
+    // final downloadService = useProvider(downloadServiceProvider);
     final playbackController = useProvider(playbackControllerProvider);
     final navigationService = useProvider(navigationServiceProvider);
 

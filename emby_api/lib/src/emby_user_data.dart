@@ -7,11 +7,11 @@ class EmbyUserData {
     this.played,
   });
 
-  int playbackPositionTicks;
-  int playCount;
-  bool isFavorite;
-  DateTime lastPlayedDate;
-  bool played;
+  int? playbackPositionTicks;
+  int? playCount;
+  bool? isFavorite;
+  DateTime? lastPlayedDate;
+  bool? played;
 
   factory EmbyUserData.fromJson(Map<String, dynamic> json) => EmbyUserData(
         playbackPositionTicks: json["PlaybackPositionTicks"],

@@ -7,7 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:marquee_widget/marquee_widget.dart';
+import 'package:marquee/marquee.dart';
 
 class MiniPlayer extends HookWidget {
   @override
@@ -49,7 +49,7 @@ class MiniPlayer extends HookWidget {
                     child: Row(children: [
                       CachedNetworkImage(
                         fit: BoxFit.contain,
-                        imageUrl: item?.artUri.toString(),
+                        imageUrl: item?.artUri?.toString(),
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -57,12 +57,9 @@ class MiniPlayer extends HookWidget {
                       Expanded(
                         child: ListTile(
                           contentPadding: EdgeInsets.only(left: 8.0),
-                          title: Marquee(
-                            child: Text(
-                              item?.title ?? '',
-                              style: TextStyle(color: Colors.white),
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          title: Text(
+                            item?.title ?? '',
+                            style: TextStyle(color: Colors.white),
                           ),
                           subtitle: Text(
                             item?.artist ?? '',

@@ -4,7 +4,7 @@ import 'package:plex_api/src/plex_metadata.dart';
 import 'package:plex_api/src/plex_track.dart';
 
 class PlexMetadataResponse {
-  MediaContainer mediaContainer;
+  MediaContainer? mediaContainer;
 
   PlexMetadataResponse({this.mediaContainer});
 
@@ -17,30 +17,30 @@ class PlexMetadataResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.mediaContainer != null) {
-      data['MediaContainer'] = this.mediaContainer.toJson();
+      data['MediaContainer'] = this.mediaContainer!.toJson();
     }
     return data;
   }
 }
 
 class MediaContainer {
-  int size;
-  int totalSize;
-  bool allowSync;
-  String art;
-  String key;
-  int librarySectionID;
-  String librarySectionTitle;
-  String librarySectionUUID;
-  String mediaTagPrefix;
-  int mediaTagVersion;
-  bool nocache;
-  String thumb;
-  String title1;
-  String title2;
-  String viewGroup;
-  int viewMode;
-  List<PlexMetadata> metadata;
+  int? size;
+  int? totalSize;
+  bool? allowSync;
+  String? art;
+  String? key;
+  int? librarySectionID;
+  String? librarySectionTitle;
+  String? librarySectionUUID;
+  String? mediaTagPrefix;
+  int? mediaTagVersion;
+  bool? nocache;
+  String? thumb;
+  String? title1;
+  String? title2;
+  String? viewGroup;
+  int? viewMode;
+  List<PlexMetadata>? metadata;
 
   MediaContainer.fromJson(Map<String, dynamic> json) {
     size = json['size'];
@@ -64,27 +64,27 @@ class MediaContainer {
       jsonMetadata.forEach((v) {
         switch (v['type']) {
           case 'track':
-            metadata = new List<PlexTrack>();
+            metadata = [];
             jsonMetadata.forEach((v) {
-              metadata.add(new PlexTrack.fromJson(v));
+              metadata!.add(new PlexTrack.fromJson(v));
             });
             break;
           case 'album':
-            metadata = new List<PlexAlbum>();
+            metadata = [];
             jsonMetadata.forEach((v) {
-              metadata.add(new PlexAlbum.fromJson(v));
+              metadata!.add(new PlexAlbum.fromJson(v));
             });
             break;
           case 'artist':
-            metadata = new List<PlexArtist>();
+            metadata = [];
             jsonMetadata.forEach((v) {
-              metadata.add(new PlexArtist.fromJson(v));
+              metadata!.add(new PlexArtist.fromJson(v));
             });
             break;
           default:
-            metadata = new List<PlexMetadata>();
+            metadata = [];
             jsonMetadata.forEach((v) {
-              metadata.add(new PlexMetadata.fromJson(v));
+              metadata!.add(new PlexMetadata.fromJson(v));
             });
         }
       });

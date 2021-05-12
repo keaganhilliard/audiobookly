@@ -9,14 +9,14 @@ import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 class EmbyApi {
-  String baseUrl;
-  String client;
-  String deviceName;
-  String clientVersion;
-  String token;
-  String deviceId;
-  String userId;
-  EmbyUser user;
+  String? baseUrl;
+  String? client;
+  String? deviceName;
+  String? clientVersion;
+  String? token;
+  String? deviceId;
+  String? userId;
+  EmbyUser? user;
 
   final uuid = Uuid();
 
@@ -34,7 +34,7 @@ class EmbyApi {
 
   Future<List<EmbyUser>> getUsers() async {
     http.Response response =
-        await http.get(Uri.https(baseUrl, '/Users/Public'));
+        await http.get(Uri.https(baseUrl!, '/Users/Public'));
     return List<EmbyUser>.from(jsonDecode(
       utf8.decode(response.bodyBytes),
     ).map((x) => EmbyUser.fromJson(x)));
@@ -57,7 +57,7 @@ class EmbyApi {
 
   Future<EmbyLoginResponse> login(String username, String password) async {
     http.Response response = await http.post(
-      Uri.https(baseUrl, '/Users/AuthenticateByName'),
+      Uri.https(baseUrl!, '/Users/AuthenticateByName'),
       headers: {
         'content-type': 'application/json',
         'x-emby-authorization': _genAuthHeader(),
@@ -70,7 +70,7 @@ class EmbyApi {
     var elr =
         EmbyLoginResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     token = elr.accessToken;
-    userId = elr.user.id;
+    userId = elr.user!.id;
     user = elr.user;
     return elr;
   }
@@ -152,7 +152,7 @@ class EmbyApi {
     });
   }
 
-  Future<List<EmbyItem>> getAuthors(String libraryId, [int limit]) async {
+  Future<List<EmbyItem>> getAuthors(String libraryId, [int? limit]) async {
     return await _getItems(
       '/emby/Artists/AlbumArtists',
       {
@@ -214,7 +214,7 @@ class EmbyApi {
 
   String getThumbnailUrl(String itemId,
       [int maxHeight = 500, int maxWidth = 500]) {
-    return Uri.https(baseUrl, '/Items/$itemId/Images/Primary', {
+    return Uri.https(baseUrl!, '/Items/$itemId/Images/Primary', {
       'maxHeight': '$maxHeight',
       'maxWidth': '$maxWidth',
     }).toString();
@@ -228,7 +228,7 @@ class EmbyApi {
         jsonDecode(
           utf8.decode(response.bodyBytes),
         ),
-      ),
+      )!,
     );
   }
 
@@ -236,7 +236,7 @@ class EmbyApi {
       String path, Map<String, dynamic> parameters) async {
     return await http.get(
       Uri.https(
-        baseUrl,
+        baseUrl!,
         path,
         _appendParameters(parameters),
       ),
@@ -251,7 +251,7 @@ class EmbyApi {
       String path, Map<String, dynamic> parameters) async {
     return await http.delete(
       Uri.https(
-        baseUrl,
+        baseUrl!,
         path,
         _appendParameters(parameters),
       ),
@@ -266,7 +266,7 @@ class EmbyApi {
       String path, Map<String, dynamic> parameters, dynamic body) async {
     return await http.post(
       Uri.https(
-        baseUrl,
+        baseUrl!,
         path,
         _appendParameters(parameters),
       ),
@@ -278,7 +278,7 @@ class EmbyApi {
     );
   }
 
-  List<EmbyItem> _getItemsFromBody(Map<String, dynamic> json) {
+  List<EmbyItem>? _getItemsFromBody(Map<String, dynamic> json) {
     return json['Items'].map<EmbyItem>((x) => EmbyItem.fromJson(x)).toList();
   }
 
@@ -286,18 +286,20 @@ class EmbyApi {
 
   // String getServerUrl(String itemId) {
   //   String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
-  //   return Uri.https(baseUrl, '/Audio/$itemId/stream', {
+  //   final uri = Uri.https(baseUrl, '/Audio/$itemId/stream.m4a', {
   //     'static': 'true',
   //     'UserId': userId,
   //     'DevceId': deviceId,
   //     'PlaySessionId': sessionId,
   //     'MaxStreamingBitrate': '140000000',
   //   }).toString();
+  //   print('The URI!: $uri');
+  //   return uri;
   // }
 
   String getServerUrl(String itemId) {
     String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
-    final uri = Uri.https(baseUrl, '/Audio/$itemId/universal', {
+    final uri = Uri.https(baseUrl!, '/Audio/$itemId/universal', {
       'UserId': userId,
       'DevceId': deviceId,
       'PlaySessionId': sessionId,
@@ -322,7 +324,7 @@ class EmbyApi {
   }
 
   String getDownloadUrl(String itemId) {
-    return Uri.https(baseUrl, '/Items/$itemId/Download', {
+    return Uri.https(baseUrl!, '/Items/$itemId/Download', {
       'X-Emby-Token': token,
     }).toString();
   }
@@ -330,7 +332,7 @@ class EmbyApi {
   Future<void> playbackStarted(
       String itemId, Duration position, Duration duration,
       [double playbackRate = 1.0]) async {
-    return await makePost('/Sessions/Playing', {}, {
+    await makePost('/Sessions/Playing', {}, {
       'ItemId': itemId,
       'CanSeek': true,
       'PlaySessionId': playSessions[itemId],
@@ -360,7 +362,7 @@ class EmbyApi {
   Future<void> playbackStopped(
       String itemId, Duration position, Duration duration,
       [double playbackRate = 1.0]) async {
-    return await makePost('/Sessions/Playing/Stopped', {}, {
+    await makePost('/Sessions/Playing/Stopped', {}, {
       'ItemId': itemId,
       'CanSeek': true,
       'PlaySessionId': playSessions[itemId],
@@ -374,13 +376,11 @@ class EmbyApi {
     final response =
         await makePost('/Users/$userId/PlayedItems/$itemId', {}, {});
     print(response.statusCode);
-    return response;
   }
 
   Future<void> markUnplayed(String itemId) async {
     final response = await makeDelete('/Users/$userId/PlayedItems/$itemId', {});
     print(response.statusCode);
-    return response;
   }
 
   Future<List<EmbyItem>> getLibraries() async {

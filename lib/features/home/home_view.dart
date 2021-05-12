@@ -21,6 +21,7 @@ class HomeView extends HookWidget {
     return ScaffoldWithoutFooter(
       title: Text('Audiobookly'),
       body: RefreshIndicator(
+        color: Theme.of(context).accentColor,
         key: _refresher,
         onRefresh: () async {
           print('refreshing');

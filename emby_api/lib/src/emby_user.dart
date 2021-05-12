@@ -1,16 +1,16 @@
 class EmbyUser {
-  String name;
-  String serverId;
-  String id;
-  String connectUserName;
-  String connectLinkType;
-  bool hasPassword;
-  bool hasConfiguredPassword;
-  bool hasConfiguredEasyPassword;
-  DateTime lastLoginDate;
-  DateTime lastActivityDate;
-  Configuration configuration;
-  Policy policy;
+  String? name;
+  String? serverId;
+  String? id;
+  String? connectUserName;
+  String? connectLinkType;
+  bool? hasPassword;
+  bool? hasConfiguredPassword;
+  bool? hasConfiguredEasyPassword;
+  DateTime? lastLoginDate;
+  DateTime? lastActivityDate;
+  Configuration? configuration;
+  Policy? policy;
 
   EmbyUser({
     this.name,
@@ -60,31 +60,31 @@ class EmbyUser {
     data['LastLoginDate'] = this.lastLoginDate?.toIso8601String();
     data['LastActivityDate'] = this.lastActivityDate?.toIso8601String();
     if (this.configuration != null) {
-      data['Configuration'] = this.configuration.toJson();
+      data['Configuration'] = this.configuration!.toJson();
     }
     if (this.policy != null) {
-      data['Policy'] = this.policy.toJson();
+      data['Policy'] = this.policy!.toJson();
     }
     return data;
   }
 }
 
 class Configuration {
-  String audioLanguagePreference;
-  bool playDefaultAudioTrack;
-  String subtitleLanguagePreference;
-  bool displayMissingEpisodes;
-  List<String> groupedFolders;
-  String subtitleMode;
-  bool displayCollectionsView;
-  bool enableLocalPassword;
-  List<String> orderedViews;
-  List<String> latestItemsExcludes;
-  List<String> myMediaExcludes;
-  bool hidePlayedInLatest;
-  bool rememberAudioSelections;
-  bool rememberSubtitleSelections;
-  bool enableNextEpisodeAutoPlay;
+  String? audioLanguagePreference;
+  bool? playDefaultAudioTrack;
+  String? subtitleLanguagePreference;
+  bool? displayMissingEpisodes;
+  List<String>? groupedFolders;
+  String? subtitleMode;
+  bool? displayCollectionsView;
+  bool? enableLocalPassword;
+  List<String>? orderedViews;
+  List<String>? latestItemsExcludes;
+  List<String>? myMediaExcludes;
+  bool? hidePlayedInLatest;
+  bool? rememberAudioSelections;
+  bool? rememberSubtitleSelections;
+  bool? enableNextEpisodeAutoPlay;
 
   Configuration({
     this.audioLanguagePreference,
@@ -144,43 +144,43 @@ class Configuration {
 }
 
 class Policy {
-  bool isAdministrator;
-  bool isHidden;
-  bool isHiddenRemotely;
-  bool isDisabled;
-  List<String> blockedTags;
-  bool isTagBlockingModeInclusive;
-  bool enableUserPreferenceAccess;
-  List<AccessSchedule> accessSchedules;
-  List<String> blockUnratedItems;
-  bool enableRemoteControlOfOtherUsers;
-  bool enableSharedDeviceControl;
-  bool enableRemoteAccess;
-  bool enableLiveTvManagement;
-  bool enableLiveTvAccess;
-  bool enableMediaPlayback;
-  bool enableAudioPlaybackTranscoding;
-  bool enableVideoPlaybackTranscoding;
-  bool enablePlaybackRemuxing;
-  bool enableContentDeletion;
-  List<String> enableContentDeletionFromFolders;
-  bool enableContentDownloading;
-  bool enableSubtitleDownloading;
-  bool enableSubtitleManagement;
-  bool enableSyncTranscoding;
-  bool enableMediaConversion;
-  List<String> enabledDevices;
-  bool enableAllDevices;
-  List<String> enabledChannels;
-  bool enableAllChannels;
-  List<String> enabledFolders;
-  bool enableAllFolders;
-  int invalidLoginAttemptCount;
-  bool enablePublicSharing;
-  int remoteClientBitrateLimit;
-  String authenticationProviderId;
-  List<String> excludedSubFolders;
-  int simultaneousStreamLimit;
+  bool? isAdministrator;
+  bool? isHidden;
+  bool? isHiddenRemotely;
+  bool? isDisabled;
+  List<String>? blockedTags;
+  bool? isTagBlockingModeInclusive;
+  bool? enableUserPreferenceAccess;
+  List<AccessSchedule>? accessSchedules;
+  List<String>? blockUnratedItems;
+  bool? enableRemoteControlOfOtherUsers;
+  bool? enableSharedDeviceControl;
+  bool? enableRemoteAccess;
+  bool? enableLiveTvManagement;
+  bool? enableLiveTvAccess;
+  bool? enableMediaPlayback;
+  bool? enableAudioPlaybackTranscoding;
+  bool? enableVideoPlaybackTranscoding;
+  bool? enablePlaybackRemuxing;
+  bool? enableContentDeletion;
+  List<String>? enableContentDeletionFromFolders;
+  bool? enableContentDownloading;
+  bool? enableSubtitleDownloading;
+  bool? enableSubtitleManagement;
+  bool? enableSyncTranscoding;
+  bool? enableMediaConversion;
+  List<String>? enabledDevices;
+  bool? enableAllDevices;
+  List<String>? enabledChannels;
+  bool? enableAllChannels;
+  List<String>? enabledFolders;
+  bool? enableAllFolders;
+  int? invalidLoginAttemptCount;
+  bool? enablePublicSharing;
+  int? remoteClientBitrateLimit;
+  String? authenticationProviderId;
+  List<String>? excludedSubFolders;
+  int? simultaneousStreamLimit;
 
   Policy({
     this.isAdministrator,
@@ -233,7 +233,7 @@ class Policy {
     if (json['AccessSchedules'] != null) {
       accessSchedules = [];
       json['AccessSchedules'].forEach((v) {
-        accessSchedules.add(new AccessSchedule.fromJson(v));
+        accessSchedules!.add(new AccessSchedule.fromJson(v));
       });
     }
     blockUnratedItems = json['BlockUnratedItems'].cast<String>();
@@ -279,7 +279,7 @@ class Policy {
     data['EnableUserPreferenceAccess'] = this.enableUserPreferenceAccess;
     if (this.accessSchedules != null) {
       data['AccessSchedules'] =
-          this.accessSchedules.map((v) => v.toJson()).toList();
+          this.accessSchedules!.map((v) => v.toJson()).toList();
     }
     data['BlockUnratedItems'] = this.blockUnratedItems;
     data['EnableRemoteControlOfOtherUsers'] =
@@ -319,9 +319,9 @@ class Policy {
 }
 
 class AccessSchedule {
-  String dayOfWeek;
-  double startHour;
-  double endHour;
+  String? dayOfWeek;
+  double? startHour;
+  double? endHour;
 
   AccessSchedule({
     this.dayOfWeek,

@@ -27,6 +27,7 @@ class BooksView extends HookWidget {
     return ScaffoldWithoutFooter(
       title: Text(title ?? 'Books'),
       body: RefreshIndicator(
+        color: Theme.of(context).accentColor,
         key: _refresher,
         onRefresh: () async {
           print('refreshing');

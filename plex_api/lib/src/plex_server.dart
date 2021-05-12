@@ -1,19 +1,19 @@
 import 'package:xml/xml.dart' show XmlElement;
 
 class PlexServer {
-  String accessToken;
-  String name;
-  String address;
-  String port;
-  String version;
-  String scheme;
-  String host;
-  List<String> localAddresses;
-  String machineIdentifier;
-  String createdAt;
-  String updatedAt;
-  String owned;
-  String synced;
+  String? accessToken;
+  String? name;
+  String? address;
+  String? port;
+  String? version;
+  String? scheme;
+  String? host;
+  List<String>? localAddresses;
+  String? machineIdentifier;
+  String? createdAt;
+  String? updatedAt;
+  String? owned;
+  String? synced;
 
   PlexServer({this.accessToken,
       this.name,
@@ -37,7 +37,7 @@ class PlexServer {
       version = el.getAttribute('version');
       scheme = el.getAttribute('scheme');
       host = el.getAttribute('host');
-      localAddresses = el.getAttribute('localAddresses').split(",");
+      localAddresses = el.getAttribute('localAddresses')!.split(",");
       machineIdentifier = el.getAttribute('machineIdentifier');
       createdAt = el.getAttribute('createdAt');
       updatedAt = el.getAttribute('updatedAt');

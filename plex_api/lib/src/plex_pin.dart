@@ -1,12 +1,12 @@
 class PlexPin {
-  int id;
-  String code;
-  String clientIdentifier;
-  int expiresIn;
-  String createdAt;
-  String expiresAt;
-  String authToken;
-  String error;
+  int? id;
+  String? code;
+  String? clientIdentifier;
+  int? expiresIn;
+  String? createdAt;
+  String? expiresAt;
+  String? authToken;
+  String? error;
 
   PlexPin(
       {this.id,

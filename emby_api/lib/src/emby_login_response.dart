@@ -1,10 +1,10 @@
 import 'emby_user.dart';
 
 class EmbyLoginResponse {
-  EmbyUser user;
-  SessionInfo sessionInfo;
-  String accessToken;
-  String serverId;
+  EmbyUser? user;
+  SessionInfo? sessionInfo;
+  String? accessToken;
+  String? serverId;
 
   EmbyLoginResponse({this.sessionInfo, this.accessToken, this.serverId});
 
@@ -20,7 +20,7 @@ class EmbyLoginResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.sessionInfo != null) {
-      data['SessionInfo'] = this.sessionInfo.toJson();
+      data['SessionInfo'] = this.sessionInfo!.toJson();
     }
     data['AccessToken'] = this.accessToken;
     data['ServerId'] = this.serverId;
@@ -29,23 +29,23 @@ class EmbyLoginResponse {
 }
 
 class SessionInfo {
-  PlayState playState;
-  List<SessionUserInfo> additionalUsers;
-  String remoteEndPoint;
-  List<String> playableMediaTypes;
-  int playlistIndex;
-  int playlistLength;
-  String id;
-  String serverId;
-  String userId;
-  String userName;
-  String client;
-  String lastActivityDate;
-  String deviceName;
-  String deviceId;
-  String applicationVersion;
-  List<String> supportedCommands;
-  bool supportsRemoteControl;
+  PlayState? playState;
+  List<SessionUserInfo>? additionalUsers;
+  String? remoteEndPoint;
+  List<String>? playableMediaTypes;
+  int? playlistIndex;
+  int? playlistLength;
+  String? id;
+  String? serverId;
+  String? userId;
+  String? userName;
+  String? client;
+  String? lastActivityDate;
+  String? deviceName;
+  String? deviceId;
+  String? applicationVersion;
+  List<String>? supportedCommands;
+  bool? supportsRemoteControl;
 
   SessionInfo({
     this.playState,
@@ -96,11 +96,11 @@ class SessionInfo {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.playState != null) {
-      data['PlayState'] = this.playState.toJson();
+      data['PlayState'] = this.playState!.toJson();
     }
     if (this.additionalUsers != null) {
       data['AdditionalUsers'] =
-          this.additionalUsers.map((v) => v.toJson()).toList();
+          this.additionalUsers!.map((v) => v.toJson()).toList();
     }
     data['RemoteEndPoint'] = this.remoteEndPoint;
     data['PlayableMediaTypes'] = this.playableMediaTypes;
@@ -122,12 +122,12 @@ class SessionInfo {
 }
 
 class PlayState {
-  bool canSeek;
-  bool isPaused;
-  bool isMuted;
-  String repeatMode;
-  int subtitleOffset;
-  double playbackRate;
+  bool? canSeek;
+  bool? isPaused;
+  bool? isMuted;
+  String? repeatMode;
+  int? subtitleOffset;
+  double? playbackRate;
 
   PlayState({
     this.canSeek,
@@ -160,9 +160,9 @@ class PlayState {
 }
 
 class SessionUserInfo {
-  String userId;
-  String userName;
-  int userInternalId;
+  String? userId;
+  String? userName;
+  int? userInternalId;
 
   SessionUserInfo({
     this.userId,

@@ -1,5 +1,5 @@
 class PlexTag {
-  String tag;
+  String? tag;
 
   PlexTag({this.tag});
 

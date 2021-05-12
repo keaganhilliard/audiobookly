@@ -1,7 +1,7 @@
 import 'package:plex_api/plex_api.dart';
 
 class PlexSections {
-  MediaContainer mediaContainer;
+  MediaContainer? mediaContainer;
 
   PlexSections({this.mediaContainer});
 
@@ -14,20 +14,20 @@ class PlexSections {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.mediaContainer != null) {
-      data['MediaContainer'] = this.mediaContainer.toJson();
+      data['MediaContainer'] = this.mediaContainer!.toJson();
     }
     return data;
   }
 }
 
 class MediaContainer {
-  int size;
-  bool allowSync;
-  String identifier;
-  String mediaTagPrefix;
-  int mediaTagVersion;
-  String title1;
-  List<PlexLibrary> directory;
+  int? size;
+  bool? allowSync;
+  String? identifier;
+  String? mediaTagPrefix;
+  int? mediaTagVersion;
+  String? title1;
+  List<PlexLibrary>? directory;
 
   MediaContainer(
       {this.size,
@@ -46,9 +46,9 @@ class MediaContainer {
     mediaTagVersion = json['mediaTagVersion'];
     title1 = json['title1'];
     if (json['Directory'] != null) {
-      directory = new List<PlexLibrary>();
+      directory = [];
       json['Directory'].forEach((v) {
-        directory.add(new PlexLibrary.fromJson(v));
+        directory!.add(new PlexLibrary.fromJson(v));
       });
     }
   }
@@ -62,7 +62,7 @@ class MediaContainer {
     data['mediaTagVersion'] = this.mediaTagVersion;
     data['title1'] = this.title1;
     if (this.directory != null) {
-      data['Directory'] = this.directory.map((v) => v.toJson()).toList();
+      data['Directory'] = this.directory!.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -23,6 +23,7 @@ class CollectionsView extends HookWidget {
     return ScaffoldWithoutFooter(
       title: Text('Collections'),
       body: RefreshIndicator(
+        color: Theme.of(context).accentColor,
         key: _refresher,
         onRefresh: () async {
           print('refreshing');

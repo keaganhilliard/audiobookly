@@ -13,5 +13,5 @@ abstract class BookDetailsState with _$BookDetailsState {
       {MediaItem book, List<MediaItem> chapters}) = BookDetailsStateLoaded;
   const factory BookDetailsState.loading() = BookDetailsStateLoading;
   const factory BookDetailsState.error([String message]) =
-      AuthorsStateErrorDetails;
+      BookDetailsStateErrorDetails;
 }

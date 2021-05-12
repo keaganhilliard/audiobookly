@@ -37,6 +37,7 @@ class BookGridItem extends StatelessWidget {
                 child: LinearProgressIndicator(
                   minHeight: 6.0,
                   value: progress,
+                  color: Theme.of(context).accentColor,
                   backgroundColor: Colors.black,
                 ),
               ),

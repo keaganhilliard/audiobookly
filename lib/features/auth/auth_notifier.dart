@@ -65,7 +65,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final _plexApi = _ref.read(plexApiProvider);
     PlexPin pin = await _plexApi.getPin();
     String oAuthUrl = _plexApi.getOauthUrl(pin.code);
-    Browser browser = await openUrl(oAuthUrl);
+    // Browser browser = await openUrl(oAuthUrl);
     int count = 0;
     Completer waitForIt = Completer();
     Timer.periodic(Duration(seconds: 5), (timer) async {
@@ -76,7 +76,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         _plexApi.headers.token = authToken.authToken;
         _prefs.setUserToken(authToken.authToken);
         // urlLauncher.closeWebView();
-        await browser.close();
+        // await browser.close();
         timer.cancel();
         waitForIt.complete();
       }

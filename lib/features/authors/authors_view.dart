@@ -23,6 +23,7 @@ class AuthorsView extends HookWidget {
     return ScaffoldWithoutFooter(
       title: Text('Authors'),
       body: RefreshIndicator(
+        color: Theme.of(context).accentColor,
         key: _refresher,
         onRefresh: () async {
           print('refreshing');
@@ -40,8 +41,10 @@ class AuthorsView extends HookWidget {
                     closedElevation: 0.0,
                     closedColor: Theme.of(context).canvasColor,
                     openColor: Theme.of(context).canvasColor,
-                    openBuilder: (context, closeContainer) =>
-                        BooksView(mediaId: author.id, title: author.title),
+                    openBuilder: (context, closeContainer) => BooksView(
+                      mediaId: author.id,
+                      title: author.title,
+                    ),
                     closedBuilder: (context, openContainer) => BookGridItem(
                       onTap: openContainer,
                       thumbnailUrl: author.artUri.toString(),
@@ -50,7 +53,19 @@ class AuthorsView extends HookWidget {
                   );
                 },
               );
-            } else
+            } else if (state is AuthorsStateErrorDetails)
+              return Column(
+                children: [
+                  Text('Could not fetch authors, is the device online?'),
+                  TextButton(
+                    onPressed: () {
+                      _refresher.currentState.show();
+                    },
+                    child: Text('Retry'),
+                  )
+                ],
+              );
+            else
               return Container();
           },
         ),
