@@ -5,13 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:device_info/device_info.dart';
 
 final deviceInfoServiceProvider =
-    Provider<DeviceInfoService>((ref) => throw UnimplementedError());
+    Provider<DeviceInfoService>(((ref) => throw UnimplementedError()) as DeviceInfoService Function(ProviderReference));
 
 class DeviceInfo {
-  String uniqueId;
-  String version;
-  String model;
-  String platform;
+  String? uniqueId;
+  String? version;
+  String? model;
+  String? platform;
   DeviceInfo({this.uniqueId, this.version, this.model, this.platform});
 }
 

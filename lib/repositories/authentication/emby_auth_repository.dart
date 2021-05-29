@@ -41,15 +41,15 @@ class EmbyAuthRepository extends AuthenticationRepository {
     final _embyApi = _ref.read(embyApiProvider);
     _embyApi.baseUrl = baseUrl;
     final res = await _embyApi.login(username, password);
-    await _prefs.setUserId(res.user.id);
+    await _prefs.setUserId(res.user!.id!);
     await _prefs.setBaseUrl(baseUrl);
-    await _prefs.setUserToken(res.accessToken);
-    await _prefs.setServerId(res.serverId);
+    await _prefs.setUserToken(res.accessToken!);
+    await _prefs.setServerId(res.serverId!);
     await _prefs.setServerType(SERVER_TYPE.EMBY);
     print(res.toJson());
     return User(
-      name: res.user.name,
-      userName: res.user.name,
+      name: res.user!.name,
+      userName: res.user!.name,
       token: res.accessToken,
     );
   }

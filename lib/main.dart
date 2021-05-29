@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:audio_service_platform_interface/audio_service_platform_interface.dart';
-import 'package:audio_service_platform_interface/no_op_audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
@@ -23,7 +22,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  // final store = await getStore();
+  final store = await getStore();
 
   PlaybackController controller;
   if (kIsWeb || (!Platform.isWindows && !Platform.isLinux)) {
@@ -37,19 +36,18 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [
-        if (controller != null)
-          playbackControllerProvider.overrideWithValue(
-            controller,
-          ),
+        playbackControllerProvider.overrideWithValue(
+          controller,
+        ),
         sharedPreferencesServiceProvider.overrideWithValue(
           SharedPreferencesService(prefs),
         ),
         deviceInfoServiceProvider.overrideWithValue(
           DeviceInfoService(info),
         ),
-        // databaseServiceProvider.overrideWithValue(
-        //   DatabaseService(store),
-        // )
+        databaseServiceProvider.overrideWithValue(
+          DatabaseService(store),
+        )
       ],
       child: AudiobooklyApp(),
     ),
@@ -100,7 +98,7 @@ class AudiobooklyApp extends HookWidget {
         authorizedBuilder: (context) {
           return WillPopScope(
             onWillPop: () async {
-              return !await _navigatorKey.currentState.maybePop();
+              return !await _navigatorKey.currentState!.maybePop();
             },
             child: AdaptiveScaffold(
                 title: Text('Audiobookly'),
@@ -124,7 +122,7 @@ class AudiobooklyApp extends HookWidget {
                     String oldRoute = routeMap[_currentIndex.value];
                     String newRoute = routeMap[index];
                     _currentIndex.value = index;
-                    _navigatorKey.currentState.pushNamedAndRemoveUntil(
+                    _navigatorKey.currentState!.pushNamedAndRemoveUntil(
                         newRoute, ModalRoute.withName(oldRoute));
                   }
                 },

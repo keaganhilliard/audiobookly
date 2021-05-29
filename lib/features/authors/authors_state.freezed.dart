@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'authors_state.dart';
 
@@ -9,29 +9,28 @@ part of 'authors_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$AuthorsStateTearOff {
   const _$AuthorsStateTearOff();
 
-// ignore: unused_element
   AuthorsStateInitial initial() {
     return const AuthorsStateInitial();
   }
 
-// ignore: unused_element
-  AuthorsStateLoaded loaded({List<MediaItem> authors}) {
+  AuthorsStateLoaded loaded({List<MediaItem>? authors}) {
     return AuthorsStateLoaded(
       authors: authors,
     );
   }
 
-// ignore: unused_element
   AuthorsStateLoading loading() {
     return const AuthorsStateLoading();
   }
 
-// ignore: unused_element
-  AuthorsStateErrorDetails error([String message]) {
+  AuthorsStateErrorDetails error([String? message]) {
     return AuthorsStateErrorDetails(
       message,
     );
@@ -39,41 +38,44 @@ class _$AuthorsStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $AuthorsState = _$AuthorsStateTearOff();
 
 /// @nodoc
 mixin _$AuthorsState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> authors),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> authors),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthorsStateInitial value),
-    @required TResult loaded(AuthorsStateLoaded value),
-    @required TResult loading(AuthorsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthorsStateInitial value) initial,
+    required TResult Function(AuthorsStateLoaded value) loaded,
+    required TResult Function(AuthorsStateLoading value) loading,
+    required TResult Function(AuthorsStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthorsStateInitial value),
-    TResult loaded(AuthorsStateLoaded value),
-    TResult loading(AuthorsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthorsStateInitial value)? initial,
+    TResult Function(AuthorsStateLoaded value)? loaded,
+    TResult Function(AuthorsStateLoading value)? loading,
+    TResult Function(AuthorsStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -112,6 +114,7 @@ class _$AuthorsStateInitialCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$AuthorsStateInitial
     with DiagnosticableTreeMixin
     implements AuthorsStateInitial {
@@ -138,29 +141,24 @@ class _$AuthorsStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> authors),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> authors),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -169,29 +167,24 @@ class _$AuthorsStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthorsStateInitial value),
-    @required TResult loaded(AuthorsStateLoaded value),
-    @required TResult loading(AuthorsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthorsStateInitial value) initial,
+    required TResult Function(AuthorsStateLoaded value) loaded,
+    required TResult Function(AuthorsStateLoading value) loading,
+    required TResult Function(AuthorsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthorsStateInitial value),
-    TResult loaded(AuthorsStateLoaded value),
-    TResult loading(AuthorsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthorsStateInitial value)? initial,
+    TResult Function(AuthorsStateLoaded value)? loaded,
+    TResult Function(AuthorsStateLoading value)? loading,
+    TResult Function(AuthorsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -208,7 +201,7 @@ abstract class $AuthorsStateLoadedCopyWith<$Res> {
   factory $AuthorsStateLoadedCopyWith(
           AuthorsStateLoaded value, $Res Function(AuthorsStateLoaded) then) =
       _$AuthorsStateLoadedCopyWithImpl<$Res>;
-  $Res call({List<MediaItem> authors});
+  $Res call({List<MediaItem>? authors});
 }
 
 /// @nodoc
@@ -224,22 +217,26 @@ class _$AuthorsStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object authors = freezed,
+    Object? authors = freezed,
   }) {
     return _then(AuthorsStateLoaded(
-      authors: authors == freezed ? _value.authors : authors as List<MediaItem>,
+      authors: authors == freezed
+          ? _value.authors
+          : authors // ignore: cast_nullable_to_non_nullable
+              as List<MediaItem>?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$AuthorsStateLoaded
     with DiagnosticableTreeMixin
     implements AuthorsStateLoaded {
   const _$AuthorsStateLoaded({this.authors});
 
   @override
-  final List<MediaItem> authors;
+  final List<MediaItem>? authors;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -273,29 +270,24 @@ class _$AuthorsStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> authors),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(authors);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> authors),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(authors);
     }
@@ -304,29 +296,24 @@ class _$AuthorsStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthorsStateInitial value),
-    @required TResult loaded(AuthorsStateLoaded value),
-    @required TResult loading(AuthorsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthorsStateInitial value) initial,
+    required TResult Function(AuthorsStateLoaded value) loaded,
+    required TResult Function(AuthorsStateLoading value) loading,
+    required TResult Function(AuthorsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthorsStateInitial value),
-    TResult loaded(AuthorsStateLoaded value),
-    TResult loading(AuthorsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthorsStateInitial value)? initial,
+    TResult Function(AuthorsStateLoaded value)? loaded,
+    TResult Function(AuthorsStateLoading value)? loading,
+    TResult Function(AuthorsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -335,12 +322,13 @@ class _$AuthorsStateLoaded
 }
 
 abstract class AuthorsStateLoaded implements AuthorsState {
-  const factory AuthorsStateLoaded({List<MediaItem> authors}) =
+  const factory AuthorsStateLoaded({List<MediaItem>? authors}) =
       _$AuthorsStateLoaded;
 
-  List<MediaItem> get authors;
+  List<MediaItem>? get authors => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthorsStateLoadedCopyWith<AuthorsStateLoaded> get copyWith;
+  $AuthorsStateLoadedCopyWith<AuthorsStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -363,6 +351,7 @@ class _$AuthorsStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$AuthorsStateLoading
     with DiagnosticableTreeMixin
     implements AuthorsStateLoading {
@@ -389,29 +378,24 @@ class _$AuthorsStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> authors),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> authors),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -420,29 +404,24 @@ class _$AuthorsStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthorsStateInitial value),
-    @required TResult loaded(AuthorsStateLoaded value),
-    @required TResult loading(AuthorsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthorsStateInitial value) initial,
+    required TResult Function(AuthorsStateLoaded value) loaded,
+    required TResult Function(AuthorsStateLoading value) loading,
+    required TResult Function(AuthorsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthorsStateInitial value),
-    TResult loaded(AuthorsStateLoaded value),
-    TResult loading(AuthorsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthorsStateInitial value)? initial,
+    TResult Function(AuthorsStateLoaded value)? loaded,
+    TResult Function(AuthorsStateLoading value)? loading,
+    TResult Function(AuthorsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -459,7 +438,7 @@ abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
   factory $AuthorsStateErrorDetailsCopyWith(AuthorsStateErrorDetails value,
           $Res Function(AuthorsStateErrorDetails) then) =
       _$AuthorsStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -476,22 +455,26 @@ class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(AuthorsStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$AuthorsStateErrorDetails
     with DiagnosticableTreeMixin
     implements AuthorsStateErrorDetails {
   const _$AuthorsStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -526,29 +509,24 @@ class _$AuthorsStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> authors),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> authors),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -557,29 +535,24 @@ class _$AuthorsStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthorsStateInitial value),
-    @required TResult loaded(AuthorsStateLoaded value),
-    @required TResult loading(AuthorsStateLoading value),
-    @required TResult error(AuthorsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthorsStateInitial value) initial,
+    required TResult Function(AuthorsStateLoaded value) loaded,
+    required TResult Function(AuthorsStateLoading value) loading,
+    required TResult Function(AuthorsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthorsStateInitial value),
-    TResult loaded(AuthorsStateLoaded value),
-    TResult loading(AuthorsStateLoading value),
-    TResult error(AuthorsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthorsStateInitial value)? initial,
+    TResult Function(AuthorsStateLoaded value)? loaded,
+    TResult Function(AuthorsStateLoading value)? loading,
+    TResult Function(AuthorsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -588,10 +561,11 @@ class _$AuthorsStateErrorDetails
 }
 
 abstract class AuthorsStateErrorDetails implements AuthorsState {
-  const factory AuthorsStateErrorDetails([String message]) =
+  const factory AuthorsStateErrorDetails([String? message]) =
       _$AuthorsStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthorsStateErrorDetailsCopyWith<AuthorsStateErrorDetails> get copyWith;
+  $AuthorsStateErrorDetailsCopyWith<AuthorsStateErrorDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }

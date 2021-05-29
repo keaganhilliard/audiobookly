@@ -9,8 +9,8 @@ part 'settings_state.freezed.dart';
 @freezed
 abstract class SettingsState with _$SettingsState {
   const factory SettingsState.initial() = SettingsStateInitial;
-  const factory SettingsState.loaded({User user}) = SettingsStateLoaded;
+  const factory SettingsState.loaded({User? user}) = SettingsStateLoaded;
   const factory SettingsState.loading() = SettingsStateLoading;
-  const factory SettingsState.error([String message]) =
+  const factory SettingsState.error([String? message]) =
       SettingsStateErrorDetails;
 }

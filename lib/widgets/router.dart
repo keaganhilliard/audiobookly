@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/features/book_details/book_details_view.dart';
 import 'package:audiobookly/features/books/books_view.dart';
@@ -20,10 +21,11 @@ class Router {
       case Routes.Collections:
         return MaterialPageRoute(builder: (_) => CollectionsView());
       case Routes.Author:
-        Map<String, dynamic> args = settings.arguments;
+        Map<String, dynamic>? args =
+            settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
             builder: (_) => BooksView(
-                  mediaId: args['id'],
+                  mediaId: args!['id'],
                   title: args['title'],
                 ));
       // case Routes.Collection:
@@ -36,13 +38,13 @@ class Router {
       case Routes.Book:
         return MaterialPageRoute(
           builder: (_) => BookDetailsView(
-            mediaId: settings.arguments,
+            mediaId: settings.arguments as String?,
           ),
         );
       case Routes.Player:
         return MaterialPageRoute(
             builder: (_) => PlayerView(
-                  book: settings.arguments,
+                  book: settings.arguments as MediaItem,
                 ));
       default:
         return MaterialPageRoute(builder: (_) => HomeView());

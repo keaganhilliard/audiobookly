@@ -8,8 +8,8 @@ part 'home_state.freezed.dart';
 abstract class HomeState with _$HomeState {
   const factory HomeState.initial() = HomeStateInitial;
   const factory HomeState.loaded(
-      {List<MediaItem> recentlyPlayed,
-      List<MediaItem> recentlyAdded}) = HomeStateLoaded;
+      {List<MediaItem>? recentlyPlayed,
+      List<MediaItem>? recentlyAdded}) = HomeStateLoaded;
   const factory HomeState.loading() = HomeStateLoading;
-  const factory HomeState.error([String message]) = HomeStateErrorDetails;
+  const factory HomeState.error([String? message]) = HomeStateErrorDetails;
 }

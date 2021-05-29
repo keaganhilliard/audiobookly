@@ -53,21 +53,21 @@ class BookSearchDelegate extends SearchDelegate {
         final _repo = watch(mediaRepositoryProdiver);
         final _navigationService = watch(navigationServiceProvider);
         return FutureBuilder<List<MediaItem>>(
-          future: _repo.search(query),
+          future: _repo?.search(query),
           builder: (context, results) {
             if (!results.hasData) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             } else {
-              if (results.data.length > 0) {
+              if (results.data!.length > 0) {
                 return ResponsiveGridView<MediaItem>(
                     items: results.data,
                     itemBuilder: (item) {
                       return BookGridItem(
                         onTap: () async {
-                          if (item.playable) {
-                            _navigationService.pushNamed(
+                          if (item.playable!) {
+                            Navigator.of(context).pushNamed(
                               Routes.Book,
                               arguments: item.id,
                             );

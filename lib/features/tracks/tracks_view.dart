@@ -21,11 +21,11 @@ class TracksView extends HookWidget {
     final currentItem = useProvider(currentItemProvider);
     final playbackController = useProvider(playbackControllerProvider);
 
-    PlaybackState state = playbackState?.data?.value;
-    List<MediaItem> items = queue?.data?.value;
-    MediaItem item = currentItem?.data?.value;
+    PlaybackState? state = playbackState.data?.value;
+    List<MediaItem>? items = queue.data?.value;
+    MediaItem? item = currentItem.data?.value;
     final currentTrackIndex = items?.indexWhere(
-            (current) => current.id == item.extras['currentTrack']) ??
+            (current) => current.id == item!.extras!['currentTrack']) ??
         0;
     return Scaffold(
         appBar: AppBar(
@@ -82,7 +82,7 @@ class TracksView extends HookWidget {
                         : Theme.of(context).canvasColor,
                     child: ListTile(
                       onTap: () {
-                        print('Skipping to ${item.id}');
+                        print('Skipping to ${item!.id}');
                         if (track.id != item.id)
                           playbackController.skipToQueueItem(index);
                       },
@@ -104,7 +104,7 @@ class TracksView extends HookWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(
-                          '${Utils.format(Duration(milliseconds: track.duration.inMilliseconds))}'),
+                          '${Utils.format(Duration(milliseconds: track.duration!.inMilliseconds))}'),
                     ),
                   );
                 },

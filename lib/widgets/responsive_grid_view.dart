@@ -4,8 +4,8 @@ import 'dart:math';
 
 class ResponsiveGridView<T> extends StatelessWidget {
   final ScrollController _controller = ScrollController();
-  final List<T> items;
-  final Widget Function(T item) itemBuilder;
+  final List<T>? items;
+  final Widget Function(T item)? itemBuilder;
 
   ResponsiveGridView({this.items, this.itemBuilder});
 
@@ -28,13 +28,13 @@ class ResponsiveGridView<T> extends StatelessWidget {
         physics: AlwaysScrollableScrollPhysics(),
         key: PageStorageKey('responsive-grid'),
         controller: _controller,
-        itemCount: items.length,
+        itemCount: items!.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: 0.7,
           crossAxisCount: crossCount,
         ),
         itemBuilder: (context, index) {
-          return itemBuilder(items[index]);
+          return itemBuilder!(items![index]);
         },
       ),
     );

@@ -33,7 +33,7 @@ class CollectionsView extends HookWidget {
           builder: (context, read, child) {
             final state = read(collectionsStateProvider);
             if (state is CollectionsStateInitial)
-              _refresher.currentState.show();
+              _refresher.currentState!.show();
             if (state is CollectionsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
                 items: state.collections,
@@ -54,7 +54,7 @@ class CollectionsView extends HookWidget {
               );
             } else
               return Container();
-          },
+          } as Widget Function(BuildContext, T Function<T>(ProviderBase<Object?, T>), Widget?),
         ),
       ),
     );

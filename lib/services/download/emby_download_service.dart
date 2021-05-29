@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 class EmbyDownloadService extends DownloadService {
   final EmbyApi _api;
-  final DatabaseService _db;
+  final DatabaseService? _db;
   EmbyDownloadService(this._api, this._db);
 
   // Future<bool> downloadItem(DownloadTask task) async {
@@ -43,8 +43,8 @@ class EmbyDownloadService extends DownloadService {
     HttpClientResponse response = await request.close();
     var total = response.headers.contentLength;
     String fileName = RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
-        .firstMatch(response.headers.value('content-disposition'))
-        .group(0)
+        .firstMatch(response.headers.value('content-disposition')!)!
+        .group(0)!
         .replaceAll(RegExp(r'"'), '');
     var fileSaver = File(p.join(path, fileName));
     int saved = 0;
@@ -66,5 +66,7 @@ class EmbyDownloadService extends DownloadService {
     }
   }
 
-  Future<List<MediaItem>> getDownloadedItems() async {}
+  Future<List<MediaItem>> getDownloadedItems() async {
+    return [];
+  }
 }

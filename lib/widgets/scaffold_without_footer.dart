@@ -3,8 +3,8 @@ import 'package:audiobookly/features/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWithoutFooter extends StatelessWidget {
-  final Widget title;
-  final Widget body;
+  final Widget? title;
+  final Widget? body;
 
   ScaffoldWithoutFooter({this.title, this.body});
 

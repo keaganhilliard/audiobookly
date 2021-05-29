@@ -7,9 +7,9 @@ part 'collections_state.freezed.dart';
 @freezed
 abstract class CollectionsState with _$CollectionsState {
   const factory CollectionsState.initial() = CollectionsStateInitial;
-  const factory CollectionsState.loaded({List<MediaItem> collections}) =
+  const factory CollectionsState.loaded({List<MediaItem>? collections}) =
       CollectionsStateLoaded;
   const factory CollectionsState.loading() = CollectionsStateLoading;
-  const factory CollectionsState.error([String message]) =
+  const factory CollectionsState.error([String? message]) =
       CollectionsStateErrorDetails;
 }

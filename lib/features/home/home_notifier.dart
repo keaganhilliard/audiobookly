@@ -9,7 +9,7 @@ final homeStateProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
 });
 
 class HomeNotifier extends StateNotifier<HomeState> {
-  final MediaRepository _repository;
+  final MediaRepository? _repository;
 
   HomeNotifier(this._repository) : super(HomeState.initial());
 
@@ -17,9 +17,9 @@ class HomeNotifier extends StateNotifier<HomeState> {
     try {
       state = HomeState.loading();
       final recentlyAdded =
-          await _repository.getChildren(MediaIds.RECENTLY_ADDED);
+          await _repository!.getChildren(MediaIds.RECENTLY_ADDED);
       final recentlyPlayed =
-          await _repository.getChildren(MediaIds.RECENTLY_PLAYED);
+          await _repository!.getChildren(MediaIds.RECENTLY_PLAYED);
       state = HomeState.loaded(
           recentlyAdded: recentlyAdded, recentlyPlayed: recentlyPlayed);
     } on Exception {

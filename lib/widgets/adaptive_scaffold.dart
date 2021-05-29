@@ -7,27 +7,27 @@ class Destination {
   final IconData icon;
 
   const Destination({
-    @required this.title,
-    @required this.icon,
+    required this.title,
+    required this.icon,
   });
 }
 
 class ScaffoldState {
-  final Widget title;
+  final Widget? title;
   final List<Widget> actions;
-  final Widget body;
+  final Widget? body;
   final int currentIndex;
   final List<Destination> destinations;
-  final ValueChanged<int> onNavigationIndexChange;
-  final FloatingActionButton floatingActionButton;
-  final Widget trailing;
+  final ValueChanged<int>? onNavigationIndexChange;
+  final FloatingActionButton? floatingActionButton;
+  final Widget? trailing;
 
   ScaffoldState({
     this.title,
     this.body,
     this.actions = const [],
-    @required this.currentIndex,
-    @required this.destinations,
+    required this.currentIndex,
+    required this.destinations,
     this.onNavigationIndexChange,
     this.floatingActionButton,
     this.trailing,
@@ -38,14 +38,14 @@ class AdaptiveScaffold extends HookWidget {
   final ScaffoldState state;
 
   AdaptiveScaffold({
-    Widget title,
-    Widget body,
+    Widget? title,
+    Widget? body,
     List<Widget> actions = const [],
-    @required int currentIndex,
-    @required List<Destination> destinations,
-    ValueChanged<int> onNavigationIndexChange,
-    FloatingActionButton floatingActionButton,
-    Widget trailing,
+    required int currentIndex,
+    required List<Destination> destinations,
+    ValueChanged<int>? onNavigationIndexChange,
+    FloatingActionButton? floatingActionButton,
+    Widget? trailing,
   }) : state = ScaffoldState(
           title: title,
           body: body,
@@ -95,7 +95,7 @@ class AdaptiveScaffold extends HookWidget {
               color: Colors.grey[900],
             ),
             Expanded(
-              child: state.body,
+              child: state.body!,
             ),
           ],
         ),
@@ -110,7 +110,7 @@ class AdaptiveScaffold extends HookWidget {
       // ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
-        unselectedItemColor: Theme.of(context).textTheme.headline6.color,
+        unselectedItemColor: Theme.of(context).textTheme.headline6!.color,
         selectedItemColor: Colors.deepPurpleAccent,
         // backgroundColor: Theme.of(context).accentColor,
         elevation: 40.0,

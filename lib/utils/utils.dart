@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 
 class Utils {
   static _getNarrator(EmbyItem item) {
-    String narrator = item.artistItems
-        .where((artist) => !item.albumArtists
+    if (item.composers?.isNotEmpty ?? false) {
+      return item.composers!.map((artist) => artist.name).join(', ');
+    }
+    String narrator = item.artistItems!
+        .where((artist) => !item.albumArtists!
             .any((albumArtist) => albumArtist.name == artist.name))
         .map((artist) => artist.name)
         .toList()
@@ -26,23 +29,23 @@ class Utils {
             ? '${MediaIds.AUTHORS_ID}/${item.id}'
             : item.type == 'BoxSet'
                 ? '${MediaIds.COLLECTIONS_ID}/${item.id}'
-                : item.id,
-        title: item.name,
+                : item.id!,
+        title: item.name!,
         artist: item.albumArtist,
         duration: item.runTimeTicks != null
             ? Duration(
-                microseconds: (item.runTimeTicks / 10).roundToDouble().toInt())
+                microseconds: (item.runTimeTicks! / 10).roundToDouble().toInt())
             : Duration.zero,
-        album: item.album ?? item.name,
+        album: item.album ?? item.name!,
         displayDescription: item.overview,
         artUri: Uri.parse(repo.getThumbnailUrl(item.id)),
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
-          'played': item.userData.played ?? false,
+          'played': item.userData!.played ?? false,
           'narrator': _getNarrator(item),
-          'viewOffset': item.userData.playbackPositionTicks != null
+          'viewOffset': item.userData!.playbackPositionTicks != null
               ? Duration(
-                      microseconds: (item.userData.playbackPositionTicks / 10)
+                      microseconds: (item.userData!.playbackPositionTicks! / 10)
                           .roundToDouble()
                           .toInt())
                   .inMilliseconds
@@ -63,14 +66,14 @@ class Utils {
 }
 
 extension MediaHelpers on MediaItem {
-  String get narrator => extras['narrator'];
-  bool get played => extras['played'] ?? false;
+  String? get narrator => extras!['narrator'];
+  bool get played => extras!['played'] ?? false;
 
-  String get partKey => extras['partKey'];
+  String? get partKey => extras!['partKey'];
 
-  Duration get viewOffset => extras['viewOffset'] == null
+  Duration get viewOffset => extras!['viewOffset'] == null
       ? Duration.zero
-      : Duration(milliseconds: extras['viewOffset']);
+      : Duration(milliseconds: extras!['viewOffset']);
 
-  String get largeThumbnail => extras['largeThumbnail'];
+  String? get largeThumbnail => extras!['largeThumbnail'];
 }

@@ -10,7 +10,7 @@ final collectionsStateProvider =
 });
 
 class CollectionsNotifier extends StateNotifier<CollectionsState> {
-  final MediaRepository _repository;
+  final MediaRepository? _repository;
 
   CollectionsNotifier(this._repository) : super(CollectionsState.initial());
 
@@ -18,7 +18,7 @@ class CollectionsNotifier extends StateNotifier<CollectionsState> {
     try {
       state = CollectionsState.loading();
       final collections =
-          await _repository.getChildren(MediaIds.COLLECTIONS_ID);
+          await _repository!.getChildren(MediaIds.COLLECTIONS_ID);
       state = CollectionsState.loaded(collections: collections);
     } on Exception {
       state = CollectionsState.error(

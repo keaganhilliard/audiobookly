@@ -17,7 +17,7 @@ class ServerSelect extends HookWidget {
           itemCount: _servers.length,
           itemBuilder: (context, position) {
             return ListTile(
-                title: Text(_servers[position].title),
+                title: Text(_servers[position].title!),
                 onTap: () {
                   Navigator.pop(context, _servers[position]);
                 });

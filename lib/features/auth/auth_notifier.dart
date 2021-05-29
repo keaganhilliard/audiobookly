@@ -64,17 +64,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
     _prefs.setServerType(SERVER_TYPE.PLEX);
     final _plexApi = _ref.read(plexApiProvider);
     PlexPin pin = await _plexApi.getPin();
-    String oAuthUrl = _plexApi.getOauthUrl(pin.code);
+    String oAuthUrl = _plexApi.getOauthUrl(pin.code!);
     // Browser browser = await openUrl(oAuthUrl);
     int count = 0;
     Completer waitForIt = Completer();
     Timer.periodic(Duration(seconds: 5), (timer) async {
       print('Timering');
       count++;
-      PlexPin authToken = await _plexApi.getAuthToken(pin.id);
+      PlexPin authToken = await _plexApi.getAuthToken(pin.id!);
       if (authToken.authToken != null) {
         _plexApi.headers.token = authToken.authToken;
-        _prefs.setUserToken(authToken.authToken);
+        _prefs.setUserToken(authToken.authToken!);
         // urlLauncher.closeWebView();
         // await browser.close();
         timer.cancel();
@@ -98,11 +98,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
     print(server.id);
 
-    PlexLibrary library = await navigationService.push(
+    PlexLibrary? library = await (navigationService.push(
       MaterialPageRoute(
         builder: (context) => LibrarySelectView(),
       ),
-    );
+    ) as FutureOr<PlexLibrary?>);
 
     return false; //server != null && library != null;
   }
@@ -129,7 +129,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       } else {
         final _userRepo = _ref.read(plexAuthRepoProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
-        if (_prefs.getServerId().isEmpty) {
+        if (_prefs.getServerId()!.isEmpty) {
           final thing = await navigationService.push(
             MaterialPageRoute(builder: (context) {
               return LibrarySelectView();

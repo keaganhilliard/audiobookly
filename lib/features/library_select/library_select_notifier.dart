@@ -11,7 +11,7 @@ final libraryStateProvider =
 });
 
 class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
-  final MediaRepository _repository;
+  final MediaRepository? _repository;
   final SharedPreferencesService _sharedPreferencesService;
 
   LibrarySelectNotifier(this._repository, this._sharedPreferencesService)
@@ -21,14 +21,14 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
 
   Future<void> setLibrary(String id) async {
     _sharedPreferencesService.setLibraryId(id);
-    _repository.setLibraryId(id);
-    _repository.getServerAndLibrary();
+    _repository!.setLibraryId(id);
+    _repository!.getServerAndLibrary();
   }
 
   Future<void> getLibraries() async {
     try {
       state = LibrarySelectState.loading();
-      final libs = await _repository.getLibraries();
+      final libs = await _repository!.getLibraries();
       state = LibrarySelectState.loaded(libraries: libs);
     } on Exception {
       state = LibrarySelectState.error(

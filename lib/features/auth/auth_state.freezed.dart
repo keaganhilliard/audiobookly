@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'auth_state.dart';
 
@@ -9,29 +9,28 @@ part of 'auth_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$AuthStateTearOff {
   const _$AuthStateTearOff();
 
-// ignore: unused_element
   AuthStateInitial initial() {
     return const AuthStateInitial();
   }
 
-// ignore: unused_element
-  AuthStateLoaded loaded({User user}) {
+  AuthStateLoaded loaded({User? user}) {
     return AuthStateLoaded(
       user: user,
     );
   }
 
-// ignore: unused_element
   AuthStateLoading loading() {
     return const AuthStateLoading();
   }
 
-// ignore: unused_element
-  AuthStateErrorDetails error([String message]) {
+  AuthStateErrorDetails error([String? message]) {
     return AuthStateErrorDetails(
       message,
     );
@@ -39,41 +38,44 @@ class _$AuthStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $AuthState = _$AuthStateTearOff();
 
 /// @nodoc
 mixin _$AuthState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthStateInitial value),
-    @required TResult loaded(AuthStateLoaded value),
-    @required TResult loading(AuthStateLoading value),
-    @required TResult error(AuthStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthStateInitial value) initial,
+    required TResult Function(AuthStateLoaded value) loaded,
+    required TResult Function(AuthStateLoading value) loading,
+    required TResult Function(AuthStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthStateInitial value),
-    TResult loaded(AuthStateLoaded value),
-    TResult loading(AuthStateLoading value),
-    TResult error(AuthStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -110,6 +112,7 @@ class _$AuthStateInitialCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$AuthStateInitial
     with DiagnosticableTreeMixin
     implements AuthStateInitial {
@@ -136,29 +139,24 @@ class _$AuthStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -167,29 +165,24 @@ class _$AuthStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthStateInitial value),
-    @required TResult loaded(AuthStateLoaded value),
-    @required TResult loading(AuthStateLoading value),
-    @required TResult error(AuthStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthStateInitial value) initial,
+    required TResult Function(AuthStateLoaded value) loaded,
+    required TResult Function(AuthStateLoading value) loading,
+    required TResult Function(AuthStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthStateInitial value),
-    TResult loaded(AuthStateLoaded value),
-    TResult loading(AuthStateLoading value),
-    TResult error(AuthStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -206,7 +199,7 @@ abstract class $AuthStateLoadedCopyWith<$Res> {
   factory $AuthStateLoadedCopyWith(
           AuthStateLoaded value, $Res Function(AuthStateLoaded) then) =
       _$AuthStateLoadedCopyWithImpl<$Res>;
-  $Res call({User user});
+  $Res call({User? user});
 }
 
 /// @nodoc
@@ -221,22 +214,26 @@ class _$AuthStateLoadedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object user = freezed,
+    Object? user = freezed,
   }) {
     return _then(AuthStateLoaded(
-      user: user == freezed ? _value.user : user as User,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$AuthStateLoaded
     with DiagnosticableTreeMixin
     implements AuthStateLoaded {
   const _$AuthStateLoaded({this.user});
 
   @override
-  final User user;
+  final User? user;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -270,29 +267,24 @@ class _$AuthStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(user);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(user);
     }
@@ -301,29 +293,24 @@ class _$AuthStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthStateInitial value),
-    @required TResult loaded(AuthStateLoaded value),
-    @required TResult loading(AuthStateLoading value),
-    @required TResult error(AuthStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthStateInitial value) initial,
+    required TResult Function(AuthStateLoaded value) loaded,
+    required TResult Function(AuthStateLoading value) loading,
+    required TResult Function(AuthStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthStateInitial value),
-    TResult loaded(AuthStateLoaded value),
-    TResult loading(AuthStateLoading value),
-    TResult error(AuthStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -332,11 +319,12 @@ class _$AuthStateLoaded
 }
 
 abstract class AuthStateLoaded implements AuthState {
-  const factory AuthStateLoaded({User user}) = _$AuthStateLoaded;
+  const factory AuthStateLoaded({User? user}) = _$AuthStateLoaded;
 
-  User get user;
+  User? get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthStateLoadedCopyWith<AuthStateLoaded> get copyWith;
+  $AuthStateLoadedCopyWith<AuthStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -358,6 +346,7 @@ class _$AuthStateLoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$AuthStateLoading
     with DiagnosticableTreeMixin
     implements AuthStateLoading {
@@ -384,29 +373,24 @@ class _$AuthStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -415,29 +399,24 @@ class _$AuthStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthStateInitial value),
-    @required TResult loaded(AuthStateLoaded value),
-    @required TResult loading(AuthStateLoading value),
-    @required TResult error(AuthStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthStateInitial value) initial,
+    required TResult Function(AuthStateLoaded value) loaded,
+    required TResult Function(AuthStateLoading value) loading,
+    required TResult Function(AuthStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthStateInitial value),
-    TResult loaded(AuthStateLoaded value),
-    TResult loading(AuthStateLoading value),
-    TResult error(AuthStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -454,7 +433,7 @@ abstract class $AuthStateErrorDetailsCopyWith<$Res> {
   factory $AuthStateErrorDetailsCopyWith(AuthStateErrorDetails value,
           $Res Function(AuthStateErrorDetails) then) =
       _$AuthStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -470,22 +449,26 @@ class _$AuthStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(AuthStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$AuthStateErrorDetails
     with DiagnosticableTreeMixin
     implements AuthStateErrorDetails {
   const _$AuthStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -520,29 +503,24 @@ class _$AuthStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -551,29 +529,24 @@ class _$AuthStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(AuthStateInitial value),
-    @required TResult loaded(AuthStateLoaded value),
-    @required TResult loading(AuthStateLoading value),
-    @required TResult error(AuthStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthStateInitial value) initial,
+    required TResult Function(AuthStateLoaded value) loaded,
+    required TResult Function(AuthStateLoading value) loading,
+    required TResult Function(AuthStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(AuthStateInitial value),
-    TResult loaded(AuthStateLoaded value),
-    TResult loading(AuthStateLoading value),
-    TResult error(AuthStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -582,10 +555,11 @@ class _$AuthStateErrorDetails
 }
 
 abstract class AuthStateErrorDetails implements AuthState {
-  const factory AuthStateErrorDetails([String message]) =
+  const factory AuthStateErrorDetails([String? message]) =
       _$AuthStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthStateErrorDetailsCopyWith<AuthStateErrorDetails> get copyWith;
+  $AuthStateErrorDetailsCopyWith<AuthStateErrorDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }

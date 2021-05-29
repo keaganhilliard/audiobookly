@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'settings_state.dart';
 
@@ -9,29 +9,28 @@ part of 'settings_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$SettingsStateTearOff {
   const _$SettingsStateTearOff();
 
-// ignore: unused_element
   SettingsStateInitial initial() {
     return const SettingsStateInitial();
   }
 
-// ignore: unused_element
-  SettingsStateLoaded loaded({User user}) {
+  SettingsStateLoaded loaded({User? user}) {
     return SettingsStateLoaded(
       user: user,
     );
   }
 
-// ignore: unused_element
   SettingsStateLoading loading() {
     return const SettingsStateLoading();
   }
 
-// ignore: unused_element
-  SettingsStateErrorDetails error([String message]) {
+  SettingsStateErrorDetails error([String? message]) {
     return SettingsStateErrorDetails(
       message,
     );
@@ -39,41 +38,44 @@ class _$SettingsStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $SettingsState = _$SettingsStateTearOff();
 
 /// @nodoc
 mixin _$SettingsState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(SettingsStateInitial value),
-    @required TResult loaded(SettingsStateLoaded value),
-    @required TResult loading(SettingsStateLoading value),
-    @required TResult error(SettingsStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(SettingsStateInitial value) initial,
+    required TResult Function(SettingsStateLoaded value) loaded,
+    required TResult Function(SettingsStateLoading value) loading,
+    required TResult Function(SettingsStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(SettingsStateInitial value),
-    TResult loaded(SettingsStateLoaded value),
-    TResult loading(SettingsStateLoading value),
-    TResult error(SettingsStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SettingsStateInitial value)? initial,
+    TResult Function(SettingsStateLoaded value)? loaded,
+    TResult Function(SettingsStateLoading value)? loading,
+    TResult Function(SettingsStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -113,6 +115,7 @@ class _$SettingsStateInitialCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$SettingsStateInitial
     with DiagnosticableTreeMixin
     implements SettingsStateInitial {
@@ -139,29 +142,24 @@ class _$SettingsStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -170,29 +168,24 @@ class _$SettingsStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(SettingsStateInitial value),
-    @required TResult loaded(SettingsStateLoaded value),
-    @required TResult loading(SettingsStateLoading value),
-    @required TResult error(SettingsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(SettingsStateInitial value) initial,
+    required TResult Function(SettingsStateLoaded value) loaded,
+    required TResult Function(SettingsStateLoading value) loading,
+    required TResult Function(SettingsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(SettingsStateInitial value),
-    TResult loaded(SettingsStateLoaded value),
-    TResult loading(SettingsStateLoading value),
-    TResult error(SettingsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SettingsStateInitial value)? initial,
+    TResult Function(SettingsStateLoaded value)? loaded,
+    TResult Function(SettingsStateLoading value)? loading,
+    TResult Function(SettingsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -209,7 +202,7 @@ abstract class $SettingsStateLoadedCopyWith<$Res> {
   factory $SettingsStateLoadedCopyWith(
           SettingsStateLoaded value, $Res Function(SettingsStateLoaded) then) =
       _$SettingsStateLoadedCopyWithImpl<$Res>;
-  $Res call({User user});
+  $Res call({User? user});
 }
 
 /// @nodoc
@@ -225,22 +218,26 @@ class _$SettingsStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object user = freezed,
+    Object? user = freezed,
   }) {
     return _then(SettingsStateLoaded(
-      user: user == freezed ? _value.user : user as User,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$SettingsStateLoaded
     with DiagnosticableTreeMixin
     implements SettingsStateLoaded {
   const _$SettingsStateLoaded({this.user});
 
   @override
-  final User user;
+  final User? user;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -274,29 +271,24 @@ class _$SettingsStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(user);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(user);
     }
@@ -305,29 +297,24 @@ class _$SettingsStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(SettingsStateInitial value),
-    @required TResult loaded(SettingsStateLoaded value),
-    @required TResult loading(SettingsStateLoading value),
-    @required TResult error(SettingsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(SettingsStateInitial value) initial,
+    required TResult Function(SettingsStateLoaded value) loaded,
+    required TResult Function(SettingsStateLoading value) loading,
+    required TResult Function(SettingsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(SettingsStateInitial value),
-    TResult loaded(SettingsStateLoaded value),
-    TResult loading(SettingsStateLoading value),
-    TResult error(SettingsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SettingsStateInitial value)? initial,
+    TResult Function(SettingsStateLoaded value)? loaded,
+    TResult Function(SettingsStateLoading value)? loading,
+    TResult Function(SettingsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -336,11 +323,12 @@ class _$SettingsStateLoaded
 }
 
 abstract class SettingsStateLoaded implements SettingsState {
-  const factory SettingsStateLoaded({User user}) = _$SettingsStateLoaded;
+  const factory SettingsStateLoaded({User? user}) = _$SettingsStateLoaded;
 
-  User get user;
+  User? get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SettingsStateLoadedCopyWith<SettingsStateLoaded> get copyWith;
+  $SettingsStateLoadedCopyWith<SettingsStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -363,6 +351,7 @@ class _$SettingsStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$SettingsStateLoading
     with DiagnosticableTreeMixin
     implements SettingsStateLoading {
@@ -389,29 +378,24 @@ class _$SettingsStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -420,29 +404,24 @@ class _$SettingsStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(SettingsStateInitial value),
-    @required TResult loaded(SettingsStateLoaded value),
-    @required TResult loading(SettingsStateLoading value),
-    @required TResult error(SettingsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(SettingsStateInitial value) initial,
+    required TResult Function(SettingsStateLoaded value) loaded,
+    required TResult Function(SettingsStateLoading value) loading,
+    required TResult Function(SettingsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(SettingsStateInitial value),
-    TResult loaded(SettingsStateLoaded value),
-    TResult loading(SettingsStateLoading value),
-    TResult error(SettingsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SettingsStateInitial value)? initial,
+    TResult Function(SettingsStateLoaded value)? loaded,
+    TResult Function(SettingsStateLoading value)? loading,
+    TResult Function(SettingsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -459,7 +438,7 @@ abstract class $SettingsStateErrorDetailsCopyWith<$Res> {
   factory $SettingsStateErrorDetailsCopyWith(SettingsStateErrorDetails value,
           $Res Function(SettingsStateErrorDetails) then) =
       _$SettingsStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -476,22 +455,26 @@ class _$SettingsStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(SettingsStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$SettingsStateErrorDetails
     with DiagnosticableTreeMixin
     implements SettingsStateErrorDetails {
   const _$SettingsStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -526,29 +509,24 @@ class _$SettingsStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(User user),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User? user) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(User user),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -557,29 +535,24 @@ class _$SettingsStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(SettingsStateInitial value),
-    @required TResult loaded(SettingsStateLoaded value),
-    @required TResult loading(SettingsStateLoading value),
-    @required TResult error(SettingsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(SettingsStateInitial value) initial,
+    required TResult Function(SettingsStateLoaded value) loaded,
+    required TResult Function(SettingsStateLoading value) loading,
+    required TResult Function(SettingsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(SettingsStateInitial value),
-    TResult loaded(SettingsStateLoaded value),
-    TResult loading(SettingsStateLoading value),
-    TResult error(SettingsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SettingsStateInitial value)? initial,
+    TResult Function(SettingsStateLoaded value)? loaded,
+    TResult Function(SettingsStateLoading value)? loading,
+    TResult Function(SettingsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -588,10 +561,11 @@ class _$SettingsStateErrorDetails
 }
 
 abstract class SettingsStateErrorDetails implements SettingsState {
-  const factory SettingsStateErrorDetails([String message]) =
+  const factory SettingsStateErrorDetails([String? message]) =
       _$SettingsStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SettingsStateErrorDetailsCopyWith<SettingsStateErrorDetails> get copyWith;
+  $SettingsStateErrorDetailsCopyWith<SettingsStateErrorDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }

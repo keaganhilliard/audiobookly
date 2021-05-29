@@ -23,13 +23,13 @@ class LibrarySelectView extends HookWidget {
           automaticallyImplyLeading: false,
         ),
         body: ListView.builder(
-          itemCount: state.libraries.length,
+          itemCount: state.libraries!.length,
           itemBuilder: (context, position) {
-            final lib = state.libraries[position];
+            final lib = state.libraries![position];
             return ListTile(
-              title: Text(lib.title),
+              title: Text(lib.title!),
               onTap: () async {
-                await notifier.setLibrary(lib.id);
+                await notifier.setLibrary(lib.id!);
                 Navigator.pop(context, lib);
                 // Provider.of<RootViewModel>(context).init();
               },
@@ -44,7 +44,7 @@ class LibrarySelectView extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: Text(state.message),
+              child: Text(state.message!),
             ),
             // ElevatedButton(style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor,)
             //   onPressed: _refresher.currentState.show,

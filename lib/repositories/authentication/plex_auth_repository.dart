@@ -15,11 +15,11 @@ class PlexAuthRepository extends AuthenticationRepository {
   PlexAuthRepository(this._ref);
   Future<User> getUser(String token) async {
     final _plexApi = _ref.read(plexApiProvider);
-    final user = await _plexApi.getUser();
+    final user = await (_plexApi.getUser());
 
     return User(
-      name: user.title,
-      userName: user.username,
+      name: user?.title,
+      userName: user?.username,
       token: token,
     );
   }

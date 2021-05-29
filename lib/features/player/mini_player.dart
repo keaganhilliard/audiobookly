@@ -17,10 +17,10 @@ class MiniPlayer extends HookWidget {
     final playbackController = useProvider(playbackControllerProvider);
 
     if (playbackState.data != null &&
-        playbackState.data.value?.processingState !=
+        playbackState.data!.value.processingState !=
             AudioProcessingState.idle) {
-      final state = playbackState.data.value;
-      final item = mediaItem.data.value;
+      final PlaybackState? state = playbackState.data!.value;
+      final MediaItem? item = mediaItem.data!.value;
       return Padding(
         padding: const EdgeInsets.only(left: 2.0, right: 2.0, bottom: 2.0),
         child: OpenContainer(
@@ -49,7 +49,7 @@ class MiniPlayer extends HookWidget {
                     child: Row(children: [
                       CachedNetworkImage(
                         fit: BoxFit.contain,
-                        imageUrl: item?.artUri?.toString(),
+                        imageUrl: item?.artUri?.toString() ?? '',
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),

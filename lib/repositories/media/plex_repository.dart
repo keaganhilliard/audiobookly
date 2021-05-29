@@ -4,6 +4,7 @@ import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/plex_media_item.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,20 +12,20 @@ import 'package:device_info/device_info.dart';
 import 'dart:io';
 
 class ServerAndLibrary {
-  PlexServerV2 server;
-  String library;
+  PlexServerV2? server;
+  String? library;
 
   ServerAndLibrary(this.server, this.library);
 }
 
 class PlexRepository extends MediaRepository {
-  PlexServerV2 _server;
-  String _libraryKey;
-  Timer _refreshServer;
+  PlexServerV2? _server;
+  String? _libraryKey;
+  Timer? _refreshServer;
   bool needsRefresh = false;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
-  PlexRepository({PlexServerV2 server, String libraryKey})
+  PlexRepository({PlexServerV2? server, String? libraryKey})
       : _server = server,
         _libraryKey = libraryKey {
     setRefreshTimer();
@@ -33,11 +34,11 @@ class PlexRepository extends MediaRepository {
   void setRefreshTimer() {
     _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) {
       needsRefresh = true;
-      _refreshServer.cancel();
+      _refreshServer!.cancel();
     });
   }
 
-  Future<PlexServerV2> get server async {
+  Future<PlexServerV2?> get server async {
     await refreshServer();
     return _server;
   }
@@ -45,22 +46,22 @@ class PlexRepository extends MediaRepository {
   Future<ServerAndLibrary> get serverAndLibrary async =>
       ServerAndLibrary(await server, _libraryKey);
 
-  String get libraryKey => _libraryKey;
+  String? get libraryKey => _libraryKey;
 
   String getServerUrl(String path) {
-    return _server.getUrlWithToken(path);
+    return _server!.getUrlWithToken(path);
   }
 
-  String getThumbnailUrl(String path) {
-    return _server.getThumbnailUrl(path);
+  String getThumbnailUrl(String? path) {
+    return _server!.getThumbnailUrl(path!);
   }
 
   Future getServerAndLibrary() async {
     if (_server == null || _libraryKey == null) {
       prefs = await SharedPreferences.getInstance();
-      String authToken = prefs.getString(SharedPrefStrings.PLEX_TOKEN);
-      String serverId = prefs.getString(SharedPrefStrings.PLEX_SERVER);
-      _libraryKey = prefs.getString(SharedPrefStrings.PLEX_LIBRARY);
+      String? authToken = prefs!.getString(SharedPrefStrings.PLEX_TOKEN);
+      String? serverId = prefs!.getString(SharedPrefStrings.PLEX_SERVER);
+      _libraryKey = prefs!.getString(SharedPrefStrings.PLEX_LIBRARY);
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       PlexHeaders headers;
 
@@ -105,10 +106,9 @@ class PlexRepository extends MediaRepository {
   Future refreshServer() async {
     if (needsRefresh) {
       if (prefs == null) prefs = await SharedPreferences.getInstance();
-      String serverId = prefs.getString(SharedPrefStrings.PLEX_SERVER);
-      _server = (await _server.api.getServersV2()).firstWhere(
-          (server) => server.clientIdentifier == serverId,
-          orElse: () => null);
+      String? serverId = prefs!.getString(SharedPrefStrings.PLEX_SERVER);
+      _server = (await _server!.api!.getServersV2())
+          .firstWhereOrNull((server) => server.clientIdentifier == serverId);
       if (_server != null) needsRefresh = false;
       setRefreshTimer();
     }
@@ -116,46 +116,46 @@ class PlexRepository extends MediaRepository {
 
   Future<List<PlexMediaItem>> getRecentlyAdded() async {
     await refreshServer();
-    return (await _server.getRecentlyAdded(_libraryKey))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+    return (await _server!.getRecentlyAdded(_libraryKey!))!
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getRecentlyPlayed() async {
     await refreshServer();
-    List<PlexMediaItem> items = (await _server.getRecentlyViewed(_libraryKey))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+    List<PlexMediaItem> items = (await _server!.getRecentlyViewed(_libraryKey!))
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
         .toList();
     return (await Future.wait<PlexAlbum>(
-            items.map((item) => _server.getAlbumFromKey(item.key))))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+            items.map((item) => _server!.getAlbumFromKey(item.key!))))
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getAllBooks() async {
     await refreshServer();
-    return (await _server.getAllAlbums(_libraryKey))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+    return (await _server!.getAllAlbums(_libraryKey!))!
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getAuthors() async {
     await refreshServer();
-    return (await _server.getArtists(_libraryKey))
-        .map((artist) => PlexMediaItem.fromPlexArtist(artist, _server))
+    return (await _server!.getArtists(_libraryKey!))!
+        .map((artist) => PlexMediaItem.fromPlexArtist(artist, _server!))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getBooksFromAuthor(String authorId) async {
     await refreshServer();
-    return (await _server.getAlbumsFromArtist(authorId))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+    return (await _server!.getAlbumsFromArtist(authorId))!
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
         .toList();
   }
 
   Future<List<PlexMediaItem>> getCollections() async {
     await refreshServer();
-    return (await _server.getCollections(_libraryKey))
+    return (await _server!.getCollections(_libraryKey!))!
         .map((collection) =>
             PlexMediaItem.fromPlexCollection(collection, _server))
         .toList();
@@ -164,28 +164,28 @@ class PlexRepository extends MediaRepository {
   Future<List<PlexMediaItem>> getBooksFromCollection(
       String collectionId) async {
     await refreshServer();
-    return (await _server.getAlbumsFromCollection(_libraryKey, collectionId))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
+    return (await _server!.getAlbumsFromCollection(_libraryKey!, collectionId))!
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
         .toList();
   }
 
   Future<List<PlexMediaItem>> search(String search) async {
     await refreshServer();
-    return (await _server.searchAlbums(_libraryKey, search))
-        ?.map((album) => PlexMediaItem.fromPlexAlbum(album, _server))
-        ?.toList();
+    return (await _server!.searchAlbums(_libraryKey!, search))
+        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+        .toList();
   }
 
-  Future<PlexMediaItem> getAlbumFromId(String mediaId) async {
+  Future<PlexMediaItem> getAlbumFromId(String? mediaId) async {
     await refreshServer();
     return PlexMediaItem.fromPlexAlbum(
-        await _server.getAlbumFromKey(mediaId), _server);
+        await _server!.getAlbumFromKey(mediaId!), _server!);
   }
 
   Future savePosition(String mediaId, int position, int duration,
       AudiobooklyPlaybackState state) async {
     await refreshServer();
-    return await _server.savePosition(
+    return await _server!.savePosition(
         mediaId,
         position,
         duration,
@@ -195,45 +195,46 @@ class PlexRepository extends MediaRepository {
           AudiobooklyPlaybackState.PAUSED: PlexPlaybackState.PAUSED,
           AudiobooklyPlaybackState.STOPPED: PlexPlaybackState.STOPPED,
           AudiobooklyPlaybackState.PLAYING: PlexPlaybackState.PLAYING
-        }[state]);
+        }[state]!);
   }
 
-  Future playbackStarted(String key, Duration position, Duration duration,
+  Future playbackStarted(String? key, Duration position, Duration duration,
       double playbackRate) async {}
-  Future playbackCheckin(String key, Duration position, Duration duration,
+  Future playbackCheckin(String? key, Duration position, Duration duration,
       double playbackRate, AudiobooklyEvent event) async {}
   Future playbackStopped(String key, Duration position, Duration duration,
       double playbackRate) async {}
 
-  Future<List<PlexMediaItem>> getTracksForBook(String bookId) async {
+  Future<List<PlexMediaItem>> getTracksForBook(String? bookId) async {
     await refreshServer();
-    return (await _server.getTracks(bookId))
-        .map((track) => PlexMediaItem.fromPlexTrack(track, _server))
+    return (await _server!.getTracks(bookId!))!
+        .map((track) => PlexMediaItem.fromPlexTrack(track, _server!))
         .toList();
   }
 
   Future<User> getUser() async {
     await refreshServer();
-    PlexUser u = await _server.getUser();
+    PlexUser u = await (_server!.getUser() as FutureOr<PlexUser>);
     print(u.toJson());
     return User(name: u.title, userName: u.username, thumb: u.thumb);
   }
 
   Future<String> getLoginUrl() async {
-    PlexPin pin = await _server.api.getPin();
-    return _server.api.getOauthUrl(pin.code);
+    PlexPin pin = await _server!.api!.getPin();
+    return _server!.api!.getOauthUrl(pin.code!);
   }
 
   Future<List<Library>> getLibraries() async {
     await refreshServer();
-    final libraries = await _server.getLibraries();
+    final libraries =
+        await (_server!.getLibraries() as FutureOr<List<PlexLibrary>>);
     return libraries.map((lib) => Library(lib.key, lib.title)).toList();
   }
 
   Future logout() async {}
 
   void stopRefresh() {
-    if (_refreshServer != null) _refreshServer.cancel();
+    if (_refreshServer != null) _refreshServer!.cancel();
   }
 
   Future markPlayed(String itemId) async {}

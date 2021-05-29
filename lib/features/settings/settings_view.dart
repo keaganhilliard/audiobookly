@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SettingsView extends HookWidget {
   const SettingsView({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -17,18 +17,18 @@ class SettingsView extends HookWidget {
     final auth = useProvider(authNotifierProvider.notifier);
     // if (state is SettingsStateInitial) Future.value(settings.getUser());
     if (state is SettingsStateLoaded) {
-      print(state.user.name);
+      print(state.user!.name);
       return ListView(
         children: [
           ListTile(
             title: Text('Account'),
-            subtitle: Text(state.user.userName),
+            subtitle: Text(state.user!.userName!),
             onTap: () async {
               await auth.logout();
             },
-            trailing: state.user.thumb != null
+            trailing: state.user!.thumb != null
                 ? Image.network(
-                    state.user.thumb,
+                    state.user!.thumb!,
                     fit: BoxFit.contain,
                     errorBuilder: (context, exception, stackTrace) {
                       return Container();
@@ -43,7 +43,8 @@ class SettingsView extends HookWidget {
                 context: context,
                 applicationName: 'Audiobookly',
                 applicationVersion: '1.0.0',
-                applicationIcon: Image.asset('audiobookly_launcher_round.png'),
+                applicationIcon:
+                    Image.asset('assets/audiobookly_launcher_round.png'),
                 useRootNavigator: true,
               );
             },

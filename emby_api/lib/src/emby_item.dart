@@ -20,6 +20,7 @@ class EmbyItem {
     this.artistItems,
     this.albumArtist,
     this.albumArtists,
+    this.composers,
     this.imageTags,
     this.album,
     this.albumId,
@@ -42,6 +43,7 @@ class EmbyItem {
   List<EmbyArtist>? artistItems;
   String? albumArtist;
   List<EmbyArtist>? albumArtists;
+  List<EmbyArtist>? composers;
   EmbyImageTag? imageTags;
   String? album;
   String? albumId;
@@ -70,9 +72,13 @@ class EmbyItem {
                 json["ArtistItems"].map((x) => EmbyArtist.fromJson(x)))
             : [],
         albumArtist: json["AlbumArtist"],
-        albumArtists: json["ArtistItems"] != null
+        albumArtists: json["AlbumArtists"] != null
             ? List<EmbyArtist>.from(
                 json["AlbumArtists"].map((x) => EmbyArtist.fromJson(x)))
+            : [],
+        composers: json["Composers"] != null
+            ? List<EmbyArtist>.from(
+                json["Composers"].map((x) => EmbyArtist.fromJson(x)))
             : [],
         album: json['Album'],
         albumId: json['AlbumId'],
@@ -96,7 +102,9 @@ class EmbyItem {
         "Artists": List<dynamic>.from(artists!.map((x) => x)),
         "ArtistItems": List<dynamic>.from(artistItems!.map((x) => x.toJson())),
         "AlbumArtist": albumArtist,
-        "AlbumArtists": List<dynamic>.from(albumArtists!.map((x) => x.toJson())),
+        "AlbumArtists":
+            List<dynamic>.from(albumArtists!.map((x) => x.toJson())),
+        "Composers": List<dynamic>.from(composers!.map((x) => x.toJson())),
         "ImageTags": imageTags!.toJson(),
         "Album": album,
         "AlbumId": albumId,

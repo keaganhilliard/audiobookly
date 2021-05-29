@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthWidget extends ConsumerWidget {
   const AuthWidget({
-    Key key,
-    @required this.authorizedBuilder,
-    @required this.unauthorizedBuilder,
+    Key? key,
+    required this.authorizedBuilder,
+    required this.unauthorizedBuilder,
   }) : super(key: key);
   final WidgetBuilder unauthorizedBuilder;
   final WidgetBuilder authorizedBuilder;
@@ -15,16 +15,14 @@ class AuthWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final authState = watch(authNotifierProvider);
-    if (authState is AuthStateInitial) {
-      return unauthorizedBuilder(context);
-    } else if (authState is AuthStateLoading) {
+    if (authState is AuthStateLoading) {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else if (authState is AuthStateLoaded) {
-      print(authState.user.token);
+      print(authState.user!.token);
       return authorizedBuilder(context);
     } else if (authState is AuthStateErrorDetails) {
       print(authState.message);
@@ -32,7 +30,7 @@ class AuthWidget extends ConsumerWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(authState.message),
+            Text(authState.message!),
             ElevatedButton(
               child: Text('Log out'),
               onPressed: () {
@@ -42,6 +40,8 @@ class AuthWidget extends ConsumerWidget {
           ],
         ),
       );
+    } else {
+      return unauthorizedBuilder(context);
     }
   }
 }

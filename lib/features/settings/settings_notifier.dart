@@ -12,8 +12,8 @@ final settingsStateProvider =
 });
 
 class SettingsNotifier extends StateNotifier<SettingsState> {
-  final MediaRepository _repository;
-  User currentUser;
+  final MediaRepository? _repository;
+  User? currentUser;
 
   SettingsNotifier(this._repository) : super(SettingsState.initial()) {
     getUser();
@@ -22,7 +22,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   Future<void> getUser() async {
     try {
       state = SettingsState.loading();
-      currentUser = await _repository.getUser();
+      currentUser = await _repository!.getUser();
       state = SettingsState.loaded(user: currentUser);
     } on Exception {
       state = SettingsState.error("Couldn't fetch user. Is the device online?");

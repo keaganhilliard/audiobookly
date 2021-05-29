@@ -18,13 +18,13 @@ class BookListElement extends StatelessWidget {
     this.played = false,
   });
 
-  final double progress;
-  final String title;
-  final String subtitle;
-  final String thumbnailUrl;
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? progress;
+  final String? title;
+  final String? subtitle;
+  final String? thumbnailUrl;
+  final double? width;
+  final double? height;
+  final Function? onTap;
   final bool played;
 
   // Widget imageBuilder() {
@@ -42,13 +42,13 @@ class BookListElement extends StatelessWidget {
           color: Colors.black,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
-            onTap: onTap,
+            onTap: onTap as void Function()?,
             child: Stack(
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    progress > 0
+                    progress! > 0
                         ? LinearProgressIndicator(
                             minHeight: 8,
                             value: progress,
@@ -66,7 +66,7 @@ class BookListElement extends StatelessWidget {
                       child: FractionallySizedBox(
                         heightFactor: .95,
                         child: CachedNetworkImage(
-                          imageUrl: thumbnailUrl,
+                          imageUrl: thumbnailUrl!,
                           fit: BoxFit.cover,
                           alignment: Alignment.center,
                           errorWidget: (context, error, child) =>
@@ -90,13 +90,13 @@ class BookListElement extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              title,
+                              title!,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 16),
                             ),
                             if (subtitle != null)
                               Text(
-                                subtitle,
+                                subtitle!,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 12,

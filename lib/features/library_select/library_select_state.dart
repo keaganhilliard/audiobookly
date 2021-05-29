@@ -8,9 +8,9 @@ part 'library_select_state.freezed.dart';
 abstract class LibrarySelectState with _$LibrarySelectState {
   const factory LibrarySelectState.initial() = LibrarySelectStateInitial;
   const factory LibrarySelectState.loaded({
-    List<Library> libraries,
+    List<Library>? libraries,
   }) = LibrarySelectStateLoaded;
   const factory LibrarySelectState.loading() = LibrarySelectStateLoading;
-  const factory LibrarySelectState.error([String message]) =
+  const factory LibrarySelectState.error([String? message]) =
       LibrarySelectStateErrorDetails;
 }

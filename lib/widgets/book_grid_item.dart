@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class BookGridItem extends StatelessWidget {
-  final String thumbnailUrl;
-  final String title;
-  final String subtitle;
-  final Function onTap;
+  final String? thumbnailUrl;
+  final String? title;
+  final String? subtitle;
+  final Function? onTap;
   final double progress;
   final bool played;
 
@@ -28,7 +28,7 @@ class BookGridItem extends StatelessWidget {
       color: Colors.black,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: onTap,
+        onTap: onTap as void Function()?,
         child: Stack(
           children: [
             if (progress > 0)
@@ -50,7 +50,7 @@ class BookGridItem extends StatelessWidget {
                   child: FractionallySizedBox(
                     heightFactor: 1,
                     child: CachedNetworkImage(
-                      imageUrl: thumbnailUrl,
+                      imageUrl: thumbnailUrl!,
                       fit: BoxFit.cover,
                       alignment: Alignment.center,
                       errorWidget: (context, message, thing) => Container(
@@ -81,13 +81,13 @@ class BookGridItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          title,
+                          title!,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 13),
                         ),
                         if (subtitle != null)
                           Text(
-                            subtitle,
+                            subtitle!,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 10, color: Colors.grey[400]),

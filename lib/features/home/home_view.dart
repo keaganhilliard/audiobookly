@@ -32,7 +32,7 @@ class HomeView extends HookWidget {
             builder: (context, watch, child) {
               final state = watch(homeStateProvider);
 
-              if (state is HomeStateInitial) _refresher.currentState.show();
+              if (state is HomeStateInitial) _refresher.currentState!.show();
               if (state is HomeStateLoaded)
                 return SingleChildScrollView(
                   // padding: EdgeInsets.only(bottom: 40),
@@ -63,7 +63,7 @@ class HomeView extends HookWidget {
               else {
                 return Container();
               }
-            },
+            } as Widget Function(BuildContext, T Function<T>(ProviderBase<Object?, T>), Widget?),
           ),
         ),
       ),

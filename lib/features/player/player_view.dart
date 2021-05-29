@@ -14,15 +14,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:marquee/marquee.dart';
 
 class PlayerView extends HookWidget {
-  final MediaItem book;
+  final MediaItem? book;
 
   String genDurationString(List<MediaItem> tracks) {
-    int total =
-        tracks.fold(0, (total, track) => total + track.duration.inMilliseconds);
+    int total = tracks.fold(
+        0, (total, track) => total + track.duration!.inMilliseconds);
     return genDuration(total);
   }
 
-  String genDuration(int durationInMilliseconds) {
+  String genDuration(int? durationInMilliseconds) {
     if (durationInMilliseconds == null) return 'Calculating...';
     Duration durObj = Duration(milliseconds: durationInMilliseconds);
 
@@ -32,7 +32,7 @@ class PlayerView extends HookWidget {
     return '$hours hours and $minutes minutes';
   }
 
-  String getDurationLeftText(int currentPosition, int duration) {
+  String getDurationLeftText(int? currentPosition, int? duration) {
     String text = '';
     if (currentPosition != null && duration != null) {
       int durationLeft = duration - currentPosition;
@@ -54,8 +54,8 @@ class PlayerView extends HookWidget {
     final playbackController = useProvider(playbackControllerProvider);
     final navigationService = useProvider(navigationServiceProvider);
 
-    final state = playbackState.data.value;
-    final item = mediaItem.data.value;
+    final PlaybackState? state = playbackState.data?.value;
+    final MediaItem? item = mediaItem.data?.value;
 
     return Scaffold(
       appBar: AppBar(
@@ -100,13 +100,13 @@ class PlayerView extends HookWidget {
                               fit: BoxFit.cover,
                               errorWidget: (context, error, child) =>
                                   Icon(Icons.book),
-                              imageUrl: book?.largeThumbnail ??
-                                  book?.artUri?.toString(),
+                              imageUrl: (book?.largeThumbnail ??
+                                  book?.artUri?.toString())!,
                               placeholder: (context, url) => Center(
                                 child: CircularProgressIndicator(),
                               ),
                             ),
-                            if (book.displayDescription?.isNotEmpty ?? false)
+                            if (book!.displayDescription?.isNotEmpty ?? false)
                               Positioned(
                                 bottom: 5.0,
                                 right: 5.0,
@@ -124,8 +124,8 @@ class PlayerView extends HookWidget {
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
                                                       18.0),
-                                                  child: Text(
-                                                      book.displayDescription),
+                                                  child: Text(book!
+                                                      .displayDescription!),
                                                 ),
                                               ),
                                             );
@@ -145,7 +145,7 @@ class PlayerView extends HookWidget {
                     padding: const EdgeInsets.only(
                         left: 16.0, right: 16.0, bottom: 8.0),
                     child: Text(
-                      item?.album ?? book?.album ?? '',
+                      item.album,
                       style: Theme.of(context).textTheme.headline5,
                       textAlign: TextAlign.center,
                     ),
@@ -157,7 +157,7 @@ class PlayerView extends HookWidget {
                   Text(
                     genDuration(
                       book?.duration?.inMilliseconds ??
-                          item?.duration?.inMilliseconds ??
+                          item.duration?.inMilliseconds ??
                           0,
                     ),
                     style: Theme.of(context).textTheme.subtitle2,
@@ -189,8 +189,8 @@ class PlayerView extends HookWidget {
                               builder: (context, snapshot) {
                                 return Text(
                                   getDurationLeftText(
-                                    snapshot?.data?.inMilliseconds,
-                                    item?.duration?.inMilliseconds,
+                                    snapshot.data?.inMilliseconds,
+                                    item.duration?.inMilliseconds,
                                   ),
                                 );
                               }),
@@ -209,8 +209,7 @@ class PlayerView extends HookWidget {
                                 child: StreamBuilder<Duration>(
                                     stream: playbackController.positionStream,
                                     builder: (context, snapshot) {
-                                      if (snapshot.data != null &&
-                                          item != null) {
+                                      if (snapshot.data != null) {
                                         // final timeLeft = getDurationLeftText(
                                         //   snapshot.data.inMilliseconds -
                                         //       item.extras[
@@ -240,8 +239,8 @@ class PlayerView extends HookWidget {
                               stream: playbackController.positionStream,
                               builder: (context, snapshot) {
                                 return SeekBar(
-                                    duration: item?.duration,
-                                    position: snapshot?.data,
+                                    duration: item.duration,
+                                    position: snapshot.data,
                                     onChangeEnd: (val) async {
                                       await playbackController
                                           .seek(val.inMilliseconds);
@@ -326,7 +325,7 @@ class PlayerView extends HookWidget {
                                                   Text('Playback Speed'),
                                                   ValueSlider(
                                                     prefix: Text('1.00'),
-                                                    value: state.speed,
+                                                    value: state?.speed ?? 1.0,
                                                     onChangeEnd: (val) {
                                                       playbackController
                                                           .setSpeed(val);
@@ -341,7 +340,7 @@ class PlayerView extends HookWidget {
                                           })
                                     },
                                     icon: Text(
-                                      '${state.speed.toStringAsFixed(2)}x',
+                                      '${state?.speed.toStringAsFixed(2)}x',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         // color: Colors.white,
@@ -364,11 +363,14 @@ class PlayerView extends HookWidget {
   }
 
   IconButton getIconButton(
-      {Icon icon, Function onPressed, double size = 35.0, Color color}) {
+      {required Icon icon,
+      Function? onPressed,
+      double size = 35.0,
+      Color? color}) {
     return IconButton(
       icon: icon,
       iconSize: size,
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
       color: color,
     );
   }
@@ -377,10 +379,10 @@ class PlayerView extends HookWidget {
 class ValueSlider extends HookWidget {
   final double min;
   final double max;
-  final double value;
-  final ValueChanged<double> onChangeEnd;
-  final Widget prefix;
-  final Widget postfix;
+  final double? value;
+  final ValueChanged<double>? onChangeEnd;
+  final Widget? prefix;
+  final Widget? postfix;
 
   ValueSlider({
     this.min = 0,
@@ -403,11 +405,11 @@ class ValueSlider extends HookWidget {
         // Text(
         //   min.toStringAsFixed(2),
         // ),
-        prefix,
+        prefix!,
         Expanded(
           child: Slider(
-            label: _currentProgress.value.toStringAsFixed(2),
-            value: _currentProgress.value,
+            label: _currentProgress.value!.toStringAsFixed(2),
+            value: _currentProgress.value!,
             onChangeStart: (val) {
               _seeking.value = true;
             },
@@ -417,7 +419,7 @@ class ValueSlider extends HookWidget {
             },
             onChangeEnd: (val) {
               _seeking.value = false;
-              onChangeEnd(val);
+              onChangeEnd!(val);
             },
             min: min,
             max: max,
@@ -428,7 +430,7 @@ class ValueSlider extends HookWidget {
         // Text(
         //   max.toStringAsFixed(2),
         // )
-        postfix,
+        postfix!,
       ],
     );
   }

@@ -5,9 +5,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginState {
-  String username;
-  String baseUrl;
-  String password;
+  late String username;
+  late String baseUrl;
+  late String password;
 }
 
 class EmbyLogin extends HookWidget {
@@ -49,7 +49,7 @@ class EmbyLogin extends HookWidget {
                       _login.value.baseUrl = val;
                     },
                     validator: (val) =>
-                        val.isEmpty ? "Please enter your server's url" : null,
+                        val!.isEmpty ? "Please enter your server's url" : null,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Emby Server Url',
@@ -61,7 +61,7 @@ class EmbyLogin extends HookWidget {
                   child: TextFormField(
                     key: ValueKey('username-field'),
                     validator: (val) =>
-                        val.isEmpty ? 'Please enter a username' : null,
+                        val!.isEmpty ? 'Please enter a username' : null,
                     onChanged: (val) {
                       _login.value.username = val;
                     },
@@ -76,7 +76,7 @@ class EmbyLogin extends HookWidget {
                   child: TextFormField(
                     key: ValueKey('password-field'),
                     validator: (value) =>
-                        value.isEmpty ? 'Please enter a password' : null,
+                        value!.isEmpty ? 'Please enter a password' : null,
                     onChanged: (val) {
                       _login.value.password = val;
                     },
@@ -109,7 +109,7 @@ class EmbyLogin extends HookWidget {
                                 ),
                         ),
                         onPressed: () async {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             _loading.value = true;
                             if (!await _auth.embyLogin(
                               _login.value.baseUrl,

@@ -36,17 +36,17 @@ final plexApiProvider = Provider<PlexApi>((ref) {
   final _info = infoService.info;
   return PlexApi(
     headers: PlexHeaders(
-      clientIdentifier: _info.uniqueId,
-      device: _info.model,
+      clientIdentifier: _info.uniqueId!,
+      device: _info.model!,
       product: 'Audiobookly',
-      platform: _info.platform,
-      platformVersion: _info.version,
+      platform: _info.platform!,
+      platformVersion: _info.version!,
       token: sharedPreferencesService.getCurrentToken(),
     ),
   );
 });
 
-final mediaRepositoryProdiver = Provider<MediaRepository>((ref) {
+final mediaRepositoryProdiver = Provider<MediaRepository?>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);
@@ -57,7 +57,7 @@ final mediaRepositoryProdiver = Provider<MediaRepository>((ref) {
     return null;
 });
 
-final downloadServiceProvider = Provider.autoDispose<DownloadService>((ref) {
+final AutoDisposeProvider<DownloadService>? downloadServiceProvider = Provider.autoDispose<DownloadService>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);
@@ -65,19 +65,19 @@ final downloadServiceProvider = Provider.autoDispose<DownloadService>((ref) {
     return EmbyDownloadService(embyApi, null);
   }
   return null;
-});
+} as DownloadService Function(AutoDisposeProviderReference));
 
 final playbackStateProvider = StreamProvider<PlaybackState>((ref) {
   final playbackController = ref.watch(playbackControllerProvider);
   return playbackController.playbackStateStream;
 });
 
-final currentItemProvider = StreamProvider<MediaItem>((ref) {
+final currentItemProvider = StreamProvider<MediaItem?>((ref) {
   final playbackController = ref.watch(playbackControllerProvider);
   return playbackController.currentMediaItemStream;
 });
 
-final queueProvider = StreamProvider<List<MediaItem>>((ref) {
+final queueProvider = StreamProvider<List<MediaItem>?>((ref) {
   final playbackController = ref.watch(playbackControllerProvider);
   return playbackController.queueStream;
 });

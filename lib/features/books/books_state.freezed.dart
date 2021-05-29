@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'books_state.dart';
 
@@ -9,30 +9,29 @@ part of 'books_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$BooksStateTearOff {
   const _$BooksStateTearOff();
 
-// ignore: unused_element
   BooksStateInitial initial() {
     return const BooksStateInitial();
   }
 
-// ignore: unused_element
-  BooksStateLoaded loaded({List<MediaItem> books, String currentParent}) {
+  BooksStateLoaded loaded({List<MediaItem>? books, String? currentParent}) {
     return BooksStateLoaded(
       books: books,
       currentParent: currentParent,
     );
   }
 
-// ignore: unused_element
   BooksStateLoading loading() {
     return const BooksStateLoading();
   }
 
-// ignore: unused_element
-  BooksStateErrorDetails error([String message]) {
+  BooksStateErrorDetails error([String? message]) {
     return BooksStateErrorDetails(
       message,
     );
@@ -40,41 +39,45 @@ class _$BooksStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $BooksState = _$BooksStateTearOff();
 
 /// @nodoc
 mixin _$BooksState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> books, String currentParent),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? books, String? currentParent)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> books, String currentParent),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(BooksStateInitial value),
-    @required TResult loaded(BooksStateLoaded value),
-    @required TResult loading(BooksStateLoading value),
-    @required TResult error(BooksStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(BooksStateInitial value) initial,
+    required TResult Function(BooksStateLoaded value) loaded,
+    required TResult Function(BooksStateLoading value) loading,
+    required TResult Function(BooksStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(BooksStateInitial value),
-    TResult loaded(BooksStateLoaded value),
-    TResult loading(BooksStateLoading value),
-    TResult error(BooksStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BooksStateInitial value)? initial,
+    TResult Function(BooksStateLoaded value)? loaded,
+    TResult Function(BooksStateLoading value)? loading,
+    TResult Function(BooksStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -113,6 +116,7 @@ class _$BooksStateInitialCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$BooksStateInitial
     with DiagnosticableTreeMixin
     implements BooksStateInitial {
@@ -139,29 +143,25 @@ class _$BooksStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> books, String currentParent),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? books, String? currentParent)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> books, String currentParent),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -170,29 +170,24 @@ class _$BooksStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(BooksStateInitial value),
-    @required TResult loaded(BooksStateLoaded value),
-    @required TResult loading(BooksStateLoading value),
-    @required TResult error(BooksStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BooksStateInitial value) initial,
+    required TResult Function(BooksStateLoaded value) loaded,
+    required TResult Function(BooksStateLoading value) loading,
+    required TResult Function(BooksStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(BooksStateInitial value),
-    TResult loaded(BooksStateLoaded value),
-    TResult loading(BooksStateLoading value),
-    TResult error(BooksStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BooksStateInitial value)? initial,
+    TResult Function(BooksStateLoaded value)? loaded,
+    TResult Function(BooksStateLoading value)? loading,
+    TResult Function(BooksStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -209,7 +204,7 @@ abstract class $BooksStateLoadedCopyWith<$Res> {
   factory $BooksStateLoadedCopyWith(
           BooksStateLoaded value, $Res Function(BooksStateLoaded) then) =
       _$BooksStateLoadedCopyWithImpl<$Res>;
-  $Res call({List<MediaItem> books, String currentParent});
+  $Res call({List<MediaItem>? books, String? currentParent});
 }
 
 /// @nodoc
@@ -225,28 +220,33 @@ class _$BooksStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object books = freezed,
-    Object currentParent = freezed,
+    Object? books = freezed,
+    Object? currentParent = freezed,
   }) {
     return _then(BooksStateLoaded(
-      books: books == freezed ? _value.books : books as List<MediaItem>,
+      books: books == freezed
+          ? _value.books
+          : books // ignore: cast_nullable_to_non_nullable
+              as List<MediaItem>?,
       currentParent: currentParent == freezed
           ? _value.currentParent
-          : currentParent as String,
+          : currentParent // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$BooksStateLoaded
     with DiagnosticableTreeMixin
     implements BooksStateLoaded {
   const _$BooksStateLoaded({this.books, this.currentParent});
 
   @override
-  final List<MediaItem> books;
+  final List<MediaItem>? books;
   @override
-  final String currentParent;
+  final String? currentParent;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -286,29 +286,25 @@ class _$BooksStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> books, String currentParent),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? books, String? currentParent)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(books, currentParent);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> books, String currentParent),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(books, currentParent);
     }
@@ -317,29 +313,24 @@ class _$BooksStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(BooksStateInitial value),
-    @required TResult loaded(BooksStateLoaded value),
-    @required TResult loading(BooksStateLoading value),
-    @required TResult error(BooksStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BooksStateInitial value) initial,
+    required TResult Function(BooksStateLoaded value) loaded,
+    required TResult Function(BooksStateLoading value) loading,
+    required TResult Function(BooksStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(BooksStateInitial value),
-    TResult loaded(BooksStateLoaded value),
-    TResult loading(BooksStateLoading value),
-    TResult error(BooksStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BooksStateInitial value)? initial,
+    TResult Function(BooksStateLoaded value)? loaded,
+    TResult Function(BooksStateLoading value)? loading,
+    TResult Function(BooksStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -349,12 +340,13 @@ class _$BooksStateLoaded
 
 abstract class BooksStateLoaded implements BooksState {
   const factory BooksStateLoaded(
-      {List<MediaItem> books, String currentParent}) = _$BooksStateLoaded;
+      {List<MediaItem>? books, String? currentParent}) = _$BooksStateLoaded;
 
-  List<MediaItem> get books;
-  String get currentParent;
+  List<MediaItem>? get books => throw _privateConstructorUsedError;
+  String? get currentParent => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BooksStateLoadedCopyWith<BooksStateLoaded> get copyWith;
+  $BooksStateLoadedCopyWith<BooksStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -377,6 +369,7 @@ class _$BooksStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$BooksStateLoading
     with DiagnosticableTreeMixin
     implements BooksStateLoading {
@@ -403,29 +396,25 @@ class _$BooksStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> books, String currentParent),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? books, String? currentParent)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> books, String currentParent),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -434,29 +423,24 @@ class _$BooksStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(BooksStateInitial value),
-    @required TResult loaded(BooksStateLoaded value),
-    @required TResult loading(BooksStateLoading value),
-    @required TResult error(BooksStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BooksStateInitial value) initial,
+    required TResult Function(BooksStateLoaded value) loaded,
+    required TResult Function(BooksStateLoading value) loading,
+    required TResult Function(BooksStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(BooksStateInitial value),
-    TResult loaded(BooksStateLoaded value),
-    TResult loading(BooksStateLoading value),
-    TResult error(BooksStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BooksStateInitial value)? initial,
+    TResult Function(BooksStateLoaded value)? loaded,
+    TResult Function(BooksStateLoading value)? loading,
+    TResult Function(BooksStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -473,7 +457,7 @@ abstract class $BooksStateErrorDetailsCopyWith<$Res> {
   factory $BooksStateErrorDetailsCopyWith(BooksStateErrorDetails value,
           $Res Function(BooksStateErrorDetails) then) =
       _$BooksStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -489,22 +473,26 @@ class _$BooksStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(BooksStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$BooksStateErrorDetails
     with DiagnosticableTreeMixin
     implements BooksStateErrorDetails {
   const _$BooksStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -539,29 +527,25 @@ class _$BooksStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> books, String currentParent),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? books, String? currentParent)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> books, String currentParent),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -570,29 +554,24 @@ class _$BooksStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(BooksStateInitial value),
-    @required TResult loaded(BooksStateLoaded value),
-    @required TResult loading(BooksStateLoading value),
-    @required TResult error(BooksStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BooksStateInitial value) initial,
+    required TResult Function(BooksStateLoaded value) loaded,
+    required TResult Function(BooksStateLoading value) loading,
+    required TResult Function(BooksStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(BooksStateInitial value),
-    TResult loaded(BooksStateLoaded value),
-    TResult loading(BooksStateLoading value),
-    TResult error(BooksStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BooksStateInitial value)? initial,
+    TResult Function(BooksStateLoaded value)? loaded,
+    TResult Function(BooksStateLoading value)? loading,
+    TResult Function(BooksStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -601,10 +580,11 @@ class _$BooksStateErrorDetails
 }
 
 abstract class BooksStateErrorDetails implements BooksState {
-  const factory BooksStateErrorDetails([String message]) =
+  const factory BooksStateErrorDetails([String? message]) =
       _$BooksStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BooksStateErrorDetailsCopyWith<BooksStateErrorDetails> get copyWith;
+  $BooksStateErrorDetailsCopyWith<BooksStateErrorDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }

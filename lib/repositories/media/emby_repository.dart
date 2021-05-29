@@ -86,15 +86,15 @@ class EmbyRepository extends MediaRepository {
         .toList();
   }
 
-  Future<List<MediaItem>> getTracksForBook(String bookId) async {
+  Future<List<MediaItem>> getTracksForBook(String? bookId) async {
     return getItemsFromEmbyItems(
-      (await _api.getItemsForAlbum(bookId)),
+      (await _api.getItemsForAlbum(bookId!)),
       this,
     );
   }
 
-  Future<MediaItem> getAlbumFromId(String mediaId) async {
-    return Utils.mediaItemfromEmbyItem((await _api.getItem(mediaId)), this);
+  Future<MediaItem> getAlbumFromId(String? mediaId) async {
+    return Utils.mediaItemfromEmbyItem((await _api.getItem(mediaId!)), this);
   }
 
   Future<User> getUser() async {
@@ -111,16 +111,16 @@ class EmbyRepository extends MediaRepository {
 //    throw UnimplementedError();
   }
 
-  Future playbackStarted(String key, Duration position, Duration duration,
+  Future playbackStarted(String? key, Duration position, Duration duration,
       double playbackRate) async {
-    await _api.playbackStarted(key, position, duration, playbackRate);
+    await _api.playbackStarted(key!, position, duration, playbackRate);
   }
 
-  Future playbackCheckin(String key, Duration position, Duration duration,
+  Future playbackCheckin(String? key, Duration position, Duration duration,
       double playbackRate, AudiobooklyEvent event) async {
     print('Checking in batches: $playbackRate');
     await _api.playbackCheckin(
-      key,
+      key!,
       position,
       duration,
       {
@@ -128,7 +128,7 @@ class EmbyRepository extends MediaRepository {
         AudiobooklyEvent.Pause: EmbyEvent.Pause,
         AudiobooklyEvent.Unpause: EmbyEvent.Unpause,
         AudiobooklyEvent.PlaybackRateChange: EmbyEvent.PlaybackRateChange,
-      }[event],
+      }[event]!,
     );
   }
 
@@ -147,8 +147,8 @@ class EmbyRepository extends MediaRepository {
     return _api.getServerUrl(path);
   }
 
-  String getThumbnailUrl(String path) {
-    return _api.getThumbnailUrl(path);
+  String getThumbnailUrl(String? path) {
+    return _api.getThumbnailUrl(path!);
   }
 
   Future logout() async {}

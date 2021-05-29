@@ -90,7 +90,7 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.azothforgotten" "\0"
-            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "FileDescription", "Audiobooly" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "audiobookly" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2020 com.azothforgotten. All rights reserved." "\0"

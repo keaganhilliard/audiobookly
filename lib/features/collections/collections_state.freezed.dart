@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'collections_state.dart';
 
@@ -9,29 +9,28 @@ part of 'collections_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$CollectionsStateTearOff {
   const _$CollectionsStateTearOff();
 
-// ignore: unused_element
   CollectionsStateInitial initial() {
     return const CollectionsStateInitial();
   }
 
-// ignore: unused_element
-  CollectionsStateLoaded loaded({List<MediaItem> collections}) {
+  CollectionsStateLoaded loaded({List<MediaItem>? collections}) {
     return CollectionsStateLoaded(
       collections: collections,
     );
   }
 
-// ignore: unused_element
   CollectionsStateLoading loading() {
     return const CollectionsStateLoading();
   }
 
-// ignore: unused_element
-  CollectionsStateErrorDetails error([String message]) {
+  CollectionsStateErrorDetails error([String? message]) {
     return CollectionsStateErrorDetails(
       message,
     );
@@ -39,41 +38,44 @@ class _$CollectionsStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $CollectionsState = _$CollectionsStateTearOff();
 
 /// @nodoc
 mixin _$CollectionsState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> collections),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> collections),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(CollectionsStateInitial value),
-    @required TResult loaded(CollectionsStateLoaded value),
-    @required TResult loading(CollectionsStateLoading value),
-    @required TResult error(CollectionsStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(CollectionsStateInitial value) initial,
+    required TResult Function(CollectionsStateLoaded value) loaded,
+    required TResult Function(CollectionsStateLoading value) loading,
+    required TResult Function(CollectionsStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(CollectionsStateInitial value),
-    TResult loaded(CollectionsStateLoaded value),
-    TResult loading(CollectionsStateLoading value),
-    TResult error(CollectionsStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -113,6 +115,7 @@ class _$CollectionsStateInitialCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$CollectionsStateInitial
     with DiagnosticableTreeMixin
     implements CollectionsStateInitial {
@@ -139,29 +142,24 @@ class _$CollectionsStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> collections),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> collections),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -170,29 +168,24 @@ class _$CollectionsStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(CollectionsStateInitial value),
-    @required TResult loaded(CollectionsStateLoaded value),
-    @required TResult loading(CollectionsStateLoading value),
-    @required TResult error(CollectionsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(CollectionsStateInitial value) initial,
+    required TResult Function(CollectionsStateLoaded value) loaded,
+    required TResult Function(CollectionsStateLoading value) loading,
+    required TResult Function(CollectionsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(CollectionsStateInitial value),
-    TResult loaded(CollectionsStateLoaded value),
-    TResult loading(CollectionsStateLoading value),
-    TResult error(CollectionsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -209,7 +202,7 @@ abstract class $CollectionsStateLoadedCopyWith<$Res> {
   factory $CollectionsStateLoadedCopyWith(CollectionsStateLoaded value,
           $Res Function(CollectionsStateLoaded) then) =
       _$CollectionsStateLoadedCopyWithImpl<$Res>;
-  $Res call({List<MediaItem> collections});
+  $Res call({List<MediaItem>? collections});
 }
 
 /// @nodoc
@@ -225,24 +218,26 @@ class _$CollectionsStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object collections = freezed,
+    Object? collections = freezed,
   }) {
     return _then(CollectionsStateLoaded(
       collections: collections == freezed
           ? _value.collections
-          : collections as List<MediaItem>,
+          : collections // ignore: cast_nullable_to_non_nullable
+              as List<MediaItem>?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$CollectionsStateLoaded
     with DiagnosticableTreeMixin
     implements CollectionsStateLoaded {
   const _$CollectionsStateLoaded({this.collections});
 
   @override
-  final List<MediaItem> collections;
+  final List<MediaItem>? collections;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -278,29 +273,24 @@ class _$CollectionsStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> collections),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(collections);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> collections),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(collections);
     }
@@ -309,29 +299,24 @@ class _$CollectionsStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(CollectionsStateInitial value),
-    @required TResult loaded(CollectionsStateLoaded value),
-    @required TResult loading(CollectionsStateLoading value),
-    @required TResult error(CollectionsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(CollectionsStateInitial value) initial,
+    required TResult Function(CollectionsStateLoaded value) loaded,
+    required TResult Function(CollectionsStateLoading value) loading,
+    required TResult Function(CollectionsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(CollectionsStateInitial value),
-    TResult loaded(CollectionsStateLoaded value),
-    TResult loading(CollectionsStateLoading value),
-    TResult error(CollectionsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -340,12 +325,13 @@ class _$CollectionsStateLoaded
 }
 
 abstract class CollectionsStateLoaded implements CollectionsState {
-  const factory CollectionsStateLoaded({List<MediaItem> collections}) =
+  const factory CollectionsStateLoaded({List<MediaItem>? collections}) =
       _$CollectionsStateLoaded;
 
-  List<MediaItem> get collections;
+  List<MediaItem>? get collections => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CollectionsStateLoadedCopyWith<CollectionsStateLoaded> get copyWith;
+  $CollectionsStateLoadedCopyWith<CollectionsStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -368,6 +354,7 @@ class _$CollectionsStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$CollectionsStateLoading
     with DiagnosticableTreeMixin
     implements CollectionsStateLoading {
@@ -394,29 +381,24 @@ class _$CollectionsStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> collections),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> collections),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -425,29 +407,24 @@ class _$CollectionsStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(CollectionsStateInitial value),
-    @required TResult loaded(CollectionsStateLoaded value),
-    @required TResult loading(CollectionsStateLoading value),
-    @required TResult error(CollectionsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(CollectionsStateInitial value) initial,
+    required TResult Function(CollectionsStateLoaded value) loaded,
+    required TResult Function(CollectionsStateLoading value) loading,
+    required TResult Function(CollectionsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(CollectionsStateInitial value),
-    TResult loaded(CollectionsStateLoaded value),
-    TResult loading(CollectionsStateLoading value),
-    TResult error(CollectionsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -465,7 +442,7 @@ abstract class $CollectionsStateErrorDetailsCopyWith<$Res> {
           CollectionsStateErrorDetails value,
           $Res Function(CollectionsStateErrorDetails) then) =
       _$CollectionsStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -483,22 +460,26 @@ class _$CollectionsStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(CollectionsStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$CollectionsStateErrorDetails
     with DiagnosticableTreeMixin
     implements CollectionsStateErrorDetails {
   const _$CollectionsStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -533,29 +514,24 @@ class _$CollectionsStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<MediaItem> collections),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<MediaItem> collections),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -564,29 +540,24 @@ class _$CollectionsStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(CollectionsStateInitial value),
-    @required TResult loaded(CollectionsStateLoaded value),
-    @required TResult loading(CollectionsStateLoading value),
-    @required TResult error(CollectionsStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(CollectionsStateInitial value) initial,
+    required TResult Function(CollectionsStateLoaded value) loaded,
+    required TResult Function(CollectionsStateLoading value) loading,
+    required TResult Function(CollectionsStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(CollectionsStateInitial value),
-    TResult loaded(CollectionsStateLoaded value),
-    TResult loading(CollectionsStateLoading value),
-    TResult error(CollectionsStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -595,11 +566,11 @@ class _$CollectionsStateErrorDetails
 }
 
 abstract class CollectionsStateErrorDetails implements CollectionsState {
-  const factory CollectionsStateErrorDetails([String message]) =
+  const factory CollectionsStateErrorDetails([String? message]) =
       _$CollectionsStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CollectionsStateErrorDetailsCopyWith<CollectionsStateErrorDetails>
-      get copyWith;
+      get copyWith => throw _privateConstructorUsedError;
 }

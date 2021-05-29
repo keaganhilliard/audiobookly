@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'home_state.dart';
 
@@ -9,31 +9,30 @@ part of 'home_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$HomeStateTearOff {
   const _$HomeStateTearOff();
 
-// ignore: unused_element
   HomeStateInitial initial() {
     return const HomeStateInitial();
   }
 
-// ignore: unused_element
   HomeStateLoaded loaded(
-      {List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded}) {
+      {List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded}) {
     return HomeStateLoaded(
       recentlyPlayed: recentlyPlayed,
       recentlyAdded: recentlyAdded,
     );
   }
 
-// ignore: unused_element
   HomeStateLoading loading() {
     return const HomeStateLoading();
   }
 
-// ignore: unused_element
-  HomeStateErrorDetails error([String message]) {
+  HomeStateErrorDetails error([String? message]) {
     return HomeStateErrorDetails(
       message,
     );
@@ -41,44 +40,48 @@ class _$HomeStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $HomeState = _$HomeStateTearOff();
 
 /// @nodoc
 mixin _$HomeState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required
-        TResult loaded(
-            List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(
-        List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(HomeStateInitial value),
-    @required TResult loaded(HomeStateLoaded value),
-    @required TResult loading(HomeStateLoading value),
-    @required TResult error(HomeStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeStateInitial value) initial,
+    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(HomeStateLoading value) loading,
+    required TResult Function(HomeStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(HomeStateInitial value),
-    TResult loaded(HomeStateLoaded value),
-    TResult loading(HomeStateLoading value),
-    TResult error(HomeStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -115,6 +118,7 @@ class _$HomeStateInitialCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$HomeStateInitial
     with DiagnosticableTreeMixin
     implements HomeStateInitial {
@@ -141,32 +145,28 @@ class _$HomeStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required
-        TResult loaded(
-            List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(
-        List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -175,29 +175,24 @@ class _$HomeStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(HomeStateInitial value),
-    @required TResult loaded(HomeStateLoaded value),
-    @required TResult loading(HomeStateLoading value),
-    @required TResult error(HomeStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeStateInitial value) initial,
+    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(HomeStateLoading value) loading,
+    required TResult Function(HomeStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(HomeStateInitial value),
-    TResult loaded(HomeStateLoaded value),
-    TResult loading(HomeStateLoading value),
-    TResult error(HomeStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -214,7 +209,7 @@ abstract class $HomeStateLoadedCopyWith<$Res> {
   factory $HomeStateLoadedCopyWith(
           HomeStateLoaded value, $Res Function(HomeStateLoaded) then) =
       _$HomeStateLoadedCopyWithImpl<$Res>;
-  $Res call({List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded});
+  $Res call({List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded});
 }
 
 /// @nodoc
@@ -229,30 +224,33 @@ class _$HomeStateLoadedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object recentlyPlayed = freezed,
-    Object recentlyAdded = freezed,
+    Object? recentlyPlayed = freezed,
+    Object? recentlyAdded = freezed,
   }) {
     return _then(HomeStateLoaded(
       recentlyPlayed: recentlyPlayed == freezed
           ? _value.recentlyPlayed
-          : recentlyPlayed as List<MediaItem>,
+          : recentlyPlayed // ignore: cast_nullable_to_non_nullable
+              as List<MediaItem>?,
       recentlyAdded: recentlyAdded == freezed
           ? _value.recentlyAdded
-          : recentlyAdded as List<MediaItem>,
+          : recentlyAdded // ignore: cast_nullable_to_non_nullable
+              as List<MediaItem>?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$HomeStateLoaded
     with DiagnosticableTreeMixin
     implements HomeStateLoaded {
   const _$HomeStateLoaded({this.recentlyPlayed, this.recentlyAdded});
 
   @override
-  final List<MediaItem> recentlyPlayed;
+  final List<MediaItem>? recentlyPlayed;
   @override
-  final List<MediaItem> recentlyAdded;
+  final List<MediaItem>? recentlyAdded;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -293,32 +291,28 @@ class _$HomeStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required
-        TResult loaded(
-            List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(recentlyPlayed, recentlyAdded);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(
-        List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(recentlyPlayed, recentlyAdded);
     }
@@ -327,29 +321,24 @@ class _$HomeStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(HomeStateInitial value),
-    @required TResult loaded(HomeStateLoaded value),
-    @required TResult loading(HomeStateLoading value),
-    @required TResult error(HomeStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeStateInitial value) initial,
+    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(HomeStateLoading value) loading,
+    required TResult Function(HomeStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(HomeStateInitial value),
-    TResult loaded(HomeStateLoaded value),
-    TResult loading(HomeStateLoading value),
-    TResult error(HomeStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -359,13 +348,14 @@ class _$HomeStateLoaded
 
 abstract class HomeStateLoaded implements HomeState {
   const factory HomeStateLoaded(
-      {List<MediaItem> recentlyPlayed,
-      List<MediaItem> recentlyAdded}) = _$HomeStateLoaded;
+      {List<MediaItem>? recentlyPlayed,
+      List<MediaItem>? recentlyAdded}) = _$HomeStateLoaded;
 
-  List<MediaItem> get recentlyPlayed;
-  List<MediaItem> get recentlyAdded;
+  List<MediaItem>? get recentlyPlayed => throw _privateConstructorUsedError;
+  List<MediaItem>? get recentlyAdded => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HomeStateLoadedCopyWith<HomeStateLoaded> get copyWith;
+  $HomeStateLoadedCopyWith<HomeStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -387,6 +377,7 @@ class _$HomeStateLoadingCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$HomeStateLoading
     with DiagnosticableTreeMixin
     implements HomeStateLoading {
@@ -413,32 +404,28 @@ class _$HomeStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required
-        TResult loaded(
-            List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(
-        List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -447,29 +434,24 @@ class _$HomeStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(HomeStateInitial value),
-    @required TResult loaded(HomeStateLoaded value),
-    @required TResult loading(HomeStateLoading value),
-    @required TResult error(HomeStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeStateInitial value) initial,
+    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(HomeStateLoading value) loading,
+    required TResult Function(HomeStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(HomeStateInitial value),
-    TResult loaded(HomeStateLoaded value),
-    TResult loading(HomeStateLoading value),
-    TResult error(HomeStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -486,7 +468,7 @@ abstract class $HomeStateErrorDetailsCopyWith<$Res> {
   factory $HomeStateErrorDetailsCopyWith(HomeStateErrorDetails value,
           $Res Function(HomeStateErrorDetails) then) =
       _$HomeStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -502,22 +484,26 @@ class _$HomeStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(HomeStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$HomeStateErrorDetails
     with DiagnosticableTreeMixin
     implements HomeStateErrorDetails {
   const _$HomeStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -552,32 +538,28 @@ class _$HomeStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required
-        TResult loaded(
-            List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)
+        loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(
-        List<MediaItem> recentlyPlayed, List<MediaItem> recentlyAdded),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -586,29 +568,24 @@ class _$HomeStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(HomeStateInitial value),
-    @required TResult loaded(HomeStateLoaded value),
-    @required TResult loading(HomeStateLoading value),
-    @required TResult error(HomeStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeStateInitial value) initial,
+    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(HomeStateLoading value) loading,
+    required TResult Function(HomeStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(HomeStateInitial value),
-    TResult loaded(HomeStateLoaded value),
-    TResult loading(HomeStateLoading value),
-    TResult error(HomeStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -617,10 +594,11 @@ class _$HomeStateErrorDetails
 }
 
 abstract class HomeStateErrorDetails implements HomeState {
-  const factory HomeStateErrorDetails([String message]) =
+  const factory HomeStateErrorDetails([String? message]) =
       _$HomeStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HomeStateErrorDetailsCopyWith<HomeStateErrorDetails> get copyWith;
+  $HomeStateErrorDetailsCopyWith<HomeStateErrorDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }

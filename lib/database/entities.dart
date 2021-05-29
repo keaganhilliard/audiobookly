@@ -1,37 +1,61 @@
-// import 'package:objectbox/objectbox.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:objectbox/objectbox.dart';
 
-// @Entity()
-// class Book {
-//   int id;
-//   String exId;
-//   String title;
-//   String author;
-//   String description;
-//   int durationInMilliseconds;
+@Entity()
+class Book {
+  int id;
+  String exId;
+  String title;
+  String author;
+  String description;
+  int durationInMilliseconds;
 
-//   @Backlink()
-//   final tracks = ToMany<Track>();
-// }
+  Book({
+    this.id = 0,
+    required this.exId,
+    required this.title,
+    required this.author,
+    required this.description,
+    required this.durationInMilliseconds,
+  });
 
-// @Entity()
-// class Track {
-//   int id;
-//   String exId;
-//   String title;
+  @Backlink()
+  final tracks = ToMany<Track>();
+}
 
-//   final book = ToOne<Book>();
+@Entity()
+class Track {
+  int id;
+  String exId;
+  String title;
 
-//   @Backlink()
-//   final downloadTasks = ToMany<DownloadTask>();
-// }
+  Track({
+    this.id = 0,
+    required this.exId,
+    required this.title,
+  });
 
-// @Entity()
-// class DownloadTask {
-//   int id;
-//   double progress;
-//   String status;
-//   String path;
-//   String url;
+  final book = ToOne<Book>();
 
-//   final track = ToOne<Track>();
-// }
+  @Backlink()
+  final downloadTasks = ToMany<DownloadTask>();
+}
+
+@Entity()
+class DownloadTask {
+  int id;
+  double progress;
+  String status;
+  String path;
+  String url;
+
+  DownloadTask({
+    this.id = 0,
+    required this.progress,
+    required this.status,
+    required this.path,
+    required this.url,
+  });
+
+  final track = ToOne<Track>();
+}

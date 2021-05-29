@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'library_select_state.dart';
 
@@ -9,29 +9,28 @@ part of 'library_select_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$LibrarySelectStateTearOff {
   const _$LibrarySelectStateTearOff();
 
-// ignore: unused_element
   LibrarySelectStateInitial initial() {
     return const LibrarySelectStateInitial();
   }
 
-// ignore: unused_element
-  LibrarySelectStateLoaded loaded({List<Library> libraries}) {
+  LibrarySelectStateLoaded loaded({List<Library>? libraries}) {
     return LibrarySelectStateLoaded(
       libraries: libraries,
     );
   }
 
-// ignore: unused_element
   LibrarySelectStateLoading loading() {
     return const LibrarySelectStateLoading();
   }
 
-// ignore: unused_element
-  LibrarySelectStateErrorDetails error([String message]) {
+  LibrarySelectStateErrorDetails error([String? message]) {
     return LibrarySelectStateErrorDetails(
       message,
     );
@@ -39,41 +38,44 @@ class _$LibrarySelectStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $LibrarySelectState = _$LibrarySelectStateTearOff();
 
 /// @nodoc
 mixin _$LibrarySelectState {
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<Library> libraries),
-    @required TResult loading(),
-    @required TResult error(String message),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<Library> libraries),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(LibrarySelectStateInitial value),
-    @required TResult loaded(LibrarySelectStateLoaded value),
-    @required TResult loading(LibrarySelectStateLoading value),
-    @required TResult error(LibrarySelectStateErrorDetails value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(LibrarySelectStateInitial value) initial,
+    required TResult Function(LibrarySelectStateLoaded value) loaded,
+    required TResult Function(LibrarySelectStateLoading value) loading,
+    required TResult Function(LibrarySelectStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(LibrarySelectStateInitial value),
-    TResult loaded(LibrarySelectStateLoaded value),
-    TResult loading(LibrarySelectStateLoading value),
-    TResult error(LibrarySelectStateErrorDetails value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -114,6 +116,7 @@ class _$LibrarySelectStateInitialCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$LibrarySelectStateInitial
     with DiagnosticableTreeMixin
     implements LibrarySelectStateInitial {
@@ -140,29 +143,24 @@ class _$LibrarySelectStateInitial
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<Library> libraries),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<Library> libraries),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -171,29 +169,24 @@ class _$LibrarySelectStateInitial
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(LibrarySelectStateInitial value),
-    @required TResult loaded(LibrarySelectStateLoaded value),
-    @required TResult loading(LibrarySelectStateLoading value),
-    @required TResult error(LibrarySelectStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(LibrarySelectStateInitial value) initial,
+    required TResult Function(LibrarySelectStateLoaded value) loaded,
+    required TResult Function(LibrarySelectStateLoading value) loading,
+    required TResult Function(LibrarySelectStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(LibrarySelectStateInitial value),
-    TResult loaded(LibrarySelectStateLoaded value),
-    TResult loading(LibrarySelectStateLoading value),
-    TResult error(LibrarySelectStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -210,7 +203,7 @@ abstract class $LibrarySelectStateLoadedCopyWith<$Res> {
   factory $LibrarySelectStateLoadedCopyWith(LibrarySelectStateLoaded value,
           $Res Function(LibrarySelectStateLoaded) then) =
       _$LibrarySelectStateLoadedCopyWithImpl<$Res>;
-  $Res call({List<Library> libraries});
+  $Res call({List<Library>? libraries});
 }
 
 /// @nodoc
@@ -227,23 +220,26 @@ class _$LibrarySelectStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object libraries = freezed,
+    Object? libraries = freezed,
   }) {
     return _then(LibrarySelectStateLoaded(
-      libraries:
-          libraries == freezed ? _value.libraries : libraries as List<Library>,
+      libraries: libraries == freezed
+          ? _value.libraries
+          : libraries // ignore: cast_nullable_to_non_nullable
+              as List<Library>?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$LibrarySelectStateLoaded
     with DiagnosticableTreeMixin
     implements LibrarySelectStateLoaded {
   const _$LibrarySelectStateLoaded({this.libraries});
 
   @override
-  final List<Library> libraries;
+  final List<Library>? libraries;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -279,29 +275,24 @@ class _$LibrarySelectStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<Library> libraries),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(libraries);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<Library> libraries),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(libraries);
     }
@@ -310,29 +301,24 @@ class _$LibrarySelectStateLoaded
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(LibrarySelectStateInitial value),
-    @required TResult loaded(LibrarySelectStateLoaded value),
-    @required TResult loading(LibrarySelectStateLoading value),
-    @required TResult error(LibrarySelectStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(LibrarySelectStateInitial value) initial,
+    required TResult Function(LibrarySelectStateLoaded value) loaded,
+    required TResult Function(LibrarySelectStateLoading value) loading,
+    required TResult Function(LibrarySelectStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(LibrarySelectStateInitial value),
-    TResult loaded(LibrarySelectStateLoaded value),
-    TResult loading(LibrarySelectStateLoading value),
-    TResult error(LibrarySelectStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loaded != null) {
       return loaded(this);
     }
@@ -341,12 +327,13 @@ class _$LibrarySelectStateLoaded
 }
 
 abstract class LibrarySelectStateLoaded implements LibrarySelectState {
-  const factory LibrarySelectStateLoaded({List<Library> libraries}) =
+  const factory LibrarySelectStateLoaded({List<Library>? libraries}) =
       _$LibrarySelectStateLoaded;
 
-  List<Library> get libraries;
+  List<Library>? get libraries => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LibrarySelectStateLoadedCopyWith<LibrarySelectStateLoaded> get copyWith;
+  $LibrarySelectStateLoadedCopyWith<LibrarySelectStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -370,6 +357,7 @@ class _$LibrarySelectStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$LibrarySelectStateLoading
     with DiagnosticableTreeMixin
     implements LibrarySelectStateLoading {
@@ -396,29 +384,24 @@ class _$LibrarySelectStateLoading
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<Library> libraries),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<Library> libraries),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -427,29 +410,24 @@ class _$LibrarySelectStateLoading
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(LibrarySelectStateInitial value),
-    @required TResult loaded(LibrarySelectStateLoaded value),
-    @required TResult loading(LibrarySelectStateLoading value),
-    @required TResult error(LibrarySelectStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(LibrarySelectStateInitial value) initial,
+    required TResult Function(LibrarySelectStateLoaded value) loaded,
+    required TResult Function(LibrarySelectStateLoading value) loading,
+    required TResult Function(LibrarySelectStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(LibrarySelectStateInitial value),
-    TResult loaded(LibrarySelectStateLoaded value),
-    TResult loading(LibrarySelectStateLoading value),
-    TResult error(LibrarySelectStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -467,7 +445,7 @@ abstract class $LibrarySelectStateErrorDetailsCopyWith<$Res> {
           LibrarySelectStateErrorDetails value,
           $Res Function(LibrarySelectStateErrorDetails) then) =
       _$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -485,22 +463,26 @@ class _$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(LibrarySelectStateErrorDetails(
-      message == freezed ? _value.message : message as String,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$LibrarySelectStateErrorDetails
     with DiagnosticableTreeMixin
     implements LibrarySelectStateErrorDetails {
   const _$LibrarySelectStateErrorDetails([this.message]);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -535,29 +517,24 @@ class _$LibrarySelectStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(),
-    @required TResult loaded(List<Library> libraries),
-    @required TResult loading(),
-    @required TResult error(String message),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function() loading,
+    required TResult Function(String? message) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(),
-    TResult loaded(List<Library> libraries),
-    TResult loading(),
-    TResult error(String message),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(message);
     }
@@ -566,29 +543,24 @@ class _$LibrarySelectStateErrorDetails
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(LibrarySelectStateInitial value),
-    @required TResult loaded(LibrarySelectStateLoaded value),
-    @required TResult loading(LibrarySelectStateLoading value),
-    @required TResult error(LibrarySelectStateErrorDetails value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(LibrarySelectStateInitial value) initial,
+    required TResult Function(LibrarySelectStateLoaded value) loaded,
+    required TResult Function(LibrarySelectStateLoading value) loading,
+    required TResult Function(LibrarySelectStateErrorDetails value) error,
   }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(loading != null);
-    assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(LibrarySelectStateInitial value),
-    TResult loaded(LibrarySelectStateLoaded value),
-    TResult loading(LibrarySelectStateLoading value),
-    TResult error(LibrarySelectStateErrorDetails value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (error != null) {
       return error(this);
     }
@@ -597,11 +569,11 @@ class _$LibrarySelectStateErrorDetails
 }
 
 abstract class LibrarySelectStateErrorDetails implements LibrarySelectState {
-  const factory LibrarySelectStateErrorDetails([String message]) =
+  const factory LibrarySelectStateErrorDetails([String? message]) =
       _$LibrarySelectStateErrorDetails;
 
-  String get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LibrarySelectStateErrorDetailsCopyWith<LibrarySelectStateErrorDetails>
-      get copyWith;
+      get copyWith => throw _privateConstructorUsedError;
 }

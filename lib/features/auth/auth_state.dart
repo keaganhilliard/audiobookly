@@ -7,7 +7,7 @@ part 'auth_state.freezed.dart';
 @freezed
 abstract class AuthState with _$AuthState {
   const factory AuthState.initial() = AuthStateInitial;
-  const factory AuthState.loaded({User user}) = AuthStateLoaded;
+  const factory AuthState.loaded({User? user}) = AuthStateLoaded;
   const factory AuthState.loading() = AuthStateLoading;
-  const factory AuthState.error([String message]) = AuthStateErrorDetails;
+  const factory AuthState.error([String? message]) = AuthStateErrorDetails;
 }

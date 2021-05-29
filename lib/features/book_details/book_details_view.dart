@@ -12,14 +12,14 @@ import 'package:expandable/expandable.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 class BookDetailsView extends HookWidget {
-  final String mediaId;
+  final String? mediaId;
   BookDetailsView({this.mediaId});
 
   @override
   Widget build(BuildContext context) {
     // final stateProvider = useProvider(bookDetailsStateProvider(mediaId));
-    final bookDetails = useProvider(bookDetailsStateProvider(mediaId).notifier);
-    final state = useProvider(bookDetailsStateProvider(mediaId));
+    final bookDetails = useProvider(bookDetailsStateProvider(mediaId!).notifier);
+    final state = useProvider(bookDetailsStateProvider(mediaId!));
     // final downloadService = useProvider(downloadServiceProvider);
     final playbackController = useProvider(playbackControllerProvider);
     final navigationService = useProvider(navigationServiceProvider);
@@ -56,14 +56,14 @@ class BookDetailsView extends HookWidget {
                             ),
                             clipBehavior: Clip.antiAlias,
                             child: CachedNetworkImage(
-                              imageUrl: state.book.artUri.toString(),
+                              imageUrl: state.book!.artUri.toString(),
                               fit: BoxFit.scaleDown,
                             ),
                           ),
                           FloatingActionButton(
                               child: Icon(Icons.play_arrow),
                               onPressed: () {
-                                playbackController.playFromId(state.book.id);
+                                playbackController.playFromId(state.book!.id);
                                 navigationService.pushNamed(
                                   Routes.Player,
                                   arguments: state.book,
@@ -81,13 +81,13 @@ class BookDetailsView extends HookWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              state.book.title,
+                              state.book!.title,
                               maxLines: 3,
                             ),
                             Divider(),
-                            Text('By ${state.book.artist}'),
-                            Text('Narrated by ${state.book.narrator ?? ''}'),
-                            Text(Utils.friendlyDuration(state.book.duration)),
+                            Text('By ${state.book!.artist}'),
+                            Text('Narrated by ${state.book!.narrator ?? ''}'),
+                            Text(Utils.friendlyDuration(state.book!.duration!)),
                             Divider(),
                             ButtonBar(
                               alignment: MainAxisAlignment.start,
@@ -101,7 +101,7 @@ class BookDetailsView extends HookWidget {
                                     // }
                                   },
                                 ),
-                                if (state.book.played)
+                                if (state.book!.played)
                                   IconButton(
                                     color: Colors.deepPurple,
                                     icon: Icon(Icons.check),
@@ -126,7 +126,7 @@ class BookDetailsView extends HookWidget {
                 ),
               ),
               // Divider(),
-              if (state.book.displayDescription?.isNotEmpty ?? false)
+              if (state.book!.displayDescription?.isNotEmpty ?? false)
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -137,7 +137,7 @@ class BookDetailsView extends HookWidget {
                             collapsed: Column(
                               children: [
                                 Text(
-                                  state.book.displayDescription ?? '',
+                                  state.book!.displayDescription ?? '',
                                   softWrap: true,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -156,7 +156,7 @@ class BookDetailsView extends HookWidget {
                             expanded: Column(
                               children: [
                                 Text(
-                                  state.book.displayDescription ?? '',
+                                  state.book!.displayDescription ?? '',
                                   softWrap: true,
                                 ),
                                 ExpandableButton(
@@ -176,28 +176,28 @@ class BookDetailsView extends HookWidget {
                     ),
                   ),
                 ),
-              if (state.chapters.isNotEmpty)
+              if (state.chapters!.isNotEmpty)
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return ListTile(
                         onTap: () async {
-                          await playbackController.playFromId(state.book.id);
+                          await playbackController.playFromId(state.book!.id);
                           await playbackController.skipToQueueItem(index);
                         },
                         title: Text(
-                          state.chapters[index].title,
+                          state.chapters![index].title,
                         ),
                         trailing: Text(
                           RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
                                   .firstMatch(
-                                      "${state.chapters[index].duration}")
+                                      "${state.chapters![index].duration}")
                                   ?.group(1) ??
                               '',
                         ),
                       );
                     },
-                    childCount: state.chapters.length,
+                    childCount: state.chapters!.length,
                   ),
                 ),
             ],

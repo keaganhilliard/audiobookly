@@ -10,14 +10,14 @@ final authorsStateProvider =
 });
 
 class AuthorsNotifier extends StateNotifier<AuthorsState> {
-  final MediaRepository _repository;
+  final MediaRepository? _repository;
 
   AuthorsNotifier(this._repository) : super(AuthorsState.initial());
 
   Future<void> getAuthors() async {
     try {
       state = AuthorsState.loading();
-      final authors = await _repository.getChildren(MediaIds.AUTHORS_ID);
+      final authors = await _repository!.getChildren(MediaIds.AUTHORS_ID);
       state = AuthorsState.loaded(authors: authors);
     } on Exception {
       state =

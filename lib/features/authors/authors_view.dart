@@ -32,7 +32,7 @@ class AuthorsView extends HookWidget {
         child: Consumer(
           builder: (context, reader, child) {
             final state = reader(authorsStateProvider);
-            if (state is AuthorsStateInitial) _refresher.currentState.show();
+            if (state is AuthorsStateInitial) _refresher.currentState!.show();
             if (state is AuthorsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
                 items: state.authors,
@@ -59,7 +59,7 @@ class AuthorsView extends HookWidget {
                   Text('Could not fetch authors, is the device online?'),
                   TextButton(
                     onPressed: () {
-                      _refresher.currentState.show();
+                      _refresher.currentState!.show();
                     },
                     child: Text('Retry'),
                   )
@@ -67,7 +67,7 @@ class AuthorsView extends HookWidget {
               );
             else
               return Container();
-          },
+          } as Widget Function(BuildContext, T Function<T>(ProviderBase<Object?, T>), Widget?),
         ),
       ),
     );

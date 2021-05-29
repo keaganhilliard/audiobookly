@@ -10,7 +10,7 @@ part 'books_state.freezed.dart';
 abstract class BooksState with _$BooksState {
   const factory BooksState.initial() = BooksStateInitial;
   const factory BooksState.loaded(
-      {List<MediaItem> books, String currentParent}) = BooksStateLoaded;
+      {List<MediaItem>? books, String? currentParent}) = BooksStateLoaded;
   const factory BooksState.loading() = BooksStateLoading;
-  const factory BooksState.error([String message]) = BooksStateErrorDetails;
+  const factory BooksState.error([String? message]) = BooksStateErrorDetails;
 }

@@ -59,12 +59,8 @@ class EmbyUser {
     data['HasConfiguredEasyPassword'] = this.hasConfiguredEasyPassword;
     data['LastLoginDate'] = this.lastLoginDate?.toIso8601String();
     data['LastActivityDate'] = this.lastActivityDate?.toIso8601String();
-    if (this.configuration != null) {
-      data['Configuration'] = this.configuration!.toJson();
-    }
-    if (this.policy != null) {
-      data['Policy'] = this.policy!.toJson();
-    }
+    data['Configuration'] = this.configuration?.toJson();
+    data['Policy'] = this.policy?.toJson();
     return data;
   }
 }
@@ -74,7 +70,6 @@ class Configuration {
   bool? playDefaultAudioTrack;
   String? subtitleLanguagePreference;
   bool? displayMissingEpisodes;
-  List<String>? groupedFolders;
   String? subtitleMode;
   bool? displayCollectionsView;
   bool? enableLocalPassword;
@@ -91,7 +86,6 @@ class Configuration {
     this.playDefaultAudioTrack,
     this.subtitleLanguagePreference,
     this.displayMissingEpisodes,
-    this.groupedFolders,
     this.subtitleMode,
     this.displayCollectionsView,
     this.enableLocalPassword,
@@ -109,13 +103,12 @@ class Configuration {
     playDefaultAudioTrack = json['PlayDefaultAudioTrack'];
     subtitleLanguagePreference = json['SubtitleLanguagePreference'];
     displayMissingEpisodes = json['DisplayMissingEpisodes'];
-    groupedFolders = json['GroupedFolders'].cast<String>();
     subtitleMode = json['SubtitleMode'];
     displayCollectionsView = json['DisplayCollectionsView'];
     enableLocalPassword = json['EnableLocalPassword'];
-    orderedViews = json['OrderedViews'].cast<String>();
-    latestItemsExcludes = json['LatestItemsExcludes'].cast<String>();
-    myMediaExcludes = json['MyMediaExcludes'].cast<String>();
+    orderedViews = json['OrderedViews']?.cast<String>();
+    latestItemsExcludes = json['LatestItemsExcludes']?.cast<String>();
+    myMediaExcludes = json['MyMediaExcludes']?.cast<String>();
     hidePlayedInLatest = json['HidePlayedInLatest'];
     rememberAudioSelections = json['RememberAudioSelections'];
     rememberSubtitleSelections = json['RememberSubtitleSelections'];
@@ -128,7 +121,6 @@ class Configuration {
     data['PlayDefaultAudioTrack'] = this.playDefaultAudioTrack;
     data['SubtitleLanguagePreference'] = this.subtitleLanguagePreference;
     data['DisplayMissingEpisodes'] = this.displayMissingEpisodes;
-    data['GroupedFolders'] = this.groupedFolders;
     data['SubtitleMode'] = this.subtitleMode;
     data['DisplayCollectionsView'] = this.displayCollectionsView;
     data['EnableLocalPassword'] = this.enableLocalPassword;
@@ -227,16 +219,13 @@ class Policy {
     isHidden = json['IsHidden'];
     isHiddenRemotely = json['IsHiddenRemotely'];
     isDisabled = json['IsDisabled'];
-    blockedTags = json['BlockedTags'].cast<String>();
+    blockedTags = json['BlockedTags']?.cast<String>();
     isTagBlockingModeInclusive = json['IsTagBlockingModeInclusive'];
     enableUserPreferenceAccess = json['EnableUserPreferenceAccess'];
-    if (json['AccessSchedules'] != null) {
-      accessSchedules = [];
-      json['AccessSchedules'].forEach((v) {
-        accessSchedules!.add(new AccessSchedule.fromJson(v));
-      });
-    }
-    blockUnratedItems = json['BlockUnratedItems'].cast<String>();
+    accessSchedules = json['AccessSchedules']
+        ?.map<AccessSchedule>((v) => AccessSchedule.fromJson(v))
+        .toList();
+    blockUnratedItems = json['BlockUnratedItems']?.cast<String>();
     enableRemoteControlOfOtherUsers = json['EnableRemoteControlOfOtherUsers'];
     enableSharedDeviceControl = json['EnableSharedDeviceControl'];
     enableRemoteAccess = json['EnableRemoteAccess'];
@@ -248,23 +237,23 @@ class Policy {
     enablePlaybackRemuxing = json['EnablePlaybackRemuxing'];
     enableContentDeletion = json['EnableContentDeletion'];
     enableContentDeletionFromFolders =
-        json['EnableContentDeletionFromFolders'].cast<String>();
+        json['EnableContentDeletionFromFolders']?.cast<String>();
     enableContentDownloading = json['EnableContentDownloading'];
     enableSubtitleDownloading = json['EnableSubtitleDownloading'];
     enableSubtitleManagement = json['EnableSubtitleManagement'];
     enableSyncTranscoding = json['EnableSyncTranscoding'];
     enableMediaConversion = json['EnableMediaConversion'];
-    enabledDevices = json['EnabledDevices'].cast<String>();
+    enabledDevices = json['EnabledDevices']?.cast<String>();
     enableAllDevices = json['EnableAllDevices'];
-    enabledChannels = json['EnabledChannels'].cast<String>();
+    enabledChannels = json['EnabledChannels']?.cast<String>();
     enableAllChannels = json['EnableAllChannels'];
-    enabledFolders = json['EnabledFolders'].cast<String>();
+    enabledFolders = json['EnabledFolders']?.cast<String>();
     enableAllFolders = json['EnableAllFolders'];
     invalidLoginAttemptCount = json['InvalidLoginAttemptCount'];
     enablePublicSharing = json['EnablePublicSharing'];
     remoteClientBitrateLimit = json['RemoteClientBitrateLimit'];
     authenticationProviderId = json['AuthenticationProviderId'];
-    excludedSubFolders = json['ExcludedSubFolders'].cast<String>();
+    excludedSubFolders = json['ExcludedSubFolders']?.cast<String>();
     simultaneousStreamLimit = json['SimultaneousStreamLimit'];
   }
 
@@ -277,10 +266,8 @@ class Policy {
     data['BlockedTags'] = this.blockedTags;
     data['IsTagBlockingModeInclusive'] = this.isTagBlockingModeInclusive;
     data['EnableUserPreferenceAccess'] = this.enableUserPreferenceAccess;
-    if (this.accessSchedules != null) {
-      data['AccessSchedules'] =
-          this.accessSchedules!.map((v) => v.toJson()).toList();
-    }
+    data['AccessSchedules'] =
+        this.accessSchedules?.map((v) => v.toJson()).toList();
     data['BlockUnratedItems'] = this.blockUnratedItems;
     data['EnableRemoteControlOfOtherUsers'] =
         this.enableRemoteControlOfOtherUsers;

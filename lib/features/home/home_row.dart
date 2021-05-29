@@ -10,10 +10,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeRow extends HookWidget {
   // final List<MediaItem> books;
-  final String title;
-  final List<MediaItem> items;
-  final double height;
-  const HomeRow({Key key, this.title, this.items, this.height})
+  final String? title;
+  final List<MediaItem>? items;
+  final double? height;
+  const HomeRow({Key? key, this.title, this.items, this.height})
       : super(key: key);
 
   @override
@@ -28,7 +28,7 @@ class HomeRow extends HookWidget {
         Padding(
             padding: EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
             child: Text(
-              title,
+              title!,
               style: Theme.of(context).textTheme.headline5,
             )),
         Padding(
@@ -38,19 +38,19 @@ class HomeRow extends HookWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: items.length,
+              itemCount: items!.length,
               itemBuilder: (context, index) {
-                final MediaItem book = items[index];
+                final MediaItem book = items![index];
                 return BookListElement(
                   onTap: () async {
                     playbackController.playItem(book);
                     navigationService.pushNamed(Routes.Player, arguments: book);
                   },
                   progress: book.viewOffset.inMilliseconds /
-                      book.duration.inMilliseconds,
+                      book.duration!.inMilliseconds,
                   thumbnailUrl: book.artUri.toString(),
                   title: book.title,
-                  subtitle: book?.artist ?? '',
+                  subtitle: book.artist ?? '',
                   played: book.played,
                 );
               },
