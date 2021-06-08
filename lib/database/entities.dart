@@ -1,4 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -8,6 +7,7 @@ class Book {
   String title;
   String author;
   String description;
+  String artPath;
   int durationInMilliseconds;
 
   Book({
@@ -16,6 +16,7 @@ class Book {
     required this.title,
     required this.author,
     required this.description,
+    required this.artPath,
     required this.durationInMilliseconds,
   });
 
@@ -28,11 +29,13 @@ class Track {
   int id;
   String exId;
   String title;
+  int durationInMilliseconds;
 
   Track({
     this.id = 0,
     required this.exId,
     required this.title,
+    required this.durationInMilliseconds,
   });
 
   final book = ToOne<Book>();

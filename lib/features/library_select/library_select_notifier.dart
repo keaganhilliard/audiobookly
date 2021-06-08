@@ -28,6 +28,7 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
   Future<void> getLibraries() async {
     try {
       state = LibrarySelectState.loading();
+      await _repository!.getServerAndLibrary();
       final libs = await _repository!.getLibraries();
       state = LibrarySelectState.loaded(libraries: libs);
     } on Exception {

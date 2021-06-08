@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:audiobookly/features/home/home_notifier.dart';
 import 'package:audiobookly/features/home/home_row.dart';
 import 'package:audiobookly/features/home/home_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,9 +22,12 @@ class HomeView extends HookWidget {
     // final state = useProvider(homeStateProvider.state);
 
     return ScaffoldWithoutFooter(
+      refresh: !kIsWeb && !Platform.isAndroid,
+      onRefresh: () {
+        _refresher.currentState!.show();
+      },
       title: Text('Audiobookly'),
       body: RefreshIndicator(
-        color: Theme.of(context).accentColor,
         key: _refresher,
         onRefresh: () async {
           print('refreshing');
@@ -63,7 +69,7 @@ class HomeView extends HookWidget {
               else {
                 return Container();
               }
-            } as Widget Function(BuildContext, T Function<T>(ProviderBase<Object?, T>), Widget?),
+            },
           ),
         ),
       ),

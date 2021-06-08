@@ -82,6 +82,7 @@ class EmbyRepository extends MediaRepository {
   Future<List<Library>> getLibraries() async {
     final libraries = await _api.getLibraries();
     return libraries
+        .where((library) => library.collectionType == 'audiobooks')
         .map((library) => Library(library.id, library.name))
         .toList();
   }

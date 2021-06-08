@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7968653816016852112",
-      "lastPropertyId": "6:4901756861453353842",
+      "lastPropertyId": "7:6099277228885854196",
       "name": "Book",
       "properties": [
         {
@@ -38,6 +38,11 @@
           "id": "6:4901756861453353842",
           "name": "durationInMilliseconds",
           "type": 6
+        },
+        {
+          "id": "7:6099277228885854196",
+          "name": "artPath",
+          "type": 9
         }
       ],
       "relations": []
@@ -86,7 +91,7 @@
     },
     {
       "id": "3:488527119246372000",
-      "lastPropertyId": "4:2391151777963167133",
+      "lastPropertyId": "5:717134928331429442",
       "name": "Track",
       "properties": [
         {
@@ -112,6 +117,11 @@
           "flags": 520,
           "indexId": "2:5136697801723172224",
           "relationTarget": "Book"
+        },
+        {
+          "id": "5:717134928331429442",
+          "name": "durationInMilliseconds",
+          "type": 6
         }
       ],
       "relations": []

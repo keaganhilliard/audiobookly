@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/features/book_details/book_details_view.dart';
@@ -5,6 +7,7 @@ import 'package:audiobookly/features/books/books_notifier.dart';
 import 'package:audiobookly/features/books/books_state.dart';
 import 'package:audiobookly/widgets/book_grid_item.dart';
 import 'package:audiobookly/widgets/responsive_grid_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,9 +28,12 @@ class BooksView extends HookWidget {
     final booksProvider = useProvider(booksStateProvider!(mediaId).notifier);
 
     return ScaffoldWithoutFooter(
+      refresh: !kIsWeb && !Platform.isAndroid,
+      onRefresh: () {
+        _refresher.currentState!.show();
+      },
       title: Text(title ?? 'Books'),
       body: RefreshIndicator(
-        color: Theme.of(context).accentColor,
         key: _refresher,
         onRefresh: () async {
           print('refreshing');
@@ -57,8 +63,10 @@ class BooksView extends HookWidget {
                       thumbnailUrl: book.artUri.toString(),
                       title: book.title,
                       subtitle: book.artist,
-                      progress: book.viewOffset.inMilliseconds /
-                          book.duration!.inMilliseconds,
+                      progress: book.duration != null
+                          ? book.viewOffset.inMilliseconds /
+                              book.duration!.inMilliseconds
+                          : 0,
                       played: book.played,
                     ),
                   );
@@ -74,9 +82,6 @@ class BooksView extends HookWidget {
                       child: Text(state.message!),
                     ),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).accentColor,
-                      ),
                       onPressed: _refresher.currentState!.show,
                       child: Text('Retry'),
                     )

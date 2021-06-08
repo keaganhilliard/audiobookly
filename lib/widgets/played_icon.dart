@@ -24,7 +24,7 @@ class PlayedIcon extends StatelessWidget {
           // color: Colors.white,
           child: Icon(
             Icons.check_circle_rounded,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         // ),

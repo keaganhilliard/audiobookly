@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Audiobookly
+Comment=Audiobook app for Emby/Plex
+Exec=audiobookly
+Icon=${SNAP}/meta/gui/icon.png # replace name to your app name
+Terminal=false
+Type=Application
+Categories=Media;

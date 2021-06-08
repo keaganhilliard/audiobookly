@@ -60,7 +60,6 @@ abstract class MediaRepository {
         } else {
           return getAuthors();
         }
-        break;
       case MediaIds.BOOKS_ID:
         return getAllBooks();
       case MediaIds.COLLECTIONS_ID:
@@ -69,7 +68,6 @@ abstract class MediaRepository {
         } else {
           return await getCollections();
         }
-        break;
       case MediaIds.RECENTLY_PLAYED:
         return await getRecentlyPlayed();
       case MediaIds.RECENTLY_ADDED:

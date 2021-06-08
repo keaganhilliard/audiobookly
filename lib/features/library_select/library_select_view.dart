@@ -46,7 +46,7 @@ class LibrarySelectView extends HookWidget {
             Container(
               child: Text(state.message!),
             ),
-            // ElevatedButton(style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor,)
+            // ElevatedButton(
             //   onPressed: _refresher.currentState.show,
             //   child: Text('Retry'),
             // )
@@ -60,8 +60,6 @@ class LibrarySelectView extends HookWidget {
           onPressed: () {
             notifier.getLibraries();
           },
-          style:
-              ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
         ),
       );
   }

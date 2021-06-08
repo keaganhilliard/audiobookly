@@ -78,7 +78,7 @@ class TracksView extends HookWidget {
                   final bool currentTrack = index == currentTrackIndex;
                   return Container(
                     color: currentTrack
-                        ? Colors.black
+                        ? Theme.of(context).hoverColor
                         : Theme.of(context).canvasColor,
                     child: ListTile(
                       onTap: () {

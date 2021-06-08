@@ -39,7 +39,8 @@ class BookListElement extends StatelessWidget {
         //     ? MediaQuery.of(context).size.width * 0.4
         //     : MediaQuery.of(context).size.width * 0.25,
         child: Card(
-          color: Colors.black,
+          elevation: 2.0,
+          // color: Colors.black,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: onTap as void Function()?,
@@ -52,8 +53,8 @@ class BookListElement extends StatelessWidget {
                         ? LinearProgressIndicator(
                             minHeight: 8,
                             value: progress,
-                            color: Theme.of(context).accentColor,
-                            backgroundColor: Colors.black,
+                            // color: Theme.of(context).accentColor,
+                            backgroundColor: Theme.of(context).cardTheme.color,
                           )
                         : Container(),
                   ],

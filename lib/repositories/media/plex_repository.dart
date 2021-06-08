@@ -4,6 +4,7 @@ import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/plex_media_item.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
+import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
@@ -12,21 +13,31 @@ import 'package:device_info/device_info.dart';
 import 'dart:io';
 
 class ServerAndLibrary {
-  PlexServerV2? server;
+  PlexServer? server;
   String? library;
 
   ServerAndLibrary(this.server, this.library);
 }
 
 class PlexRepository extends MediaRepository {
-  PlexServerV2? _server;
+  PlexApi _api;
+  PlexServer? _server;
+  String? _serverKey;
   String? _libraryKey;
   Timer? _refreshServer;
   bool needsRefresh = false;
-  SharedPreferences? prefs;
+  SharedPreferencesService _prefs;
 
-  PlexRepository({PlexServerV2? server, String? libraryKey})
-      : _server = server,
+  PlexRepository({
+    required PlexApi api,
+    required SharedPreferencesService prefs,
+    PlexServer? server,
+    String? serverKey,
+    String? libraryKey,
+  })  : _api = api,
+        _serverKey = serverKey,
+        _server = server,
+        _prefs = prefs,
         _libraryKey = libraryKey {
     setRefreshTimer();
   }
@@ -38,7 +49,7 @@ class PlexRepository extends MediaRepository {
     });
   }
 
-  Future<PlexServerV2?> get server async {
+  Future<PlexServer?> get server async {
     await refreshServer();
     return _server;
   }
@@ -53,62 +64,30 @@ class PlexRepository extends MediaRepository {
   }
 
   String getThumbnailUrl(String? path) {
-    return _server!.getThumbnailUrl(path!);
+    return _server!.getThumbnailUrl(path!).toString();
   }
 
+  Completer? raceCondition;
+
   Future getServerAndLibrary() async {
-    if (_server == null || _libraryKey == null) {
-      prefs = await SharedPreferences.getInstance();
-      String? authToken = prefs!.getString(SharedPrefStrings.PLEX_TOKEN);
-      String? serverId = prefs!.getString(SharedPrefStrings.PLEX_SERVER);
-      _libraryKey = prefs!.getString(SharedPrefStrings.PLEX_LIBRARY);
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      PlexHeaders headers;
-
-      if (kIsWeb || Platform.isWindows) {
-        headers = PlexHeaders(
-          clientIdentifier: 'AUDIOBOOKLY_WEB',
-          device: 'WEB',
-          product: 'Audiobookly',
-          platform: 'Chrome',
-          platformVersion: 'UNKOWN',
-          token: authToken,
-        );
-      } else if (Platform.isAndroid) {
-        AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-        headers = PlexHeaders(
-          clientIdentifier: androidDeviceInfo.androidId,
-          device: androidDeviceInfo.model,
-          product: 'Audiobookly',
-          platform: 'Android',
-          platformVersion: androidDeviceInfo.version.release,
-          token: authToken,
-        );
-      } else {
-        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        headers = PlexHeaders(
-          clientIdentifier: iosInfo.identifierForVendor,
-          device: iosInfo.model,
-          product: 'Audiobookly',
-          platform: 'iOS',
-          platformVersion: iosInfo.systemVersion,
-          token: authToken,
-        );
-      }
-
-      PlexApi api = PlexApi(headers: headers);
-      _server = (await api.getServersV2())
-          .firstWhere((server) => server.clientIdentifier == serverId);
+    if (raceCondition != null) await raceCondition!.future;
+    if (_serverKey == null) _serverKey = _prefs.getServerId();
+    if (_libraryKey == null) _libraryKey = _prefs.getLibraryId();
+    if (_server == null) {
+      raceCondition = Completer();
+      _server = (await _api.getServers())
+          .firstWhere((server) => server.clientIdentifier == _serverKey);
+      raceCondition!.complete();
       setRefreshTimer();
     }
+    raceCondition = null;
   }
 
   Future refreshServer() async {
-    if (needsRefresh) {
-      if (prefs == null) prefs = await SharedPreferences.getInstance();
-      String? serverId = prefs!.getString(SharedPrefStrings.PLEX_SERVER);
-      _server = (await _server!.api!.getServersV2())
-          .firstWhereOrNull((server) => server.clientIdentifier == serverId);
+    if (needsRefresh || _server == null) {
+      _serverKey = _prefs.getServerId();
+      _server = (await _api.getServers())
+          .firstWhereOrNull((server) => server.clientIdentifier == _serverKey);
       if (_server != null) needsRefresh = false;
       setRefreshTimer();
     }
@@ -214,9 +193,9 @@ class PlexRepository extends MediaRepository {
 
   Future<User> getUser() async {
     await refreshServer();
-    PlexUser u = await (_server!.getUser() as FutureOr<PlexUser>);
-    print(u.toJson());
-    return User(name: u.title, userName: u.username, thumb: u.thumb);
+    PlexUser? u = await (_server!.getUser());
+    print(u?.toJson());
+    return User(name: u?.title, userName: u?.username, thumb: u?.thumb);
   }
 
   Future<String> getLoginUrl() async {
@@ -226,9 +205,8 @@ class PlexRepository extends MediaRepository {
 
   Future<List<Library>> getLibraries() async {
     await refreshServer();
-    final libraries =
-        await (_server!.getLibraries() as FutureOr<List<PlexLibrary>>);
-    return libraries.map((lib) => Library(lib.key, lib.title)).toList();
+    final libraries = await (_server!.getLibraries());
+    return libraries?.map((lib) => Library(lib.key, lib.title)).toList() ?? [];
   }
 
   Future logout() async {}

@@ -16,7 +16,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 7968653816016852112),
       name: 'Book',
-      lastPropertyId: const IdUid(6, 4901756861453353842),
+      lastPropertyId: const IdUid(7, 6099277228885854196),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -48,6 +48,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(6, 4901756861453353842),
             name: 'durationInMilliseconds',
             type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 6099277228885854196),
+            name: 'artPath',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -98,7 +103,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(3, 488527119246372000),
       name: 'Track',
-      lastPropertyId: const IdUid(4, 2391151777963167133),
+      lastPropertyId: const IdUid(5, 717134928331429442),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -122,7 +127,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(2, 5136697801723172224),
-            relationTarget: 'Book')
+            relationTarget: 'Book'),
+        ModelProperty(
+            id: const IdUid(5, 717134928331429442),
+            name: 'durationInMilliseconds',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -165,13 +175,15 @@ ModelDefinition getObjectBoxModel() {
           final titleOffset = fbb.writeString(object.title);
           final authorOffset = fbb.writeString(object.author);
           final descriptionOffset = fbb.writeString(object.description);
-          fbb.startTable(7);
+          final artPathOffset = fbb.writeString(object.artPath);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, exIdOffset);
           fbb.addOffset(2, titleOffset);
           fbb.addOffset(3, authorOffset);
           fbb.addOffset(4, descriptionOffset);
           fbb.addInt64(5, object.durationInMilliseconds);
+          fbb.addOffset(6, artPathOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -189,6 +201,8 @@ ModelDefinition getObjectBoxModel() {
                   const fb.StringReader().vTableGet(buffer, rootOffset, 10, ''),
               description:
                   const fb.StringReader().vTableGet(buffer, rootOffset, 12, ''),
+              artPath:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 16, ''),
               durationInMilliseconds:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
           InternalToManyAccess.setRelInfo(
@@ -255,11 +269,12 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Track object, fb.Builder fbb) {
           final exIdOffset = fbb.writeString(object.exId);
           final titleOffset = fbb.writeString(object.title);
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, exIdOffset);
           fbb.addOffset(2, titleOffset);
           fbb.addInt64(3, object.book.targetId);
+          fbb.addInt64(4, object.durationInMilliseconds);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -272,7 +287,9 @@ ModelDefinition getObjectBoxModel() {
               exId:
                   const fb.StringReader().vTableGet(buffer, rootOffset, 6, ''),
               title:
-                  const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''));
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''),
+              durationInMilliseconds:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
           object.book.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.book.attach(store);
@@ -310,6 +327,9 @@ class Book_ {
   /// see [Book.durationInMilliseconds]
   static final durationInMilliseconds =
       QueryIntegerProperty<Book>(_entities[0].properties[5]);
+
+  /// see [Book.artPath]
+  static final artPath = QueryStringProperty<Book>(_entities[0].properties[6]);
 }
 
 /// [DownloadTask] entity fields to define ObjectBox queries.
@@ -353,4 +373,8 @@ class Track_ {
   /// see [Track.book]
   static final book =
       QueryRelationProperty<Track, Book>(_entities[2].properties[3]);
+
+  /// see [Track.durationInMilliseconds]
+  static final durationInMilliseconds =
+      QueryIntegerProperty<Track>(_entities[2].properties[4]);
 }

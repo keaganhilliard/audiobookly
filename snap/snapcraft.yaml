@@ -1,0 +1,28 @@
+name: audiobookly
+version: 0.1.0
+summary: Audiobook player for Emby/Plex
+description: Audiobook player for Emby/Plex
+
+confinement: strict
+base: core18
+grade: stable
+
+slots:
+  dbus-audiobookly: # adjust accordingly to your app name
+    interface: dbus
+    bus: session
+    name: com.azothforgotten.audiobookly # adjust accordingly to your app name and
+    
+apps:
+  audiobookly:
+    command: audiobookly
+    extensions: [flutter-stable] # Where "master" defines which Flutter channel to use for the build
+    plugs:
+      - network
+    slots:
+      - dbus-audiobookly
+parts:
+  audiobookly:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart

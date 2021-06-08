@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -61,11 +62,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<bool> plexLogin() async {
     final _prefs = _ref.read(sharedPreferencesServiceProvider);
-    _prefs.setServerType(SERVER_TYPE.PLEX);
     final _plexApi = _ref.read(plexApiProvider);
     PlexPin pin = await _plexApi.getPin();
     String oAuthUrl = _plexApi.getOauthUrl(pin.code!);
     // Browser browser = await openUrl(oAuthUrl);
+    await launch(oAuthUrl);
     int count = 0;
     Completer waitForIt = Completer();
     Timer.periodic(Duration(seconds: 5), (timer) async {
@@ -74,7 +75,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       PlexPin authToken = await _plexApi.getAuthToken(pin.id!);
       if (authToken.authToken != null) {
         _plexApi.headers.token = authToken.authToken;
+        _plexApi.authToken = authToken.authToken;
         _prefs.setUserToken(authToken.authToken!);
+        _prefs.setServerType(SERVER_TYPE.PLEX);
         // urlLauncher.closeWebView();
         // await browser.close();
         timer.cancel();
@@ -87,7 +90,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       }
     });
     await waitForIt.future;
-    final servers = (await _plexApi.getServersV2())
+    final servers = (await _plexApi.getServers())
         .map((server) => Library(server.clientIdentifier, server.name))
         .toList();
     final navigationService = _ref.read(navigationServiceProvider);
@@ -97,12 +100,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
       ),
     );
     print(server.id);
+    _prefs.setServerId(server.id);
 
-    PlexLibrary? library = await (navigationService.push(
+    final library = await (navigationService.push(
       MaterialPageRoute(
         builder: (context) => LibrarySelectView(),
       ),
-    ) as FutureOr<PlexLibrary?>);
+    ));
 
     return false; //server != null && library != null;
   }
@@ -114,7 +118,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final navigationService = _ref.read(navigationServiceProvider);
       print('Checking token: ${_prefs.getCurrentToken()}');
 
-      User user;
+      User? user;
       if (_prefs.getServerType() == SERVER_TYPE.EMBY) {
         final _userRepo = _ref.read(embyAuthRepoProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
@@ -128,21 +132,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
         }
       } else {
         final _userRepo = _ref.read(plexAuthRepoProvider);
+        final _plexRepo = _ref.read(plexApiProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
-        if (_prefs.getServerId()!.isEmpty) {
-          final thing = await navigationService.push(
-            MaterialPageRoute(builder: (context) {
-              return LibrarySelectView();
-            }),
-          );
+
+        if (user == null) {
+        } else if (_prefs.getServerId()!.isEmpty) {
+          // final thing = await navigationService.push(
+          //   MaterialPageRoute(builder: (context) {
+          //     return ServerSelect(await _plexRepo.getSer);
+          //   }),
+          // );
         }
-        if (_prefs.getLibraryId().isEmpty) {
-          await navigationService.push(
-            MaterialPageRoute(builder: (context) {
-              return LibrarySelectView();
-            }),
-          );
-        }
+        // if (_prefs.getLibraryId().isEmpty) {
+        //   await navigationService.push(
+        //     MaterialPageRoute(builder: (context) {
+        //       return LibrarySelectView();
+        //     }),
+        //   );
+        // }
       }
 
       if (user != null)

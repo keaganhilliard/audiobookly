@@ -61,21 +61,11 @@ class AdaptiveScaffold extends HookWidget {
   Widget build(BuildContext context) {
     if (Utils.isLargeScreen(context)) {
       return Scaffold(
-        // appBar: AppBar(
-        //   title: state.title,
-        //   actions: state.actions,
-        // ),
         body: Row(
           children: [
             NavigationRail(
               elevation: 10.0,
               backgroundColor: Theme.of(context).canvasColor,
-              selectedIconTheme: Theme.of(context).iconTheme.copyWith(
-                    color: Theme.of(context).accentColor,
-                  ),
-              selectedLabelTextStyle: TextStyle(
-                color: Theme.of(context).accentColor,
-              ),
               leading: state.floatingActionButton,
               destinations: [
                 for (var destination in state.destinations)
@@ -104,15 +94,10 @@ class AdaptiveScaffold extends HookWidget {
 
     return Scaffold(
       body: state.body,
-      // appBar: AppBar(
-      //   title: state.title,
-      //   actions: state.actions,
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         unselectedItemColor: Theme.of(context).textTheme.headline6!.color,
         selectedItemColor: Colors.deepPurpleAccent,
-        // backgroundColor: Theme.of(context).accentColor,
         elevation: 40.0,
         items: [
           for (var destination in state.destinations)

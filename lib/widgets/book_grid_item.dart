@@ -9,7 +9,7 @@ class BookGridItem extends StatelessWidget {
   final String? thumbnailUrl;
   final String? title;
   final String? subtitle;
-  final Function? onTap;
+  final VoidCallback? onTap;
   final double progress;
   final bool played;
 
@@ -25,10 +25,11 @@ class BookGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.black,
+      // color: Colors.black,
+      elevation: 1.0,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: onTap as void Function()?,
+        onTap: onTap,
         child: Stack(
           children: [
             if (progress > 0)
@@ -37,8 +38,7 @@ class BookGridItem extends StatelessWidget {
                 child: LinearProgressIndicator(
                   minHeight: 6.0,
                   value: progress,
-                  color: Theme.of(context).accentColor,
-                  backgroundColor: Colors.black,
+                  backgroundColor: Theme.of(context).cardTheme.color,
                 ),
               ),
             Column(
@@ -55,7 +55,7 @@ class BookGridItem extends StatelessWidget {
                       alignment: Alignment.center,
                       errorWidget: (context, message, thing) => Container(
                         constraints: BoxConstraints.expand(),
-                        color: Colors.black,
+                        // color: Colors.black,
                         child: Icon(
                           subtitle == null ? Icons.person : Icons.book,
                           size: 50.0,
@@ -63,7 +63,7 @@ class BookGridItem extends StatelessWidget {
                       ),
                       placeholder: (context, url) => Container(
                         constraints: BoxConstraints.expand(),
-                        color: Colors.black,
+                        // color: Colors.black,
                         child: Icon(
                           subtitle == null ? Icons.person : Icons.book,
                           size: 50.0,

@@ -32,8 +32,8 @@ class MiniPlayer extends HookWidget {
           closedShape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          closedColor: Theme.of(context).accentColor,
-          closedElevation: 20,
+          closedColor: Theme.of(context).colorScheme.primary,
+          closedElevation: 1.0,
           closedBuilder: (context, openContainer) => InkWell(
             radius: 2000,
             onTap: () {

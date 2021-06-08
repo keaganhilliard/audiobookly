@@ -46,18 +46,19 @@ class PlexHeaders {
       this.token = '',
       this.accept = 'application/json',
       this.contentType = 'application/json'})
-      : assert(clientIdentifier != null && clientIdentifier != '');
+      : assert(clientIdentifier != '');
 
-  Map<String, String?> toMap({String? overrideToken}) => {
+  Map<String, String> toMap({String? overrideToken}) => {
         'X-Plex-Platform': this.platform,
         'X-Plex-Platform-Version': this.platformVersion,
         'X-Plex-Provides': this.provides,
         'X-Plex-Client-Identifier': this.clientIdentifier,
         'X-Plex-Product': this.product,
-        'X-Plex-Version': this.version,
-        'X-Plex-Device': this.device,
-        'X-Plex-Container-Size': this.containerSize,
-        'X-Plex-Token': overrideToken ?? this.token,
+        if (this.version.isNotEmpty) 'X-Plex-Version': this.version,
+        if (this.device.isNotEmpty) 'X-Plex-Device': this.device,
+        if (this.containerSize.isNotEmpty)
+          'X-Plex-Container-Size': this.containerSize,
+        'X-Plex-Token': overrideToken ?? this.token ?? '',
         'Accept': this.accept,
         'Content-Type': this.contentType
       };

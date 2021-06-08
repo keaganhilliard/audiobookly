@@ -23,7 +23,7 @@ class SeekBar extends HookWidget {
     return Stack(
       children: [
         Slider(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.primary,
           min: 0.0,
           label: RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
                   .firstMatch("${_dragValue.value}")

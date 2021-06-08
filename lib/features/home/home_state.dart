@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 part 'home_state.freezed.dart';
 
 @freezed
-abstract class HomeState with _$HomeState {
+class HomeState with _$HomeState {
   const factory HomeState.initial() = HomeStateInitial;
   const factory HomeState.loaded(
       {List<MediaItem>? recentlyPlayed,

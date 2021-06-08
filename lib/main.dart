@@ -69,30 +69,46 @@ class AudiobooklyApp extends HookWidget {
     final _currentIndex = useState(0);
     // timeDilation = 7.0;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Audiobookly',
       navigatorKey: navigationService.navigatorKey,
       onGenerateRoute: r.Router.generateRoute,
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
-        brightness: Brightness.dark,
+        primaryColor: Colors.deepPurple,
+        appBarTheme: AppBarTheme(),
+        brightness: Brightness.light,
         indicatorColor: Colors.deepPurple,
-        accentColor: Colors.deepPurple,
+        secondaryHeaderColor: Colors.deepPurple,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          brightness: Brightness.light,
+        ),
         sliderTheme: SliderThemeData(
           overlayColor: Colors.deepPurple,
           thumbColor: Colors.deepPurple,
           activeTrackColor: Colors.deepPurple,
         ),
-        canvasColor: Colors.grey[900],
+        // canvasColor: Colors.grey[900],
       ),
       darkTheme: ThemeData(
-        accentColor: Colors.deepPurple,
         indicatorColor: Colors.deepPurple,
+        cardTheme: CardTheme(
+          clipBehavior: Clip.antiAlias,
+          color: Colors.black,
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          brightness: Brightness.dark,
+          backgroundColor: Colors.grey[900],
+        ),
         sliderTheme: SliderThemeData(
           overlayColor: Colors.deepPurple,
           thumbColor: Colors.deepPurple,
           activeTrackColor: Colors.deepPurple,
         ),
         brightness: Brightness.dark,
-        canvasColor: Colors.grey[900],
+        // canvasColor: Colors.grey[900],
       ),
       home: AuthWidget(
         authorizedBuilder: (context) {

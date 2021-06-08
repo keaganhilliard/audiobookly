@@ -4,10 +4,8 @@ import 'package:flutter/foundation.dart';
 
 part 'books_state.freezed.dart';
 
-// part of 'books_cubit.dart';
-
 @freezed
-abstract class BooksState with _$BooksState {
+class BooksState with _$BooksState {
   const factory BooksState.initial() = BooksStateInitial;
   const factory BooksState.loaded(
       {List<MediaItem>? books, String? currentParent}) = BooksStateLoaded;

@@ -13,13 +13,19 @@ final plexAuthRepoProvider = Provider<PlexAuthRepository>((ref) {
 class PlexAuthRepository extends AuthenticationRepository {
   ProviderReference _ref;
   PlexAuthRepository(this._ref);
-  Future<User> getUser(String token) async {
+  Future<User?> getUser(String token) async {
     final _plexApi = _ref.read(plexApiProvider);
+    _plexApi.headers.token = token;
+    _plexApi.authToken = token;
     final user = await (_plexApi.getUser());
+    final _prefs = _ref.read(sharedPreferencesServiceProvider);
+    final _repo = _ref.read(mediaRepositoryProdiver);
+
+    if (user == null) return null;
 
     return User(
-      name: user?.title,
-      userName: user?.username,
+      name: user.title,
+      userName: user.username,
       token: token,
     );
   }

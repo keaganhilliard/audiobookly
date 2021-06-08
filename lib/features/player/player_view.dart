@@ -8,6 +8,7 @@ import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/features/tracks/tracks_view.dart';
 import 'package:audiobookly/widgets/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cast/cast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -100,10 +101,81 @@ class PlayerView extends HookWidget {
                               fit: BoxFit.cover,
                               errorWidget: (context, error, child) =>
                                   Icon(Icons.book),
-                              imageUrl: (book?.largeThumbnail ??
+                              imageUrl: (book?.largeThumbnail?.toString() ??
                                   book?.artUri?.toString())!,
                               placeholder: (context, url) => Center(
                                 child: CircularProgressIndicator(),
+                              ),
+                            ),
+                            Positioned(
+                              top: 5.0,
+                              right: 5.0,
+                              child: Opacity(
+                                opacity: 1,
+                                child: IconButton(
+                                  color: Colors.grey[100],
+                                  icon: Icon(Icons.cast),
+                                  onPressed: () async {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return SingleChildScrollView(
+                                            child: Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(18.0),
+                                                child: FutureBuilder<
+                                                    List<CastDevice>>(
+                                                  future: CastDiscoveryService()
+                                                      .search(),
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.hasError) {
+                                                      return Center(
+                                                        child: Text(
+                                                          'Error: ${snapshot.error.toString()}',
+                                                        ),
+                                                      );
+                                                    } else if (!snapshot
+                                                        .hasData) {
+                                                      return Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      );
+                                                    }
+
+                                                    if (snapshot
+                                                        .data!.isEmpty) {
+                                                      return Column(
+                                                        children: [
+                                                          Center(
+                                                            child: Text(
+                                                              'No Chromecast founded',
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }
+
+                                                    return Column(
+                                                      children: snapshot.data!
+                                                          .map((device) {
+                                                        return ListTile(
+                                                          title:
+                                                              Text(device.name),
+                                                          onTap: () {
+                                                            // _connectToYourApp(context, device);
+                                                          },
+                                                        );
+                                                      }).toList(),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                ),
                               ),
                             ),
                             if (book!.displayDescription?.isNotEmpty ?? false)
@@ -267,9 +339,7 @@ class PlayerView extends HookWidget {
                                               AudioProcessingState.buffering ||
                                           state?.processingState ==
                                               AudioProcessingState.loading
-                                      ? CircularProgressIndicator(
-                                          color: Theme.of(context).accentColor,
-                                        )
+                                      ? CircularProgressIndicator()
                                       : Container(),
                                 ),
                                 getIconButton(
@@ -285,7 +355,7 @@ class PlayerView extends HookWidget {
                                                   AudioProcessingState.buffering
                                       ? playbackController.pause
                                       : playbackController.play,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   size: 60,
                                 ),
                               ],
@@ -424,7 +494,7 @@ class ValueSlider extends HookWidget {
             min: min,
             max: max,
             divisions: 20,
-            activeColor: Theme.of(context).accentColor,
+            activeColor: Theme.of(context).colorScheme.primary,
           ),
         ),
         // Text(

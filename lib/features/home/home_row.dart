@@ -46,8 +46,10 @@ class HomeRow extends HookWidget {
                     playbackController.playItem(book);
                     navigationService.pushNamed(Routes.Player, arguments: book);
                   },
-                  progress: book.viewOffset.inMilliseconds /
-                      book.duration!.inMilliseconds,
+                  progress: book.duration != null
+                      ? book.viewOffset.inMilliseconds /
+                          book.duration!.inMilliseconds
+                      : 0,
                   thumbnailUrl: book.artUri.toString(),
                   title: book.title,
                   subtitle: book.artist ?? '',

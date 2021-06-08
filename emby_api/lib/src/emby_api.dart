@@ -32,9 +32,27 @@ class EmbyApi {
     this.userId,
   });
 
+  Uri createUri(String url,
+      [String? path, Map<String, dynamic>? queryParameters]) {
+    var isHttp = false;
+    if (url.startsWith('https://') || (isHttp = url.startsWith('http://'))) {
+      var authority = url.substring((isHttp ? 'http://' : 'https://').length);
+
+      if (isHttp) {
+        return Uri.http(authority, path ?? '', queryParameters);
+      } else {
+        return Uri.https(authority, path ?? '', queryParameters);
+      }
+    } else if (url.startsWith('localhost')) {
+      return createUri('http://' + url, '', queryParameters);
+    }
+
+    throw Exception('Unsupported scheme');
+  }
+
   Future<List<EmbyUser>> getUsers() async {
     http.Response response =
-        await http.get(Uri.https(baseUrl!, '/Users/Public'));
+        await http.get(createUri(baseUrl!, '/Users/Public'));
     return List<EmbyUser>.from(jsonDecode(
       utf8.decode(response.bodyBytes),
     ).map((x) => EmbyUser.fromJson(x)));
@@ -57,7 +75,7 @@ class EmbyApi {
 
   Future<EmbyLoginResponse> login(String username, String password) async {
     http.Response response = await http.post(
-      Uri.https(baseUrl!, '/Users/AuthenticateByName'),
+      createUri(baseUrl!, '/Users/AuthenticateByName'),
       headers: {
         'content-type': 'application/json',
         'x-emby-authorization': _genAuthHeader(),
@@ -214,7 +232,7 @@ class EmbyApi {
 
   String getThumbnailUrl(String itemId,
       [int maxHeight = 500, int maxWidth = 500]) {
-    return Uri.https(baseUrl!, '/Items/$itemId/Images/Primary', {
+    return createUri(baseUrl!, '/Items/$itemId/Images/Primary', {
       'maxHeight': '$maxHeight',
       'maxWidth': '$maxWidth',
     }).toString();
@@ -235,7 +253,7 @@ class EmbyApi {
   Future<http.Response> makeGet(
       String path, Map<String, dynamic> parameters) async {
     return await http.get(
-      Uri.https(
+      createUri(
         baseUrl!,
         path,
         _appendParameters(parameters),
@@ -250,7 +268,7 @@ class EmbyApi {
   Future<http.Response> makeDelete(
       String path, Map<String, dynamic> parameters) async {
     return await http.delete(
-      Uri.https(
+      createUri(
         baseUrl!,
         path,
         _appendParameters(parameters),
@@ -265,7 +283,7 @@ class EmbyApi {
   Future<http.Response> makePost(
       String path, Map<String, dynamic> parameters, dynamic body) async {
     return await http.post(
-      Uri.https(
+      createUri(
         baseUrl!,
         path,
         _appendParameters(parameters),
@@ -299,7 +317,7 @@ class EmbyApi {
 
   String getServerUrl(String itemId) {
     String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
-    final uri = Uri.https(baseUrl!, '/Audio/$itemId/universal', {
+    final uri = createUri(baseUrl!, '/Audio/$itemId/universal', {
       'UserId': userId,
       'DevceId': deviceId,
       'PlaySessionId': sessionId,
@@ -324,7 +342,7 @@ class EmbyApi {
   }
 
   String getDownloadUrl(String itemId) {
-    return Uri.https(baseUrl!, '/Items/$itemId/Download', {
+    return createUri(baseUrl!, '/Items/$itemId/Download', {
       'X-Emby-Token': token,
     }).toString();
   }

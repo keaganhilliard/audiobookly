@@ -6,7 +6,7 @@ import 'package:plex_api/plex_api.dart';
 class PlexMediaItem extends AudiobooklyMediaItem {
   final String? key;
 
-  PlexMediaItem.fromPlexTrack(PlexTrack track, PlexServerV2 server,
+  PlexMediaItem.fromPlexTrack(PlexTrack track, PlexServer server,
       [int? duration])
       : key = track.ratingKey,
         super(
@@ -19,23 +19,24 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           duration: Duration(milliseconds: duration ?? track.duration!),
           extras: <String, dynamic>{
             'fileName': Utils.cleanFileName(track.media![0].part![0].file!
-                .substring(track.media![0].part![0].file!.lastIndexOf('/') + 1)),
+                .substring(
+                    track.media![0].part![0].file!.lastIndexOf('/') + 1)),
             'partKey': track.media![0].part![0].key,
             'serverKey': track.ratingKey,
             'viewOffset': track.viewOffset
           },
         );
-  PlexMediaItem.fromPlexArtist(PlexArtist artist, PlexServerV2 server)
+  PlexMediaItem.fromPlexArtist(PlexArtist artist, PlexServer server)
       : key = artist.ratingKey,
         super(
           serverKey: artist.ratingKey,
           id: '${MediaIds.AUTHORS_ID}/${artist.ratingKey}',
           title: artist.title,
           album: '',
-          artUri: server.getThumbnailUrl(artist.thumb!),
+          artUri: server.getThumbnailUrl(artist.thumb ?? ''),
           playable: false,
         );
-  PlexMediaItem.fromPlexAlbum(PlexAlbum album, PlexServerV2 server,
+  PlexMediaItem.fromPlexAlbum(PlexAlbum album, PlexServer server,
       [int? duration])
       : key = album.ratingKey,
         super(
@@ -44,16 +45,16 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           title: album.title,
           album: album.title,
           artist: album.parentTitle,
-          artUri: server.getThumbnailUrl(album.thumb!),
+          artUri: server.getThumbnailUrl(album.thumb ?? ''),
           displayDescription: album.summary,
           duration: duration != null ? Duration(milliseconds: duration) : null,
           extras: <String, dynamic>{
             'viewOffset': album.viewOffset,
-            'largeThumbnail': server.getThumbnailUrl(album.thumb!, 600)
+            'largeThumbnail': server.getThumbnailUrl(album.thumb ?? '', 600)
           },
         );
   PlexMediaItem.fromPlexCollection(
-      PlexCollection collection, PlexServerV2? server)
+      PlexCollection collection, PlexServer? server)
       : key = collection.key,
         super(
           serverKey: collection.key,

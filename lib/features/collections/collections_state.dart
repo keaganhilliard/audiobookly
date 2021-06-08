@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 part 'collections_state.freezed.dart';
 
 @freezed
-abstract class CollectionsState with _$CollectionsState {
+class CollectionsState with _$CollectionsState {
   const factory CollectionsState.initial() = CollectionsStateInitial;
   const factory CollectionsState.loaded({List<MediaItem>? collections}) =
       CollectionsStateLoaded;

@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 class ScaffoldWithoutFooter extends StatelessWidget {
   final Widget? title;
   final Widget? body;
+  final bool refresh;
+  final VoidCallback? onRefresh;
 
-  ScaffoldWithoutFooter({this.title, this.body});
+  ScaffoldWithoutFooter({
+    this.title,
+    this.body,
+    this.refresh = false,
+    this.onRefresh,
+  });
 
   @override
   Widget build(context) {
@@ -14,6 +21,13 @@ class ScaffoldWithoutFooter extends StatelessWidget {
       appBar: AppBar(
         title: title,
         actions: [
+          if (refresh)
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                onRefresh?.call();
+              },
+            ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {

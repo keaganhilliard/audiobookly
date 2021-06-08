@@ -50,7 +50,7 @@ class Utils {
                           .toInt())
                   .inMilliseconds
               : 0,
-          'largeThumbnail': repo.getThumbnailUrl(item.id)
+          'largeThumbnail': Uri.parse(repo.getThumbnailUrl(item.id))
         });
   }
 
@@ -62,6 +62,14 @@ class Utils {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
     return '$hours hours and $minutes minutes';
+  }
+
+  static String friendlyDurationFromItems(List<MediaItem> items) {
+    final totalDuration = items.fold<Duration>(
+        Duration.zero,
+        (previousValue, element) =>
+            previousValue + (element.duration ?? Duration.zero));
+    return friendlyDuration(totalDuration);
   }
 }
 
@@ -75,5 +83,5 @@ extension MediaHelpers on MediaItem {
       ? Duration.zero
       : Duration(milliseconds: extras!['viewOffset']);
 
-  String? get largeThumbnail => extras!['largeThumbnail'];
+  Uri? get largeThumbnail => extras!['largeThumbnail'];
 }

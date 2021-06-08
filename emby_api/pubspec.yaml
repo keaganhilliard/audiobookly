@@ -8,7 +8,7 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  test: ^1.16.8
+  test: 
   http: ^0.13.3 
   device_info: ^2.0.0 
   xml: ^5.1.0

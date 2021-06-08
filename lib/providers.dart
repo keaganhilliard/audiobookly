@@ -52,12 +52,15 @@ final mediaRepositoryProdiver = Provider<MediaRepository?>((ref) {
     final embyApi = ref.watch(embyApiProvider);
     return EmbyRepository(embyApi, sharedPreferencesService.getLibraryId());
   } else if (sharedPreferencesService.getServerType() == SERVER_TYPE.PLEX) {
-    return PlexRepository()..getServerAndLibrary();
+    final plexApi = ref.watch(plexApiProvider);
+    return PlexRepository(api: plexApi, prefs: sharedPreferencesService)
+      ..getServerAndLibrary();
   } else
     return null;
 });
 
-final AutoDisposeProvider<DownloadService>? downloadServiceProvider = Provider.autoDispose<DownloadService>((ref) {
+final AutoDisposeProvider<DownloadService>? downloadServiceProvider =
+    Provider.autoDispose<DownloadService>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);

@@ -314,7 +314,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
       await _player.stop();
     }
     await _repository!.getServerAndLibrary();
-    queue.add(await _repository!.getTracksForBook(mediaId));
+    queue.add((await _repository!.getTracksForBook(mediaId)).cast());
     _currentMediaItem = (await _repository!.getAlbumFromId(mediaId))
         .copyWith(duration: totalDuration);
     final queuePosition = findPositionForAlbum(_currentMediaItem!);
@@ -385,7 +385,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
     }, orElse: () => queue.value![0]);
   }
 
-  Duration findLatestTrackPosition(MediaItem item) {
+  Duration findLatestTrackPosition(MediaItem? item) {
     if (item != null) {
       Duration position = Duration.zero;
 
