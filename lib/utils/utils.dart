@@ -1,8 +1,47 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/database/entity/book.dart';
+import 'package:audiobookly/database/entity/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:flutter/material.dart';
+
+Track getTrack(
+  MediaItem chapter,
+  String bookId,
+  double progress,
+  String path,
+) =>
+    Track(
+      chapter.id,
+      chapter.title,
+      chapter.duration ?? Duration.zero,
+      progress,
+      progress == 1,
+      path,
+      bookId,
+    );
+
+Book getBook(
+  MediaItem book,
+  bool downloadRequested,
+  bool downloadCompleted,
+  bool downloadFailed,
+) =>
+    Book(
+      book.id,
+      book.title,
+      book.artist ?? 'Unknown',
+      book.narrator ?? 'Unkown',
+      book.displayDescription ?? '',
+      book.artUri.toString(),
+      book.duration ?? Duration.zero,
+      book.viewOffset,
+      downloadRequested,
+      downloadCompleted,
+      downloadFailed,
+      book.played,
+    );
 
 class Utils {
   static _getNarrator(EmbyItem item) {
@@ -50,7 +89,8 @@ class Utils {
                           .toInt())
                   .inMilliseconds
               : 0,
-          'largeThumbnail': Uri.parse(repo.getThumbnailUrl(item.id))
+          'largeThumbnail': Uri.parse(repo.getThumbnailUrl(item.id)),
+          'cached': false,
         });
   }
 
@@ -74,14 +114,32 @@ class Utils {
 }
 
 extension MediaHelpers on MediaItem {
-  String? get narrator => extras!['narrator'];
-  bool get played => extras!['played'] ?? false;
+  String? get narrator => extras?['narrator'];
+  bool get played => extras?['played'] ?? false;
+  bool get cached => extras?['cached'] ?? false;
+  String get cachePath => extras?['cachePath'] ?? '';
 
-  String? get partKey => extras!['partKey'];
+  String? get partKey => extras?['partKey'];
 
-  Duration get viewOffset => extras!['viewOffset'] == null
+  Duration get viewOffset => extras?['viewOffset'] == null
       ? Duration.zero
-      : Duration(milliseconds: extras!['viewOffset']);
+      : Duration(milliseconds: extras?['viewOffset']);
 
-  Uri? get largeThumbnail => extras!['largeThumbnail'];
+  Uri? get largeThumbnail => extras?['largeThumbnail'];
+  static MediaItem fromBook(Book book) => MediaItem(
+        id: book.id,
+        title: book.title,
+        artist: book.author,
+        album: book.title,
+        artUri: Uri.parse(book.artPath),
+        displayDescription: book.description,
+        playable: true,
+        duration: book.duration,
+        extras: <String, dynamic>{
+          'narrator': book.narrator,
+          'largeThumbnail': Uri.parse(book.artPath),
+          'cached': true,
+          'viewOffset': book.lastPlayedPosition.inMilliseconds
+        },
+      );
 }

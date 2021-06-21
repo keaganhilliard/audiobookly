@@ -2,6 +2,8 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
+import 'package:audiobookly/services/database/database_service.dart';
+import 'package:audiobookly/singletons.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:audiobookly/utils/utils.dart';
 
@@ -20,6 +22,7 @@ List<MediaItem> getItemsFromEmbyItems(
 class EmbyRepository extends MediaRepository {
   EmbyApi _api;
   String _libraryId;
+  DatabaseService _db = getIt();
 
   EmbyRepository(this._api, this._libraryId);
 
@@ -112,16 +115,20 @@ class EmbyRepository extends MediaRepository {
 //    throw UnimplementedError();
   }
 
-  Future playbackStarted(String? key, Duration position, Duration duration,
+  Future playbackStarted(String key, Duration position, Duration duration,
       double playbackRate) async {
-    await _api.playbackStarted(key!, position, duration, playbackRate);
+    await _api.playbackStarted(key, position, duration, playbackRate);
   }
 
-  Future playbackCheckin(String? key, Duration position, Duration duration,
-      double playbackRate, AudiobooklyEvent event) async {
-    print('Checking in batches: $playbackRate');
+  Future playbackCheckin(String key, Duration position, Duration duration,
+      double playbackRate, AudiobooklyEvent event, bool playing) async {
+    final book = await _db.getBookById(key);
+    if (book != null) {
+      print('Saving place :)');
+      await _db.insertBook(book.copyWith(lastPlayedPosition: position));
+    }
     await _api.playbackCheckin(
-      key!,
+      key,
       position,
       duration,
       {
@@ -130,6 +137,8 @@ class EmbyRepository extends MediaRepository {
         AudiobooklyEvent.Unpause: EmbyEvent.Unpause,
         AudiobooklyEvent.PlaybackRateChange: EmbyEvent.PlaybackRateChange,
       }[event]!,
+      playbackRate,
+      !playing,
     );
   }
 
@@ -155,6 +164,8 @@ class EmbyRepository extends MediaRepository {
   Future logout() async {}
 
   Future markPlayed(String itemId) async {
+    final book = await _db.getBookById(itemId);
+    if (book != null) _db.insertBook(book.copyWith(read: true));
     return _api.markPlayed(itemId);
   }
 

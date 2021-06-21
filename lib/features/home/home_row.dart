@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
@@ -15,6 +17,31 @@ class HomeRow extends HookWidget {
   final double? height;
   const HomeRow({Key? key, this.title, this.items, this.height})
       : super(key: key);
+
+  Widget getListView(PlaybackController playbackController,
+      NavigationService navigationService) {
+    return ListView.builder(
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      itemCount: items!.length,
+      itemBuilder: (context, index) {
+        final MediaItem book = items![index];
+        return BookListElement(
+          onTap: () async {
+            playbackController.playItem(book);
+            navigationService.pushNamed(Routes.Player, arguments: book);
+          },
+          progress: book.duration != null
+              ? book.viewOffset.inMilliseconds / book.duration!.inMilliseconds
+              : 0,
+          thumbnailUrl: book.artUri.toString(),
+          title: book.title,
+          subtitle: book.artist ?? '',
+          played: book.played,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,28 +62,10 @@ class HomeRow extends HookWidget {
           padding: EdgeInsets.only(left: 5.0),
           child: SizedBox(
             height: height,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: items!.length,
-              itemBuilder: (context, index) {
-                final MediaItem book = items![index];
-                return BookListElement(
-                  onTap: () async {
-                    playbackController.playItem(book);
-                    navigationService.pushNamed(Routes.Player, arguments: book);
-                  },
-                  progress: book.duration != null
-                      ? book.viewOffset.inMilliseconds /
-                          book.duration!.inMilliseconds
-                      : 0,
-                  thumbnailUrl: book.artUri.toString(),
-                  title: book.title,
-                  subtitle: book.artist ?? '',
-                  played: book.played,
-                );
-              },
-            ),
+            child: Platform.isLinux || Platform.isWindows
+                ? Scrollbar(
+                    child: getListView(playbackController, navigationService))
+                : getListView(playbackController, navigationService),
           ),
         ),
       ],

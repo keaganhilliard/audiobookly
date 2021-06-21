@@ -1,17 +1,16 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:audiobookly/constants/app_constants.dart';
-import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:audiobookly/features/player/mini_player.dart';
 import 'package:audiobookly/features/welcome_view/welcome_view.dart';
+import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/widgets/adaptive_scaffold.dart';
 import 'package:audiobookly/widgets/auth_widget.dart';
 import 'package:audiobookly/widgets/router.dart' as r;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -22,22 +21,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final info = await getDeviceInfo();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final store = await getStore();
 
-  PlaybackController controller;
-  if (kIsWeb || (!Platform.isWindows && !Platform.isLinux)) {
-    final handler = await initAudioHandler();
-    controller = AudioHandlerPlaybackController(handler);
-  } else {
-    final handler = await initDesktopAudioHandler();
-    controller = AudioHandlerPlaybackController(handler);
-  }
+  await registerSingletons();
 
   runApp(
     ProviderScope(
       overrides: [
         playbackControllerProvider.overrideWithValue(
-          controller,
+          getIt<PlaybackController>(),
         ),
         sharedPreferencesServiceProvider.overrideWithValue(
           SharedPreferencesService(prefs),
@@ -46,7 +37,7 @@ Future<void> main() async {
           DeviceInfoService(info),
         ),
         databaseServiceProvider.overrideWithValue(
-          DatabaseService(store),
+          getIt<DatabaseService>(),
         )
       ],
       child: AudiobooklyApp(),
@@ -80,6 +71,7 @@ class AudiobooklyApp extends HookWidget {
         brightness: Brightness.light,
         indicatorColor: Colors.deepPurple,
         secondaryHeaderColor: Colors.deepPurple,
+        accentColor: Colors.deepPurple,
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.deepPurple,
           brightness: Brightness.light,
@@ -97,6 +89,7 @@ class AudiobooklyApp extends HookWidget {
           clipBehavior: Clip.antiAlias,
           color: Colors.black,
         ),
+        accentColor: Colors.deepPurple,
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.deepPurple,
           brightness: Brightness.dark,

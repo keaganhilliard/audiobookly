@@ -1,4 +1,6 @@
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/database/entity/book.dart';
+import 'package:audiobookly/database/entity/track.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/features/book_details/book_details_notifier.dart';
@@ -12,16 +14,16 @@ import 'package:expandable/expandable.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 class BookDetailsView extends HookWidget {
-  final String? mediaId;
-  BookDetailsView({this.mediaId});
+  final String mediaId;
+  BookDetailsView({required this.mediaId});
 
   @override
   Widget build(BuildContext context) {
-    // final stateProvider = useProvider(bookDetailsStateProvider(mediaId));
-    final bookDetails =
-        useProvider(bookDetailsStateProvider(mediaId!).notifier);
-    final state = useProvider(bookDetailsStateProvider(mediaId!));
-    // final downloadService = useProvider(downloadServiceProvider);
+    final bookDetails = useProvider(
+      bookDetailsStateProvider(mediaId).notifier,
+    );
+    final state = useProvider(bookDetailsStateProvider(mediaId));
+    final downloadService = useProvider(downloadServiceProvider);
     final playbackController = useProvider(playbackControllerProvider);
     final navigationService = useProvider(navigationServiceProvider);
 
@@ -107,15 +109,33 @@ class BookDetailsView extends HookWidget {
                               ButtonBar(
                                 alignment: MainAxisAlignment.start,
                                 children: [
-                                  IconButton(
-                                    icon: Icon(Icons.file_download),
-                                    onPressed: () async {
-                                      // for (final chapter in state.chapters) {
-                                      //   await downloadService
-                                      //       .downloadItem(chapter);
-                                      // }
-                                    },
-                                  ),
+                                  StreamBuilder<Book?>(
+                                      stream: state.dbBook,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          if (snapshot
+                                                  .data?.downloadCompleted ??
+                                              false) {
+                                            return IconButton(
+                                              onPressed: () async {},
+                                              icon: Icon(Icons.delete_forever),
+                                            );
+                                          } else if (snapshot
+                                                  .data?.downloadRequested ??
+                                              false) {
+                                            return CircularProgressIndicator();
+                                          }
+                                        }
+                                        return IconButton(
+                                          icon: Icon(Icons.file_download),
+                                          onPressed: () async {
+                                            downloadService?.downloadBook(
+                                              state.book!,
+                                              state.chapters!,
+                                            );
+                                          },
+                                        );
+                                      }),
                                   if (state.book!.played)
                                     IconButton(
                                       color: Colors.deepPurple,
@@ -192,29 +212,56 @@ class BookDetailsView extends HookWidget {
                     ),
                   ),
                 if (state.chapters!.isNotEmpty)
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return ListTile(
-                          onTap: () async {
-                            await playbackController.playFromId(state.book!.id);
-                            await playbackController.skipToQueueItem(index);
-                          },
-                          title: Text(
-                            state.chapters![index].title,
-                          ),
-                          trailing: Text(
-                            RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                                    .firstMatch(
-                                        "${state.chapters![index].duration}")
-                                    ?.group(1) ??
-                                '',
+                  StreamBuilder<Map<String, Track>>(
+                      stream: state.tracks,
+                      builder: (context, snapshot) {
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final chapter = state.chapters![index];
+                              final track = snapshot.data?[chapter.id];
+                              return Stack(
+                                children: [
+                                  ListTile(
+                                    leading: track?.isDownloaded ?? false
+                                        ? Icon(Icons.offline_pin)
+                                        : null,
+                                    onTap: () async {
+                                      await playbackController
+                                          .playFromId(state.book!.id);
+                                      await playbackController
+                                          .skipToQueueItem(index);
+                                    },
+                                    title: Text(
+                                      state.chapters![index].title,
+                                    ),
+                                    trailing: Text(
+                                      RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
+                                              .firstMatch(
+                                                  "${state.chapters![index].duration}")
+                                              ?.group(1) ??
+                                          '',
+                                    ),
+                                  ),
+                                  if (track != null && !track.isDownloaded)
+                                    Positioned.fill(
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: LinearProgressIndicator(
+                                          minHeight: 6.0,
+                                          value: track.downloadProgress,
+                                          // backgroundColor:
+                                          //     Theme.of(context).cardTheme.color,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
+                            childCount: state.chapters!.length,
                           ),
                         );
-                      },
-                      childCount: state.chapters!.length,
-                    ),
-                  ),
+                      }),
               ],
             ),
           ),

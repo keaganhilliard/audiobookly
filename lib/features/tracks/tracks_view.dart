@@ -52,15 +52,12 @@ class TracksView extends HookWidget {
                   playbackController.pause();
                 },
               ),
-            IconButton(
-              icon: Icon(Icons.file_download),
-              onPressed: () {
-                // if (items.isNotEmpty)
-                //   playbackController.downloadAllTracks(items);
-                // else
-                //   print('Fucking empty');
-              },
-            )
+            // IconButton(
+            //   icon: Icon(Icons.file_download),
+            //   onPressed: () {
+
+            //   },
+            // )
           ],
         ),
         body: items == null
@@ -91,16 +88,17 @@ class TracksView extends HookWidget {
                               icon: Icon(Icons.poll),
                               onPressed: () {},
                             )
-                          : IconButton(
-                              icon: Icon(Icons.file_download),
-                              onPressed: () {
-                                // print('Something');
-                                // model.downloadAllTracks(items.sublist(index));
-                                // model.handleDownload(track);
-                              },
-                            ),
+                          : null,
+                      // IconButton(
+                      //     icon: Icon(Icons.file_download),
+                      //     onPressed: () {
+                      //       // print('Something');
+                      //       // model.downloadAllTracks(items.sublist(index));
+                      //       // model.handleDownload(track);
+                      //     },
+                      //   ),
                       title: Text(
-                        '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title == null || track.title.isEmpty ? '' : ' - ' + track.title}',
+                        '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title.isEmpty ? '' : ' - ' + track.title}',
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(

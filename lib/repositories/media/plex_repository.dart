@@ -1,16 +1,11 @@
 import 'dart:async';
-import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/plex_media_item.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:flutter/foundation.dart';
 import 'package:plex_api/plex_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:device_info/device_info.dart';
-import 'dart:io';
 
 class ServerAndLibrary {
   PlexServer? server;
@@ -161,8 +156,12 @@ class PlexRepository extends MediaRepository {
         await _server!.getAlbumFromKey(mediaId!), _server!);
   }
 
-  Future savePosition(String mediaId, int position, int duration,
-      AudiobooklyPlaybackState state) async {
+  Future savePosition(
+    String mediaId,
+    int position,
+    int duration,
+    AudiobooklyPlaybackState state,
+  ) async {
     await refreshServer();
     return await _server!.savePosition(
         mediaId,
@@ -177,12 +176,28 @@ class PlexRepository extends MediaRepository {
         }[state]!);
   }
 
-  Future playbackStarted(String? key, Duration position, Duration duration,
-      double playbackRate) async {}
-  Future playbackCheckin(String? key, Duration position, Duration duration,
-      double playbackRate, AudiobooklyEvent event) async {}
-  Future playbackStopped(String key, Duration position, Duration duration,
-      double playbackRate) async {}
+  Future playbackStarted(
+    String? key,
+    Duration position,
+    Duration duration,
+    double playbackRate,
+  ) async {}
+
+  Future playbackCheckin(
+    String? key,
+    Duration position,
+    Duration duration,
+    double playbackRate,
+    AudiobooklyEvent event,
+    bool playing,
+  ) async {}
+
+  Future playbackStopped(
+    String key,
+    Duration position,
+    Duration duration,
+    double playbackRate,
+  ) async {}
 
   Future<List<PlexMediaItem>> getTracksForBook(String? bookId) async {
     await refreshServer();

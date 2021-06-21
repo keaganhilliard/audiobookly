@@ -1,7 +1,6 @@
 import 'package:audiobookly/features/auth/auth_notifier.dart';
 import 'package:audiobookly/features/settings/settings_notifier.dart';
 import 'package:audiobookly/features/settings/settings_state.dart';
-import 'package:cast/cast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

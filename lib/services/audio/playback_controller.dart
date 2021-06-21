@@ -1,15 +1,10 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/audio/default_audio_handler.dart';
 import 'package:audiobookly/services/audio/desktop_audio_handler.dart';
-import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:dart_vlc/dart_vlc.dart' show Player, Playlist, Media;
 import 'package:rxdart/rxdart.dart';
-import 'package:audiobookly/utils/utils.dart';
 
 final playbackControllerProvider =
     Provider<PlaybackController>((ref) => throw UnimplementedError());
@@ -77,7 +72,7 @@ class AudioHandlerPlaybackController extends PlaybackController {
 
   bool ensured = false;
 
-  Stream<Duration> get positionStream => AudioService.getPositionStream();
+  Stream<Duration> get positionStream => AudioService.positionStream;
   Stream<PlaybackState> get playbackStateStream => _audioHandler.playbackState;
   Stream<MediaItem?> get currentMediaItemStream => _audioHandler.mediaItem;
   MediaItem? get currentMediaItem => _audioHandler.mediaItem.value;

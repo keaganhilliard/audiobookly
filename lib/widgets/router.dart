@@ -28,17 +28,10 @@ class Router {
                   mediaId: args!['id'],
                   title: args['title'],
                 ));
-      // case Routes.Collection:
-      //   Map<String, dynamic> args = settings.arguments;
-      //   return MaterialPageRoute(
-      //       builder: (_) => BooksView(
-      //             mediaId: args['collectionId'],
-      //             title: args['title'],
-      //           ));
       case Routes.Book:
         return MaterialPageRoute(
           builder: (_) => BookDetailsView(
-            mediaId: settings.arguments as String?,
+            mediaId: settings.arguments as String,
           ),
         );
       case Routes.Player:

@@ -32,8 +32,12 @@ class EmbyApi {
     this.userId,
   });
 
-  Uri createUri(String url,
-      [String? path, Map<String, dynamic>? queryParameters]) {
+  Uri createUri(
+    String url, [
+    String? path,
+    Map<String, dynamic>? queryParameters,
+  ]) {
+    print(url);
     var isHttp = false;
     if (url.startsWith('https://') || (isHttp = url.startsWith('http://'))) {
       var authority = url.substring((isHttp ? 'http://' : 'https://').length);
@@ -93,8 +97,10 @@ class EmbyApi {
     return elr;
   }
 
-  Future<List<EmbyItem>> getRecentlyAdded(String libraryId,
-      [int limit = 20]) async {
+  Future<List<EmbyItem>> getRecentlyAdded(
+    String libraryId, [
+    int limit = 20,
+  ]) async {
     return await _getItems('/Users/$userId/Items', {
       'ParentId': libraryId,
       'Fields': 'Overview',
@@ -107,8 +113,10 @@ class EmbyApi {
     });
   }
 
-  Future<List<EmbyItem>> getRecentlyPlayed(String libraryId,
-      [int limit = 10]) async {
+  Future<List<EmbyItem>> getRecentlyPlayed(
+    String libraryId, [
+    int limit = 10,
+  ]) async {
     return await _getItems('/Users/$userId/Items/Resume', {
       'ParentId': libraryId,
       'Fields': 'Overview',
@@ -119,7 +127,10 @@ class EmbyApi {
     });
   }
 
-  Future<List<EmbyItem>> getAll(String libraryId, [int limit = 10000]) async {
+  Future<List<EmbyItem>> getAll(
+    String libraryId, [
+    int limit = 10000,
+  ]) async {
     return await _getItems('/Users/$userId/Items', {
       'ParentId': libraryId,
       'Fields': 'Overview',
@@ -132,8 +143,11 @@ class EmbyApi {
     });
   }
 
-  Future<List<EmbyItem>> search(String libraryId, String searchTerm,
-      [int limit = 10000]) async {
+  Future<List<EmbyItem>> search(
+    String libraryId,
+    String searchTerm, [
+    int limit = 10000,
+  ]) async {
     return await _getItems('/Users/$userId/Items', {
       'ParentId': libraryId,
       'Fields': 'Overview',
@@ -230,8 +244,11 @@ class EmbyApi {
     ));
   }
 
-  String getThumbnailUrl(String itemId,
-      [int maxHeight = 500, int maxWidth = 500]) {
+  String getThumbnailUrl(
+    String itemId, [
+    int maxHeight = 500,
+    int maxWidth = 500,
+  ]) {
     return createUri(baseUrl!, '/Items/$itemId/Images/Primary', {
       'maxHeight': '$maxHeight',
       'maxWidth': '$maxWidth',
@@ -239,7 +256,9 @@ class EmbyApi {
   }
 
   Future<List<EmbyItem>> _getItems(
-      String path, Map<String, dynamic> parameters) async {
+    String path,
+    Map<String, dynamic> parameters,
+  ) async {
     http.Response response = await makeGet(path, parameters);
     return List<EmbyItem>.from(
       _getItemsFromBody(
@@ -251,7 +270,9 @@ class EmbyApi {
   }
 
   Future<http.Response> makeGet(
-      String path, Map<String, dynamic> parameters) async {
+    String path,
+    Map<String, dynamic> parameters,
+  ) async {
     return await http.get(
       createUri(
         baseUrl!,
@@ -266,7 +287,9 @@ class EmbyApi {
   }
 
   Future<http.Response> makeDelete(
-      String path, Map<String, dynamic> parameters) async {
+    String path,
+    Map<String, dynamic> parameters,
+  ) async {
     return await http.delete(
       createUri(
         baseUrl!,
@@ -281,7 +304,10 @@ class EmbyApi {
   }
 
   Future<http.Response> makePost(
-      String path, Map<String, dynamic> parameters, dynamic body) async {
+    String path,
+    Map<String, dynamic> parameters,
+    dynamic body,
+  ) async {
     return await http.post(
       createUri(
         baseUrl!,
@@ -348,8 +374,11 @@ class EmbyApi {
   }
 
   Future<void> playbackStarted(
-      String itemId, Duration position, Duration duration,
-      [double playbackRate = 1.0]) async {
+    String itemId,
+    Duration position,
+    Duration duration, [
+    double playbackRate = 1.0,
+  ]) async {
     await makePost('/Sessions/Playing', {}, {
       'ItemId': itemId,
       'CanSeek': true,
@@ -361,10 +390,15 @@ class EmbyApi {
   }
 
   Future<void> playbackCheckin(
-      String itemId, Duration position, Duration duration, EmbyEvent event,
-      [double playbackRate = 1.0, bool paused = false]) async {
+    String itemId,
+    Duration position,
+    Duration duration,
+    EmbyEvent event, [
+    double playbackRate = 1.0,
+    bool paused = false,
+  ]) async {
     print(
-        'Checking in bitches ${position.inMinutes}: Event ${describeEnum(event)}');
+        'Checking in bitches ${position.inMinutes}: Event ${describeEnum(event)} Paused: $paused');
     final res = await makePost('/Sessions/Playing/Progress', {}, {
       'ItemId': itemId,
       'CanSeek': true,
@@ -374,12 +408,15 @@ class EmbyApi {
       'PositionTicks': position.inMicroseconds * 10,
       'PlaybackRate': playbackRate,
     });
-    print(res.body);
+    print('PlaybackCheckin response: ${res.body}');
   }
 
   Future<void> playbackStopped(
-      String itemId, Duration position, Duration duration,
-      [double playbackRate = 1.0]) async {
+    String itemId,
+    Duration position,
+    Duration duration, [
+    double playbackRate = 1.0,
+  ]) async {
     await makePost('/Sessions/Playing/Stopped', {}, {
       'ItemId': itemId,
       'CanSeek': true,

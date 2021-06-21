@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:audiobookly/widgets/played_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +32,7 @@ class BookGridItem extends StatelessWidget {
           children: [
             if (progress > 0)
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomLeft,
                 child: LinearProgressIndicator(
                   minHeight: 6.0,
                   value: progress,

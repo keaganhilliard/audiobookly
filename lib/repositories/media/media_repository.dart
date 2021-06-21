@@ -11,7 +11,7 @@ enum AudiobooklyPlaybackState {
   BUFFERING,
 }
 
-enum AudiobooklyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange }
+enum AudiobooklyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange, Stop }
 
 abstract class MediaRepository {
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
@@ -93,9 +93,9 @@ abstract class MediaRepository {
   Future savePosition(
       String key, int position, int duration, AudiobooklyPlaybackState state);
   Future playbackStarted(
-      String? key, Duration position, Duration duration, double playbackRate);
-  Future playbackCheckin(String? key, Duration position, Duration duration,
-      double playbackRate, AudiobooklyEvent event);
+      String key, Duration position, Duration duration, double playbackRate);
+  Future playbackCheckin(String key, Duration position, Duration duration,
+      double playbackRate, AudiobooklyEvent event, bool playing);
   Future playbackStopped(
       String key, Duration position, Duration duration, double playbackRate);
   Future getServerAndLibrary();

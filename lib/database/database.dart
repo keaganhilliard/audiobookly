@@ -1,39 +1,25 @@
-import 'package:audiobookly/database/entities.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookly/objectbox.g.dart';
-import 'package:path_provider/path_provider.dart';
+import 'dart:async';
+import 'dao/download_task_dao.dart';
+import 'dao/track_dao.dart';
+import 'entity/download_task.dart';
+import 'entity/track.dart';
+import 'converters/duration_converter.dart';
+import 'package:floor/floor.dart';
+import 'package:sqflite/sqflite.dart' as sqflite;
+import 'package:audiobookly/database/dao/book_dao.dart';
+import 'package:audiobookly/database/entity/book.dart';
 
-final AutoDisposeProvider<DatabaseService> databaseServiceProvider =
-    Provider.autoDispose<DatabaseService>(
-        ((ref) => throw UnimplementedError()));
+part 'database.g.dart'; // the generated code will be there
 
-Future<Store> getStore() async {
-  final dir = await getApplicationDocumentsDirectory();
-  final _store = Store(getObjectBoxModel(), directory: dir.path + '/box');
-  return _store;
+@TypeConverters([DurationConverter])
+@Database(version: 2, entities: [Book, Track, DownloadTask])
+abstract class AppDatabase extends FloorDatabase {
+  BookDao get bookDao;
+  TrackDao get trackDao;
+  DownloadTaskDao get downloadTaskDao;
 }
 
-class DatabaseService {
-  Store _store;
-  DatabaseService(this._store);
-
-  List<DownloadTask> getDownloadTasks() {
-    final taskBox = _store.box<DownloadTask>();
-    return taskBox.getAll();
-  }
-
-  List<int> createOrUpdateDownloadTasks(List<DownloadTask> tasks) {
-    final taskBox = _store.box<DownloadTask>();
-    return taskBox.putMany(tasks);
-  }
-
-  List<Book> getBooks() {
-    final bookBox = _store.box<Book>();
-    return bookBox.getAll();
-  }
-
-  List<int> createOrUpdateBooks(List<Book> books) {
-    final bookBox = _store.box<Book>();
-    return bookBox.putMany(books);
-  }
-}
+final migrate1To2 = Migration(1, 2, (database) async {
+  await database
+      .execute('ALTER TABLE books ADD COLUMN read INTEGER NOT NULL DEFAULT 0');
+});

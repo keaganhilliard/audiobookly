@@ -6,7 +6,6 @@ import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/authentication/plex_auth_repository.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
-import 'package:audiobookly/utils/in_app_browser.dart';
 import 'package:audiobookly/repositories/authentication/emby_auth_repository.dart';
 import 'package:audiobookly/features/auth/auth_state.dart';
 import 'package:audiobookly/features/library_select/library_select_view.dart';
@@ -130,13 +129,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
             }),
           );
         }
-      } else {
+      } else if (_prefs.getServerType() == SERVER_TYPE.PLEX) {
         final _userRepo = _ref.read(plexAuthRepoProvider);
         final _plexRepo = _ref.read(plexApiProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
 
         if (user == null) {
-        } else if (_prefs.getServerId()!.isEmpty) {
+        } else if (_prefs.getServerId().isEmpty) {
           // final thing = await navigationService.push(
           //   MaterialPageRoute(builder: (context) {
           //     return ServerSelect(await _plexRepo.getSer);
@@ -150,7 +149,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         //     }),
         //   );
         // }
-      }
+      } else {}
 
       if (user != null)
         state = AuthStateLoaded(user: user);

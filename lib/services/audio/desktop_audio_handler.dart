@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
+import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -8,7 +11,6 @@ import 'package:audiobookly/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:audiobookly/constants/app_constants.dart';
 import 'package:dart_vlc/dart_vlc.dart' as vlc;
 
 class DesktopAudioHandler extends BaseAudioHandler {
@@ -23,13 +25,15 @@ class DesktopAudioHandler extends BaseAudioHandler {
   String? _currentMedia;
   MediaItem? _currentMediaItem;
 
-  SharedPreferences? _prefs;
+  late SharedPreferencesService _prefs;
   MediaItem get currentQueueItem => queue.value![index!];
   Duration get totalDuration =>
       queue.value!.fold(Duration.zero, (total, item) => total + item.duration!);
   Duration get currentTrackStartingPosition =>
-      queue.value!.getRange(0, index ?? 0).fold<Duration>(Duration.zero,
-          (total, item) => (total) + (item.duration ?? Duration.zero));
+      queue.value!.getRange(0, index ?? 0).fold<Duration>(
+            Duration.zero,
+            (total, item) => (total) + (item.duration ?? Duration.zero),
+          );
   Duration get currentPosition =>
       currentTrackStartingPosition +
       (_player.position.position ?? Duration.zero);
@@ -53,14 +57,14 @@ class DesktopAudioHandler extends BaseAudioHandler {
     // }
     print('Updating progress: ${_player.playback.isPlaying}');
     _repository!.playbackCheckin(
-      _currentMedia,
-      currentPosition,
-      totalDuration,
-      _player.general.rate,
-      _player.playback.isPlaying
-          ? AudiobooklyEvent.Unpause
-          : AudiobooklyEvent.Pause,
-    );
+        _currentMedia!,
+        currentPosition,
+        totalDuration,
+        _player.general.rate,
+        _player.playback.isPlaying
+            ? AudiobooklyEvent.Unpause
+            : AudiobooklyEvent.Pause,
+        _player.playback.isPlaying);
     // _repository.savePosition(currentQueueItem.id, position,
     //     currentQueueItem.duration.inMilliseconds * (finished ? 1 : 2), state);
   }
@@ -97,12 +101,12 @@ class DesktopAudioHandler extends BaseAudioHandler {
     //   if (state == ProcessingState.completed) stop();
     // });
 
-    _prefs = await SharedPreferences.getInstance();
+    _prefs = SharedPreferencesService(await SharedPreferences.getInstance());
     final _info = await getDeviceInfo();
     _repository = ProviderContainer(
       overrides: [
         sharedPreferencesServiceProvider.overrideWithValue(
-          SharedPreferencesService(_prefs),
+          _prefs,
         ),
         deviceInfoServiceProvider.overrideWithValue(
           DeviceInfoService(_info),
@@ -117,7 +121,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> setPlaybackRate(double speed) async {
-    await _prefs!.setDouble(SharedPrefStrings.PLAYBACK_SPEED, speed);
+    await _prefs.setSpeed(speed);
     await _player.setRate(speed);
   }
 
@@ -139,7 +143,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   @override
   Future customAction(String name, Map<String, dynamic>? arguments) async {
-    if (_player == null || await queue.isEmpty) return;
+    if (await queue.isEmpty) return;
     if (name == 'skip')
       await _player.next();
     else if (name == 'previous') await _player.back();
@@ -238,18 +242,32 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   @override
   Future seek(Duration position, [bool startPlaying = false]) async {
+    print('Seeking');
     final queuePosition = findPostion(position);
-    if (queuePosition.trackIndex < index!)
-      while (queuePosition.trackIndex < index!) await _player.back();
-    else
-      while (queuePosition.trackIndex > index!) await _player.next();
-    late StreamSubscription listener;
-    listener = _player.playbackStream.listen((state) async {
-      if (state.isSeekable) {
-        await _player.seek(queuePosition.trackPosition);
-        listener.cancel();
+    if (queuePosition.trackIndex == index!) {
+      if (!_player.playback.isSeekable) {
+        late StreamSubscription listener;
+        listener = _player.playbackStream.listen((state) async {
+          if (state.isSeekable) {
+            await _player.seek(queuePosition.trackPosition);
+            listener.cancel();
+          }
+        });
       }
-    });
+      await _player.seek(queuePosition.trackPosition);
+    } else {
+      if (queuePosition.trackIndex < index!)
+        while (queuePosition.trackIndex < index!) await _player.back();
+      else
+        while (queuePosition.trackIndex > index!) await _player.next();
+      late StreamSubscription listener;
+      listener = _player.playbackStream.listen((state) async {
+        if (state.isSeekable) {
+          await _player.seek(queuePosition.trackPosition);
+          listener.cancel();
+        }
+      });
+    }
     if (startPlaying) await _player.play();
     await super.seek(position);
   }
@@ -307,28 +325,78 @@ class DesktopAudioHandler extends BaseAudioHandler {
     // if (mediaItem?.value?.id == mediaId && _player != null) {
     //   return;
     // }
+    if (mediaId == null) return;
+
+    final db = getIt<DatabaseService>();
+    final dbBook = await db.getBookById(mediaId);
+    final dbTracks = await db.getTracksForBookId(mediaId).first;
+
     _currentMedia = mediaId;
     if (_player.playback.isPlaying) {
       updateProgress(
           _player.position.position, AudiobooklyPlaybackState.STOPPED);
       await _player.stop();
     }
-    await _repository!.getServerAndLibrary();
-    queue.add((await _repository!.getTracksForBook(mediaId)).cast());
-    _currentMediaItem = (await _repository!.getAlbumFromId(mediaId))
-        .copyWith(duration: totalDuration);
+
+    if (dbBook != null && dbTracks.isNotEmpty) {
+      final cachedQueue = dbTracks.entries.map((entry) {
+        final track = entry.value;
+        return MediaItem(
+          id: entry.key,
+          title: track.title,
+          album: dbBook.title,
+          artist: dbBook.author,
+          displayDescription: dbBook.description,
+          artUri: Uri.parse(dbBook.artPath),
+          playable: true,
+          extras: <String, dynamic>{
+            'narrator': dbBook.narrator,
+            'largeThumbnail': Uri.parse(dbBook.artPath),
+            'cached': true,
+            'cachePath': track.downloadPath,
+          },
+          duration: track.duration,
+        );
+      }).toList();
+      queue.add(cachedQueue);
+      _currentMediaItem = MediaItem(
+        id: dbBook.id,
+        title: dbBook.title,
+        artist: dbBook.author,
+        album: dbBook.title,
+        artUri: Uri.parse(dbBook.artPath),
+        displayDescription: dbBook.description,
+        playable: true,
+        duration: dbBook.duration,
+        extras: <String, dynamic>{
+          'narrator': dbBook.narrator,
+          'largeThumbnail': Uri.parse(dbBook.artPath),
+          'cached': true,
+          'viewOffset': dbBook.lastPlayedPosition.inMilliseconds
+        },
+      );
+    } else {
+      await _repository!.getServerAndLibrary();
+      queue.add((await _repository!.getTracksForBook(mediaId)).cast());
+      _currentMediaItem = (await _repository!.getAlbumFromId(mediaId))
+          .copyWith(duration: totalDuration);
+    }
+
     final queuePosition = findPositionForAlbum(_currentMediaItem!);
     try {
       List<vlc.Media> medias = [];
       for (final item in queue.value!) {
-        final m = await vlc.Media.network(
-          _repository!.getServerUrl(item.partKey ?? item.id),
-        );
-        medias.add(m);
+        if (item.cached) {
+          print('We are using a cached file bitches');
+          medias.add(await vlc.Media.file(File(item.cachePath)));
+        } else {
+          medias.add(await vlc.Media.network(
+            _repository!.getServerUrl(item.partKey ?? item.id),
+          ));
+        }
       }
       await _player.open(vlc.Playlist(medias: medias)).then((value) async {
-        await setSpeed(
-            _prefs!.getDouble(SharedPrefStrings.PLAYBACK_SPEED) ?? 1.0);
+        await setSpeed(_prefs.speed);
         while (queuePosition.trackIndex > index!) await _player.next();
         late StreamSubscription listener;
         listener = _player.playbackStream.listen((state) async {
@@ -371,7 +439,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
     await prepareFromMediaId(mediaId, extras);
     await _player.play();
     await _repository!.playbackStarted(
-      mediaId,
+      mediaId!,
       currentPosition,
       totalDuration,
       _player.general.rate,
@@ -417,7 +485,8 @@ class DesktopAudioHandler extends BaseAudioHandler {
       return findPostion(album.viewOffset);
     } else {
       MediaItem item = findLatestTrack();
-      return _QueuePosition(queue.value!.indexOf(item), item.viewOffset);
+      final index = queue.value!.indexOf(item);
+      return _QueuePosition(index, item.viewOffset);
     }
   }
 }

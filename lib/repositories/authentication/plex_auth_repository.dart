@@ -1,10 +1,8 @@
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/repositories/authentication/authentication_repository.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:plex_api/plex_api.dart';
 
 final plexAuthRepoProvider = Provider<PlexAuthRepository>((ref) {
   return PlexAuthRepository(ref);

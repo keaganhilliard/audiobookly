@@ -1,5 +1,3 @@
-import "package:meta/meta.dart";
-
 class PlexHeaders {
   /// X-Plex-Platform	(Platform name, eg iOS, MacOSX, Android, LG, etc)
   String platform;
@@ -34,19 +32,19 @@ class PlexHeaders {
   // In case we need to use something other than application/json
   String contentType;
 
-  PlexHeaders(
-      {required this.clientIdentifier,
-      this.platform = '',
-      this.platformVersion = '',
-      this.provides = 'player',
-      this.product = '',
-      this.version = '',
-      this.device = '',
-      this.containerSize = '',
-      this.token = '',
-      this.accept = 'application/json',
-      this.contentType = 'application/json'})
-      : assert(clientIdentifier != '');
+  PlexHeaders({
+    required this.clientIdentifier,
+    this.platform = '',
+    this.platformVersion = '',
+    this.provides = 'player',
+    this.product = '',
+    this.version = '',
+    this.device = '',
+    this.containerSize = '',
+    this.token = '',
+    this.accept = 'application/json',
+    this.contentType = 'application/json',
+  }) : assert(clientIdentifier != '');
 
   Map<String, String> toMap({String? overrideToken}) => {
         'X-Plex-Platform': this.platform,

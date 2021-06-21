@@ -12,7 +12,6 @@ import 'package:cast/cast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:marquee/marquee.dart';
 
 class PlayerView extends HookWidget {
   final MediaItem? book;
@@ -217,7 +216,7 @@ class PlayerView extends HookWidget {
                     padding: const EdgeInsets.only(
                         left: 16.0, right: 16.0, bottom: 8.0),
                     child: Text(
-                      item.album,
+                      item.album ?? '',
                       style: Theme.of(context).textTheme.headline5,
                       textAlign: TextAlign.center,
                     ),

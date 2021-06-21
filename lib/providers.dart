@@ -1,5 +1,5 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/database/database.dart';
+import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
@@ -55,20 +55,21 @@ final mediaRepositoryProdiver = Provider<MediaRepository?>((ref) {
     final plexApi = ref.watch(plexApiProvider);
     return PlexRepository(api: plexApi, prefs: sharedPreferencesService)
       ..getServerAndLibrary();
-  } else
+  } else {
     return null;
+  }
 });
 
-final AutoDisposeProvider<DownloadService>? downloadServiceProvider =
-    Provider.autoDispose<DownloadService>((ref) {
+final AutoDisposeProvider<DownloadService?> downloadServiceProvider =
+    Provider.autoDispose<DownloadService?>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);
-    // final db = ref.watch(databaseServiceProvider);
-    return EmbyDownloadService(embyApi, null);
+    final db = ref.watch(databaseServiceProvider);
+    return EmbyDownloadService(embyApi, db);
   }
   return null;
-} as DownloadService Function(AutoDisposeProviderReference));
+});
 
 final playbackStateProvider = StreamProvider<PlaybackState>((ref) {
   final playbackController = ref.watch(playbackControllerProvider);
