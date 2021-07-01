@@ -6,16 +6,15 @@ import 'package:flutter/foundation.dart';
 
 part 'book_details_state.freezed.dart';
 
-// part of 'books_cubit.dart';
-
 @freezed
 class BookDetailsState with _$BookDetailsState {
   const factory BookDetailsState.initial() = BookDetailsStateInitial;
-  const factory BookDetailsState.loaded(
-      {MediaItem? book,
-      List<MediaItem>? chapters,
-      Stream<Book?>? dbBook,
-      Stream<Map<String, Track>>? tracks}) = BookDetailsStateLoaded;
+  const factory BookDetailsState.loaded({
+    MediaItem? book,
+    List<MediaItem>? chapters,
+    Stream<Book?>? dbBook,
+    Stream<Map<String, Track>>? tracks,
+  }) = BookDetailsStateLoaded;
   const factory BookDetailsState.loading() = BookDetailsStateLoading;
   const factory BookDetailsState.error([String? message]) =
       BookDetailsStateErrorDetails;

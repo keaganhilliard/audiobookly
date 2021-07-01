@@ -80,7 +80,7 @@ class Utils {
         artUri: Uri.parse(repo.getThumbnailUrl(item.id)),
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
-          'played': item.userData!.played ?? false,
+          'played': (item.userData?.played ?? false) ? 1 : 0,
           'narrator': _getNarrator(item),
           'viewOffset': item.userData!.playbackPositionTicks != null
               ? Duration(
@@ -89,8 +89,8 @@ class Utils {
                           .toInt())
                   .inMilliseconds
               : 0,
-          'largeThumbnail': Uri.parse(repo.getThumbnailUrl(item.id)),
-          'cached': false,
+          // 'largeThumbnail': repo.getThumbnailUrl(item.id),
+          'cached': 0,
         });
   }
 
@@ -115,8 +115,8 @@ class Utils {
 
 extension MediaHelpers on MediaItem {
   String? get narrator => extras?['narrator'];
-  bool get played => extras?['played'] ?? false;
-  bool get cached => extras?['cached'] ?? false;
+  bool get played => extras?['played'] == 1;
+  bool get cached => extras?['cached'] == 1;
   String get cachePath => extras?['cachePath'] ?? '';
 
   String? get partKey => extras?['partKey'];
@@ -125,7 +125,7 @@ extension MediaHelpers on MediaItem {
       ? Duration.zero
       : Duration(milliseconds: extras?['viewOffset']);
 
-  Uri? get largeThumbnail => extras?['largeThumbnail'];
+  Uri? get largeThumbnail => extras?['largeThumbnail'] == null ? null : Uri.parse(extras?['largeThumbnail']);
   static MediaItem fromBook(Book book) => MediaItem(
         id: book.id,
         title: book.title,
@@ -137,9 +137,27 @@ extension MediaHelpers on MediaItem {
         duration: book.duration,
         extras: <String, dynamic>{
           'narrator': book.narrator,
-          'largeThumbnail': Uri.parse(book.artPath),
-          'cached': true,
-          'viewOffset': book.lastPlayedPosition.inMilliseconds
+          'largeThumbnail': book.artPath,
+          'cached': 1,
+          'viewOffset': book.lastPlayedPosition.inMilliseconds,
+          'played': book.read ? 1 : 0,
         },
+      );
+
+  static MediaItem fromTrack(Track track, Book book) => MediaItem(
+        id: track.id,
+        title: track.title,
+        album: book.title,
+        artist: book.author,
+        displayDescription: book.description,
+        artUri: Uri.parse(book.artPath),
+        playable: true,
+        extras: <String, dynamic>{
+          'narrator': book.narrator,
+          'largeThumbnail': book.artPath,
+          'cached': 1,
+          'cachePath': track.downloadPath,
+        },
+        duration: track.duration,
       );
 }

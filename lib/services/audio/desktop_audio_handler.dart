@@ -142,7 +142,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future customAction(String name, Map<String, dynamic>? arguments) async {
+  Future customAction(String name, [Map<String, dynamic>? arguments]) async {
     if (await queue.isEmpty) return;
     if (name == 'skip')
       await _player.next();
@@ -157,7 +157,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
   /// Broadcasts the current state to all clients.
   void _broadcastState(dynamic event) async {
     final playing = _player.playback.isPlaying;
-    playbackState.add(playbackState.value!.copyWith(
+    playbackState.add(playbackState.value.copyWith(
       controls: [
         MediaControl.rewind,
         // Controls.rewindControl,
@@ -276,7 +276,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
   Future<void> click([MediaButton button = MediaButton.media]) async {
     switch (button) {
       case MediaButton.media:
-        if (playbackState.value?.playing == true) {
+        if (playbackState.value.playing == true) {
           await pause();
         } else {
           await play();

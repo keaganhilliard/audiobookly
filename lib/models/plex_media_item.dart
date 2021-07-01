@@ -36,9 +36,11 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           artUri: server.getThumbnailUrl(artist.thumb ?? ''),
           playable: false,
         );
-  PlexMediaItem.fromPlexAlbum(PlexAlbum album, PlexServer server,
-      [int? duration])
-      : key = album.ratingKey,
+  PlexMediaItem.fromPlexAlbum(
+    PlexAlbum album,
+    PlexServer server, [
+    int? duration,
+  ])  : key = album.ratingKey,
         super(
           serverKey: album.ratingKey,
           id: album.ratingKey,
@@ -50,7 +52,8 @@ class PlexMediaItem extends AudiobooklyMediaItem {
           duration: duration != null ? Duration(milliseconds: duration) : null,
           extras: <String, dynamic>{
             'viewOffset': album.viewOffset,
-            'largeThumbnail': server.getThumbnailUrl(album.thumb ?? '', 600)
+            'largeThumbnail':
+                server.getThumbnailUrl(album.thumb ?? '', 600).toString()
           },
         );
   PlexMediaItem.fromPlexCollection(

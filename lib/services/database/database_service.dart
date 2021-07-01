@@ -13,7 +13,7 @@ class DatabaseService {
   DatabaseService(this._db);
 
   Stream<List<Book>> getBooks() {
-    return _db.bookDao.findAllBooks();
+    return _db.bookDao.getAllDownloadedBooks();
   }
 
   Future<Book?> getBookById(String id) async {

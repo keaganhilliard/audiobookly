@@ -148,7 +148,7 @@ class PlayerView extends HookWidget {
                             //                             children: [
                             //                               Center(
                             //                                 child: Text(
-                            //                                   'No Chromecast founded',
+                            //                                   'No Chromecast found',
                             //                                 ),
                             //                               ),
                             //                             ],

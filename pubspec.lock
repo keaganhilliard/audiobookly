@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  archive:
-    dependency: transitive
-    description:
-      name: archive
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.2"
   args:
     dependency: transitive
     description:
@@ -48,28 +41,24 @@ packages:
     description:
       path: audio_service
       ref: one-isolate
-      resolved-ref: "0222339b0b9c49da32a9fceda086062bc484202b"
+      resolved-ref: aa9f3ac10b5e8130dfa5cb8f320f8902cc9740f9
       url: "https://github.com/ryanheise/audio_service.git"
     source: git
     version: "0.16.2"
   audio_service_platform_interface:
     dependency: transitive
     description:
-      path: audio_service_platform_interface
-      ref: one-isolate
-      resolved-ref: "0222339b0b9c49da32a9fceda086062bc484202b"
-      url: "https://github.com/ryanheise/audio_service.git"
-    source: git
-    version: "1.0.0"
+      name: audio_service_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   audio_service_web:
     dependency: transitive
     description:
-      path: audio_service_web
-      ref: one-isolate
-      resolved-ref: "0222339b0b9c49da32a9fceda086062bc484202b"
-      url: "https://github.com/ryanheise/audio_service.git"
-    source: git
-    version: "0.16.2"
+      name: audio_service_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   audio_session:
     dependency: "direct main"
     description:
@@ -139,7 +128,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   build_runner_core:
     dependency: transitive
     description:
@@ -160,7 +149,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.6"
+    version: "8.1.0"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -202,7 +191,7 @@ packages:
       name: cli_util
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   clock:
     dependency: transitive
     description:
@@ -230,7 +219,7 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   coverage:
     dependency: transitive
     description:
@@ -396,14 +385,21 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   flutter_hooks:
     dependency: "direct main"
     description:
       name: flutter_hooks
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.0"
+    version: "0.17.0"
+  flutter_lints:
+    dependency: "direct dev"
+    description:
+      name: flutter_lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -464,7 +460,7 @@ packages:
       name: hooks_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0+3"
+    version: "0.14.0+4"
   http:
     dependency: "direct main"
     description:
@@ -486,13 +482,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-  image:
-    dependency: transitive
-    description:
-      name: image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
   io:
     dependency: transitive
     description:
@@ -520,21 +509,28 @@ packages:
       name: just_audio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.5"
+    version: "0.8.0"
   just_audio_platform_interface:
     dependency: transitive
     description:
       name: just_audio_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
   just_audio_web:
     dependency: "direct main"
     description:
       name: just_audio_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "0.3.2"
+  lints:
+    dependency: transitive
+    description:
+      name: lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -548,7 +544,7 @@ packages:
       name: marquee
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   matcher:
     dependency: transitive
     description:
@@ -576,7 +572,7 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   octo_image:
     dependency: transitive
     description:
@@ -639,7 +635,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.1"
   petitparser:
     dependency: transitive
     description:
@@ -716,7 +712,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.26.0"
+    version: "0.27.1"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
@@ -910,7 +906,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.17.8"
+    version: "1.17.9"
   test_api:
     dependency: transitive
     description:
@@ -924,7 +920,7 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.28"
+    version: "0.3.29"
   timing:
     dependency: transitive
     description:
@@ -945,7 +941,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.6"
+    version: "6.0.7"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1029,7 +1025,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.5"
+    version: "2.2.4"
   xdg_directories:
     dependency: transitive
     description:

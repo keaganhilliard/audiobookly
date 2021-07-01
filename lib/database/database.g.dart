@@ -169,7 +169,29 @@ class _$BookDao extends BookDao {
 
   @override
   Stream<List<Book>> findAllBooks() {
-    return _queryAdapter.queryListStream('SELECT * FROM books',
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM books ORDER BY author, title',
+        mapper: (Map<String, Object?> row) => Book(
+            row['id'] as String,
+            row['title'] as String,
+            row['author'] as String,
+            row['narrator'] as String,
+            row['description'] as String,
+            row['artPath'] as String,
+            _durationConverter.decode(row['duration'] as int),
+            _durationConverter.decode(row['lastPlayedPosition'] as int),
+            (row['downloadRequested'] as int) != 0,
+            (row['downloadCompleted'] as int) != 0,
+            (row['downloadFailed'] as int) != 0,
+            (row['read'] as int) != 0),
+        queryableName: 'books',
+        isView: false);
+  }
+
+  @override
+  Stream<List<Book>> getAllDownloadedBooks() {
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM books WHERE downloadCompleted = 1 ORDER BY author, title',
         mapper: (Map<String, Object?> row) => Book(
             row['id'] as String,
             row['title'] as String,

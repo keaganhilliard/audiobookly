@@ -89,7 +89,7 @@ class BookListElement extends StatelessWidget {
                             Text(
                               title!,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 16),
+                              style: TextStyle(fontSize: 14),
                             ),
                             if (subtitle != null)
                               Text(

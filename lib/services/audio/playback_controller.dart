@@ -13,7 +13,9 @@ Future<AudioHandler> initAudioHandler() async {
   return await AudioService.init(
     builder: () => AudiobooklyAudioHandler(),
     config: AudioServiceConfig(
+      androidNotificationChannelId: 'com.azothforgotten.audibookly.audio',
       androidNotificationChannelName: 'Audiobookly',
+      androidNotificationChannelDescription: 'Audio playback notification',
       androidNotificationOngoing: true,
       androidEnableQueue: true,
       androidNotificationClickStartsActivity: true,
@@ -29,14 +31,8 @@ Future<AudioHandler> initDesktopAudioHandler() async {
   return await AudioService.init(
     builder: () => DesktopAudioHandler(),
     config: AudioServiceConfig(
-      androidNotificationChannelName: 'Audiobookly',
-      androidNotificationOngoing: true,
-      androidEnableQueue: true,
-      androidNotificationClickStartsActivity: true,
-      androidStopForegroundOnPause: true,
       rewindInterval: Duration(seconds: 30),
       fastForwardInterval: Duration(seconds: 30),
-      androidNotificationIcon: 'mipmap/audiobookly_launcher',
     ),
   );
 }
@@ -85,7 +81,7 @@ class AudioHandlerPlaybackController extends PlaybackController {
 
   Future playFromId(String? id, [bool shouldPlay = true]) async {
     if (id == currentItemId) {
-      if (shouldPlay && !_audioHandler.playbackState.value!.playing) play();
+      if (shouldPlay && !_audioHandler.playbackState.value.playing) play();
       return;
     }
 

@@ -16,37 +16,37 @@ enum AudiobooklyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange, Stop }
 abstract class MediaRepository {
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
     var pieces = parentMediaId.split('/');
-    print('Parent media id!');
+    print('Parent media id! $parentMediaId');
     switch (pieces[0]) {
       case AudioService.browsableRootId:
         var items = <MediaItem>[
           MediaItem(
+            id: MediaIds.DOWNLOADS,
+            title: 'Downloads',
+            playable: false,
+          ),
+          MediaItem(
             id: MediaIds.RECENTLY_PLAYED,
-            album: '',
             title: 'In Progress',
             playable: false,
           ),
           MediaItem(
             id: MediaIds.RECENTLY_ADDED,
-            album: '',
             title: 'Recently Added',
             playable: false,
           ),
           MediaItem(
             id: MediaIds.AUTHORS_ID,
-            album: '',
             title: 'Authors',
             playable: false,
           ),
           MediaItem(
             id: MediaIds.BOOKS_ID,
-            album: '',
             title: 'All Books',
             playable: false,
           ),
           MediaItem(
             id: MediaIds.COLLECTIONS_ID,
-            album: '',
             title: 'Collections',
             playable: false,
           ),
@@ -62,6 +62,8 @@ abstract class MediaRepository {
         }
       case MediaIds.BOOKS_ID:
         return getAllBooks();
+      case MediaIds.DOWNLOADS:
+        return getDownloads();
       case MediaIds.COLLECTIONS_ID:
         if (pieces.length > 1) {
           return await getBooksFromCollection(pieces[1]);
@@ -78,6 +80,7 @@ abstract class MediaRepository {
   }
 
   Future<List<MediaItem>> getRecentlyAdded();
+  Future<List<MediaItem>> getDownloads();
   Future<List<MediaItem>> getRecentlyPlayed();
   Future<List<MediaItem>> getAllBooks();
   Future<List<MediaItem>> getAuthors();
@@ -103,5 +106,6 @@ abstract class MediaRepository {
   Future markUnplayed(String itemId);
   String getServerUrl(String path);
   String getThumbnailUrl(String? path);
+  Future playbackFinished(String key);
   void setLibraryId(String libraryId) {}
 }

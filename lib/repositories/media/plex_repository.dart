@@ -106,6 +106,10 @@ class PlexRepository extends MediaRepository {
         .toList();
   }
 
+  Future<List<PlexMediaItem>> getDownloads() async {
+    return [];
+  }
+
   Future<List<PlexMediaItem>> getAllBooks() async {
     await refreshServer();
     return (await _server!.getAllAlbums(_libraryKey!))!
@@ -191,6 +195,8 @@ class PlexRepository extends MediaRepository {
     AudiobooklyEvent event,
     bool playing,
   ) async {}
+
+  Future playbackFinished(String key) async {}
 
   Future playbackStopped(
     String key,

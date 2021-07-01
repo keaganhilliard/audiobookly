@@ -43,8 +43,10 @@ class SettingsView extends HookWidget {
                 context: context,
                 applicationName: 'Audiobookly',
                 applicationVersion: '1.0.0',
-                applicationIcon:
-                    Image.asset('assets/audiobookly_launcher_round.png'),
+                applicationIcon: Image.asset(
+                  'assets/audiobookly_launcher_round.png',
+                  height: 50.0,
+                ),
                 useRootNavigator: true,
               );
             },

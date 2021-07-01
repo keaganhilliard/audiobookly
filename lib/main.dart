@@ -74,6 +74,7 @@ class AudiobooklyApp extends HookWidget {
         accentColor: Colors.deepPurple,
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.deepPurple,
+          accentColor: Colors.deepPurple,
           brightness: Brightness.light,
         ),
         sliderTheme: SliderThemeData(
@@ -92,6 +93,7 @@ class AudiobooklyApp extends HookWidget {
         accentColor: Colors.deepPurple,
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.deepPurple,
+          accentColor: Colors.deepPurple,
           brightness: Brightness.dark,
           backgroundColor: Colors.grey[900],
         ),

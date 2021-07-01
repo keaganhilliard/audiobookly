@@ -37,7 +37,6 @@ class EmbyApi {
     String? path,
     Map<String, dynamic>? queryParameters,
   ]) {
-    print(url);
     var isHttp = false;
     if (url.startsWith('https://') || (isHttp = url.startsWith('http://'))) {
       var authority = url.substring((isHttp ? 'http://' : 'https://').length);
@@ -89,8 +88,9 @@ class EmbyApi {
         jsonEncode({'Username': username, 'Pw': password}),
       ),
     );
-    var elr =
-        EmbyLoginResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    var elr = EmbyLoginResponse.fromJson(
+      jsonDecode(utf8.decode(response.bodyBytes)),
+    );
     token = elr.accessToken;
     userId = elr.user!.id;
     user = elr.user;

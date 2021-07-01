@@ -34,6 +34,7 @@ class EmbyRepository extends MediaRepository {
   }
 
   Future<List<MediaItem>> getRecentlyPlayed() async {
+    print('Calling get recently played');
     return getItemsFromEmbyItems(
       (await _api.getRecentlyPlayed(_libraryId)),
       this,
@@ -52,6 +53,12 @@ class EmbyRepository extends MediaRepository {
       (await _api.getAuthors(_libraryId)),
       this,
     );
+  }
+
+  Future<List<MediaItem>> getDownloads() async {
+    return (await _db.getBooks().first)
+        .map((book) => MediaHelpers.fromBook(book))
+        .toList();
   }
 
   Future<List<MediaItem>> getBooksFromAuthor(String authorId) async {
@@ -142,6 +149,16 @@ class EmbyRepository extends MediaRepository {
     );
   }
 
+  Future playbackFinished(String key) async {
+    final book = await _db.getBookById(key);
+    if (book != null) {
+      await _db.insertBook(book.copyWith(
+        lastPlayedPosition: Duration.zero,
+        read: true,
+      ));
+    }
+  }
+
   Future playbackStopped(String key, Duration position, Duration duration,
       double playbackRate) async {}
 
@@ -165,11 +182,27 @@ class EmbyRepository extends MediaRepository {
 
   Future markPlayed(String itemId) async {
     final book = await _db.getBookById(itemId);
-    if (book != null) _db.insertBook(book.copyWith(read: true));
+    if (book != null) {
+      _db.insertBook(
+          book.copyWith(read: true, lastPlayedPosition: Duration.zero));
+    } else {
+      final album = await getAlbumFromId(itemId);
+      _db.insertBook(getBook(album, false, false, false).copyWith(
+        read: true,
+        lastPlayedPosition: Duration.zero,
+      ));
+    }
     return _api.markPlayed(itemId);
   }
 
   Future markUnplayed(String itemId) async {
+    final book = await _db.getBookById(itemId);
+    if (book != null) {
+      _db.insertBook(book.copyWith(read: false));
+    } else {
+      final album = await getAlbumFromId(itemId);
+      _db.insertBook(getBook(album, false, false, false).copyWith(read: false));
+    }
     return _api.markUnplayed(itemId);
   }
 }
