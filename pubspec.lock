@@ -247,6 +247,13 @@ packages:
       name: dart_vlc
       url: "https://pub.dartlang.org"
     source: hosted
+    version: "0.0.9"
+  dart_vlc_ffi:
+    dependency: transitive
+    description:
+      name: dart_vlc_ffi
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.7"
   device_info:
     dependency: transitive

@@ -80,7 +80,7 @@ class Utils {
         artUri: Uri.parse(repo.getThumbnailUrl(item.id)),
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
-          'played': (item.userData?.played ?? false) ? 1 : 0,
+          'played': (item.userData?.played ?? false),
           'narrator': _getNarrator(item),
           'viewOffset': item.userData!.playbackPositionTicks != null
               ? Duration(
@@ -90,7 +90,7 @@ class Utils {
                   .inMilliseconds
               : 0,
           // 'largeThumbnail': repo.getThumbnailUrl(item.id),
-          'cached': 0,
+          'cached': false,
         });
   }
 
@@ -115,8 +115,8 @@ class Utils {
 
 extension MediaHelpers on MediaItem {
   String? get narrator => extras?['narrator'];
-  bool get played => extras?['played'] == 1;
-  bool get cached => extras?['cached'] == 1;
+  bool get played => extras?['played'];
+  bool get cached => extras?['cached'];
   String get cachePath => extras?['cachePath'] ?? '';
 
   String? get partKey => extras?['partKey'];
@@ -125,7 +125,10 @@ extension MediaHelpers on MediaItem {
       ? Duration.zero
       : Duration(milliseconds: extras?['viewOffset']);
 
-  Uri? get largeThumbnail => extras?['largeThumbnail'] == null ? null : Uri.parse(extras?['largeThumbnail']);
+  Uri? get largeThumbnail => extras?['largeThumbnail'] == null
+      ? null
+      : Uri.parse(extras?['largeThumbnail']);
+
   static MediaItem fromBook(Book book) => MediaItem(
         id: book.id,
         title: book.title,
@@ -138,9 +141,9 @@ extension MediaHelpers on MediaItem {
         extras: <String, dynamic>{
           'narrator': book.narrator,
           'largeThumbnail': book.artPath,
-          'cached': 1,
+          'cached': true,
           'viewOffset': book.lastPlayedPosition.inMilliseconds,
-          'played': book.read ? 1 : 0,
+          'played': book.read,
         },
       );
 
@@ -155,7 +158,7 @@ extension MediaHelpers on MediaItem {
         extras: <String, dynamic>{
           'narrator': book.narrator,
           'largeThumbnail': book.artPath,
-          'cached': 1,
+          'cached': true,
           'cachePath': track.downloadPath,
         },
         duration: track.duration,

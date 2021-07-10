@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/database/database_service.dart';
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,6 +25,7 @@ Future<void> registerSingletons() async {
     final handler = await initAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
   } else {
+    DartVLC.initialize();
     final handler = await initDesktopAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
   }

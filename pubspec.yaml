@@ -47,7 +47,7 @@ dependencies:
   # flutter_inappwebview:
   freezed_annotation: ^0.14.1
   scrollable_positioned_list: ^0.2.0-nullsafety.0
-  dart_vlc: ^0.0.7
+  dart_vlc: ^0.0.9
   # audio_cast:
   cast:
   collection: ^1.15.0-nullsafety.4

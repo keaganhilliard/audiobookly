@@ -122,7 +122,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   Future<void> setPlaybackRate(double speed) async {
     await _prefs.setSpeed(speed);
-    await _player.setRate(speed);
+    _player.setRate(speed);
   }
 
   void setCurrentMediaItem() {
@@ -145,8 +145,8 @@ class DesktopAudioHandler extends BaseAudioHandler {
   Future customAction(String name, [Map<String, dynamic>? arguments]) async {
     if (await queue.isEmpty) return;
     if (name == 'skip')
-      await _player.next();
-    else if (name == 'previous') await _player.back();
+      _player.next();
+    else if (name == 'previous') _player.back();
   }
 
   @override
@@ -196,7 +196,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> play() async {
-    await _player.play();
+    _player.play();
     // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
     await updateProgress(
         _player.position.position, AudiobooklyPlaybackState.PLAYING);
@@ -205,7 +205,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> pause() async {
-    await _player.pause();
+    _player.pause();
     await seek(currentPosition - Duration(seconds: 2));
     await super.pause();
     await updateProgress(
@@ -224,7 +224,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
       _player.position.position,
       AudiobooklyPlaybackState.STOPPED,
     );
-    await _player.stop();
+    _player.stop();
     await super.stop();
   }
 
@@ -249,26 +249,26 @@ class DesktopAudioHandler extends BaseAudioHandler {
         late StreamSubscription listener;
         listener = _player.playbackStream.listen((state) async {
           if (state.isSeekable) {
-            await _player.seek(queuePosition.trackPosition);
+            _player.seek(queuePosition.trackPosition);
             listener.cancel();
           }
         });
       }
-      await _player.seek(queuePosition.trackPosition);
+      _player.seek(queuePosition.trackPosition);
     } else {
       if (queuePosition.trackIndex < index!)
-        while (queuePosition.trackIndex < index!) await _player.back();
+        while (queuePosition.trackIndex < index!) _player.back();
       else
-        while (queuePosition.trackIndex > index!) await _player.next();
+        while (queuePosition.trackIndex > index!) _player.next();
       late StreamSubscription listener;
       listener = _player.playbackStream.listen((state) async {
         if (state.isSeekable) {
-          await _player.seek(queuePosition.trackPosition);
+          _player.seek(queuePosition.trackPosition);
           listener.cancel();
         }
       });
     }
-    if (startPlaying) await _player.play();
+    if (startPlaying) _player.play();
     await super.seek(position);
   }
 
@@ -293,7 +293,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> skipToQueueItem(int skipToIndex) async {
-    while (skipToIndex > index!) await _player.next();
+    while (skipToIndex > index!) _player.next();
   }
 
   @override
@@ -335,7 +335,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
     if (_player.playback.isPlaying) {
       updateProgress(
           _player.position.position, AudiobooklyPlaybackState.STOPPED);
-      await _player.stop();
+      _player.stop();
     }
 
     if (dbBook != null && dbTracks.isNotEmpty) {
@@ -388,24 +388,25 @@ class DesktopAudioHandler extends BaseAudioHandler {
       for (final item in queue.value!) {
         if (item.cached) {
           print('We are using a cached file bitches');
-          medias.add(await vlc.Media.file(File(item.cachePath)));
+          medias.add(vlc.Media.file(File(item.cachePath)));
         } else {
-          medias.add(await vlc.Media.network(
+          medias.add(vlc.Media.network(
             _repository!.getServerUrl(item.partKey ?? item.id),
           ));
         }
       }
-      await _player.open(vlc.Playlist(medias: medias)).then((value) async {
-        await setSpeed(_prefs.speed);
-        while (queuePosition.trackIndex > index!) await _player.next();
-        late StreamSubscription listener;
-        listener = _player.playbackStream.listen((state) async {
-          if (state.isSeekable) {
-            await _player.seek(queuePosition.trackPosition);
-            listener.cancel();
-          }
-        });
-      });
+      _player.open(vlc.Playlist(medias: medias));
+      _player.jump(queuePosition.trackIndex);
+      _player.seek(queuePosition.trackPosition);
+      await setSpeed(_prefs.speed);
+      // while (queuePosition.trackIndex > index!) _player.next();
+      // late StreamSubscription listener;
+      // listener = _player.playbackStream.listen((state) async {
+      //   if (state.isSeekable) {
+      //     _player.seek(queuePosition.trackPosition);
+      //     listener.cancel();
+      //   }
+      // });
       setCurrentMediaItem();
     } catch (e, stack) {
       print("Error code $e");
@@ -437,7 +438,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
   Future playFromMediaId(String? mediaId,
       [Map<String, dynamic>? extras]) async {
     await prepareFromMediaId(mediaId, extras);
-    await _player.play();
+    _player.play();
     await _repository!.playbackStarted(
       mediaId!,
       currentPosition,
