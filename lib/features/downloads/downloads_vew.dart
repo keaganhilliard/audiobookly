@@ -35,7 +35,6 @@ class Downloads extends HookWidget {
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
-          print('refreshing');
           return downloadsProvider.getBooks();
         },
         child: Column(
@@ -49,8 +48,6 @@ class Downloads extends HookWidget {
                   if (state is DownloadsStateInitial)
                     _refresher.currentState!.show();
                   if (state is DownloadsStateLoaded) {
-                    // if (state.currentParent != mediaId)
-                    // _refresher.currentState!.show();
                     return ResponsiveGridView<MediaItem>(
                       items: state.books,
                       itemBuilder: (book) {

@@ -17,8 +17,9 @@ class CollectionsNotifier extends StateNotifier<CollectionsState> {
   Future<void> getCollections() async {
     try {
       state = CollectionsState.loading();
-      final collections =
-          await _repository!.getChildren(MediaIds.COLLECTIONS_ID);
+      final collections = await _repository!.getChildren(
+        MediaIds.COLLECTIONS_ID,
+      );
       state = CollectionsState.loaded(collections: collections);
     } on Exception {
       state = CollectionsState.error(

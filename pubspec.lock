@@ -39,26 +39,24 @@ packages:
   audio_service:
     dependency: "direct main"
     description:
-      path: audio_service
-      ref: one-isolate
-      resolved-ref: aa9f3ac10b5e8130dfa5cb8f320f8902cc9740f9
-      url: "https://github.com/ryanheise/audio_service.git"
-    source: git
-    version: "0.16.2"
+      name: audio_service
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.18.0-beta.0"
   audio_service_platform_interface:
     dependency: transitive
     description:
       name: audio_service_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1"
+    version: "0.1.0"
   audio_service_web:
     dependency: transitive
     description:
       name: audio_service_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1"
+    version: "0.1.0"
   audio_session:
     dependency: "direct main"
     description:
@@ -247,14 +245,14 @@ packages:
       name: dart_vlc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "0.1.4"
   dart_vlc_ffi:
     dependency: transitive
     description:
       name: dart_vlc_ffi
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.7"
+    version: "0.1.2"
   device_info:
     dependency: transitive
     description:
@@ -516,21 +514,21 @@ packages:
       name: just_audio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.0"
+    version: "0.9.5"
   just_audio_platform_interface:
     dependency: transitive
     description:
       name: just_audio_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.0"
   just_audio_web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: just_audio_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2"
+    version: "0.4.1"
   lints:
     dependency: transitive
     description:

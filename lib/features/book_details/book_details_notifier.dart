@@ -40,7 +40,8 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
       );
     } on Exception {
       return BookDetailsState.error(
-          "Couldn't fetch book details. Is the device online?");
+        "Couldn't fetch book details. Is the device online?",
+      );
     }
   }
 

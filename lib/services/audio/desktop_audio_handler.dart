@@ -26,11 +26,11 @@ class DesktopAudioHandler extends BaseAudioHandler {
   MediaItem? _currentMediaItem;
 
   late SharedPreferencesService _prefs;
-  MediaItem get currentQueueItem => queue.value![index!];
+  MediaItem get currentQueueItem => queue.value[index!];
   Duration get totalDuration =>
-      queue.value!.fold(Duration.zero, (total, item) => total + item.duration!);
+      queue.value.fold(Duration.zero, (total, item) => total + item.duration!);
   Duration get currentTrackStartingPosition =>
-      queue.value!.getRange(0, index ?? 0).fold<Duration>(
+      queue.value.getRange(0, index ?? 0).fold<Duration>(
             Duration.zero,
             (total, item) => (total) + (item.duration ?? Duration.zero),
           );
@@ -385,7 +385,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
     final queuePosition = findPositionForAlbum(_currentMediaItem!);
     try {
       List<vlc.Media> medias = [];
-      for (final item in queue.value!) {
+      for (final item in queue.value) {
         if (item.cached) {
           print('We are using a cached file bitches');
           medias.add(vlc.Media.file(File(item.cachePath)));
@@ -449,16 +449,16 @@ class DesktopAudioHandler extends BaseAudioHandler {
   }
 
   MediaItem findLatestTrack() {
-    return queue.value!.lastWhere((element) {
+    return queue.value.lastWhere((element) {
       return element.viewOffset != Duration.zero;
-    }, orElse: () => queue.value![0]);
+    }, orElse: () => queue.value[0]);
   }
 
   Duration findLatestTrackPosition(MediaItem? item) {
     if (item != null) {
       Duration position = Duration.zero;
 
-      queue.value!.firstWhere((element) {
+      queue.value.firstWhere((element) {
         position += element.duration!;
         return element.id == item.id;
       });
@@ -472,13 +472,13 @@ class DesktopAudioHandler extends BaseAudioHandler {
 
   _QueuePosition findPostion(Duration positionToFind) {
     Duration trackStart = Duration.zero;
-    final track = queue.value!.firstWhere((element) {
+    final track = queue.value.firstWhere((element) {
       trackStart += element.duration!;
       return trackStart > positionToFind;
-    }, orElse: () => queue.value![0]);
+    }, orElse: () => queue.value[0]);
     trackStart -= track.duration!;
     Duration trackPosition = positionToFind - trackStart;
-    return _QueuePosition(queue.value!.indexOf(track), trackPosition);
+    return _QueuePosition(queue.value.indexOf(track), trackPosition);
   }
 
   _QueuePosition findPositionForAlbum(MediaItem album) {
@@ -486,7 +486,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
       return findPostion(album.viewOffset);
     } else {
       MediaItem item = findLatestTrack();
-      final index = queue.value!.indexOf(item);
+      final index = queue.value.indexOf(item);
       return _QueuePosition(index, item.viewOffset);
     }
   }
