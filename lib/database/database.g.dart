@@ -256,6 +256,20 @@ class _$TrackDao extends TrackDao {
                   'downloadPath': item.downloadPath,
                   'bookId': item.bookId
                 },
+            changeListener),
+        _trackDeletionAdapter = DeletionAdapter(
+            database,
+            'tracks',
+            ['id'],
+            (Track item) => <String, Object?>{
+                  'id': item.id,
+                  'title': item.title,
+                  'duration': _durationConverter.encode(item.duration),
+                  'downloadProgress': item.downloadProgress,
+                  'isDownloaded': item.isDownloaded ? 1 : 0,
+                  'downloadPath': item.downloadPath,
+                  'bookId': item.bookId
+                },
             changeListener);
 
   final sqflite.DatabaseExecutor database;
@@ -265,6 +279,8 @@ class _$TrackDao extends TrackDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Track> _trackInsertionAdapter;
+
+  final DeletionAdapter<Track> _trackDeletionAdapter;
 
   @override
   Stream<List<Track>> findAllTracks() {
@@ -331,6 +347,11 @@ class _$TrackDao extends TrackDao {
   @override
   Future<void> insertTrack(Track track) async {
     await _trackInsertionAdapter.insert(track, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<int> deleteTracks(List<Track> tracks) {
+    return _trackDeletionAdapter.deleteListAndReturnChangedRows(tracks);
   }
 }
 

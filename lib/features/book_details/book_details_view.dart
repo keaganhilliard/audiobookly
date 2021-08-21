@@ -53,7 +53,6 @@ class BookDetailsView extends HookWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 8.0,
-                          // top: 8.0,
                           right: 8.0,
                         ),
                         child: Stack(
@@ -76,7 +75,7 @@ class BookDetailsView extends HookWidget {
                                 backgroundColor:
                                     Theme.of(context).colorScheme.primary,
                                 onPressed: () {
-                                  playbackController.playFromId(state.book!.id);
+                                  playbackController.playItem(state.book!);
                                   navigationService.pushNamed(
                                     Routes.Player,
                                     arguments: state.book,
@@ -117,7 +116,11 @@ class BookDetailsView extends HookWidget {
                                                   .data?.downloadCompleted ??
                                               false) {
                                             return IconButton(
-                                              onPressed: () async {},
+                                              onPressed: () async {
+                                                downloadService?.deleteDownload(
+                                                  state.book!,
+                                                );
+                                              },
                                               icon: Icon(Icons.delete_forever),
                                             );
                                           } else if (snapshot

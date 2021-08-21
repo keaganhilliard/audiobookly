@@ -28,7 +28,7 @@ class BooksView extends HookWidget {
     final booksProvider = useProvider(booksStateProvider!(mediaId).notifier);
 
     return ScaffoldWithoutFooter(
-      refresh: !kIsWeb && !Platform.isAndroid,
+      refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
         _refresher.currentState!.show();
       },

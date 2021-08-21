@@ -20,7 +20,7 @@ Future<AudioHandler> initAudioHandler() async {
       // androidEnableQueue: true,
       androidNotificationClickStartsActivity: true,
       androidStopForegroundOnPause: true,
-      rewindInterval: Duration(seconds: 30),
+      rewindInterval: Duration(seconds: 15),
       fastForwardInterval: Duration(seconds: 30),
       androidNotificationIcon: 'mipmap/audiobookly_launcher',
     ),

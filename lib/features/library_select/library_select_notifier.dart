@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final libraryStateProvider =
     StateNotifierProvider<LibrarySelectNotifier, LibrarySelectState>((ref) {
-  return LibrarySelectNotifier(ref.watch(mediaRepositoryProdiver),
+  return LibrarySelectNotifier(ref.watch(mediaRepositoryProvider),
       ref.watch(sharedPreferencesServiceProvider));
 });
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/features/book_details/book_details_view.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/widgets/book_list_element.dart';
@@ -28,8 +29,9 @@ class HomeRow extends HookWidget {
         final MediaItem book = items![index];
         return BookListElement(
           onTap: () async {
-            playbackController.playItem(book);
-            navigationService.pushNamed(Routes.Player, arguments: book);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return BookDetailsView(mediaId: book.id);
+            }));
           },
           progress: book.duration != null
               ? book.viewOffset.inMilliseconds / book.duration!.inMilliseconds

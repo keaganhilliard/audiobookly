@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/database/entity/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookly/services/download/download_service.dart';
@@ -20,6 +21,21 @@ class EmbyDownloadService extends DownloadService {
     if (!dirExists) {
       await dir.create(recursive: true);
     }
+  }
+
+  Future deleteDownload(MediaItem item) async {
+    final tracks = await _db.getTracksForBookId(item.id).first;
+
+    final toDelete = <Track>[];
+    for (final track in tracks.entries) {
+      final file = File(track.value.downloadPath);
+      if (await file.exists()) {
+        file.deleteSync();
+      }
+      toDelete.add(track.value);
+    }
+    await _db.deleteTracks(toDelete);
+    await _db.insertBook(getBook(item, false, false, false));
   }
 
   Future downloadBook(MediaItem book, List<MediaItem> chapters) async {
@@ -51,7 +67,7 @@ class EmbyDownloadService extends DownloadService {
       String url = _api.getDownloadUrl(chapter.id);
       double currentProgress = 0.0;
       try {
-        await downloadFile(url, path, (fileName) {
+        await downloadFile(chapter.id, url, path, (fileName) {
           path = p.join(path, fileName);
         }, (progress) async {
           if (progress - currentProgress > 0.01) {
@@ -72,6 +88,7 @@ class EmbyDownloadService extends DownloadService {
   }
 
   Future downloadFile(
+    String id,
     String url,
     String path, [
     Function(String)? onFileName,
@@ -91,10 +108,15 @@ class EmbyDownloadService extends DownloadService {
       final total = response.headers.contentLength;
       print(url);
       print(response.headers.value('content-disposition'));
-      String fileName = RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
-          .firstMatch(response.headers.value('content-disposition')!)!
-          .group(0)!
-          .replaceAll(RegExp(r'"'), '');
+      late String fileName;
+      try {
+        fileName = RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
+            .firstMatch(response.headers.value('content-disposition')!)!
+            .group(0)!
+            .replaceAll(RegExp(r'"'), '');
+      } catch (e, stack) {
+        fileName = id;
+      }
       onFileName?.call(fileName);
       final file = File(p.join(path, fileName));
       await file.create(recursive: true);

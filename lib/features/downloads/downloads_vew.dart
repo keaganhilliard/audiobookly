@@ -26,7 +26,7 @@ class Downloads extends HookWidget {
     final navigationService = useProvider(navigationServiceProvider);
 
     return ScaffoldWithoutFooter(
-      refresh: !kIsWeb && !Platform.isAndroid,
+      refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       showDownloads: false,
       onRefresh: () {
         _refresher.currentState!.show();

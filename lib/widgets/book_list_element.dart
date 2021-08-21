@@ -67,7 +67,7 @@ class BookListElement extends StatelessWidget {
                           fit: BoxFit.cover,
                           alignment: Alignment.center,
                           errorWidget: (context, error, child) =>
-                              Icon(Icons.book),
+                              Text(title ?? ''),
                           placeholder: (context, url) => Container(
                             color: Theme.of(context).canvasColor,
                             child: Icon(

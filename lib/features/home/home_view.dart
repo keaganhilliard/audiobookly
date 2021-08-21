@@ -22,7 +22,7 @@ class HomeView extends HookWidget {
     // final state = useProvider(homeStateProvider.state);
 
     return ScaffoldWithoutFooter(
-      refresh: !kIsWeb && !Platform.isAndroid,
+      refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
         _refresher.currentState!.show();
       },
@@ -49,9 +49,7 @@ class HomeView extends HookWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeRow(
-                        height: constraints.maxHeight > constraints.maxWidth
-                            ? math.min(((constraints.maxHeight - 120) / 2), 250)
-                            : 225,
+                        height: 250,
                         // math.min(((constraints.maxHeight - 120) / 2), 250),
                         title: 'In Progress',
                         items: state.recentlyPlayed,

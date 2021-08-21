@@ -24,7 +24,8 @@ class AuthorsView extends HookWidget {
     final booksProvider = useProvider(authorsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
-      refresh: !kIsWeb && !Platform.isAndroid,
+      refresh:
+          !kIsWeb && !Platform.isAndroid && !Platform.isIOS && !Platform.isIOS,
       onRefresh: () {
         _refresher.currentState!.show();
       },

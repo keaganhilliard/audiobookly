@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/widgets/rewind_button.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -31,13 +32,7 @@ class TracksView extends HookWidget {
         appBar: AppBar(
           title: Text('Tracks'),
           actions: <Widget>[
-            if ((state != null))
-              IconButton(
-                icon: Icon(Icons.replay_30),
-                onPressed: () {
-                  playbackController.rewind();
-                },
-              ),
+            if ((state != null)) RewindButton(iconSize: 24.0),
             if (!(state?.playing ?? false))
               IconButton(
                 icon: Icon(Icons.play_arrow),

@@ -112,7 +112,7 @@ class DesktopAudioHandler extends BaseAudioHandler {
           DeviceInfoService(_info),
         )
       ],
-    ).read(mediaRepositoryProdiver);
+    ).read(mediaRepositoryProvider);
     await _repository!.getServerAndLibrary();
     // _childrenSubjects = Map<String, BehaviorSubject<List<MediaItem>>>();
     if (_currentMedia != null) {

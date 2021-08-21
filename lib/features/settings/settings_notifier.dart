@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final settingsStateProvider =
     StateNotifierProvider<SettingsNotifier, SettingsState>((ref) {
-  return SettingsNotifier(ref.watch(mediaRepositoryProdiver));
+  return SettingsNotifier(ref.watch(mediaRepositoryProvider));
 });
 
 class SettingsNotifier extends StateNotifier<SettingsState> {

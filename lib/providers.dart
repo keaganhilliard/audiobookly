@@ -46,7 +46,7 @@ final plexApiProvider = Provider<PlexApi>((ref) {
   );
 });
 
-final mediaRepositoryProdiver = Provider<MediaRepository?>((ref) {
+final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);

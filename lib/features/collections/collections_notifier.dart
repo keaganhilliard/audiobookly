@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final collectionsStateProvider =
     StateNotifierProvider<CollectionsNotifier, CollectionsState>((ref) {
-  return CollectionsNotifier(ref.watch(mediaRepositoryProdiver));
+  return CollectionsNotifier(ref.watch(mediaRepositoryProvider));
 });
 
 class CollectionsNotifier extends StateNotifier<CollectionsState> {

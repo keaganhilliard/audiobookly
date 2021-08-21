@@ -3,6 +3,8 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/features/player/player_view.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/utils/jump_icons.dart';
+import 'package:audiobookly/widgets/rewind_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -38,73 +40,86 @@ class MiniPlayer extends HookWidget {
             onTap: () {
               openContainer();
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 65,
-                    child: Row(children: [
-                      CachedNetworkImage(
-                        fit: BoxFit.contain,
-                        imageUrl: item?.artUri?.toString() ?? '',
-                        placeholder: (context, url) => Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                      Expanded(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.only(left: 8.0),
-                          title: Text(
-                            item?.title ?? '',
-                            style: TextStyle(color: Colors.white),
+            child: GestureDetector(
+              onVerticalDragUpdate: (details) {
+                if (details.delta.dy < -20) openContainer();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 65,
+                      child: Row(children: [
+                        CachedNetworkImage(
+                          fit: BoxFit.contain,
+                          imageUrl: item?.artUri?.toString() ?? '',
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(),
                           ),
-                          subtitle: Text(
-                            item?.artist ?? '',
-                            style: TextStyle(color: Colors.white),
-                            overflow: TextOverflow.ellipsis,
+                          errorWidget: (context, message, something) =>
+                              Icon(Icons.book),
+                        ),
+                        Expanded(
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(left: 8.0),
+                            title: Text(
+                              item?.title ?? '',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              item?.artist ?? '',
+                              style: TextStyle(color: Colors.white),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      color: Colors.white,
-                      icon: Icon(Icons.replay_30),
-                      iconSize: 25,
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      autofocus: false,
-                      onPressed: playbackController.rewind,
-                    ),
-                    IconButton(
-                      color: Colors.white,
-                      icon: state?.playing ?? false
-                          ? Icon(Icons.pause)
-                          : Icon(Icons.play_arrow),
-                      iconSize: 25,
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      autofocus: false,
-                      onPressed: state?.playing ?? false
-                          ? playbackController.pause
-                          : playbackController.play,
-                    ),
-                    IconButton(
-                      color: Colors.white,
-                      icon: Icon(Icons.close),
-                      iconSize: 25,
-                      padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
-                      autofocus: false,
-                      onPressed: playbackController.stop,
-                    )
-                  ],
-                ),
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RewindButton(
+                        iconSize: 25,
+                        color: Colors.white,
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                      ),
+                      // IconButton(
+                      //   color: Colors.white,
+                      //   icon: Icon(Jump.replay_15),
+                      //   iconSize: 25,
+                      //   padding: EdgeInsets.only(top: 10, bottom: 10),
+                      //   autofocus: false,
+                      //   onPressed: playbackController.rewind,
+                      // ),
+                      IconButton(
+                        color: Colors.white,
+                        icon: state?.playing ?? false
+                            ? Icon(Icons.pause)
+                            : Icon(Icons.play_arrow),
+                        iconSize: 25,
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        autofocus: false,
+                        onPressed: state?.playing ?? false
+                            ? playbackController.pause
+                            : playbackController.play,
+                      ),
+                      IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.close),
+                        iconSize: 25,
+                        padding:
+                            EdgeInsets.only(top: 10, bottom: 10, right: 10),
+                        autofocus: false,
+                        onPressed: playbackController.stop,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           // borderOnForeground: true,

@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authorsStateProvider =
     StateNotifierProvider<AuthorsNotifier, AuthorsState>((ref) {
-  return AuthorsNotifier(ref.watch(mediaRepositoryProdiver));
+  return AuthorsNotifier(ref.watch(mediaRepositoryProvider));
 });
 
 class AuthorsNotifier extends StateNotifier<AuthorsState> {

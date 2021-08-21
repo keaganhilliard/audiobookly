@@ -40,6 +40,10 @@ class DatabaseService {
     return _db.trackDao.findAllTracks();
   }
 
+  Future<int> deleteTracks(List<Track> tracks) async {
+    return _db.trackDao.deleteTracks(tracks);
+  }
+
   Stream<Map<String, Track>> getTracksForBookId(String bookId) {
     return _db.trackDao
         .streamTracksForBookId(bookId)

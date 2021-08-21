@@ -4,4 +4,5 @@ abstract class DownloadService {
   // Future<bool> downloadItem(DownloadTask item);
   Future downloadBook(MediaItem book, List<MediaItem> chapters) async {}
   Future<List<MediaItem>> getDownloadedItems();
+  Future deleteDownload(MediaItem item) async {}
 }

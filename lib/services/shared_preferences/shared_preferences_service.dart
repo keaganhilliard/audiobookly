@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesServiceProvider =
@@ -17,6 +18,8 @@ class SharedPreferencesService {
   static const libraryKey = 'LIBRARY_KEY';
   static const baseUrlKey = 'BASE_URL_KEY';
   static const speedKey = 'playbackSpeed';
+  static const rewindIntervalKey = 'REWIND_INTERVAL_KEY';
+  static const fastForwardIntervalKey = 'FF_INTERVAL_KEY';
 
   // init() async {
   //   sharedPreferences = await SharedPreferences.getInstance();
@@ -27,6 +30,19 @@ class SharedPreferencesService {
   }
 
   double get speed => sharedPreferences.getDouble(speedKey) ?? 1.0;
+
+  Future<void> setRewindInterval(double interval) async {
+    await sharedPreferences.setDouble(rewindIntervalKey, interval);
+  }
+
+  Future<void> setFastForwardInterval(double interval) async {
+    await sharedPreferences.setDouble(fastForwardIntervalKey, interval);
+  }
+
+  double get rewindInterval =>
+      sharedPreferences.getDouble(rewindIntervalKey) ?? 15;
+  double get fastForwardInterval =>
+      sharedPreferences.getDouble(fastForwardIntervalKey) ?? 30;
 
   Future<void> setBaseUrl(String baseUrl) async {
     await sharedPreferences.setString(baseUrlKey, baseUrl);

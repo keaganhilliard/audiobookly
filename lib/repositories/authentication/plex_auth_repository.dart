@@ -17,7 +17,7 @@ class PlexAuthRepository extends AuthenticationRepository {
     _plexApi.authToken = token;
     final user = await (_plexApi.getUser());
     final _prefs = _ref.read(sharedPreferencesServiceProvider);
-    final _repo = _ref.read(mediaRepositoryProdiver);
+    final _repo = _ref.read(mediaRepositoryProvider);
 
     if (user == null) return null;
 

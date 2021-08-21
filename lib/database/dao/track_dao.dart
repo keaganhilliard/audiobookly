@@ -17,4 +17,7 @@ abstract class TrackDao {
 
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertTrack(Track track);
+
+  @delete
+  Future<int> deleteTracks(List<Track> tracks);
 }

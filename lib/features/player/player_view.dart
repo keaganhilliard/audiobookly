@@ -6,9 +6,11 @@ import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/features/tracks/tracks_view.dart';
+import 'package:audiobookly/widgets/rewind_button.dart';
 import 'package:audiobookly/widgets/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cast/cast.dart';
+import 'package:audiobookly/utils/jump_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -327,9 +329,8 @@ class PlayerView extends HookWidget {
                               onPressed: () {},
                               size: 25.0,
                             ),
-                            getIconButton(
-                              icon: Icon(Icons.replay_30),
-                              onPressed: playbackController.rewind,
+                            RewindButton(
+                              iconSize: 35,
                             ),
                             Stack(
                               children: [
@@ -360,7 +361,7 @@ class PlayerView extends HookWidget {
                               ],
                             ),
                             getIconButton(
-                              icon: Icon(Icons.forward_30),
+                              icon: Icon(Jump.forward_30),
                               onPressed: playbackController.fastForward,
                             ),
                             StreamBuilder<Duration>(

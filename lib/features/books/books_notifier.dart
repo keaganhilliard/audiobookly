@@ -8,7 +8,7 @@ final StateNotifierProviderFamily<BooksNotifier, BooksState, String?>?
     booksStateProvider =
     StateNotifierProvider.family<BooksNotifier, BooksState, String?>(
         (ref, parentId) {
-  return BooksNotifier(ref.watch(mediaRepositoryProdiver), parentId);
+  return BooksNotifier(ref.watch(mediaRepositoryProvider), parentId);
 });
 
 class BooksNotifier extends StateNotifier<BooksState> {

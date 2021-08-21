@@ -24,7 +24,7 @@ class CollectionsView extends HookWidget {
     final booksProvider = useProvider(collectionsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
-      refresh: !kIsWeb && !Platform.isAndroid,
+      refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
         _refresher.currentState!.show();
       },

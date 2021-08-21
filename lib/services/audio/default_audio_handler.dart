@@ -135,8 +135,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           DeviceInfoService(_info),
         )
       ],
-    ).read(mediaRepositoryProdiver);
-    await _repository!.getServerAndLibrary();
+    ).read(mediaRepositoryProvider);
+    await _repository?.getServerAndLibrary();
     // _childrenSubjects = Map<String, BehaviorSubject<List<MediaItem>>>();
     if (_currentMedia != null) {
       playFromMediaId(_currentMedia);
@@ -153,6 +153,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       currentQueueItem.copyWith(
         id: currentQueueItem.id,
         duration: totalDuration,
+        artUri: _currentMediaItem?.artUri,
         displayDescription: _currentMediaItem?.displayDescription,
         extras: <String, dynamic>{
           'currentTrack': currentQueueItem.id,
@@ -248,7 +249,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future rewind([Duration interval = const Duration(seconds: 30)]) async {
+  Future rewind([Duration interval = const Duration(seconds: 15)]) async {
     await seek(currentPosition - interval);
     await super.rewind();
   }
