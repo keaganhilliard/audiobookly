@@ -1,4 +1,4 @@
-import 'package:audiobookly/features/downloads/downloads_vew.dart';
+import 'package:audiobookly/features/downloads/downloads_view.dart';
 import 'package:audiobookly/utils/book_search_delegate.dart';
 import 'package:audiobookly/features/settings/settings_view.dart';
 import 'package:flutter/material.dart';

@@ -93,6 +93,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }
   }
 
+  bool pauseOnNext = false;
+
   Future<void> _init() async {
     // We configure the audio session for speech since we're playing a podcast.
     // You can also put this in your app's initialisation if your app doesn't
@@ -111,6 +113,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           await updateProgress(AudiobooklyPlaybackState.PLAYING);
         }
         setCurrentMediaItem();
+      }
+      if (pauseOnNext) {
+        pauseOnNext = false;
+        pause();
       }
     });
 
@@ -165,12 +171,30 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     );
   }
 
+  Timer? _pauseTimer;
+
   @override
   Future customAction(String name, [Map<String, dynamic>? arguments]) async {
     if (await queue.isEmpty) return;
     if (name == 'skip')
       await _player.seekToNext();
-    else if (name == 'previous') await _player.seekToPrevious();
+    else if (name == 'previous')
+      await _player.seekToPrevious();
+    else if (name == 'setTimer') {
+      if (arguments?['type'] == 'endOfTrack') {
+        pauseOnNext = true;
+      } else if (arguments?['type'] == 'cancel') {
+        _pauseTimer?.cancel();
+        _pauseTimer = null;
+      } else {
+        final minutes = arguments?['minutes'];
+        if (minutes != null) {
+          _pauseTimer = Timer(Duration(minutes: minutes), () {
+            if (_player.playing) pause();
+          });
+        }
+      }
+    }
   }
 
   @override

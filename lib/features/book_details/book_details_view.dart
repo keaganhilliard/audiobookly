@@ -6,6 +6,7 @@ import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/features/book_details/book_details_notifier.dart';
 import 'package:audiobookly/features/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -26,12 +27,17 @@ class BookDetailsView extends HookWidget {
     final downloadService = useProvider(downloadServiceProvider);
     final playbackController = useProvider(playbackControllerProvider);
     final navigationService = useProvider(navigationServiceProvider);
+    final group = AutoSizeGroup();
 
     if (state is BookDetailsStateLoading)
       return Center(
         child: CircularProgressIndicator(),
       );
     if (state is BookDetailsStateLoaded) {
+      final double progress = Utils.getProgess(state.book!);
+      final tracks = useStream(state.tracks);
+      final dbBook = useStream(state.dbBook).data;
+
       return Scaffold(
         body: SafeArea(
           child: RefreshIndicator(
@@ -43,124 +49,176 @@ class BookDetailsView extends HookWidget {
               slivers: [
                 SliverAppBar(
                   backgroundColor: Theme.of(context).canvasColor,
+                  centerTitle: true,
+                  floating: true,
+                  pinned: true,
+                  title: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(state.book!.title),
+                  ),
+                  actions: [
+                    if ((dbBook?.downloadCompleted ?? false) ||
+                        (!(dbBook?.downloadRequested ?? false) &&
+                            (tracks.hasData && tracks.data!.length > 0)))
+                      IconButton(
+                        onPressed: () async {
+                          downloadService?.deleteDownload(
+                            state.book!,
+                          );
+                          bookDetails.refreshForDownloads();
+                        },
+                        icon: Icon(Icons.delete_forever),
+                      ),
+                    if ((dbBook?.downloadRequested ?? false) &&
+                        !(dbBook?.downloadCompleted ?? false))
+                      Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Center(
+                              child: SizedBox(
+                                height: 30.0,
+                                width: 30.0,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: IconButton(
+                                onPressed: () {
+                                  downloadService
+                                      ?.cancelBookDownload(state.book!);
+                                },
+                                icon: Icon(Icons.cancel_rounded)),
+                          ),
+                        ],
+                      ),
+                    if (!(dbBook?.downloadRequested ?? false) &&
+                        !(dbBook?.downloadCompleted ?? false))
+                      IconButton(
+                        icon: Icon(Icons.file_download_outlined),
+                        onPressed: () async {
+                          downloadService?.downloadBook(
+                            state.book!,
+                            state.chapters!,
+                          );
+                          bookDetails.refreshForDownloads();
+                        },
+                      ),
+                    if (state.book!.played)
+                      IconButton(
+                        color: Colors.deepPurple,
+                        icon: Icon(Icons.check),
+                        onPressed: () async {
+                          await bookDetails.markUnplayed();
+                        },
+                      )
+                    else
+                      IconButton(
+                        icon: Icon(Icons.check),
+                        onPressed: () async {
+                          await bookDetails.markPlayed();
+                        },
+                      ),
+                  ],
                 ),
                 SliverToBoxAdapter(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                          right: 8.0,
-                        ),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              child: CachedNetworkImage(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: Stack(
+                            children: [
+                              CachedNetworkImage(
                                 imageUrl: state.book!.artUri.toString(),
                                 fit: BoxFit.scaleDown,
                               ),
-                            ),
-                            FloatingActionButton(
-                                child: Icon(Icons.play_arrow),
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                onPressed: () {
-                                  playbackController.playItem(state.book!);
-                                  navigationService.pushNamed(
-                                    Routes.Player,
-                                    arguments: state.book,
-                                  );
-                                }),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                state.book!.title,
-                                maxLines: 3,
-                              ),
-                              Divider(),
-                              Text('By ${state.book!.artist}'),
-                              Text('Narrated by ${state.book!.narrator ?? ''}'),
-                              Text(state.book!.duration != null
-                                  ? Utils.friendlyDuration(
-                                      state.book!.duration!)
-                                  : Utils.friendlyDurationFromItems(
-                                      state.chapters!)),
-                              Divider(),
-                              ButtonBar(
-                                alignment: MainAxisAlignment.start,
-                                children: [
-                                  StreamBuilder<Book?>(
-                                      stream: state.dbBook,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          if (snapshot
-                                                  .data?.downloadCompleted ??
-                                              false) {
-                                            return IconButton(
-                                              onPressed: () async {
-                                                downloadService?.deleteDownload(
-                                                  state.book!,
-                                                );
-                                              },
-                                              icon: Icon(Icons.delete_forever),
-                                            );
-                                          } else if (snapshot
-                                                  .data?.downloadRequested ??
-                                              false) {
-                                            return CircularProgressIndicator();
-                                          }
-                                        }
-                                        return IconButton(
-                                          icon: Icon(Icons.file_download),
-                                          onPressed: () async {
-                                            downloadService?.downloadBook(
-                                              state.book!,
-                                              state.chapters!,
-                                            );
-                                          },
-                                        );
-                                      }),
-                                  if (state.book!.played)
-                                    IconButton(
-                                      color: Colors.deepPurple,
-                                      icon: Icon(Icons.check),
-                                      onPressed: () async {
-                                        await bookDetails.markUnplayed();
-                                      },
-                                    )
-                                  else
-                                    IconButton(
-                                      icon: Icon(Icons.check),
-                                      onPressed: () async {
-                                        await bookDetails.markPlayed();
-                                      },
-                                    )
-                                ],
+                              Positioned.fill(
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: progress > 0
+                                      ? LinearProgressIndicator(
+                                          minHeight: 6,
+                                          value: progress,
+                                          backgroundColor:
+                                              Theme.of(context).cardTheme.color,
+                                        )
+                                      : Container(),
+                                ),
                               )
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        FloatingActionButton(
+                          child: Icon(Icons.play_arrow),
+                          foregroundColor: Colors.white,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          onPressed: () {
+                            playbackController.playItem(state.book!);
+                            navigationService.pushNamed(
+                              Routes.Player,
+                              arguments: state.book,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, top: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Text(
+                        //   state.book!.title,
+                        //   maxLines: 3,
+                        //   style: TextStyle(fontSize: 20.0),
+                        //   textAlign: TextAlign.center,
+                        // ),
+                        // Divider(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            'By ${state.book!.artist}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Narrated by ${state.book!.narrator ?? ''}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Text(state.book!.duration != null
+                            ? Utils.friendlyDuration(state.book!.duration!)
+                            : Utils.friendlyDurationFromItems(state.chapters!)),
+                        Divider(),
+                        ButtonBar(
+                          alignment: MainAxisAlignment.start,
+                          children: [
+                            // IconButton(
+                            //     onPressed: () async {},
+                            //     icon: Icon(Icons.person))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 // Divider(),
@@ -215,56 +273,53 @@ class BookDetailsView extends HookWidget {
                     ),
                   ),
                 if (state.chapters!.isNotEmpty)
-                  StreamBuilder<Map<String, Track>>(
-                      stream: state.tracks,
-                      builder: (context, snapshot) {
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              final chapter = state.chapters![index];
-                              final track = snapshot.data?[chapter.id];
-                              return Stack(
-                                children: [
-                                  ListTile(
-                                    leading: track?.isDownloaded ?? false
-                                        ? Icon(Icons.offline_pin)
-                                        : null,
-                                    onTap: () async {
-                                      await playbackController
-                                          .playFromId(state.book!.id);
-                                      await playbackController
-                                          .skipToQueueItem(index);
-                                    },
-                                    title: Text(
-                                      state.chapters![index].title,
-                                    ),
-                                    trailing: Text(
-                                      RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                                              .firstMatch(
-                                                  "${state.chapters![index].duration}")
-                                              ?.group(1) ??
-                                          '',
-                                    ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final chapter = state.chapters![index];
+                        final track = tracks.data?[chapter.id];
+                        return Stack(
+                          children: [
+                            ListTile(
+                              leading: track?.isDownloaded ?? false
+                                  ? Icon(Icons.offline_pin)
+                                  : null,
+                              onTap: () async {
+                                await playbackController
+                                    .playFromId(state.book!.id);
+                                await playbackController.skipToQueueItem(index);
+                              },
+                              title: AutoSizeText(
+                                state.chapters![index].title,
+                                group: group,
+                                maxLines: 2,
+                              ),
+                              trailing: Text(
+                                RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
+                                        .firstMatch(
+                                            "${state.chapters![index].duration}")
+                                        ?.group(1) ??
+                                    '',
+                              ),
+                            ),
+                            if (track != null && !track.isDownloaded)
+                              Positioned.fill(
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: LinearProgressIndicator(
+                                    minHeight: 6.0,
+                                    value: track.downloadProgress,
+                                    // backgroundColor:
+                                    //     Theme.of(context).cardTheme.color,
                                   ),
-                                  if (track != null && !track.isDownloaded)
-                                    Positioned.fill(
-                                      child: Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: LinearProgressIndicator(
-                                          minHeight: 6.0,
-                                          value: track.downloadProgress,
-                                          // backgroundColor:
-                                          //     Theme.of(context).cardTheme.color,
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              );
-                            },
-                            childCount: state.chapters!.length,
-                          ),
+                                ),
+                              ),
+                          ],
                         );
-                      }),
+                      },
+                      childCount: state.chapters!.length,
+                    ),
+                  ),
               ],
             ),
           ),

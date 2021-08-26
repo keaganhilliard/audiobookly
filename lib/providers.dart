@@ -60,8 +60,8 @@ final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
   }
 });
 
-final AutoDisposeProvider<DownloadService?> downloadServiceProvider =
-    Provider.autoDispose<DownloadService?>((ref) {
+final Provider<DownloadService?> downloadServiceProvider =
+    Provider<DownloadService?>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
   if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
     final embyApi = ref.watch(embyApiProvider);

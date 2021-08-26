@@ -53,19 +53,18 @@ class Downloads extends HookWidget {
                       itemBuilder: (book) {
                         return BookGridItem(
                           onTap: () async {
-                            playbackController.playFromId(book.id);
-                            navigationService.pushNamed(
-                              Routes.Player,
-                              arguments: book,
-                            );
+                            Navigator.of(context)
+                                .pushNamed(Routes.Book, arguments: book.id);
+                            // playbackController.playFromId(book.id);
+                            // navigationService.pushNamed(
+                            //   Routes.Player,
+                            //   arguments: book,
+                            // );
                           },
                           thumbnailUrl: book.artUri.toString(),
                           title: book.title,
                           subtitle: book.artist,
-                          progress: book.duration != null
-                              ? book.viewOffset.inMilliseconds /
-                                  book.duration!.inMilliseconds
-                              : 0,
+                          progress: Utils.getProgess(book),
                           played: book.played,
                         );
                       },

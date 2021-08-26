@@ -7,7 +7,7 @@ abstract class TrackDao {
   Stream<List<Track>> findAllTracks();
 
   @Query('SELECT * FROM tracks WHERE id = :id')
-  Stream<Track?> findTrackById(int id);
+  Stream<Track?> findTrackById(String id);
 
   @Query('SELECT * FROM tracks WHERE bookId = :bookId')
   Future<List<Track>> findTracksForBookId(String bookId);

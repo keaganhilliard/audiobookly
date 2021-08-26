@@ -91,7 +91,14 @@ class Utils {
               : 0,
           // 'largeThumbnail': repo.getThumbnailUrl(item.id),
           'cached': false,
+          'artists': item.albumArtists?.map((artist) => artist.toJson())
         });
+  }
+
+  static double getProgess(MediaItem book) {
+    return book.duration != null
+        ? book.viewOffset.inMilliseconds / book.duration!.inMilliseconds
+        : 0;
   }
 
   static bool isLargeScreen(BuildContext context) {
@@ -101,7 +108,7 @@ class Utils {
   static String friendlyDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
-    return '$hours hours and $minutes minutes';
+    return '$hours hour${hours > 1 ? "s" : ""} and $minutes minute${minutes > 1 ? "s" : ""}';
   }
 
   static String friendlyDurationFromItems(List<MediaItem> items) {

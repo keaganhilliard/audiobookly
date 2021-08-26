@@ -19,26 +19,18 @@ class PlayerView extends HookWidget {
   final MediaItem? book;
 
   String genDurationString(List<MediaItem> tracks) {
-    int total = tracks.fold(
-        0, (total, track) => total + track.duration!.inMilliseconds);
-    return genDuration(total);
+    Duration total =
+        tracks.fold(Duration.zero, (total, track) => total + track.duration!);
+    return Utils.friendlyDuration(total);
   }
 
-  String genDuration(int? durationInMilliseconds) {
-    if (durationInMilliseconds == null) return 'Calculating...';
-    Duration durObj = Duration(milliseconds: durationInMilliseconds);
-
-    int hours = durObj.inHours;
-    int minutes = durObj.inMinutes.remainder(60);
-
-    return '$hours hours and $minutes minutes';
-  }
-
-  String getDurationLeftText(int? currentPosition, int? duration) {
+  String getDurationLeftText(int? currentPosition, int? duration,
+      [double rate = 1.0]) {
     String text = '';
     if (currentPosition != null && duration != null) {
       int durationLeft = duration - currentPosition;
-      String durationLeftText = genDuration(durationLeft);
+      String durationLeftText = Utils.friendlyDuration(
+          Duration(milliseconds: (durationLeft / rate).round()));
       text = (currentPosition / duration * 100).toStringAsFixed(0) +
           '% ($durationLeftText left)';
     }
@@ -213,29 +205,19 @@ class PlayerView extends HookWidget {
                     ),
                   ),
                 ),
-                if (item != null) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, bottom: 8.0),
-                    child: Text(
-                      item.album ?? '',
-                      style: Theme.of(context).textTheme.headline5,
-                      textAlign: TextAlign.center,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 8.0),
+                  child: Text(
+                    book?.album ?? '',
+                    style: Theme.of(context).textTheme.headline5,
+                    textAlign: TextAlign.center,
                   ),
-                  Text(
-                    book?.artist ?? '',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  Text(
-                    genDuration(
-                      book?.duration?.inMilliseconds ??
-                          item.duration?.inMilliseconds ??
-                          0,
-                    ),
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                ],
+                ),
+                Text(
+                  book?.artist ?? '',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
               ],
             ),
           ),
@@ -262,9 +244,9 @@ class PlayerView extends HookWidget {
                               builder: (context, snapshot) {
                                 return Text(
                                   getDurationLeftText(
-                                    snapshot.data?.inMilliseconds,
-                                    item.duration?.inMilliseconds,
-                                  ),
+                                      snapshot.data?.inMilliseconds,
+                                      item.duration?.inMilliseconds,
+                                      state?.speed ?? 1.0),
                                 );
                               }),
                         ),

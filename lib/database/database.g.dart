@@ -298,7 +298,7 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Stream<Track?> findTrackById(int id) {
+  Stream<Track?> findTrackById(String id) {
     return _queryAdapter.queryStream('SELECT * FROM tracks WHERE id = ?1',
         mapper: (Map<String, Object?> row) => Track(
             row['id'] as String,

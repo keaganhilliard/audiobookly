@@ -135,4 +135,25 @@ class AudioHandlerPlaybackController extends PlaybackController {
   Future skipToPrevious() async {
     await _audioHandler.customAction('previous', {});
   }
+
+  Future setTimer([int? minutes]) async {
+    if (minutes == null) {
+      await _audioHandler.customAction(
+        'setTimer',
+        {'type': 'endOfTrack'},
+      );
+    } else {
+      await _audioHandler.customAction(
+        'setTimer',
+        {'minutes': minutes},
+      );
+    }
+  }
+
+  Future cancelTimer() async {
+    await _audioHandler.customAction(
+      'setTimer',
+      {'type': 'cancel'},
+    );
+  }
 }

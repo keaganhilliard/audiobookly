@@ -15,6 +15,14 @@ class SeekBar extends HookWidget {
     this.onChangeEnd,
   });
 
+  String getTimeValue(Duration? time) {
+    if (time == null) return '-:--:--';
+    return RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
+            .firstMatch("${time}")
+            ?.group(1) ??
+        '${time}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final _dragValue = useState<Duration?>(null);
@@ -24,10 +32,7 @@ class SeekBar extends HookWidget {
         Slider(
           activeColor: Theme.of(context).colorScheme.primary,
           min: 0.0,
-          label: RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                  .firstMatch("${_dragValue.value}")
-                  ?.group(1) ??
-              '${_dragValue.value}',
+          label: getTimeValue(_dragValue.value),
           max: duration!.inMilliseconds.toDouble(),
           value: min(
               _dragValue.value?.inMilliseconds.toDouble() ??
@@ -50,21 +55,13 @@ class SeekBar extends HookWidget {
         Positioned(
           right: 16.0,
           bottom: 0.0,
-          child: Text(
-              RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                      .firstMatch("$duration")
-                      ?.group(1) ??
-                  '$duration',
+          child: Text(getTimeValue(duration),
               style: Theme.of(context).textTheme.caption),
         ),
         Positioned(
           left: 16.0,
           bottom: 0.0,
-          child: Text(
-              RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                      .firstMatch("$_position")
-                      ?.group(1) ??
-                  '$_position',
+          child: Text(getTimeValue(_position),
               style: Theme.of(context).textTheme.caption),
         ),
       ],

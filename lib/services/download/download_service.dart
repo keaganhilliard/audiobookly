@@ -5,4 +5,5 @@ abstract class DownloadService {
   Future downloadBook(MediaItem book, List<MediaItem> chapters) async {}
   Future<List<MediaItem>> getDownloadedItems();
   Future deleteDownload(MediaItem item) async {}
+  Future cancelBookDownload(MediaItem book);
 }

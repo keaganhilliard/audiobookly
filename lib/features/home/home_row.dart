@@ -5,6 +5,7 @@ import 'package:audiobookly/features/book_details/book_details_view.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/widgets/book_list_element.dart';
+import 'package:audiobookly/widgets/cover_item.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/utils/utils.dart';
@@ -27,15 +28,14 @@ class HomeRow extends HookWidget {
       itemCount: items!.length,
       itemBuilder: (context, index) {
         final MediaItem book = items![index];
-        return BookListElement(
+        return CoverItem(
           onTap: () async {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return BookDetailsView(mediaId: book.id);
             }));
           },
-          progress: book.duration != null
-              ? book.viewOffset.inMilliseconds / book.duration!.inMilliseconds
-              : 0,
+          height: height,
+          progress: Utils.getProgess(book),
           thumbnailUrl: book.artUri.toString(),
           title: book.title,
           subtitle: book.artist ?? '',

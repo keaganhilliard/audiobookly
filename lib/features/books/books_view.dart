@@ -63,10 +63,7 @@ class BooksView extends HookWidget {
                       thumbnailUrl: book.artUri.toString(),
                       title: book.title,
                       subtitle: book.artist,
-                      progress: book.duration != null
-                          ? book.viewOffset.inMilliseconds /
-                              book.duration!.inMilliseconds
-                          : 0,
+                      progress: Utils.getProgess(book),
                       played: book.played,
                     ),
                   );
