@@ -69,7 +69,7 @@ class _$AppDatabase extends AppDatabase {
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 2,
+      version: 3,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -87,7 +87,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `books` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `narrator` TEXT NOT NULL, `description` TEXT NOT NULL, `artPath` TEXT NOT NULL, `duration` INTEGER NOT NULL, `lastPlayedPosition` INTEGER NOT NULL, `downloadRequested` INTEGER NOT NULL, `downloadCompleted` INTEGER NOT NULL, `downloadFailed` INTEGER NOT NULL, `read` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `tracks` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `duration` INTEGER NOT NULL, `downloadProgress` REAL NOT NULL, `isDownloaded` INTEGER NOT NULL, `downloadPath` TEXT NOT NULL, `bookId` TEXT NOT NULL, FOREIGN KEY (`bookId`) REFERENCES `books` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `tracks` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `duration` INTEGER NOT NULL, `downloadProgress` REAL NOT NULL, `isDownloaded` INTEGER NOT NULL, `downloadPath` TEXT NOT NULL, `bookId` TEXT NOT NULL, `downloadTaskId` TEXT NOT NULL, `downloadTaskStatus` INTEGER NOT NULL, FOREIGN KEY (`bookId`) REFERENCES `books` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `downloads` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `progress` REAL NOT NULL, `status` TEXT NOT NULL, `path` TEXT NOT NULL, `url` TEXT NOT NULL, `trackId` INTEGER NOT NULL, FOREIGN KEY (`trackId`) REFERENCES `tracks` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
@@ -254,7 +254,9 @@ class _$TrackDao extends TrackDao {
                   'downloadProgress': item.downloadProgress,
                   'isDownloaded': item.isDownloaded ? 1 : 0,
                   'downloadPath': item.downloadPath,
-                  'bookId': item.bookId
+                  'bookId': item.bookId,
+                  'downloadTaskId': item.downloadTaskId,
+                  'downloadTaskStatus': item.downloadTaskStatus
                 },
             changeListener),
         _trackDeletionAdapter = DeletionAdapter(
@@ -268,7 +270,9 @@ class _$TrackDao extends TrackDao {
                   'downloadProgress': item.downloadProgress,
                   'isDownloaded': item.isDownloaded ? 1 : 0,
                   'downloadPath': item.downloadPath,
-                  'bookId': item.bookId
+                  'bookId': item.bookId,
+                  'downloadTaskId': item.downloadTaskId,
+                  'downloadTaskStatus': item.downloadTaskStatus
                 },
             changeListener);
 
@@ -292,7 +296,9 @@ class _$TrackDao extends TrackDao {
             row['downloadProgress'] as double,
             (row['isDownloaded'] as int) != 0,
             row['downloadPath'] as String,
-            row['bookId'] as String),
+            row['bookId'] as String,
+            row['downloadTaskId'] as String,
+            row['downloadTaskStatus'] as int),
         queryableName: 'tracks',
         isView: false);
   }
@@ -307,7 +313,9 @@ class _$TrackDao extends TrackDao {
             row['downloadProgress'] as double,
             (row['isDownloaded'] as int) != 0,
             row['downloadPath'] as String,
-            row['bookId'] as String),
+            row['bookId'] as String,
+            row['downloadTaskId'] as String,
+            row['downloadTaskStatus'] as int),
         arguments: [id],
         queryableName: 'tracks',
         isView: false);
@@ -323,8 +331,26 @@ class _$TrackDao extends TrackDao {
             row['downloadProgress'] as double,
             (row['isDownloaded'] as int) != 0,
             row['downloadPath'] as String,
-            row['bookId'] as String),
+            row['bookId'] as String,
+            row['downloadTaskId'] as String,
+            row['downloadTaskStatus'] as int),
         arguments: [bookId]);
+  }
+
+  @override
+  Future<Track?> findTracksForDownloadTaskId(String taskId) async {
+    return _queryAdapter.query('SELECT * FROM tracks WHERE downloadTaskId = ?1',
+        mapper: (Map<String, Object?> row) => Track(
+            row['id'] as String,
+            row['title'] as String,
+            _durationConverter.decode(row['duration'] as int),
+            row['downloadProgress'] as double,
+            (row['isDownloaded'] as int) != 0,
+            row['downloadPath'] as String,
+            row['bookId'] as String,
+            row['downloadTaskId'] as String,
+            row['downloadTaskStatus'] as int),
+        arguments: [taskId]);
   }
 
   @override
@@ -338,15 +364,39 @@ class _$TrackDao extends TrackDao {
             row['downloadProgress'] as double,
             (row['isDownloaded'] as int) != 0,
             row['downloadPath'] as String,
-            row['bookId'] as String),
+            row['bookId'] as String,
+            row['downloadTaskId'] as String,
+            row['downloadTaskStatus'] as int),
         arguments: [bookId],
         queryableName: 'tracks',
         isView: false);
   }
 
   @override
+  Future<Track?> updateProgress(String taskId, double progress) async {
+    return _queryAdapter.query(
+        'UPDATE tracks SET downloadProgress = ?2 WHERE downloadTaskId = ?1',
+        mapper: (Map<String, Object?> row) => Track(
+            row['id'] as String,
+            row['title'] as String,
+            _durationConverter.decode(row['duration'] as int),
+            row['downloadProgress'] as double,
+            (row['isDownloaded'] as int) != 0,
+            row['downloadPath'] as String,
+            row['bookId'] as String,
+            row['downloadTaskId'] as String,
+            row['downloadTaskStatus'] as int),
+        arguments: [taskId, progress]);
+  }
+
+  @override
   Future<void> insertTrack(Track track) async {
     await _trackInsertionAdapter.insert(track, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> insertTracks(List<Track> track) async {
+    await _trackInsertionAdapter.insertList(track, OnConflictStrategy.replace);
   }
 
   @override

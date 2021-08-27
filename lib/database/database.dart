@@ -12,7 +12,7 @@ import 'package:audiobookly/database/entity/book.dart';
 part 'database.g.dart'; // the generated code will be there
 
 @TypeConverters([DurationConverter])
-@Database(version: 2, entities: [Book, Track, DownloadTask])
+@Database(version: 3, entities: [Book, Track, DownloadTask])
 abstract class AppDatabase extends FloorDatabase {
   BookDao get bookDao;
   TrackDao get trackDao;
@@ -22,4 +22,11 @@ abstract class AppDatabase extends FloorDatabase {
 final migrate1To2 = Migration(1, 2, (database) async {
   await database
       .execute('ALTER TABLE books ADD COLUMN read INTEGER NOT NULL DEFAULT 0');
+});
+
+final migrate2To3 = Migration(2, 3, (database) async {
+  await database.execute(
+      'ALTER TABLE tracks ADD COLUMN downloadTaskId TEXT NOT NULL DEFAULT \'\'');
+  await database.execute(
+      'ALTER TABLE tracks ADD COLUMN downloadTaskStatus INTEGER NOT NULL DEFAULT 0');
 });

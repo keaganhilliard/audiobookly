@@ -135,7 +135,9 @@ class AudiobooklyApp extends HookWidget {
                     String newRoute = routeMap[index];
                     _currentIndex.value = index;
                     _navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                        newRoute, ModalRoute.withName(oldRoute));
+                      newRoute,
+                      ModalRoute.withName(oldRoute),
+                    );
                   }
                 },
                 destinations: [

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/database/entity/book.dart';
 import 'package:audiobookly/database/entity/track.dart';
@@ -8,6 +10,7 @@ import 'package:audiobookly/features/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -73,16 +76,32 @@ class BookDetailsView extends HookWidget {
                         !(dbBook?.downloadCompleted ?? false))
                       Stack(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 5.0),
-                            child: Center(
-                              child: SizedBox(
-                                height: 30.0,
-                                width: 30.0,
-                                child: CircularProgressIndicator(),
+                          if (!kIsWeb &&
+                              !Platform.isWindows &&
+                              !Platform.isLinux)
+                            Positioned(
+                              left: 9.0,
+                              top: 13.0,
+                              child: Center(
+                                child: SizedBox(
+                                  height: 30.0,
+                                  width: 30.0,
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
                             ),
-                          ),
+                          if (kIsWeb || Platform.isWindows || Platform.isLinux)
+                            Positioned(
+                              left: 5.0,
+                              top: 13.0,
+                              child: Center(
+                                child: SizedBox(
+                                  height: 30.0,
+                                  width: 30.0,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                            ),
                           Center(
                             child: IconButton(
                                 onPressed: () {

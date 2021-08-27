@@ -10,8 +10,9 @@ Track getTrack(
   MediaItem chapter,
   String bookId,
   double progress,
-  String path,
-) =>
+  String path, [
+  String downloadTaskId = '',
+]) =>
     Track(
       chapter.id,
       chapter.title,
@@ -20,6 +21,8 @@ Track getTrack(
       progress == 1,
       path,
       bookId,
+      downloadTaskId,
+      0,
     );
 
 Book getBook(

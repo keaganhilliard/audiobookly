@@ -48,6 +48,10 @@ class DatabaseService {
     return _db.trackDao.findTrackById(id).first;
   }
 
+  Future updateTrackDownloadProgress(String taskId, double progress) async {
+    return _db.trackDao.updateProgress(taskId, progress);
+  }
+
   Stream<Map<String, Track>> getTracksForBookId(String bookId) {
     return _db.trackDao
         .streamTracksForBookId(bookId)
@@ -58,7 +62,15 @@ class DatabaseService {
             ));
   }
 
+  Future<Track?> getTrackByDownloadTask(String taskId) {
+    return _db.trackDao.findTracksForDownloadTaskId(taskId);
+  }
+
   Future insertTrack(Track track) {
     return _db.trackDao.insertTrack(track);
+  }
+
+  Future insertTracks(List<Track> tracks) {
+    return _db.trackDao.insertTracks(tracks);
   }
 }
