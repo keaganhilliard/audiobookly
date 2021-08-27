@@ -86,17 +86,17 @@ class MobileDownloader extends Downloader {
   }
 
   Future downloadFile(String id, String url, String path) async {
-    String? id = await FlutterDownloader.enqueue(
+    String? taskId = await FlutterDownloader.enqueue(
       url: url,
       savedDir: path,
       showNotification: false,
       openFileFromNotification: false,
     );
-    if (id != null) {
+    if (taskId != null) {
       print('$id');
       final track = await db.getTrack(id);
       if (track != null)
-        await db.insertTrack(track.copyWith(downloadTaskId: id));
+        await db.insertTrack(track.copyWith(downloadTaskId: taskId));
     }
     return id;
   }
