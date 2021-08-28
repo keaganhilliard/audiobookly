@@ -17,14 +17,14 @@ class TracksView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final playbackState = useProvider(playbackStateProvider);
-    final queue = useProvider(queueProvider);
-    final currentItem = useProvider(currentItemProvider);
     final playbackController = useProvider(playbackControllerProvider);
+    final playbackState = useStream(playbackController.playbackStateStream);
+    final currentItem = useStream(playbackController.currentMediaItemStream);
+    final queue = useStream(playbackController.queueStream);
 
-    PlaybackState? state = playbackState.data?.value;
-    List<MediaItem>? items = queue.data?.value;
-    MediaItem? item = currentItem.data?.value;
+    PlaybackState? state = playbackState.data;
+    List<MediaItem>? items = queue.data;
+    MediaItem? item = currentItem.data;
     final currentTrackIndex = items?.indexWhere(
             (current) => current.id == item!.extras!['currentTrack']) ??
         0;
@@ -47,12 +47,6 @@ class TracksView extends HookWidget {
                   playbackController.pause();
                 },
               ),
-            // IconButton(
-            //   icon: Icon(Icons.file_download),
-            //   onPressed: () {
-
-            //   },
-            // )
           ],
         ),
         body: items == null
@@ -68,37 +62,33 @@ class TracksView extends HookWidget {
                   final MediaItem track = items[index];
                   final totalTrackDigits = items.length.toString().length;
                   final bool currentTrack = index == currentTrackIndex;
-                  return Container(
-                    color: currentTrack
-                        ? Theme.of(context).hoverColor
-                        : Theme.of(context).canvasColor,
-                    child: ListTile(
-                      onTap: () {
-                        print('Skipping to ${item!.id}');
-                        if (track.id != item.id)
-                          playbackController.skipToQueueItem(index);
-                      },
-                      trailing: currentTrack
-                          ? IconButton(
-                              icon: Icon(Icons.poll),
-                              onPressed: () {},
-                            )
-                          : null,
-                      // IconButton(
-                      //     icon: Icon(Icons.file_download),
-                      //     onPressed: () {
-                      //       // print('Something');
-                      //       // model.downloadAllTracks(items.sublist(index));
-                      //       // model.handleDownload(track);
-                      //     },
-                      //   ),
-                      title: Text(
-                        '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title.isEmpty ? '' : ' - ' + track.title}',
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                          '${Utils.format(Duration(milliseconds: track.duration!.inMilliseconds))}'),
+                  return ListTile(
+                    leading: track.cached ? Icon(Icons.offline_pin) : null,
+                    onTap: () {
+                      print('Skipping to ${item!.id}');
+                      if (track.id != item.id)
+                        playbackController.skipToQueueItem(index);
+                    },
+                    trailing: currentTrack
+                        ? IconButton(
+                            icon: Icon(Icons.poll),
+                            onPressed: () {},
+                          )
+                        : null,
+                    // IconButton(
+                    //     icon: Icon(Icons.file_download),
+                    //     onPressed: () {
+                    //       // print('Something');
+                    //       // model.downloadAllTracks(items.sublist(index));
+                    //       // model.handleDownload(track);
+                    //     },
+                    //   ),
+                    title: Text(
+                      '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title.isEmpty ? '' : ' - ' + track.title}',
+                      overflow: TextOverflow.ellipsis,
                     ),
+                    subtitle: Text(
+                        '${Utils.format(Duration(milliseconds: track.duration!.inMilliseconds))}'),
                   );
                 },
               )

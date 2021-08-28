@@ -1,11 +1,13 @@
 import 'dart:ui';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/features/tracks/tracks_view.dart';
+import 'package:audiobookly/widgets/playback_position.dart';
 import 'package:audiobookly/widgets/rewind_button.dart';
 import 'package:audiobookly/widgets/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,6 +15,7 @@ import 'package:cast/cast.dart';
 import 'package:audiobookly/utils/jump_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PlayerView extends HookWidget {
@@ -43,13 +46,14 @@ class PlayerView extends HookWidget {
 
   @override
   Widget build(context) {
-    final playbackState = useProvider(playbackStateProvider);
-    final mediaItem = useProvider(currentItemProvider);
     final playbackController = useProvider(playbackControllerProvider);
+    final playbackState = useStream(playbackController.playbackStateStream);
+    final mediaItem = useStream(playbackController.currentMediaItemStream);
     final navigationService = useProvider(navigationServiceProvider);
 
-    final PlaybackState? state = playbackState.data?.value;
-    final MediaItem? item = mediaItem.data?.value;
+    final PlaybackState? state = playbackState.data;
+    final MediaItem? item = mediaItem.data;
+    final sleepService = GetIt.I<SleepService>();
 
     return Scaffold(
       appBar: AppBar(
@@ -239,16 +243,14 @@ class PlayerView extends HookWidget {
                         Padding(
                           padding: const EdgeInsets.only(
                               left: 16.0, bottom: 16.0, right: 16.0),
-                          child: StreamBuilder<Duration>(
-                              stream: playbackController.positionStream,
-                              builder: (context, snapshot) {
-                                return Text(
-                                  getDurationLeftText(
-                                      snapshot.data?.inMilliseconds,
-                                      item.duration?.inMilliseconds,
-                                      state?.speed ?? 1.0),
-                                );
-                              }),
+                          child: PlaybackPosition(builder: (context, position) {
+                            return Text(
+                              getDurationLeftText(
+                                  position?.inMilliseconds,
+                                  item.duration?.inMilliseconds,
+                                  state?.speed ?? 1.0),
+                            );
+                          }),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -261,22 +263,10 @@ class PlayerView extends HookWidget {
                               },
                             ),
                             Expanded(
-                                child: StreamBuilder<Duration>(
-                                    stream: playbackController.positionStream,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.data != null) {
-                                        // final timeLeft = getDurationLeftText(
-                                        //   snapshot.data.inMilliseconds -
-                                        //       item.extras[
-                                        //           'currentTrackStartingPosition'],
-                                        //   item.extras['currentTrackLength'],
-                                        // );
-                                        return Center(
-                                            child: Text('${item.title}'));
-                                      }
-                                      return Center(
-                                          child: Text('${item.title}'));
-                                    })),
+                              child: Center(
+                                child: Text('${item.title}'),
+                              ),
+                            ),
                             IconButton(
                               icon: Icon(Icons.skip_next),
                               onPressed: () {
@@ -290,26 +280,75 @@ class PlayerView extends HookWidget {
                             left: 8.0,
                             right: 8.0,
                           ),
-                          child: StreamBuilder<Duration>(
-                              stream: playbackController.positionStream,
-                              builder: (context, snapshot) {
-                                return SeekBar(
-                                    duration: item.duration,
-                                    position: snapshot.data,
-                                    onChangeEnd: (val) async {
-                                      await playbackController
-                                          .seek(val.inMilliseconds);
-                                    });
-                              }),
+                          child: PlaybackPosition(builder: (context, position) {
+                            return SeekBar(
+                                duration: item.duration,
+                                position: position,
+                                onChangeEnd: (val) async {
+                                  await playbackController
+                                      .seek(val.inMilliseconds);
+                                });
+                          }),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            getIconButton(
-                              icon: Icon(Icons.alarm),
-                              onPressed: () {},
-                              size: 25.0,
+                            HookBuilder(
+                              builder: (context) {
+                                final timeLeft =
+                                    useStream(sleepService.getTimeLeftStream());
+                                return getIconButton(
+                                  icon:
+                                      timeLeft.hasData && timeLeft.data != null
+                                          ? Text(
+                                              Utils.getTimeValue(timeLeft.data),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                // color: Colors.white,
+                                                fontSize: 9.0,
+                                              ),
+                                            )
+                                          : Icon(Icons.snooze),
+                                  onPressed: () async {
+                                    final time = await showDialog<Duration?>(
+                                      context: context,
+                                      builder: (context) {
+                                        Widget createOption(
+                                          String label,
+                                          int minutes,
+                                        ) =>
+                                            SimpleDialogOption(
+                                              child: Text('$label'),
+                                              onPressed: () {
+                                                Navigator.pop(
+                                                  context,
+                                                  Duration(minutes: minutes),
+                                                );
+                                              },
+                                            );
+                                        return SimpleDialog(
+                                          title: const Text('Start timer'),
+                                          children: [
+                                            createOption('Stop timer', 0),
+                                            // createOption('End of chapter', 1),
+                                            createOption('10 minutes', 10),
+                                            createOption('15 minutes', 15),
+                                            createOption('30 minutes', 30),
+                                            createOption('45 minutes', 45),
+                                            createOption('1 hour', 60),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    if (time == Duration.zero)
+                                      sleepService.cancelTimer();
+                                    else if (time != null)
+                                      sleepService.beginTimer(time);
+                                  },
+                                  size: 25.0,
+                                );
+                              },
                             ),
                             RewindButton(
                               iconSize: 35,
@@ -346,61 +385,56 @@ class PlayerView extends HookWidget {
                               icon: Icon(Jump.forward_30),
                               onPressed: playbackController.fastForward,
                             ),
-                            StreamBuilder<Duration>(
-                                stream: playbackController.positionStream,
-                                builder: (context, snapshot) {
-                                  return IconButton(
-                                    onPressed: () => {
-                                      showModalBottomSheet(
-                                          clipBehavior: Clip.antiAlias,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(15.0),
-                                              topRight: Radius.circular(15.0),
-                                              bottomLeft: Radius.circular(15.0),
-                                              bottomRight:
-                                                  Radius.circular(15.0),
-                                            ),
-                                          ),
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 40.0,
-                                                bottom: 40.0,
-                                                left: 16.0,
-                                                right: 16.0,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  Text('Playback Speed'),
-                                                  ValueSlider(
-                                                    prefix: Text('1.00'),
-                                                    value: state?.speed ?? 1.0,
-                                                    onChangeEnd: (val) {
-                                                      playbackController
-                                                          .setSpeed(val);
-                                                    },
-                                                    max: 2.0,
-                                                    min: 1.0,
-                                                    postfix: Text('2.00'),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          })
-                                    },
-                                    icon: Text(
-                                      '${state?.speed.toStringAsFixed(2)}x',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        // color: Colors.white,
-                                        fontSize: 9.0,
+                            IconButton(
+                              onPressed: () => {
+                                showModalBottomSheet(
+                                    clipBehavior: Clip.antiAlias,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15.0),
+                                        topRight: Radius.circular(15.0),
+                                        bottomLeft: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0),
                                       ),
-                                    ), //............
-                                  );
-                                }),
+                                    ),
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 40.0,
+                                          bottom: 40.0,
+                                          left: 16.0,
+                                          right: 16.0,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Text('Playback Speed'),
+                                            ValueSlider(
+                                              prefix: Text('1.00'),
+                                              value: state?.speed ?? 1.0,
+                                              onChangeEnd: (val) {
+                                                playbackController
+                                                    .setSpeed(val);
+                                              },
+                                              max: 2.0,
+                                              min: 1.0,
+                                              postfix: Text('2.00'),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    })
+                              },
+                              icon: Text(
+                                '${state?.speed.toStringAsFixed(2)}x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  // color: Colors.white,
+                                  fontSize: 9.0,
+                                ),
+                              ), //............
+                            ),
                           ],
                         ),
                       ],
@@ -415,7 +449,7 @@ class PlayerView extends HookWidget {
   }
 
   IconButton getIconButton(
-      {required Icon icon,
+      {required Widget icon,
       Function? onPressed,
       double size = 35.0,
       Color? color}) {

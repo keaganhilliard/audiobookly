@@ -15,6 +15,7 @@ class DesktopDownloader extends Downloader {
   ) async {
     StreamSubscription? sub;
     Completer completer = Completer();
+    print(url);
     try {
       final track = await db.getTrack(id);
 

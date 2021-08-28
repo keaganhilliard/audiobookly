@@ -1,3 +1,4 @@
+import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,14 +16,6 @@ class SeekBar extends HookWidget {
     this.onChangeEnd,
   });
 
-  String getTimeValue(Duration? time) {
-    if (time == null) return '-:--:--';
-    return RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-            .firstMatch("${time}")
-            ?.group(1) ??
-        '${time}';
-  }
-
   @override
   Widget build(BuildContext context) {
     final _dragValue = useState<Duration?>(null);
@@ -32,7 +25,7 @@ class SeekBar extends HookWidget {
         Slider(
           activeColor: Theme.of(context).colorScheme.primary,
           min: 0.0,
-          label: getTimeValue(_dragValue.value),
+          label: Utils.getTimeValue(_dragValue.value),
           max: duration!.inMilliseconds.toDouble(),
           value: min(
               _dragValue.value?.inMilliseconds.toDouble() ??
@@ -55,13 +48,13 @@ class SeekBar extends HookWidget {
         Positioned(
           right: 16.0,
           bottom: 0.0,
-          child: Text(getTimeValue(duration),
+          child: Text(Utils.getTimeValue(duration),
               style: Theme.of(context).textTheme.caption),
         ),
         Positioned(
           left: 16.0,
           bottom: 0.0,
-          child: Text(getTimeValue(_position),
+          child: Text(Utils.getTimeValue(_position),
               style: Theme.of(context).textTheme.caption),
         ),
       ],

@@ -174,6 +174,10 @@ class EmbyRepository extends MediaRepository {
     return _api.getServerUrl(path);
   }
 
+  String getDownloadUrl(String path) {
+    return _api.getDownloadUrl(path);
+  }
+
   String getThumbnailUrl(String? path) {
     return _api.getThumbnailUrl(path!);
   }

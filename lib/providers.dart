@@ -7,7 +7,6 @@ import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/repositories/media/emby_repository.dart';
 import 'package:audiobookly/repositories/media/plex_repository.dart';
 import 'package:audiobookly/services/download/download_service.dart';
-import 'package:audiobookly/services/download/emby_download_service.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -62,26 +61,10 @@ final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
 
 final Provider<DownloadService?> downloadServiceProvider =
     Provider<DownloadService?>((ref) {
-  final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
-  if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
-    final embyApi = ref.watch(embyApiProvider);
-    final db = ref.watch(databaseServiceProvider);
-    return EmbyDownloadService(embyApi, db);
-  }
-  return null;
-});
-
-final playbackStateProvider = StreamProvider<PlaybackState>((ref) {
-  final playbackController = ref.watch(playbackControllerProvider);
-  return playbackController.playbackStateStream;
-});
-
-final currentItemProvider = StreamProvider<MediaItem?>((ref) {
-  final playbackController = ref.watch(playbackControllerProvider);
-  return playbackController.currentMediaItemStream;
-});
-
-final queueProvider = StreamProvider<List<MediaItem>?>((ref) {
-  final playbackController = ref.watch(playbackControllerProvider);
-  return playbackController.queueStream;
+  final mediaRepo = ref.watch(mediaRepositoryProvider);
+  final db = ref.watch(databaseServiceProvider);
+  if (mediaRepo != null)
+    return DownloadService(mediaRepo, db);
+  else
+    return null;
 });

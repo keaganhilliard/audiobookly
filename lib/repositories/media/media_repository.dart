@@ -107,5 +107,6 @@ abstract class MediaRepository {
   String getServerUrl(String path);
   String getThumbnailUrl(String? path);
   Future playbackFinished(String key);
+  String getDownloadUrl(String path);
   void setLibraryId(String libraryId) {}
 }

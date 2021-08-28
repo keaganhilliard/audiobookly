@@ -10,6 +10,7 @@ class PlexTrack extends PlexMetadata {
   String? parentKey;
   String? grandparentTitle;
   String? parentTitle;
+  String? originalTitle;
   int? parentIndex;
   String? parentThumb;
   String? grandparentThumb;
@@ -29,6 +30,7 @@ class PlexTrack extends PlexMetadata {
     parentKey = json['parentKey'];
     grandparentTitle = json['grandparentTitle'];
     parentTitle = json['parentTitle'];
+    originalTitle = json['originalTitle'];
     parentIndex = json['parentIndex'];
     parentThumb = json['parentThumb'];
     grandparentThumb = json['grandparentThumb'];
@@ -55,6 +57,7 @@ class PlexTrack extends PlexMetadata {
     data['parentKey'] = this.parentKey;
     data['grandparentTitle'] = this.grandparentTitle;
     data['parentTitle'] = this.parentTitle;
+    data['originalTitle'] = this.originalTitle;
     data['parentIndex'] = this.parentIndex;
     data['parentThumb'] = this.parentThumb;
     data['grandparentThumb'] = this.grandparentThumb;

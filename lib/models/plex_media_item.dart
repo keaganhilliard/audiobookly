@@ -23,7 +23,8 @@ class PlexMediaItem extends AudiobooklyMediaItem {
                     track.media![0].part![0].file!.lastIndexOf('/') + 1)),
             'partKey': track.media![0].part![0].key,
             'serverKey': track.ratingKey,
-            'viewOffset': track.viewOffset
+            'viewOffset': track.viewOffset,
+            'narrator': track.originalTitle,
           },
         );
   PlexMediaItem.fromPlexArtist(PlexArtist artist, PlexServer server)

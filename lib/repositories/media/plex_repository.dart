@@ -239,4 +239,8 @@ class PlexRepository extends MediaRepository {
   Future markPlayed(String itemId) async {}
 
   Future markUnplayed(String itemId) async {}
+
+  String getDownloadUrl(String path) {
+    return getServerUrl(path) + '&download=1';
+  }
 }

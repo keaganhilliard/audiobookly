@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/desktop_downloader.dart';
 import 'package:audiobookly/services/download/downloader.dart';
@@ -37,6 +38,7 @@ Future<void> registerSingletons() async {
     final handler = await initDesktopAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
   }
-  getIt.registerSingleton(downloader);
+  getIt.registerSingleton<Downloader>(downloader);
   getIt.registerSingleton<PlaybackController>(controller);
+  getIt.registerSingleton<SleepService>(SleepService(controller));
 }

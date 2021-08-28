@@ -47,6 +47,14 @@ Book getBook(
     );
 
 class Utils {
+  static String getTimeValue(Duration? time) {
+    if (time == null) return '-:--:--';
+    return RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
+            .firstMatch("${time}")
+            ?.group(1) ??
+        '${time}';
+  }
+
   static _getNarrator(EmbyItem item) {
     if (item.composers?.isNotEmpty ?? false) {
       return item.composers!.map((artist) => artist.name).join(', ');
@@ -125,8 +133,8 @@ class Utils {
 
 extension MediaHelpers on MediaItem {
   String? get narrator => extras?['narrator'];
-  bool get played => extras?['played'];
-  bool get cached => extras?['cached'];
+  bool get played => extras?['played'] ?? false;
+  bool get cached => extras?['cached'] ?? false;
   String get cachePath => extras?['cachePath'] ?? '';
 
   String? get partKey => extras?['partKey'];

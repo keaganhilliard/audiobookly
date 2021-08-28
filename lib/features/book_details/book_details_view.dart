@@ -217,13 +217,14 @@ class BookDetailsView extends HookWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Narrated by ${state.book!.narrator ?? ''}',
-                            textAlign: TextAlign.center,
+                        if (state.book!.narrator != null)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Narrated by ${state.book!.narrator!}',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
                         Text(state.book!.duration != null
                             ? Utils.friendlyDuration(state.book!.duration!)
                             : Utils.friendlyDurationFromItems(state.chapters!)),
@@ -313,12 +314,9 @@ class BookDetailsView extends HookWidget {
                                 group: group,
                                 maxLines: 2,
                               ),
-                              trailing: Text(
-                                RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-                                        .firstMatch(
-                                            "${state.chapters![index].duration}")
-                                        ?.group(1) ??
-                                    '',
+                              subtitle: Text(
+                                Utils.getTimeValue(
+                                    state.chapters![index].duration),
                               ),
                             ),
                             if (track != null && !track.isDownloaded)
