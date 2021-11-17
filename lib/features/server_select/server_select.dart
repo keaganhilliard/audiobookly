@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ServerSelect extends HookWidget {
   final List<Library> _servers;
-  ServerSelect(this._servers);
+  const ServerSelect(this._servers);
 
   @override
   Widget build(BuildContext context) {

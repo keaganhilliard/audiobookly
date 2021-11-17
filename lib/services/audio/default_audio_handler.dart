@@ -48,22 +48,24 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   void initTimer() {
     int pauseCount = 0;
-    _timer ??= Timer.periodic(Duration(seconds: 10), (timer) async {
-      if (!_player.playing) pauseCount++;
-      await _repository?.playbackCheckin(
-          _currentMedia!,
-          currentPosition,
-          totalDuration,
-          _player.speed,
-          AudiobooklyEvent.TimeUpdate,
-          _player.playing);
-      if (_player.playerState.processingState == ProcessingState.idle ||
-          pauseCount > 5) {
-        timer.cancel();
-        _timer = null;
-        pauseCount = 0;
-      }
-    });
+    if (_currentMedia != null) {
+      _timer ??= Timer.periodic(const Duration(seconds: 10), (timer) async {
+        if (!_player.playing) pauseCount++;
+        await _repository?.playbackCheckin(
+            _currentMedia!,
+            currentPosition,
+            totalDuration,
+            _player.speed,
+            AudiobooklyEvent.TimeUpdate,
+            _player.playing);
+        if (_player.playerState.processingState == ProcessingState.idle ||
+            pauseCount > 5) {
+          timer.cancel();
+          _timer = null;
+          pauseCount = 0;
+        }
+      });
+    }
   }
 
   Future updateProgress(AudiobooklyPlaybackState state,
@@ -72,7 +74,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     if (state == AudiobooklyPlaybackState.STOPPED) {
       _timer?.cancel();
       _timer = null;
-      if (_currentMedia != null)
+      if (_currentMedia != null) {
         _repository!.playbackCheckin(
           _currentMedia!,
           currentPosition,
@@ -81,6 +83,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           AudiobooklyEvent.Pause,
           _player.playing,
         );
+      }
     } else {
       _repository!.playbackCheckin(
         _currentMedia!,
@@ -176,11 +179,11 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future customAction(String name, [Map<String, dynamic>? arguments]) async {
     if (await queue.isEmpty) return;
-    if (name == 'skip')
+    if (name == 'skip') {
       await _player.seekToNext();
-    else if (name == 'previous')
+    } else if (name == 'previous') {
       await _player.seekToPrevious();
-    else if (name == 'setTimer') {
+    } else if (name == 'setTimer') {
       if (arguments?['type'] == 'endOfTrack') {
         pauseOnNext = true;
       } else if (arguments?['type'] == 'cancel') {
@@ -313,7 +316,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     await _player.seek(Duration.zero, index: index);
   }
 
-  Map<String, ValueStream<Map<String, dynamic>>> streams = Map();
+  Map<String, ValueStream<Map<String, dynamic>>> streams = {};
 
   @override
   ValueStream<Map<String, dynamic>> subscribeToChildren(String parentMediaId) {
@@ -369,15 +372,16 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       _currentMediaItem = MediaHelpers.fromBook(dbBook);
     } else {
       await _repository!.getServerAndLibrary();
-      queue.add(
-          (await _repository!.getTracksForBook(mediaId)).cast<MediaItem>());
-      _currentMediaItem = (await _repository!.getAlbumFromId(mediaId))
-          .copyWith(duration: totalDuration);
+      _currentMediaItem = (await _repository!.getAlbumFromId(mediaId));
+      queue.add((await _repository!.getTracksForBook(_currentMediaItem!))
+          .cast<MediaItem>());
+      _currentMediaItem = _currentMediaItem!.copyWith(duration: totalDuration);
     }
 
     final queuePosition = findPositionForAlbum(_currentMediaItem!);
     try {
-      await _player.setAudioSource(
+      await _player
+          .setAudioSource(
         ConcatenatingAudioSource(
           children: queue.value.map((item) {
             print('We doing cache? ${'file:///' + item.cachePath}');
@@ -389,7 +393,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         ),
         initialIndex: queuePosition.trackIndex,
         initialPosition: queuePosition.trackPosition,
-      );
+      )
+          .catchError((err) {
+        print(err);
+      });
       await setSpeed(_prefs.speed);
       setCurrentMediaItem();
     } catch (e, stack) {
@@ -410,12 +417,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   Future<List<MediaItem>> search(String query,
       [Map<String, dynamic>? extras]) async {
     return await _repository!.search(query);
-  }
-
-  @override
-  Future<void> prepareFromSearch(String query, [Map<String, dynamic>? extras]) {
-    // TODO: implement prepareFromSearch
-    return super.prepareFromSearch(query, extras);
   }
 
   @override

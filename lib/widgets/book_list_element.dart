@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BookListElement extends StatelessWidget {
-  BookListElement({
+  const BookListElement({
     this.progress,
     this.subtitle,
     this.title,
@@ -50,7 +50,7 @@ class BookListElement extends StatelessWidget {
                             minHeight: 8,
                             value: progress,
                             // color: Theme.of(context).accentColor,
-                            backgroundColor: Theme.of(context).cardTheme.color,
+                            backgroundColor: Colors.transparent,
                           )
                         : Container(),
                   ],

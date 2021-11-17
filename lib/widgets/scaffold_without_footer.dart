@@ -10,7 +10,7 @@ class ScaffoldWithoutFooter extends StatelessWidget {
   final bool showDownloads;
   final VoidCallback? onRefresh;
 
-  ScaffoldWithoutFooter({
+  const ScaffoldWithoutFooter({
     this.title,
     this.body,
     this.refresh = false,

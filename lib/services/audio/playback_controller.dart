@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/default_audio_handler.dart';
-import 'package:audiobookly/services/audio/desktop_audio_handler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
 
 final playbackControllerProvider =
     Provider<PlaybackController>((ref) => throw UnimplementedError());
@@ -12,7 +10,7 @@ final playbackControllerProvider =
 Future<AudioHandler> initAudioHandler() async {
   return await AudioService.init(
     builder: () => AudiobooklyAudioHandler(),
-    config: AudioServiceConfig(
+    config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.azothforgotten.audibookly.audio',
       androidNotificationChannelName: 'Audiobookly',
       androidNotificationChannelDescription: 'Audio playback notification',
@@ -27,15 +25,15 @@ Future<AudioHandler> initAudioHandler() async {
   );
 }
 
-Future<AudioHandler> initDesktopAudioHandler() async {
-  return await AudioService.init(
-    builder: () => DesktopAudioHandler(),
-    config: AudioServiceConfig(
-      rewindInterval: Duration(seconds: 30),
-      fastForwardInterval: Duration(seconds: 30),
-    ),
-  );
-}
+// Future<AudioHandler> initDesktopAudioHandler() async {
+//   return await AudioService.init(
+//     builder: () => DesktopAudioHandler(),
+//     config: AudioServiceConfig(
+//       rewindInterval: Duration(seconds: 30),
+//       fastForwardInterval: Duration(seconds: 30),
+//     ),
+//   );
+// }
 
 abstract class PlaybackController {
   Future playItem(MediaItem item) async {}
@@ -60,7 +58,7 @@ abstract class PlaybackController {
 }
 
 class AudioHandlerPlaybackController extends PlaybackController {
-  AudioHandler _audioHandler;
+  final AudioHandler _audioHandler;
   AudioHandlerPlaybackController(this._audioHandler);
 
   MediaItem? currentItem;
@@ -68,17 +66,25 @@ class AudioHandlerPlaybackController extends PlaybackController {
 
   bool ensured = false;
 
+  @override
   Stream<Duration> get positionStream => AudioService.positionStream;
+  @override
   Stream<PlaybackState> get playbackStateStream => _audioHandler.playbackState;
+  @override
   Stream<MediaItem?> get currentMediaItemStream => _audioHandler.mediaItem;
+  @override
   MediaItem? get currentMediaItem => _audioHandler.mediaItem.value;
+  @override
   List<MediaItem>? get currentQueue => _audioHandler.queue.value;
+  @override
   Stream<List<MediaItem>?> get queueStream => _audioHandler.queue;
 
+  @override
   Future playItem(MediaItem item) async {
     return playFromId(item.id);
   }
 
+  @override
   Future playFromId(String? id, [bool shouldPlay = true]) async {
     if (id == currentItemId) {
       if (shouldPlay && !_audioHandler.playbackState.value.playing) play();
@@ -89,49 +95,60 @@ class AudioHandlerPlaybackController extends PlaybackController {
     return await _audioHandler.playFromMediaId(id!);
   }
 
+  @override
   Future handleResume() async {
     if (currentItemId != null) return playFromId(currentItemId, false);
   }
 
+  @override
   Future stop() async {
     await _audioHandler.stop();
     currentItem = null;
   }
 
+  @override
   Future fastForward() async {
     await _audioHandler.fastForward();
   }
 
+  @override
   Future rewind() async {
     await _audioHandler.rewind();
   }
 
+  @override
   Future play() async {
     await _audioHandler.play();
   }
 
+  @override
   Future pause() async {
     await _audioHandler.pause();
   }
 
+  @override
   Future seek(int position) async {
     await _audioHandler.seek(
       Duration(milliseconds: position),
     );
   }
 
+  @override
   Future setSpeed(double speed) async {
     await _audioHandler.setSpeed(speed);
   }
 
+  @override
   Future skipToQueueItem(int index) async {
     await _audioHandler.skipToQueueItem(index);
   }
 
+  @override
   Future skipToNext() async {
     await _audioHandler.customAction('skip', {});
   }
 
+  @override
   Future skipToPrevious() async {
     await _audioHandler.customAction('previous', {});
   }

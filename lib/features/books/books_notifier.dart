@@ -15,17 +15,19 @@ class BooksNotifier extends StateNotifier<BooksState> {
   final MediaRepository? _repository;
   final String? _parentId;
 
-  BooksNotifier(this._repository, this._parentId) : super(BooksState.initial());
+  BooksNotifier(this._repository, this._parentId)
+      : super(const BooksState.initial());
 
   Future<void> getBooks() async {
     try {
-      state = BooksState.loading();
+      state = const BooksState.loading();
       final books = await _repository!.getChildren(
         _parentId ?? MediaIds.BOOKS_ID,
       );
       state = BooksState.loaded(books: books, currentParent: _parentId);
     } on Exception {
-      state = BooksState.error("Couldn't fetch books. Is the device online?");
+      state =
+          const BooksState.error("Couldn't fetch books. Is the device online?");
     }
   }
 }

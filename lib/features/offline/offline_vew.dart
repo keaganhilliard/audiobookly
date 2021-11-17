@@ -16,22 +16,24 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';
 
-class Offline extends HookWidget {
+class Offline extends HookConsumerWidget {
+  const Offline({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final offlineProvider = useProvider(offlineStateProvider.notifier);
-    final playbackController = useProvider(playbackControllerProvider);
-    final navigationService = useProvider(navigationServiceProvider);
+    final offlineProvider = ref.watch(offlineStateProvider.notifier);
+    final playbackController = ref.watch(playbackControllerProvider);
+    final navigationService = ref.watch(navigationServiceProvider);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text('Books'),
+      title: const Text('Books'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
@@ -44,10 +46,11 @@ class Offline extends HookWidget {
           children: [
             Expanded(
               child: Consumer(
-                builder: (context, watch, child) {
-                  final state = watch(offlineStateProvider);
-                  if (state is OfflineStateInitial)
+                builder: (context, ref, child) {
+                  final state = ref.watch(offlineStateProvider);
+                  if (state is OfflineStateInitial) {
                     _refresher.currentState!.show();
+                  }
                   if (state is OfflineStateLoaded) {
                     // if (state.currentParent != mediaId)
                     // _refresher.currentState!.show();
@@ -83,13 +86,14 @@ class Offline extends HookWidget {
                           ),
                           ElevatedButton(
                             onPressed: _refresher.currentState!.show,
-                            child: Text('Retry'),
+                            child: const Text('Retry'),
                           )
                         ],
                       ),
                     );
-                  } else
+                  } else {
                     return Container();
+                  }
                 },
               ),
             ),

@@ -11,19 +11,18 @@ import 'package:audiobookly/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/widgets/scaffold_without_footer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';
 
-class Downloads extends HookWidget {
+class Downloads extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final downloadsProvider = useProvider(downloadsStateProvider.notifier);
-    final playbackController = useProvider(playbackControllerProvider);
-    final navigationService = useProvider(navigationServiceProvider);
+    final downloadsProvider = ref.watch(downloadsStateProvider.notifier);
+    final playbackController = ref.watch(playbackControllerProvider);
+    final navigationService = ref.watch(navigationServiceProvider);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
@@ -31,7 +30,7 @@ class Downloads extends HookWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text('Downloads'),
+      title: const Text('Downloads'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
@@ -43,10 +42,11 @@ class Downloads extends HookWidget {
           children: [
             Expanded(
               child: Consumer(
-                builder: (context, watch, child) {
-                  final state = watch(downloadsStateProvider);
-                  if (state is DownloadsStateInitial)
+                builder: (context, ref, child) {
+                  final state = ref.watch(downloadsStateProvider);
+                  if (state is DownloadsStateInitial) {
                     _refresher.currentState!.show();
+                  }
                   if (state is DownloadsStateLoaded) {
                     return ResponsiveGridView<MediaItem>(
                       items: state.books,
@@ -75,18 +75,17 @@ class Downloads extends HookWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Text(state.message!),
-                          ),
+                          Text(state.message!),
                           ElevatedButton(
                             onPressed: _refresher.currentState!.show,
-                            child: Text('Retry'),
+                            child: const Text('Retry'),
                           )
                         ],
                       ),
                     );
-                  } else
+                  } else {
                     return Container();
+                  }
                 },
               ),
             ),

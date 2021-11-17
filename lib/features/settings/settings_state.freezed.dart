@@ -129,7 +129,7 @@ class _$SettingsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SettingsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'SettingsState.initial'));
   }
 
   @override
@@ -365,7 +365,7 @@ class _$SettingsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SettingsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'SettingsState.loading'));
   }
 
   @override

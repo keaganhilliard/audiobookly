@@ -9,9 +9,10 @@ final embyAuthRepoProvider = Provider<EmbyAuthRepository>((ref) {
 });
 
 class EmbyAuthRepository extends AuthenticationRepository {
-  ProviderReference _ref;
+  final ProviderReference _ref;
   EmbyAuthRepository(this._ref);
 
+  @override
   Future<User?> getUser(String token) async {
     final _embyApi = _ref.read(embyApiProvider);
     final _prefs = _ref.read(sharedPreferencesServiceProvider);
@@ -26,6 +27,7 @@ class EmbyAuthRepository extends AuthenticationRepository {
     );
   }
 
+  @override
   Future<bool> logout() async {
     final _prefs = _ref.read(sharedPreferencesServiceProvider);
     await _prefs.setBaseUrl('');

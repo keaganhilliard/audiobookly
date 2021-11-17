@@ -2,10 +2,13 @@ import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/features/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/database/database_service.dart';
+import 'package:audiobookly/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+// import 'package:rxdart/rxdart.dart';
 
-final bookDetailsStateProvider = StateNotifierProvider.family
-    .autoDispose<BookDetailsNotifier, BookDetailsState, String>((ref, mediaId) {
+final bookDetailsStateProvider =
+    StateNotifierProvider.family<BookDetailsNotifier, BookDetailsState, String>(
+        (ref, mediaId) {
   return BookDetailsNotifier(ref.watch(mediaRepositoryProvider), mediaId,
       ref.watch(databaseServiceProvider));
 });
@@ -16,7 +19,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   final String _mediaId;
 
   BookDetailsNotifier(this._repository, this._mediaId, this._databaseService)
-      : super(BookDetailsState.initial()) {
+      : super(const BookDetailsState.initial()) {
     getBook();
   }
 
@@ -28,9 +31,11 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   Future<BookDetailsState> getDetails() async {
     try {
       final book = await _repository!.getAlbumFromId(_mediaId);
-      final chapters = await _repository!.getTracksForBook(_mediaId);
-      final dbBook = await _databaseService!.watchBookById(_mediaId);
-      final tracks = await _databaseService!.getTracksForBookId(_mediaId);
+      print(book.asin);
+      final chapters = await _repository!.getTracksForBook(book);
+      final dbBook = _databaseService!.watchBookById(_mediaId);
+      // print(await _databaseService!.getBookById(_mediaId));
+      final tracks = _databaseService!.getTracksForBookId(_mediaId);
       return BookDetailsState.loaded(
         book: book,
         chapters: chapters,
@@ -38,7 +43,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
         tracks: tracks,
       );
     } on Exception {
-      return BookDetailsState.error(
+      return const BookDetailsState.error(
         "Couldn't fetch book details. Is the device online?",
       );
     }
@@ -54,7 +59,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   }
 
   Future<void> getBook() async {
-    state = BookDetailsState.loading();
+    state = const BookDetailsState.loading();
     state = await getDetails();
   }
 }

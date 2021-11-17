@@ -1,26 +1,62 @@
-import 'package:audiobookly/database/entity/track.dart';
-import 'package:floor/floor.dart';
+import 'package:audiobookly/models/book.dart';
+import 'package:hive/hive.dart';
 
-@Entity(tableName: 'books')
-class Book {
-  @PrimaryKey()
+part 'hive_book.g.dart';
+
+@HiveType(typeId: 1)
+class HiveBook extends Book {
+  @override
+  @HiveField(0)
   final String id;
+
+  @override
+  @HiveField(1)
   final String title;
+
+  @override
+  @HiveField(2)
   final String author;
+
+  @override
+  @HiveField(3)
   final String narrator;
+
+  @override
+  @HiveField(4)
   final String description;
+
+  @override
+  @HiveField(5)
   final String artPath;
+
+  @override
+  @HiveField(6)
   final Duration duration;
+
+  @override
+  @HiveField(7)
   final Duration lastPlayedPosition;
+
+  @override
+  @HiveField(8)
   final bool downloadRequested;
+
+  @override
+  @HiveField(9)
   final bool downloadCompleted;
+
+  @override
+  @HiveField(10)
   final bool downloadFailed;
+
+  @override
+  @HiveField(11)
   final bool read;
 
-  @ignore
-  List<Track>? tracks;
+  @HiveField(12)
+  HiveList? tracks;
 
-  Book(
+  HiveBook(
     this.id,
     this.title,
     this.author,
@@ -33,8 +69,22 @@ class Book {
     this.downloadCompleted,
     this.downloadFailed,
     this.read,
-  );
+  ) : super(
+          id,
+          title,
+          author,
+          narrator,
+          description,
+          artPath,
+          duration,
+          lastPlayedPosition,
+          downloadRequested,
+          downloadCompleted,
+          downloadFailed,
+          read,
+        );
 
+  @override
   Book copyWith({
     String? id,
     String? title,
@@ -49,7 +99,7 @@ class Book {
     bool? downloadFailed,
     bool? read,
   }) =>
-      Book(
+      HiveBook(
         id ?? this.id,
         title ?? this.title,
         author ?? this.author,

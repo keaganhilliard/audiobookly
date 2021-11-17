@@ -130,7 +130,7 @@ class _$BooksStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BooksState.initial'));
+    properties.add(DiagnosticsProperty('type', 'BooksState.initial'));
   }
 
   @override
@@ -383,7 +383,7 @@ class _$BooksStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BooksState.loading'));
+    properties.add(DiagnosticsProperty('type', 'BooksState.loading'));
   }
 
   @override

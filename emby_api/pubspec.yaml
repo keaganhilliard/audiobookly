@@ -1,7 +1,6 @@
 name: emby_api
 description: A wrapper for emby api
 version: 0.0.1
-author:
 homepage:
 
 environment:

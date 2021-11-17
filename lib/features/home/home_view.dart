@@ -10,15 +10,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/widgets/scaffold_without_footer.dart';
 import 'dart:math' as math;
 
-class HomeView extends HookWidget {
-  HomeView();
+class HomeView extends HookConsumerWidget {
+  const HomeView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final homeProvider = useProvider(homeStateProvider.notifier);
+    final homeProvider = ref.watch(homeStateProvider.notifier);
     // final state = useProvider(homeStateProvider.state);
 
     return ScaffoldWithoutFooter(
@@ -35,8 +35,8 @@ class HomeView extends HookWidget {
         },
         child: LayoutBuilder(
           builder: (context, constraints) => Consumer(
-            builder: (context, watch, child) {
-              final state = watch(homeStateProvider);
+            builder: (context, ref, child) {
+              final state = ref.watch(homeStateProvider);
 
               final double rowHeight =
                   constraints.maxHeight > constraints.maxWidth
@@ -44,7 +44,7 @@ class HomeView extends HookWidget {
                       : 225;
 
               if (state is HomeStateInitial) _refresher.currentState!.show();
-              if (state is HomeStateLoaded)
+              if (state is HomeStateLoaded) {
                 return SingleChildScrollView(
                   // padding: EdgeInsets.only(bottom: 40),
                   physics: AlwaysScrollableScrollPhysics(),
@@ -67,7 +67,7 @@ class HomeView extends HookWidget {
                     ],
                   ),
                 );
-              else {
+              } else {
                 return Container();
               }
             },

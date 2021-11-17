@@ -1,8 +1,8 @@
-import 'package:audiobookly/database/entity/track.dart';
+import 'package:audiobookly/database/entity/sql_track.dart';
 import 'package:floor/floor.dart';
 
 @Entity(tableName: 'downloads', foreignKeys: [
-  ForeignKey(childColumns: ['trackId'], parentColumns: ['id'], entity: Track)
+  ForeignKey(childColumns: ['trackId'], parentColumns: ['id'], entity: SqlTrack)
 ])
 class DownloadTask {
   @PrimaryKey(autoGenerate: true)

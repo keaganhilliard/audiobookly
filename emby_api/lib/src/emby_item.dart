@@ -26,6 +26,7 @@ class EmbyItem {
     this.albumId,
     this.mediaType,
     this.collectionType,
+    this.providerIds,
   });
 
   String? name;
@@ -50,6 +51,7 @@ class EmbyItem {
   String? albumId;
   String? mediaType;
   String? collectionType;
+  Map<String, String>? providerIds;
 
   factory EmbyItem.fromJson(Map<String, dynamic> json) => EmbyItem(
         name: json["Name"],
@@ -87,6 +89,8 @@ class EmbyItem {
         mediaType: json['MediaType'],
         collectionType: json['CollectionType'],
         imageTags: EmbyImageTag.fromJson(json["ImageTags"]),
+        providerIds:
+            json["ProviderIds"] != null ? Map.from(json['ProviderIds']) : {},
       );
 
   Map<String, dynamic> toJson() => {
@@ -113,5 +117,6 @@ class EmbyItem {
         "AlbumId": albumId,
         "MediaType": mediaType,
         "CollectionType": collectionType,
+        "ProviderIds": providerIds,
       };
 }

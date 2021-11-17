@@ -120,7 +120,7 @@ class _$BookDao extends BookDao {
         _bookInsertionAdapter = InsertionAdapter(
             database,
             'books',
-            (Book item) => <String, Object?>{
+            (SqlBook item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
                   'author': item.author,
@@ -140,7 +140,7 @@ class _$BookDao extends BookDao {
             database,
             'books',
             ['id'],
-            (Book item) => <String, Object?>{
+            (SqlBook item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
                   'author': item.author,
@@ -163,15 +163,15 @@ class _$BookDao extends BookDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Book> _bookInsertionAdapter;
+  final InsertionAdapter<SqlBook> _bookInsertionAdapter;
 
-  final UpdateAdapter<Book> _bookUpdateAdapter;
+  final UpdateAdapter<SqlBook> _bookUpdateAdapter;
 
   @override
-  Stream<List<Book>> findAllBooks() {
+  Stream<List<SqlBook>> findAllBooks() {
     return _queryAdapter.queryListStream(
         'SELECT * FROM books ORDER BY author, title',
-        mapper: (Map<String, Object?> row) => Book(
+        mapper: (Map<String, Object?> row) => SqlBook(
             row['id'] as String,
             row['title'] as String,
             row['author'] as String,
@@ -189,10 +189,10 @@ class _$BookDao extends BookDao {
   }
 
   @override
-  Stream<List<Book>> getAllDownloadedBooks() {
+  Stream<List<SqlBook>> getAllDownloadedBooks() {
     return _queryAdapter.queryListStream(
         'SELECT * FROM books WHERE downloadCompleted = 1 ORDER BY author, title',
-        mapper: (Map<String, Object?> row) => Book(
+        mapper: (Map<String, Object?> row) => SqlBook(
             row['id'] as String,
             row['title'] as String,
             row['author'] as String,
@@ -210,9 +210,9 @@ class _$BookDao extends BookDao {
   }
 
   @override
-  Stream<Book?> findBookById(String id) {
+  Stream<SqlBook?> findBookById(String id) {
     return _queryAdapter.queryStream('SELECT * FROM books WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => Book(
+        mapper: (Map<String, Object?> row) => SqlBook(
             row['id'] as String,
             row['title'] as String,
             row['author'] as String,
@@ -231,12 +231,12 @@ class _$BookDao extends BookDao {
   }
 
   @override
-  Future<void> insertBook(Book book) async {
+  Future<void> insertBook(SqlBook book) async {
     await _bookInsertionAdapter.insert(book, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> updateBook(Book book) async {
+  Future<void> updateBook(SqlBook book) async {
     await _bookUpdateAdapter.update(book, OnConflictStrategy.abort);
   }
 }
@@ -247,7 +247,7 @@ class _$TrackDao extends TrackDao {
         _trackInsertionAdapter = InsertionAdapter(
             database,
             'tracks',
-            (Track item) => <String, Object?>{
+            (SqlTrack item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
                   'duration': _durationConverter.encode(item.duration),
@@ -263,7 +263,7 @@ class _$TrackDao extends TrackDao {
             database,
             'tracks',
             ['id'],
-            (Track item) => <String, Object?>{
+            (SqlTrack item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
                   'duration': _durationConverter.encode(item.duration),
@@ -282,14 +282,14 @@ class _$TrackDao extends TrackDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Track> _trackInsertionAdapter;
+  final InsertionAdapter<SqlTrack> _trackInsertionAdapter;
 
-  final DeletionAdapter<Track> _trackDeletionAdapter;
+  final DeletionAdapter<SqlTrack> _trackDeletionAdapter;
 
   @override
-  Stream<List<Track>> findAllTracks() {
+  Stream<List<SqlTrack>> findAllTracks() {
     return _queryAdapter.queryListStream('SELECT * FROM tracks',
-        mapper: (Map<String, Object?> row) => Track(
+        mapper: (Map<String, Object?> row) => SqlTrack(
             row['id'] as String,
             row['title'] as String,
             _durationConverter.decode(row['duration'] as int),
@@ -304,9 +304,9 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Stream<Track?> findTrackById(String id) {
+  Stream<SqlTrack?> findTrackById(String id) {
     return _queryAdapter.queryStream('SELECT * FROM tracks WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => Track(
+        mapper: (Map<String, Object?> row) => SqlTrack(
             row['id'] as String,
             row['title'] as String,
             _durationConverter.decode(row['duration'] as int),
@@ -322,9 +322,9 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Future<List<Track>> findTracksForBookId(String bookId) async {
+  Future<List<SqlTrack>> findTracksForBookId(String bookId) async {
     return _queryAdapter.queryList('SELECT * FROM tracks WHERE bookId = ?1',
-        mapper: (Map<String, Object?> row) => Track(
+        mapper: (Map<String, Object?> row) => SqlTrack(
             row['id'] as String,
             row['title'] as String,
             _durationConverter.decode(row['duration'] as int),
@@ -338,9 +338,9 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Future<Track?> findTracksForDownloadTaskId(String taskId) async {
+  Future<SqlTrack?> findTracksForDownloadTaskId(String taskId) async {
     return _queryAdapter.query('SELECT * FROM tracks WHERE downloadTaskId = ?1',
-        mapper: (Map<String, Object?> row) => Track(
+        mapper: (Map<String, Object?> row) => SqlTrack(
             row['id'] as String,
             row['title'] as String,
             _durationConverter.decode(row['duration'] as int),
@@ -354,10 +354,10 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Stream<List<Track>> streamTracksForBookId(String bookId) {
+  Stream<List<SqlTrack>> streamTracksForBookId(String bookId) {
     return _queryAdapter.queryListStream(
         'SELECT * FROM tracks WHERE bookId = ?1',
-        mapper: (Map<String, Object?> row) => Track(
+        mapper: (Map<String, Object?> row) => SqlTrack(
             row['id'] as String,
             row['title'] as String,
             _durationConverter.decode(row['duration'] as int),
@@ -373,10 +373,10 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Future<Track?> updateProgress(String taskId, double progress) async {
+  Future<SqlTrack?> updateProgress(String taskId, double progress) async {
     return _queryAdapter.query(
         'UPDATE tracks SET downloadProgress = ?2 WHERE downloadTaskId = ?1',
-        mapper: (Map<String, Object?> row) => Track(
+        mapper: (Map<String, Object?> row) => SqlTrack(
             row['id'] as String,
             row['title'] as String,
             _durationConverter.decode(row['duration'] as int),
@@ -390,17 +390,17 @@ class _$TrackDao extends TrackDao {
   }
 
   @override
-  Future<void> insertTrack(Track track) async {
+  Future<void> insertTrack(SqlTrack track) async {
     await _trackInsertionAdapter.insert(track, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> insertTracks(List<Track> track) async {
+  Future<void> insertTracks(List<SqlTrack> track) async {
     await _trackInsertionAdapter.insertList(track, OnConflictStrategy.replace);
   }
 
   @override
-  Future<int> deleteTracks(List<Track> tracks) {
+  Future<int> deleteTracks(List<SqlTrack> tracks) {
     return _trackDeletionAdapter.deleteListAndReturnChangedRows(tracks);
   }
 }

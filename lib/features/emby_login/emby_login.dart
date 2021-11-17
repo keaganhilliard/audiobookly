@@ -10,9 +10,11 @@ class LoginState {
   late String password;
 }
 
-class EmbyLogin extends HookWidget {
+class EmbyLogin extends HookConsumerWidget {
+  const EmbyLogin({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // final _username =
     //     useTextEditingController.fromValue(TextEditingValue.empty);
     // final _password =
@@ -24,8 +26,8 @@ class EmbyLogin extends HookWidget {
     final _formKey = GlobalKey<FormState>();
     final _loading = useState(false);
     final _login = useState(LoginState());
-    final _auth = useProvider(authNotifierProvider.notifier);
-    final _navigationService = useProvider(navigationServiceProvider);
+    final _auth = ref.watch(authNotifierProvider.notifier);
+    final _navigationService = ref.watch(navigationServiceProvider);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -44,13 +46,13 @@ class EmbyLogin extends HookWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextFormField(
-                    key: ValueKey('emby-url-field'),
+                    key: const ValueKey('emby-url-field'),
                     onChanged: (val) {
                       _login.value.baseUrl = val;
                     },
                     validator: (val) =>
                         val!.isEmpty ? "Please enter your server's url" : null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Emby Server Url',
                     ),
@@ -59,13 +61,13 @@ class EmbyLogin extends HookWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextFormField(
-                    key: ValueKey('username-field'),
+                    key: const ValueKey('username-field'),
                     validator: (val) =>
                         val!.isEmpty ? 'Please enter a username' : null,
                     onChanged: (val) {
                       _login.value.username = val;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Username',
                     ),
@@ -74,14 +76,14 @@ class EmbyLogin extends HookWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextFormField(
-                    key: ValueKey('password-field'),
+                    key: const ValueKey('password-field'),
                     validator: (value) =>
                         value!.isEmpty ? 'Please enter a password' : null,
                     onChanged: (val) {
                       _login.value.password = val;
                     },
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
                     ),
@@ -99,11 +101,11 @@ class EmbyLogin extends HookWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: _loading.value
-                              ? CircularProgressIndicator(
+                              ? const CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                       Colors.white),
                                 )
-                              : Text(
+                              : const Text(
                                   'Submit',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
@@ -117,7 +119,7 @@ class EmbyLogin extends HookWidget {
                               _login.value.password,
                             )) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                       content: Text(
                                           'Username or password invalid')));
                             } else {

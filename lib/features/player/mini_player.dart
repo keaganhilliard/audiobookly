@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MiniPlayer extends HookWidget {
+class MiniPlayer extends HookConsumerWidget {
+  const MiniPlayer({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    final playbackController = useProvider(playbackControllerProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playbackController = ref.watch(playbackControllerProvider);
     final mediaItem = useStream(playbackController.currentMediaItemStream);
     final playbackState = useStream(playbackController.playbackStateStream);
 
@@ -52,22 +54,22 @@ class MiniPlayer extends HookWidget {
                         CachedNetworkImage(
                           fit: BoxFit.contain,
                           imageUrl: item?.artUri?.toString() ?? '',
-                          placeholder: (context, url) => Center(
+                          placeholder: (context, url) => const Center(
                             child: CircularProgressIndicator(),
                           ),
                           errorWidget: (context, message, something) =>
-                              Icon(Icons.book),
+                              const Icon(Icons.book),
                         ),
                         Expanded(
                           child: ListTile(
-                            contentPadding: EdgeInsets.only(left: 8.0),
+                            contentPadding: const EdgeInsets.only(left: 8.0),
                             title: Text(
                               item?.title ?? '',
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                             subtitle: Text(
                               item?.artist ?? '',
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),

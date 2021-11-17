@@ -13,22 +13,22 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/widgets/scaffold_without_footer.dart';
 
-class CollectionsView extends HookWidget {
-  CollectionsView();
+class CollectionsView extends HookConsumerWidget {
+  const CollectionsView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(collectionsStateProvider.notifier);
+    final booksProvider = ref.watch(collectionsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text('Collections'),
+      title: const Text('Collections'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
@@ -36,10 +36,11 @@ class CollectionsView extends HookWidget {
           return booksProvider.getCollections();
         },
         child: Consumer(
-          builder: (context, read, child) {
-            final state = read(collectionsStateProvider);
-            if (state is CollectionsStateInitial)
+          builder: (context, ref, child) {
+            final state = ref.watch(collectionsStateProvider);
+            if (state is CollectionsStateInitial) {
               _refresher.currentState!.show();
+            }
             if (state is CollectionsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
                 items: state.collections,
@@ -59,14 +60,14 @@ class CollectionsView extends HookWidget {
                 },
               );
             }
-            if (state is CollectionsStateLoading)
+            if (state is CollectionsStateLoading) {
               return Container();
-            else
+            } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
+                  const Center(
                     child: Text(
                       'Could not fetch collections, is the device online?',
                     ),
@@ -75,10 +76,11 @@ class CollectionsView extends HookWidget {
                     onPressed: () {
                       _refresher.currentState!.show();
                     },
-                    child: Text('Retry'),
+                    child: const Text('Retry'),
                   )
                 ],
               );
+            }
           },
         ),
       ),

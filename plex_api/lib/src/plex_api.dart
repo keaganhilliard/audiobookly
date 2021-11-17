@@ -289,7 +289,7 @@ class PlexApi {
   }
 
   ///:/timeline?ratingKey=26117&key=%2Flibrary%2Fmetadata%2F26117&state=stopped&hasMDE=1&time=1650000&duration=46141000
-// :/timeline?key=26117&%2Flibrary%2Fmetadata%2F26117&state=paused&duration=92283768&time=1660989
+  // :/timeline?key=26117&%2Flibrary%2Fmetadata%2F26117&state=paused&duration=92283768&time=1660989
   // void setServer(PlexServer server) {
   //   this.server = server;
   // }

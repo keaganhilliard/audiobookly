@@ -12,17 +12,18 @@ final collectionsStateProvider =
 class CollectionsNotifier extends StateNotifier<CollectionsState> {
   final MediaRepository? _repository;
 
-  CollectionsNotifier(this._repository) : super(CollectionsState.initial());
+  CollectionsNotifier(this._repository)
+      : super(const CollectionsState.initial());
 
   Future<void> getCollections() async {
     try {
-      state = CollectionsState.loading();
+      state = const CollectionsState.loading();
       final collections = await _repository!.getChildren(
         MediaIds.COLLECTIONS_ID,
       );
       state = CollectionsState.loaded(collections: collections);
     } on Exception {
-      state = CollectionsState.error(
+      state = const CollectionsState.error(
           "Couldn't fetch authors. Is the device online?");
     }
   }

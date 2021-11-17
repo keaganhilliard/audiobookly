@@ -3,14 +3,15 @@ import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/features/emby_login/emby_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class WelcomeView extends HookWidget {
+class WelcomeView extends HookConsumerWidget {
+  const WelcomeView({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    final auth = useProvider(authNotifierProvider.notifier);
-    final navigationService = useProvider(navigationServiceProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authNotifierProvider.notifier);
+    final navigationService = ref.watch(navigationServiceProvider);
 
     return Scaffold(
       appBar: AppBar(

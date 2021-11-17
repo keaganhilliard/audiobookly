@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 class DesktopDownloader extends Downloader {
   DesktopDownloader(DatabaseService _db) : super(_db);
 
+  @override
   Future downloadFile(
     String id,
     String url,
@@ -50,16 +51,17 @@ class DesktopDownloader extends Downloader {
         final currentPercentage = currentProgress / total;
         saved = currentProgress;
         if (currentPercentage - debouncer > 0.01) {
-          if (track != null)
+          if (track != null) {
             await db.insertTrack(
                 track.copyWith(downloadProgress: currentPercentage));
+          }
           debouncer = currentPercentage;
         }
         sub.resume();
       }, onDone: () async {
         await fileSink.close();
         // final track = await db.getTrack(id);
-        if (track != null)
+        if (track != null) {
           await db.insertTrack(
             track.copyWith(
               downloadProgress: 1,
@@ -67,6 +69,7 @@ class DesktopDownloader extends Downloader {
               isDownloaded: true,
             ),
           );
+        }
         completer.complete();
       });
     } catch (e, stack) {
@@ -77,6 +80,10 @@ class DesktopDownloader extends Downloader {
     return completer.future;
   }
 
+  @override
+  Future cancelDownloads(String parentId) async {}
+
+  @override
   Future whenAllDone(String parentId) async {
     final completer = Completer();
     StreamSubscription? trackSub;
@@ -85,6 +92,7 @@ class DesktopDownloader extends Downloader {
         .where((tracks) => tracks.values.every((track) => track.isDownloaded))
         .listen((tracks) async {
       trackSub?.cancel();
+      print('ALL DONE');
 
       final book = await db.getBookById(parentId);
       if (book != null) {

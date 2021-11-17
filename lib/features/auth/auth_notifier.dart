@@ -24,13 +24,13 @@ final authNotifierProvider =
 class AuthNotifier extends StateNotifier<AuthState> {
   final ProviderReference _ref;
 
-  AuthNotifier(this._ref) : super(AuthStateInitial()) {
+  AuthNotifier(this._ref) : super(const AuthStateInitial()) {
     checkToken();
   }
 
   Future<bool> logout() async {
     try {
-      state = AuthStateLoading();
+      state = const AuthStateLoading();
       final _prefs = _ref.read(sharedPreferencesServiceProvider);
       await _prefs.setUserToken('');
       await _prefs.setBaseUrl('');
@@ -38,7 +38,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _prefs.setServerType(null);
       await _prefs.setUserId('');
       await _prefs.setLibraryId('');
-      state = AuthStateInitial();
+      state = const AuthStateInitial();
       return true;
     } catch (e) {
       return false;
@@ -50,9 +50,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String username,
     String password,
   ) async {
-    print(baseUrl);
-    print(username);
-    print(password);
     User u = await _ref
         .read(embyAuthRepoProvider)
         .login(baseUrl, username, password);
@@ -68,7 +65,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     await launch(oAuthUrl);
     int count = 0;
     Completer waitForIt = Completer();
-    Timer.periodic(Duration(seconds: 5), (timer) async {
+    Timer.periodic(const Duration(seconds: 5), (timer) async {
       print('Timering');
       count++;
       PlexPin authToken = await _plexApi.getAuthToken(pin.id!);
@@ -112,7 +109,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future checkToken() async {
     try {
-      state = AuthStateLoading();
+      state = const AuthStateLoading();
       final _prefs = _ref.read(sharedPreferencesServiceProvider);
       final navigationService = _ref.read(navigationServiceProvider);
       print('Checking token: ${_prefs.getCurrentToken()}');
@@ -151,11 +148,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
         // }
       } else {}
 
-      if (user != null)
+      if (user != null) {
         state = AuthStateLoaded(user: user);
-      else {
+      } else {
         _prefs.setUserToken('');
-        state = AuthStateInitial();
+        state = const AuthStateInitial();
       }
     } catch (e) {
       state = AuthStateErrorDetails(e.toString());

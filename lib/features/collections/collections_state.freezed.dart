@@ -129,7 +129,7 @@ class _$CollectionsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'CollectionsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'CollectionsState.initial'));
   }
 
   @override
@@ -368,7 +368,7 @@ class _$CollectionsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'CollectionsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'CollectionsState.loading'));
   }
 
   @override

@@ -14,18 +14,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/widgets/scaffold_without_footer.dart';
 import 'package:audiobookly/utils/utils.dart';
 
-class BooksView extends HookWidget {
+class BooksView extends HookConsumerWidget {
   final String? mediaId;
   final String? title;
 
-  BooksView({this.mediaId, this.title});
+  const BooksView({this.mediaId, this.title});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(booksStateProvider!(mediaId).notifier);
+    final booksProvider = ref.watch(booksStateProvider!(mediaId).notifier);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
@@ -40,12 +40,13 @@ class BooksView extends HookWidget {
           return booksProvider.getBooks();
         },
         child: Consumer(
-          builder: (context, watch, child) {
-            final state = watch(booksStateProvider!(mediaId));
+          builder: (context, ref, child) {
+            final state = ref.watch(booksStateProvider!(mediaId));
             if (state is BooksStateInitial) _refresher.currentState!.show();
             if (state is BooksStateLoaded) {
-              if (state.currentParent != mediaId)
+              if (state.currentParent != mediaId) {
                 _refresher.currentState!.show();
+              }
               return ResponsiveGridView<MediaItem>(
                 items: state.books,
                 itemBuilder: (book) {
@@ -75,18 +76,17 @@ class BooksView extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      child: Text(state.message!),
-                    ),
+                    Text(state.message!),
                     ElevatedButton(
                       onPressed: _refresher.currentState!.show,
-                      child: Text('Retry'),
+                      child: const Text('Retry'),
                     )
                   ],
                 ),
               );
-            } else
+            } else {
               return Container();
+            }
           },
         ),
       ),

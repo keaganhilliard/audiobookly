@@ -5,7 +5,6 @@ import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/features/tracks/tracks_view.dart';
 import 'package:audiobookly/widgets/playback_position.dart';
 import 'package:audiobookly/widgets/rewind_button.dart';
@@ -15,10 +14,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:audiobookly/utils/jump_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PlayerView extends HookWidget {
+class PlayerView extends HookConsumerWidget {
   final MediaItem? book;
 
   String genDurationString(List<MediaItem> tracks) {
@@ -40,16 +40,14 @@ class PlayerView extends HookWidget {
     return text;
   }
 
-  PlayerView({
-    this.book,
-  });
+  const PlayerView({this.book, Key? key}) : super(key: key);
 
   @override
-  Widget build(context) {
-    final playbackController = useProvider(playbackControllerProvider);
+  Widget build(context, ref) {
+    final playbackController = ref.watch(playbackControllerProvider);
     final playbackState = useStream(playbackController.playbackStateStream);
     final mediaItem = useStream(playbackController.currentMediaItemStream);
-    final navigationService = useProvider(navigationServiceProvider);
+    final navigationService = ref.watch(navigationServiceProvider);
 
     final PlaybackState? state = playbackState.data;
     final MediaItem? item = mediaItem.data;
@@ -62,7 +60,7 @@ class PlayerView extends HookWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.list),
+            icon: const Icon(Icons.list),
             onPressed: () {
               navigationService.push(MaterialPageRoute(
                 builder: (context) {
@@ -86,7 +84,11 @@ class PlayerView extends HookWidget {
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          top: 16.0, bottom: 16.0, left: 16.0, right: 16.0),
+                        top: 16.0,
+                        bottom: 16.0,
+                        left: 16.0,
+                        right: 16.0,
+                      ),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
@@ -97,10 +99,10 @@ class PlayerView extends HookWidget {
                             CachedNetworkImage(
                               fit: BoxFit.cover,
                               errorWidget: (context, error, child) =>
-                                  Icon(Icons.book),
+                                  const Icon(Icons.book),
                               imageUrl: (book?.largeThumbnail?.toString() ??
                                   book?.artUri?.toString())!,
-                              placeholder: (context, url) => Center(
+                              placeholder: (context, url) => const Center(
                                 child: CircularProgressIndicator(),
                               ),
                             ),
@@ -111,62 +113,59 @@ class PlayerView extends HookWidget {
                             //     opacity: 1,
                             //     child: IconButton(
                             //       color: Colors.grey[100],
-                            //       icon: Icon(Icons.cast),
+                            //       icon: const Icon(Icons.cast),
                             //       onPressed: () async {
                             //         showModalBottomSheet(
                             //             context: context,
                             //             builder: (context) {
                             //               return SingleChildScrollView(
-                            //                 child: Container(
-                            //                   child: Padding(
-                            //                     padding:
-                            //                         const EdgeInsets.all(18.0),
-                            //                     child: FutureBuilder<
-                            //                         List<CastDevice>>(
-                            //                       future: CastDiscoveryService()
-                            //                           .search(),
-                            //                       builder: (context, snapshot) {
-                            //                         if (snapshot.hasError) {
-                            //                           return Center(
-                            //                             child: Text(
-                            //                               'Error: ${snapshot.error.toString()}',
-                            //                             ),
-                            //                           );
-                            //                         } else if (!snapshot
-                            //                             .hasData) {
-                            //                           return Center(
-                            //                             child:
-                            //                                 CircularProgressIndicator(),
-                            //                           );
-                            //                         }
-
-                            //                         if (snapshot
-                            //                             .data!.isEmpty) {
-                            //                           return Column(
-                            //                             children: [
-                            //                               Center(
-                            //                                 child: Text(
-                            //                                   'No Chromecast found',
-                            //                                 ),
-                            //                               ),
-                            //                             ],
-                            //                           );
-                            //                         }
-
-                            //                         return Column(
-                            //                           children: snapshot.data!
-                            //                               .map((device) {
-                            //                             return ListTile(
-                            //                               title:
-                            //                                   Text(device.name),
-                            //                               onTap: () {
-                            //                                 // _connectToYourApp(context, device);
-                            //                               },
-                            //                             );
-                            //                           }).toList(),
+                            //                 child: Padding(
+                            //                   padding:
+                            //                       const EdgeInsets.all(18.0),
+                            //                   child: FutureBuilder<
+                            //                       List<CastDevice>>(
+                            //                     future: CastDiscoveryService()
+                            //                         .search(),
+                            //                     builder: (context, snapshot) {
+                            //                       if (snapshot.hasError) {
+                            //                         return Center(
+                            //                           child: Text(
+                            //                             'Error: ${snapshot.error.toString()}',
+                            //                           ),
                             //                         );
-                            //                       },
-                            //                     ),
+                            //                       } else if (!snapshot
+                            //                           .hasData) {
+                            //                         return const Center(
+                            //                           child:
+                            //                               CircularProgressIndicator(),
+                            //                         );
+                            //                       }
+
+                            //                       if (snapshot.data!.isEmpty) {
+                            //                         return Column(
+                            //                           children: const [
+                            //                             Center(
+                            //                               child: Text(
+                            //                                 'No Chromecast found',
+                            //                               ),
+                            //                             ),
+                            //                           ],
+                            //                         );
+                            //                       }
+
+                            //                       return Column(
+                            //                         children: snapshot.data!
+                            //                             .map((device) {
+                            //                           return ListTile(
+                            //                             title:
+                            //                                 Text(device.name),
+                            //                             onTap: () {
+                            //                               // _connectToYourApp(context, device);
+                            //                             },
+                            //                           );
+                            //                         }).toList(),
+                            //                       );
+                            //                     },
                             //                   ),
                             //                 ),
                             //               );
@@ -183,19 +182,18 @@ class PlayerView extends HookWidget {
                                   opacity: 1,
                                   child: IconButton(
                                     color: Colors.grey[100],
-                                    icon: Icon(Icons.info_outline),
+                                    icon: const Icon(Icons.info_outline),
                                     onPressed: () async {
                                       showModalBottomSheet(
                                           context: context,
                                           builder: (context) {
                                             return SingleChildScrollView(
-                                              child: Container(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      18.0),
-                                                  child: Text(book!
-                                                      .displayDescription!),
-                                                ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(18.0),
+                                                child: Html(
+                                                    data: book!
+                                                        .displayDescription!),
                                               ),
                                             );
                                           });
@@ -264,7 +262,7 @@ class PlayerView extends HookWidget {
                             ),
                             Expanded(
                               child: Center(
-                                child: Text('${item.title}'),
+                                child: Text(item.title),
                               ),
                             ),
                             IconButton(
@@ -319,7 +317,7 @@ class PlayerView extends HookWidget {
                                           int minutes,
                                         ) =>
                                             SimpleDialogOption(
-                                              child: Text('$label'),
+                                              child: Text(label),
                                               onPressed: () {
                                                 Navigator.pop(
                                                   context,
@@ -341,10 +339,11 @@ class PlayerView extends HookWidget {
                                         );
                                       },
                                     );
-                                    if (time == Duration.zero)
+                                    if (time == Duration.zero) {
                                       sleepService.cancelTimer();
-                                    else if (time != null)
+                                    } else if (time != null) {
                                       sleepService.beginTimer(time);
+                                    }
                                   },
                                   size: 25.0,
                                 );
@@ -470,7 +469,7 @@ class ValueSlider extends HookWidget {
   final Widget? prefix;
   final Widget? postfix;
 
-  ValueSlider({
+  const ValueSlider({
     this.min = 0,
     this.max = 100,
     this.value,

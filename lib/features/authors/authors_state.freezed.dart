@@ -128,7 +128,7 @@ class _$AuthorsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthorsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'AuthorsState.initial'));
   }
 
   @override
@@ -365,7 +365,7 @@ class _$AuthorsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthorsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'AuthorsState.loading'));
   }
 
   @override

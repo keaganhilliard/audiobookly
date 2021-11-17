@@ -1,11 +1,4 @@
-import 'package:floor/floor.dart';
-import 'package:audiobookly/database/entity/book.dart';
-
-@Entity(tableName: 'tracks', foreignKeys: [
-  ForeignKey(childColumns: ['bookId'], parentColumns: ['id'], entity: Book)
-])
 class Track {
-  @PrimaryKey()
   final String id;
   final String title;
   final Duration duration;

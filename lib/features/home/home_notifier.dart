@@ -11,11 +11,11 @@ final homeStateProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
 class HomeNotifier extends StateNotifier<HomeState> {
   final MediaRepository? _repository;
 
-  HomeNotifier(this._repository) : super(HomeState.initial());
+  HomeNotifier(this._repository) : super(const HomeState.initial());
 
   Future<void> getBooks() async {
     try {
-      state = HomeState.loading();
+      state = const HomeState.loading();
       final recentlyAdded =
           await _repository!.getChildren(MediaIds.RECENTLY_ADDED);
       final recentlyPlayed =
@@ -23,7 +23,8 @@ class HomeNotifier extends StateNotifier<HomeState> {
       state = HomeState.loaded(
           recentlyAdded: recentlyAdded, recentlyPlayed: recentlyPlayed);
     } on Exception {
-      state = HomeState.error("Couldn't fetch books. Is the device online?");
+      state =
+          const HomeState.error("Couldn't fetch books. Is the device online?");
     }
   }
 }

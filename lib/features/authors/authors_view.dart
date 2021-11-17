@@ -13,15 +13,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/widgets/scaffold_without_footer.dart';
 
-class AuthorsView extends HookWidget {
-  AuthorsView();
+class AuthorsView extends HookConsumerWidget {
+  const AuthorsView({Key? key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = useProvider(authorsStateProvider.notifier);
+    final booksProvider = ref.watch(authorsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       refresh:
@@ -29,7 +29,7 @@ class AuthorsView extends HookWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text('Authors'),
+      title: const Text('Authors'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
@@ -37,8 +37,8 @@ class AuthorsView extends HookWidget {
           return booksProvider.getAuthors();
         },
         child: Consumer(
-          builder: (context, reader, child) {
-            final state = reader(authorsStateProvider);
+          builder: (context, ref, child) {
+            final state = ref.watch(authorsStateProvider);
             if (state is AuthorsStateInitial) _refresher.currentState!.show();
             if (state is AuthorsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
@@ -61,14 +61,14 @@ class AuthorsView extends HookWidget {
                 },
               );
             }
-            if (state is AuthorsStateLoading)
+            if (state is AuthorsStateLoading) {
               return Container();
-            else
+            } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
+                  const Center(
                     child: Text(
                       'Could not fetch authors, is the device online?',
                     ),
@@ -77,10 +77,11 @@ class AuthorsView extends HookWidget {
                     onPressed: () {
                       _refresher.currentState!.show();
                     },
-                    child: Text('Retry'),
+                    child: const Text('Retry'),
                   )
                 ],
               );
+            }
           },
         ),
       ),

@@ -89,7 +89,7 @@ abstract class MediaRepository {
   Future<List<MediaItem>> getBooksFromCollection(String collectionId);
   Future<List<MediaItem>> search(String search);
   Future<List<Library>> getLibraries();
-  Future<List<MediaItem>> getTracksForBook(String? bookId);
+  Future<List<MediaItem>> getTracksForBook(MediaItem book);
   Future<MediaItem> getAlbumFromId(String? mediaId);
   Future<User> getUser();
   Future<String> getLoginUrl();
@@ -105,7 +105,11 @@ abstract class MediaRepository {
   Future markPlayed(String itemId);
   Future markUnplayed(String itemId);
   String getServerUrl(String path);
-  String getThumbnailUrl(String? path);
+  String getThumbnailUrl(
+    String? path, {
+    int? height,
+    int? width,
+  });
   Future playbackFinished(String key);
   String getDownloadUrl(String path);
   void setLibraryId(String libraryId) {}

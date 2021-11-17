@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LibrarySelectView extends HookWidget {
-  LibrarySelectView();
+class LibrarySelectView extends HookConsumerWidget {
+  const LibrarySelectView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final notifier = useProvider(libraryStateProvider.notifier);
-    final state = useProvider(libraryStateProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.watch(libraryStateProvider.notifier);
+    final state = ref.watch(libraryStateProvider);
 
-    if (state is LibrarySelectStateLoading)
-      return Center(
+    if (state is LibrarySelectStateLoading) {
+      return const Center(
         child: CircularProgressIndicator(),
       );
-    else if (state is LibrarySelectStateLoaded)
+    } else if (state is LibrarySelectStateLoaded) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Select a library'),
@@ -37,15 +37,13 @@ class LibrarySelectView extends HookWidget {
           },
         ),
       );
-    else if (state is LibrarySelectStateErrorDetails)
+    } else if (state is LibrarySelectStateErrorDetails) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              child: Text(state.message!),
-            ),
+            Text(state.message!),
             // ElevatedButton(
             //   onPressed: _refresher.currentState.show,
             //   child: Text('Retry'),
@@ -53,14 +51,15 @@ class LibrarySelectView extends HookWidget {
           ],
         ),
       );
-    else
+    } else {
       return Center(
         child: ElevatedButton(
-          child: Text('Load'),
+          child: const Text('Load'),
           onPressed: () {
             notifier.getLibraries();
           },
         ),
       );
+    }
   }
 }

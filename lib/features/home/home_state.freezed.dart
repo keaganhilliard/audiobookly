@@ -132,7 +132,7 @@ class _$HomeStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'HomeState.initial'));
+    properties.add(DiagnosticsProperty('type', 'HomeState.initial'));
   }
 
   @override
@@ -391,7 +391,7 @@ class _$HomeStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'HomeState.loading'));
+    properties.add(DiagnosticsProperty('type', 'HomeState.loading'));
   }
 
   @override

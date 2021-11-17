@@ -15,7 +15,7 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
   final SharedPreferencesService _sharedPreferencesService;
 
   LibrarySelectNotifier(this._repository, this._sharedPreferencesService)
-      : super(LibrarySelectState.initial()) {
+      : super(const LibrarySelectState.initial()) {
     getLibraries();
   }
 
@@ -27,12 +27,12 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
 
   Future<void> getLibraries() async {
     try {
-      state = LibrarySelectState.loading();
+      state = const LibrarySelectState.loading();
       await _repository!.getServerAndLibrary();
       final libs = await _repository!.getLibraries();
       state = LibrarySelectState.loaded(libraries: libs);
     } on Exception {
-      state = LibrarySelectState.error(
+      state = const LibrarySelectState.error(
           "Couldn't fetch libraries. Is the device online?");
     }
   }

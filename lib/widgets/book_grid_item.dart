@@ -11,7 +11,7 @@ class BookGridItem extends StatelessWidget {
   final double progress;
   final bool played;
 
-  BookGridItem({
+  const BookGridItem({
     this.thumbnailUrl,
     this.title,
     this.subtitle,
@@ -36,7 +36,7 @@ class BookGridItem extends StatelessWidget {
                 child: LinearProgressIndicator(
                   minHeight: 6.0,
                   value: progress,
-                  backgroundColor: Theme.of(context).cardTheme.color,
+                  backgroundColor: Colors.transparent,
                 ),
               ),
             Column(

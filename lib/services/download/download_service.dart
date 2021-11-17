@@ -2,19 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/database/entity/track.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
-import 'package:audiobookly/services/download/mobile_downloader.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:audiobookly/services/download/download_service.dart';
-import 'package:emby_api/emby_api.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as pathProvider;
-import 'package:plex_api/plex_api.dart';
 
 class DownloadRequest {
   final MediaItem book;
@@ -29,7 +24,7 @@ class DownloadService {
   DownloadService(this._repo, this._db);
 
   Future createDirIfNotExists(String path) async {
-    final dir = new Directory(path);
+    final dir = Directory(path);
     bool dirExists = await dir.exists();
     if (!dirExists) {
       await dir.create(recursive: true);
@@ -41,22 +36,33 @@ class DownloadService {
 
     final toDelete = <Track>[];
     for (final track in tracks.entries) {
-      final file = File(track.value.downloadPath);
-      if (await file.exists()) {
-        file.deleteSync();
+      if (track.value.downloadPath.isNotEmpty) {
+        final file = File(track.value.downloadPath);
+        if (await file.exists()) {
+          await file.delete();
+        }
       }
       toDelete.add(track.value);
     }
+    final book = await _db.getBookById(item.id);
     await _db.deleteTracks(toDelete);
-    await _db.insertBook(getBook(item, false, false, false));
+    if (book != null) {
+      await _db.insertBook(
+        book.copyWith(
+          downloadCompleted: false,
+          downloadFailed: false,
+          downloadRequested: false,
+        ),
+      );
+    }
   }
 
   List<DownloadRequest?> toDownload = [];
-  bool _isDownloading = false;
+  final bool _isDownloading = false;
 
   Future downloadBook(MediaItem book, List<MediaItem> chapters) async {
     if (toDownload.any((req) => req!.book.id == book.id)) return;
-    await _db.insertBook(getBook(book, true, false, false));
+    await _db.insertBook(_db.getBookFromMediaItem(book, true, false, false));
     toDownload.add(DownloadRequest(book, chapters));
     // if (!_isDownloading)
     await processNextBook();
@@ -65,6 +71,7 @@ class DownloadService {
   Future cancelBookDownload(MediaItem book) async {
     DownloadRequest? req = toDownload
         .firstWhere((req) => req!.book.id == book.id, orElse: () => null);
+    GetIt.I.get<Downloader>().cancelDownloads(book.id);
     // req?.token.cancel('Requested');
     if (req == null) deleteDownload(book);
   }
@@ -82,9 +89,7 @@ class DownloadService {
     } catch (e) {
       print('We does not support storageDirectories');
     }
-    if (baseDir == null) {
-      baseDir = await pathProvider.getApplicationDocumentsDirectory();
-    }
+    baseDir ??= await pathProvider.getApplicationDocumentsDirectory();
 
     Downloader d = GetIt.I.get();
     for (MediaItem chapter in chapters) {
@@ -104,15 +109,15 @@ class DownloadService {
 
       await createDirIfNotExists(path);
 
-      await _db.insertTrack(getTrack(chapter, book.id, 0, path));
+      await _db
+          .insertTrack(_db.getTrackFromMediaItem(chapter, book.id, 0, path));
       String url = _repo.getDownloadUrl(chapter.partKey ?? chapter.id);
 
       await d.downloadFile(chapter.id, url, path);
-      // await _db.insertTrack(getTrack(chapter, book.id, 0, path, id ?? ''));
     }
 
     await d.whenAllDone(book.id);
-    toDownload.removeAt(0);
+    if (toDownload.isNotEmpty) toDownload.removeAt(0);
     await processNextBook();
   }
 
@@ -154,7 +159,7 @@ class DownloadService {
         sub!.pause();
         await fileSink.writeFrom(data);
         final currentProgress = saved + data.length;
-        print('${(currentProgress / total).toStringAsPrecision(2)}');
+        print((currentProgress / total).toStringAsPrecision(2));
         saved = currentProgress;
         await onProgress?.call(currentProgress / total);
         sub.resume();

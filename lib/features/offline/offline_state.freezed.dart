@@ -128,7 +128,7 @@ class _$OfflineStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'OfflineState.initial'));
+    properties.add(DiagnosticsProperty('type', 'OfflineState.initial'));
   }
 
   @override
@@ -365,7 +365,7 @@ class _$OfflineStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'OfflineState.loading'));
+    properties.add(DiagnosticsProperty('type', 'OfflineState.loading'));
   }
 
   @override

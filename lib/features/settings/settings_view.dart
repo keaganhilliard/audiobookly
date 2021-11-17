@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SettingsView extends HookWidget {
+class SettingsView extends HookConsumerWidget {
   const SettingsView({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final state = useProvider(settingsStateProvider);
-    final auth = useProvider(authNotifierProvider.notifier);
+  Widget build(context, ref) {
+    final state = ref.watch(settingsStateProvider);
+    final auth = ref.watch(authNotifierProvider.notifier);
     // if (state is SettingsStateInitial) Future.value(settings.getUser());
     if (state is SettingsStateLoaded) {
       print(state.user!.name);
@@ -53,7 +53,8 @@ class SettingsView extends HookWidget {
           ),
         ],
       );
-    } else
+    } else {
       return Center(child: CircularProgressIndicator());
+    }
   }
 }

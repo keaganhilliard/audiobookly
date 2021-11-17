@@ -7,7 +7,7 @@ final navigationServiceProvider =
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+      GlobalKey<NavigatorState>();
 
   Future pop([dynamic result]) {
     return navigatorKey.currentState!.maybePop(result);

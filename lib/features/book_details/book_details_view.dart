@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:audiobookly/constants/app_constants.dart';
-import 'package:audiobookly/database/entity/book.dart';
-import 'package:audiobookly/database/entity/track.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/features/book_details/book_details_notifier.dart';
@@ -16,26 +14,26 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:audiobookly/utils/utils.dart';
+import 'package:flutter_html/flutter_html.dart';
 
-class BookDetailsView extends HookWidget {
+class BookDetailsView extends HookConsumerWidget {
   final String mediaId;
-  BookDetailsView({required this.mediaId});
+  const BookDetailsView({required this.mediaId, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final bookDetails = useProvider(
-      bookDetailsStateProvider(mediaId).notifier,
-    );
-    final state = useProvider(bookDetailsStateProvider(mediaId));
-    final downloadService = useProvider(downloadServiceProvider);
-    final playbackController = useProvider(playbackControllerProvider);
-    final navigationService = useProvider(navigationServiceProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bookDetails = ref.watch(bookDetailsStateProvider(mediaId).notifier);
+    final state = ref.watch(bookDetailsStateProvider(mediaId));
+    final downloadService = ref.watch(downloadServiceProvider);
+    final playbackController = ref.watch(playbackControllerProvider);
+    final navigationService = ref.watch(navigationServiceProvider);
     final group = AutoSizeGroup();
 
-    if (state is BookDetailsStateLoading)
-      return Center(
+    if (state is BookDetailsStateLoading) {
+      return const Center(
         child: CircularProgressIndicator(),
       );
+    }
     if (state is BookDetailsStateLoaded) {
       final double progress = Utils.getProgess(state.book!);
       final tracks = useStream(state.tracks);
@@ -48,7 +46,7 @@ class BookDetailsView extends HookWidget {
               bookDetails.getBook();
             },
             child: CustomScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverAppBar(
                   backgroundColor: Theme.of(context).canvasColor,
@@ -62,7 +60,7 @@ class BookDetailsView extends HookWidget {
                   actions: [
                     if ((dbBook?.downloadCompleted ?? false) ||
                         (!(dbBook?.downloadRequested ?? false) &&
-                            (tracks.hasData && tracks.data!.length > 0)))
+                            (tracks.hasData && tracks.data!.isNotEmpty)))
                       IconButton(
                         onPressed: () async {
                           downloadService?.deleteDownload(
@@ -70,7 +68,7 @@ class BookDetailsView extends HookWidget {
                           );
                           bookDetails.refreshForDownloads();
                         },
-                        icon: Icon(Icons.delete_forever),
+                        icon: const Icon(Icons.delete_forever),
                       ),
                     if ((dbBook?.downloadRequested ?? false) &&
                         !(dbBook?.downloadCompleted ?? false))
@@ -79,7 +77,7 @@ class BookDetailsView extends HookWidget {
                           if (!kIsWeb &&
                               !Platform.isWindows &&
                               !Platform.isLinux)
-                            Positioned(
+                            const Positioned(
                               left: 9.0,
                               top: 13.0,
                               child: Center(
@@ -91,7 +89,7 @@ class BookDetailsView extends HookWidget {
                               ),
                             ),
                           if (kIsWeb || Platform.isWindows || Platform.isLinux)
-                            Positioned(
+                            const Positioned(
                               left: 5.0,
                               top: 13.0,
                               child: Center(
@@ -108,14 +106,14 @@ class BookDetailsView extends HookWidget {
                                   downloadService
                                       ?.cancelBookDownload(state.book!);
                                 },
-                                icon: Icon(Icons.cancel_rounded)),
+                                icon: const Icon(Icons.cancel_rounded)),
                           ),
                         ],
                       ),
                     if (!(dbBook?.downloadRequested ?? false) &&
                         !(dbBook?.downloadCompleted ?? false))
                       IconButton(
-                        icon: Icon(Icons.file_download_outlined),
+                        icon: const Icon(Icons.file_download_outlined),
                         onPressed: () async {
                           downloadService?.downloadBook(
                             state.book!,
@@ -127,14 +125,14 @@ class BookDetailsView extends HookWidget {
                     if (state.book!.played)
                       IconButton(
                         color: Colors.deepPurple,
-                        icon: Icon(Icons.check),
+                        icon: const Icon(Icons.check),
                         onPressed: () async {
                           await bookDetails.markUnplayed();
                         },
                       )
                     else
                       IconButton(
-                        icon: Icon(Icons.check),
+                        icon: const Icon(Icons.check),
                         onPressed: () async {
                           await bookDetails.markPlayed();
                         },
@@ -152,6 +150,7 @@ class BookDetailsView extends HookWidget {
                       children: [
                         Container(
                           height: 250,
+                          constraints: const BoxConstraints(maxWidth: 250),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
@@ -159,27 +158,26 @@ class BookDetailsView extends HookWidget {
                           child: Stack(
                             children: [
                               CachedNetworkImage(
+                                cacheKey: state.book!.id,
                                 imageUrl: state.book!.artUri.toString(),
                                 fit: BoxFit.scaleDown,
                               ),
-                              Positioned.fill(
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: progress > 0
-                                      ? LinearProgressIndicator(
-                                          minHeight: 6,
-                                          value: progress,
-                                          backgroundColor:
-                                              Theme.of(context).cardTheme.color,
-                                        )
-                                      : Container(),
-                                ),
-                              )
+                              if (progress > 0)
+                                Positioned.fill(
+                                  child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: LinearProgressIndicator(
+                                        minHeight: 6,
+                                        value: progress,
+                                        backgroundColor: Colors.transparent,
+                                        // Theme.of(context).cardTheme.color,
+                                      )),
+                                )
                             ],
                           ),
                         ),
                         FloatingActionButton(
-                          child: Icon(Icons.play_arrow),
+                          child: const Icon(Icons.play_arrow),
                           foregroundColor: Colors.white,
                           backgroundColor:
                               Theme.of(context).colorScheme.primary,
@@ -228,8 +226,8 @@ class BookDetailsView extends HookWidget {
                         Text(state.book!.duration != null
                             ? Utils.friendlyDuration(state.book!.duration!)
                             : Utils.friendlyDurationFromItems(state.chapters!)),
-                        Divider(),
-                        ButtonBar(
+                        const Divider(),
+                        const ButtonBar(
                           alignment: MainAxisAlignment.start,
                           children: [
                             // IconButton(
@@ -245,22 +243,26 @@ class BookDetailsView extends HookWidget {
                 if (state.book!.displayDescription?.isNotEmpty ?? false)
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 0.0,
+                      ),
                       child: ExpandableNotifier(
                         child: Column(
                           children: [
                             Expandable(
                               collapsed: Column(
                                 children: [
-                                  Text(
-                                    state.book!.displayDescription ?? '',
-                                    softWrap: true,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                                  SizedBox(
+                                    height: 45,
+                                    child: Html(
+                                      data:
+                                          state.book!.displayDescription ?? '',
+                                    ),
                                   ),
                                   ExpandableButton(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(
                                         horizontal: 16.0,
                                         vertical: 8.0,
                                       ),
@@ -271,13 +273,13 @@ class BookDetailsView extends HookWidget {
                               ),
                               expanded: Column(
                                 children: [
-                                  Text(
-                                    state.book!.displayDescription ?? '',
-                                    softWrap: true,
+                                  Html(
+                                    shrinkWrap: true,
+                                    data: state.book!.displayDescription ?? '',
                                   ),
                                   ExpandableButton(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(
                                         horizontal: 8.0,
                                         vertical: 8.0,
                                       ),
@@ -302,7 +304,7 @@ class BookDetailsView extends HookWidget {
                           children: [
                             ListTile(
                               leading: track?.isDownloaded ?? false
-                                  ? Icon(Icons.offline_pin)
+                                  ? const Icon(Icons.offline_pin)
                                   : null,
                               onTap: () async {
                                 await playbackController
@@ -326,8 +328,7 @@ class BookDetailsView extends HookWidget {
                                   child: LinearProgressIndicator(
                                     minHeight: 6.0,
                                     value: track.downloadProgress,
-                                    // backgroundColor:
-                                    //     Theme.of(context).cardTheme.color,
+                                    backgroundColor: Colors.transparent,
                                   ),
                                 ),
                               ),

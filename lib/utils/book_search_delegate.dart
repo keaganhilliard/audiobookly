@@ -15,7 +15,7 @@ class BookSearchDelegate extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -26,7 +26,7 @@ class BookSearchDelegate extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(context, null);
       },
@@ -38,7 +38,7 @@ class BookSearchDelegate extends SearchDelegate {
     if (query.length < 3) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        children: const <Widget>[
           Center(
             child: Text(
               "Search term must be longer than two letters.",
@@ -49,18 +49,18 @@ class BookSearchDelegate extends SearchDelegate {
     }
 
     return Consumer(
-      builder: (context, watch, child) {
-        final _repo = watch(mediaRepositoryProvider);
-        final _navigationService = watch(navigationServiceProvider);
+      builder: (context, ref, child) {
+        final _repo = ref.watch(mediaRepositoryProvider);
+        final _navigationService = ref.watch(navigationServiceProvider);
         return FutureBuilder<List<MediaItem>>(
           future: _repo?.search(query),
           builder: (context, results) {
             if (!results.hasData) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else {
-              if (results.data!.length > 0) {
+              if (results.data!.isNotEmpty) {
                 return ResponsiveGridView<MediaItem>(
                     items: results.data,
                     itemBuilder: (item) {
@@ -71,7 +71,7 @@ class BookSearchDelegate extends SearchDelegate {
                               Routes.Book,
                               arguments: item.id,
                             );
-                          } else
+                          } else {
                             Navigator.of(context).pushNamed(
                               Routes.Author,
                               arguments: {
@@ -79,6 +79,7 @@ class BookSearchDelegate extends SearchDelegate {
                                 'title': item.title,
                               },
                             );
+                          }
                         },
                         thumbnailUrl: item.artUri.toString(),
                         title: item.title,
@@ -88,7 +89,7 @@ class BookSearchDelegate extends SearchDelegate {
               } else {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
+                  children: const <Widget>[
                     Center(
                       child: Text(
                         "No Results Found.",

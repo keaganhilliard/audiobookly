@@ -6,8 +6,10 @@ class ResponsiveGridView<T> extends StatelessWidget {
   final List<T>? items;
   final Widget Function(T item)? itemBuilder;
 
-  ResponsiveGridView({this.items, this.itemBuilder});
+  ResponsiveGridView({this.items, this.itemBuilder, Key? key})
+      : super(key: key);
 
+  @override
   Widget build(context) {
     var screenSize = MediaQuery.of(context).size;
     var crossCount = 3;
@@ -21,11 +23,11 @@ class ResponsiveGridView<T> extends StatelessWidget {
     print(screenSize.width);
 
     return Scrollbar(
-      radius: Radius.circular(5.0),
+      radius: const Radius.circular(5.0),
       controller: _controller,
       child: GridView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
-        key: PageStorageKey('responsive-grid'),
+        physics: const AlwaysScrollableScrollPhysics(),
+        key: const PageStorageKey('responsive-grid'),
         controller: _controller,
         itemCount: items!.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

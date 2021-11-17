@@ -11,7 +11,6 @@ import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/widgets/adaptive_scaffold.dart';
 import 'package:audiobookly/widgets/auth_widget.dart';
 import 'package:audiobookly/widgets/router.dart' as r;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -46,7 +45,7 @@ Future<void> main() async {
   );
 }
 
-class AudiobooklyApp extends HookWidget {
+class AudiobooklyApp extends HookConsumerWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final routeMap = [
     Routes.Home,
@@ -55,9 +54,11 @@ class AudiobooklyApp extends HookWidget {
     Routes.Collections,
   ];
 
+  AudiobooklyApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    final navigationService = useProvider(navigationServiceProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final navigationService = ref.watch(navigationServiceProvider);
     final _currentIndex = useState(0);
     // timeDilation = 7.0;
     return MaterialApp(
@@ -68,42 +69,40 @@ class AudiobooklyApp extends HookWidget {
       themeMode: ThemeMode.dark,
       theme: ThemeData(
         primaryColor: Colors.deepPurple,
-        appBarTheme: AppBarTheme(),
+        appBarTheme: const AppBarTheme(),
         brightness: Brightness.light,
         indicatorColor: Colors.deepPurple,
         secondaryHeaderColor: Colors.deepPurple,
-        accentColor: Colors.deepPurple,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-          accentColor: Colors.deepPurple,
-          brightness: Brightness.light,
-        ),
-        sliderTheme: SliderThemeData(
+        sliderTheme: const SliderThemeData(
           overlayColor: Colors.deepPurple,
           thumbColor: Colors.deepPurple,
           activeTrackColor: Colors.deepPurple,
         ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          accentColor: Colors.deepPurple,
+          brightness: Brightness.light,
+        ).copyWith(secondary: Colors.deepPurple),
         // canvasColor: Colors.grey[900],
       ),
       darkTheme: ThemeData(
         indicatorColor: Colors.deepPurple,
-        cardTheme: CardTheme(
+        cardTheme: const CardTheme(
           clipBehavior: Clip.antiAlias,
           color: Colors.black,
         ),
-        accentColor: Colors.deepPurple,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-          accentColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-          backgroundColor: Colors.grey[900],
-        ),
-        sliderTheme: SliderThemeData(
+        sliderTheme: const SliderThemeData(
           overlayColor: Colors.deepPurple,
           thumbColor: Colors.deepPurple,
           activeTrackColor: Colors.deepPurple,
         ),
         brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          accentColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+          backgroundColor: Colors.grey[900],
+        ).copyWith(secondary: Colors.deepPurple),
         // canvasColor: Colors.grey[900],
       ),
       home: AuthWidget(
@@ -113,7 +112,7 @@ class AudiobooklyApp extends HookWidget {
               return !await _navigatorKey.currentState!.maybePop();
             },
             child: AdaptiveScaffold(
-                title: Text('Audiobookly'),
+                title: const Text('Audiobookly'),
                 body: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,7 +124,7 @@ class AudiobooklyApp extends HookWidget {
                         initialRoute: Routes.Home,
                       ),
                     ),
-                    MiniPlayer(),
+                    const MiniPlayer(),
                   ],
                 ),
                 currentIndex: _currentIndex.value,
@@ -140,7 +139,7 @@ class AudiobooklyApp extends HookWidget {
                     );
                   }
                 },
-                destinations: [
+                destinations: const [
                   Destination(
                     title: 'Home',
                     icon: Icons.home,

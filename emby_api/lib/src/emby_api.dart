@@ -136,8 +136,8 @@ class EmbyApi {
       'Fields': 'Overview',
       'IncludeItemTypes': 'MusicAlbum',
       // 'Limit': '$limit',
-      'SortBy': 'AlbumArtist,ProductionYear',
-      'SortOrder': 'Ascending,Ascending',
+      'SortBy': 'AlbumArtist,SortName,ProductionYear',
+      'SortOrder': 'Ascending,Ascending,Ascending',
       'EnableImageTypes': 'Primary',
       'Recursive': 'true'
     });
@@ -167,8 +167,8 @@ class EmbyApi {
       'Fields': 'Overview',
       'IncludeItemTypes': 'MusicAlbum',
       // 'Limit': '$limit',
-      // 'SortBy': 'AlbumArtist,ProductionYear',
-      // 'SortOrder': 'Ascending,Ascending',
+      'SortBy': 'SortName,ProductionYear',
+      'SortOrder': 'Ascending,Ascending',
       'EnableImageTypes': 'Primary',
       // 'Recursive': 'true'
     });
@@ -208,8 +208,8 @@ class EmbyApi {
       'Fields': 'Overview',
       'IncludeItemTypes': 'MusicAlbum',
       // 'Limit': '$limit',
-      'SortBy': 'AlbumArtist,ProductionYear',
-      'SortOrder': 'Ascending,Ascending',
+      'SortBy': 'AlbumArtist,SortName,ProductionYear',
+      'SortOrder': 'Ascending,Ascending,Ascending',
       'EnableImageTypes': 'Primary',
       'Recursive': 'true'
     });
@@ -245,14 +245,24 @@ class EmbyApi {
   }
 
   String getThumbnailUrl(
-    String itemId, [
+    String itemId, {
     int maxHeight = 500,
     int maxWidth = 500,
-  ]) {
-    return createUri(baseUrl!, '/Items/$itemId/Images/Primary', {
-      'maxHeight': '$maxHeight',
-      'maxWidth': '$maxWidth',
-    }).toString();
+    int? height,
+    int? width,
+  }) {
+    Map<String, String> params = {};
+
+    if (height != null)
+      params.putIfAbsent('height', () => '$height');
+    else
+      params.putIfAbsent('maxHeight', () => '$maxHeight');
+    if (width != null)
+      params.putIfAbsent('width', () => '$width');
+    else
+      params.putIfAbsent('maxWidth', () => '$maxWidth');
+    return createUri(baseUrl!, '/Items/$itemId/Images/Primary', params)
+        .toString();
   }
 
   Future<List<EmbyItem>> _getItems(
@@ -344,6 +354,7 @@ class EmbyApi {
   String getServerUrl(String itemId) {
     String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
     final uri = createUri(baseUrl!, '/Audio/$itemId/universal', {
+      'X-Emby-Token': token,
       'UserId': userId,
       'DevceId': deviceId,
       'PlaySessionId': sessionId,
@@ -379,10 +390,12 @@ class EmbyApi {
     Duration duration, [
     double playbackRate = 1.0,
   ]) async {
+    String sessionId = playSessions.putIfAbsent(itemId, () => uuid.v4());
     await makePost('/Sessions/Playing', {}, {
+      'X-Emby-Token': token,
       'ItemId': itemId,
       'CanSeek': true,
-      'PlaySessionId': playSessions[itemId],
+      'PlaySessionId': sessionId,
       'PositionTicks': position.inMicroseconds * 10,
       'PlaybackRate': playbackRate,
       'IsPaused': false

@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CoverItem extends StatelessWidget {
-  CoverItem({
+  const CoverItem({
     this.progress,
     this.subtitle,
     this.title,
@@ -50,7 +50,7 @@ class CoverItem extends StatelessWidget {
                     errorWidget: (context, error, child) => Text(title ?? ''),
                     placeholder: (context, url) => Container(
                       color: Theme.of(context).canvasColor,
-                      child: Icon(
+                      child: const Icon(
                         Icons.book,
                         size: 50.0,
                       ),
@@ -64,12 +64,12 @@ class CoverItem extends StatelessWidget {
                         ? LinearProgressIndicator(
                             minHeight: 6,
                             value: progress,
-                            backgroundColor: Theme.of(context).cardTheme.color,
+                            backgroundColor: Colors.transparent,
                           )
                         : Container(),
                   ),
                 ),
-                if (played) PlayedIcon(),
+                if (played) const PlayedIcon(),
               ],
             ),
           ),

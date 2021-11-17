@@ -9,8 +9,9 @@ final plexAuthRepoProvider = Provider<PlexAuthRepository>((ref) {
 });
 
 class PlexAuthRepository extends AuthenticationRepository {
-  ProviderReference _ref;
+  final ProviderReference _ref;
   PlexAuthRepository(this._ref);
+  @override
   Future<User?> getUser(String token) async {
     final _plexApi = _ref.read(plexApiProvider);
     _plexApi.headers.token = token;
@@ -28,6 +29,7 @@ class PlexAuthRepository extends AuthenticationRepository {
     );
   }
 
+  @override
   Future<bool> logout() async {
     final _prefs = _ref.read(sharedPreferencesServiceProvider);
     await _prefs.setBaseUrl('');

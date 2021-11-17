@@ -130,7 +130,7 @@ class _$LibrarySelectStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
+    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
   }
 
   @override
@@ -371,7 +371,7 @@ class _$LibrarySelectStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
+    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
   }
 
   @override

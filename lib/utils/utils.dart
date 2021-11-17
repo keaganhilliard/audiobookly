@@ -1,58 +1,20 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
-import 'package:audiobookly/database/entity/book.dart';
-import 'package:audiobookly/database/entity/track.dart';
+import 'package:audiobookly/database/entity/sql_book.dart';
+import 'package:audiobookly/database/entity/sql_track.dart';
+import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:flutter/material.dart';
-
-Track getTrack(
-  MediaItem chapter,
-  String bookId,
-  double progress,
-  String path, [
-  String downloadTaskId = '',
-]) =>
-    Track(
-      chapter.id,
-      chapter.title,
-      chapter.duration ?? Duration.zero,
-      progress,
-      progress == 1,
-      path,
-      bookId,
-      downloadTaskId,
-      0,
-    );
-
-Book getBook(
-  MediaItem book,
-  bool downloadRequested,
-  bool downloadCompleted,
-  bool downloadFailed,
-) =>
-    Book(
-      book.id,
-      book.title,
-      book.artist ?? 'Unknown',
-      book.narrator ?? 'Unkown',
-      book.displayDescription ?? '',
-      book.artUri.toString(),
-      book.duration ?? Duration.zero,
-      book.viewOffset,
-      downloadRequested,
-      downloadCompleted,
-      downloadFailed,
-      book.played,
-    );
 
 class Utils {
   static String getTimeValue(Duration? time) {
     if (time == null) return '-:--:--';
     return RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})')
-            .firstMatch("${time}")
+            .firstMatch("$time")
             ?.group(1) ??
-        '${time}';
+        '$time';
   }
 
   static _getNarrator(EmbyItem item) {
@@ -70,9 +32,9 @@ class Utils {
 
   static format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
   static cleanPath(String path) =>
-      path.replaceAll(new RegExp(r'([^a-zA-Z0-9 /\.]+)'), '-');
+      path.replaceAll(RegExp(r'([^a-zA-Z0-9 /\.]+)'), '-');
   static cleanFileName(String fileName) =>
-      fileName.replaceAll(new RegExp(r'([^a-zA-Z0-9 \.]+)'), '-');
+      fileName.replaceAll(RegExp(r'([^a-zA-Z0-9 \.]+)'), '-');
   static MediaItem mediaItemfromEmbyItem(EmbyItem item, MediaRepository repo) {
     return MediaItem(
         id: item.type == 'MusicArtist'
@@ -87,8 +49,10 @@ class Utils {
                 microseconds: (item.runTimeTicks! / 10).roundToDouble().toInt())
             : Duration.zero,
         album: item.album ?? item.name!,
-        displayDescription: item.overview,
-        artUri: Uri.parse(repo.getThumbnailUrl(item.id)),
+        displayDescription: item.overview ?? '',
+        artUri: Uri.parse(item.type == 'BoxSet'
+            ? repo.getThumbnailUrl(item.id)
+            : repo.getThumbnailUrl(item.id)),
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
           'played': (item.userData?.played ?? false),
@@ -102,7 +66,12 @@ class Utils {
               : 0,
           // 'largeThumbnail': repo.getThumbnailUrl(item.id),
           'cached': false,
-          'artists': item.albumArtists?.map((artist) => artist.toJson())
+          'artists': item.albumArtists
+              ?.map(
+                (artist) => artist.toJson(),
+              )
+              .toList(),
+          'asin': item.providerIds?['asin']
         });
   }
 
@@ -119,7 +88,7 @@ class Utils {
   static String friendlyDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
-    return '$hours hour${hours > 1 ? "s" : ""} and $minutes minute${minutes > 1 ? "s" : ""}';
+    return '$hours hour${hours != 1 ? "s" : ""} and $minutes minute${minutes != 1 ? "s" : ""}';
   }
 
   static String friendlyDurationFromItems(List<MediaItem> items) {
@@ -136,6 +105,7 @@ extension MediaHelpers on MediaItem {
   bool get played => extras?['played'] ?? false;
   bool get cached => extras?['cached'] ?? false;
   String get cachePath => extras?['cachePath'] ?? '';
+  String get asin => extras?['asin'] ?? '';
 
   String? get partKey => extras?['partKey'];
 

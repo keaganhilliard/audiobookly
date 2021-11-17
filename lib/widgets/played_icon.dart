@@ -13,7 +13,7 @@ class PlayedIcon extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   color: Colors.grey,
                   blurRadius: 5.0,

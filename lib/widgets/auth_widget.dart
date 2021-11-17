@@ -15,11 +15,11 @@ class AuthWidget extends ConsumerWidget {
   final WidgetBuilder authorizedBuilder;
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final authState = watch(authNotifierProvider);
-    final navigation = watch(navigationServiceProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authNotifierProvider);
+    final navigation = ref.watch(navigationServiceProvider);
     if (authState is AuthStateLoading) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
@@ -33,21 +33,21 @@ class AuthWidget extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
+            const Center(
               child: Text('Could not connect to server, is the device online?'),
             ),
             ElevatedButton(
               child: Text('Offline Mode'),
               onPressed: () {
-                context.read(authNotifierProvider.notifier).checkToken();
-                navigation
-                    .push(MaterialPageRoute(builder: (context) => Offline()));
+                ref.read(authNotifierProvider.notifier).checkToken();
+                navigation.push(
+                    MaterialPageRoute(builder: (context) => const Offline()));
               },
             ),
             ElevatedButton(
               child: Text('Retry?'),
               onPressed: () {
-                context.read(authNotifierProvider.notifier).checkToken();
+                ref.read(authNotifierProvider.notifier).checkToken();
               },
             )
           ],

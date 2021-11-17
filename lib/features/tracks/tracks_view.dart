@@ -8,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class TracksView extends HookWidget {
+class TracksView extends HookConsumerWidget {
   TracksView();
 
   final ItemScrollController itemScrollController = ItemScrollController();
@@ -16,8 +16,8 @@ class TracksView extends HookWidget {
       ItemPositionsListener.create();
 
   @override
-  Widget build(BuildContext context) {
-    final playbackController = useProvider(playbackControllerProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playbackController = ref.watch(playbackControllerProvider);
     final playbackState = useStream(playbackController.playbackStateStream);
     final currentItem = useStream(playbackController.currentMediaItemStream);
     final queue = useStream(playbackController.queueStream);
@@ -30,19 +30,19 @@ class TracksView extends HookWidget {
         0;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Tracks'),
+          title: const Text('Tracks'),
           actions: <Widget>[
             if ((state != null)) RewindButton(iconSize: 24.0),
             if (!(state?.playing ?? false))
               IconButton(
-                icon: Icon(Icons.play_arrow),
+                icon: const Icon(Icons.play_arrow),
                 onPressed: () {
                   playbackController.play();
                 },
               ),
             if ((state?.playing ?? false))
               IconButton(
-                icon: Icon(Icons.pause),
+                icon: const Icon(Icons.pause),
                 onPressed: () {
                   playbackController.pause();
                 },
@@ -50,7 +50,7 @@ class TracksView extends HookWidget {
           ],
         ),
         body: items == null
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : ScrollablePositionedList.builder(
@@ -63,15 +63,17 @@ class TracksView extends HookWidget {
                   final totalTrackDigits = items.length.toString().length;
                   final bool currentTrack = index == currentTrackIndex;
                   return ListTile(
-                    leading: track.cached ? Icon(Icons.offline_pin) : null,
+                    leading:
+                        track.cached ? const Icon(Icons.offline_pin) : null,
                     onTap: () {
                       print('Skipping to ${item!.id}');
-                      if (track.id != item.id)
+                      if (track.id != item.id) {
                         playbackController.skipToQueueItem(index);
+                      }
                     },
                     trailing: currentTrack
                         ? IconButton(
-                            icon: Icon(Icons.poll),
+                            icon: const Icon(Icons.poll),
                             onPressed: () {},
                           )
                         : null,

@@ -63,8 +63,9 @@ final Provider<DownloadService?> downloadServiceProvider =
     Provider<DownloadService?>((ref) {
   final mediaRepo = ref.watch(mediaRepositoryProvider);
   final db = ref.watch(databaseServiceProvider);
-  if (mediaRepo != null)
+  if (mediaRepo != null) {
     return DownloadService(mediaRepo, db);
-  else
+  } else {
     return null;
+  }
 });

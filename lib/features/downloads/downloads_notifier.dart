@@ -12,21 +12,22 @@ final downloadsStateProvider =
 class DownloadsNotifier extends StateNotifier<DownloadsState> {
   final DatabaseService _databaseService = getIt();
 
-  DownloadsNotifier() : super(DownloadsState.initial()) {
+  DownloadsNotifier() : super(const DownloadsState.initial()) {
     getBooks();
   }
 
   Future getBooks() async {
     try {
-      state = DownloadsState.loading();
+      state = const DownloadsState.loading();
       final books = (await _databaseService.getBooks().first)
+          .where((book) => book.downloadCompleted)
           .map((book) => MediaHelpers.fromBook(book))
           .toList();
       state = DownloadsState.loaded(
         books: books,
       );
     } on Exception {
-      state = DownloadsState.error("Something went wrong... :(");
+      state = const DownloadsState.error("Something went wrong... :(");
     }
   }
 }

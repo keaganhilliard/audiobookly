@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RewindButton extends HookWidget {
+class RewindButton extends HookConsumerWidget {
   final Color? color;
   final EdgeInsetsGeometry padding;
   final double iconSize;
@@ -23,15 +23,15 @@ class RewindButton extends HookWidget {
   };
 
   @override
-  Widget build(BuildContext context) {
-    final playbackController = useProvider(playbackControllerProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playbackController = ref.watch(playbackControllerProvider);
     final sharedPreferencesService =
-        useProvider(sharedPreferencesServiceProvider);
+        ref.watch(sharedPreferencesServiceProvider);
 
     return IconButton(
-      color: this.color,
+      color: color,
       icon: Icon(iconMap[sharedPreferencesService.rewindInterval.toString()]),
-      iconSize: this.iconSize,
+      iconSize: iconSize,
       padding: padding,
       autofocus: false,
       onPressed: playbackController.rewind,

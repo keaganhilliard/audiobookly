@@ -33,14 +33,14 @@ Future<DeviceInfo> getDeviceInfo() async {
       version: '0.0.1.0',
       platform: 'Windows',
     );
-  } else if (Platform.isLinux) {
-    LinuxDeviceInfo windowsDeviceInfo = await deviceInfo.linuxInfo;
-    return DeviceInfo(
-      uniqueId: windowsDeviceInfo.machineId,
-      model: windowsDeviceInfo.prettyName,
-      version: '0.0.1.0',
-      platform: 'Linux',
-    );
+    // } else if (Platform.isLinux) {
+    //   LinuxDeviceInfo linuxDeviceInfo = await deviceInfo.linuxInfo;
+    //   return DeviceInfo(
+    //     uniqueId: linuxDeviceInfo.machineId,
+    //     model: linuxDeviceInfo.prettyName,
+    //     version: '0.0.1.0',
+    //     platform: 'Linux',
+    //   );
   } else if (Platform.isAndroid) {
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
     return DeviceInfo(

@@ -5,14 +5,14 @@ import 'package:audiobookly/utils/utils.dart';
 import 'package:rxdart/subjects.dart';
 
 class SleepService {
-  PlaybackController _pb;
+  final PlaybackController _pb;
   SleepService(this._pb);
   Timer? _timer;
   bool get hasTimer => _requestedDuration != null;
   StreamSubscription? endOfChapterSub;
-  Stopwatch _timeRunning = Stopwatch();
+  final Stopwatch _timeRunning = Stopwatch();
   Timer? watcher;
-  BehaviorSubject<Duration?> _timeLeft = BehaviorSubject.seeded(null);
+  final BehaviorSubject<Duration?> _timeLeft = BehaviorSubject.seeded(null);
   Duration? _requestedDuration;
 
   beginTimer(Duration time) {
@@ -25,10 +25,11 @@ class SleepService {
     _requestedDuration = time;
     _timeLeft.add(time);
     watcher = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_requestedDuration != null)
+      if (_requestedDuration != null) {
         _timeLeft.add(_requestedDuration! - _timeRunning.elapsed);
-      else
+      } else {
         watcher?.cancel();
+      }
     });
   }
 

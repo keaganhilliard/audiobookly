@@ -129,7 +129,7 @@ class _$DownloadsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'DownloadsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'DownloadsState.initial'));
   }
 
   @override
@@ -367,7 +367,7 @@ class _$DownloadsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'DownloadsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'DownloadsState.loading'));
   }
 
   @override
