@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/repositories/media/abs_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
@@ -54,6 +55,10 @@ final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
     final plexApi = ref.watch(plexApiProvider);
     return PlexRepository(api: plexApi, prefs: sharedPreferencesService)
       ..getServerAndLibrary();
+  } else if (sharedPreferencesService.getServerType() ==
+      SERVER_TYPE.AUDIOBOOKSHELF) {
+    final absApi = ref.watch(absApiProvider);
+    return AbsRepository(absApi, sharedPreferencesService.getLibraryId());
   } else {
     return null;
   }

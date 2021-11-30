@@ -70,7 +70,7 @@ class BookListElement extends StatelessWidget {
                               Text(title ?? ''),
                           placeholder: (context, url) => Container(
                             color: Theme.of(context).canvasColor,
-                            child: Icon(
+                            child: const Icon(
                               Icons.book,
                               size: 50.0,
                             ),
@@ -89,7 +89,7 @@ class BookListElement extends StatelessWidget {
                             Text(
                               title!,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                             ),
                             if (subtitle != null)
                               Text(
@@ -111,7 +111,7 @@ class BookListElement extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (played) PlayedIcon(),
+                if (played) const PlayedIcon(),
               ],
             ),
           ),

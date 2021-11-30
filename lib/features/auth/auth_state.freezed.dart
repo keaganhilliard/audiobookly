@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, avoid_single_cascade_in_expression_statements
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'auth_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$AuthState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(User? user)? loaded,
@@ -65,6 +74,14 @@ mixin _$AuthState {
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -131,7 +148,8 @@ class _$AuthStateInitial
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is AuthStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthStateInitial);
   }
 
   @override
@@ -146,6 +164,17 @@ class _$AuthStateInitial
     required TResult Function(String? message) error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -172,6 +201,17 @@ class _$AuthStateInitial
     required TResult Function(AuthStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -251,14 +291,13 @@ class _$AuthStateLoaded
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is AuthStateLoaded &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)));
+        (other.runtimeType == runtimeType &&
+            other is AuthStateLoaded &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
@@ -274,6 +313,17 @@ class _$AuthStateLoaded
     required TResult Function(String? message) error,
   }) {
     return loaded(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(user);
   }
 
   @override
@@ -304,6 +354,17 @@ class _$AuthStateLoaded
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthStateInitial value)? initial,
     TResult Function(AuthStateLoaded value)? loaded,
@@ -321,7 +382,7 @@ class _$AuthStateLoaded
 abstract class AuthStateLoaded implements AuthState {
   const factory AuthStateLoaded({User? user}) = _$AuthStateLoaded;
 
-  User? get user => throw _privateConstructorUsedError;
+  User? get user;
   @JsonKey(ignore: true)
   $AuthStateLoadedCopyWith<AuthStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -365,7 +426,8 @@ class _$AuthStateLoading
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is AuthStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthStateLoading);
   }
 
   @override
@@ -380,6 +442,17 @@ class _$AuthStateLoading
     required TResult Function(String? message) error,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -406,6 +479,17 @@ class _$AuthStateLoading
     required TResult Function(AuthStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -486,14 +570,13 @@ class _$AuthStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is AuthStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is AuthStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -510,6 +593,17 @@ class _$AuthStateErrorDetails
     required TResult Function(String? message) error,
   }) {
     return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User? user)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
   }
 
   @override
@@ -540,6 +634,17 @@ class _$AuthStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(AuthStateInitial value)? initial,
+    TResult Function(AuthStateLoaded value)? loaded,
+    TResult Function(AuthStateLoading value)? loading,
+    TResult Function(AuthStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthStateInitial value)? initial,
     TResult Function(AuthStateLoaded value)? loaded,
@@ -558,7 +663,7 @@ abstract class AuthStateErrorDetails implements AuthState {
   const factory AuthStateErrorDetails([String? message]) =
       _$AuthStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $AuthStateErrorDetailsCopyWith<AuthStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

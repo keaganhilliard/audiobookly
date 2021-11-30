@@ -23,7 +23,6 @@ Future<void> main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   await registerSingletons();
-
   runApp(
     ProviderScope(
       overrides: [
@@ -52,6 +51,7 @@ class AudiobooklyApp extends HookConsumerWidget {
     Routes.Authors,
     Routes.Books,
     Routes.Collections,
+    Routes.Series,
   ];
 
   AudiobooklyApp({Key? key}) : super(key: key);
@@ -59,6 +59,8 @@ class AudiobooklyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigationService = ref.watch(navigationServiceProvider);
+    final sharedPreferencesService =
+        ref.watch(sharedPreferencesServiceProvider);
     final _currentIndex = useState(0);
     // timeDilation = 7.0;
     return MaterialApp(
@@ -139,27 +141,30 @@ class AudiobooklyApp extends HookConsumerWidget {
                     );
                   }
                 },
-                destinations: const [
-                  Destination(
+                destinations: [
+                  const Destination(
                     title: 'Home',
                     icon: Icons.home,
                   ),
-                  Destination(
+                  const Destination(
                     title: 'Authors',
                     icon: Icons.person,
                   ),
-                  Destination(
+                  const Destination(
                     title: 'Books',
                     icon: Icons.book,
                   ),
-                  Destination(
+                  const Destination(
                     title: 'Collections',
                     icon: Icons.collections_bookmark,
                   ),
+                  if (sharedPreferencesService.getServerType() ==
+                      SERVER_TYPE.AUDIOBOOKSHELF)
+                    const Destination(title: 'Series', icon: Icons.window),
                 ]),
           );
         },
-        unauthorizedBuilder: (context) => WelcomeView(),
+        unauthorizedBuilder: (context) => const WelcomeView(),
       ),
     );
   }

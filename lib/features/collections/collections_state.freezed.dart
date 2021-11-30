@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'collections_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$CollectionsState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<MediaItem>? collections)? loaded,
@@ -65,6 +74,14 @@ mixin _$CollectionsState {
     required TResult Function(CollectionsStateLoaded value) loaded,
     required TResult Function(CollectionsStateLoading value) loading,
     required TResult Function(CollectionsStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -129,12 +146,13 @@ class _$CollectionsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CollectionsState.initial'));
+    properties..add(DiagnosticsProperty('type', 'CollectionsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is CollectionsStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CollectionsStateInitial);
   }
 
   @override
@@ -149,6 +167,17 @@ class _$CollectionsStateInitial
     required TResult Function(String? message) error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -175,6 +204,17 @@ class _$CollectionsStateInitial
     required TResult Function(CollectionsStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -255,15 +295,15 @@ class _$CollectionsStateLoaded
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is CollectionsStateLoaded &&
-            (identical(other.collections, collections) ||
-                const DeepCollectionEquality()
-                    .equals(other.collections, collections)));
+        (other.runtimeType == runtimeType &&
+            other is CollectionsStateLoaded &&
+            const DeepCollectionEquality()
+                .equals(other.collections, collections));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(collections);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(collections));
 
   @JsonKey(ignore: true)
   @override
@@ -280,6 +320,17 @@ class _$CollectionsStateLoaded
     required TResult Function(String? message) error,
   }) {
     return loaded(collections);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(collections);
   }
 
   @override
@@ -310,6 +361,17 @@ class _$CollectionsStateLoaded
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
@@ -328,7 +390,7 @@ abstract class CollectionsStateLoaded implements CollectionsState {
   const factory CollectionsStateLoaded({List<MediaItem>? collections}) =
       _$CollectionsStateLoaded;
 
-  List<MediaItem>? get collections => throw _privateConstructorUsedError;
+  List<MediaItem>? get collections;
   @JsonKey(ignore: true)
   $CollectionsStateLoadedCopyWith<CollectionsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -368,12 +430,13 @@ class _$CollectionsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CollectionsState.loading'));
+    properties..add(DiagnosticsProperty('type', 'CollectionsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is CollectionsStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CollectionsStateLoading);
   }
 
   @override
@@ -388,6 +451,17 @@ class _$CollectionsStateLoading
     required TResult Function(String? message) error,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -414,6 +488,17 @@ class _$CollectionsStateLoading
     required TResult Function(CollectionsStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -497,14 +582,13 @@ class _$CollectionsStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is CollectionsStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is CollectionsStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -521,6 +605,17 @@ class _$CollectionsStateErrorDetails
     required TResult Function(String? message) error,
   }) {
     return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
   }
 
   @override
@@ -551,6 +646,17 @@ class _$CollectionsStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CollectionsStateInitial value)? initial,
+    TResult Function(CollectionsStateLoaded value)? loaded,
+    TResult Function(CollectionsStateLoading value)? loading,
+    TResult Function(CollectionsStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
@@ -569,7 +675,7 @@ abstract class CollectionsStateErrorDetails implements CollectionsState {
   const factory CollectionsStateErrorDetails([String? message]) =
       _$CollectionsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $CollectionsStateErrorDetailsCopyWith<CollectionsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

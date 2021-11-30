@@ -104,6 +104,7 @@ class AudioHandlerPlaybackController extends PlaybackController {
   Future stop() async {
     await _audioHandler.stop();
     currentItem = null;
+    currentItemId = null;
   }
 
   @override

@@ -3,7 +3,7 @@ import 'abs_utils.dart';
 class AbsAudiobookProgress {
   String audiobookId;
   Duration? totalDuration;
-  Duration? progress;
+  double? progress;
   Duration? currentTime;
   bool isRead;
   DateTime? lastUpdate;
@@ -29,7 +29,7 @@ class AbsAudiobookProgress {
         totalDuration:
             AbsUtils.parseDuration(json['totalDuration']?.toDouble()),
         isRead: json['isRead'],
-        progress: AbsUtils.parseDuration(json['progress']?.toDouble()),
+        progress: json['progress']?.toDouble(),
         currentTime: AbsUtils.parseDuration(json['currentTime']?.toDouble()),
         lastUpdate: AbsUtils.parseDateTime(json['lastUpdate']),
         startedAt: AbsUtils.parseDateTime(json['startedAt']),
@@ -41,8 +41,8 @@ class AbsAudiobookProgress {
     final Map<String, dynamic> data = {};
     data['audiobookId'] = audiobookId;
     data['totalDuration'] = totalDuration?.inMilliseconds ?? 0 / 1000;
-    data['progress'] = progress?.inMilliseconds;
-    data['currentTime'] = currentTime?.inMilliseconds;
+    data['progress'] = progress;
+    data['currentTime'] = (currentTime?.inMilliseconds ?? 0) / 1000;
     data['isRead'] = isRead;
     data['lastUpdate'] = lastUpdate?.millisecondsSinceEpoch;
     data['startedAt'] = startedAt?.millisecondsSinceEpoch;

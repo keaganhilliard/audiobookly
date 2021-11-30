@@ -2,8 +2,10 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/database/database.dart';
 import 'package:audiobookly/database/entity/sql_book.dart';
 import 'package:audiobookly/database/entity/download_task.dart';
+import 'package:audiobookly/database/entity/sql_chapter.dart';
 import 'package:audiobookly/database/entity/sql_track.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -69,7 +71,7 @@ class SqlDatabaseService implements DatabaseService {
   Stream<Map<String, Track>> getTracksForBookId(String bookId) {
     return _db.trackDao
         .streamTracksForBookId(bookId)
-        .map((tracks) => { for (var track in tracks) track.id : track });
+        .map((tracks) => {for (var track in tracks) track.id: track});
   }
 
   @override
@@ -128,4 +130,32 @@ class SqlDatabaseService implements DatabaseService {
         downloadFailed,
         book.played,
       );
+
+  @override
+  Future deleteChapters(List<Chapter> chapters) async {
+    await _db.chapterDao.deleteChapters(
+      [for (final chapter in chapters) SqlChapter.fromChapter(chapter)],
+    );
+  }
+
+  @override
+  Future<List<Chapter>> getChaptersForBook(String bookId) async {
+    return [
+      for (final chapter in await _db.chapterDao.findChaptersForBookId(bookId))
+        Chapter.fromJson(chapter.toJson(), bookId)
+    ];
+  }
+
+  @override
+  Future insertChapter(Chapter chapter) async {
+    return await _db.chapterDao.insertChapter(SqlChapter.fromChapter(chapter));
+  }
+
+  @override
+  Future insertChapters(List<Chapter> chapters) async {
+    print('Inserting chapters: ${chapters.length}');
+    return await _db.chapterDao.insertChapters(
+      [for (final chapter in chapters) SqlChapter.fromChapter(chapter)],
+    );
+  }
 }

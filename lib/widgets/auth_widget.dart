@@ -1,6 +1,6 @@
 import 'package:audiobookly/features/auth/auth_notifier.dart';
 import 'package:audiobookly/features/auth/auth_state.dart';
-import 'package:audiobookly/features/offline/offline_vew.dart';
+import 'package:audiobookly/features/offline/offline_view.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +27,6 @@ class AuthWidget extends ConsumerWidget {
     } else if (authState is AuthStateLoaded) {
       return authorizedBuilder(context);
     } else if (authState is AuthStateErrorDetails) {
-      print(authState.message);
       return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +36,7 @@ class AuthWidget extends ConsumerWidget {
               child: Text('Could not connect to server, is the device online?'),
             ),
             ElevatedButton(
-              child: Text('Offline Mode'),
+              child: const Text('Offline Mode'),
               onPressed: () {
                 ref.read(authNotifierProvider.notifier).checkToken();
                 navigation.push(
@@ -45,7 +44,7 @@ class AuthWidget extends ConsumerWidget {
               },
             ),
             ElevatedButton(
-              child: Text('Retry?'),
+              child: const Text('Retry?'),
               onPressed: () {
                 ref.read(authNotifierProvider.notifier).checkToken();
               },

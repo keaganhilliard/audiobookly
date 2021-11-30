@@ -9,7 +9,7 @@ final embyAuthRepoProvider = Provider<EmbyAuthRepository>((ref) {
 });
 
 class EmbyAuthRepository extends AuthenticationRepository {
-  final ProviderReference _ref;
+  final Ref _ref;
   EmbyAuthRepository(this._ref);
 
   @override

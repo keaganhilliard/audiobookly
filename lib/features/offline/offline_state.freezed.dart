@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'offline_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$OfflineState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<MediaItem>? books)? loaded,
@@ -65,6 +74,14 @@ mixin _$OfflineState {
     required TResult Function(OfflineStateLoaded value) loaded,
     required TResult Function(OfflineStateLoading value) loading,
     required TResult Function(OfflineStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(OfflineStateInitial value)? initial,
+    TResult Function(OfflineStateLoaded value)? loaded,
+    TResult Function(OfflineStateLoading value)? loading,
+    TResult Function(OfflineStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -128,12 +145,13 @@ class _$OfflineStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'OfflineState.initial'));
+    properties..add(DiagnosticsProperty('type', 'OfflineState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is OfflineStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is OfflineStateInitial);
   }
 
   @override
@@ -148,6 +166,17 @@ class _$OfflineStateInitial
     required TResult Function(String? message) error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -174,6 +203,17 @@ class _$OfflineStateInitial
     required TResult Function(OfflineStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(OfflineStateInitial value)? initial,
+    TResult Function(OfflineStateLoaded value)? loaded,
+    TResult Function(OfflineStateLoading value)? loading,
+    TResult Function(OfflineStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -254,14 +294,14 @@ class _$OfflineStateLoaded
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is OfflineStateLoaded &&
-            (identical(other.books, books) ||
-                const DeepCollectionEquality().equals(other.books, books)));
+        (other.runtimeType == runtimeType &&
+            other is OfflineStateLoaded &&
+            const DeepCollectionEquality().equals(other.books, books));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(books);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(books));
 
   @JsonKey(ignore: true)
   @override
@@ -277,6 +317,17 @@ class _$OfflineStateLoaded
     required TResult Function(String? message) error,
   }) {
     return loaded(books);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(books);
   }
 
   @override
@@ -307,6 +358,17 @@ class _$OfflineStateLoaded
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(OfflineStateInitial value)? initial,
+    TResult Function(OfflineStateLoaded value)? loaded,
+    TResult Function(OfflineStateLoading value)? loading,
+    TResult Function(OfflineStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
@@ -325,7 +387,7 @@ abstract class OfflineStateLoaded implements OfflineState {
   const factory OfflineStateLoaded({List<MediaItem>? books}) =
       _$OfflineStateLoaded;
 
-  List<MediaItem>? get books => throw _privateConstructorUsedError;
+  List<MediaItem>? get books;
   @JsonKey(ignore: true)
   $OfflineStateLoadedCopyWith<OfflineStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -365,12 +427,13 @@ class _$OfflineStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'OfflineState.loading'));
+    properties..add(DiagnosticsProperty('type', 'OfflineState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is OfflineStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is OfflineStateLoading);
   }
 
   @override
@@ -385,6 +448,17 @@ class _$OfflineStateLoading
     required TResult Function(String? message) error,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -411,6 +485,17 @@ class _$OfflineStateLoading
     required TResult Function(OfflineStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(OfflineStateInitial value)? initial,
+    TResult Function(OfflineStateLoaded value)? loaded,
+    TResult Function(OfflineStateLoading value)? loading,
+    TResult Function(OfflineStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -492,14 +577,13 @@ class _$OfflineStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is OfflineStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is OfflineStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -516,6 +600,17 @@ class _$OfflineStateErrorDetails
     required TResult Function(String? message) error,
   }) {
     return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
   }
 
   @override
@@ -546,6 +641,17 @@ class _$OfflineStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(OfflineStateInitial value)? initial,
+    TResult Function(OfflineStateLoaded value)? loaded,
+    TResult Function(OfflineStateLoading value)? loading,
+    TResult Function(OfflineStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
@@ -564,7 +670,7 @@ abstract class OfflineStateErrorDetails implements OfflineState {
   const factory OfflineStateErrorDetails([String? message]) =
       _$OfflineStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $OfflineStateErrorDetailsCopyWith<OfflineStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

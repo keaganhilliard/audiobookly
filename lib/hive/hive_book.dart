@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 part 'hive_book.g.dart';
 
 @HiveType(typeId: 1)
-class HiveBook extends Book {
+class HiveBook implements Book {
   @override
   @HiveField(0)
   final String id;
@@ -69,23 +69,10 @@ class HiveBook extends Book {
     this.downloadCompleted,
     this.downloadFailed,
     this.read,
-  ) : super(
-          id,
-          title,
-          author,
-          narrator,
-          description,
-          artPath,
-          duration,
-          lastPlayedPosition,
-          downloadRequested,
-          downloadCompleted,
-          downloadFailed,
-          read,
-        );
+  );
 
   @override
-  Book copyWith({
+  HiveBook copyWith({
     String? id,
     String? title,
     String? author,

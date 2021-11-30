@@ -10,7 +10,7 @@ class DurationAdapter extends TypeAdapter<Duration> {
   }
 
   @override
-  void write(BinaryWriter writer, Duration duration) {
-    writer.write(duration.inMicroseconds);
+  void write(BinaryWriter writer, Duration obj) {
+    writer.write(obj.inMicroseconds);
   }
 }

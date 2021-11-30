@@ -1,16 +1,18 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/hive/hive_book.dart';
+import 'package:audiobookly/hive/hive_chapter.dart';
 import 'package:audiobookly/hive/hive_track.dart';
 import 'package:audiobookly/hive/type_adapters/duration_adapter.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:plex_api/plex_api.dart';
 import 'package:rxdart/subjects.dart';
 
 Future initHive() async {
@@ -18,15 +20,24 @@ Future initHive() async {
   Hive.registerAdapter(DurationAdapter());
   Hive.registerAdapter(HiveBookAdapter());
   Hive.registerAdapter(HiveTrackAdapter());
+  Hive.registerAdapter(HiveChapterAdapter());
   await Hive.openBox<HiveBook>('books');
   await Hive.openBox<HiveTrack>('tracks');
+  await Hive.openBox<HiveChapter>('chapters');
 }
 
 class HiveDatabaseService implements DatabaseService {
   final Box<HiveBook> _bookBox;
   final Box<HiveTrack> _trackBox;
+  final Box<HiveChapter> _chapterBox;
 
-  HiveDatabaseService(this._bookBox, this._trackBox);
+  HiveDatabaseService({
+    required Box<HiveBook> bookBox,
+    required Box<HiveTrack> trackBox,
+    required Box<HiveChapter> chapterBox,
+  })  : _bookBox = bookBox,
+        _trackBox = trackBox,
+        _chapterBox = chapterBox;
 
   @override
   Stream<List<Book>> getBooks() {
@@ -82,9 +93,11 @@ class HiveDatabaseService implements DatabaseService {
 
   @override
   Future updateTrackDownloadProgress(String taskId, double progress) async {
-    HiveTrack track = _trackBox.values
-        .firstWhere((element) => element.downloadTaskId == taskId);
-    await _trackBox.put(track.id, track.copyWith(downloadProgress: progress));
+    Track? track = await getTrackByDownloadTask(taskId);
+    if (track != null) {
+      await _trackBox.put(
+          track.id, (track as HiveTrack).copyWith(downloadProgress: progress));
+    }
   }
 
   Map<String, BehaviorSubject<Map<String, Track>>> trackListeners = {};
@@ -115,33 +128,14 @@ class HiveDatabaseService implements DatabaseService {
       subject.add(tracks);
     });
     return subject;
-    // _trackSubscription ??= _trackBox.watch().listen((event) {
-    //   Map<String, Map<String, Track>> bookToTrack = {};
-    //   for (final track in _trackBox.values) {
-    //     bookToTrack
-    //         .putIfAbsent(track.bookId, () => <String, Track>{})
-    //         .putIfAbsent(track.id, () => track);
-    //   }
-
-    //   for (var subject in trackListeners.entries) {
-    //     if (bookToTrack.containsKey(subject.key)) {
-    //       subject.value.add(bookToTrack[subject.key]!);
-    //     }
-    //   }
-    // });
-    // return trackListeners.putIfAbsent(
-    //     bookId,
-    //     () => BehaviorSubject.seeded({
-    //           for (var track
-    //               in _trackBox.values.where((track) => track.bookId == bookId))
-    //             track.id: track
-    //         }));
   }
 
   @override
   Future<Track?> getTrackByDownloadTask(String taskId) async {
-    return _trackBox.values
-        .firstWhere((element) => element.downloadTaskId == taskId);
+    for (final track in _trackBox.values) {
+      if (track.downloadTaskId == taskId) return track;
+    }
+    return null;
   }
 
   @override
@@ -196,4 +190,36 @@ class HiveDatabaseService implements DatabaseService {
         downloadFailed,
         book.played,
       );
+
+  @override
+  Future deleteChapters(List<Chapter> chapters) async {
+    await _chapterBox.deleteAll([for (final chapter in chapters) chapter.id]);
+  }
+
+  @override
+  Future<List<Chapter>> getChaptersForBook(String bookId) async {
+    List<Chapter> chapters = [];
+    for (final chapter in _chapterBox.values) {
+      if (chapter.bookId == bookId) {
+        chapters.add(chapter);
+      }
+    }
+    return chapters;
+  }
+
+  @override
+  Future insertChapter(Chapter chapter) async {
+    return _chapterBox.put(
+      '${chapter.bookId}.${chapter.id}',
+      HiveChapter.fromChapter(chapter),
+    );
+  }
+
+  @override
+  Future insertChapters(List<Chapter> chapters) {
+    return _chapterBox.putAll({
+      for (var chapter in chapters)
+        '${chapter.bookId}.${chapter.id}': HiveChapter.fromChapter(chapter)
+    });
+  }
 }

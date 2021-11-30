@@ -24,7 +24,7 @@ class SleepService {
     _timeRunning.start();
     _requestedDuration = time;
     _timeLeft.add(time);
-    watcher = Timer.periodic(Duration(seconds: 1), (timer) {
+    watcher = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_requestedDuration != null) {
         _timeLeft.add(_requestedDuration! - _timeRunning.elapsed);
       } else {

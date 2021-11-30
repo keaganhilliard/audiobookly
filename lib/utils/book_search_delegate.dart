@@ -51,7 +51,6 @@ class BookSearchDelegate extends SearchDelegate {
     return Consumer(
       builder: (context, ref, child) {
         final _repo = ref.watch(mediaRepositoryProvider);
-        final _navigationService = ref.watch(navigationServiceProvider);
         return FutureBuilder<List<MediaItem>>(
           future: _repo?.search(query),
           builder: (context, results) {

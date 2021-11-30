@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'library_select_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$LibrarySelectState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<Library>? libraries)? loaded,
@@ -65,6 +74,14 @@ mixin _$LibrarySelectState {
     required TResult Function(LibrarySelectStateLoaded value) loaded,
     required TResult Function(LibrarySelectStateLoading value) loading,
     required TResult Function(LibrarySelectStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -130,12 +147,14 @@ class _$LibrarySelectStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
+    properties..add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is LibrarySelectStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is LibrarySelectStateInitial);
   }
 
   @override
@@ -150,6 +169,17 @@ class _$LibrarySelectStateInitial
     required TResult Function(String? message) error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -176,6 +206,17 @@ class _$LibrarySelectStateInitial
     required TResult Function(LibrarySelectStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -257,15 +298,14 @@ class _$LibrarySelectStateLoaded
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is LibrarySelectStateLoaded &&
-            (identical(other.libraries, libraries) ||
-                const DeepCollectionEquality()
-                    .equals(other.libraries, libraries)));
+        (other.runtimeType == runtimeType &&
+            other is LibrarySelectStateLoaded &&
+            const DeepCollectionEquality().equals(other.libraries, libraries));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(libraries);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(libraries));
 
   @JsonKey(ignore: true)
   @override
@@ -282,6 +322,17 @@ class _$LibrarySelectStateLoaded
     required TResult Function(String? message) error,
   }) {
     return loaded(libraries);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(libraries);
   }
 
   @override
@@ -312,6 +363,17 @@ class _$LibrarySelectStateLoaded
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
@@ -330,7 +392,7 @@ abstract class LibrarySelectStateLoaded implements LibrarySelectState {
   const factory LibrarySelectStateLoaded({List<Library>? libraries}) =
       _$LibrarySelectStateLoaded;
 
-  List<Library>? get libraries => throw _privateConstructorUsedError;
+  List<Library>? get libraries;
   @JsonKey(ignore: true)
   $LibrarySelectStateLoadedCopyWith<LibrarySelectStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -371,12 +433,14 @@ class _$LibrarySelectStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
+    properties..add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is LibrarySelectStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is LibrarySelectStateLoading);
   }
 
   @override
@@ -391,6 +455,17 @@ class _$LibrarySelectStateLoading
     required TResult Function(String? message) error,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -417,6 +492,17 @@ class _$LibrarySelectStateLoading
     required TResult Function(LibrarySelectStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -500,14 +586,13 @@ class _$LibrarySelectStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is LibrarySelectStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is LibrarySelectStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -524,6 +609,17 @@ class _$LibrarySelectStateErrorDetails
     required TResult Function(String? message) error,
   }) {
     return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
   }
 
   @override
@@ -554,6 +650,17 @@ class _$LibrarySelectStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LibrarySelectStateInitial value)? initial,
+    TResult Function(LibrarySelectStateLoaded value)? loaded,
+    TResult Function(LibrarySelectStateLoading value)? loading,
+    TResult Function(LibrarySelectStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
@@ -572,7 +679,7 @@ abstract class LibrarySelectStateErrorDetails implements LibrarySelectState {
   const factory LibrarySelectStateErrorDetails([String? message]) =
       _$LibrarySelectStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $LibrarySelectStateErrorDetailsCopyWith<LibrarySelectStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

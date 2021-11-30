@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final sharedPreferencesServiceProvider =
     Provider<SharedPreferencesService>(((ref) => throw UnimplementedError()));
 
-enum SERVER_TYPE { PLEX, EMBY, UNKNOWN }
+enum SERVER_TYPE { PLEX, EMBY, AUDIOBOOKSHELF, UNKNOWN }
 
 class SharedPreferencesService {
   SharedPreferencesService(this.sharedPreferences);

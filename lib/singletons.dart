@@ -22,28 +22,33 @@ Future<void> registerSingletons() async {
   if (registered) return;
   registered = true;
 
-  final database = await $FloorAppDatabase
-      .databaseBuilder('app_database.db')
-      .addMigrations([migrate1To2, migrate2To3]).build();
-  getIt.registerSingleton<DatabaseService>(SqlDatabaseService(database));
+  // final database = await $FloorAppDatabase
+  //     .databaseBuilder('app_database.db')
+  //     .addMigrations([migrate1To2, migrate2To3, migrate3To4]).build();
+  // getIt.registerSingleton<DatabaseService>(SqlDatabaseService(database));
 
-  // await initHive();
+  await initHive();
 
-  // getIt.registerSingleton<DatabaseService>(
-  //     HiveDatabaseService(Hive.box('books'), Hive.box('tracks')));
+  getIt.registerSingleton<DatabaseService>(
+    HiveDatabaseService(
+      bookBox: Hive.box('books'),
+      trackBox: Hive.box('tracks'),
+      chapterBox: Hive.box('chapters'),
+    ),
+  );
 
   PlaybackController controller;
   Downloader downloader;
   if (kIsWeb) {
-    downloader = DesktopDownloader(getIt.get());
+    downloader = DesktopDownloader(getIt());
   } else if ((!Platform.isWindows && !Platform.isLinux)) {
     await FlutterDownloader.initialize();
-    downloader = MobileDownloader(getIt.get());
+    downloader = MobileDownloader(getIt());
     // final handler = await initAudioHandler();
     // controller = AudioHandlerPlaybackController(handler);
   } else {
     // DartVLC.initialize();
-    downloader = DesktopDownloader(getIt.get());
+    downloader = DesktopDownloader(getIt());
     // final handler = await initDesktopAudioHandler();
     // controller = AudioHandlerPlaybackController(handler);
   }

@@ -33,7 +33,7 @@ class HomeRow extends HookConsumerWidget {
             }));
           },
           height: height,
-          progress: Utils.getProgess(book),
+          progress: Utils.getProgess(item: book),
           thumbnailUrl: book.artUri.toString(),
           title: book.title,
           subtitle: book.artist ?? '',

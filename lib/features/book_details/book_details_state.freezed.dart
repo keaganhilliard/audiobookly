@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'book_details_state.dart';
 
@@ -20,16 +21,10 @@ class _$BookDetailsStateTearOff {
     return const BookDetailsStateInitial();
   }
 
-  BookDetailsStateLoaded loaded(
-      {MediaItem? book,
-      List<MediaItem>? chapters,
-      Stream<Book?>? dbBook,
-      Stream<Map<String, Track>>? tracks}) {
+  BookDetailsStateLoaded loaded({MediaItem? book, List<MediaItem>? chapters}) {
     return BookDetailsStateLoaded(
       book: book,
       chapters: chapters,
-      dbBook: dbBook,
-      tracks: tracks,
     );
   }
 
@@ -52,19 +47,24 @@ mixin _$BookDetailsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)
+    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)?
-        loaded,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -76,6 +76,14 @@ mixin _$BookDetailsState {
     required TResult Function(BookDetailsStateLoaded value) loaded,
     required TResult Function(BookDetailsStateLoading value) loading,
     required TResult Function(BookDetailsStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(BookDetailsStateInitial value)? initial,
+    TResult Function(BookDetailsStateLoaded value)? loaded,
+    TResult Function(BookDetailsStateLoading value)? loading,
+    TResult Function(BookDetailsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -140,12 +148,13 @@ class _$BookDetailsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'BookDetailsState.initial'));
+    properties..add(DiagnosticsProperty('type', 'BookDetailsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is BookDetailsStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is BookDetailsStateInitial);
   }
 
   @override
@@ -155,8 +164,7 @@ class _$BookDetailsStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)
+    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -166,11 +174,20 @@ class _$BookDetailsStateInitial
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)?
-        loaded,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -190,6 +207,17 @@ class _$BookDetailsStateInitial
     required TResult Function(BookDetailsStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(BookDetailsStateInitial value)? initial,
+    TResult Function(BookDetailsStateLoaded value)? loaded,
+    TResult Function(BookDetailsStateLoading value)? loading,
+    TResult Function(BookDetailsStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -217,11 +245,7 @@ abstract class $BookDetailsStateLoadedCopyWith<$Res> {
   factory $BookDetailsStateLoadedCopyWith(BookDetailsStateLoaded value,
           $Res Function(BookDetailsStateLoaded) then) =
       _$BookDetailsStateLoadedCopyWithImpl<$Res>;
-  $Res call(
-      {MediaItem? book,
-      List<MediaItem>? chapters,
-      Stream<Book?>? dbBook,
-      Stream<Map<String, Track>>? tracks});
+  $Res call({MediaItem? book, List<MediaItem>? chapters});
 }
 
 /// @nodoc
@@ -239,8 +263,6 @@ class _$BookDetailsStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? book = freezed,
     Object? chapters = freezed,
-    Object? dbBook = freezed,
-    Object? tracks = freezed,
   }) {
     return _then(BookDetailsStateLoaded(
       book: book == freezed
@@ -251,14 +273,6 @@ class _$BookDetailsStateLoadedCopyWithImpl<$Res>
           ? _value.chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
-      dbBook: dbBook == freezed
-          ? _value.dbBook
-          : dbBook // ignore: cast_nullable_to_non_nullable
-              as Stream<Book?>?,
-      tracks: tracks == freezed
-          ? _value.tracks
-          : tracks // ignore: cast_nullable_to_non_nullable
-              as Stream<Map<String, Track>>?,
     ));
   }
 }
@@ -268,21 +282,16 @@ class _$BookDetailsStateLoadedCopyWithImpl<$Res>
 class _$BookDetailsStateLoaded
     with DiagnosticableTreeMixin
     implements BookDetailsStateLoaded {
-  const _$BookDetailsStateLoaded(
-      {this.book, this.chapters, this.dbBook, this.tracks});
+  const _$BookDetailsStateLoaded({this.book, this.chapters});
 
   @override
   final MediaItem? book;
   @override
   final List<MediaItem>? chapters;
-  @override
-  final Stream<Book?>? dbBook;
-  @override
-  final Stream<Map<String, Track>>? tracks;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookDetailsState.loaded(book: $book, chapters: $chapters, dbBook: $dbBook, tracks: $tracks)';
+    return 'BookDetailsState.loaded(book: $book, chapters: $chapters)';
   }
 
   @override
@@ -291,33 +300,21 @@ class _$BookDetailsStateLoaded
     properties
       ..add(DiagnosticsProperty('type', 'BookDetailsState.loaded'))
       ..add(DiagnosticsProperty('book', book))
-      ..add(DiagnosticsProperty('chapters', chapters))
-      ..add(DiagnosticsProperty('dbBook', dbBook))
-      ..add(DiagnosticsProperty('tracks', tracks));
+      ..add(DiagnosticsProperty('chapters', chapters));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is BookDetailsStateLoaded &&
-            (identical(other.book, book) ||
-                const DeepCollectionEquality().equals(other.book, book)) &&
-            (identical(other.chapters, chapters) ||
-                const DeepCollectionEquality()
-                    .equals(other.chapters, chapters)) &&
-            (identical(other.dbBook, dbBook) ||
-                const DeepCollectionEquality().equals(other.dbBook, dbBook)) &&
-            (identical(other.tracks, tracks) ||
-                const DeepCollectionEquality().equals(other.tracks, tracks)));
+        (other.runtimeType == runtimeType &&
+            other is BookDetailsStateLoaded &&
+            (identical(other.book, book) || other.book == book) &&
+            const DeepCollectionEquality().equals(other.chapters, chapters));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(book) ^
-      const DeepCollectionEquality().hash(chapters) ^
-      const DeepCollectionEquality().hash(dbBook) ^
-      const DeepCollectionEquality().hash(tracks);
+  int get hashCode => Object.hash(
+      runtimeType, book, const DeepCollectionEquality().hash(chapters));
 
   @JsonKey(ignore: true)
   @override
@@ -329,28 +326,36 @@ class _$BookDetailsStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)
+    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return loaded(book, chapters, dbBook, tracks);
+    return loaded(book, chapters);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(book, chapters);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)?
-        loaded,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(book, chapters, dbBook, tracks);
+      return loaded(book, chapters);
     }
     return orElse();
   }
@@ -364,6 +369,17 @@ class _$BookDetailsStateLoaded
     required TResult Function(BookDetailsStateErrorDetails value) error,
   }) {
     return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(BookDetailsStateInitial value)? initial,
+    TResult Function(BookDetailsStateLoaded value)? loaded,
+    TResult Function(BookDetailsStateLoading value)? loading,
+    TResult Function(BookDetailsStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
   }
 
   @override
@@ -384,15 +400,10 @@ class _$BookDetailsStateLoaded
 
 abstract class BookDetailsStateLoaded implements BookDetailsState {
   const factory BookDetailsStateLoaded(
-      {MediaItem? book,
-      List<MediaItem>? chapters,
-      Stream<Book?>? dbBook,
-      Stream<Map<String, Track>>? tracks}) = _$BookDetailsStateLoaded;
+      {MediaItem? book, List<MediaItem>? chapters}) = _$BookDetailsStateLoaded;
 
-  MediaItem? get book => throw _privateConstructorUsedError;
-  List<MediaItem>? get chapters => throw _privateConstructorUsedError;
-  Stream<Book?>? get dbBook => throw _privateConstructorUsedError;
-  Stream<Map<String, Track>>? get tracks => throw _privateConstructorUsedError;
+  MediaItem? get book;
+  List<MediaItem>? get chapters;
   @JsonKey(ignore: true)
   $BookDetailsStateLoadedCopyWith<BookDetailsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -432,12 +443,13 @@ class _$BookDetailsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'BookDetailsState.loading'));
+    properties..add(DiagnosticsProperty('type', 'BookDetailsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is BookDetailsStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is BookDetailsStateLoading);
   }
 
   @override
@@ -447,8 +459,7 @@ class _$BookDetailsStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)
+    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -458,11 +469,20 @@ class _$BookDetailsStateLoading
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)?
-        loaded,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -482,6 +502,17 @@ class _$BookDetailsStateLoading
     required TResult Function(BookDetailsStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(BookDetailsStateInitial value)? initial,
+    TResult Function(BookDetailsStateLoaded value)? loaded,
+    TResult Function(BookDetailsStateLoading value)? loading,
+    TResult Function(BookDetailsStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -565,14 +596,13 @@ class _$BookDetailsStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is BookDetailsStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is BookDetailsStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -584,8 +614,7 @@ class _$BookDetailsStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)
+    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -595,11 +624,20 @@ class _$BookDetailsStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters,
-            Stream<Book?>? dbBook, Stream<Map<String, Track>>? tracks)?
-        loaded,
+    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -623,6 +661,17 @@ class _$BookDetailsStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(BookDetailsStateInitial value)? initial,
+    TResult Function(BookDetailsStateLoaded value)? loaded,
+    TResult Function(BookDetailsStateLoading value)? loading,
+    TResult Function(BookDetailsStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(BookDetailsStateInitial value)? initial,
     TResult Function(BookDetailsStateLoaded value)? loaded,
@@ -641,7 +690,7 @@ abstract class BookDetailsStateErrorDetails implements BookDetailsState {
   const factory BookDetailsStateErrorDetails([String? message]) =
       _$BookDetailsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $BookDetailsStateErrorDetailsCopyWith<BookDetailsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

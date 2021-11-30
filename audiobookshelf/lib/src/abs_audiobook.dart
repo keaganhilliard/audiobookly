@@ -1,3 +1,5 @@
+import 'package:audiobookshelf/src/abs_track.dart';
+
 import 'abs_utils.dart';
 
 class AbsAudiobook {
@@ -18,6 +20,7 @@ class AbsAudiobook {
     this.numEbooks,
     this.numTracks,
     this.chapters,
+    this.tracks,
     this.isMissing,
     this.isInvalid,
     this.hasMissingParts,
@@ -40,6 +43,7 @@ class AbsAudiobook {
   int? numEbooks;
   int? numTracks;
   List<Chapter>? chapters;
+  List<AbsTrack>? tracks;
   bool? isMissing;
   bool? isInvalid;
   int? hasMissingParts;
@@ -56,13 +60,18 @@ class AbsAudiobook {
         fullPath: json["fullPath"],
         addedAt: AbsUtils.parseDateTime(json["addedAt"]),
         lastUpdate: AbsUtils.parseDateTime(json["lastUpdate"]),
-        duration: AbsUtils.parseDuration(json["duration"].toDouble()),
+        duration: AbsUtils.parseDuration(json["duration"]?.toDouble()),
         size: json["size"],
-        ebooks: List<Ebook>.from(json["ebooks"].map((x) => Ebook.fromJson(x))),
+        ebooks: List<Ebook>.from(
+            json["ebooks"]?.map((x) => Ebook.fromJson(x)) ?? []),
         numEbooks: json["numEbooks"],
         numTracks: json["numTracks"],
-        chapters: List<Chapter>.from(
-            json["chapters"].map((x) => Chapter.fromJson(x))),
+        chapters: [
+          for (final chapter in json['chapters']) Chapter.fromJson(chapter)
+        ],
+        tracks: json['tracks'] == null
+            ? []
+            : [for (final t in json['tracks']) AbsTrack.fromMap(t)],
         isMissing: json["isMissing"],
         isInvalid: json["isInvalid"],
         hasMissingParts: json["hasMissingParts"],
@@ -86,6 +95,7 @@ class AbsAudiobook {
         "numEbooks": numEbooks,
         "numTracks": numTracks,
         "chapters": List<dynamic>.from(chapters?.map((x) => x.toJson()) ?? []),
+        "tracks": List<dynamic>.from(tracks?.map((x) => x.toMap()) ?? []),
         "isMissing": isMissing,
         "isInvalid": isInvalid,
         "hasMissingParts": hasMissingParts,

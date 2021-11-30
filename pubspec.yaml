@@ -25,10 +25,13 @@ dependencies:
     path: ./plex_api
   emby_api:
     path: ./emby_api
+  audiobookshelf:
+    path: ./audiobookshelf
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^1.0.0-dev.11
   expandable: ^5.0.1
   cached_network_image: ^3.0.0
+  socket_io_client: any
   audio_session: ^0.1.0
   audio_service: ^0.18.0-beta.0
   just_audio: any

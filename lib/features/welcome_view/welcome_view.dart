@@ -1,3 +1,4 @@
+import 'package:audiobookly/features/abs_login/abs_login.dart';
 import 'package:audiobookly/features/auth/auth_notifier.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/features/emby_login/emby_login.dart';
@@ -30,18 +31,30 @@ class WelcomeView extends HookConsumerWidget {
               onPressed: () async {
                 await auth.plexLogin();
               },
-              child: Text('Login to Plex'),
+              child: const Text('Login to Plex'),
             ),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                  onPrimary: Colors.white,
-                ),
-                onPressed: () {
-                  navigationService.push(
-                      MaterialPageRoute(builder: (context) => EmbyLogin()));
-                },
-                child: Text('Login to Emby'))
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+                onPrimary: Colors.white,
+              ),
+              onPressed: () {
+                navigationService.push(
+                    MaterialPageRoute(builder: (context) => const EmbyLogin()));
+              },
+              child: const Text('Login to Emby'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+                onPrimary: Colors.white,
+              ),
+              onPressed: () {
+                navigationService.push(
+                    MaterialPageRoute(builder: (context) => const AbsLogin()));
+              },
+              child: const Text('Login to Audiobookshelf'),
+            ),
           ],
         ),
       ),

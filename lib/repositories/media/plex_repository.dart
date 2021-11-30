@@ -273,4 +273,16 @@ class PlexRepository extends MediaRepository {
   String getDownloadUrl(String path) {
     return getServerUrl(path) + '&download=1';
   }
+
+  @override
+  Future<List<MediaItem>> getBooksFromSeries(String seriesId) {
+    // TODO: implement getBooksFromSeries
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<MediaItem>> getSeries() {
+    // TODO: implement getSeries
+    throw UnimplementedError();
+  }
 }

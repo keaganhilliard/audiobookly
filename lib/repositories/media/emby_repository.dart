@@ -238,4 +238,16 @@ class EmbyRepository extends MediaRepository {
     }
     return _api.markUnplayed(itemId);
   }
+
+  @override
+  Future<List<MediaItem>> getBooksFromSeries(String seriesId) {
+    // TODO: implement getBooksFromSeries
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<MediaItem>> getSeries() {
+    // TODO: implement getSeries
+    throw UnimplementedError();
+  }
 }

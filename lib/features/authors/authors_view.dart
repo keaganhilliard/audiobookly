@@ -21,7 +21,7 @@ class AuthorsView extends HookConsumerWidget {
     final GlobalKey<RefreshIndicatorState> _refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = ref.watch(authorsStateProvider.notifier);
+    final authorsProvider = ref.watch(authorsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       refresh:
@@ -34,7 +34,7 @@ class AuthorsView extends HookConsumerWidget {
         key: _refresher,
         onRefresh: () async {
           print('refreshing');
-          return booksProvider.getAuthors();
+          return authorsProvider.getAuthors();
         },
         child: Consumer(
           builder: (context, ref, child) {
@@ -56,6 +56,7 @@ class AuthorsView extends HookConsumerWidget {
                       onTap: openContainer,
                       thumbnailUrl: author.artUri.toString(),
                       title: author.title,
+                      placeholder: Icons.person,
                     ),
                   );
                 },

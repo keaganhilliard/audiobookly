@@ -12,8 +12,9 @@ class DesktopDownloader extends Downloader {
   Future downloadFile(
     String id,
     String url,
-    String path,
-  ) async {
+    String path, [
+    String? filename,
+  ]) async {
     StreamSubscription? sub;
     Completer completer = Completer();
     print(url);
@@ -28,16 +29,15 @@ class DesktopDownloader extends Downloader {
 
       HttpClientResponse response = await request.close();
       final total = response.headers.contentLength;
-      late String fileName;
       try {
-        fileName = RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
+        filename ??= RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
             .firstMatch(response.headers.value('content-disposition')!)!
             .group(0)!
             .replaceAll(RegExp(r'"'), '');
       } catch (e, stack) {
-        fileName = id;
+        filename ??= id;
       }
-      final downloadPath = p.join(path, fileName);
+      final downloadPath = p.join(path, filename);
       final file = File(downloadPath);
       await file.create(recursive: true);
 

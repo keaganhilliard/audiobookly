@@ -6,6 +6,7 @@ import 'package:audiobookly/features/home/home_view.dart';
 import 'package:audiobookly/features/authors/authors_view.dart';
 import 'package:audiobookly/features/player/player_view.dart';
 import 'package:audiobookly/features/collections/collections_view.dart';
+import 'package:audiobookly/features/series/series_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,6 +21,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => BooksView());
       case Routes.Collections:
         return MaterialPageRoute(builder: (_) => CollectionsView());
+      case Routes.Series:
+        return MaterialPageRoute(builder: (_) => SeriesView());
       case Routes.Author:
         Map<String, dynamic>? args =
             settings.arguments as Map<String, dynamic>?;

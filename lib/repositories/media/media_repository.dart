@@ -14,38 +14,47 @@ enum AudiobooklyPlaybackState {
 enum AudiobooklyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange, Stop }
 
 abstract class MediaRepository {
+  MediaRepository([this.enableSeries = false]);
+  final bool enableSeries;
+
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
     var pieces = parentMediaId.split('/');
     print('Parent media id! $parentMediaId');
     switch (pieces[0]) {
       case AudioService.browsableRootId:
         var items = <MediaItem>[
-          MediaItem(
+          const MediaItem(
             id: MediaIds.DOWNLOADS,
             title: 'Downloads',
             playable: false,
           ),
-          MediaItem(
+          const MediaItem(
             id: MediaIds.RECENTLY_PLAYED,
             title: 'In Progress',
             playable: false,
           ),
-          MediaItem(
+          const MediaItem(
             id: MediaIds.RECENTLY_ADDED,
             title: 'Recently Added',
             playable: false,
           ),
-          MediaItem(
+          const MediaItem(
             id: MediaIds.AUTHORS_ID,
             title: 'Authors',
             playable: false,
           ),
-          MediaItem(
+          const MediaItem(
             id: MediaIds.BOOKS_ID,
             title: 'All Books',
             playable: false,
           ),
-          MediaItem(
+          if (enableSeries)
+            const MediaItem(
+              id: MediaIds.SERIES_ID,
+              title: 'Series',
+              playable: false,
+            ),
+          const MediaItem(
             id: MediaIds.COLLECTIONS_ID,
             title: 'Collections',
             playable: false,
@@ -70,6 +79,12 @@ abstract class MediaRepository {
         } else {
           return await getCollections();
         }
+      case MediaIds.SERIES_ID:
+        if (pieces.length > 1) {
+          return await getBooksFromSeries(pieces[1]);
+        } else {
+          return await getSeries();
+        }
       case MediaIds.RECENTLY_PLAYED:
         return await getRecentlyPlayed();
       case MediaIds.RECENTLY_ADDED:
@@ -87,6 +102,8 @@ abstract class MediaRepository {
   Future<List<MediaItem>> getBooksFromAuthor(String authorId);
   Future<List<MediaItem>> getCollections();
   Future<List<MediaItem>> getBooksFromCollection(String collectionId);
+  Future<List<MediaItem>> getSeries();
+  Future<List<MediaItem>> getBooksFromSeries(String seriesId);
   Future<List<MediaItem>> search(String search);
   Future<List<Library>> getLibraries();
   Future<List<MediaItem>> getTracksForBook(MediaItem book);

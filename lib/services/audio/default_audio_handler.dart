@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
 import 'package:audio_session/audio_session.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
@@ -12,6 +14,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audiobookly/utils/utils.dart';
+
+enum DURATION_STATE { between, before, after }
 
 class AudiobooklyAudioHandler extends BaseAudioHandler {
   final _player = AudioPlayer();
@@ -21,43 +26,61 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     _init();
   }
 
+  int? chapterIndex;
+
   int? get index => _player.currentIndex;
   String? _currentMedia;
   MediaItem? _currentMediaItem;
+  List<MediaItem> tracks = [];
 
   late SharedPreferencesService _prefs;
-  MediaItem get currentQueueItem => queue.value[index!];
-  Duration get totalDuration => queue.value.fold(
+  MediaItem? get currentQueueItem {
+    if (chapterIndex != null &&
+        chapterIndex! >= 0 &&
+        chapterIndex! < queue.value.length) {
+      return queue.value[chapterIndex!];
+    } else if (index != null && index! >= 0 && index! < tracks.length) {
+      return tracks[index!];
+    }
+    return null;
+  }
+
+  Duration get totalDuration => tracks.fold(
         Duration.zero,
         (total, item) => total + item.duration!,
       );
   Duration get currentTrackStartingPosition =>
-      queue.value.getRange(0, index ?? 0).fold<Duration>(
+      tracks.getRange(0, index ?? 0).fold<Duration>(
             Duration.zero,
             (total, item) => (total) + (item.duration ?? Duration.zero),
           );
   Duration get currentPosition =>
       currentTrackStartingPosition + (_player.position);
   Duration get currentBufferedPosition =>
-      queue.value.getRange(0, index ?? 0).fold<Duration>(
+      tracks.getRange(0, index ?? 0).fold<Duration>(
             Duration.zero,
             (total, item) => (total) + (item.duration ?? Duration.zero),
           ) +
       (_player.bufferedPosition);
   Timer? _timer;
+  StreamSubscription? _positionSub;
 
   void initTimer() {
     int pauseCount = 0;
     if (_currentMedia != null) {
       _timer ??= Timer.periodic(const Duration(seconds: 10), (timer) async {
         if (!_player.playing) pauseCount++;
-        await _repository?.playbackCheckin(
-            _currentMedia!,
-            currentPosition,
-            totalDuration,
-            _player.speed,
-            AudiobooklyEvent.TimeUpdate,
-            _player.playing);
+        try {
+          await _repository?.playbackCheckin(
+              _currentMedia!,
+              currentPosition,
+              totalDuration,
+              _player.speed,
+              AudiobooklyEvent.TimeUpdate,
+              _player.playing);
+        } catch (e) {
+          log('$e');
+        }
         if (_player.playerState.processingState == ProcessingState.idle ||
             pauseCount > 5) {
           timer.cancel();
@@ -66,33 +89,74 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         }
       });
     }
+    _positionSub ??= _player.positionStream.listen((position) {
+      if (currentQueueItem?.extras?.containsKey('end') ?? false) {
+        var currentState = durationBetween(
+          currentPosition,
+          currentQueueItem!.start,
+          currentQueueItem!.end,
+        );
+        bool shouldChange = currentState != DURATION_STATE.between;
+        while (currentState != DURATION_STATE.between) {
+          if (currentState == DURATION_STATE.before) {
+            chapterIndex ??= 0;
+            chapterIndex = chapterIndex! - 1;
+          }
+          if (currentState == DURATION_STATE.after) {
+            chapterIndex ??= 0;
+
+            chapterIndex = chapterIndex! + 1;
+          }
+          currentState = durationBetween(
+              currentPosition, currentQueueItem!.start, currentQueueItem!.end);
+        }
+        if (shouldChange) {
+          setCurrentMediaItem();
+        }
+      }
+    });
+  }
+
+  DURATION_STATE durationBetween(
+      Duration position, Duration start, Duration end) {
+    if (position >= start && position <= end) {
+      return DURATION_STATE.between;
+    } else if (position > end) {
+      return DURATION_STATE.after;
+    } else {
+      return DURATION_STATE.before;
+    }
   }
 
   Future updateProgress(AudiobooklyPlaybackState state,
       [bool finished = false]) async {
     initTimer();
-    if (state == AudiobooklyPlaybackState.STOPPED) {
-      _timer?.cancel();
-      _timer = null;
-      if (_currentMedia != null) {
+    try {
+      if (state == AudiobooklyPlaybackState.STOPPED) {
+        _timer?.cancel();
+        _timer = null;
+        if (_currentMedia != null) {
+          _repository!.playbackCheckin(
+            _currentMedia!,
+            currentPosition,
+            totalDuration,
+            _player.speed,
+            AudiobooklyEvent.Pause,
+            _player.playing,
+          );
+        }
+      } else {
         _repository!.playbackCheckin(
           _currentMedia!,
           currentPosition,
           totalDuration,
           _player.speed,
-          AudiobooklyEvent.Pause,
+          _player.playing ? AudiobooklyEvent.Unpause : AudiobooklyEvent.Pause,
           _player.playing,
         );
       }
-    } else {
-      _repository!.playbackCheckin(
-        _currentMedia!,
-        currentPosition,
-        totalDuration,
-        _player.speed,
-        _player.playing ? AudiobooklyEvent.Unpause : AudiobooklyEvent.Pause,
-        _player.playing,
-      );
+    } catch (e) {
+      log('Checkin error: $e');
     }
   }
 
@@ -103,7 +167,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     // You can also put this in your app's initialisation if your app doesn't
     // switch between two types of audio as this example does.
     final session = await AudioSession.instance;
-    await session.configure(AudioSessionConfiguration.speech());
+    await session.configure(const AudioSessionConfiguration.speech());
 
     // await _player
     //     .setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED) ?? 1.0);
@@ -158,20 +222,23 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   void setCurrentMediaItem() {
-    mediaItem.add(
-      currentQueueItem.copyWith(
-        id: currentQueueItem.id,
-        duration: totalDuration,
-        artUri: _currentMediaItem?.artUri,
-        displayDescription: _currentMediaItem?.displayDescription,
-        extras: <String, dynamic>{
-          'currentTrack': currentQueueItem.id,
-          'currentTrackLength': currentQueueItem.duration!.inMilliseconds,
-          'currentTrackStartingPosition':
-              currentTrackStartingPosition.inMilliseconds,
-        },
-      ),
-    );
+    if (currentQueueItem != null) {
+      mediaItem.add(
+        currentQueueItem!.copyWith(
+          id: currentQueueItem!.id,
+          duration: totalDuration,
+          artUri: _currentMediaItem?.artUri,
+          displayDescription: _currentMediaItem?.displayDescription,
+          extras: <String, dynamic>{
+            ...currentQueueItem!.extras ?? {},
+            'currentTrack': currentQueueItem!.id,
+            'currentTrackLength': currentQueueItem!.duration!.inMilliseconds,
+            'currentTrackStartingPosition':
+                currentTrackStartingPosition.inMilliseconds,
+          },
+        ),
+      );
+    }
   }
 
   Timer? _pauseTimer;
@@ -180,9 +247,17 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   Future customAction(String name, [Map<String, dynamic>? arguments]) async {
     if (await queue.isEmpty) return;
     if (name == 'skip') {
-      await _player.seekToNext();
+      if (chapterIndex != null && chapterIndex! < queue.value.length) {
+        await skipToQueueItem(chapterIndex! + 1);
+      } else {
+        await _player.seekToNext();
+      }
     } else if (name == 'previous') {
-      await _player.seekToPrevious();
+      if (chapterIndex != null && chapterIndex! > 0) {
+        await skipToQueueItem(chapterIndex! - 1);
+      } else {
+        await _player.seekToPrevious();
+      }
     } else if (name == 'setTimer') {
       if (arguments?['type'] == 'endOfTrack') {
         pauseOnNext = true;
@@ -251,7 +326,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> pause() async {
     await _player.pause();
-    await seek(currentPosition - Duration(seconds: 2));
+    await seek(currentPosition - const Duration(seconds: 2));
     await super.pause();
     await updateProgress(AudiobooklyPlaybackState.PAUSED);
   }
@@ -266,6 +341,13 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   Future<void> stop() async {
     await updateProgress(AudiobooklyPlaybackState.STOPPED);
     await _player.stop();
+    _currentMedia = null;
+    _currentMediaItem = null;
+    tracks = [];
+    chapterIndex = null;
+    mediaItem.add(null);
+    _timer?.cancel();
+    _timer = null;
     await super.stop();
   }
 
@@ -313,7 +395,15 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> skipToQueueItem(int index) async {
-    await _player.seek(Duration.zero, index: index);
+    final item = queue.value[index];
+    if (item.extras?.containsKey('start') ?? false) {
+      await seek(
+        Duration(
+            milliseconds: (item.extras?['start'].toDouble() * 1000).round()),
+      );
+    } else {
+      await _player.seek(Duration.zero, index: index);
+    }
   }
 
   Map<String, ValueStream<Map<String, dynamic>>> streams = {};
@@ -328,10 +418,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<List<MediaItem>> getChildren(String parentMediaId,
       [Map<String, dynamic>? extras]) async {
-    print('Get children: $parentMediaId');
     final items = await _repository!.getChildren(parentMediaId);
     doMe = items;
-    print('We returned $items');
     return items;
   }
 
@@ -364,17 +452,45 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }
 
     if (dbBook != null && dbTracks.isNotEmpty) {
-      final cachedQueue = dbTracks.entries.map((entry) {
+      tracks = dbTracks.entries.map((entry) {
         final track = entry.value;
         return MediaHelpers.fromTrack(track, dbBook);
       }).toList();
-      queue.add(cachedQueue);
+      queue.add(tracks);
       _currentMediaItem = MediaHelpers.fromBook(dbBook);
+      final chapters = await db.getChaptersForBook(dbBook.id);
+      if (chapters.isNotEmpty) {
+        chapterIndex = 0;
+        queue.add([
+          for (final chapter in chapters)
+            Utils.chapterToItem(chapter).copyWith(
+              album: _currentMediaItem!.album,
+              artist: _currentMediaItem!.artist,
+            )
+        ]..sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id))));
+      }
     } else {
       await _repository!.getServerAndLibrary();
       _currentMediaItem = (await _repository!.getAlbumFromId(mediaId));
-      queue.add((await _repository!.getTracksForBook(_currentMediaItem!))
-          .cast<MediaItem>());
+      tracks = (await _repository!.getTracksForBook(_currentMediaItem!))
+          .cast<MediaItem>();
+      if (_currentMediaItem?.chapters != null &&
+          _currentMediaItem!.chapters.isNotEmpty) {
+        List<MediaItem> chapters = [
+          for (final chapter in _currentMediaItem!.chapters)
+            Utils.chapterToItem(chapter).copyWith(
+              album: _currentMediaItem!.album,
+              artist: _currentMediaItem!.artist,
+              artUri: _currentMediaItem!.artUri,
+            )
+        ];
+        chapters.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
+        chapterIndex = 0;
+        queue.add(chapters);
+      } else {
+        print('No chapters');
+        queue.add(tracks);
+      }
       _currentMediaItem = _currentMediaItem!.copyWith(duration: totalDuration);
     }
 
@@ -383,12 +499,13 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       await _player
           .setAudioSource(
         ConcatenatingAudioSource(
-          children: queue.value.map((item) {
-            print('We doing cache? ${'file:///' + item.cachePath}');
-            return AudioSource.uri(item.cached
-                ? Uri.parse('file://' + item.cachePath)
-                : Uri.parse(
-                    _repository!.getServerUrl(item.partKey ?? item.id)));
+          children: tracks.map((item) {
+            if (item.cached && File(item.cachePath).existsSync()) {
+              log('Tis cached ${item.cachePath}');
+              return AudioSource.uri(Uri.parse('file://${item.cachePath}'));
+            }
+            return AudioSource.uri(
+                Uri.parse(_repository!.getServerUrl(item.partKey ?? item.id)));
           }).toList(),
         ),
         initialIndex: queuePosition.trackIndex,
@@ -398,6 +515,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         print(err);
       });
       await setSpeed(_prefs.speed);
+
       setCurrentMediaItem();
     } catch (e, stack) {
       print("Error code $e");
@@ -424,6 +542,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       [Map<String, dynamic>? extras]) async {
     await prepareFromMediaId(mediaId, extras);
     await _player.play();
+    initTimer();
     await _repository!.playbackStarted(
       mediaId!,
       currentPosition,
@@ -435,20 +554,20 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   MediaItem findLatestTrack() {
-    return queue.value.lastWhere((element) {
+    return tracks.lastWhere((element) {
       return element.viewOffset != Duration.zero;
-    }, orElse: () => queue.value[0]);
+    }, orElse: () => tracks[0]);
   }
 
   _QueuePosition findPostion(Duration positionToFind) {
     Duration trackStart = Duration.zero;
-    final track = queue.value.firstWhere((element) {
+    final track = tracks.firstWhere((element) {
       trackStart += element.duration!;
       return trackStart > positionToFind;
-    }, orElse: () => queue.value[0]);
+    }, orElse: () => tracks[0]);
     trackStart -= track.duration!;
     Duration trackPosition = positionToFind - trackStart;
-    return _QueuePosition(queue.value.indexOf(track), trackPosition);
+    return _QueuePosition(tracks.indexOf(track), trackPosition);
   }
 
   _QueuePosition findPositionForAlbum(MediaItem album) {
@@ -456,7 +575,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       return findPostion(album.viewOffset);
     } else {
       MediaItem item = findLatestTrack();
-      return _QueuePosition(queue.value.indexOf(item), item.viewOffset);
+      return _QueuePosition(tracks.indexOf(item), item.viewOffset);
     }
   }
 }

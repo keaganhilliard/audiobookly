@@ -59,8 +59,8 @@ class Offline extends HookConsumerWidget {
                       itemBuilder: (book) {
                         return BookGridItem(
                           onTap: () async {
-                            Navigator.of(context)
-                                .pushNamed(Routes.Book, arguments: book);
+                            navigationService.pushNamed(Routes.Book,
+                                arguments: book.id);
                             // playbackController.playFromId(book.id);
                             // navigationService.pushNamed(
                             //   Routes.Player,
@@ -70,7 +70,7 @@ class Offline extends HookConsumerWidget {
                           thumbnailUrl: book.artUri.toString(),
                           title: book.title,
                           subtitle: book.artist,
-                          progress: Utils.getProgess(book),
+                          progress: Utils.getProgess(item: book),
                           played: book.played,
                         );
                       },

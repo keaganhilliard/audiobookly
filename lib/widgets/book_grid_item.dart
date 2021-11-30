@@ -10,15 +10,18 @@ class BookGridItem extends StatelessWidget {
   final VoidCallback? onTap;
   final double progress;
   final bool played;
+  final IconData placeholder;
 
   const BookGridItem({
+    Key? key,
     this.thumbnailUrl,
     this.title,
     this.subtitle,
     this.progress = 0,
     this.onTap,
     this.played = false,
-  });
+    this.placeholder = Icons.book,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +55,18 @@ class BookGridItem extends StatelessWidget {
                       fit: BoxFit.cover,
                       alignment: Alignment.center,
                       errorWidget: (context, message, thing) => Container(
-                        constraints: BoxConstraints.expand(),
+                        constraints: const BoxConstraints.expand(),
                         // color: Colors.black,
                         child: Icon(
-                          subtitle == null ? Icons.person : Icons.book,
+                          placeholder,
                           size: 50.0,
                         ),
                       ),
                       placeholder: (context, url) => Container(
-                        constraints: BoxConstraints.expand(),
+                        constraints: const BoxConstraints.expand(),
                         // color: Colors.black,
                         child: Icon(
-                          subtitle == null ? Icons.person : Icons.book,
+                          placeholder,
                           size: 50.0,
                         ),
                       ),
@@ -81,7 +84,7 @@ class BookGridItem extends StatelessWidget {
                         Text(
                           title!,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 13),
+                          style: const TextStyle(fontSize: 13),
                         ),
                         if (subtitle != null)
                           Text(
@@ -96,7 +99,7 @@ class BookGridItem extends StatelessWidget {
                 ),
               ],
             ),
-            if (played) PlayedIcon(),
+            if (played) const PlayedIcon(),
           ],
         ),
       ),

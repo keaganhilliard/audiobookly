@@ -6,6 +6,7 @@ part of 'database.dart';
 // FloorGenerator
 // **************************************************************************
 
+// ignore: avoid_classes_with_only_static_members
 class $FloorAppDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
@@ -66,10 +67,12 @@ class _$AppDatabase extends AppDatabase {
 
   DownloadTaskDao? _downloadTaskDaoInstance;
 
+  ChapterDao? _chapterDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 3,
+      version: 4,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -90,6 +93,8 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `tracks` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `duration` INTEGER NOT NULL, `downloadProgress` REAL NOT NULL, `isDownloaded` INTEGER NOT NULL, `downloadPath` TEXT NOT NULL, `bookId` TEXT NOT NULL, `downloadTaskId` TEXT NOT NULL, `downloadTaskStatus` INTEGER NOT NULL, FOREIGN KEY (`bookId`) REFERENCES `books` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `downloads` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `progress` REAL NOT NULL, `status` TEXT NOT NULL, `path` TEXT NOT NULL, `url` TEXT NOT NULL, `trackId` INTEGER NOT NULL, FOREIGN KEY (`trackId`) REFERENCES `tracks` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `chapters` (`id` TEXT NOT NULL, `end` REAL NOT NULL, `start` REAL NOT NULL, `title` TEXT NOT NULL, `bookId` TEXT NOT NULL, FOREIGN KEY (`bookId`) REFERENCES `books` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`, `bookId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -112,12 +117,17 @@ class _$AppDatabase extends AppDatabase {
     return _downloadTaskDaoInstance ??=
         _$DownloadTaskDao(database, changeListener);
   }
+
+  @override
+  ChapterDao get chapterDao {
+    return _chapterDaoInstance ??= _$ChapterDao(database, changeListener);
+  }
 }
 
 class _$BookDao extends BookDao {
   _$BookDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database, changeListener),
-        _bookInsertionAdapter = InsertionAdapter(
+        _sqlBookInsertionAdapter = InsertionAdapter(
             database,
             'books',
             (SqlBook item) => <String, Object?>{
@@ -136,7 +146,7 @@ class _$BookDao extends BookDao {
                   'read': item.read ? 1 : 0
                 },
             changeListener),
-        _bookUpdateAdapter = UpdateAdapter(
+        _sqlBookUpdateAdapter = UpdateAdapter(
             database,
             'books',
             ['id'],
@@ -163,9 +173,9 @@ class _$BookDao extends BookDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<SqlBook> _bookInsertionAdapter;
+  final InsertionAdapter<SqlBook> _sqlBookInsertionAdapter;
 
-  final UpdateAdapter<SqlBook> _bookUpdateAdapter;
+  final UpdateAdapter<SqlBook> _sqlBookUpdateAdapter;
 
   @override
   Stream<List<SqlBook>> findAllBooks() {
@@ -232,19 +242,19 @@ class _$BookDao extends BookDao {
 
   @override
   Future<void> insertBook(SqlBook book) async {
-    await _bookInsertionAdapter.insert(book, OnConflictStrategy.replace);
+    await _sqlBookInsertionAdapter.insert(book, OnConflictStrategy.replace);
   }
 
   @override
   Future<void> updateBook(SqlBook book) async {
-    await _bookUpdateAdapter.update(book, OnConflictStrategy.abort);
+    await _sqlBookUpdateAdapter.update(book, OnConflictStrategy.abort);
   }
 }
 
 class _$TrackDao extends TrackDao {
   _$TrackDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database, changeListener),
-        _trackInsertionAdapter = InsertionAdapter(
+        _sqlTrackInsertionAdapter = InsertionAdapter(
             database,
             'tracks',
             (SqlTrack item) => <String, Object?>{
@@ -259,7 +269,7 @@ class _$TrackDao extends TrackDao {
                   'downloadTaskStatus': item.downloadTaskStatus
                 },
             changeListener),
-        _trackDeletionAdapter = DeletionAdapter(
+        _sqlTrackDeletionAdapter = DeletionAdapter(
             database,
             'tracks',
             ['id'],
@@ -282,9 +292,9 @@ class _$TrackDao extends TrackDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<SqlTrack> _trackInsertionAdapter;
+  final InsertionAdapter<SqlTrack> _sqlTrackInsertionAdapter;
 
-  final DeletionAdapter<SqlTrack> _trackDeletionAdapter;
+  final DeletionAdapter<SqlTrack> _sqlTrackDeletionAdapter;
 
   @override
   Stream<List<SqlTrack>> findAllTracks() {
@@ -391,17 +401,18 @@ class _$TrackDao extends TrackDao {
 
   @override
   Future<void> insertTrack(SqlTrack track) async {
-    await _trackInsertionAdapter.insert(track, OnConflictStrategy.replace);
+    await _sqlTrackInsertionAdapter.insert(track, OnConflictStrategy.replace);
   }
 
   @override
   Future<void> insertTracks(List<SqlTrack> track) async {
-    await _trackInsertionAdapter.insertList(track, OnConflictStrategy.replace);
+    await _sqlTrackInsertionAdapter.insertList(
+        track, OnConflictStrategy.replace);
   }
 
   @override
   Future<int> deleteTracks(List<SqlTrack> tracks) {
-    return _trackDeletionAdapter.deleteListAndReturnChangedRows(tracks);
+    return _sqlTrackDeletionAdapter.deleteListAndReturnChangedRows(tracks);
   }
 }
 
@@ -483,6 +494,128 @@ class _$DownloadTaskDao extends DownloadTaskDao {
   @override
   Future<void> insertDownloadTask(DownloadTask task) async {
     await _downloadTaskInsertionAdapter.insert(task, OnConflictStrategy.abort);
+  }
+}
+
+class _$ChapterDao extends ChapterDao {
+  _$ChapterDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database, changeListener),
+        _sqlChapterInsertionAdapter = InsertionAdapter(
+            database,
+            'chapters',
+            (SqlChapter item) => <String, Object?>{
+                  'id': item.id,
+                  'end': item.end,
+                  'start': item.start,
+                  'title': item.title,
+                  'bookId': item.bookId
+                },
+            changeListener),
+        _sqlChapterDeletionAdapter = DeletionAdapter(
+            database,
+            'chapters',
+            ['id', 'bookId'],
+            (SqlChapter item) => <String, Object?>{
+                  'id': item.id,
+                  'end': item.end,
+                  'start': item.start,
+                  'title': item.title,
+                  'bookId': item.bookId
+                },
+            changeListener);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<SqlChapter> _sqlChapterInsertionAdapter;
+
+  final DeletionAdapter<SqlChapter> _sqlChapterDeletionAdapter;
+
+  @override
+  Stream<List<SqlChapter>> findAllChapters() {
+    return _queryAdapter.queryListStream('SELECT * FROM chapters',
+        mapper: (Map<String, Object?> row) => SqlChapter(
+            row['id'] as String,
+            row['start'] as double,
+            row['end'] as double,
+            row['title'] as String,
+            row['bookId'] as String),
+        queryableName: 'chapters',
+        isView: false);
+  }
+
+  @override
+  Stream<SqlChapter?> findChapterById(String id) {
+    return _queryAdapter.queryStream('SELECT * FROM chapters WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => SqlChapter(
+            row['id'] as String,
+            row['start'] as double,
+            row['end'] as double,
+            row['title'] as String,
+            row['bookId'] as String),
+        arguments: [id],
+        queryableName: 'chapters',
+        isView: false);
+  }
+
+  @override
+  Future<List<SqlChapter>> findChaptersForBookId(String bookId) async {
+    return _queryAdapter.queryList('SELECT * FROM chapters WHERE bookId = ?1',
+        mapper: (Map<String, Object?> row) => SqlChapter(
+            row['id'] as String,
+            row['start'] as double,
+            row['end'] as double,
+            row['title'] as String,
+            row['bookId'] as String),
+        arguments: [bookId]);
+  }
+
+  @override
+  Future<SqlChapter?> findChaptersForDownloadTaskId(String taskId) async {
+    return _queryAdapter.query(
+        'SELECT * FROM chapters WHERE downloadTaskId = ?1',
+        mapper: (Map<String, Object?> row) => SqlChapter(
+            row['id'] as String,
+            row['start'] as double,
+            row['end'] as double,
+            row['title'] as String,
+            row['bookId'] as String),
+        arguments: [taskId]);
+  }
+
+  @override
+  Stream<List<SqlChapter>> streamChaptersForBookId(String bookId) {
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM chapters WHERE bookId = ?1',
+        mapper: (Map<String, Object?> row) => SqlChapter(
+            row['id'] as String,
+            row['start'] as double,
+            row['end'] as double,
+            row['title'] as String,
+            row['bookId'] as String),
+        arguments: [bookId],
+        queryableName: 'chapters',
+        isView: false);
+  }
+
+  @override
+  Future<void> insertChapter(SqlChapter chapter) async {
+    await _sqlChapterInsertionAdapter.insert(
+        chapter, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> insertChapters(List<SqlChapter> chapter) async {
+    await _sqlChapterInsertionAdapter.insertList(
+        chapter, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<int> deleteChapters(List<SqlChapter> chapters) {
+    return _sqlChapterDeletionAdapter.deleteListAndReturnChangedRows(chapters);
   }
 }
 

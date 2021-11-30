@@ -55,6 +55,7 @@ class CollectionsView extends HookConsumerWidget {
                       onTap: openContainer,
                       thumbnailUrl: author.artUri.toString(),
                       title: author.title,
+                      placeholder: Icons.collections_bookmark,
                     ),
                   );
                 },

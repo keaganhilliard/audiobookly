@@ -17,8 +17,9 @@ class MiniPlayer extends HookConsumerWidget {
     final mediaItem = useStream(playbackController.currentMediaItemStream);
     final playbackState = useStream(playbackController.playbackStateStream);
 
-    if (playbackState.data != null &&
-        playbackState.data!.processingState != AudioProcessingState.idle) {
+    if (playbackState.hasData &&
+        playbackState.data!.processingState != AudioProcessingState.idle &&
+        mediaItem.hasData) {
       final PlaybackState? state = playbackState.data!;
       final MediaItem? item = mediaItem.data!;
       return Padding(

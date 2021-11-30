@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'home_state.dart';
 
@@ -55,6 +56,16 @@ mixin _$HomeState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(
@@ -71,6 +82,14 @@ mixin _$HomeState {
     required TResult Function(HomeStateLoaded value) loaded,
     required TResult Function(HomeStateLoading value) loading,
     required TResult Function(HomeStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -132,12 +151,13 @@ class _$HomeStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'HomeState.initial'));
+    properties..add(DiagnosticsProperty('type', 'HomeState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is HomeStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is HomeStateInitial);
   }
 
   @override
@@ -154,6 +174,19 @@ class _$HomeStateInitial
     required TResult Function(String? message) error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -182,6 +215,17 @@ class _$HomeStateInitial
     required TResult Function(HomeStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -269,20 +313,19 @@ class _$HomeStateLoaded
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is HomeStateLoaded &&
-            (identical(other.recentlyPlayed, recentlyPlayed) ||
-                const DeepCollectionEquality()
-                    .equals(other.recentlyPlayed, recentlyPlayed)) &&
-            (identical(other.recentlyAdded, recentlyAdded) ||
-                const DeepCollectionEquality()
-                    .equals(other.recentlyAdded, recentlyAdded)));
+        (other.runtimeType == runtimeType &&
+            other is HomeStateLoaded &&
+            const DeepCollectionEquality()
+                .equals(other.recentlyPlayed, recentlyPlayed) &&
+            const DeepCollectionEquality()
+                .equals(other.recentlyAdded, recentlyAdded));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(recentlyPlayed) ^
-      const DeepCollectionEquality().hash(recentlyAdded);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(recentlyPlayed),
+      const DeepCollectionEquality().hash(recentlyAdded));
 
   @JsonKey(ignore: true)
   @override
@@ -300,6 +343,19 @@ class _$HomeStateLoaded
     required TResult Function(String? message) error,
   }) {
     return loaded(recentlyPlayed, recentlyAdded);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(recentlyPlayed, recentlyAdded);
   }
 
   @override
@@ -332,6 +388,17 @@ class _$HomeStateLoaded
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
@@ -351,8 +418,8 @@ abstract class HomeStateLoaded implements HomeState {
       {List<MediaItem>? recentlyPlayed,
       List<MediaItem>? recentlyAdded}) = _$HomeStateLoaded;
 
-  List<MediaItem>? get recentlyPlayed => throw _privateConstructorUsedError;
-  List<MediaItem>? get recentlyAdded => throw _privateConstructorUsedError;
+  List<MediaItem>? get recentlyPlayed;
+  List<MediaItem>? get recentlyAdded;
   @JsonKey(ignore: true)
   $HomeStateLoadedCopyWith<HomeStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -391,12 +458,13 @@ class _$HomeStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'HomeState.loading'));
+    properties..add(DiagnosticsProperty('type', 'HomeState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is HomeStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is HomeStateLoading);
   }
 
   @override
@@ -413,6 +481,19 @@ class _$HomeStateLoading
     required TResult Function(String? message) error,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -441,6 +522,17 @@ class _$HomeStateLoading
     required TResult Function(HomeStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -521,14 +613,13 @@ class _$HomeStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is HomeStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is HomeStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -547,6 +638,19 @@ class _$HomeStateErrorDetails
     required TResult Function(String? message) error,
   }) {
     return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded)?
+        loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
   }
 
   @override
@@ -579,6 +683,17 @@ class _$HomeStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(HomeStateInitial value)? initial,
+    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(HomeStateLoading value)? loading,
+    TResult Function(HomeStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
@@ -597,7 +712,7 @@ abstract class HomeStateErrorDetails implements HomeState {
   const factory HomeStateErrorDetails([String? message]) =
       _$HomeStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $HomeStateErrorDetailsCopyWith<HomeStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audiobookly/features/server_select/server_select.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/user.dart';
+import 'package:audiobookly/repositories/authentication/abs_auth_repository.dart';
 import 'package:audiobookly/repositories/authentication/plex_auth_repository.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
@@ -22,7 +23,7 @@ final authNotifierProvider =
 });
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  final ProviderReference _ref;
+  final Ref _ref;
 
   AuthNotifier(this._ref) : super(const AuthStateInitial()) {
     checkToken();
@@ -53,6 +54,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     User u = await _ref
         .read(embyAuthRepoProvider)
         .login(baseUrl, username, password);
+    return u.token != null;
+  }
+
+  Future<bool> absLogin(
+    String baseUrl,
+    String username,
+    String password,
+  ) async {
+    User u =
+        await _ref.read(absAuthRepoProvider).login(baseUrl, username, password);
     return u.token != null;
   }
 
@@ -118,11 +129,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (_prefs.getServerType() == SERVER_TYPE.EMBY) {
         final _userRepo = _ref.read(embyAuthRepoProvider);
         user = await _userRepo.getUser(_prefs.getCurrentToken());
-        print('LibraryId: ${_prefs.getLibraryId()}');
         if (_prefs.getLibraryId().isEmpty) {
           await navigationService.push(
             MaterialPageRoute(builder: (context) {
-              return LibrarySelectView();
+              return const LibrarySelectView();
             }),
           );
         }
@@ -146,6 +156,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
         //     }),
         //   );
         // }
+      } else if (_prefs.getServerType() == SERVER_TYPE.AUDIOBOOKSHELF) {
+        final _userRepo = _ref.read(absAuthRepoProvider);
+        user = await _userRepo.getUser(_prefs.getCurrentToken());
+        if (_prefs.getLibraryId().isEmpty) {
+          await navigationService.push(
+            MaterialPageRoute(builder: (context) {
+              return const LibrarySelectView();
+            }),
+          );
+        }
       } else {}
 
       if (user != null) {

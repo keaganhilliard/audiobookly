@@ -54,7 +54,8 @@ class TracksView extends HookConsumerWidget {
                 child: CircularProgressIndicator(),
               )
             : ScrollablePositionedList.builder(
-                initialScrollIndex: currentTrackIndex,
+                initialScrollIndex:
+                    currentTrackIndex != -1 ? currentTrackIndex : 0,
                 itemScrollController: itemScrollController,
                 itemPositionsListener: itemPositionsListener,
                 itemCount: items.length,
@@ -66,8 +67,7 @@ class TracksView extends HookConsumerWidget {
                     leading:
                         track.cached ? const Icon(Icons.offline_pin) : null,
                     onTap: () {
-                      print('Skipping to ${item!.id}');
-                      if (track.id != item.id) {
+                      if (track.id != item!.id) {
                         playbackController.skipToQueueItem(index);
                       }
                     },

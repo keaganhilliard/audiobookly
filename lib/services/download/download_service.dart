@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
@@ -34,7 +35,7 @@ class DownloadService {
   Future deleteDownload(MediaItem item) async {
     final tracks = await _db.getTracksForBookId(item.id).first;
 
-    final toDelete = <Track>[];
+    final toUpdate = <Track>[];
     for (final track in tracks.entries) {
       if (track.value.downloadPath.isNotEmpty) {
         final file = File(track.value.downloadPath);
@@ -42,10 +43,14 @@ class DownloadService {
           await file.delete();
         }
       }
-      toDelete.add(track.value);
+      toUpdate.add(track.value.copyWith(
+        isDownloaded: false,
+        downloadProgress: 0,
+        downloadTaskId: '',
+      ));
     }
     final book = await _db.getBookById(item.id);
-    await _db.deleteTracks(toDelete);
+    await _db.insertTracks(toUpdate);
     if (book != null) {
       await _db.insertBook(
         book.copyWith(
@@ -57,29 +62,29 @@ class DownloadService {
     }
   }
 
-  List<DownloadRequest?> toDownload = [];
+  List<DownloadRequest> toDownload = [];
   final bool _isDownloading = false;
 
-  Future downloadBook(MediaItem book, List<MediaItem> chapters) async {
-    if (toDownload.any((req) => req!.book.id == book.id)) return;
+  Future downloadBook(MediaItem book, List<MediaItem> tracks) async {
+    if (toDownload.any((req) => req.book.id == book.id)) return;
     await _db.insertBook(_db.getBookFromMediaItem(book, true, false, false));
-    toDownload.add(DownloadRequest(book, chapters));
+    if (book.chapters.isNotEmpty) await _db.insertChapters(book.chapters);
+    toDownload.add(DownloadRequest(book, tracks));
     // if (!_isDownloading)
     await processNextBook();
   }
 
   Future cancelBookDownload(MediaItem book) async {
-    DownloadRequest? req = toDownload
-        .firstWhere((req) => req!.book.id == book.id, orElse: () => null);
-    GetIt.I.get<Downloader>().cancelDownloads(book.id);
+    await GetIt.I.get<Downloader>().cancelDownloads(book.id);
     // req?.token.cancel('Requested');
-    if (req == null) deleteDownload(book);
+    toDownload.removeWhere((req) => req.book.id == book.id);
+    await deleteDownload(book);
   }
 
   Future processNextBook() async {
     if (toDownload.isEmpty) return;
     // _isDownloading = true;
-    final req = toDownload[0]!;
+    final req = toDownload[0];
     final book = req.book;
     final chapters = req.chapters;
     Directory? baseDir;
@@ -109,11 +114,19 @@ class DownloadService {
 
       await createDirIfNotExists(path);
 
-      await _db
-          .insertTrack(_db.getTrackFromMediaItem(chapter, book.id, 0, path));
+      await _db.insertTrack(
+        _db.getTrackFromMediaItem(chapter, book.id, 0, path),
+      );
       String url = _repo.getDownloadUrl(chapter.partKey ?? chapter.id);
 
-      await d.downloadFile(chapter.id, url, path);
+      var pieces = chapter.id.split('/');
+
+      await d.downloadFile(
+        chapter.id,
+        url,
+        path,
+        pieces.length > 1 ? pieces[1] : null,
+      );
     }
 
     await d.whenAllDone(book.id);

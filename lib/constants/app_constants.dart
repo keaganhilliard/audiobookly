@@ -10,6 +10,7 @@ class Routes {
   static const String Books = '/books';
   static const String Book = '/book';
   static const String Player = '/player';
+  static const String Series = '/series';
 }
 
 class SharedPrefStrings {
@@ -23,6 +24,7 @@ class MediaIds {
   static const String AUTHORS_ID = '@authors';
   static const String BOOKS_ID = '@books';
   static const String COLLECTIONS_ID = '@collections';
+  static const String SERIES_ID = '@series';
   static const String RECENTLY_PLAYED = '@recentlyPlayed';
   static const String RECENTLY_ADDED = '@recentlyAdded';
   static const String DOWNLOADS = '@downloads';

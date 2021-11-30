@@ -3,7 +3,7 @@ import 'package:audiobookly/services/database/database_service.dart';
 abstract class Downloader {
   DatabaseService db;
   Downloader(this.db);
-  Future downloadFile(String id, String url, String path);
+  Future downloadFile(String id, String url, String path, [String? filename]);
   Future whenAllDone(String parentId);
   Future cancelDownloads(String parentId);
 }

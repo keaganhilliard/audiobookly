@@ -4,6 +4,7 @@ import 'package:audiobookly/database/entity/sql_book.dart';
 import 'package:audiobookly/database/entity/sql_track.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/track.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,20 @@ class Utils {
             .firstMatch("$time")
             ?.group(1) ??
         '$time';
+  }
+
+  static MediaItem chapterToItem(Chapter chapter) {
+    print('Chapter ${chapter.toJson()}');
+    return MediaItem(
+        id: chapter.id,
+        title: chapter.title,
+        duration: Duration(
+              milliseconds: (chapter.end * 1000).round(),
+            ) -
+            Duration(
+              milliseconds: (chapter.start * 1000).round(),
+            ),
+        extras: {'start': chapter.start, 'end': chapter.end});
   }
 
   static _getNarrator(EmbyItem item) {
@@ -75,10 +90,16 @@ class Utils {
         });
   }
 
-  static double getProgess(MediaItem book) {
-    return book.duration != null
-        ? book.viewOffset.inMilliseconds / book.duration!.inMilliseconds
-        : 0;
+  static double getProgess({MediaItem? item, Book? book}) {
+    if (book != null && book.duration != Duration.zero) {
+      return book.lastPlayedPosition.inMilliseconds /
+          book.duration.inMilliseconds;
+    } else if (item != null) {
+      return item.duration != null
+          ? item.viewOffset.inMilliseconds / item.duration!.inMilliseconds
+          : 0;
+    }
+    return 0;
   }
 
   static bool isLargeScreen(BuildContext context) {
@@ -104,6 +125,8 @@ extension MediaHelpers on MediaItem {
   String? get narrator => extras?['narrator'];
   bool get played => extras?['played'] ?? false;
   bool get cached => extras?['cached'] ?? false;
+  bool get downloading => extras?['downloading'] ?? false;
+  double get downloadProgress => extras?['downloadProgress'] ?? 0.0;
   String get cachePath => extras?['cachePath'] ?? '';
   String get asin => extras?['asin'] ?? '';
 
@@ -116,6 +139,22 @@ extension MediaHelpers on MediaItem {
   Uri? get largeThumbnail => extras?['largeThumbnail'] == null
       ? null
       : Uri.parse(extras?['largeThumbnail']);
+  List<Chapter> get chapters {
+    if (extras != null && extras!.containsKey('chapters')) {
+      return [
+        for (final chapter in extras!['chapters']) Chapter.fromJson(chapter, id)
+      ];
+    }
+    return [];
+  }
+
+  Duration get start => Duration(
+        milliseconds: (extras!['start'] * 1000).round(),
+      );
+
+  Duration get end => Duration(
+        milliseconds: (extras!['end'] * 1000).round(),
+      );
 
   static MediaItem fromBook(Book book) => MediaItem(
         id: book.id,

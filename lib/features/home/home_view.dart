@@ -26,7 +26,7 @@ class HomeView extends HookConsumerWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text('Audiobookly'),
+      title: const Text('Audiobookly'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
@@ -47,7 +47,7 @@ class HomeView extends HookConsumerWidget {
               if (state is HomeStateLoaded) {
                 return SingleChildScrollView(
                   // padding: EdgeInsets.only(bottom: 40),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,7 +56,7 @@ class HomeView extends HookConsumerWidget {
                       HomeRow(
                         height: rowHeight,
                         // math.min(((constraints.maxHeight - 120) / 2), 250),
-                        title: 'In Progress',
+                        title: 'Continue Listening',
                         items: state.recentlyPlayed,
                       ),
                       HomeRow(

@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'downloads_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$DownloadsState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<MediaItem>? books)? loaded,
@@ -65,6 +74,14 @@ mixin _$DownloadsState {
     required TResult Function(DownloadsStateLoaded value) loaded,
     required TResult Function(DownloadsStateLoading value) loading,
     required TResult Function(DownloadsStateErrorDetails value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(DownloadsStateInitial value)? initial,
+    TResult Function(DownloadsStateLoaded value)? loaded,
+    TResult Function(DownloadsStateLoading value)? loading,
+    TResult Function(DownloadsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -129,12 +146,13 @@ class _$DownloadsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'DownloadsState.initial'));
+    properties..add(DiagnosticsProperty('type', 'DownloadsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is DownloadsStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DownloadsStateInitial);
   }
 
   @override
@@ -149,6 +167,17 @@ class _$DownloadsStateInitial
     required TResult Function(String? message) error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -175,6 +204,17 @@ class _$DownloadsStateInitial
     required TResult Function(DownloadsStateErrorDetails value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(DownloadsStateInitial value)? initial,
+    TResult Function(DownloadsStateLoaded value)? loaded,
+    TResult Function(DownloadsStateLoading value)? loading,
+    TResult Function(DownloadsStateErrorDetails value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -255,14 +295,14 @@ class _$DownloadsStateLoaded
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is DownloadsStateLoaded &&
-            (identical(other.books, books) ||
-                const DeepCollectionEquality().equals(other.books, books)));
+        (other.runtimeType == runtimeType &&
+            other is DownloadsStateLoaded &&
+            const DeepCollectionEquality().equals(other.books, books));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(books);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(books));
 
   @JsonKey(ignore: true)
   @override
@@ -279,6 +319,17 @@ class _$DownloadsStateLoaded
     required TResult Function(String? message) error,
   }) {
     return loaded(books);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loaded?.call(books);
   }
 
   @override
@@ -309,6 +360,17 @@ class _$DownloadsStateLoaded
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(DownloadsStateInitial value)? initial,
+    TResult Function(DownloadsStateLoaded value)? loaded,
+    TResult Function(DownloadsStateLoading value)? loading,
+    TResult Function(DownloadsStateErrorDetails value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
@@ -327,7 +389,7 @@ abstract class DownloadsStateLoaded implements DownloadsState {
   const factory DownloadsStateLoaded({List<MediaItem>? books}) =
       _$DownloadsStateLoaded;
 
-  List<MediaItem>? get books => throw _privateConstructorUsedError;
+  List<MediaItem>? get books;
   @JsonKey(ignore: true)
   $DownloadsStateLoadedCopyWith<DownloadsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -367,12 +429,13 @@ class _$DownloadsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'DownloadsState.loading'));
+    properties..add(DiagnosticsProperty('type', 'DownloadsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is DownloadsStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DownloadsStateLoading);
   }
 
   @override
@@ -387,6 +450,17 @@ class _$DownloadsStateLoading
     required TResult Function(String? message) error,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -413,6 +487,17 @@ class _$DownloadsStateLoading
     required TResult Function(DownloadsStateErrorDetails value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(DownloadsStateInitial value)? initial,
+    TResult Function(DownloadsStateLoaded value)? loaded,
+    TResult Function(DownloadsStateLoading value)? loading,
+    TResult Function(DownloadsStateErrorDetails value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -494,14 +579,13 @@ class _$DownloadsStateErrorDetails
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is DownloadsStateErrorDetails &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is DownloadsStateErrorDetails &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -519,6 +603,17 @@ class _$DownloadsStateErrorDetails
     required TResult Function(String? message) error,
   }) {
     return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function()? loading,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
   }
 
   @override
@@ -549,6 +644,17 @@ class _$DownloadsStateErrorDetails
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(DownloadsStateInitial value)? initial,
+    TResult Function(DownloadsStateLoaded value)? loaded,
+    TResult Function(DownloadsStateLoading value)? loading,
+    TResult Function(DownloadsStateErrorDetails value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
@@ -567,7 +673,7 @@ abstract class DownloadsStateErrorDetails implements DownloadsState {
   const factory DownloadsStateErrorDetails([String? message]) =
       _$DownloadsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   $DownloadsStateErrorDetailsCopyWith<DownloadsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;
