@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/default_audio_handler.dart';
+import 'package:audiobookly/services/audio/desktop_audio_handler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final playbackControllerProvider =
@@ -25,15 +26,15 @@ Future<AudioHandler> initAudioHandler() async {
   );
 }
 
-// Future<AudioHandler> initDesktopAudioHandler() async {
-//   return await AudioService.init(
-//     builder: () => DesktopAudioHandler(),
-//     config: AudioServiceConfig(
-//       rewindInterval: Duration(seconds: 30),
-//       fastForwardInterval: Duration(seconds: 30),
-//     ),
-//   );
-// }
+Future<AudioHandler> initDesktopAudioHandler() async {
+  return await AudioService.init(
+    builder: () => DesktopAudioHandler(),
+    config: const AudioServiceConfig(
+      rewindInterval: Duration(seconds: 30),
+      fastForwardInterval: Duration(seconds: 30),
+    ),
+  );
+}
 
 abstract class PlaybackController {
   Future playItem(MediaItem item) async {}
@@ -67,7 +68,7 @@ class AudioHandlerPlaybackController extends PlaybackController {
   bool ensured = false;
 
   @override
-  Stream<Duration> get positionStream => AudioService.positionStream;
+  Stream<Duration> get positionStream => AudioService.position;
   @override
   Stream<PlaybackState> get playbackStateStream => _audioHandler.playbackState;
   @override

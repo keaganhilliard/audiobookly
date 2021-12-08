@@ -41,20 +41,22 @@ Future<void> registerSingletons() async {
   Downloader downloader;
   if (kIsWeb) {
     downloader = DesktopDownloader(getIt());
+    final handler = await initAudioHandler();
+    controller = AudioHandlerPlaybackController(handler);
   } else if ((!Platform.isWindows && !Platform.isLinux)) {
     await FlutterDownloader.initialize();
     downloader = MobileDownloader(getIt());
-    // final handler = await initAudioHandler();
-    // controller = AudioHandlerPlaybackController(handler);
+    final handler = await initAudioHandler();
+    controller = AudioHandlerPlaybackController(handler);
   } else {
     // DartVLC.initialize();
     downloader = DesktopDownloader(getIt());
-    // final handler = await initDesktopAudioHandler();
-    // controller = AudioHandlerPlaybackController(handler);
+    final handler = await initDesktopAudioHandler();
+    controller = AudioHandlerPlaybackController(handler);
   }
 
-  final handler = await initAudioHandler();
-  controller = AudioHandlerPlaybackController(handler);
+  // final handler = await initAudioHandler();
+  // controller = AudioHandlerPlaybackController(handler);
 
   getIt.registerSingleton(downloader);
   getIt.registerSingleton(controller);

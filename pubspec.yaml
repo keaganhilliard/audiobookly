@@ -33,10 +33,10 @@ dependencies:
   cached_network_image: ^3.0.0
   socket_io_client: any
   audio_session: ^0.1.6+1
-  audio_service: 
+  audio_service:
     git:
-      url: git@github.com:ryanheise/audio_service
-      ref: fix/early_method_calls
+      url: https://github.com/ryanheise/audio_service
+      ref: minor
       path: audio_service
   just_audio: any
   just_audio_libwinmedia: any
@@ -64,6 +64,7 @@ dependencies:
   hive_flutter:
   flutter_cache_manager:
   flutter_html: ^2.1.5
+  libwinmedia: ^0.0.7
   # dart_chromecast:
   #   git:
   #     url: git@github.com:keaganhilliard/dart_chromecast
@@ -82,7 +83,7 @@ dependency_overrides:
 dev_dependencies:
   build_runner: ^2.0.2
   freezed: ^0.15.0+1
-  hive_generator: 
+  hive_generator:
   # objectbox_generator:
   floor_generator:
   flutter_lints: ^1.0.3

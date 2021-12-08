@@ -47,9 +47,9 @@ packages:
     dependency: "direct main"
     description:
       path: audio_service
-      ref: "fix/early_method_calls"
-      resolved-ref: "4a2c99cfe4a554e6aca22c1613dfdae6ec911c5e"
-      url: "git@github.com:ryanheise/audio_service"
+      ref: minor
+      resolved-ref: "1f5799fb75fed1c579103acb776e7b2ebd09b89f"
+      url: "https://github.com/ryanheise/audio_service"
     source: git
     version: "0.18.2"
   audio_service_platform_interface:
@@ -649,7 +649,7 @@ packages:
     source: hosted
     version: "0.4.2"
   libwinmedia:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: libwinmedia
       url: "https://pub.dartlang.org"
