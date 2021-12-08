@@ -56,6 +56,7 @@ class CollectionsView extends HookConsumerWidget {
                       thumbnailUrl: author.artUri.toString(),
                       title: author.title,
                       placeholder: Icons.collections_bookmark,
+                      showTitle: true,
                     ),
                   );
                 },

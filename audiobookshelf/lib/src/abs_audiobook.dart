@@ -60,7 +60,9 @@ class AbsAudiobook {
         fullPath: json["fullPath"],
         addedAt: AbsUtils.parseDateTime(json["addedAt"]),
         lastUpdate: AbsUtils.parseDateTime(json["lastUpdate"]),
-        duration: AbsUtils.parseDuration(json["duration"]?.toDouble()),
+        duration: AbsUtils.parseDurationFromSeconds(
+          json["duration"]?.toDouble(),
+        ),
         size: json["size"],
         ebooks: List<Ebook>.from(
             json["ebooks"]?.map((x) => Ebook.fromJson(x)) ?? []),

@@ -56,6 +56,7 @@ class SeriesView extends HookConsumerWidget {
                       thumbnailUrl: author.artUri.toString(),
                       title: author.title,
                       placeholder: Icons.window,
+                      showTitle: true,
                     ),
                   );
                 },

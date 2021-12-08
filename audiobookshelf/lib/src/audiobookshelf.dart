@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/abs_search_response.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'abs_audiobook.dart';
 import 'abs_library.dart';
@@ -83,9 +85,9 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))
-        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
-        .toList();
+    return (await compute(_convertBody, response.bodyBytes));
+    // .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+    // .toList();
   }
 
   Future<List<AbsLibrary>> getLibraries() async {
@@ -119,8 +121,55 @@ class AudiobookshelfApi {
   }
 
   Future<List<AbsAudiobook>> getRecentlyAdded(String libraryId) async {
-    var books = await getAll(libraryId);
-    return (books..sort(sortByAddedDate)).take(10).toList();
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/libraries/$libraryId/books', {
+        'sort': 'addedAt',
+        'desc': '1',
+        'limit': '10',
+      }),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(utf8.decode(response.bodyBytes))
+        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+        .toList();
+  }
+
+  Future<List<String>> getAuthors(String libraryId) async {
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/libraries/$libraryId/authors'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(utf8.decode(response.bodyBytes))
+        .map<String>((el) => el['name'] as String)
+        .toList();
+  }
+
+  Future<List<AbsAudiobook>> getBooksForAuthor(
+      String libraryId, String author) async {
+    final encodedAuthor = base64Encode(utf8.encode(author));
+    http.Response response = await client.get(
+      createUri(
+        baseUrl!,
+        '/api/libraries/$libraryId/books',
+        {'filter': 'authors.$encodedAuthor'},
+      ),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(utf8.decode(response.bodyBytes))
+        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+        .toList();
   }
 
   Future<AbsSearchResponse> search(String libraryId, String searchTerm) async {
@@ -206,4 +255,10 @@ class AudiobookshelfApi {
         },
         body: utf8.encode(jsonEncode(progress.toJson())));
   }
+}
+
+List<AbsAudiobook> _convertBody(List<int> bodyBytes) {
+  return jsonDecode(utf8.decode(bodyBytes))
+      .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+      .toList();
 }

@@ -250,4 +250,10 @@ class EmbyRepository extends MediaRepository {
     // TODO: implement getSeries
     throw UnimplementedError();
   }
+
+  @override
+  Future addToCollection(String collectionId, String mediaId) {
+    // TODO: implement addToCollection
+    throw UnimplementedError();
+  }
 }

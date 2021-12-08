@@ -17,13 +17,24 @@ class SettingsView extends HookConsumerWidget {
     final auth = ref.watch(authNotifierProvider.notifier);
     // if (state is SettingsStateInitial) Future.value(settings.getUser());
     if (state is SettingsStateLoaded) {
-      print(state.user!.name);
       return ListView(
         children: [
           ListTile(
-            title: Text('Account'),
+            title: const Text('Account'),
             subtitle: Text(state.user!.userName!),
             onTap: () async {
+              // showDialog(
+              //     context: context,
+              //     builder: (context) {
+              //       return Column(
+              //         children: [
+              //           TextButton(
+              //             onPressed: () {},
+              //             child: const Text('Add another account'),
+              //           ),
+              //         ],
+              //       );
+              //     });
               await auth.logout();
             },
             trailing: state.user!.thumb != null
@@ -34,10 +45,10 @@ class SettingsView extends HookConsumerWidget {
                       return Container();
                     },
                   )
-                : Icon(Icons.person),
+                : const Icon(Icons.person),
           ),
           ListTile(
-            title: Text('About'),
+            title: const Text('About'),
             onTap: () {
               showAboutDialog(
                 context: context,
@@ -54,7 +65,7 @@ class SettingsView extends HookConsumerWidget {
         ],
       );
     } else {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
   }
 }

@@ -30,7 +30,6 @@ class HomeView extends HookConsumerWidget {
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
-          print('refreshing');
           return homeProvider.getBooks();
         },
         child: LayoutBuilder(
@@ -53,17 +52,21 @@ class HomeView extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HomeRow(
-                        height: rowHeight,
-                        // math.min(((constraints.maxHeight - 120) / 2), 250),
-                        title: 'Continue Listening',
-                        items: state.recentlyPlayed,
-                      ),
-                      HomeRow(
-                        height: rowHeight,
-                        title: 'Recently Added',
-                        items: state.recentlyAdded,
-                      ),
+                      if (state.recentlyPlayed != null &&
+                          state.recentlyPlayed!.isNotEmpty)
+                        HomeRow(
+                          height: rowHeight,
+                          // math.min(((constraints.maxHeight - 120) / 2), 250),
+                          title: 'Continue Listening',
+                          items: state.recentlyPlayed,
+                        ),
+                      if (state.recentlyAdded != null &&
+                          state.recentlyAdded!.isNotEmpty)
+                        HomeRow(
+                          height: rowHeight,
+                          title: 'Recently Added',
+                          items: state.recentlyAdded,
+                        ),
                     ],
                   ),
                 );

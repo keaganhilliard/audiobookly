@@ -29,7 +29,7 @@ class ResponsiveGridView<T> extends StatelessWidget {
         controller: _controller,
         itemCount: items!.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.7,
+          childAspectRatio: 1,
           crossAxisCount: crossCount,
         ),
         itemBuilder: (context, index) {

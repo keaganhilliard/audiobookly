@@ -45,15 +45,18 @@ class AbsRepository extends MediaRepository {
   }
 
   MediaItem _bookToItem(AbsAudiobook book) {
-    int viewOffset = userProgress[book.id]?.currentTime?.inMilliseconds ?? 0;
-    bool played = userProgress[book.id]?.isRead ?? false;
+    final progress = userProgress[book.id];
+
+    int viewOffset = progress?.currentTime?.inMilliseconds ?? 0;
+    bool played = progress?.isRead ?? false;
+    Duration? totalDuration = progress?.totalDuration;
     return MediaItem(
       id: book.id!,
       title: book.book!.title!,
       displayDescription: book.book?.description,
       artist: book.book?.author,
       album: book.book!.title,
-      duration: book.duration,
+      duration: book.duration ?? totalDuration,
       artUri: _coverUrl(_api.baseUrl, book.book?.cover,
           book.lastUpdate?.millisecondsSinceEpoch),
       playable: true,
@@ -72,49 +75,28 @@ class AbsRepository extends MediaRepository {
   Future<List<MediaItem>> getAllBooks() async {
     final books = await _api.getAll(_libraryId);
     audiobooks = {for (final book in books) book.id!: book};
-    return (books..sort(_sortBooks)
-        // ..sort((a, b) => a.book?.author == null || b.book?.author == null
-        //     ? 0
-        //     : a.book!.author!.compareTo(b.book!.author!))
-        )
-        .map(_bookToItem)
-        .toList();
+    return [for (final book in books..sort(_sortBooks)) _bookToItem(book)];
   }
 
   @override
   Future<List<MediaItem>> getAuthors() async {
-    if (audiobooks.isEmpty) {
-      await getAllBooks();
-    }
-    return {
-      for (final author in audiobooks.values
-          .where((book) => book.book?.author != null)
-          .expand((book) =>
-              book.book!.author!.split(',').map((author) => author.trim())))
-        MediaItem(
-          id: '@authors/$author',
-          title: author,
-          playable: false,
+    return (await _api.getAuthors(_libraryId))
+        .map(
+          (author) => MediaItem(
+            id: '@authors/$author',
+            title: author,
+            playable: false,
+          ),
         )
-    }.toList()
+        .toList()
       ..sort((a, b) => a.id.compareTo(b.id));
   }
 
   @override
   Future<List<MediaItem>> getBooksFromAuthor(String authorId) async {
-    if (audiobooks.isEmpty) {
-      await getAllBooks();
-    }
     return [
       for (final book
-          in audiobooks.values
-              .where((book) =>
-                  book.book?.author != null &&
-                  (book.book?.author == authorId ||
-                      book.book!.author!
-                          .split(',')
-                          .any((author) => authorId == author.trim())))
-              .toList()
+          in (await _api.getBooksForAuthor(_libraryId, authorId)).toList()
             ..sort(_sortBooks))
         _bookToItem(book)
     ];
@@ -240,19 +222,17 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<MediaItem>> getRecentlyPlayed() async {
     final books = await _api.getRecentlyPlayed();
-    if (audiobooks.isEmpty) await getAllBooks();
     userProgress = books;
     return [
       for (final book
           in books.values
               .where((book) =>
-                  audiobooks.containsKey(book.audiobookId) &&
                   !book.isRead &&
                   (book.progress ?? 0) > 0 &&
                   book.lastUpdate != null)
               .toList()
             ..sort((a, b) => b.lastUpdate!.compareTo(a.lastUpdate!)))
-        _bookToItem(audiobooks[book.audiobookId]!)
+        _bookToItem(await _api.getBookInfo(book.audiobookId))
     ];
   }
 
@@ -401,5 +381,11 @@ class AbsRepository extends MediaRepository {
           playable: false,
         )
     ];
+  }
+
+  @override
+  Future addToCollection(String collectionId, String mediaId) {
+    // TODO: implement addToCollection
+    throw UnimplementedError();
   }
 }

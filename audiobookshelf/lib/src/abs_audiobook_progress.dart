@@ -26,11 +26,12 @@ class AbsAudiobookProgress {
   factory AbsAudiobookProgress.fromJson(Map<String, dynamic> json) =>
       AbsAudiobookProgress(
         audiobookId: json['audiobookId'],
-        totalDuration:
-            AbsUtils.parseDuration(json['totalDuration']?.toDouble()),
+        totalDuration: AbsUtils.parseDurationFromMilliseconds(
+            json['totalDuration']?.toDouble()),
         isRead: json['isRead'],
         progress: json['progress']?.toDouble(),
-        currentTime: AbsUtils.parseDuration(json['currentTime']?.toDouble()),
+        currentTime:
+            AbsUtils.parseDurationFromSeconds(json['currentTime']?.toDouble()),
         lastUpdate: AbsUtils.parseDateTime(json['lastUpdate']),
         startedAt: AbsUtils.parseDateTime(json['startedAt']),
         finishedAt: AbsUtils.parseDateTime(json['finishedAt']),
@@ -40,7 +41,7 @@ class AbsAudiobookProgress {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['audiobookId'] = audiobookId;
-    data['totalDuration'] = totalDuration?.inMilliseconds ?? 0 / 1000;
+    data['totalDuration'] = (totalDuration?.inMilliseconds) ?? 0 / 1000;
     data['progress'] = progress;
     data['currentTime'] = (currentTime?.inMilliseconds ?? 0) / 1000;
     data['isRead'] = isRead;

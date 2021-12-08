@@ -20,6 +20,7 @@ enum DURATION_STATE { between, before, after }
 
 class AudiobooklyAudioHandler extends BaseAudioHandler {
   final _player = AudioPlayer();
+  final completer = Completer();
 
   MediaRepository? _repository;
   AudiobooklyAudioHandler() {
@@ -214,6 +215,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     if (_currentMedia != null) {
       playFromMediaId(_currentMedia);
     }
+    completer.complete();
   }
 
   Future<void> setPlaybackRate(double speed) async {
@@ -245,6 +247,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future customAction(String name, [Map<String, dynamic>? arguments]) async {
+    await completer.future;
     if (await queue.isEmpty) return;
     if (name == 'skip') {
       if (chapterIndex != null && chapterIndex! < queue.value.length) {
@@ -277,6 +280,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> setSpeed(double speed) async {
+    await completer.future;
     await setPlaybackRate(speed);
   }
 
@@ -316,7 +320,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> play() async {
-    _player.play();
+    await completer.future;
+    await _player.play();
     // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
     print('Playing progress should fire bitch');
     await updateProgress(AudiobooklyPlaybackState.PLAYING);
@@ -325,6 +330,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> pause() async {
+    await completer.future;
     await _player.pause();
     await seek(currentPosition - const Duration(seconds: 2));
     await super.pause();
@@ -339,6 +345,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> stop() async {
+    await completer.future;
     await updateProgress(AudiobooklyPlaybackState.STOPPED);
     await _player.stop();
     _currentMedia = null;
@@ -353,12 +360,14 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future fastForward([Duration interval = const Duration(seconds: 30)]) async {
+    await completer.future;
     await seek(currentPosition + interval);
     await super.fastForward();
   }
 
   @override
   Future rewind([Duration interval = const Duration(seconds: 15)]) async {
+    await completer.future;
     await seek(currentPosition - interval);
     await super.rewind();
   }
@@ -376,6 +385,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> click([MediaButton button = MediaButton.media]) async {
+    await completer.future;
     switch (button) {
       case MediaButton.media:
         if (playbackState.value.playing == true) {
@@ -395,6 +405,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> skipToQueueItem(int index) async {
+    await completer.future;
     final item = queue.value[index];
     if (item.extras?.containsKey('start') ?? false) {
       await seek(
@@ -418,18 +429,21 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<List<MediaItem>> getChildren(String parentMediaId,
       [Map<String, dynamic>? extras]) async {
+    await completer.future;
     final items = await _repository!.getChildren(parentMediaId);
     doMe = items;
     return items;
   }
 
   @override
-  Future<MediaItem> getMediaItem(String mediaId) {
-    return _repository!.getAlbumFromId(mediaId);
+  Future<MediaItem> getMediaItem(String mediaId) async {
+    await completer.future;
+    return await _repository!.getAlbumFromId(mediaId);
   }
 
   @override
   Future<void> prepare() async {
+    await completer.future;
     prepareFromMediaId(
         (await _repository!.getRecentlyPlayed()).take(1).toList()[0].id);
   }
@@ -437,9 +451,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> prepareFromMediaId(String? mediaId,
       [Map<String, dynamic>? extras]) async {
-    // if (mediaItem?.value?.id == mediaId && _player != null) {
-    //   return;
-    // }
+    await completer.future;
     if (mediaId == null) return;
 
     final db = getIt<DatabaseService>();
@@ -526,6 +538,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> playFromSearch(String query,
       [Map<String, dynamic>? extras]) async {
+    await completer.future;
     List<MediaItem> items = await _repository!.search(query);
     if (items.isNotEmpty) await playFromMediaId(items[0].id);
     return super.playFromSearch(query, extras);
@@ -534,12 +547,14 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<List<MediaItem>> search(String query,
       [Map<String, dynamic>? extras]) async {
+    await completer.future;
     return await _repository!.search(query);
   }
 
   @override
   Future playFromMediaId(String? mediaId,
       [Map<String, dynamic>? extras]) async {
+    await completer.future;
     await prepareFromMediaId(mediaId, extras);
     await _player.play();
     initTimer();

@@ -16,10 +16,10 @@ class HomeNotifier extends StateNotifier<HomeState> {
   Future<void> getBooks() async {
     try {
       state = const HomeState.loading();
-      final recentlyAdded =
-          await _repository!.getChildren(MediaIds.RECENTLY_ADDED);
       final recentlyPlayed =
           await _repository!.getChildren(MediaIds.RECENTLY_PLAYED);
+      final recentlyAdded =
+          await _repository!.getChildren(MediaIds.RECENTLY_ADDED);
       state = HomeState.loaded(
           recentlyAdded: recentlyAdded, recentlyPlayed: recentlyPlayed);
     } on Exception {

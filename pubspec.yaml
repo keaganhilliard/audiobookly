@@ -32,8 +32,12 @@ dependencies:
   expandable: ^5.0.1
   cached_network_image: ^3.0.0
   socket_io_client: any
-  audio_session: ^0.1.0
-  audio_service: ^0.18.0-beta.0
+  audio_session: ^0.1.6+1
+  audio_service: 
+    git:
+      url: git@github.com:ryanheise/audio_service
+      ref: fix/early_method_calls
+      path: audio_service
   just_audio: any
   just_audio_libwinmedia: any
   shared_preferences: ^2.0.5

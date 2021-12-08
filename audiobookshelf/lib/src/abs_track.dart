@@ -11,7 +11,7 @@ class AbsTrack {
   final Duration duration;
   final int size;
   final int bitRate;
-  final String language;
+  final String? language;
   final String codec;
   final String timeBase;
   final int channels;

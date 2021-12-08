@@ -121,6 +121,7 @@ abstract class MediaRepository {
   Future getServerAndLibrary();
   Future markPlayed(String itemId);
   Future markUnplayed(String itemId);
+  Future addToCollection(String collectionId, String mediaId);
   String getServerUrl(String path);
   String getThumbnailUrl(
     String? path, {

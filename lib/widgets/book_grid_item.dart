@@ -10,17 +10,21 @@ class BookGridItem extends StatelessWidget {
   final VoidCallback? onTap;
   final double progress;
   final bool played;
+  final bool showTitle;
   final IconData placeholder;
+  final List<String>? thumbnailUrls;
 
   const BookGridItem({
     Key? key,
     this.thumbnailUrl,
+    this.thumbnailUrls,
     this.title,
     this.subtitle,
     this.progress = 0,
     this.onTap,
     this.played = false,
     this.placeholder = Icons.book,
+    this.showTitle = false,
   }) : super(key: key);
 
   @override
@@ -33,6 +37,82 @@ class BookGridItem extends StatelessWidget {
         onTap: onTap,
         child: Stack(
           children: [
+            Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  flex: 3,
+                  child: CachedNetworkImage(
+                    imageUrl: thumbnailUrl!,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    imageBuilder: (context, imageProvider) {
+                      if (showTitle) {
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            return Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Image(image: imageProvider),
+                                Positioned(
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.7,
+                                        child: Container(
+                                          height: 40,
+                                          width: constraints.minWidth,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        width: 100,
+                                        child: Text(
+                                          title!,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: const TextStyle(fontSize: 11),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  bottom: 0,
+                                  left: 0,
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                      return Image(
+                        image: imageProvider,
+                      );
+                    },
+                    errorWidget: (context, message, thing) => Container(
+                      constraints: const BoxConstraints.expand(),
+                      // color: Colors.black,
+                      child: PlaceHolder(
+                        title: title!,
+                        placeholder: placeholder,
+                        subtitle: subtitle,
+                      ),
+                    ),
+                    placeholder: (context, url) => Container(
+                      constraints: const BoxConstraints.expand(),
+                      // color: Colors.black,
+                      child: PlaceHolder(
+                        title: title!,
+                        placeholder: placeholder,
+                        subtitle: subtitle,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             if (progress > 0)
               Align(
                 alignment: Alignment.bottomLeft,
@@ -42,67 +122,53 @@ class BookGridItem extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                 ),
               ),
-            Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Flexible(
-                  flex: 3,
-                  child: FractionallySizedBox(
-                    heightFactor: 1,
-                    child: CachedNetworkImage(
-                      imageUrl: thumbnailUrl!,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      errorWidget: (context, message, thing) => Container(
-                        constraints: const BoxConstraints.expand(),
-                        // color: Colors.black,
-                        child: Icon(
-                          placeholder,
-                          size: 50.0,
-                        ),
-                      ),
-                      placeholder: (context, url) => Container(
-                        constraints: const BoxConstraints.expand(),
-                        // color: Colors.black,
-                        child: Icon(
-                          placeholder,
-                          size: 50.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          title!,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                        if (subtitle != null)
-                          Text(
-                            subtitle!,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 10, color: Colors.grey[400]),
-                          )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
             if (played) const PlayedIcon(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class PlaceHolder extends StatelessWidget {
+  final IconData placeholder;
+  final String title;
+  final String? subtitle;
+  const PlaceHolder({
+    Key? key,
+    required this.placeholder,
+    required this.title,
+    this.subtitle,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          placeholder,
+          size: 50.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: const TextStyle(fontSize: 13),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        if (subtitle != null)
+          Text(
+            subtitle!,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 10, color: Colors.grey[400]),
+            textAlign: TextAlign.center,
+          )
+      ],
     );
   }
 }

@@ -33,20 +33,20 @@ Future<DeviceInfo> getDeviceInfo() async {
       version: '0.0.1.0',
       platform: 'Windows',
     );
-    // } else if (Platform.isLinux) {
-    //   LinuxDeviceInfo linuxDeviceInfo = await deviceInfo.linuxInfo;
-    //   return DeviceInfo(
-    //     uniqueId: linuxDeviceInfo.machineId,
-    //     model: linuxDeviceInfo.prettyName,
-    //     version: '0.0.1.0',
-    //     platform: 'Linux',
-    //   );
+  } else if (Platform.isLinux) {
+    // LinuxDeviceInfo linuxDeviceInfo = await deviceInfo.linuxInfo;
+    return DeviceInfo(
+      uniqueId: 'Unknown',
+      model: 'Unknown',
+      version: '0.0.1.0',
+      platform: 'Linux',
+    );
   } else if (Platform.isAndroid) {
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
     return DeviceInfo(
       uniqueId: androidDeviceInfo.androidId,
       model: androidDeviceInfo.model,
-      version: androidDeviceInfo.version.release,
+      version: '0.0.1.0',
       platform: 'Android',
     );
   } else if (Platform.isIOS) {
@@ -55,7 +55,7 @@ Future<DeviceInfo> getDeviceInfo() async {
       uniqueId: iosInfo.identifierForVendor,
       model: iosInfo.model,
       platform: 'iOS',
-      version: iosInfo.systemVersion,
+      version: '0.0.1.0',
     );
   } else {
     return DeviceInfo(
