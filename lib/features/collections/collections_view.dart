@@ -44,17 +44,18 @@ class CollectionsView extends HookConsumerWidget {
             if (state is CollectionsStateLoaded) {
               return ResponsiveGridView<MediaItem>(
                 items: state.collections,
-                itemBuilder: (author) {
+                itemBuilder: (collection) {
                   return OpenContainer(
+                    key: Key(collection.title),
                     closedElevation: 0.0,
                     closedColor: Theme.of(context).canvasColor,
                     openColor: Theme.of(context).canvasColor,
-                    openBuilder: (context, closeContainer) =>
-                        BooksView(mediaId: author.id, title: author.title),
+                    openBuilder: (context, closeContainer) => BooksView(
+                        mediaId: collection.id, title: collection.title),
                     closedBuilder: (context, openContainer) => BookGridItem(
                       onTap: openContainer,
-                      thumbnailUrl: author.artUri.toString(),
-                      title: author.title,
+                      thumbnailUrl: collection.artUri.toString(),
+                      title: collection.title,
                       placeholder: Icons.collections_bookmark,
                       showTitle: true,
                     ),

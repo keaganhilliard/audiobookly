@@ -157,7 +157,7 @@ class PlaceHolder extends StatelessWidget {
             title,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
-            style: const TextStyle(fontSize: 13),
+            // style: const TextStyle(fontSize: 13),
             textAlign: TextAlign.center,
           ),
         ),
@@ -165,7 +165,7 @@ class PlaceHolder extends StatelessWidget {
           Text(
             subtitle!,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 10, color: Colors.grey[400]),
+            style: TextStyle(color: Colors.grey[400]),
             textAlign: TextAlign.center,
           )
       ],

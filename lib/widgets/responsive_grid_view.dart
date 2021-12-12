@@ -18,7 +18,7 @@ class ResponsiveGridView<T> extends StatelessWidget {
     if (deviceOrientation == Orientation.landscape) crossCount = 4;
 
     crossCount =
-        max((screenSize.width / 160).floor(), 3); // Always at least 3 columns
+        max((screenSize.width / 200).floor(), 3); // Always at least 3 columns
 
     return Scrollbar(
       radius: const Radius.circular(5.0),

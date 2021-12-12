@@ -193,7 +193,8 @@ class HiveDatabaseService implements DatabaseService {
 
   @override
   Future deleteChapters(List<Chapter> chapters) async {
-    await _chapterBox.deleteAll([for (final chapter in chapters) chapter.id]);
+    await _chapterBox.deleteAll(
+        [for (final chapter in chapters) '${chapter.bookId}.${chapter.id}']);
   }
 
   @override
@@ -221,5 +222,10 @@ class HiveDatabaseService implements DatabaseService {
       for (var chapter in chapters)
         '${chapter.bookId}.${chapter.id}': HiveChapter.fromChapter(chapter)
     });
+  }
+
+  @override
+  Future deleteBook(Book book) async {
+    await _bookBox.delete(book.id);
   }
 }

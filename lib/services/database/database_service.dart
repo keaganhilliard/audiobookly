@@ -43,4 +43,6 @@ abstract class DatabaseService {
     bool downloadCompleted,
     bool downloadFailed,
   );
+
+  Future deleteBook(Book book);
 }

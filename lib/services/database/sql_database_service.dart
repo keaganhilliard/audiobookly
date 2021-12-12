@@ -158,4 +158,10 @@ class SqlDatabaseService implements DatabaseService {
       [for (final chapter in chapters) SqlChapter.fromChapter(chapter)],
     );
   }
+
+  @override
+  Future deleteBook(Book book) {
+    // TODO: implement deleteBook
+    throw UnimplementedError();
+  }
 }
