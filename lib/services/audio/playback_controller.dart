@@ -68,7 +68,7 @@ class AudioHandlerPlaybackController extends PlaybackController {
   bool ensured = false;
 
   @override
-  Stream<Duration> get positionStream => AudioService.position;
+  Stream<Duration> get positionStream => AudioService.createPositionStream();
   @override
   Stream<PlaybackState> get playbackStateStream => _audioHandler.playbackState;
   @override

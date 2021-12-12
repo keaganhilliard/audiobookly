@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PlaybackPosition extends HookConsumerWidget {
   final Widget Function(BuildContext context, Duration? position) builder;
-  const PlaybackPosition({required this.builder});
+  const PlaybackPosition({required this.builder, Key? key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

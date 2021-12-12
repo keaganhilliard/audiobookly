@@ -244,9 +244,10 @@ class PlayerView extends HookConsumerWidget {
                           child: PlaybackPosition(builder: (context, position) {
                             return Text(
                               getDurationLeftText(
-                                  position?.inMilliseconds,
-                                  item.duration?.inMilliseconds,
-                                  state?.speed ?? 1.0),
+                                position?.inMilliseconds,
+                                item.duration?.inMilliseconds,
+                                state?.speed ?? 1.0,
+                              ),
                             );
                           }),
                         ),
@@ -255,7 +256,7 @@ class PlayerView extends HookConsumerWidget {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.skip_previous),
+                              icon: const Icon(Icons.skip_previous),
                               onPressed: () {
                                 playbackController.skipToPrevious();
                               },
@@ -266,7 +267,7 @@ class PlayerView extends HookConsumerWidget {
                               ),
                             ),
                             IconButton(
-                              icon: Icon(Icons.skip_next),
+                              icon: const Icon(Icons.skip_next),
                               onPressed: () {
                                 playbackController.skipToNext();
                               },
