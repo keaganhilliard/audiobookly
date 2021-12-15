@@ -318,12 +318,24 @@ class AbsRepository extends MediaRepository {
   @override
   Future markPlayed(String itemId) async {
     await _api.markPlayed(itemId);
+    final book = await _db.getBookById(itemId);
+    if (book != null) {
+      await _db.insertBook(
+        book.copyWith(lastPlayedPosition: Duration.zero, read: true),
+      );
+    }
     await getUser();
   }
 
   @override
   Future markUnplayed(String itemId) async {
     await _api.markUnplayed(itemId);
+    final book = await _db.getBookById(itemId);
+    if (book != null) {
+      await _db.insertBook(
+        book.copyWith(lastPlayedPosition: Duration.zero, read: false),
+      );
+    }
     await getUser();
   }
 
