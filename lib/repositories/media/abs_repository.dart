@@ -44,6 +44,17 @@ class AbsRepository extends MediaRepository {
     return null;
   }
 
+  Uri? _scaledCoverUrl(String? baseUrl, String? id, int? timestamp,
+      [int width = 400]) {
+    if (baseUrl != null && id != null) {
+      print(
+          '$baseUrl/api/books/$id/cover?token=${_api.token}&ts=$timestamp&width=$width');
+      return Uri.parse(
+          '$baseUrl/api/books/$id/cover?token=${_api.token}&ts=$timestamp&width=$width&format=webp');
+    }
+    return null;
+  }
+
   MediaItem _bookToItem(AbsAudiobook book) {
     final progress = userProgress[book.id];
 
@@ -57,14 +68,19 @@ class AbsRepository extends MediaRepository {
       artist: book.book?.author,
       album: book.book!.title,
       duration: book.duration ?? totalDuration,
-      artUri: _coverUrl(_api.baseUrl, book.book?.cover,
-          book.lastUpdate?.millisecondsSinceEpoch),
+      artUri:
+          // _coverUrl(_api.baseUrl, book.book?.cover,
+          //     book.lastUpdate?.millisecondsSinceEpoch),
+          _scaledCoverUrl(
+              _api.baseUrl, book.id, book.lastUpdate?.millisecondsSinceEpoch),
       playable: true,
       extras: <String, dynamic>{
         'played': played,
         'narrator': book.book?.narrator,
-        // 'largeThumbnail': _coverUrl(_api.baseUrl, book.book?.cover),
         'viewOffset': viewOffset,
+        'largeThumbnail': _coverUrl(_api.baseUrl, book.book?.cover,
+                book.lastUpdate?.millisecondsSinceEpoch)
+            .toString(),
         if (book.chapters != null)
           'chapters': [for (final chapter in book.chapters!) chapter.toJson()]
       },
@@ -151,7 +167,7 @@ class AbsRepository extends MediaRepository {
             id: '@collections/${collection.id}',
             title: collection.name,
             playable: false,
-            artUri: _coverUrl(_api.baseUrl, collection.books[0].book?.cover,
+            artUri: _scaledCoverUrl(_api.baseUrl, collection.books[0].id,
                 collection.books[0].book?.lastUpdate))
     ];
   }
@@ -184,8 +200,7 @@ class AbsRepository extends MediaRepository {
           id: '@series/${book.book!.series!}',
           title: book.book!.series!,
           playable: false,
-          artUri:
-              _coverUrl(_api.baseUrl, book.book?.cover, book.book?.lastUpdate),
+          artUri: _scaledCoverUrl(_api.baseUrl, book.id, book.book?.lastUpdate),
         )
     }.toList()
       ..sort((a, b) =>
