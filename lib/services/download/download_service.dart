@@ -123,7 +123,7 @@ class DownloadService {
 
       await d.downloadFile(
         chapter.id,
-        url,
+        Uri.parse(url).toString(),
         path,
         pieces.length > 1 ? pieces[1] : null,
       );
