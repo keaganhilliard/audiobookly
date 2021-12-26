@@ -5,6 +5,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/hive/hive_book.dart';
 import 'package:audiobookly/hive/hive_chapter.dart';
 import 'package:audiobookly/hive/hive_track.dart';
+import 'package:audiobookly/hive/type_adapters/datetime_adapter.dart';
 import 'package:audiobookly/hive/type_adapters/duration_adapter.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
@@ -17,6 +18,7 @@ import 'package:rxdart/subjects.dart';
 
 Future initHive() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(DateTimeAdapter());
   Hive.registerAdapter(DurationAdapter());
   Hive.registerAdapter(HiveBookAdapter());
   Hive.registerAdapter(HiveTrackAdapter());
@@ -72,7 +74,8 @@ class HiveDatabaseService implements DatabaseService {
 
   @override
   Future insertBook(Book book) async {
-    return await _bookBox.put(book.id, book as HiveBook);
+    return await _bookBox.put(
+        book.id, book.copyWith(lastUpdate: DateTime.now()) as HiveBook);
   }
 
   @override
@@ -189,6 +192,7 @@ class HiveDatabaseService implements DatabaseService {
         downloadCompleted,
         downloadFailed,
         book.played,
+        DateTime.now(),
       );
 
   @override

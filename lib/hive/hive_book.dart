@@ -53,23 +53,27 @@ class HiveBook implements Book {
   @HiveField(11)
   final bool read;
 
+  @override
+  @HiveField(13)
+  final DateTime? lastUpdate;
+
   @HiveField(12)
   HiveList? tracks;
 
   HiveBook(
-    this.id,
-    this.title,
-    this.author,
-    this.narrator,
-    this.description,
-    this.artPath,
-    this.duration,
-    this.lastPlayedPosition,
-    this.downloadRequested,
-    this.downloadCompleted,
-    this.downloadFailed,
-    this.read,
-  );
+      this.id,
+      this.title,
+      this.author,
+      this.narrator,
+      this.description,
+      this.artPath,
+      this.duration,
+      this.lastPlayedPosition,
+      this.downloadRequested,
+      this.downloadCompleted,
+      this.downloadFailed,
+      this.read,
+      this.lastUpdate);
 
   @override
   HiveBook copyWith({
@@ -85,19 +89,20 @@ class HiveBook implements Book {
     bool? downloadCompleted,
     bool? downloadFailed,
     bool? read,
+    DateTime? lastUpdate,
   }) =>
       HiveBook(
-        id ?? this.id,
-        title ?? this.title,
-        author ?? this.author,
-        narrator ?? this.narrator,
-        description ?? this.description,
-        artPath ?? this.artPath,
-        duration ?? this.duration,
-        lastPlayedPosition ?? this.lastPlayedPosition,
-        downloadRequested ?? this.downloadRequested,
-        downloadCompleted ?? this.downloadCompleted,
-        downloadFailed ?? this.downloadFailed,
-        read ?? this.read,
-      );
+          id ?? this.id,
+          title ?? this.title,
+          author ?? this.author,
+          narrator ?? this.narrator,
+          description ?? this.description,
+          artPath ?? this.artPath,
+          duration ?? this.duration,
+          lastPlayedPosition ?? this.lastPlayedPosition,
+          downloadRequested ?? this.downloadRequested,
+          downloadCompleted ?? this.downloadCompleted,
+          downloadFailed ?? this.downloadFailed,
+          read ?? this.read,
+          lastUpdate ?? this.lastUpdate);
 }

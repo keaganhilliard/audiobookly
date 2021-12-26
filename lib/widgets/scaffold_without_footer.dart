@@ -26,14 +26,14 @@ class ScaffoldWithoutFooter extends StatelessWidget {
         actions: [
           if (refresh)
             IconButton(
-              icon: Icon(Icons.refresh),
+              icon: const Icon(Icons.refresh),
               onPressed: () {
                 onRefresh?.call();
               },
             ),
           if (showDownloads)
             IconButton(
-              icon: Icon(Icons.download_done),
+              icon: const Icon(Icons.download_done),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -43,7 +43,7 @@ class ScaffoldWithoutFooter extends StatelessWidget {
               },
             ),
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(
                 context: context,
@@ -52,33 +52,18 @@ class ScaffoldWithoutFooter extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () async {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => Scaffold(
                     appBar: AppBar(
-                      title: Text('Settings'),
+                      title: const Text('Settings'),
                     ),
-                    body: SettingsView(),
+                    body: const SettingsView(),
                   ),
                 ),
               );
-              // showModalBottomSheet(
-              //     context: context,
-              //     useRootNavigator: true,
-              //     clipBehavior: Clip.antiAlias,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.only(
-              //         topLeft: Radius.circular(15.0),
-              //         topRight: Radius.circular(15.0),
-              //         bottomLeft: Radius.circular(15.0),
-              //         bottomRight: Radius.circular(15.0),
-              //       ),
-              //     ),
-              //     builder: (context) {
-              //       return SettingsView();
-              //     });
             },
           )
         ],

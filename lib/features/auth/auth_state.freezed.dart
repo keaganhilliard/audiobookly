@@ -293,11 +293,12 @@ class _$AuthStateLoaded
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AuthStateLoaded &&
-            (identical(other.user, user) || other.user == user));
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
@@ -572,11 +573,12 @@ class _$AuthStateErrorDetails
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AuthStateErrorDetails &&
-            (identical(other.message, message) || other.message == message));
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override

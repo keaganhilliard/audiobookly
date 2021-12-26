@@ -29,6 +29,8 @@ class SqlBook implements Book {
   final bool downloadFailed;
   @override
   final bool read;
+  @override
+  final DateTime? lastUpdate;
 
   SqlBook(
     this.id,
@@ -43,6 +45,7 @@ class SqlBook implements Book {
     this.downloadCompleted,
     this.downloadFailed,
     this.read,
+    this.lastUpdate,
   );
 
   @override
@@ -59,19 +62,20 @@ class SqlBook implements Book {
     bool? downloadCompleted,
     bool? downloadFailed,
     bool? read,
+    DateTime? lastUpdate,
   }) =>
       SqlBook(
-        id ?? this.id,
-        title ?? this.title,
-        author ?? this.author,
-        narrator ?? this.narrator,
-        description ?? this.description,
-        artPath ?? this.artPath,
-        duration ?? this.duration,
-        lastPlayedPosition ?? this.lastPlayedPosition,
-        downloadRequested ?? this.downloadRequested,
-        downloadCompleted ?? this.downloadCompleted,
-        downloadFailed ?? this.downloadFailed,
-        read ?? this.read,
-      );
+          id ?? this.id,
+          title ?? this.title,
+          author ?? this.author,
+          narrator ?? this.narrator,
+          description ?? this.description,
+          artPath ?? this.artPath,
+          duration ?? this.duration,
+          lastPlayedPosition ?? this.lastPlayedPosition,
+          downloadRequested ?? this.downloadRequested,
+          downloadCompleted ?? this.downloadCompleted,
+          downloadFailed ?? this.downloadFailed,
+          read ?? this.read,
+          lastUpdate ?? this.lastUpdate);
 }

@@ -11,21 +11,22 @@ class Book {
   final bool downloadCompleted;
   final bool downloadFailed;
   final bool read;
+  final DateTime? lastUpdate;
 
   Book(
-    this.id,
-    this.title,
-    this.author,
-    this.narrator,
-    this.description,
-    this.artPath,
-    this.duration,
-    this.lastPlayedPosition,
-    this.downloadRequested,
-    this.downloadCompleted,
-    this.downloadFailed,
-    this.read,
-  );
+      this.id,
+      this.title,
+      this.author,
+      this.narrator,
+      this.description,
+      this.artPath,
+      this.duration,
+      this.lastPlayedPosition,
+      this.downloadRequested,
+      this.downloadCompleted,
+      this.downloadFailed,
+      this.read,
+      this.lastUpdate);
 
   Book copyWith({
     String? id,
@@ -40,19 +41,20 @@ class Book {
     bool? downloadCompleted,
     bool? downloadFailed,
     bool? read,
+    DateTime? lastUpdate,
   }) =>
       Book(
-        id ?? this.id,
-        title ?? this.title,
-        author ?? this.author,
-        narrator ?? this.narrator,
-        description ?? this.description,
-        artPath ?? this.artPath,
-        duration ?? this.duration,
-        lastPlayedPosition ?? this.lastPlayedPosition,
-        downloadRequested ?? this.downloadRequested,
-        downloadCompleted ?? this.downloadCompleted,
-        downloadFailed ?? this.downloadFailed,
-        read ?? this.read,
-      );
+          id ?? this.id,
+          title ?? this.title,
+          author ?? this.author,
+          narrator ?? this.narrator,
+          description ?? this.description,
+          artPath ?? this.artPath,
+          duration ?? this.duration,
+          lastPlayedPosition ?? this.lastPlayedPosition,
+          downloadRequested ?? this.downloadRequested,
+          downloadCompleted ?? this.downloadCompleted,
+          downloadFailed ?? this.downloadFailed,
+          read ?? this.read,
+          lastUpdate ?? this.lastUpdate);
 }

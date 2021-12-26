@@ -1,7 +1,7 @@
 import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:hive/hive.dart';
 
-part 'hive_user.g.dart';
+// part 'hive_user.g.dart';
 
 @HiveType(typeId: 5)
 class HiveUser {

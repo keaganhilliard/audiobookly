@@ -64,6 +64,11 @@ class BookDetailsView extends HookConsumerWidget {
                     child: Text(state.book!.title),
                   ),
                   actions: [
+                    if (kIsWeb || (!Platform.isIOS && !Platform.isAndroid))
+                      IconButton(
+                        onPressed: () => refreshState.currentState?.show(),
+                        icon: const Icon(Icons.refresh),
+                      ),
                     if (state.book!.cached ||
                         (!state.book!.downloading &&
                             (state.chapters?.any((chapter) => chapter.cached) ??
@@ -163,7 +168,10 @@ class BookDetailsView extends HookConsumerWidget {
                           child: Stack(
                             children: [
                               CachedNetworkImage(
-                                imageUrl: state.book?.artUri.toString() ?? '',
+                                imageUrl:
+                                    state.book?.largeThumbnail?.toString() ??
+                                        state.book?.artUri.toString() ??
+                                        '',
                                 fit: BoxFit.scaleDown,
                                 errorWidget: (context, string, stack) {
                                   return const Icon(Icons.book);

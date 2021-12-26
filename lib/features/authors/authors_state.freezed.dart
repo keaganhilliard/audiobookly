@@ -579,11 +579,12 @@ class _$AuthorsStateErrorDetails
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AuthorsStateErrorDetails &&
-            (identical(other.message, message) || other.message == message));
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override

@@ -308,13 +308,15 @@ class _$BookDetailsStateLoaded
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BookDetailsStateLoaded &&
-            (identical(other.book, book) || other.book == book) &&
+            const DeepCollectionEquality().equals(other.book, book) &&
             const DeepCollectionEquality().equals(other.chapters, chapters));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, book, const DeepCollectionEquality().hash(chapters));
+      runtimeType,
+      const DeepCollectionEquality().hash(book),
+      const DeepCollectionEquality().hash(chapters));
 
   @JsonKey(ignore: true)
   @override
@@ -598,11 +600,12 @@ class _$BookDetailsStateErrorDetails
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BookDetailsStateErrorDetails &&
-            (identical(other.message, message) || other.message == message));
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
