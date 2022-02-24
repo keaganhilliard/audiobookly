@@ -78,7 +78,7 @@ class AudiobookshelfApi {
 
   Future<List<AbsAudiobook>> getAll(String library) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/libraries/$library/books'),
+      createUri(baseUrl!, '/api/libraries/$library/books', {'minified': '1'}),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
@@ -126,6 +126,7 @@ class AudiobookshelfApi {
         'sort': 'addedAt',
         'desc': '1',
         'limit': '10',
+        'minified': '1',
       }),
       headers: {
         'content-type': 'application/json',
@@ -159,7 +160,7 @@ class AudiobookshelfApi {
       createUri(
         baseUrl!,
         '/api/libraries/$libraryId/books',
-        {'filter': 'authors.$encodedAuthor'},
+        {'filter': 'authors.$encodedAuthor', 'minified': '1'},
       ),
       headers: {
         'content-type': 'application/json',

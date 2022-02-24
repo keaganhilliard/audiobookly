@@ -212,8 +212,12 @@ class Chapter {
 
   factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
         id: json["id"],
-        start: json["start"].toDouble(),
-        end: json["end"].toDouble(),
+        start: json["start"] is String
+            ? double.parse(json["start"])
+            : json["start"].toDouble(),
+        end: json["end"] is String
+            ? double.parse(json["end"])
+            : json["end"].toDouble(),
         title: json["title"],
       );
 
