@@ -2,14 +2,19 @@
 //  Generated file. Do not edit.
 //
 
+// clang-format off
+
 #include "generated_plugin_registrant.h"
 
-#include <dart_vlc/dart_vlc_plugin.h>
-#include <url_launcher_windows/url_launcher_plugin.h>
+#include <isar_flutter_libs/isar_flutter_libs_plugin.h>
+#include <libwinmedia/libwinmedia_plugin.h>
+#include <url_launcher_windows/url_launcher_windows.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  DartVlcPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("DartVlcPlugin"));
-  UrlLauncherPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("UrlLauncherPlugin"));
+  IsarFlutterLibsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("IsarFlutterLibsPlugin"));
+  LibwinmediaPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("LibwinmediaPlugin"));
+  UrlLauncherWindowsRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("UrlLauncherWindows"));
 }

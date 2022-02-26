@@ -3,7 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  dart_vlc
+  isar_flutter_libs
+  libwinmedia
   url_launcher_windows
 )
 

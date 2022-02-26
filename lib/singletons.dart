@@ -10,7 +10,6 @@ import 'package:audiobookly/services/database/isar_database_service.dart';
 import 'package:audiobookly/services/download/desktop_downloader.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:audiobookly/services/download/mobile_downloader.dart';
-// import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get_it/get_it.dart';
@@ -50,9 +49,13 @@ Future<void> registerSingletons() async {
     downloader = DesktopDownloader(getIt());
     final handler = await initAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
-  } else if ((!Platform.isWindows && !Platform.isLinux)) {
+  } else if ((!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS)) {
     await FlutterDownloader.initialize();
     downloader = MobileDownloader(getIt());
+    final handler = await initAudioHandler();
+    controller = AudioHandlerPlaybackController(handler);
+  } else if (Platform.isMacOS) {
+    downloader = DesktopDownloader(getIt());
     final handler = await initAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
   } else {
