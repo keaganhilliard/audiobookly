@@ -121,6 +121,14 @@ class Utils {
   }
 }
 
+extension ListHelpers<T> on List<T> {
+  T? get firstOrNull => isEmpty ? null : first;
+}
+
+extension StringHelpers on String {
+  Uri? get uri => Uri.parse(this);
+}
+
 extension MediaHelpers on MediaItem {
   String? get narrator => extras?['narrator'];
   bool get played => extras?['played'] ?? false;
@@ -136,9 +144,7 @@ extension MediaHelpers on MediaItem {
       ? Duration.zero
       : Duration(milliseconds: extras?['viewOffset']);
 
-  Uri? get largeThumbnail => extras?['largeThumbnail'] == null
-      ? null
-      : Uri.parse(extras?['largeThumbnail']);
+  Uri? get largeThumbnail => (extras?['largeThumbnail'] as String?)?.uri;
   List<Chapter> get chapters {
     if (extras != null && extras!.containsKey('chapters')) {
       return [

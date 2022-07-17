@@ -8,7 +8,7 @@ class AbsAudiobook {
     this.ino,
     this.libraryId,
     this.folderId,
-    this.book,
+    this.media,
     this.tags,
     this.path,
     this.fullPath,
@@ -31,7 +31,7 @@ class AbsAudiobook {
   String? ino;
   String? libraryId;
   String? folderId;
-  Book? book;
+  Book? media;
   List<String>? tags;
   String? path;
   String? fullPath;
@@ -54,8 +54,8 @@ class AbsAudiobook {
         ino: json["ino"],
         libraryId: json["libraryId"],
         folderId: json["folderId"],
-        book: Book.fromJson(json["book"]),
-        tags: List<String>.from(json["tags"].map((x) => x)),
+        media: Book.fromJson(json["media"]["metadata"]),
+        tags: List<String>.from(json["media"]["tags"].map((x) => x)),
         path: json["path"],
         fullPath: json["fullPath"],
         addedAt: AbsUtils.parseDateTime(json["addedAt"]),
@@ -68,9 +68,12 @@ class AbsAudiobook {
             json["ebooks"]?.map((x) => Ebook.fromJson(x)) ?? []),
         numEbooks: json["numEbooks"],
         numTracks: json["numTracks"],
-        chapters: [
-          for (final chapter in json['chapters']) Chapter.fromJson(chapter)
-        ],
+        chapters: json['media']['chapters'] == null
+            ? []
+            : [
+                for (final chapter in json['media']['chapters'])
+                  Chapter.fromJson(chapter)
+              ],
         tracks: json['tracks'] == null
             ? []
             : [for (final t in json['tracks']) AbsTrack.fromMap(t)],
@@ -85,7 +88,7 @@ class AbsAudiobook {
         "ino": ino,
         "libraryId": libraryId,
         "folderId": folderId,
-        "book": book?.toJson(),
+        "book": media?.toJson(),
         "tags": List<dynamic>.from(tags?.map((x) => x) ?? []),
         "path": path,
         "fullPath": fullPath,
@@ -135,7 +138,7 @@ class Book {
   String? authorFl;
   String? authorLf;
   String? narrator;
-  String? series;
+  List<Series>? series;
   String? volumeNumber;
   String? publishYear;
   String? publisher;
@@ -157,7 +160,8 @@ class Book {
         authorFl: json["authorFL"],
         authorLf: json["authorLF"],
         narrator: json["narrator"],
-        series: json["series"],
+        series:
+            json["series"]?.map<Series>((val) => Series.fromJson(val)).toList(),
         volumeNumber: json["volumeNumber"],
         publishYear: json["publishYear"],
         publisher: json["publisher"],
@@ -266,5 +270,29 @@ class Ebook {
         "path": path,
         "fullPath": fullPath,
         "addedAt": addedAt,
+      };
+}
+
+class Series {
+  Series({
+    required this.id,
+    required this.name,
+    required this.sequence,
+  });
+
+  String id;
+  String name;
+  String sequence;
+
+  factory Series.fromJson(Map<String, dynamic> json) => Series(
+        id: json["id"],
+        name: json["name"],
+        sequence: json["sequence"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "sequence": sequence,
       };
 }

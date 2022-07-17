@@ -14,11 +14,11 @@ class EmbyAuthRepository extends AuthenticationRepository {
 
   @override
   Future<User?> getUser(String token) async {
-    final _embyApi = _ref.read(embyApiProvider);
-    final _prefs = _ref.read(sharedPreferencesServiceProvider);
-    _embyApi.token = token;
-    _embyApi.userId = _prefs.getUserId();
-    final user = await _embyApi.getUser();
+    final embyApi = _ref.read(embyApiProvider);
+    final prefs = _ref.read(sharedPreferencesServiceProvider);
+    embyApi.token = token;
+    embyApi.userId = prefs.userId;
+    final user = await embyApi.getUser();
 
     return User(
       name: user.name,
@@ -29,25 +29,25 @@ class EmbyAuthRepository extends AuthenticationRepository {
 
   @override
   Future<bool> logout() async {
-    final _prefs = _ref.read(sharedPreferencesServiceProvider);
-    await _prefs.setBaseUrl('');
-    await _prefs.setUserToken('');
-    await _prefs.setServerId('');
-    await _prefs.setLibraryId('');
-    await _prefs.setServerType(null);
+    final prefs = _ref.read(sharedPreferencesServiceProvider);
+    await prefs.setBaseUrl('');
+    await prefs.setUserToken('');
+    await prefs.setServerId('');
+    await prefs.setLibraryId('');
+    await prefs.setServerType(null);
     return true;
   }
 
   Future<User> login(String baseUrl, String username, String password) async {
-    final _prefs = _ref.read(sharedPreferencesServiceProvider);
-    final _embyApi = _ref.read(embyApiProvider);
-    _embyApi.baseUrl = baseUrl;
-    final res = await _embyApi.login(username, password);
-    await _prefs.setUserId(res.user!.id!);
-    await _prefs.setBaseUrl(baseUrl);
-    await _prefs.setUserToken(res.accessToken!);
-    await _prefs.setServerId(res.serverId!);
-    await _prefs.setServerType(SERVER_TYPE.EMBY);
+    final prefs = _ref.read(sharedPreferencesServiceProvider);
+    final embyApi = _ref.read(embyApiProvider);
+    embyApi.baseUrl = baseUrl;
+    final res = await embyApi.login(username, password);
+    await prefs.setUserId(res.user!.id!);
+    await prefs.setBaseUrl(baseUrl);
+    await prefs.setUserToken(res.accessToken!);
+    await prefs.setServerId(res.serverId!);
+    await prefs.setServerType(ServerType.emby);
     print(res.toJson());
     return User(
       name: res.user!.name,

@@ -46,8 +46,9 @@ class IsarTrack implements Track {
     this.downloadPath,
     this.bookId,
     this.downloadTaskId,
-    this.downloadTaskStatus,
-  );
+    this.downloadTaskStatus, [
+    this.isarId,
+  ]);
 
   @override
   IsarTrack copyWith({
@@ -60,6 +61,7 @@ class IsarTrack implements Track {
     String? bookId,
     String? downloadTaskId,
     int? downloadTaskStatus,
+    int? isarId,
   }) =>
       IsarTrack(
         id ?? this.id,
@@ -71,5 +73,6 @@ class IsarTrack implements Track {
         bookId ?? this.bookId,
         downloadTaskId ?? this.downloadTaskId,
         downloadTaskStatus ?? this.downloadTaskStatus,
+        isarId ?? this.isarId,
       );
 }

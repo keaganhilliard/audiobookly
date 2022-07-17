@@ -14,12 +14,9 @@ import 'package:audiobookly/widgets/router.dart' as r;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final info = await getDeviceInfo();
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   await registerSingletons();
   runApp(
@@ -29,10 +26,10 @@ Future<void> main() async {
           getIt<PlaybackController>(),
         ),
         sharedPreferencesServiceProvider.overrideWithValue(
-          SharedPreferencesService(prefs),
+          getIt<SharedPreferencesService>(),
         ),
         deviceInfoServiceProvider.overrideWithValue(
-          DeviceInfoService(info),
+          getIt<DeviceInfoService>(),
         ),
         databaseServiceProvider.overrideWithValue(
           getIt<DatabaseService>(),
@@ -60,7 +57,7 @@ class AudiobooklyApp extends HookConsumerWidget {
     final navigationService = ref.watch(navigationServiceProvider);
     final sharedPreferencesService =
         ref.watch(sharedPreferencesServiceProvider);
-    final _currentIndex = useState(0);
+    final currentIndex = useState(0);
     // timeDilation = 7.0;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -69,6 +66,7 @@ class AudiobooklyApp extends HookConsumerWidget {
       onGenerateRoute: r.Router.generateRoute,
       themeMode: ThemeMode.dark,
       theme: ThemeData(
+        useMaterial3: true,
         primaryColor: Colors.deepPurple,
         appBarTheme: const AppBarTheme(),
         brightness: Brightness.light,
@@ -128,12 +126,12 @@ class AudiobooklyApp extends HookConsumerWidget {
                     const MiniPlayer(),
                   ],
                 ),
-                currentIndex: _currentIndex.value,
+                currentIndex: currentIndex.value,
                 onNavigationIndexChange: (index) {
-                  if (index != _currentIndex.value) {
-                    String oldRoute = routeMap[_currentIndex.value];
+                  if (index != currentIndex.value) {
+                    String oldRoute = routeMap[currentIndex.value];
                     String newRoute = routeMap[index];
-                    _currentIndex.value = index;
+                    currentIndex.value = index;
                     _navigatorKey.currentState!.pushNamedAndRemoveUntil(
                       newRoute,
                       ModalRoute.withName(oldRoute),
@@ -157,8 +155,8 @@ class AudiobooklyApp extends HookConsumerWidget {
                     title: 'Collections',
                     icon: Icons.collections_bookmark,
                   ),
-                  if (sharedPreferencesService.getServerType() ==
-                      SERVER_TYPE.AUDIOBOOKSHELF)
+                  if (sharedPreferencesService.serverType ==
+                      ServerType.audiobookshelf)
                     const Destination(title: 'Series', icon: Icons.window),
                 ]),
           );

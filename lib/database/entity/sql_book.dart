@@ -1,5 +1,6 @@
 import 'package:audiobookly/database/entity/sql_track.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:floor/floor.dart';
 
 @Entity(tableName: 'books')
@@ -31,6 +32,8 @@ class SqlBook implements Book {
   final bool read;
   @override
   final DateTime? lastUpdate;
+  @override
+  final DownloadStatus downloadStatus;
 
   SqlBook(
     this.id,
@@ -45,8 +48,9 @@ class SqlBook implements Book {
     this.downloadCompleted,
     this.downloadFailed,
     this.read,
-    this.lastUpdate,
-  );
+    this.lastUpdate, [
+    this.downloadStatus = DownloadStatus.none,
+  ]);
 
   @override
   SqlBook copyWith({
@@ -63,19 +67,22 @@ class SqlBook implements Book {
     bool? downloadFailed,
     bool? read,
     DateTime? lastUpdate,
+    DownloadStatus? downloadStatus,
   }) =>
       SqlBook(
-          id ?? this.id,
-          title ?? this.title,
-          author ?? this.author,
-          narrator ?? this.narrator,
-          description ?? this.description,
-          artPath ?? this.artPath,
-          duration ?? this.duration,
-          lastPlayedPosition ?? this.lastPlayedPosition,
-          downloadRequested ?? this.downloadRequested,
-          downloadCompleted ?? this.downloadCompleted,
-          downloadFailed ?? this.downloadFailed,
-          read ?? this.read,
-          lastUpdate ?? this.lastUpdate);
+        id ?? this.id,
+        title ?? this.title,
+        author ?? this.author,
+        narrator ?? this.narrator,
+        description ?? this.description,
+        artPath ?? this.artPath,
+        duration ?? this.duration,
+        lastPlayedPosition ?? this.lastPlayedPosition,
+        downloadRequested ?? this.downloadRequested,
+        downloadCompleted ?? this.downloadCompleted,
+        downloadFailed ?? this.downloadFailed,
+        read ?? this.read,
+        lastUpdate ?? this.lastUpdate,
+        downloadStatus ?? this.downloadStatus,
+      );
 }

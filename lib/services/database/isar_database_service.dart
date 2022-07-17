@@ -10,15 +10,15 @@ import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:isar/isar.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:isar_connect/isar_connect.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/subjects.dart';
 
 Future<Isar> initIsar() async {
-  initializeIsarConnect();
   return await Isar.open(
-      schemas: [IsarBookSchema, IsarChapterSchema, IsarTrackSchema],
-      directory: (await getApplicationSupportDirectory()).path);
+    schemas: [IsarBookSchema, IsarChapterSchema, IsarTrackSchema],
+    directory: (await getApplicationSupportDirectory()).path,
+    inspector: true,
+  );
 }
 
 class IsarDatabaseService implements DatabaseService {
@@ -50,10 +50,14 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Future insertBook(Book book) async {
+    final dbBook = await _db.isarBooks.filter().idEqualTo(book.id).findFirst();
     await _db.writeTxn((isar) async {
-      return await _db.isarBooks.put(
-          (book as IsarBook).copyWith(lastUpdate: DateTime.now()),
-          replaceOnConflict: true);
+      return await isar.isarBooks.put(
+        (book as IsarBook).copyWith(
+          isarId: dbBook?.isarId,
+          lastUpdate: DateTime.now(),
+        ),
+      );
     });
   }
 
@@ -78,9 +82,8 @@ class IsarDatabaseService implements DatabaseService {
     Track? track = await getTrackByDownloadTask(taskId);
     if (track != null) {
       await _db.writeTxn((isar) async {
-        await _db.isarTracks.put(
+        await isar.isarTracks.put(
           (track as IsarTrack).copyWith(downloadProgress: progress),
-          replaceOnConflict: true,
         );
       });
     }
@@ -108,16 +111,20 @@ class IsarDatabaseService implements DatabaseService {
   }
 
   @override
-  Future insertTrack(Track track) {
+  Future insertTrack(Track track) async {
+    final dbTrack =
+        await _db.isarTracks.filter().idEqualTo(track.id).findFirst();
     return _db.writeTxn((isar) async {
-      return _db.isarTracks.put(track as IsarTrack, replaceOnConflict: true);
+      final iTrack = track as IsarTrack;
+      if (dbTrack != null) iTrack.isarId = dbTrack.isarId;
+      return isar.isarTracks.put(iTrack);
     });
   }
 
   @override
   Future insertTracks(List<Track> tracks) {
     return _db.writeTxn((isar) async {
-      return _db.isarTracks.putAll(tracks.cast(), replaceOnConflict: true);
+      return isar.isarTracks.putAll(tracks.cast());
     });
   }
 
@@ -167,7 +174,15 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Future deleteChapters(List<Chapter> chapters) async {
-    await _db.isarChapters.deleteAll(chapters.cast());
+    if (chapters.isNotEmpty) {
+      final bookId = chapters[0].bookId;
+      final dbChapters =
+          await _db.isarChapters.filter().bookIdEqualTo(bookId).findAll();
+      await _db.writeTxn((isar) async {
+        await _db.isarChapters
+            .deleteAll(dbChapters.map((chapter) => chapter.isarId!).toList());
+      });
+    }
   }
 
   @override
@@ -178,14 +193,14 @@ class IsarDatabaseService implements DatabaseService {
   @override
   Future insertChapter(Chapter chapter) async {
     return _db.writeTxn((isar) async {
-      return _db.isarChapters.put(chapter as IsarChapter);
+      return isar.isarChapters.put(IsarChapter.fromChapter(chapter));
     });
   }
 
   @override
   Future insertChapters(List<Chapter> chapters) {
     return _db.writeTxn((isar) async {
-      return _db.isarChapters.putAll(
+      return isar.isarChapters.putAll(
           [for (final chapter in chapters) IsarChapter.fromChapter(chapter)]);
     });
   }
@@ -193,7 +208,7 @@ class IsarDatabaseService implements DatabaseService {
   @override
   Future deleteBook(Book book) async {
     return _db.writeTxn((isar) async {
-      await _db.isarBooks.delete((book as IsarBook).isarId!);
+      await isar.isarBooks.delete((book as IsarBook).isarId!);
     });
   }
 }

@@ -57,6 +57,7 @@ class AuthorsView extends HookConsumerWidget {
                       thumbnailUrl: author.artUri.toString(),
                       title: author.title,
                       placeholder: Icons.person,
+                      showTitle: true,
                     ),
                   );
                 },

@@ -1,3 +1,5 @@
+import 'package:audiobookly/models/download_status.dart';
+
 class Book {
   final String id;
   final String title;
@@ -11,22 +13,25 @@ class Book {
   final bool downloadCompleted;
   final bool downloadFailed;
   final bool read;
+  final DownloadStatus downloadStatus;
   final DateTime? lastUpdate;
 
   Book(
-      this.id,
-      this.title,
-      this.author,
-      this.narrator,
-      this.description,
-      this.artPath,
-      this.duration,
-      this.lastPlayedPosition,
-      this.downloadRequested,
-      this.downloadCompleted,
-      this.downloadFailed,
-      this.read,
-      this.lastUpdate);
+    this.id,
+    this.title,
+    this.author,
+    this.narrator,
+    this.description,
+    this.artPath,
+    this.duration,
+    this.lastPlayedPosition,
+    this.downloadRequested,
+    this.downloadCompleted,
+    this.downloadFailed,
+    this.read,
+    this.lastUpdate, [
+    this.downloadStatus = DownloadStatus.none,
+  ]);
 
   Book copyWith({
     String? id,
@@ -42,19 +47,22 @@ class Book {
     bool? downloadFailed,
     bool? read,
     DateTime? lastUpdate,
+    DownloadStatus? downloadStatus,
   }) =>
       Book(
-          id ?? this.id,
-          title ?? this.title,
-          author ?? this.author,
-          narrator ?? this.narrator,
-          description ?? this.description,
-          artPath ?? this.artPath,
-          duration ?? this.duration,
-          lastPlayedPosition ?? this.lastPlayedPosition,
-          downloadRequested ?? this.downloadRequested,
-          downloadCompleted ?? this.downloadCompleted,
-          downloadFailed ?? this.downloadFailed,
-          read ?? this.read,
-          lastUpdate ?? this.lastUpdate);
+        id ?? this.id,
+        title ?? this.title,
+        author ?? this.author,
+        narrator ?? this.narrator,
+        description ?? this.description,
+        artPath ?? this.artPath,
+        duration ?? this.duration,
+        lastPlayedPosition ?? this.lastPlayedPosition,
+        downloadRequested ?? this.downloadRequested,
+        downloadCompleted ?? this.downloadCompleted,
+        downloadFailed ?? this.downloadFailed,
+        read ?? this.read,
+        lastUpdate ?? this.lastUpdate,
+        downloadStatus ?? this.downloadStatus,
+      );
 }

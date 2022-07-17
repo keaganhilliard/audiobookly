@@ -19,13 +19,13 @@ final embyApiProvider = Provider<EmbyApi>((ref) {
 
   final _info = infoService.info;
   return EmbyApi(
-    userId: sharedPreferencesService.getUserId(),
-    baseUrl: sharedPreferencesService.getBaseUrl(),
+    userId: sharedPreferencesService.userId,
+    baseUrl: sharedPreferencesService.baseUrl,
     client: 'Audiobookly',
     clientVersion: _info.version,
     deviceId: _info.uniqueId,
     deviceName: _info.model,
-    token: sharedPreferencesService.getCurrentToken(),
+    token: sharedPreferencesService.currentToken,
   );
 });
 
@@ -33,32 +33,31 @@ final plexApiProvider = Provider<PlexApi>((ref) {
   DeviceInfoService infoService = ref.watch(deviceInfoServiceProvider);
   SharedPreferencesService sharedPreferencesService =
       ref.watch(sharedPreferencesServiceProvider);
-  final _info = infoService.info;
+  final info = infoService.info;
   return PlexApi(
     headers: PlexHeaders(
-      clientIdentifier: _info.uniqueId!,
-      device: _info.model!,
+      clientIdentifier: info.uniqueId!,
+      device: info.model!,
       product: 'Audiobookly',
-      platform: _info.platform!,
-      platformVersion: _info.version!,
-      token: sharedPreferencesService.getCurrentToken(),
+      platform: info.platform!,
+      platformVersion: info.version!,
+      token: sharedPreferencesService.currentToken,
     ),
   );
 });
 
 final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
   final sharedPreferencesService = ref.watch(sharedPreferencesServiceProvider);
-  if (sharedPreferencesService.getServerType() == SERVER_TYPE.EMBY) {
+  if (sharedPreferencesService.serverType == ServerType.emby) {
     final embyApi = ref.watch(embyApiProvider);
-    return EmbyRepository(embyApi, sharedPreferencesService.getLibraryId());
-  } else if (sharedPreferencesService.getServerType() == SERVER_TYPE.PLEX) {
+    return EmbyRepository(embyApi, sharedPreferencesService.libraryId);
+  } else if (sharedPreferencesService.serverType == ServerType.plex) {
     final plexApi = ref.watch(plexApiProvider);
     return PlexRepository(api: plexApi, prefs: sharedPreferencesService)
       ..getServerAndLibrary();
-  } else if (sharedPreferencesService.getServerType() ==
-      SERVER_TYPE.AUDIOBOOKSHELF) {
+  } else if (sharedPreferencesService.serverType == ServerType.audiobookshelf) {
     final absApi = ref.watch(absApiProvider);
-    return AbsRepository(absApi, sharedPreferencesService.getLibraryId());
+    return AbsRepository(absApi, sharedPreferencesService.libraryId);
   } else {
     return null;
   }

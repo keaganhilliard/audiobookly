@@ -32,7 +32,7 @@ class IsarChapter implements Chapter {
   String bookId;
 
   factory IsarChapter.fromChapter(Chapter chapter) => IsarChapter(
-        id: chapter.id,
+        id: '${chapter.bookId}.${chapter.id}',
         start: chapter.start,
         end: chapter.end,
         title: chapter.title,

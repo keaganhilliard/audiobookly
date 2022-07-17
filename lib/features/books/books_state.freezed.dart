@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'books_state.dart';
@@ -11,36 +12,7 @@ part of 'books_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$BooksStateTearOff {
-  const _$BooksStateTearOff();
-
-  BooksStateInitial initial() {
-    return const BooksStateInitial();
-  }
-
-  BooksStateLoaded loaded({List<MediaItem>? books, String? currentParent}) {
-    return BooksStateLoaded(
-      books: books,
-      currentParent: currentParent,
-    );
-  }
-
-  BooksStateLoading loading() {
-    return const BooksStateLoading();
-  }
-
-  BooksStateErrorDetails error([String? message]) {
-    return BooksStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $BooksState = _$BooksStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$BooksState {
@@ -114,22 +86,22 @@ class _$BooksStateCopyWithImpl<$Res> implements $BooksStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $BooksStateInitialCopyWith<$Res> {
-  factory $BooksStateInitialCopyWith(
-          BooksStateInitial value, $Res Function(BooksStateInitial) then) =
-      _$BooksStateInitialCopyWithImpl<$Res>;
+abstract class _$$BooksStateInitialCopyWith<$Res> {
+  factory _$$BooksStateInitialCopyWith(
+          _$BooksStateInitial value, $Res Function(_$BooksStateInitial) then) =
+      __$$BooksStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$BooksStateInitialCopyWithImpl<$Res>
+class __$$BooksStateInitialCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
-    implements $BooksStateInitialCopyWith<$Res> {
-  _$BooksStateInitialCopyWithImpl(
-      BooksStateInitial _value, $Res Function(BooksStateInitial) _then)
-      : super(_value, (v) => _then(v as BooksStateInitial));
+    implements _$$BooksStateInitialCopyWith<$Res> {
+  __$$BooksStateInitialCopyWithImpl(
+      _$BooksStateInitial _value, $Res Function(_$BooksStateInitial) _then)
+      : super(_value, (v) => _then(v as _$BooksStateInitial));
 
   @override
-  BooksStateInitial get _value => super._value as BooksStateInitial;
+  _$BooksStateInitial get _value => super._value as _$BooksStateInitial;
 }
 
 /// @nodoc
@@ -147,13 +119,13 @@ class _$BooksStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BooksState.initial'));
+    properties.add(DiagnosticsProperty('type', 'BooksState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is BooksStateInitial);
+        (other.runtimeType == runtimeType && other is _$BooksStateInitial);
   }
 
   @override
@@ -240,32 +212,32 @@ abstract class BooksStateInitial implements BooksState {
 }
 
 /// @nodoc
-abstract class $BooksStateLoadedCopyWith<$Res> {
-  factory $BooksStateLoadedCopyWith(
-          BooksStateLoaded value, $Res Function(BooksStateLoaded) then) =
-      _$BooksStateLoadedCopyWithImpl<$Res>;
+abstract class _$$BooksStateLoadedCopyWith<$Res> {
+  factory _$$BooksStateLoadedCopyWith(
+          _$BooksStateLoaded value, $Res Function(_$BooksStateLoaded) then) =
+      __$$BooksStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? books, String? currentParent});
 }
 
 /// @nodoc
-class _$BooksStateLoadedCopyWithImpl<$Res>
+class __$$BooksStateLoadedCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
-    implements $BooksStateLoadedCopyWith<$Res> {
-  _$BooksStateLoadedCopyWithImpl(
-      BooksStateLoaded _value, $Res Function(BooksStateLoaded) _then)
-      : super(_value, (v) => _then(v as BooksStateLoaded));
+    implements _$$BooksStateLoadedCopyWith<$Res> {
+  __$$BooksStateLoadedCopyWithImpl(
+      _$BooksStateLoaded _value, $Res Function(_$BooksStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$BooksStateLoaded));
 
   @override
-  BooksStateLoaded get _value => super._value as BooksStateLoaded;
+  _$BooksStateLoaded get _value => super._value as _$BooksStateLoaded;
 
   @override
   $Res call({
     Object? books = freezed,
     Object? currentParent = freezed,
   }) {
-    return _then(BooksStateLoaded(
+    return _then(_$BooksStateLoaded(
       books: books == freezed
-          ? _value.books
+          ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
       currentParent: currentParent == freezed
@@ -281,10 +253,18 @@ class _$BooksStateLoadedCopyWithImpl<$Res>
 class _$BooksStateLoaded
     with DiagnosticableTreeMixin
     implements BooksStateLoaded {
-  const _$BooksStateLoaded({this.books, this.currentParent});
+  const _$BooksStateLoaded({final List<MediaItem>? books, this.currentParent})
+      : _books = books;
 
+  final List<MediaItem>? _books;
   @override
-  final List<MediaItem>? books;
+  List<MediaItem>? get books {
+    final value = _books;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? currentParent;
 
@@ -306,8 +286,8 @@ class _$BooksStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is BooksStateLoaded &&
-            const DeepCollectionEquality().equals(other.books, books) &&
+            other is _$BooksStateLoaded &&
+            const DeepCollectionEquality().equals(other._books, _books) &&
             const DeepCollectionEquality()
                 .equals(other.currentParent, currentParent));
   }
@@ -315,13 +295,13 @@ class _$BooksStateLoaded
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(books),
+      const DeepCollectionEquality().hash(_books),
       const DeepCollectionEquality().hash(currentParent));
 
   @JsonKey(ignore: true)
   @override
-  $BooksStateLoadedCopyWith<BooksStateLoaded> get copyWith =>
-      _$BooksStateLoadedCopyWithImpl<BooksStateLoaded>(this, _$identity);
+  _$$BooksStateLoadedCopyWith<_$BooksStateLoaded> get copyWith =>
+      __$$BooksStateLoadedCopyWithImpl<_$BooksStateLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -401,32 +381,33 @@ class _$BooksStateLoaded
 
 abstract class BooksStateLoaded implements BooksState {
   const factory BooksStateLoaded(
-      {List<MediaItem>? books, String? currentParent}) = _$BooksStateLoaded;
+      {final List<MediaItem>? books,
+      final String? currentParent}) = _$BooksStateLoaded;
 
-  List<MediaItem>? get books;
-  String? get currentParent;
+  List<MediaItem>? get books => throw _privateConstructorUsedError;
+  String? get currentParent => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BooksStateLoadedCopyWith<BooksStateLoaded> get copyWith =>
+  _$$BooksStateLoadedCopyWith<_$BooksStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BooksStateLoadingCopyWith<$Res> {
-  factory $BooksStateLoadingCopyWith(
-          BooksStateLoading value, $Res Function(BooksStateLoading) then) =
-      _$BooksStateLoadingCopyWithImpl<$Res>;
+abstract class _$$BooksStateLoadingCopyWith<$Res> {
+  factory _$$BooksStateLoadingCopyWith(
+          _$BooksStateLoading value, $Res Function(_$BooksStateLoading) then) =
+      __$$BooksStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$BooksStateLoadingCopyWithImpl<$Res>
+class __$$BooksStateLoadingCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
-    implements $BooksStateLoadingCopyWith<$Res> {
-  _$BooksStateLoadingCopyWithImpl(
-      BooksStateLoading _value, $Res Function(BooksStateLoading) _then)
-      : super(_value, (v) => _then(v as BooksStateLoading));
+    implements _$$BooksStateLoadingCopyWith<$Res> {
+  __$$BooksStateLoadingCopyWithImpl(
+      _$BooksStateLoading _value, $Res Function(_$BooksStateLoading) _then)
+      : super(_value, (v) => _then(v as _$BooksStateLoading));
 
   @override
-  BooksStateLoading get _value => super._value as BooksStateLoading;
+  _$BooksStateLoading get _value => super._value as _$BooksStateLoading;
 }
 
 /// @nodoc
@@ -444,13 +425,13 @@ class _$BooksStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BooksState.loading'));
+    properties.add(DiagnosticsProperty('type', 'BooksState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is BooksStateLoading);
+        (other.runtimeType == runtimeType && other is _$BooksStateLoading);
   }
 
   @override
@@ -537,29 +518,30 @@ abstract class BooksStateLoading implements BooksState {
 }
 
 /// @nodoc
-abstract class $BooksStateErrorDetailsCopyWith<$Res> {
-  factory $BooksStateErrorDetailsCopyWith(BooksStateErrorDetails value,
-          $Res Function(BooksStateErrorDetails) then) =
-      _$BooksStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$BooksStateErrorDetailsCopyWith<$Res> {
+  factory _$$BooksStateErrorDetailsCopyWith(_$BooksStateErrorDetails value,
+          $Res Function(_$BooksStateErrorDetails) then) =
+      __$$BooksStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$BooksStateErrorDetailsCopyWithImpl<$Res>
+class __$$BooksStateErrorDetailsCopyWithImpl<$Res>
     extends _$BooksStateCopyWithImpl<$Res>
-    implements $BooksStateErrorDetailsCopyWith<$Res> {
-  _$BooksStateErrorDetailsCopyWithImpl(BooksStateErrorDetails _value,
-      $Res Function(BooksStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as BooksStateErrorDetails));
+    implements _$$BooksStateErrorDetailsCopyWith<$Res> {
+  __$$BooksStateErrorDetailsCopyWithImpl(_$BooksStateErrorDetails _value,
+      $Res Function(_$BooksStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$BooksStateErrorDetails));
 
   @override
-  BooksStateErrorDetails get _value => super._value as BooksStateErrorDetails;
+  _$BooksStateErrorDetails get _value =>
+      super._value as _$BooksStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(BooksStateErrorDetails(
+    return _then(_$BooksStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -595,7 +577,7 @@ class _$BooksStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is BooksStateErrorDetails &&
+            other is _$BooksStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -605,8 +587,8 @@ class _$BooksStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $BooksStateErrorDetailsCopyWith<BooksStateErrorDetails> get copyWith =>
-      _$BooksStateErrorDetailsCopyWithImpl<BooksStateErrorDetails>(
+  _$$BooksStateErrorDetailsCopyWith<_$BooksStateErrorDetails> get copyWith =>
+      __$$BooksStateErrorDetailsCopyWithImpl<_$BooksStateErrorDetails>(
           this, _$identity);
 
   @override
@@ -686,11 +668,11 @@ class _$BooksStateErrorDetails
 }
 
 abstract class BooksStateErrorDetails implements BooksState {
-  const factory BooksStateErrorDetails([String? message]) =
+  const factory BooksStateErrorDetails([final String? message]) =
       _$BooksStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BooksStateErrorDetailsCopyWith<BooksStateErrorDetails> get copyWith =>
+  _$$BooksStateErrorDetailsCopyWith<_$BooksStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

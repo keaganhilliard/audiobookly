@@ -16,8 +16,8 @@ final absApiProvider = Provider<AudiobookshelfApi>((ref) {
       ref.watch(sharedPreferencesServiceProvider);
 
   return AudiobookshelfApi(
-    baseUrl: sharedPreferencesService.getBaseUrl(),
-    token: sharedPreferencesService.getCurrentToken(),
+    baseUrl: sharedPreferencesService.baseUrl,
+    token: sharedPreferencesService.currentToken,
   );
 });
 
@@ -48,9 +48,9 @@ class AbsRepository extends MediaRepository {
       [int width = 400]) {
     if (baseUrl != null && id != null) {
       print(
-          '$baseUrl/api/books/$id/cover?token=${_api.token}&ts=$timestamp&width=$width');
+          '$baseUrl/api/items/$id/cover?token=${_api.token}&ts=$timestamp&width=$width');
       return Uri.parse(
-          '$baseUrl/api/books/$id/cover?token=${_api.token}&ts=$timestamp&width=$width&format=webp');
+          '$baseUrl/api/items/$id/cover?token=${_api.token}&ts=$timestamp&width=$width&format=webp');
     }
     return null;
   }
@@ -59,30 +59,34 @@ class AbsRepository extends MediaRepository {
     final progress = userProgress[book.id];
 
     int viewOffset = progress?.currentTime?.inMilliseconds ?? 0;
-    bool played = progress?.isRead ?? false;
-    Duration? totalDuration = progress?.totalDuration;
+    bool played = progress?.isFinished ?? false;
+    Duration? totalDuration = progress?.duration;
     return MediaItem(
-      id: book.id!,
-      title: book.book!.title!,
-      displayDescription: book.book?.description,
-      artist: book.book?.author,
-      album: book.book!.title,
-      duration: book.duration ?? totalDuration,
+      id: book.id,
+      title: book.media.metadata.title ?? 'Unknown',
+      displayDescription: book.media.metadata.description,
+      artist: book.media.metadata.authors?.map((e) => e.name).join(', ') ??
+          'Unknown',
+      album: book.media.metadata.title,
+      duration: book.media.duration == null
+          ? totalDuration
+          : AbsUtils.parseDurationFromSeconds(book.media.duration),
       artUri:
           // _coverUrl(_api.baseUrl, book.book?.cover,
           //     book.lastUpdate?.millisecondsSinceEpoch),
-          _scaledCoverUrl(
-              _api.baseUrl, book.id, book.lastUpdate?.millisecondsSinceEpoch),
+          _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt),
       playable: true,
       extras: <String, dynamic>{
         'played': played,
-        'narrator': book.book?.narrator,
+        'narrator': book.media.metadata.narrators?.join(', ') ?? 'Unknown',
         'viewOffset': viewOffset,
-        'largeThumbnail': _coverUrl(_api.baseUrl, book.book?.cover,
-                book.lastUpdate?.millisecondsSinceEpoch)
-            .toString(),
-        if (book.chapters != null)
-          'chapters': [for (final chapter in book.chapters!) chapter.toJson()]
+        'largeThumbnail':
+            _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
+                .toString(),
+        if (book.media.chapters != null)
+          'chapters': [
+            for (final chapter in book.media.chapters!) chapter.toJson()
+          ]
       },
     );
   }
@@ -90,7 +94,7 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<MediaItem>> getAllBooks() async {
     final books = await _api.getAll(_libraryId);
-    audiobooks = {for (final book in books) book.id!: book};
+    audiobooks = {for (final book in books) book.id: book};
     return [for (final book in books..sort(_sortBooks)) _bookToItem(book)];
   }
 
@@ -99,13 +103,17 @@ class AbsRepository extends MediaRepository {
     return (await _api.getAuthors(_libraryId))
         .map(
           (author) => MediaItem(
-            id: '@authors/$author',
-            title: author,
+            id: '@authors/${author.id}',
+            title: author.name,
+            artUri: author.imagePath == null
+                ? null
+                : Uri.parse(
+                    '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
             playable: false,
           ),
         )
         .toList()
-      ..sort((a, b) => a.id.compareTo(b.id));
+      ..sort((a, b) => a.title.compareTo(b.title));
   }
 
   @override
@@ -120,25 +128,33 @@ class AbsRepository extends MediaRepository {
 
   int _sortBooks(AbsAudiobook a, AbsAudiobook b) {
     int retValue = 0;
-    if (a.book?.author != null && b.book?.author != null) {
-      retValue = a.book!.author!.compareTo(b.book!.author!);
+
+    final aAuthor = a.media.metadata.authors?.firstOrNull;
+    final bAuthor = b.media.metadata.authors?.firstOrNull;
+
+    final aSeries = a.media.metadata.series?.firstOrNull;
+    final bSeries = b.media.metadata.series?.firstOrNull;
+
+    if (aAuthor != null && bAuthor != null) {
+      retValue = aAuthor.name.compareTo(bAuthor.name);
     }
-    if (a.book?.series != null && b.book?.series != null && retValue == 0) {
-      if (a.book!.series == b.book!.series) {
-        retValue = double.parse(a.book?.volumeNumber ?? '0')
-            .compareTo(double.parse(b.book?.volumeNumber ?? '0'));
+    if (aSeries != null && bSeries != null && retValue == 0) {
+      if (aSeries.id == bSeries.id) {
+        retValue = double.parse(aSeries.sequence ?? '0')
+            .compareTo(double.parse(bSeries.sequence ?? '0'));
       } else {
-        retValue =
-            compareStringsWithoutArticles(a.book!.series!, b.book!.series!);
+        retValue = compareStringsWithoutArticles(aSeries.name, bSeries.name);
       }
-    } else if (a.book?.series != null && retValue == 0) {
-      retValue = compareStringsWithoutArticles(a.book!.series!, b.book!.title!);
-    } else if (b.book?.series != null && retValue == 0) {
-      retValue = compareStringsWithoutArticles(a.book!.title!, b.book!.series!);
+    } else if (aSeries != null && retValue == 0) {
+      retValue =
+          compareStringsWithoutArticles(aSeries.name, b.media.metadata.title!);
+    } else if (bSeries != null && retValue == 0) {
+      retValue =
+          compareStringsWithoutArticles(a.media.metadata.title!, bSeries.name);
     }
     if (retValue == 0) {
       retValue = compareStringsWithoutArticles(
-          a.book?.title ?? '', b.book?.title ?? '');
+          a.media.metadata.title!, b.media.metadata.title!);
     }
     return retValue;
   }
@@ -168,7 +184,7 @@ class AbsRepository extends MediaRepository {
             title: collection.name,
             playable: false,
             artUri: _scaledCoverUrl(_api.baseUrl, collection.books[0].id,
-                collection.books[0].book?.lastUpdate))
+                collection.books[0].updatedAt))
     ];
   }
 
@@ -179,10 +195,18 @@ class AbsRepository extends MediaRepository {
     }
     return [
       for (final book in audiobooks.values
-          .where((book) => book.book?.series == seriesId)
+          .where((book) =>
+              book.media.metadata.series?.any((series) => series.id == seriesId) ??
+              false)
           .toList()
-        ..sort((a, b) => double.parse(a.book?.volumeNumber ?? '0')
-            .compareTo(double.parse(b.book?.volumeNumber ?? '0'))))
+        ..sort((a, b) => double.parse(a.media.metadata.series
+                    ?.firstWhere((series) => series.id == seriesId)
+                    .sequence ??
+                '0')
+            .compareTo(double.parse(b.media.metadata.series
+                    ?.firstWhere((series) => series.id == seriesId)
+                    .sequence ??
+                '0'))))
         _bookToItem(book)
     ];
   }
@@ -193,14 +217,19 @@ class AbsRepository extends MediaRepository {
       await getAllBooks();
     }
     return {
-      for (final book in audiobooks.values
-          .where((book) => book.book?.series != null)
+      for (final series in audiobooks.values
+          .where((book) =>
+              book.media.metadata.series != null &&
+              book.media.metadata.series!.isNotEmpty)
+          .expand((book) => book.media.metadata.series!
+              .map((e) => _SeriesHolder(e.id, e.name, e.sequence ?? '', book)))
           .toList())
         MediaItem(
-          id: '@series/${book.book!.series!}',
-          title: book.book!.series!,
+          id: '@series/${series.id}',
+          title: series.name,
           playable: false,
-          artUri: _scaledCoverUrl(_api.baseUrl, book.id, book.book?.lastUpdate),
+          artUri: _scaledCoverUrl(
+              _api.baseUrl, series.book.id, series.book.updatedAt),
         )
     }.toList()
       ..sort((a, b) =>
@@ -242,12 +271,12 @@ class AbsRepository extends MediaRepository {
       for (final book
           in books.values
               .where((book) =>
-                  !book.isRead &&
+                  !book.isFinished &&
                   (book.progress ?? 0) > 0 &&
                   book.lastUpdate != null)
               .toList()
             ..sort((a, b) => b.lastUpdate!.compareTo(a.lastUpdate!)))
-        _bookToItem(await _api.getBookInfo(book.audiobookId))
+        _bookToItem(await _api.getBookInfo(book.id))
     ];
   }
 
@@ -256,7 +285,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   String getServerUrl(String path) {
-    return '${_api.baseUrl}/s/book/$path?token=${_api.token}';
+    return '${_api.baseUrl}/s/item/$path?token=${_api.token}';
   }
 
   @override
@@ -268,17 +297,20 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<MediaItem>> getTracksForBook(MediaItem book) async {
     final apiBook = await _api.getBookInfo(book.id);
-    if (apiBook.tracks == null) {
+    if (apiBook.media.audioFiles == null) {
       return [];
     }
     return [
-      for (final track in apiBook.tracks!)
+      for (final file in apiBook.media.audioFiles!)
         MediaItem(
-          id: '${book.id}/${track.filename}',
+          id: '${book.id}/${file.metadata.filename}',
           album: book.title,
           artist: book.artist,
-          title: track.filename,
-          duration: track.duration,
+          artUri: book.artUri,
+          title: file.metadata.filename,
+          duration: file.duration != null
+              ? AbsUtils.parseDurationFromSeconds(file.duration)
+              : Duration.zero,
         )
     ];
   }
@@ -288,15 +320,15 @@ class AbsRepository extends MediaRepository {
   @override
   Future<User> getUser() async {
     final apiUser = await _api.getUser();
-    userProgress = apiUser.audiobooks;
+    userProgress = apiUser.mediaProgress;
 
     for (final progress in userProgress.values) {
-      final book = await _db.getBookById(progress.audiobookId);
+      final book = await _db.getBookById(progress.id);
       if (book != null && progress.currentTime != null) {
-        if (progress.isRead && !book.read) {
+        if (progress.isFinished && !book.read) {
           await _db.insertBook(
             book.copyWith(
-              read: progress.isRead,
+              read: progress.isFinished,
               lastPlayedPosition: Duration.zero,
             ),
           );
@@ -345,12 +377,12 @@ class AbsRepository extends MediaRepository {
     final progress = userProgress.putIfAbsent(
         key,
         () => AbsAudiobookProgress(
-              audiobookId: key,
-              isRead: false,
+              id: key,
+              isFinished: false,
             ));
     progress.progress = position.inMilliseconds / duration.inMilliseconds;
     progress.currentTime = position;
-    progress.totalDuration = duration;
+    progress.duration = duration;
 
     final book = await _db.getBookById(key);
     if (book != null) {
@@ -381,8 +413,8 @@ class AbsRepository extends MediaRepository {
     final progress = userProgress.putIfAbsent(
         key,
         () => AbsAudiobookProgress(
-              audiobookId: key,
-              isRead: false,
+              id: key,
+              isFinished: false,
             ));
     progress.progress = position / duration;
     progress.currentTime = Duration(milliseconds: position);
@@ -415,4 +447,12 @@ class AbsRepository extends MediaRepository {
     // TODO: implement addToCollection
     throw UnimplementedError();
   }
+}
+
+class _SeriesHolder {
+  String id;
+  String name;
+  String sequence;
+  AbsAudiobook book;
+  _SeriesHolder(this.id, this.name, this.sequence, this.book);
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'settings_state.dart';
@@ -11,35 +12,7 @@ part of 'settings_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SettingsStateTearOff {
-  const _$SettingsStateTearOff();
-
-  SettingsStateInitial initial() {
-    return const SettingsStateInitial();
-  }
-
-  SettingsStateLoaded loaded({User? user}) {
-    return SettingsStateLoaded(
-      user: user,
-    );
-  }
-
-  SettingsStateLoading loading() {
-    return const SettingsStateLoading();
-  }
-
-  SettingsStateErrorDetails error([String? message]) {
-    return SettingsStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $SettingsState = _$SettingsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SettingsState {
@@ -113,22 +86,22 @@ class _$SettingsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $SettingsStateInitialCopyWith<$Res> {
-  factory $SettingsStateInitialCopyWith(SettingsStateInitial value,
-          $Res Function(SettingsStateInitial) then) =
-      _$SettingsStateInitialCopyWithImpl<$Res>;
+abstract class _$$SettingsStateInitialCopyWith<$Res> {
+  factory _$$SettingsStateInitialCopyWith(_$SettingsStateInitial value,
+          $Res Function(_$SettingsStateInitial) then) =
+      __$$SettingsStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SettingsStateInitialCopyWithImpl<$Res>
+class __$$SettingsStateInitialCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
-    implements $SettingsStateInitialCopyWith<$Res> {
-  _$SettingsStateInitialCopyWithImpl(
-      SettingsStateInitial _value, $Res Function(SettingsStateInitial) _then)
-      : super(_value, (v) => _then(v as SettingsStateInitial));
+    implements _$$SettingsStateInitialCopyWith<$Res> {
+  __$$SettingsStateInitialCopyWithImpl(_$SettingsStateInitial _value,
+      $Res Function(_$SettingsStateInitial) _then)
+      : super(_value, (v) => _then(v as _$SettingsStateInitial));
 
   @override
-  SettingsStateInitial get _value => super._value as SettingsStateInitial;
+  _$SettingsStateInitial get _value => super._value as _$SettingsStateInitial;
 }
 
 /// @nodoc
@@ -146,13 +119,13 @@ class _$SettingsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SettingsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'SettingsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SettingsStateInitial);
+        (other.runtimeType == runtimeType && other is _$SettingsStateInitial);
   }
 
   @override
@@ -238,29 +211,29 @@ abstract class SettingsStateInitial implements SettingsState {
 }
 
 /// @nodoc
-abstract class $SettingsStateLoadedCopyWith<$Res> {
-  factory $SettingsStateLoadedCopyWith(
-          SettingsStateLoaded value, $Res Function(SettingsStateLoaded) then) =
-      _$SettingsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$SettingsStateLoadedCopyWith<$Res> {
+  factory _$$SettingsStateLoadedCopyWith(_$SettingsStateLoaded value,
+          $Res Function(_$SettingsStateLoaded) then) =
+      __$$SettingsStateLoadedCopyWithImpl<$Res>;
   $Res call({User? user});
 }
 
 /// @nodoc
-class _$SettingsStateLoadedCopyWithImpl<$Res>
+class __$$SettingsStateLoadedCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
-    implements $SettingsStateLoadedCopyWith<$Res> {
-  _$SettingsStateLoadedCopyWithImpl(
-      SettingsStateLoaded _value, $Res Function(SettingsStateLoaded) _then)
-      : super(_value, (v) => _then(v as SettingsStateLoaded));
+    implements _$$SettingsStateLoadedCopyWith<$Res> {
+  __$$SettingsStateLoadedCopyWithImpl(
+      _$SettingsStateLoaded _value, $Res Function(_$SettingsStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$SettingsStateLoaded));
 
   @override
-  SettingsStateLoaded get _value => super._value as SettingsStateLoaded;
+  _$SettingsStateLoaded get _value => super._value as _$SettingsStateLoaded;
 
   @override
   $Res call({
     Object? user = freezed,
   }) {
-    return _then(SettingsStateLoaded(
+    return _then(_$SettingsStateLoaded(
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -296,7 +269,7 @@ class _$SettingsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SettingsStateLoaded &&
+            other is _$SettingsStateLoaded &&
             const DeepCollectionEquality().equals(other.user, user));
   }
 
@@ -306,8 +279,9 @@ class _$SettingsStateLoaded
 
   @JsonKey(ignore: true)
   @override
-  $SettingsStateLoadedCopyWith<SettingsStateLoaded> get copyWith =>
-      _$SettingsStateLoadedCopyWithImpl<SettingsStateLoaded>(this, _$identity);
+  _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
+      __$$SettingsStateLoadedCopyWithImpl<_$SettingsStateLoaded>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -385,31 +359,31 @@ class _$SettingsStateLoaded
 }
 
 abstract class SettingsStateLoaded implements SettingsState {
-  const factory SettingsStateLoaded({User? user}) = _$SettingsStateLoaded;
+  const factory SettingsStateLoaded({final User? user}) = _$SettingsStateLoaded;
 
-  User? get user;
+  User? get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SettingsStateLoadedCopyWith<SettingsStateLoaded> get copyWith =>
+  _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SettingsStateLoadingCopyWith<$Res> {
-  factory $SettingsStateLoadingCopyWith(SettingsStateLoading value,
-          $Res Function(SettingsStateLoading) then) =
-      _$SettingsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$SettingsStateLoadingCopyWith<$Res> {
+  factory _$$SettingsStateLoadingCopyWith(_$SettingsStateLoading value,
+          $Res Function(_$SettingsStateLoading) then) =
+      __$$SettingsStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SettingsStateLoadingCopyWithImpl<$Res>
+class __$$SettingsStateLoadingCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
-    implements $SettingsStateLoadingCopyWith<$Res> {
-  _$SettingsStateLoadingCopyWithImpl(
-      SettingsStateLoading _value, $Res Function(SettingsStateLoading) _then)
-      : super(_value, (v) => _then(v as SettingsStateLoading));
+    implements _$$SettingsStateLoadingCopyWith<$Res> {
+  __$$SettingsStateLoadingCopyWithImpl(_$SettingsStateLoading _value,
+      $Res Function(_$SettingsStateLoading) _then)
+      : super(_value, (v) => _then(v as _$SettingsStateLoading));
 
   @override
-  SettingsStateLoading get _value => super._value as SettingsStateLoading;
+  _$SettingsStateLoading get _value => super._value as _$SettingsStateLoading;
 }
 
 /// @nodoc
@@ -427,13 +401,13 @@ class _$SettingsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SettingsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'SettingsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SettingsStateLoading);
+        (other.runtimeType == runtimeType && other is _$SettingsStateLoading);
   }
 
   @override
@@ -519,30 +493,31 @@ abstract class SettingsStateLoading implements SettingsState {
 }
 
 /// @nodoc
-abstract class $SettingsStateErrorDetailsCopyWith<$Res> {
-  factory $SettingsStateErrorDetailsCopyWith(SettingsStateErrorDetails value,
-          $Res Function(SettingsStateErrorDetails) then) =
-      _$SettingsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$SettingsStateErrorDetailsCopyWith<$Res> {
+  factory _$$SettingsStateErrorDetailsCopyWith(
+          _$SettingsStateErrorDetails value,
+          $Res Function(_$SettingsStateErrorDetails) then) =
+      __$$SettingsStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$SettingsStateErrorDetailsCopyWithImpl<$Res>
+class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res>
-    implements $SettingsStateErrorDetailsCopyWith<$Res> {
-  _$SettingsStateErrorDetailsCopyWithImpl(SettingsStateErrorDetails _value,
-      $Res Function(SettingsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as SettingsStateErrorDetails));
+    implements _$$SettingsStateErrorDetailsCopyWith<$Res> {
+  __$$SettingsStateErrorDetailsCopyWithImpl(_$SettingsStateErrorDetails _value,
+      $Res Function(_$SettingsStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$SettingsStateErrorDetails));
 
   @override
-  SettingsStateErrorDetails get _value =>
-      super._value as SettingsStateErrorDetails;
+  _$SettingsStateErrorDetails get _value =>
+      super._value as _$SettingsStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(SettingsStateErrorDetails(
+    return _then(_$SettingsStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -578,7 +553,7 @@ class _$SettingsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SettingsStateErrorDetails &&
+            other is _$SettingsStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -588,9 +563,9 @@ class _$SettingsStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $SettingsStateErrorDetailsCopyWith<SettingsStateErrorDetails> get copyWith =>
-      _$SettingsStateErrorDetailsCopyWithImpl<SettingsStateErrorDetails>(
-          this, _$identity);
+  _$$SettingsStateErrorDetailsCopyWith<_$SettingsStateErrorDetails>
+      get copyWith => __$$SettingsStateErrorDetailsCopyWithImpl<
+          _$SettingsStateErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -668,11 +643,11 @@ class _$SettingsStateErrorDetails
 }
 
 abstract class SettingsStateErrorDetails implements SettingsState {
-  const factory SettingsStateErrorDetails([String? message]) =
+  const factory SettingsStateErrorDetails([final String? message]) =
       _$SettingsStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SettingsStateErrorDetailsCopyWith<SettingsStateErrorDetails> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SettingsStateErrorDetailsCopyWith<_$SettingsStateErrorDetails>
+      get copyWith => throw _privateConstructorUsedError;
 }

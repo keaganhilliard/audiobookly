@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'collections_state.dart';
@@ -11,35 +12,7 @@ part of 'collections_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$CollectionsStateTearOff {
-  const _$CollectionsStateTearOff();
-
-  CollectionsStateInitial initial() {
-    return const CollectionsStateInitial();
-  }
-
-  CollectionsStateLoaded loaded({List<MediaItem>? collections}) {
-    return CollectionsStateLoaded(
-      collections: collections,
-    );
-  }
-
-  CollectionsStateLoading loading() {
-    return const CollectionsStateLoading();
-  }
-
-  CollectionsStateErrorDetails error([String? message]) {
-    return CollectionsStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $CollectionsState = _$CollectionsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$CollectionsState {
@@ -113,22 +86,23 @@ class _$CollectionsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $CollectionsStateInitialCopyWith<$Res> {
-  factory $CollectionsStateInitialCopyWith(CollectionsStateInitial value,
-          $Res Function(CollectionsStateInitial) then) =
-      _$CollectionsStateInitialCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateInitialCopyWith<$Res> {
+  factory _$$CollectionsStateInitialCopyWith(_$CollectionsStateInitial value,
+          $Res Function(_$CollectionsStateInitial) then) =
+      __$$CollectionsStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CollectionsStateInitialCopyWithImpl<$Res>
+class __$$CollectionsStateInitialCopyWithImpl<$Res>
     extends _$CollectionsStateCopyWithImpl<$Res>
-    implements $CollectionsStateInitialCopyWith<$Res> {
-  _$CollectionsStateInitialCopyWithImpl(CollectionsStateInitial _value,
-      $Res Function(CollectionsStateInitial) _then)
-      : super(_value, (v) => _then(v as CollectionsStateInitial));
+    implements _$$CollectionsStateInitialCopyWith<$Res> {
+  __$$CollectionsStateInitialCopyWithImpl(_$CollectionsStateInitial _value,
+      $Res Function(_$CollectionsStateInitial) _then)
+      : super(_value, (v) => _then(v as _$CollectionsStateInitial));
 
   @override
-  CollectionsStateInitial get _value => super._value as CollectionsStateInitial;
+  _$CollectionsStateInitial get _value =>
+      super._value as _$CollectionsStateInitial;
 }
 
 /// @nodoc
@@ -146,13 +120,14 @@ class _$CollectionsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'CollectionsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'CollectionsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is CollectionsStateInitial);
+        (other.runtimeType == runtimeType &&
+            other is _$CollectionsStateInitial);
   }
 
   @override
@@ -238,31 +213,32 @@ abstract class CollectionsStateInitial implements CollectionsState {
 }
 
 /// @nodoc
-abstract class $CollectionsStateLoadedCopyWith<$Res> {
-  factory $CollectionsStateLoadedCopyWith(CollectionsStateLoaded value,
-          $Res Function(CollectionsStateLoaded) then) =
-      _$CollectionsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateLoadedCopyWith<$Res> {
+  factory _$$CollectionsStateLoadedCopyWith(_$CollectionsStateLoaded value,
+          $Res Function(_$CollectionsStateLoaded) then) =
+      __$$CollectionsStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? collections});
 }
 
 /// @nodoc
-class _$CollectionsStateLoadedCopyWithImpl<$Res>
+class __$$CollectionsStateLoadedCopyWithImpl<$Res>
     extends _$CollectionsStateCopyWithImpl<$Res>
-    implements $CollectionsStateLoadedCopyWith<$Res> {
-  _$CollectionsStateLoadedCopyWithImpl(CollectionsStateLoaded _value,
-      $Res Function(CollectionsStateLoaded) _then)
-      : super(_value, (v) => _then(v as CollectionsStateLoaded));
+    implements _$$CollectionsStateLoadedCopyWith<$Res> {
+  __$$CollectionsStateLoadedCopyWithImpl(_$CollectionsStateLoaded _value,
+      $Res Function(_$CollectionsStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$CollectionsStateLoaded));
 
   @override
-  CollectionsStateLoaded get _value => super._value as CollectionsStateLoaded;
+  _$CollectionsStateLoaded get _value =>
+      super._value as _$CollectionsStateLoaded;
 
   @override
   $Res call({
     Object? collections = freezed,
   }) {
-    return _then(CollectionsStateLoaded(
+    return _then(_$CollectionsStateLoaded(
       collections: collections == freezed
-          ? _value.collections
+          ? _value._collections
           : collections // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -274,10 +250,17 @@ class _$CollectionsStateLoadedCopyWithImpl<$Res>
 class _$CollectionsStateLoaded
     with DiagnosticableTreeMixin
     implements CollectionsStateLoaded {
-  const _$CollectionsStateLoaded({this.collections});
+  const _$CollectionsStateLoaded({final List<MediaItem>? collections})
+      : _collections = collections;
 
+  final List<MediaItem>? _collections;
   @override
-  final List<MediaItem>? collections;
+  List<MediaItem>? get collections {
+    final value = _collections;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -296,19 +279,19 @@ class _$CollectionsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CollectionsStateLoaded &&
+            other is _$CollectionsStateLoaded &&
             const DeepCollectionEquality()
-                .equals(other.collections, collections));
+                .equals(other._collections, _collections));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(collections));
+      runtimeType, const DeepCollectionEquality().hash(_collections));
 
   @JsonKey(ignore: true)
   @override
-  $CollectionsStateLoadedCopyWith<CollectionsStateLoaded> get copyWith =>
-      _$CollectionsStateLoadedCopyWithImpl<CollectionsStateLoaded>(
+  _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
+      __$$CollectionsStateLoadedCopyWithImpl<_$CollectionsStateLoaded>(
           this, _$identity);
 
   @override
@@ -387,32 +370,33 @@ class _$CollectionsStateLoaded
 }
 
 abstract class CollectionsStateLoaded implements CollectionsState {
-  const factory CollectionsStateLoaded({List<MediaItem>? collections}) =
+  const factory CollectionsStateLoaded({final List<MediaItem>? collections}) =
       _$CollectionsStateLoaded;
 
-  List<MediaItem>? get collections;
+  List<MediaItem>? get collections => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CollectionsStateLoadedCopyWith<CollectionsStateLoaded> get copyWith =>
+  _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CollectionsStateLoadingCopyWith<$Res> {
-  factory $CollectionsStateLoadingCopyWith(CollectionsStateLoading value,
-          $Res Function(CollectionsStateLoading) then) =
-      _$CollectionsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateLoadingCopyWith<$Res> {
+  factory _$$CollectionsStateLoadingCopyWith(_$CollectionsStateLoading value,
+          $Res Function(_$CollectionsStateLoading) then) =
+      __$$CollectionsStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CollectionsStateLoadingCopyWithImpl<$Res>
+class __$$CollectionsStateLoadingCopyWithImpl<$Res>
     extends _$CollectionsStateCopyWithImpl<$Res>
-    implements $CollectionsStateLoadingCopyWith<$Res> {
-  _$CollectionsStateLoadingCopyWithImpl(CollectionsStateLoading _value,
-      $Res Function(CollectionsStateLoading) _then)
-      : super(_value, (v) => _then(v as CollectionsStateLoading));
+    implements _$$CollectionsStateLoadingCopyWith<$Res> {
+  __$$CollectionsStateLoadingCopyWithImpl(_$CollectionsStateLoading _value,
+      $Res Function(_$CollectionsStateLoading) _then)
+      : super(_value, (v) => _then(v as _$CollectionsStateLoading));
 
   @override
-  CollectionsStateLoading get _value => super._value as CollectionsStateLoading;
+  _$CollectionsStateLoading get _value =>
+      super._value as _$CollectionsStateLoading;
 }
 
 /// @nodoc
@@ -430,13 +414,14 @@ class _$CollectionsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'CollectionsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'CollectionsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is CollectionsStateLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$CollectionsStateLoading);
   }
 
   @override
@@ -522,32 +507,32 @@ abstract class CollectionsStateLoading implements CollectionsState {
 }
 
 /// @nodoc
-abstract class $CollectionsStateErrorDetailsCopyWith<$Res> {
-  factory $CollectionsStateErrorDetailsCopyWith(
-          CollectionsStateErrorDetails value,
-          $Res Function(CollectionsStateErrorDetails) then) =
-      _$CollectionsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateErrorDetailsCopyWith<$Res> {
+  factory _$$CollectionsStateErrorDetailsCopyWith(
+          _$CollectionsStateErrorDetails value,
+          $Res Function(_$CollectionsStateErrorDetails) then) =
+      __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$CollectionsStateErrorDetailsCopyWithImpl<$Res>
+class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
     extends _$CollectionsStateCopyWithImpl<$Res>
-    implements $CollectionsStateErrorDetailsCopyWith<$Res> {
-  _$CollectionsStateErrorDetailsCopyWithImpl(
-      CollectionsStateErrorDetails _value,
-      $Res Function(CollectionsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as CollectionsStateErrorDetails));
+    implements _$$CollectionsStateErrorDetailsCopyWith<$Res> {
+  __$$CollectionsStateErrorDetailsCopyWithImpl(
+      _$CollectionsStateErrorDetails _value,
+      $Res Function(_$CollectionsStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$CollectionsStateErrorDetails));
 
   @override
-  CollectionsStateErrorDetails get _value =>
-      super._value as CollectionsStateErrorDetails;
+  _$CollectionsStateErrorDetails get _value =>
+      super._value as _$CollectionsStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(CollectionsStateErrorDetails(
+    return _then(_$CollectionsStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -583,7 +568,7 @@ class _$CollectionsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CollectionsStateErrorDetails &&
+            other is _$CollectionsStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -593,9 +578,9 @@ class _$CollectionsStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $CollectionsStateErrorDetailsCopyWith<CollectionsStateErrorDetails>
-      get copyWith => _$CollectionsStateErrorDetailsCopyWithImpl<
-          CollectionsStateErrorDetails>(this, _$identity);
+  _$$CollectionsStateErrorDetailsCopyWith<_$CollectionsStateErrorDetails>
+      get copyWith => __$$CollectionsStateErrorDetailsCopyWithImpl<
+          _$CollectionsStateErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -673,11 +658,11 @@ class _$CollectionsStateErrorDetails
 }
 
 abstract class CollectionsStateErrorDetails implements CollectionsState {
-  const factory CollectionsStateErrorDetails([String? message]) =
+  const factory CollectionsStateErrorDetails([final String? message]) =
       _$CollectionsStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CollectionsStateErrorDetailsCopyWith<CollectionsStateErrorDetails>
+  _$$CollectionsStateErrorDetailsCopyWith<_$CollectionsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;
 }

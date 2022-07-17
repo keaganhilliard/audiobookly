@@ -26,15 +26,15 @@ Future<AudioHandler> initAudioHandler() async {
   );
 }
 
-Future<AudioHandler> initDesktopAudioHandler() async {
-  return await AudioService.init(
-    builder: () => DesktopAudioHandler(),
-    config: const AudioServiceConfig(
-      rewindInterval: Duration(seconds: 30),
-      fastForwardInterval: Duration(seconds: 30),
-    ),
-  );
-}
+// Future<AudioHandler> initDesktopAudioHandler() async {
+//   return await AudioService.init(
+//     builder: () => DesktopAudioHandler(),
+//     config: const AudioServiceConfig(
+//       rewindInterval: Duration(seconds: 30),
+//       fastForwardInterval: Duration(seconds: 30),
+//     ),
+//   );
+// }
 
 abstract class PlaybackController {
   Future playItem(MediaItem item) async {}

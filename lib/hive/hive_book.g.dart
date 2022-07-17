@@ -30,13 +30,14 @@ class HiveBookAdapter extends TypeAdapter<HiveBook> {
       fields[10] as bool,
       fields[11] as bool,
       fields[13] as DateTime?,
+      fields[14] as DownloadStatus,
     )..tracks = (fields[12] as HiveList?)?.castHiveList();
   }
 
   @override
   void write(BinaryWriter writer, HiveBook obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -63,6 +64,8 @@ class HiveBookAdapter extends TypeAdapter<HiveBook> {
       ..write(obj.read)
       ..writeByte(13)
       ..write(obj.lastUpdate)
+      ..writeByte(14)
+      ..write(obj.downloadStatus)
       ..writeByte(12)
       ..write(obj.tracks);
   }

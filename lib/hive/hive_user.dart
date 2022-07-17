@@ -26,9 +26,9 @@ class HiveUser {
   @HiveField(6)
   final bool isSelected;
 
-  SERVER_TYPE get serverType => SERVER_TYPE.values.firstWhere(
+  ServerType get serverType => ServerType.values.firstWhere(
         (servType) => servType.toString() == _serverType,
-        orElse: () => SERVER_TYPE.UNKNOWN,
+        orElse: () => ServerType.unknown,
       );
 
   HiveUser({

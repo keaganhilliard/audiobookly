@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/chapter.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
@@ -57,6 +58,7 @@ class DownloadService {
           downloadCompleted: false,
           downloadFailed: false,
           downloadRequested: false,
+          downloadStatus: DownloadStatus.none,
         ),
       );
     }

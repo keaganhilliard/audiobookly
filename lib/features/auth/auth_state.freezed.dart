@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'auth_state.dart';
@@ -11,35 +12,7 @@ part of 'auth_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AuthStateTearOff {
-  const _$AuthStateTearOff();
-
-  AuthStateInitial initial() {
-    return const AuthStateInitial();
-  }
-
-  AuthStateLoaded loaded({User? user}) {
-    return AuthStateLoaded(
-      user: user,
-    );
-  }
-
-  AuthStateLoading loading() {
-    return const AuthStateLoading();
-  }
-
-  AuthStateErrorDetails error([String? message]) {
-    return AuthStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $AuthState = _$AuthStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AuthState {
@@ -111,21 +84,22 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $AuthStateInitialCopyWith<$Res> {
-  factory $AuthStateInitialCopyWith(
-          AuthStateInitial value, $Res Function(AuthStateInitial) then) =
-      _$AuthStateInitialCopyWithImpl<$Res>;
+abstract class _$$AuthStateInitialCopyWith<$Res> {
+  factory _$$AuthStateInitialCopyWith(
+          _$AuthStateInitial value, $Res Function(_$AuthStateInitial) then) =
+      __$$AuthStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AuthStateInitialCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $AuthStateInitialCopyWith<$Res> {
-  _$AuthStateInitialCopyWithImpl(
-      AuthStateInitial _value, $Res Function(AuthStateInitial) _then)
-      : super(_value, (v) => _then(v as AuthStateInitial));
+class __$$AuthStateInitialCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$AuthStateInitialCopyWith<$Res> {
+  __$$AuthStateInitialCopyWithImpl(
+      _$AuthStateInitial _value, $Res Function(_$AuthStateInitial) _then)
+      : super(_value, (v) => _then(v as _$AuthStateInitial));
 
   @override
-  AuthStateInitial get _value => super._value as AuthStateInitial;
+  _$AuthStateInitial get _value => super._value as _$AuthStateInitial;
 }
 
 /// @nodoc
@@ -143,13 +117,13 @@ class _$AuthStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthState.initial'));
+    properties.add(DiagnosticsProperty('type', 'AuthState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthStateInitial);
+        (other.runtimeType == runtimeType && other is _$AuthStateInitial);
   }
 
   @override
@@ -235,28 +209,29 @@ abstract class AuthStateInitial implements AuthState {
 }
 
 /// @nodoc
-abstract class $AuthStateLoadedCopyWith<$Res> {
-  factory $AuthStateLoadedCopyWith(
-          AuthStateLoaded value, $Res Function(AuthStateLoaded) then) =
-      _$AuthStateLoadedCopyWithImpl<$Res>;
+abstract class _$$AuthStateLoadedCopyWith<$Res> {
+  factory _$$AuthStateLoadedCopyWith(
+          _$AuthStateLoaded value, $Res Function(_$AuthStateLoaded) then) =
+      __$$AuthStateLoadedCopyWithImpl<$Res>;
   $Res call({User? user});
 }
 
 /// @nodoc
-class _$AuthStateLoadedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $AuthStateLoadedCopyWith<$Res> {
-  _$AuthStateLoadedCopyWithImpl(
-      AuthStateLoaded _value, $Res Function(AuthStateLoaded) _then)
-      : super(_value, (v) => _then(v as AuthStateLoaded));
+class __$$AuthStateLoadedCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$AuthStateLoadedCopyWith<$Res> {
+  __$$AuthStateLoadedCopyWithImpl(
+      _$AuthStateLoaded _value, $Res Function(_$AuthStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$AuthStateLoaded));
 
   @override
-  AuthStateLoaded get _value => super._value as AuthStateLoaded;
+  _$AuthStateLoaded get _value => super._value as _$AuthStateLoaded;
 
   @override
   $Res call({
     Object? user = freezed,
   }) {
-    return _then(AuthStateLoaded(
+    return _then(_$AuthStateLoaded(
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -292,7 +267,7 @@ class _$AuthStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AuthStateLoaded &&
+            other is _$AuthStateLoaded &&
             const DeepCollectionEquality().equals(other.user, user));
   }
 
@@ -302,8 +277,8 @@ class _$AuthStateLoaded
 
   @JsonKey(ignore: true)
   @override
-  $AuthStateLoadedCopyWith<AuthStateLoaded> get copyWith =>
-      _$AuthStateLoadedCopyWithImpl<AuthStateLoaded>(this, _$identity);
+  _$$AuthStateLoadedCopyWith<_$AuthStateLoaded> get copyWith =>
+      __$$AuthStateLoadedCopyWithImpl<_$AuthStateLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -381,30 +356,31 @@ class _$AuthStateLoaded
 }
 
 abstract class AuthStateLoaded implements AuthState {
-  const factory AuthStateLoaded({User? user}) = _$AuthStateLoaded;
+  const factory AuthStateLoaded({final User? user}) = _$AuthStateLoaded;
 
-  User? get user;
+  User? get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthStateLoadedCopyWith<AuthStateLoaded> get copyWith =>
+  _$$AuthStateLoadedCopyWith<_$AuthStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AuthStateLoadingCopyWith<$Res> {
-  factory $AuthStateLoadingCopyWith(
-          AuthStateLoading value, $Res Function(AuthStateLoading) then) =
-      _$AuthStateLoadingCopyWithImpl<$Res>;
+abstract class _$$AuthStateLoadingCopyWith<$Res> {
+  factory _$$AuthStateLoadingCopyWith(
+          _$AuthStateLoading value, $Res Function(_$AuthStateLoading) then) =
+      __$$AuthStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AuthStateLoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $AuthStateLoadingCopyWith<$Res> {
-  _$AuthStateLoadingCopyWithImpl(
-      AuthStateLoading _value, $Res Function(AuthStateLoading) _then)
-      : super(_value, (v) => _then(v as AuthStateLoading));
+class __$$AuthStateLoadingCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$AuthStateLoadingCopyWith<$Res> {
+  __$$AuthStateLoadingCopyWithImpl(
+      _$AuthStateLoading _value, $Res Function(_$AuthStateLoading) _then)
+      : super(_value, (v) => _then(v as _$AuthStateLoading));
 
   @override
-  AuthStateLoading get _value => super._value as AuthStateLoading;
+  _$AuthStateLoading get _value => super._value as _$AuthStateLoading;
 }
 
 /// @nodoc
@@ -422,13 +398,13 @@ class _$AuthStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthState.loading'));
+    properties.add(DiagnosticsProperty('type', 'AuthState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthStateLoading);
+        (other.runtimeType == runtimeType && other is _$AuthStateLoading);
   }
 
   @override
@@ -514,29 +490,29 @@ abstract class AuthStateLoading implements AuthState {
 }
 
 /// @nodoc
-abstract class $AuthStateErrorDetailsCopyWith<$Res> {
-  factory $AuthStateErrorDetailsCopyWith(AuthStateErrorDetails value,
-          $Res Function(AuthStateErrorDetails) then) =
-      _$AuthStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$AuthStateErrorDetailsCopyWith<$Res> {
+  factory _$$AuthStateErrorDetailsCopyWith(_$AuthStateErrorDetails value,
+          $Res Function(_$AuthStateErrorDetails) then) =
+      __$$AuthStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$AuthStateErrorDetailsCopyWithImpl<$Res>
+class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
     extends _$AuthStateCopyWithImpl<$Res>
-    implements $AuthStateErrorDetailsCopyWith<$Res> {
-  _$AuthStateErrorDetailsCopyWithImpl(
-      AuthStateErrorDetails _value, $Res Function(AuthStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as AuthStateErrorDetails));
+    implements _$$AuthStateErrorDetailsCopyWith<$Res> {
+  __$$AuthStateErrorDetailsCopyWithImpl(_$AuthStateErrorDetails _value,
+      $Res Function(_$AuthStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$AuthStateErrorDetails));
 
   @override
-  AuthStateErrorDetails get _value => super._value as AuthStateErrorDetails;
+  _$AuthStateErrorDetails get _value => super._value as _$AuthStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(AuthStateErrorDetails(
+    return _then(_$AuthStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -572,7 +548,7 @@ class _$AuthStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AuthStateErrorDetails &&
+            other is _$AuthStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -582,8 +558,8 @@ class _$AuthStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $AuthStateErrorDetailsCopyWith<AuthStateErrorDetails> get copyWith =>
-      _$AuthStateErrorDetailsCopyWithImpl<AuthStateErrorDetails>(
+  _$$AuthStateErrorDetailsCopyWith<_$AuthStateErrorDetails> get copyWith =>
+      __$$AuthStateErrorDetailsCopyWithImpl<_$AuthStateErrorDetails>(
           this, _$identity);
 
   @override
@@ -662,11 +638,11 @@ class _$AuthStateErrorDetails
 }
 
 abstract class AuthStateErrorDetails implements AuthState {
-  const factory AuthStateErrorDetails([String? message]) =
+  const factory AuthStateErrorDetails([final String? message]) =
       _$AuthStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthStateErrorDetailsCopyWith<AuthStateErrorDetails> get copyWith =>
+  _$$AuthStateErrorDetailsCopyWith<_$AuthStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'authors_state.dart';
@@ -11,35 +12,7 @@ part of 'authors_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AuthorsStateTearOff {
-  const _$AuthorsStateTearOff();
-
-  AuthorsStateInitial initial() {
-    return const AuthorsStateInitial();
-  }
-
-  AuthorsStateLoaded loaded({List<MediaItem>? authors}) {
-    return AuthorsStateLoaded(
-      authors: authors,
-    );
-  }
-
-  AuthorsStateLoading loading() {
-    return const AuthorsStateLoading();
-  }
-
-  AuthorsStateErrorDetails error([String? message]) {
-    return AuthorsStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $AuthorsState = _$AuthorsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AuthorsState {
@@ -112,22 +85,22 @@ class _$AuthorsStateCopyWithImpl<$Res> implements $AuthorsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $AuthorsStateInitialCopyWith<$Res> {
-  factory $AuthorsStateInitialCopyWith(
-          AuthorsStateInitial value, $Res Function(AuthorsStateInitial) then) =
-      _$AuthorsStateInitialCopyWithImpl<$Res>;
+abstract class _$$AuthorsStateInitialCopyWith<$Res> {
+  factory _$$AuthorsStateInitialCopyWith(_$AuthorsStateInitial value,
+          $Res Function(_$AuthorsStateInitial) then) =
+      __$$AuthorsStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AuthorsStateInitialCopyWithImpl<$Res>
+class __$$AuthorsStateInitialCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
-    implements $AuthorsStateInitialCopyWith<$Res> {
-  _$AuthorsStateInitialCopyWithImpl(
-      AuthorsStateInitial _value, $Res Function(AuthorsStateInitial) _then)
-      : super(_value, (v) => _then(v as AuthorsStateInitial));
+    implements _$$AuthorsStateInitialCopyWith<$Res> {
+  __$$AuthorsStateInitialCopyWithImpl(
+      _$AuthorsStateInitial _value, $Res Function(_$AuthorsStateInitial) _then)
+      : super(_value, (v) => _then(v as _$AuthorsStateInitial));
 
   @override
-  AuthorsStateInitial get _value => super._value as AuthorsStateInitial;
+  _$AuthorsStateInitial get _value => super._value as _$AuthorsStateInitial;
 }
 
 /// @nodoc
@@ -145,13 +118,13 @@ class _$AuthorsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthorsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'AuthorsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthorsStateInitial);
+        (other.runtimeType == runtimeType && other is _$AuthorsStateInitial);
   }
 
   @override
@@ -237,31 +210,31 @@ abstract class AuthorsStateInitial implements AuthorsState {
 }
 
 /// @nodoc
-abstract class $AuthorsStateLoadedCopyWith<$Res> {
-  factory $AuthorsStateLoadedCopyWith(
-          AuthorsStateLoaded value, $Res Function(AuthorsStateLoaded) then) =
-      _$AuthorsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$AuthorsStateLoadedCopyWith<$Res> {
+  factory _$$AuthorsStateLoadedCopyWith(_$AuthorsStateLoaded value,
+          $Res Function(_$AuthorsStateLoaded) then) =
+      __$$AuthorsStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? authors});
 }
 
 /// @nodoc
-class _$AuthorsStateLoadedCopyWithImpl<$Res>
+class __$$AuthorsStateLoadedCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
-    implements $AuthorsStateLoadedCopyWith<$Res> {
-  _$AuthorsStateLoadedCopyWithImpl(
-      AuthorsStateLoaded _value, $Res Function(AuthorsStateLoaded) _then)
-      : super(_value, (v) => _then(v as AuthorsStateLoaded));
+    implements _$$AuthorsStateLoadedCopyWith<$Res> {
+  __$$AuthorsStateLoadedCopyWithImpl(
+      _$AuthorsStateLoaded _value, $Res Function(_$AuthorsStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$AuthorsStateLoaded));
 
   @override
-  AuthorsStateLoaded get _value => super._value as AuthorsStateLoaded;
+  _$AuthorsStateLoaded get _value => super._value as _$AuthorsStateLoaded;
 
   @override
   $Res call({
     Object? authors = freezed,
   }) {
-    return _then(AuthorsStateLoaded(
+    return _then(_$AuthorsStateLoaded(
       authors: authors == freezed
-          ? _value.authors
+          ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -273,10 +246,17 @@ class _$AuthorsStateLoadedCopyWithImpl<$Res>
 class _$AuthorsStateLoaded
     with DiagnosticableTreeMixin
     implements AuthorsStateLoaded {
-  const _$AuthorsStateLoaded({this.authors});
+  const _$AuthorsStateLoaded({final List<MediaItem>? authors})
+      : _authors = authors;
 
+  final List<MediaItem>? _authors;
   @override
-  final List<MediaItem>? authors;
+  List<MediaItem>? get authors {
+    final value = _authors;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -295,18 +275,19 @@ class _$AuthorsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AuthorsStateLoaded &&
-            const DeepCollectionEquality().equals(other.authors, authors));
+            other is _$AuthorsStateLoaded &&
+            const DeepCollectionEquality().equals(other._authors, _authors));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(authors));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_authors));
 
   @JsonKey(ignore: true)
   @override
-  $AuthorsStateLoadedCopyWith<AuthorsStateLoaded> get copyWith =>
-      _$AuthorsStateLoadedCopyWithImpl<AuthorsStateLoaded>(this, _$identity);
+  _$$AuthorsStateLoadedCopyWith<_$AuthorsStateLoaded> get copyWith =>
+      __$$AuthorsStateLoadedCopyWithImpl<_$AuthorsStateLoaded>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -384,32 +365,32 @@ class _$AuthorsStateLoaded
 }
 
 abstract class AuthorsStateLoaded implements AuthorsState {
-  const factory AuthorsStateLoaded({List<MediaItem>? authors}) =
+  const factory AuthorsStateLoaded({final List<MediaItem>? authors}) =
       _$AuthorsStateLoaded;
 
-  List<MediaItem>? get authors;
+  List<MediaItem>? get authors => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthorsStateLoadedCopyWith<AuthorsStateLoaded> get copyWith =>
+  _$$AuthorsStateLoadedCopyWith<_$AuthorsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AuthorsStateLoadingCopyWith<$Res> {
-  factory $AuthorsStateLoadingCopyWith(
-          AuthorsStateLoading value, $Res Function(AuthorsStateLoading) then) =
-      _$AuthorsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$AuthorsStateLoadingCopyWith<$Res> {
+  factory _$$AuthorsStateLoadingCopyWith(_$AuthorsStateLoading value,
+          $Res Function(_$AuthorsStateLoading) then) =
+      __$$AuthorsStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AuthorsStateLoadingCopyWithImpl<$Res>
+class __$$AuthorsStateLoadingCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
-    implements $AuthorsStateLoadingCopyWith<$Res> {
-  _$AuthorsStateLoadingCopyWithImpl(
-      AuthorsStateLoading _value, $Res Function(AuthorsStateLoading) _then)
-      : super(_value, (v) => _then(v as AuthorsStateLoading));
+    implements _$$AuthorsStateLoadingCopyWith<$Res> {
+  __$$AuthorsStateLoadingCopyWithImpl(
+      _$AuthorsStateLoading _value, $Res Function(_$AuthorsStateLoading) _then)
+      : super(_value, (v) => _then(v as _$AuthorsStateLoading));
 
   @override
-  AuthorsStateLoading get _value => super._value as AuthorsStateLoading;
+  _$AuthorsStateLoading get _value => super._value as _$AuthorsStateLoading;
 }
 
 /// @nodoc
@@ -427,13 +408,13 @@ class _$AuthorsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthorsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'AuthorsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthorsStateLoading);
+        (other.runtimeType == runtimeType && other is _$AuthorsStateLoading);
   }
 
   @override
@@ -519,30 +500,30 @@ abstract class AuthorsStateLoading implements AuthorsState {
 }
 
 /// @nodoc
-abstract class $AuthorsStateErrorDetailsCopyWith<$Res> {
-  factory $AuthorsStateErrorDetailsCopyWith(AuthorsStateErrorDetails value,
-          $Res Function(AuthorsStateErrorDetails) then) =
-      _$AuthorsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$AuthorsStateErrorDetailsCopyWith<$Res> {
+  factory _$$AuthorsStateErrorDetailsCopyWith(_$AuthorsStateErrorDetails value,
+          $Res Function(_$AuthorsStateErrorDetails) then) =
+      __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$AuthorsStateErrorDetailsCopyWithImpl<$Res>
+class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
     extends _$AuthorsStateCopyWithImpl<$Res>
-    implements $AuthorsStateErrorDetailsCopyWith<$Res> {
-  _$AuthorsStateErrorDetailsCopyWithImpl(AuthorsStateErrorDetails _value,
-      $Res Function(AuthorsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as AuthorsStateErrorDetails));
+    implements _$$AuthorsStateErrorDetailsCopyWith<$Res> {
+  __$$AuthorsStateErrorDetailsCopyWithImpl(_$AuthorsStateErrorDetails _value,
+      $Res Function(_$AuthorsStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$AuthorsStateErrorDetails));
 
   @override
-  AuthorsStateErrorDetails get _value =>
-      super._value as AuthorsStateErrorDetails;
+  _$AuthorsStateErrorDetails get _value =>
+      super._value as _$AuthorsStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(AuthorsStateErrorDetails(
+    return _then(_$AuthorsStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -578,7 +559,7 @@ class _$AuthorsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AuthorsStateErrorDetails &&
+            other is _$AuthorsStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -588,9 +569,10 @@ class _$AuthorsStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $AuthorsStateErrorDetailsCopyWith<AuthorsStateErrorDetails> get copyWith =>
-      _$AuthorsStateErrorDetailsCopyWithImpl<AuthorsStateErrorDetails>(
-          this, _$identity);
+  _$$AuthorsStateErrorDetailsCopyWith<_$AuthorsStateErrorDetails>
+      get copyWith =>
+          __$$AuthorsStateErrorDetailsCopyWithImpl<_$AuthorsStateErrorDetails>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -668,11 +650,11 @@ class _$AuthorsStateErrorDetails
 }
 
 abstract class AuthorsStateErrorDetails implements AuthorsState {
-  const factory AuthorsStateErrorDetails([String? message]) =
+  const factory AuthorsStateErrorDetails([final String? message]) =
       _$AuthorsStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AuthorsStateErrorDetailsCopyWith<AuthorsStateErrorDetails> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AuthorsStateErrorDetailsCopyWith<_$AuthorsStateErrorDetails>
+      get copyWith => throw _privateConstructorUsedError;
 }

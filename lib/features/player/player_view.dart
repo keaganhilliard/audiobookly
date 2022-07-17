@@ -6,6 +6,7 @@ import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookly/features/tracks/tracks_view.dart';
+import 'package:audiobookly/widgets/forward_button.dart';
 import 'package:audiobookly/widgets/playback_position.dart';
 import 'package:audiobookly/widgets/rewind_button.dart';
 import 'package:audiobookly/widgets/seek_bar.dart';
@@ -302,13 +303,13 @@ class PlayerView extends HookConsumerWidget {
                                       timeLeft.hasData && timeLeft.data != null
                                           ? Text(
                                               Utils.getTimeValue(timeLeft.data),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 // color: Colors.white,
                                                 fontSize: 9.0,
                                               ),
                                             )
-                                          : Icon(Icons.snooze),
+                                          : const Icon(Icons.snooze),
                                   onPressed: () async {
                                     final time = await showDialog<Duration?>(
                                       context: context,
@@ -360,7 +361,7 @@ class PlayerView extends HookConsumerWidget {
                                               AudioProcessingState.buffering ||
                                           state?.processingState ==
                                               AudioProcessingState.loading
-                                      ? CircularProgressIndicator()
+                                      ? const CircularProgressIndicator()
                                       : Container(),
                                 ),
                                 getIconButton(
@@ -368,8 +369,8 @@ class PlayerView extends HookConsumerWidget {
                                           false ||
                                               state?.processingState ==
                                                   AudioProcessingState.buffering
-                                      ? Icon(Icons.pause_circle_filled)
-                                      : Icon(Icons.play_circle_filled),
+                                      ? const Icon(Icons.pause_circle_filled)
+                                      : const Icon(Icons.play_circle_filled),
                                   onPressed: state?.playing ??
                                           false ||
                                               state?.processingState ==
@@ -381,15 +382,16 @@ class PlayerView extends HookConsumerWidget {
                                 ),
                               ],
                             ),
-                            getIconButton(
-                              icon: Icon(Jump.forward_30),
-                              onPressed: playbackController.fastForward,
-                            ),
+                            ForwardButton(iconSize: 35),
+                            // getIconButton(
+                            //   icon: Icon(Jump.forward_30),
+                            //   onPressed: playbackController.fastForward,
+                            // ),
                             IconButton(
                               onPressed: () => {
                                 showModalBottomSheet(
                                     clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(15.0),
                                         topRight: Radius.circular(15.0),
@@ -409,9 +411,9 @@ class PlayerView extends HookConsumerWidget {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
-                                            Text('Playback Speed'),
+                                            const Text('Playback Speed'),
                                             ValueSlider(
-                                              prefix: Text('1.00'),
+                                              prefix: const Text('1.00'),
                                               value: state?.speed ?? 1.0,
                                               onChangeEnd: (val) {
                                                 playbackController
@@ -419,7 +421,7 @@ class PlayerView extends HookConsumerWidget {
                                               },
                                               max: 2.0,
                                               min: 1.0,
-                                              postfix: Text('2.00'),
+                                              postfix: const Text('2.00'),
                                             )
                                           ],
                                         ),
@@ -428,7 +430,7 @@ class PlayerView extends HookConsumerWidget {
                               },
                               icon: Text(
                                 '${state?.speed.toStringAsFixed(2)}x',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   // color: Colors.white,
                                   fontSize: 9.0,

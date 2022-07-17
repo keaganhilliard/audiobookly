@@ -32,13 +32,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<bool> logout() async {
     try {
       state = const AuthStateLoading();
-      final _prefs = _ref.read(sharedPreferencesServiceProvider);
-      await _prefs.setUserToken('');
-      await _prefs.setBaseUrl('');
-      await _prefs.setServerId('');
-      await _prefs.setServerType(null);
-      await _prefs.setUserId('');
-      await _prefs.setLibraryId('');
+      final prefs = _ref.read(sharedPreferencesServiceProvider);
+      await prefs.setUserToken('');
+      await prefs.setBaseUrl('');
+      await prefs.setServerId('');
+      await prefs.setServerType(null);
+      await prefs.setUserId('');
+      await prefs.setLibraryId('');
       state = const AuthStateInitial();
       return true;
     } catch (e) {
@@ -68,23 +68,23 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<bool> plexLogin() async {
-    final _prefs = _ref.read(sharedPreferencesServiceProvider);
-    final _plexApi = _ref.read(plexApiProvider);
-    PlexPin pin = await _plexApi.getPin();
-    String oAuthUrl = _plexApi.getOauthUrl(pin.code!);
+    final prefs = _ref.read(sharedPreferencesServiceProvider);
+    final plexApi = _ref.read(plexApiProvider);
+    PlexPin pin = await plexApi.getPin();
+    String oAuthUrl = plexApi.getOauthUrl(pin.code!);
     // Browser browser = await openUrl(oAuthUrl);
-    await launch(oAuthUrl);
+    await launchUrl(Uri.parse(oAuthUrl));
     int count = 0;
     Completer waitForIt = Completer();
     Timer.periodic(const Duration(seconds: 5), (timer) async {
       print('Timering');
       count++;
-      PlexPin authToken = await _plexApi.getAuthToken(pin.id!);
+      PlexPin authToken = await plexApi.getAuthToken(pin.id!);
       if (authToken.authToken != null) {
-        _plexApi.headers.token = authToken.authToken;
-        _plexApi.authToken = authToken.authToken;
-        _prefs.setUserToken(authToken.authToken!);
-        _prefs.setServerType(SERVER_TYPE.PLEX);
+        plexApi.headers.token = authToken.authToken;
+        plexApi.authToken = authToken.authToken;
+        prefs.setUserToken(authToken.authToken!);
+        prefs.setServerType(ServerType.plex);
         // urlLauncher.closeWebView();
         // await browser.close();
         timer.cancel();
@@ -97,7 +97,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       }
     });
     await waitForIt.future;
-    final servers = (await _plexApi.getServers())
+    final servers = (await plexApi.getServers())
         .map((server) => Library(server.clientIdentifier, server.name))
         .toList();
     final navigationService = _ref.read(navigationServiceProvider);
@@ -107,11 +107,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       ),
     );
     print(server.id);
-    _prefs.setServerId(server.id);
+    prefs.setServerId(server.id);
 
     final library = await (navigationService.push(
       MaterialPageRoute(
-        builder: (context) => LibrarySelectView(),
+        builder: (context) => const LibrarySelectView(),
       ),
     ));
 
@@ -121,45 +121,46 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future checkToken() async {
     try {
       state = const AuthStateLoading();
-      final _prefs = _ref.read(sharedPreferencesServiceProvider);
+      final prefs = _ref.read(sharedPreferencesServiceProvider);
       final navigationService = _ref.read(navigationServiceProvider);
-      print('Checking token: ${_prefs.getCurrentToken()}');
+      print('Checking token: ${prefs.currentToken}');
 
       User? user;
-      if (_prefs.getServerType() == SERVER_TYPE.EMBY) {
-        final _userRepo = _ref.read(embyAuthRepoProvider);
-        user = await _userRepo.getUser(_prefs.getCurrentToken());
-        if (_prefs.getLibraryId().isEmpty) {
+      if (prefs.serverType == ServerType.emby) {
+        final userRepo = _ref.read(embyAuthRepoProvider);
+        user = await userRepo.getUser(prefs.currentToken);
+        if (prefs.libraryId.isEmpty) {
           await navigationService.push(
             MaterialPageRoute(builder: (context) {
               return const LibrarySelectView();
             }),
           );
         }
-      } else if (_prefs.getServerType() == SERVER_TYPE.PLEX) {
-        final _userRepo = _ref.read(plexAuthRepoProvider);
-        final _plexRepo = _ref.read(plexApiProvider);
-        user = await _userRepo.getUser(_prefs.getCurrentToken());
+      } else if (prefs.serverType == ServerType.plex) {
+        final userRepo = _ref.read(plexAuthRepoProvider);
+        // final plexRepo = _ref.read(plexApiProvider);
+        user = await userRepo.getUser(prefs.currentToken);
 
         if (user == null) {
-        } else if (_prefs.getServerId().isEmpty) {
+        } else if (prefs.serverId.isEmpty) {
           // final thing = await navigationService.push(
           //   MaterialPageRoute(builder: (context) {
-          //     return ServerSelect(await _plexRepo.getSer);
+          //     return ServerSelect(await plexRepo.getSer);
           //   }),
           // );
         }
-        // if (_prefs.getLibraryId().isEmpty) {
+        // if (prefs.libraryId.isEmpty) {
         //   await navigationService.push(
         //     MaterialPageRoute(builder: (context) {
         //       return LibrarySelectView();
         //     }),
         //   );
         // }
-      } else if (_prefs.getServerType() == SERVER_TYPE.AUDIOBOOKSHELF) {
-        final _userRepo = _ref.read(absAuthRepoProvider);
-        user = await _userRepo.getUser(_prefs.getCurrentToken());
-        if (_prefs.getLibraryId().isEmpty) {
+      } else if (prefs.serverType == ServerType.audiobookshelf) {
+        final userRepo = _ref.read(absAuthRepoProvider);
+        user = await userRepo.getUser(prefs.currentToken);
+        print(user);
+        if (prefs.libraryId.isEmpty) {
           await navigationService.push(
             MaterialPageRoute(builder: (context) {
               return const LibrarySelectView();
@@ -171,10 +172,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (user != null) {
         state = AuthStateLoaded(user: user);
       } else {
-        _prefs.setUserToken('');
+        prefs.setUserToken('');
         state = const AuthStateInitial();
       }
-    } catch (e) {
+    } catch (e, stack) {
+      print(e);
+      print(stack);
       state = AuthStateErrorDetails(e.toString());
     }
   }

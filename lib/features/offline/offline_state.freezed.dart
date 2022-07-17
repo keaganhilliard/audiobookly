@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'offline_state.dart';
@@ -11,35 +12,7 @@ part of 'offline_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$OfflineStateTearOff {
-  const _$OfflineStateTearOff();
-
-  OfflineStateInitial initial() {
-    return const OfflineStateInitial();
-  }
-
-  OfflineStateLoaded loaded({List<MediaItem>? books}) {
-    return OfflineStateLoaded(
-      books: books,
-    );
-  }
-
-  OfflineStateLoading loading() {
-    return const OfflineStateLoading();
-  }
-
-  OfflineStateErrorDetails error([String? message]) {
-    return OfflineStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $OfflineState = _$OfflineStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$OfflineState {
@@ -112,22 +85,22 @@ class _$OfflineStateCopyWithImpl<$Res> implements $OfflineStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $OfflineStateInitialCopyWith<$Res> {
-  factory $OfflineStateInitialCopyWith(
-          OfflineStateInitial value, $Res Function(OfflineStateInitial) then) =
-      _$OfflineStateInitialCopyWithImpl<$Res>;
+abstract class _$$OfflineStateInitialCopyWith<$Res> {
+  factory _$$OfflineStateInitialCopyWith(_$OfflineStateInitial value,
+          $Res Function(_$OfflineStateInitial) then) =
+      __$$OfflineStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$OfflineStateInitialCopyWithImpl<$Res>
+class __$$OfflineStateInitialCopyWithImpl<$Res>
     extends _$OfflineStateCopyWithImpl<$Res>
-    implements $OfflineStateInitialCopyWith<$Res> {
-  _$OfflineStateInitialCopyWithImpl(
-      OfflineStateInitial _value, $Res Function(OfflineStateInitial) _then)
-      : super(_value, (v) => _then(v as OfflineStateInitial));
+    implements _$$OfflineStateInitialCopyWith<$Res> {
+  __$$OfflineStateInitialCopyWithImpl(
+      _$OfflineStateInitial _value, $Res Function(_$OfflineStateInitial) _then)
+      : super(_value, (v) => _then(v as _$OfflineStateInitial));
 
   @override
-  OfflineStateInitial get _value => super._value as OfflineStateInitial;
+  _$OfflineStateInitial get _value => super._value as _$OfflineStateInitial;
 }
 
 /// @nodoc
@@ -145,13 +118,13 @@ class _$OfflineStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'OfflineState.initial'));
+    properties.add(DiagnosticsProperty('type', 'OfflineState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is OfflineStateInitial);
+        (other.runtimeType == runtimeType && other is _$OfflineStateInitial);
   }
 
   @override
@@ -237,31 +210,31 @@ abstract class OfflineStateInitial implements OfflineState {
 }
 
 /// @nodoc
-abstract class $OfflineStateLoadedCopyWith<$Res> {
-  factory $OfflineStateLoadedCopyWith(
-          OfflineStateLoaded value, $Res Function(OfflineStateLoaded) then) =
-      _$OfflineStateLoadedCopyWithImpl<$Res>;
+abstract class _$$OfflineStateLoadedCopyWith<$Res> {
+  factory _$$OfflineStateLoadedCopyWith(_$OfflineStateLoaded value,
+          $Res Function(_$OfflineStateLoaded) then) =
+      __$$OfflineStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? books});
 }
 
 /// @nodoc
-class _$OfflineStateLoadedCopyWithImpl<$Res>
+class __$$OfflineStateLoadedCopyWithImpl<$Res>
     extends _$OfflineStateCopyWithImpl<$Res>
-    implements $OfflineStateLoadedCopyWith<$Res> {
-  _$OfflineStateLoadedCopyWithImpl(
-      OfflineStateLoaded _value, $Res Function(OfflineStateLoaded) _then)
-      : super(_value, (v) => _then(v as OfflineStateLoaded));
+    implements _$$OfflineStateLoadedCopyWith<$Res> {
+  __$$OfflineStateLoadedCopyWithImpl(
+      _$OfflineStateLoaded _value, $Res Function(_$OfflineStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$OfflineStateLoaded));
 
   @override
-  OfflineStateLoaded get _value => super._value as OfflineStateLoaded;
+  _$OfflineStateLoaded get _value => super._value as _$OfflineStateLoaded;
 
   @override
   $Res call({
     Object? books = freezed,
   }) {
-    return _then(OfflineStateLoaded(
+    return _then(_$OfflineStateLoaded(
       books: books == freezed
-          ? _value.books
+          ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -273,10 +246,16 @@ class _$OfflineStateLoadedCopyWithImpl<$Res>
 class _$OfflineStateLoaded
     with DiagnosticableTreeMixin
     implements OfflineStateLoaded {
-  const _$OfflineStateLoaded({this.books});
+  const _$OfflineStateLoaded({final List<MediaItem>? books}) : _books = books;
 
+  final List<MediaItem>? _books;
   @override
-  final List<MediaItem>? books;
+  List<MediaItem>? get books {
+    final value = _books;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -295,18 +274,19 @@ class _$OfflineStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is OfflineStateLoaded &&
-            const DeepCollectionEquality().equals(other.books, books));
+            other is _$OfflineStateLoaded &&
+            const DeepCollectionEquality().equals(other._books, _books));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(books));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_books));
 
   @JsonKey(ignore: true)
   @override
-  $OfflineStateLoadedCopyWith<OfflineStateLoaded> get copyWith =>
-      _$OfflineStateLoadedCopyWithImpl<OfflineStateLoaded>(this, _$identity);
+  _$$OfflineStateLoadedCopyWith<_$OfflineStateLoaded> get copyWith =>
+      __$$OfflineStateLoadedCopyWithImpl<_$OfflineStateLoaded>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -384,32 +364,32 @@ class _$OfflineStateLoaded
 }
 
 abstract class OfflineStateLoaded implements OfflineState {
-  const factory OfflineStateLoaded({List<MediaItem>? books}) =
+  const factory OfflineStateLoaded({final List<MediaItem>? books}) =
       _$OfflineStateLoaded;
 
-  List<MediaItem>? get books;
+  List<MediaItem>? get books => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OfflineStateLoadedCopyWith<OfflineStateLoaded> get copyWith =>
+  _$$OfflineStateLoadedCopyWith<_$OfflineStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OfflineStateLoadingCopyWith<$Res> {
-  factory $OfflineStateLoadingCopyWith(
-          OfflineStateLoading value, $Res Function(OfflineStateLoading) then) =
-      _$OfflineStateLoadingCopyWithImpl<$Res>;
+abstract class _$$OfflineStateLoadingCopyWith<$Res> {
+  factory _$$OfflineStateLoadingCopyWith(_$OfflineStateLoading value,
+          $Res Function(_$OfflineStateLoading) then) =
+      __$$OfflineStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$OfflineStateLoadingCopyWithImpl<$Res>
+class __$$OfflineStateLoadingCopyWithImpl<$Res>
     extends _$OfflineStateCopyWithImpl<$Res>
-    implements $OfflineStateLoadingCopyWith<$Res> {
-  _$OfflineStateLoadingCopyWithImpl(
-      OfflineStateLoading _value, $Res Function(OfflineStateLoading) _then)
-      : super(_value, (v) => _then(v as OfflineStateLoading));
+    implements _$$OfflineStateLoadingCopyWith<$Res> {
+  __$$OfflineStateLoadingCopyWithImpl(
+      _$OfflineStateLoading _value, $Res Function(_$OfflineStateLoading) _then)
+      : super(_value, (v) => _then(v as _$OfflineStateLoading));
 
   @override
-  OfflineStateLoading get _value => super._value as OfflineStateLoading;
+  _$OfflineStateLoading get _value => super._value as _$OfflineStateLoading;
 }
 
 /// @nodoc
@@ -427,13 +407,13 @@ class _$OfflineStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'OfflineState.loading'));
+    properties.add(DiagnosticsProperty('type', 'OfflineState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is OfflineStateLoading);
+        (other.runtimeType == runtimeType && other is _$OfflineStateLoading);
   }
 
   @override
@@ -519,30 +499,30 @@ abstract class OfflineStateLoading implements OfflineState {
 }
 
 /// @nodoc
-abstract class $OfflineStateErrorDetailsCopyWith<$Res> {
-  factory $OfflineStateErrorDetailsCopyWith(OfflineStateErrorDetails value,
-          $Res Function(OfflineStateErrorDetails) then) =
-      _$OfflineStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$OfflineStateErrorDetailsCopyWith<$Res> {
+  factory _$$OfflineStateErrorDetailsCopyWith(_$OfflineStateErrorDetails value,
+          $Res Function(_$OfflineStateErrorDetails) then) =
+      __$$OfflineStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$OfflineStateErrorDetailsCopyWithImpl<$Res>
+class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
     extends _$OfflineStateCopyWithImpl<$Res>
-    implements $OfflineStateErrorDetailsCopyWith<$Res> {
-  _$OfflineStateErrorDetailsCopyWithImpl(OfflineStateErrorDetails _value,
-      $Res Function(OfflineStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as OfflineStateErrorDetails));
+    implements _$$OfflineStateErrorDetailsCopyWith<$Res> {
+  __$$OfflineStateErrorDetailsCopyWithImpl(_$OfflineStateErrorDetails _value,
+      $Res Function(_$OfflineStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$OfflineStateErrorDetails));
 
   @override
-  OfflineStateErrorDetails get _value =>
-      super._value as OfflineStateErrorDetails;
+  _$OfflineStateErrorDetails get _value =>
+      super._value as _$OfflineStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(OfflineStateErrorDetails(
+    return _then(_$OfflineStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -578,7 +558,7 @@ class _$OfflineStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is OfflineStateErrorDetails &&
+            other is _$OfflineStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -588,9 +568,10 @@ class _$OfflineStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $OfflineStateErrorDetailsCopyWith<OfflineStateErrorDetails> get copyWith =>
-      _$OfflineStateErrorDetailsCopyWithImpl<OfflineStateErrorDetails>(
-          this, _$identity);
+  _$$OfflineStateErrorDetailsCopyWith<_$OfflineStateErrorDetails>
+      get copyWith =>
+          __$$OfflineStateErrorDetailsCopyWithImpl<_$OfflineStateErrorDetails>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -668,11 +649,11 @@ class _$OfflineStateErrorDetails
 }
 
 abstract class OfflineStateErrorDetails implements OfflineState {
-  const factory OfflineStateErrorDetails([String? message]) =
+  const factory OfflineStateErrorDetails([final String? message]) =
       _$OfflineStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OfflineStateErrorDetailsCopyWith<OfflineStateErrorDetails> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$OfflineStateErrorDetailsCopyWith<_$OfflineStateErrorDetails>
+      get copyWith => throw _privateConstructorUsedError;
 }

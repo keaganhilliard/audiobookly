@@ -38,7 +38,7 @@ class BookGridItem extends StatelessWidget {
         child: Stack(
           children: [
             Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Flexible(
@@ -48,45 +48,18 @@ class BookGridItem extends StatelessWidget {
                     fit: BoxFit.cover,
                     alignment: Alignment.center,
                     imageBuilder: (context, imageProvider) {
-                      if (showTitle) {
-                        return LayoutBuilder(
-                          builder: (context, constraints) {
-                            return Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Image(image: imageProvider),
-                                Positioned(
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Opacity(
-                                        opacity: 0.7,
-                                        child: Container(
-                                          height: 40,
-                                          width: constraints.minWidth,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        width: 100,
-                                        child: Text(
-                                          title!,
-                                          textAlign: TextAlign.center,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: const TextStyle(fontSize: 11),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  bottom: 0,
-                                  left: 0,
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
+                      // if (showTitle) {
+                      //   return LayoutBuilder(
+                      //     builder: (context, constraints) {
+                      //       return Stack(
+                      //         alignment: Alignment.bottomCenter,
+                      //         children: [
+                      //           Image(image: imageProvider),
+                      //         ],
+                      //       );
+                      //     },
+                      //   );
+                      // }
                       return Image(
                         image: imageProvider,
                       );
@@ -95,24 +68,51 @@ class BookGridItem extends StatelessWidget {
                       constraints: const BoxConstraints.expand(),
                       // color: Colors.black,
                       child: PlaceHolder(
-                        title: title!,
+                        title: showTitle ? null : title,
                         placeholder: placeholder,
-                        subtitle: subtitle,
+                        subtitle: showTitle ? null : subtitle,
                       ),
                     ),
                     placeholder: (context, url) => Container(
                       constraints: const BoxConstraints.expand(),
                       // color: Colors.black,
                       child: PlaceHolder(
-                        title: title!,
+                        title: showTitle ? null : title,
                         placeholder: placeholder,
-                        subtitle: subtitle,
+                        subtitle: showTitle ? null : subtitle,
                       ),
                     ),
                   ),
                 ),
               ],
             ),
+            if (showTitle)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Opacity(
+                      opacity: 0.7,
+                      child: Container(
+                        height: 40,
+                        //width: constraints.minWidth,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Positioned(
+                      width: 100,
+                      child: Text(
+                        title!,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             if (progress > 0)
               Align(
                 alignment: Alignment.bottomLeft,
@@ -132,12 +132,12 @@ class BookGridItem extends StatelessWidget {
 
 class PlaceHolder extends StatelessWidget {
   final IconData placeholder;
-  final String title;
+  final String? title;
   final String? subtitle;
   const PlaceHolder({
     Key? key,
     required this.placeholder,
-    required this.title,
+    this.title,
     this.subtitle,
   }) : super(key: key);
 
@@ -151,16 +151,17 @@ class PlaceHolder extends StatelessWidget {
           placeholder,
           size: 50.0,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            // style: const TextStyle(fontSize: 13),
-            textAlign: TextAlign.center,
+        if (title != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              title!,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              // style: const TextStyle(fontSize: 13),
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
         if (subtitle != null)
           Text(
             subtitle!,

@@ -1,4 +1,5 @@
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:hive/hive.dart';
 
 part 'hive_book.g.dart';
@@ -57,23 +58,29 @@ class HiveBook implements Book {
   @HiveField(13)
   final DateTime? lastUpdate;
 
+  @override
+  @HiveField(14)
+  final DownloadStatus downloadStatus;
+
   @HiveField(12)
   HiveList? tracks;
 
   HiveBook(
-      this.id,
-      this.title,
-      this.author,
-      this.narrator,
-      this.description,
-      this.artPath,
-      this.duration,
-      this.lastPlayedPosition,
-      this.downloadRequested,
-      this.downloadCompleted,
-      this.downloadFailed,
-      this.read,
-      this.lastUpdate);
+    this.id,
+    this.title,
+    this.author,
+    this.narrator,
+    this.description,
+    this.artPath,
+    this.duration,
+    this.lastPlayedPosition,
+    this.downloadRequested,
+    this.downloadCompleted,
+    this.downloadFailed,
+    this.read,
+    this.lastUpdate, [
+    this.downloadStatus = DownloadStatus.none,
+  ]);
 
   @override
   HiveBook copyWith({
@@ -90,19 +97,22 @@ class HiveBook implements Book {
     bool? downloadFailed,
     bool? read,
     DateTime? lastUpdate,
+    DownloadStatus? downloadStatus,
   }) =>
       HiveBook(
-          id ?? this.id,
-          title ?? this.title,
-          author ?? this.author,
-          narrator ?? this.narrator,
-          description ?? this.description,
-          artPath ?? this.artPath,
-          duration ?? this.duration,
-          lastPlayedPosition ?? this.lastPlayedPosition,
-          downloadRequested ?? this.downloadRequested,
-          downloadCompleted ?? this.downloadCompleted,
-          downloadFailed ?? this.downloadFailed,
-          read ?? this.read,
-          lastUpdate ?? this.lastUpdate);
+        id ?? this.id,
+        title ?? this.title,
+        author ?? this.author,
+        narrator ?? this.narrator,
+        description ?? this.description,
+        artPath ?? this.artPath,
+        duration ?? this.duration,
+        lastPlayedPosition ?? this.lastPlayedPosition,
+        downloadRequested ?? this.downloadRequested,
+        downloadCompleted ?? this.downloadCompleted,
+        downloadFailed ?? this.downloadFailed,
+        read ?? this.read,
+        lastUpdate ?? this.lastUpdate,
+        downloadStatus ?? this.downloadStatus,
+      );
 }

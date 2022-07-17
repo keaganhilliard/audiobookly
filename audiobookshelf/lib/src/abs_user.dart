@@ -7,7 +7,7 @@ class AbsUser {
   String type;
   String? stream;
   String token;
-  Map<String, AbsAudiobookProgress> audiobooks;
+  Map<String, AbsAudiobookProgress> mediaProgress;
   bool isActive;
   bool isLocked;
   DateTime? lastSeen;
@@ -22,7 +22,7 @@ class AbsUser {
       required this.type,
       this.stream,
       required this.token,
-      required this.audiobooks,
+      required this.mediaProgress,
       required this.isActive,
       required this.isLocked,
       this.lastSeen,
@@ -37,9 +37,9 @@ class AbsUser {
         type: json['type'],
         stream: json['stream'],
         token: json['token'],
-        audiobooks: {
-          for (final e in json['audiobooks'].entries)
-            e.key: AbsAudiobookProgress.fromJson(e.value)
+        mediaProgress: {
+          for (final prog in json['mediaProgress'])
+            prog['id']: AbsAudiobookProgress.fromJson(prog)
         },
         isActive: json['isActive'],
         isLocked: json['isLocked'],
@@ -56,8 +56,8 @@ class AbsUser {
         'type': type,
         'stream': stream,
         'token': token,
-        'audiobooks': {
-          for (final e in audiobooks.entries) e.key: e.value.toJson()
+        'mediaProgress': {
+          for (final e in mediaProgress.entries) e.key: e.value.toJson()
         },
         'isActive': isActive,
         'isLocked': isLocked,

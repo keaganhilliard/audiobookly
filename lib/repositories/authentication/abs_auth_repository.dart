@@ -18,7 +18,7 @@ class AbsAuthRepository extends AuthenticationRepository {
     final _absApi = _ref.read(absApiProvider);
     final _prefs = _ref.read(sharedPreferencesServiceProvider);
     _absApi.token = token;
-    _absApi.userId = _prefs.getUserId();
+    _absApi.userId = _prefs.userId;
     final user = await _absApi.getUser();
 
     return User(
@@ -48,7 +48,7 @@ class AbsAuthRepository extends AuthenticationRepository {
     await _prefs.setBaseUrl(baseUrl);
     await _prefs.setUserToken(res.user.token);
     // await _prefs.setServerId(res.serverId!);
-    await _prefs.setServerType(SERVER_TYPE.AUDIOBOOKSHELF);
+    await _prefs.setServerType(ServerType.audiobookshelf);
     // print(res.toJson());
     return User(
       name: res.user.username,

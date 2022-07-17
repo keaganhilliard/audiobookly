@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'library_select_state.dart';
@@ -11,35 +12,7 @@ part of 'library_select_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LibrarySelectStateTearOff {
-  const _$LibrarySelectStateTearOff();
-
-  LibrarySelectStateInitial initial() {
-    return const LibrarySelectStateInitial();
-  }
-
-  LibrarySelectStateLoaded loaded({List<Library>? libraries}) {
-    return LibrarySelectStateLoaded(
-      libraries: libraries,
-    );
-  }
-
-  LibrarySelectStateLoading loading() {
-    return const LibrarySelectStateLoading();
-  }
-
-  LibrarySelectStateErrorDetails error([String? message]) {
-    return LibrarySelectStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $LibrarySelectState = _$LibrarySelectStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LibrarySelectState {
@@ -113,23 +86,24 @@ class _$LibrarySelectStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $LibrarySelectStateInitialCopyWith<$Res> {
-  factory $LibrarySelectStateInitialCopyWith(LibrarySelectStateInitial value,
-          $Res Function(LibrarySelectStateInitial) then) =
-      _$LibrarySelectStateInitialCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateInitialCopyWith<$Res> {
+  factory _$$LibrarySelectStateInitialCopyWith(
+          _$LibrarySelectStateInitial value,
+          $Res Function(_$LibrarySelectStateInitial) then) =
+      __$$LibrarySelectStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LibrarySelectStateInitialCopyWithImpl<$Res>
+class __$$LibrarySelectStateInitialCopyWithImpl<$Res>
     extends _$LibrarySelectStateCopyWithImpl<$Res>
-    implements $LibrarySelectStateInitialCopyWith<$Res> {
-  _$LibrarySelectStateInitialCopyWithImpl(LibrarySelectStateInitial _value,
-      $Res Function(LibrarySelectStateInitial) _then)
-      : super(_value, (v) => _then(v as LibrarySelectStateInitial));
+    implements _$$LibrarySelectStateInitialCopyWith<$Res> {
+  __$$LibrarySelectStateInitialCopyWithImpl(_$LibrarySelectStateInitial _value,
+      $Res Function(_$LibrarySelectStateInitial) _then)
+      : super(_value, (v) => _then(v as _$LibrarySelectStateInitial));
 
   @override
-  LibrarySelectStateInitial get _value =>
-      super._value as LibrarySelectStateInitial;
+  _$LibrarySelectStateInitial get _value =>
+      super._value as _$LibrarySelectStateInitial;
 }
 
 /// @nodoc
@@ -147,14 +121,14 @@ class _$LibrarySelectStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
+    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LibrarySelectStateInitial);
+            other is _$LibrarySelectStateInitial);
   }
 
   @override
@@ -240,32 +214,32 @@ abstract class LibrarySelectStateInitial implements LibrarySelectState {
 }
 
 /// @nodoc
-abstract class $LibrarySelectStateLoadedCopyWith<$Res> {
-  factory $LibrarySelectStateLoadedCopyWith(LibrarySelectStateLoaded value,
-          $Res Function(LibrarySelectStateLoaded) then) =
-      _$LibrarySelectStateLoadedCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateLoadedCopyWith<$Res> {
+  factory _$$LibrarySelectStateLoadedCopyWith(_$LibrarySelectStateLoaded value,
+          $Res Function(_$LibrarySelectStateLoaded) then) =
+      __$$LibrarySelectStateLoadedCopyWithImpl<$Res>;
   $Res call({List<Library>? libraries});
 }
 
 /// @nodoc
-class _$LibrarySelectStateLoadedCopyWithImpl<$Res>
+class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
     extends _$LibrarySelectStateCopyWithImpl<$Res>
-    implements $LibrarySelectStateLoadedCopyWith<$Res> {
-  _$LibrarySelectStateLoadedCopyWithImpl(LibrarySelectStateLoaded _value,
-      $Res Function(LibrarySelectStateLoaded) _then)
-      : super(_value, (v) => _then(v as LibrarySelectStateLoaded));
+    implements _$$LibrarySelectStateLoadedCopyWith<$Res> {
+  __$$LibrarySelectStateLoadedCopyWithImpl(_$LibrarySelectStateLoaded _value,
+      $Res Function(_$LibrarySelectStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$LibrarySelectStateLoaded));
 
   @override
-  LibrarySelectStateLoaded get _value =>
-      super._value as LibrarySelectStateLoaded;
+  _$LibrarySelectStateLoaded get _value =>
+      super._value as _$LibrarySelectStateLoaded;
 
   @override
   $Res call({
     Object? libraries = freezed,
   }) {
-    return _then(LibrarySelectStateLoaded(
+    return _then(_$LibrarySelectStateLoaded(
       libraries: libraries == freezed
-          ? _value.libraries
+          ? _value._libraries
           : libraries // ignore: cast_nullable_to_non_nullable
               as List<Library>?,
     ));
@@ -277,10 +251,17 @@ class _$LibrarySelectStateLoadedCopyWithImpl<$Res>
 class _$LibrarySelectStateLoaded
     with DiagnosticableTreeMixin
     implements LibrarySelectStateLoaded {
-  const _$LibrarySelectStateLoaded({this.libraries});
+  const _$LibrarySelectStateLoaded({final List<Library>? libraries})
+      : _libraries = libraries;
 
+  final List<Library>? _libraries;
   @override
-  final List<Library>? libraries;
+  List<Library>? get libraries {
+    final value = _libraries;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -299,19 +280,21 @@ class _$LibrarySelectStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LibrarySelectStateLoaded &&
-            const DeepCollectionEquality().equals(other.libraries, libraries));
+            other is _$LibrarySelectStateLoaded &&
+            const DeepCollectionEquality()
+                .equals(other._libraries, _libraries));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(libraries));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_libraries));
 
   @JsonKey(ignore: true)
   @override
-  $LibrarySelectStateLoadedCopyWith<LibrarySelectStateLoaded> get copyWith =>
-      _$LibrarySelectStateLoadedCopyWithImpl<LibrarySelectStateLoaded>(
-          this, _$identity);
+  _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
+      get copyWith =>
+          __$$LibrarySelectStateLoadedCopyWithImpl<_$LibrarySelectStateLoaded>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -389,33 +372,34 @@ class _$LibrarySelectStateLoaded
 }
 
 abstract class LibrarySelectStateLoaded implements LibrarySelectState {
-  const factory LibrarySelectStateLoaded({List<Library>? libraries}) =
+  const factory LibrarySelectStateLoaded({final List<Library>? libraries}) =
       _$LibrarySelectStateLoaded;
 
-  List<Library>? get libraries;
+  List<Library>? get libraries => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LibrarySelectStateLoadedCopyWith<LibrarySelectStateLoaded> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LibrarySelectStateLoadingCopyWith<$Res> {
-  factory $LibrarySelectStateLoadingCopyWith(LibrarySelectStateLoading value,
-          $Res Function(LibrarySelectStateLoading) then) =
-      _$LibrarySelectStateLoadingCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateLoadingCopyWith<$Res> {
+  factory _$$LibrarySelectStateLoadingCopyWith(
+          _$LibrarySelectStateLoading value,
+          $Res Function(_$LibrarySelectStateLoading) then) =
+      __$$LibrarySelectStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LibrarySelectStateLoadingCopyWithImpl<$Res>
+class __$$LibrarySelectStateLoadingCopyWithImpl<$Res>
     extends _$LibrarySelectStateCopyWithImpl<$Res>
-    implements $LibrarySelectStateLoadingCopyWith<$Res> {
-  _$LibrarySelectStateLoadingCopyWithImpl(LibrarySelectStateLoading _value,
-      $Res Function(LibrarySelectStateLoading) _then)
-      : super(_value, (v) => _then(v as LibrarySelectStateLoading));
+    implements _$$LibrarySelectStateLoadingCopyWith<$Res> {
+  __$$LibrarySelectStateLoadingCopyWithImpl(_$LibrarySelectStateLoading _value,
+      $Res Function(_$LibrarySelectStateLoading) _then)
+      : super(_value, (v) => _then(v as _$LibrarySelectStateLoading));
 
   @override
-  LibrarySelectStateLoading get _value =>
-      super._value as LibrarySelectStateLoading;
+  _$LibrarySelectStateLoading get _value =>
+      super._value as _$LibrarySelectStateLoading;
 }
 
 /// @nodoc
@@ -433,14 +417,14 @@ class _$LibrarySelectStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
+    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LibrarySelectStateLoading);
+            other is _$LibrarySelectStateLoading);
   }
 
   @override
@@ -526,32 +510,32 @@ abstract class LibrarySelectStateLoading implements LibrarySelectState {
 }
 
 /// @nodoc
-abstract class $LibrarySelectStateErrorDetailsCopyWith<$Res> {
-  factory $LibrarySelectStateErrorDetailsCopyWith(
-          LibrarySelectStateErrorDetails value,
-          $Res Function(LibrarySelectStateErrorDetails) then) =
-      _$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateErrorDetailsCopyWith<$Res> {
+  factory _$$LibrarySelectStateErrorDetailsCopyWith(
+          _$LibrarySelectStateErrorDetails value,
+          $Res Function(_$LibrarySelectStateErrorDetails) then) =
+      __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
+class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
     extends _$LibrarySelectStateCopyWithImpl<$Res>
-    implements $LibrarySelectStateErrorDetailsCopyWith<$Res> {
-  _$LibrarySelectStateErrorDetailsCopyWithImpl(
-      LibrarySelectStateErrorDetails _value,
-      $Res Function(LibrarySelectStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as LibrarySelectStateErrorDetails));
+    implements _$$LibrarySelectStateErrorDetailsCopyWith<$Res> {
+  __$$LibrarySelectStateErrorDetailsCopyWithImpl(
+      _$LibrarySelectStateErrorDetails _value,
+      $Res Function(_$LibrarySelectStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$LibrarySelectStateErrorDetails));
 
   @override
-  LibrarySelectStateErrorDetails get _value =>
-      super._value as LibrarySelectStateErrorDetails;
+  _$LibrarySelectStateErrorDetails get _value =>
+      super._value as _$LibrarySelectStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(LibrarySelectStateErrorDetails(
+    return _then(_$LibrarySelectStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -587,7 +571,7 @@ class _$LibrarySelectStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LibrarySelectStateErrorDetails &&
+            other is _$LibrarySelectStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -597,9 +581,9 @@ class _$LibrarySelectStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $LibrarySelectStateErrorDetailsCopyWith<LibrarySelectStateErrorDetails>
-      get copyWith => _$LibrarySelectStateErrorDetailsCopyWithImpl<
-          LibrarySelectStateErrorDetails>(this, _$identity);
+  _$$LibrarySelectStateErrorDetailsCopyWith<_$LibrarySelectStateErrorDetails>
+      get copyWith => __$$LibrarySelectStateErrorDetailsCopyWithImpl<
+          _$LibrarySelectStateErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -677,11 +661,11 @@ class _$LibrarySelectStateErrorDetails
 }
 
 abstract class LibrarySelectStateErrorDetails implements LibrarySelectState {
-  const factory LibrarySelectStateErrorDetails([String? message]) =
+  const factory LibrarySelectStateErrorDetails([final String? message]) =
       _$LibrarySelectStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LibrarySelectStateErrorDetailsCopyWith<LibrarySelectStateErrorDetails>
+  _$$LibrarySelectStateErrorDetailsCopyWith<_$LibrarySelectStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,22 +1,22 @@
 import 'abs_utils.dart';
 
 class AbsAudiobookProgress {
-  String audiobookId;
-  Duration? totalDuration;
+  String id;
+  Duration? duration;
   double? progress;
   Duration? currentTime;
-  bool isRead;
+  bool isFinished;
   DateTime? lastUpdate;
   DateTime? startedAt;
   DateTime? finishedAt;
   List<int>? bookmarks;
 
   AbsAudiobookProgress({
-    required this.audiobookId,
-    this.totalDuration,
+    required this.id,
+    this.duration,
     this.progress,
     this.currentTime,
-    required this.isRead,
+    required this.isFinished,
     this.lastUpdate,
     this.startedAt,
     this.finishedAt,
@@ -25,13 +25,11 @@ class AbsAudiobookProgress {
 
   factory AbsAudiobookProgress.fromJson(Map<String, dynamic> json) =>
       AbsAudiobookProgress(
-        audiobookId: json['audiobookId'],
-        totalDuration: AbsUtils.parseDurationFromMilliseconds(
-            json['totalDuration']?.toDouble()),
-        isRead: json['isRead'],
+        id: json['id'],
+        duration: AbsUtils.parseDurationFromSeconds(json['duration']),
+        isFinished: json['isFinished'],
         progress: json['progress']?.toDouble(),
-        currentTime:
-            AbsUtils.parseDurationFromSeconds(json['currentTime']?.toDouble()),
+        currentTime: AbsUtils.parseDurationFromSeconds(json['currentTime']),
         lastUpdate: AbsUtils.parseDateTime(json['lastUpdate']),
         startedAt: AbsUtils.parseDateTime(json['startedAt']),
         finishedAt: AbsUtils.parseDateTime(json['finishedAt']),
@@ -40,11 +38,11 @@ class AbsAudiobookProgress {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['audiobookId'] = audiobookId;
-    data['totalDuration'] = (totalDuration?.inMilliseconds) ?? 0 / 1000;
+    data['id'] = id;
+    data['duration'] = (duration?.inMilliseconds ?? 0) / 1000;
     data['progress'] = progress;
     data['currentTime'] = (currentTime?.inMilliseconds ?? 0) / 1000;
-    data['isRead'] = isRead;
+    data['isFinished'] = isFinished;
     data['lastUpdate'] = lastUpdate?.millisecondsSinceEpoch;
     data['startedAt'] = startedAt?.millisecondsSinceEpoch;
     data['finishedAt'] = finishedAt?.millisecondsSinceEpoch;

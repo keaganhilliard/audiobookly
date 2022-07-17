@@ -51,18 +51,14 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         (total, item) => total + item.duration!,
       );
   Duration get currentTrackStartingPosition =>
-      tracks.getRange(0, index ?? 0).fold<Duration>(
+      tracks.getRange(0, index ?? 0).fold(
             Duration.zero,
             (total, item) => (total) + (item.duration ?? Duration.zero),
           );
   Duration get currentPosition =>
-      currentTrackStartingPosition + (_player.position);
+      currentTrackStartingPosition + _player.position;
   Duration get currentBufferedPosition =>
-      tracks.getRange(0, index ?? 0).fold<Duration>(
-            Duration.zero,
-            (total, item) => (total) + (item.duration ?? Duration.zero),
-          ) +
-      (_player.bufferedPosition);
+      currentTrackStartingPosition + _player.bufferedPosition;
   Timer? _timer;
   StreamSubscription? _positionSub;
 
@@ -240,6 +236,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           },
         ),
       );
+      _broadcastState();
     }
   }
 
@@ -285,7 +282,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   /// Broadcasts the current state to all clients.
-  Future<void> _broadcastState(PlaybackEvent event) async {
+  Future<void> _broadcastState([PlaybackEvent? event]) async {
     playbackState.add(playbackState.value.copyWith(
       controls: [
         MediaControl.rewind,
@@ -315,6 +312,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       updatePosition: currentPosition,
       bufferedPosition: currentBufferedPosition,
       speed: _player.speed,
+      queueIndex: chapterIndex ?? index,
     ));
   }
 
@@ -323,7 +321,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     await completer.future;
     await _player.play();
     // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
-    print('Playing progress should fire bitch');
+    log('Playing progress should fire bitch');
     await updateProgress(AudiobooklyPlaybackState.PLAYING);
     // await super.play();
   }
@@ -346,7 +344,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> stop() async {
     await completer.future;
-    await updateProgress(AudiobooklyPlaybackState.STOPPED);
+    if (_player.playing) {
+      await updateProgress(AudiobooklyPlaybackState.STOPPED);
+    }
     await _player.stop();
     _currentMedia = null;
     _currentMediaItem = null;
@@ -374,7 +374,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future seek(Duration position, [bool startPlaying = false]) async {
-    final queuePosition = findPostion(position);
+    final queuePosition = _findPostion(position);
     await _player.seek(
       queuePosition.trackPosition,
       index: queuePosition.trackIndex,
@@ -479,7 +479,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
               album: _currentMediaItem!.album,
               artist: _currentMediaItem!.artist,
             )
-        ]..sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id))));
+        ]..sort((a, b) => a.start.compareTo(b.start)));
       }
     } else {
       await _repository!.getServerAndLibrary();
@@ -500,13 +500,13 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         chapterIndex = 0;
         queue.add(chapters);
       } else {
-        print('No chapters');
+        log('No chapters');
         queue.add(tracks);
       }
       _currentMediaItem = _currentMediaItem!.copyWith(duration: totalDuration);
     }
 
-    final queuePosition = findPositionForAlbum(_currentMediaItem!);
+    final queuePosition = _findPositionForAlbum(_currentMediaItem!);
     try {
       await _player
           .setAudioSource(
@@ -524,14 +524,14 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         initialPosition: queuePosition.trackPosition,
       )
           .catchError((err) {
-        print(err);
+        log(err);
       });
       await setSpeed(_prefs.speed);
 
       setCurrentMediaItem();
     } catch (e, stack) {
-      print("Error code $e");
-      print("Error stack $stack");
+      log("Error code $e");
+      log("Error stack $stack");
     }
   }
 
@@ -574,7 +574,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }, orElse: () => tracks[0]);
   }
 
-  _QueuePosition findPostion(Duration positionToFind) {
+  _QueuePosition _findPostion(Duration positionToFind) {
     Duration trackStart = Duration.zero;
     final track = tracks.firstWhere((element) {
       trackStart += element.duration!;
@@ -585,9 +585,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     return _QueuePosition(tracks.indexOf(track), trackPosition);
   }
 
-  _QueuePosition findPositionForAlbum(MediaItem album) {
+  _QueuePosition _findPositionForAlbum(MediaItem album) {
     if (album.viewOffset != Duration.zero) {
-      return findPostion(album.viewOffset);
+      return _findPostion(album.viewOffset);
     } else {
       MediaItem item = findLatestTrack();
       return _QueuePosition(tracks.indexOf(item), item.viewOffset);

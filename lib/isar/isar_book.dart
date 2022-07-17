@@ -1,6 +1,8 @@
 import 'package:audiobookly/isar/datetime_converter.dart';
+import 'package:audiobookly/isar/download_status_converter.dart';
 import 'package:audiobookly/isar/duration_converter.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:isar/isar.dart';
 
 part 'isar_book.g.dart';
@@ -37,6 +39,10 @@ class IsarBook implements Book {
   final Duration lastPlayedPosition;
 
   @override
+  @DownloadStatusConverter()
+  final DownloadStatus downloadStatus;
+
+  @override
   final bool downloadRequested;
 
   @override
@@ -66,8 +72,9 @@ class IsarBook implements Book {
     this.downloadCompleted,
     this.downloadFailed,
     this.read,
-    this.lastUpdate,
-  );
+    this.lastUpdate, [
+    this.downloadStatus = DownloadStatus.none,
+  ]);
 
   @override
   IsarBook copyWith({
@@ -85,6 +92,7 @@ class IsarBook implements Book {
     bool? downloadFailed,
     bool? read,
     DateTime? lastUpdate,
+    DownloadStatus? downloadStatus,
   }) =>
       IsarBook(
         isarId ?? this.isarId,
@@ -101,5 +109,6 @@ class IsarBook implements Book {
         downloadFailed ?? this.downloadFailed,
         read ?? this.read,
         lastUpdate ?? this.lastUpdate,
+        downloadStatus ?? this.downloadStatus,
       );
 }

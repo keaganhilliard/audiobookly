@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'series_state.dart';
@@ -11,35 +12,7 @@ part of 'series_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SeriesStateTearOff {
-  const _$SeriesStateTearOff();
-
-  SeriesStateInitial initial() {
-    return const SeriesStateInitial();
-  }
-
-  SeriesStateLoaded loaded({List<MediaItem>? series}) {
-    return SeriesStateLoaded(
-      series: series,
-    );
-  }
-
-  SeriesStateLoading loading() {
-    return const SeriesStateLoading();
-  }
-
-  SeriesStateErrorDetails error([String? message]) {
-    return SeriesStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $SeriesState = _$SeriesStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SeriesState {
@@ -112,22 +85,22 @@ class _$SeriesStateCopyWithImpl<$Res> implements $SeriesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $SeriesStateInitialCopyWith<$Res> {
-  factory $SeriesStateInitialCopyWith(
-          SeriesStateInitial value, $Res Function(SeriesStateInitial) then) =
-      _$SeriesStateInitialCopyWithImpl<$Res>;
+abstract class _$$SeriesStateInitialCopyWith<$Res> {
+  factory _$$SeriesStateInitialCopyWith(_$SeriesStateInitial value,
+          $Res Function(_$SeriesStateInitial) then) =
+      __$$SeriesStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SeriesStateInitialCopyWithImpl<$Res>
+class __$$SeriesStateInitialCopyWithImpl<$Res>
     extends _$SeriesStateCopyWithImpl<$Res>
-    implements $SeriesStateInitialCopyWith<$Res> {
-  _$SeriesStateInitialCopyWithImpl(
-      SeriesStateInitial _value, $Res Function(SeriesStateInitial) _then)
-      : super(_value, (v) => _then(v as SeriesStateInitial));
+    implements _$$SeriesStateInitialCopyWith<$Res> {
+  __$$SeriesStateInitialCopyWithImpl(
+      _$SeriesStateInitial _value, $Res Function(_$SeriesStateInitial) _then)
+      : super(_value, (v) => _then(v as _$SeriesStateInitial));
 
   @override
-  SeriesStateInitial get _value => super._value as SeriesStateInitial;
+  _$SeriesStateInitial get _value => super._value as _$SeriesStateInitial;
 }
 
 /// @nodoc
@@ -145,13 +118,13 @@ class _$SeriesStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SeriesState.initial'));
+    properties.add(DiagnosticsProperty('type', 'SeriesState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SeriesStateInitial);
+        (other.runtimeType == runtimeType && other is _$SeriesStateInitial);
   }
 
   @override
@@ -237,31 +210,31 @@ abstract class SeriesStateInitial implements SeriesState {
 }
 
 /// @nodoc
-abstract class $SeriesStateLoadedCopyWith<$Res> {
-  factory $SeriesStateLoadedCopyWith(
-          SeriesStateLoaded value, $Res Function(SeriesStateLoaded) then) =
-      _$SeriesStateLoadedCopyWithImpl<$Res>;
+abstract class _$$SeriesStateLoadedCopyWith<$Res> {
+  factory _$$SeriesStateLoadedCopyWith(
+          _$SeriesStateLoaded value, $Res Function(_$SeriesStateLoaded) then) =
+      __$$SeriesStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? series});
 }
 
 /// @nodoc
-class _$SeriesStateLoadedCopyWithImpl<$Res>
+class __$$SeriesStateLoadedCopyWithImpl<$Res>
     extends _$SeriesStateCopyWithImpl<$Res>
-    implements $SeriesStateLoadedCopyWith<$Res> {
-  _$SeriesStateLoadedCopyWithImpl(
-      SeriesStateLoaded _value, $Res Function(SeriesStateLoaded) _then)
-      : super(_value, (v) => _then(v as SeriesStateLoaded));
+    implements _$$SeriesStateLoadedCopyWith<$Res> {
+  __$$SeriesStateLoadedCopyWithImpl(
+      _$SeriesStateLoaded _value, $Res Function(_$SeriesStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$SeriesStateLoaded));
 
   @override
-  SeriesStateLoaded get _value => super._value as SeriesStateLoaded;
+  _$SeriesStateLoaded get _value => super._value as _$SeriesStateLoaded;
 
   @override
   $Res call({
     Object? series = freezed,
   }) {
-    return _then(SeriesStateLoaded(
+    return _then(_$SeriesStateLoaded(
       series: series == freezed
-          ? _value.series
+          ? _value._series
           : series // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -273,10 +246,16 @@ class _$SeriesStateLoadedCopyWithImpl<$Res>
 class _$SeriesStateLoaded
     with DiagnosticableTreeMixin
     implements SeriesStateLoaded {
-  const _$SeriesStateLoaded({this.series});
+  const _$SeriesStateLoaded({final List<MediaItem>? series}) : _series = series;
 
+  final List<MediaItem>? _series;
   @override
-  final List<MediaItem>? series;
+  List<MediaItem>? get series {
+    final value = _series;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -295,18 +274,18 @@ class _$SeriesStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SeriesStateLoaded &&
-            const DeepCollectionEquality().equals(other.series, series));
+            other is _$SeriesStateLoaded &&
+            const DeepCollectionEquality().equals(other._series, _series));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(series));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_series));
 
   @JsonKey(ignore: true)
   @override
-  $SeriesStateLoadedCopyWith<SeriesStateLoaded> get copyWith =>
-      _$SeriesStateLoadedCopyWithImpl<SeriesStateLoaded>(this, _$identity);
+  _$$SeriesStateLoadedCopyWith<_$SeriesStateLoaded> get copyWith =>
+      __$$SeriesStateLoadedCopyWithImpl<_$SeriesStateLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -384,32 +363,32 @@ class _$SeriesStateLoaded
 }
 
 abstract class SeriesStateLoaded implements SeriesState {
-  const factory SeriesStateLoaded({List<MediaItem>? series}) =
+  const factory SeriesStateLoaded({final List<MediaItem>? series}) =
       _$SeriesStateLoaded;
 
-  List<MediaItem>? get series;
+  List<MediaItem>? get series => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SeriesStateLoadedCopyWith<SeriesStateLoaded> get copyWith =>
+  _$$SeriesStateLoadedCopyWith<_$SeriesStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SeriesStateLoadingCopyWith<$Res> {
-  factory $SeriesStateLoadingCopyWith(
-          SeriesStateLoading value, $Res Function(SeriesStateLoading) then) =
-      _$SeriesStateLoadingCopyWithImpl<$Res>;
+abstract class _$$SeriesStateLoadingCopyWith<$Res> {
+  factory _$$SeriesStateLoadingCopyWith(_$SeriesStateLoading value,
+          $Res Function(_$SeriesStateLoading) then) =
+      __$$SeriesStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SeriesStateLoadingCopyWithImpl<$Res>
+class __$$SeriesStateLoadingCopyWithImpl<$Res>
     extends _$SeriesStateCopyWithImpl<$Res>
-    implements $SeriesStateLoadingCopyWith<$Res> {
-  _$SeriesStateLoadingCopyWithImpl(
-      SeriesStateLoading _value, $Res Function(SeriesStateLoading) _then)
-      : super(_value, (v) => _then(v as SeriesStateLoading));
+    implements _$$SeriesStateLoadingCopyWith<$Res> {
+  __$$SeriesStateLoadingCopyWithImpl(
+      _$SeriesStateLoading _value, $Res Function(_$SeriesStateLoading) _then)
+      : super(_value, (v) => _then(v as _$SeriesStateLoading));
 
   @override
-  SeriesStateLoading get _value => super._value as SeriesStateLoading;
+  _$SeriesStateLoading get _value => super._value as _$SeriesStateLoading;
 }
 
 /// @nodoc
@@ -427,13 +406,13 @@ class _$SeriesStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SeriesState.loading'));
+    properties.add(DiagnosticsProperty('type', 'SeriesState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SeriesStateLoading);
+        (other.runtimeType == runtimeType && other is _$SeriesStateLoading);
   }
 
   @override
@@ -519,29 +498,30 @@ abstract class SeriesStateLoading implements SeriesState {
 }
 
 /// @nodoc
-abstract class $SeriesStateErrorDetailsCopyWith<$Res> {
-  factory $SeriesStateErrorDetailsCopyWith(SeriesStateErrorDetails value,
-          $Res Function(SeriesStateErrorDetails) then) =
-      _$SeriesStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$SeriesStateErrorDetailsCopyWith<$Res> {
+  factory _$$SeriesStateErrorDetailsCopyWith(_$SeriesStateErrorDetails value,
+          $Res Function(_$SeriesStateErrorDetails) then) =
+      __$$SeriesStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$SeriesStateErrorDetailsCopyWithImpl<$Res>
+class __$$SeriesStateErrorDetailsCopyWithImpl<$Res>
     extends _$SeriesStateCopyWithImpl<$Res>
-    implements $SeriesStateErrorDetailsCopyWith<$Res> {
-  _$SeriesStateErrorDetailsCopyWithImpl(SeriesStateErrorDetails _value,
-      $Res Function(SeriesStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as SeriesStateErrorDetails));
+    implements _$$SeriesStateErrorDetailsCopyWith<$Res> {
+  __$$SeriesStateErrorDetailsCopyWithImpl(_$SeriesStateErrorDetails _value,
+      $Res Function(_$SeriesStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$SeriesStateErrorDetails));
 
   @override
-  SeriesStateErrorDetails get _value => super._value as SeriesStateErrorDetails;
+  _$SeriesStateErrorDetails get _value =>
+      super._value as _$SeriesStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(SeriesStateErrorDetails(
+    return _then(_$SeriesStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -577,7 +557,7 @@ class _$SeriesStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SeriesStateErrorDetails &&
+            other is _$SeriesStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -587,8 +567,8 @@ class _$SeriesStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $SeriesStateErrorDetailsCopyWith<SeriesStateErrorDetails> get copyWith =>
-      _$SeriesStateErrorDetailsCopyWithImpl<SeriesStateErrorDetails>(
+  _$$SeriesStateErrorDetailsCopyWith<_$SeriesStateErrorDetails> get copyWith =>
+      __$$SeriesStateErrorDetailsCopyWithImpl<_$SeriesStateErrorDetails>(
           this, _$identity);
 
   @override
@@ -667,11 +647,11 @@ class _$SeriesStateErrorDetails
 }
 
 abstract class SeriesStateErrorDetails implements SeriesState {
-  const factory SeriesStateErrorDetails([String? message]) =
+  const factory SeriesStateErrorDetails([final String? message]) =
       _$SeriesStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SeriesStateErrorDetailsCopyWith<SeriesStateErrorDetails> get copyWith =>
+  _$$SeriesStateErrorDetailsCopyWith<_$SeriesStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

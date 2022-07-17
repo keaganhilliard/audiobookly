@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'home_state.dart';
@@ -11,37 +12,7 @@ part of 'home_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$HomeStateTearOff {
-  const _$HomeStateTearOff();
-
-  HomeStateInitial initial() {
-    return const HomeStateInitial();
-  }
-
-  HomeStateLoaded loaded(
-      {List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded}) {
-    return HomeStateLoaded(
-      recentlyPlayed: recentlyPlayed,
-      recentlyAdded: recentlyAdded,
-    );
-  }
-
-  HomeStateLoading loading() {
-    return const HomeStateLoading();
-  }
-
-  HomeStateErrorDetails error([String? message]) {
-    return HomeStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $HomeState = _$HomeStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$HomeState {
@@ -119,21 +90,22 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $HomeStateInitialCopyWith<$Res> {
-  factory $HomeStateInitialCopyWith(
-          HomeStateInitial value, $Res Function(HomeStateInitial) then) =
-      _$HomeStateInitialCopyWithImpl<$Res>;
+abstract class _$$HomeStateInitialCopyWith<$Res> {
+  factory _$$HomeStateInitialCopyWith(
+          _$HomeStateInitial value, $Res Function(_$HomeStateInitial) then) =
+      __$$HomeStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$HomeStateInitialCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
-    implements $HomeStateInitialCopyWith<$Res> {
-  _$HomeStateInitialCopyWithImpl(
-      HomeStateInitial _value, $Res Function(HomeStateInitial) _then)
-      : super(_value, (v) => _then(v as HomeStateInitial));
+class __$$HomeStateInitialCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$HomeStateInitialCopyWith<$Res> {
+  __$$HomeStateInitialCopyWithImpl(
+      _$HomeStateInitial _value, $Res Function(_$HomeStateInitial) _then)
+      : super(_value, (v) => _then(v as _$HomeStateInitial));
 
   @override
-  HomeStateInitial get _value => super._value as HomeStateInitial;
+  _$HomeStateInitial get _value => super._value as _$HomeStateInitial;
 }
 
 /// @nodoc
@@ -151,13 +123,13 @@ class _$HomeStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'HomeState.initial'));
+    properties.add(DiagnosticsProperty('type', 'HomeState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is HomeStateInitial);
+        (other.runtimeType == runtimeType && other is _$HomeStateInitial);
   }
 
   @override
@@ -249,35 +221,36 @@ abstract class HomeStateInitial implements HomeState {
 }
 
 /// @nodoc
-abstract class $HomeStateLoadedCopyWith<$Res> {
-  factory $HomeStateLoadedCopyWith(
-          HomeStateLoaded value, $Res Function(HomeStateLoaded) then) =
-      _$HomeStateLoadedCopyWithImpl<$Res>;
+abstract class _$$HomeStateLoadedCopyWith<$Res> {
+  factory _$$HomeStateLoadedCopyWith(
+          _$HomeStateLoaded value, $Res Function(_$HomeStateLoaded) then) =
+      __$$HomeStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? recentlyPlayed, List<MediaItem>? recentlyAdded});
 }
 
 /// @nodoc
-class _$HomeStateLoadedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
-    implements $HomeStateLoadedCopyWith<$Res> {
-  _$HomeStateLoadedCopyWithImpl(
-      HomeStateLoaded _value, $Res Function(HomeStateLoaded) _then)
-      : super(_value, (v) => _then(v as HomeStateLoaded));
+class __$$HomeStateLoadedCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$HomeStateLoadedCopyWith<$Res> {
+  __$$HomeStateLoadedCopyWithImpl(
+      _$HomeStateLoaded _value, $Res Function(_$HomeStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$HomeStateLoaded));
 
   @override
-  HomeStateLoaded get _value => super._value as HomeStateLoaded;
+  _$HomeStateLoaded get _value => super._value as _$HomeStateLoaded;
 
   @override
   $Res call({
     Object? recentlyPlayed = freezed,
     Object? recentlyAdded = freezed,
   }) {
-    return _then(HomeStateLoaded(
+    return _then(_$HomeStateLoaded(
       recentlyPlayed: recentlyPlayed == freezed
-          ? _value.recentlyPlayed
+          ? _value._recentlyPlayed
           : recentlyPlayed // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
       recentlyAdded: recentlyAdded == freezed
-          ? _value.recentlyAdded
+          ? _value._recentlyAdded
           : recentlyAdded // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -289,12 +262,29 @@ class _$HomeStateLoadedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 class _$HomeStateLoaded
     with DiagnosticableTreeMixin
     implements HomeStateLoaded {
-  const _$HomeStateLoaded({this.recentlyPlayed, this.recentlyAdded});
+  const _$HomeStateLoaded(
+      {final List<MediaItem>? recentlyPlayed,
+      final List<MediaItem>? recentlyAdded})
+      : _recentlyPlayed = recentlyPlayed,
+        _recentlyAdded = recentlyAdded;
 
+  final List<MediaItem>? _recentlyPlayed;
   @override
-  final List<MediaItem>? recentlyPlayed;
+  List<MediaItem>? get recentlyPlayed {
+    final value = _recentlyPlayed;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<MediaItem>? _recentlyAdded;
   @override
-  final List<MediaItem>? recentlyAdded;
+  List<MediaItem>? get recentlyAdded {
+    final value = _recentlyAdded;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -314,23 +304,23 @@ class _$HomeStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is HomeStateLoaded &&
+            other is _$HomeStateLoaded &&
             const DeepCollectionEquality()
-                .equals(other.recentlyPlayed, recentlyPlayed) &&
+                .equals(other._recentlyPlayed, _recentlyPlayed) &&
             const DeepCollectionEquality()
-                .equals(other.recentlyAdded, recentlyAdded));
+                .equals(other._recentlyAdded, _recentlyAdded));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(recentlyPlayed),
-      const DeepCollectionEquality().hash(recentlyAdded));
+      const DeepCollectionEquality().hash(_recentlyPlayed),
+      const DeepCollectionEquality().hash(_recentlyAdded));
 
   @JsonKey(ignore: true)
   @override
-  $HomeStateLoadedCopyWith<HomeStateLoaded> get copyWith =>
-      _$HomeStateLoadedCopyWithImpl<HomeStateLoaded>(this, _$identity);
+  _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
+      __$$HomeStateLoadedCopyWithImpl<_$HomeStateLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -415,32 +405,33 @@ class _$HomeStateLoaded
 
 abstract class HomeStateLoaded implements HomeState {
   const factory HomeStateLoaded(
-      {List<MediaItem>? recentlyPlayed,
-      List<MediaItem>? recentlyAdded}) = _$HomeStateLoaded;
+      {final List<MediaItem>? recentlyPlayed,
+      final List<MediaItem>? recentlyAdded}) = _$HomeStateLoaded;
 
-  List<MediaItem>? get recentlyPlayed;
-  List<MediaItem>? get recentlyAdded;
+  List<MediaItem>? get recentlyPlayed => throw _privateConstructorUsedError;
+  List<MediaItem>? get recentlyAdded => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HomeStateLoadedCopyWith<HomeStateLoaded> get copyWith =>
+  _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HomeStateLoadingCopyWith<$Res> {
-  factory $HomeStateLoadingCopyWith(
-          HomeStateLoading value, $Res Function(HomeStateLoading) then) =
-      _$HomeStateLoadingCopyWithImpl<$Res>;
+abstract class _$$HomeStateLoadingCopyWith<$Res> {
+  factory _$$HomeStateLoadingCopyWith(
+          _$HomeStateLoading value, $Res Function(_$HomeStateLoading) then) =
+      __$$HomeStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$HomeStateLoadingCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
-    implements $HomeStateLoadingCopyWith<$Res> {
-  _$HomeStateLoadingCopyWithImpl(
-      HomeStateLoading _value, $Res Function(HomeStateLoading) _then)
-      : super(_value, (v) => _then(v as HomeStateLoading));
+class __$$HomeStateLoadingCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$HomeStateLoadingCopyWith<$Res> {
+  __$$HomeStateLoadingCopyWithImpl(
+      _$HomeStateLoading _value, $Res Function(_$HomeStateLoading) _then)
+      : super(_value, (v) => _then(v as _$HomeStateLoading));
 
   @override
-  HomeStateLoading get _value => super._value as HomeStateLoading;
+  _$HomeStateLoading get _value => super._value as _$HomeStateLoading;
 }
 
 /// @nodoc
@@ -458,13 +449,13 @@ class _$HomeStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'HomeState.loading'));
+    properties.add(DiagnosticsProperty('type', 'HomeState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is HomeStateLoading);
+        (other.runtimeType == runtimeType && other is _$HomeStateLoading);
   }
 
   @override
@@ -556,29 +547,29 @@ abstract class HomeStateLoading implements HomeState {
 }
 
 /// @nodoc
-abstract class $HomeStateErrorDetailsCopyWith<$Res> {
-  factory $HomeStateErrorDetailsCopyWith(HomeStateErrorDetails value,
-          $Res Function(HomeStateErrorDetails) then) =
-      _$HomeStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$HomeStateErrorDetailsCopyWith<$Res> {
+  factory _$$HomeStateErrorDetailsCopyWith(_$HomeStateErrorDetails value,
+          $Res Function(_$HomeStateErrorDetails) then) =
+      __$$HomeStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$HomeStateErrorDetailsCopyWithImpl<$Res>
+class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
     extends _$HomeStateCopyWithImpl<$Res>
-    implements $HomeStateErrorDetailsCopyWith<$Res> {
-  _$HomeStateErrorDetailsCopyWithImpl(
-      HomeStateErrorDetails _value, $Res Function(HomeStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as HomeStateErrorDetails));
+    implements _$$HomeStateErrorDetailsCopyWith<$Res> {
+  __$$HomeStateErrorDetailsCopyWithImpl(_$HomeStateErrorDetails _value,
+      $Res Function(_$HomeStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$HomeStateErrorDetails));
 
   @override
-  HomeStateErrorDetails get _value => super._value as HomeStateErrorDetails;
+  _$HomeStateErrorDetails get _value => super._value as _$HomeStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(HomeStateErrorDetails(
+    return _then(_$HomeStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -614,7 +605,7 @@ class _$HomeStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is HomeStateErrorDetails &&
+            other is _$HomeStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -624,8 +615,8 @@ class _$HomeStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $HomeStateErrorDetailsCopyWith<HomeStateErrorDetails> get copyWith =>
-      _$HomeStateErrorDetailsCopyWithImpl<HomeStateErrorDetails>(
+  _$$HomeStateErrorDetailsCopyWith<_$HomeStateErrorDetails> get copyWith =>
+      __$$HomeStateErrorDetailsCopyWithImpl<_$HomeStateErrorDetails>(
           this, _$identity);
 
   @override
@@ -710,11 +701,11 @@ class _$HomeStateErrorDetails
 }
 
 abstract class HomeStateErrorDetails implements HomeState {
-  const factory HomeStateErrorDetails([String? message]) =
+  const factory HomeStateErrorDetails([final String? message]) =
       _$HomeStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HomeStateErrorDetailsCopyWith<HomeStateErrorDetails> get copyWith =>
+  _$$HomeStateErrorDetailsCopyWith<_$HomeStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

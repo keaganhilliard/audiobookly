@@ -1,10 +1,28 @@
 class AbsUtils {
-  static Duration? parseDurationFromMilliseconds(double? time) {
-    return time == null ? null : Duration(milliseconds: (time).round());
+  static Duration? parseDurationFromMilliseconds(Object? time) {
+    double? theDouble = getDoubleFromAmbiguousAttribute(time);
+
+    return theDouble == null
+        ? null
+        : Duration(milliseconds: (theDouble).round());
   }
 
-  static Duration? parseDurationFromSeconds(double? time) {
-    return time == null ? null : Duration(milliseconds: (time * 1000).round());
+  static Duration? parseDurationFromSeconds(Object? time) {
+    double? theDouble = getDoubleFromAmbiguousAttribute(time);
+
+    return theDouble == null
+        ? null
+        : Duration(milliseconds: (theDouble * 1000).round());
+  }
+
+  static double? getDoubleFromAmbiguousAttribute(Object? shouldBeDouble) {
+    double? theDouble;
+    if (shouldBeDouble is String) {
+      theDouble = double.parse(shouldBeDouble);
+    } else if (shouldBeDouble is double) {
+      theDouble = shouldBeDouble.toDouble();
+    }
+    return theDouble;
   }
 
   static DateTime? parseDateTime(int? dateInMillis) {

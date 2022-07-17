@@ -71,10 +71,11 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
     MediaItem? book;
     List<MediaItem>? chapters;
     try {
+      log('Getting for mediaId $_mediaId');
       book = await _repository!.getAlbumFromId(_mediaId);
       chapters = await _repository!.getTracksForBook(book);
-    } catch (e) {
-      log('No data from server $e');
+    } catch (e, stack) {
+      log('No data from server $e, $stack');
       log('State $state');
       if (state is BookDetailsStateLoaded) {
         log('State loaded');
@@ -92,8 +93,8 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
     if (state is BookDetailsStateLoaded) {
       return BookDetailsState.loaded(
         book: book.copyWith(
-            extras:
-                (state as BookDetailsStateLoaded).book?.extras ?? book.extras),
+          extras: (state as BookDetailsStateLoaded).book?.extras ?? book.extras,
+        ),
         chapters: chapters,
       );
     }

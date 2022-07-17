@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 final downloadsStateProvider =
-    StateNotifierProvider<DownloadsNotifier, DownloadsState>(
+    StateNotifierProvider.autoDispose<DownloadsNotifier, DownloadsState>(
   (ref) => DownloadsNotifier(),
 );
 

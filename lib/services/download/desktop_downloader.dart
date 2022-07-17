@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:path/path.dart' as p;
@@ -101,6 +102,7 @@ class DesktopDownloader extends Downloader {
             downloadRequested: true,
             downloadCompleted: true,
             downloadFailed: false,
+            downloadStatus: DownloadStatus.succeeded,
           ),
         );
         completer.complete();

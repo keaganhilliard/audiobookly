@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/abs_search_response.dart';
+import 'package:audiobookshelf/src/models/abs_media_progress.dart';
+import 'package:audiobookshelf/src/models/abs_play_item_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'abs_audiobook.dart';
-import 'abs_library.dart';
-import 'abs_login_response.dart';
-import 'abs_user.dart';
 
 class AudiobookshelfApi {
   String? baseUrl;
@@ -72,19 +70,22 @@ class AudiobookshelfApi {
       },
     );
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+    print(decodedResponse);
     user = AbsUser.fromJson(decodedResponse['user']);
     return user!;
   }
 
   Future<List<AbsAudiobook>> getAll(String library) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/libraries/$library/books', {'minified': '1'}),
+      createUri(
+          baseUrl!, '/api/libraries/$library/items'), // {'minified': '1'}),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
       },
     );
 
+    // return _convertBody(response.bodyBytes);
     return (await compute(_convertBody, response.bodyBytes));
     // .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
     // .toList();
@@ -106,15 +107,14 @@ class AudiobookshelfApi {
 
   Future<Map<String, AbsAudiobookProgress>> getRecentlyPlayed() async {
     await getUser();
-    return user?.audiobooks ?? {};
+    return user?.mediaProgress ?? {};
   }
 
   int sortByAddedDate(AbsAudiobook a, AbsAudiobook b) {
     if (a.addedAt == null || b.addedAt == null) return 0;
-    if (a.addedAt!.millisecondsSinceEpoch < b.addedAt!.millisecondsSinceEpoch) {
+    if (a.addedAt! < b.addedAt!) {
       return 1;
-    } else if (a.addedAt!.millisecondsSinceEpoch >
-        b.addedAt!.millisecondsSinceEpoch) {
+    } else if (a.addedAt! > b.addedAt!) {
       return -1;
     }
     return 0;
@@ -122,11 +122,11 @@ class AudiobookshelfApi {
 
   Future<List<AbsAudiobook>> getRecentlyAdded(String libraryId) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/libraries/$libraryId/books', {
+      createUri(baseUrl!, '/api/libraries/$libraryId/items', {
         'sort': 'addedAt',
         'desc': '1',
         'limit': '10',
-        'minified': '1',
+        //'minified': '1',
       }),
       headers: {
         'content-type': 'application/json',
@@ -134,12 +134,12 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))
+    return jsonDecode(utf8.decode(response.bodyBytes))['results']
         .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
         .toList();
   }
 
-  Future<List<String>> getAuthors(String libraryId) async {
+  Future<List<Author>> getAuthors(String libraryId) async {
     http.Response response = await client.get(
       createUri(baseUrl!, '/api/libraries/$libraryId/authors'),
       headers: {
@@ -149,7 +149,7 @@ class AudiobookshelfApi {
     );
 
     return jsonDecode(utf8.decode(response.bodyBytes))
-        .map<String>((el) => el['name'] as String)
+        .map<Author>((el) => Author.fromJson(el))
         .toList();
   }
 
@@ -159,8 +159,11 @@ class AudiobookshelfApi {
     http.Response response = await client.get(
       createUri(
         baseUrl!,
-        '/api/libraries/$libraryId/books',
-        {'filter': 'authors.$encodedAuthor', 'minified': '1'},
+        '/api/libraries/$libraryId/items',
+        {
+          'expanded': '1',
+          'filter': 'authors.$encodedAuthor',
+        },
       ),
       headers: {
         'content-type': 'application/json',
@@ -168,7 +171,7 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))
+    return jsonDecode(utf8.decode(response.bodyBytes))['results']
         .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
         .toList();
   }
@@ -192,7 +195,7 @@ class AudiobookshelfApi {
 
   Future<AbsAudiobook> getBookInfo(String bookId) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/books/$bookId'),
+      createUri(baseUrl!, '/api/items/$bookId', {'expanded': '1'}),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
@@ -230,6 +233,16 @@ class AudiobookshelfApi {
     )).books;
   }
 
+  Future startPlaybackSession(String id, AbsPlayItemRequest playRequest) async {
+    http.Response response = await client.post(
+      createUri(baseUrl!, '/api/items/$id/play'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+  }
+
   Future markPlayed(String itemId) async {
     await patchAudiobook(itemId, true);
   }
@@ -239,27 +252,37 @@ class AudiobookshelfApi {
   }
 
   Future patchAudiobook(String itemId, bool isRead) async {
-    await client.patch(createUri(baseUrl!, '/api/me/audiobook/$itemId'),
+    await client.patch(createUri(baseUrl!, '/api/me/progress/$itemId'),
         headers: {
           'content-type': 'application/json',
           'authorization': 'Bearer $token',
         },
-        body: utf8.encode(jsonEncode({'isRead': isRead})));
+        body: utf8.encode(jsonEncode({'isFinished': isRead})));
   }
 
   Future updateProgress(AbsAudiobookProgress progress) async {
-    await client.patch(
-        createUri(baseUrl!, '/api/me/audiobook/${progress.audiobookId}'),
+    await client.patch(createUri(baseUrl!, '/api/me/progress/${progress.id}'),
         headers: {
           'content-type': 'application/json',
           'authorization': 'Bearer $token',
         },
         body: utf8.encode(jsonEncode(progress.toJson())));
   }
+
+  Future sendProgressSync(String sessionId, AbsMediaProgress progress) async {
+    await client.post(
+      createUri(baseUrl!, '/api/session/$sessionId/sync'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+      body: utf8.encode(jsonEncode(progress.toJson())),
+    );
+  }
 }
 
 List<AbsAudiobook> _convertBody(List<int> bodyBytes) {
-  return jsonDecode(utf8.decode(bodyBytes))
+  return jsonDecode(utf8.decode(bodyBytes))['results']
       .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
       .toList();
 }

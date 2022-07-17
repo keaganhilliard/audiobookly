@@ -7,7 +7,7 @@ part 'settings_state.freezed.dart';
 // part of 'books_cubit.dart';
 
 @freezed
-abstract class SettingsState with _$SettingsState {
+class SettingsState with _$SettingsState {
   const factory SettingsState.initial() = SettingsStateInitial;
   const factory SettingsState.loaded({User? user}) = SettingsStateLoaded;
   const factory SettingsState.loading() = SettingsStateLoading;

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'track_details_state.dart';
@@ -11,35 +12,7 @@ part of 'track_details_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TrackDetailsStateTearOff {
-  const _$TrackDetailsStateTearOff();
-
-  TrackDetailsStateInitial initial() {
-    return const TrackDetailsStateInitial();
-  }
-
-  TrackDetailsStateLoaded loaded({List<MediaItem>? chapters}) {
-    return TrackDetailsStateLoaded(
-      chapters: chapters,
-    );
-  }
-
-  TrackDetailsStateLoading loading() {
-    return const TrackDetailsStateLoading();
-  }
-
-  TrackDetailsStateErrorDetails error([String? message]) {
-    return TrackDetailsStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $TrackDetailsState = _$TrackDetailsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TrackDetailsState {
@@ -113,23 +86,23 @@ class _$TrackDetailsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $TrackDetailsStateInitialCopyWith<$Res> {
-  factory $TrackDetailsStateInitialCopyWith(TrackDetailsStateInitial value,
-          $Res Function(TrackDetailsStateInitial) then) =
-      _$TrackDetailsStateInitialCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateInitialCopyWith<$Res> {
+  factory _$$TrackDetailsStateInitialCopyWith(_$TrackDetailsStateInitial value,
+          $Res Function(_$TrackDetailsStateInitial) then) =
+      __$$TrackDetailsStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$TrackDetailsStateInitialCopyWithImpl<$Res>
+class __$$TrackDetailsStateInitialCopyWithImpl<$Res>
     extends _$TrackDetailsStateCopyWithImpl<$Res>
-    implements $TrackDetailsStateInitialCopyWith<$Res> {
-  _$TrackDetailsStateInitialCopyWithImpl(TrackDetailsStateInitial _value,
-      $Res Function(TrackDetailsStateInitial) _then)
-      : super(_value, (v) => _then(v as TrackDetailsStateInitial));
+    implements _$$TrackDetailsStateInitialCopyWith<$Res> {
+  __$$TrackDetailsStateInitialCopyWithImpl(_$TrackDetailsStateInitial _value,
+      $Res Function(_$TrackDetailsStateInitial) _then)
+      : super(_value, (v) => _then(v as _$TrackDetailsStateInitial));
 
   @override
-  TrackDetailsStateInitial get _value =>
-      super._value as TrackDetailsStateInitial;
+  _$TrackDetailsStateInitial get _value =>
+      super._value as _$TrackDetailsStateInitial;
 }
 
 /// @nodoc
@@ -147,13 +120,14 @@ class _$TrackDetailsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'TrackDetailsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'TrackDetailsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is TrackDetailsStateInitial);
+        (other.runtimeType == runtimeType &&
+            other is _$TrackDetailsStateInitial);
   }
 
   @override
@@ -239,31 +213,32 @@ abstract class TrackDetailsStateInitial implements TrackDetailsState {
 }
 
 /// @nodoc
-abstract class $TrackDetailsStateLoadedCopyWith<$Res> {
-  factory $TrackDetailsStateLoadedCopyWith(TrackDetailsStateLoaded value,
-          $Res Function(TrackDetailsStateLoaded) then) =
-      _$TrackDetailsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateLoadedCopyWith<$Res> {
+  factory _$$TrackDetailsStateLoadedCopyWith(_$TrackDetailsStateLoaded value,
+          $Res Function(_$TrackDetailsStateLoaded) then) =
+      __$$TrackDetailsStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? chapters});
 }
 
 /// @nodoc
-class _$TrackDetailsStateLoadedCopyWithImpl<$Res>
+class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
     extends _$TrackDetailsStateCopyWithImpl<$Res>
-    implements $TrackDetailsStateLoadedCopyWith<$Res> {
-  _$TrackDetailsStateLoadedCopyWithImpl(TrackDetailsStateLoaded _value,
-      $Res Function(TrackDetailsStateLoaded) _then)
-      : super(_value, (v) => _then(v as TrackDetailsStateLoaded));
+    implements _$$TrackDetailsStateLoadedCopyWith<$Res> {
+  __$$TrackDetailsStateLoadedCopyWithImpl(_$TrackDetailsStateLoaded _value,
+      $Res Function(_$TrackDetailsStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$TrackDetailsStateLoaded));
 
   @override
-  TrackDetailsStateLoaded get _value => super._value as TrackDetailsStateLoaded;
+  _$TrackDetailsStateLoaded get _value =>
+      super._value as _$TrackDetailsStateLoaded;
 
   @override
   $Res call({
     Object? chapters = freezed,
   }) {
-    return _then(TrackDetailsStateLoaded(
+    return _then(_$TrackDetailsStateLoaded(
       chapters: chapters == freezed
-          ? _value.chapters
+          ? _value._chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -275,10 +250,17 @@ class _$TrackDetailsStateLoadedCopyWithImpl<$Res>
 class _$TrackDetailsStateLoaded
     with DiagnosticableTreeMixin
     implements TrackDetailsStateLoaded {
-  const _$TrackDetailsStateLoaded({this.chapters});
+  const _$TrackDetailsStateLoaded({final List<MediaItem>? chapters})
+      : _chapters = chapters;
 
+  final List<MediaItem>? _chapters;
   @override
-  final List<MediaItem>? chapters;
+  List<MediaItem>? get chapters {
+    final value = _chapters;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -297,18 +279,18 @@ class _$TrackDetailsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is TrackDetailsStateLoaded &&
-            const DeepCollectionEquality().equals(other.chapters, chapters));
+            other is _$TrackDetailsStateLoaded &&
+            const DeepCollectionEquality().equals(other._chapters, _chapters));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(chapters));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_chapters));
 
   @JsonKey(ignore: true)
   @override
-  $TrackDetailsStateLoadedCopyWith<TrackDetailsStateLoaded> get copyWith =>
-      _$TrackDetailsStateLoadedCopyWithImpl<TrackDetailsStateLoaded>(
+  _$$TrackDetailsStateLoadedCopyWith<_$TrackDetailsStateLoaded> get copyWith =>
+      __$$TrackDetailsStateLoadedCopyWithImpl<_$TrackDetailsStateLoaded>(
           this, _$identity);
 
   @override
@@ -387,33 +369,33 @@ class _$TrackDetailsStateLoaded
 }
 
 abstract class TrackDetailsStateLoaded implements TrackDetailsState {
-  const factory TrackDetailsStateLoaded({List<MediaItem>? chapters}) =
+  const factory TrackDetailsStateLoaded({final List<MediaItem>? chapters}) =
       _$TrackDetailsStateLoaded;
 
-  List<MediaItem>? get chapters;
+  List<MediaItem>? get chapters => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TrackDetailsStateLoadedCopyWith<TrackDetailsStateLoaded> get copyWith =>
+  _$$TrackDetailsStateLoadedCopyWith<_$TrackDetailsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TrackDetailsStateLoadingCopyWith<$Res> {
-  factory $TrackDetailsStateLoadingCopyWith(TrackDetailsStateLoading value,
-          $Res Function(TrackDetailsStateLoading) then) =
-      _$TrackDetailsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateLoadingCopyWith<$Res> {
+  factory _$$TrackDetailsStateLoadingCopyWith(_$TrackDetailsStateLoading value,
+          $Res Function(_$TrackDetailsStateLoading) then) =
+      __$$TrackDetailsStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$TrackDetailsStateLoadingCopyWithImpl<$Res>
+class __$$TrackDetailsStateLoadingCopyWithImpl<$Res>
     extends _$TrackDetailsStateCopyWithImpl<$Res>
-    implements $TrackDetailsStateLoadingCopyWith<$Res> {
-  _$TrackDetailsStateLoadingCopyWithImpl(TrackDetailsStateLoading _value,
-      $Res Function(TrackDetailsStateLoading) _then)
-      : super(_value, (v) => _then(v as TrackDetailsStateLoading));
+    implements _$$TrackDetailsStateLoadingCopyWith<$Res> {
+  __$$TrackDetailsStateLoadingCopyWithImpl(_$TrackDetailsStateLoading _value,
+      $Res Function(_$TrackDetailsStateLoading) _then)
+      : super(_value, (v) => _then(v as _$TrackDetailsStateLoading));
 
   @override
-  TrackDetailsStateLoading get _value =>
-      super._value as TrackDetailsStateLoading;
+  _$TrackDetailsStateLoading get _value =>
+      super._value as _$TrackDetailsStateLoading;
 }
 
 /// @nodoc
@@ -431,13 +413,14 @@ class _$TrackDetailsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'TrackDetailsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'TrackDetailsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is TrackDetailsStateLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$TrackDetailsStateLoading);
   }
 
   @override
@@ -523,32 +506,32 @@ abstract class TrackDetailsStateLoading implements TrackDetailsState {
 }
 
 /// @nodoc
-abstract class $TrackDetailsStateErrorDetailsCopyWith<$Res> {
-  factory $TrackDetailsStateErrorDetailsCopyWith(
-          TrackDetailsStateErrorDetails value,
-          $Res Function(TrackDetailsStateErrorDetails) then) =
-      _$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateErrorDetailsCopyWith<$Res> {
+  factory _$$TrackDetailsStateErrorDetailsCopyWith(
+          _$TrackDetailsStateErrorDetails value,
+          $Res Function(_$TrackDetailsStateErrorDetails) then) =
+      __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
+class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
     extends _$TrackDetailsStateCopyWithImpl<$Res>
-    implements $TrackDetailsStateErrorDetailsCopyWith<$Res> {
-  _$TrackDetailsStateErrorDetailsCopyWithImpl(
-      TrackDetailsStateErrorDetails _value,
-      $Res Function(TrackDetailsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as TrackDetailsStateErrorDetails));
+    implements _$$TrackDetailsStateErrorDetailsCopyWith<$Res> {
+  __$$TrackDetailsStateErrorDetailsCopyWithImpl(
+      _$TrackDetailsStateErrorDetails _value,
+      $Res Function(_$TrackDetailsStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$TrackDetailsStateErrorDetails));
 
   @override
-  TrackDetailsStateErrorDetails get _value =>
-      super._value as TrackDetailsStateErrorDetails;
+  _$TrackDetailsStateErrorDetails get _value =>
+      super._value as _$TrackDetailsStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(TrackDetailsStateErrorDetails(
+    return _then(_$TrackDetailsStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -584,7 +567,7 @@ class _$TrackDetailsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is TrackDetailsStateErrorDetails &&
+            other is _$TrackDetailsStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -594,9 +577,9 @@ class _$TrackDetailsStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $TrackDetailsStateErrorDetailsCopyWith<TrackDetailsStateErrorDetails>
-      get copyWith => _$TrackDetailsStateErrorDetailsCopyWithImpl<
-          TrackDetailsStateErrorDetails>(this, _$identity);
+  _$$TrackDetailsStateErrorDetailsCopyWith<_$TrackDetailsStateErrorDetails>
+      get copyWith => __$$TrackDetailsStateErrorDetailsCopyWithImpl<
+          _$TrackDetailsStateErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -674,11 +657,11 @@ class _$TrackDetailsStateErrorDetails
 }
 
 abstract class TrackDetailsStateErrorDetails implements TrackDetailsState {
-  const factory TrackDetailsStateErrorDetails([String? message]) =
+  const factory TrackDetailsStateErrorDetails([final String? message]) =
       _$TrackDetailsStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TrackDetailsStateErrorDetailsCopyWith<TrackDetailsStateErrorDetails>
+  _$$TrackDetailsStateErrorDetailsCopyWith<_$TrackDetailsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;
 }

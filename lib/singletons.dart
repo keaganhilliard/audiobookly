@@ -6,13 +6,16 @@ import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 // import 'package:audiobookly/services/database/hive_database_service.dart';
 import 'package:audiobookly/services/database/isar_database_service.dart';
+import 'package:audiobookly/services/device_info/device_info_service.dart';
 // import 'package:audiobookly/services/database/sql_database_service.dart';
 import 'package:audiobookly/services/download/desktop_downloader.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:audiobookly/services/download/mobile_downloader.dart';
+import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
 
 final getIt = GetIt.I;
@@ -28,11 +31,13 @@ Future<void> registerSingletons() async {
   // getIt.registerSingleton<DatabaseService>(SqlDatabaseService(database));
 
   final isar = await initIsar();
-  getIt.registerSingleton<DatabaseService>(
-    IsarDatabaseService(
+  getIt.registerLazySingleton<DatabaseService>(
+    () => IsarDatabaseService(
       db: isar,
     ),
   );
+  // clear db
+  // await isar.writeTxn((isar) => isar.clear());
 
   // await initHive();
   // getIt.registerSingleton<DatabaseService>(
@@ -61,7 +66,7 @@ Future<void> registerSingletons() async {
   } else {
     // DartVLC.initialize();
     downloader = DesktopDownloader(getIt());
-    final handler = await initDesktopAudioHandler();
+    final handler = await initAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
   }
 
@@ -71,4 +76,9 @@ Future<void> registerSingletons() async {
   getIt.registerSingleton(downloader);
   getIt.registerSingleton(controller);
   getIt.registerSingleton(SleepService(controller));
+
+  final info = await getDeviceInfo();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  getIt.registerSingleton(SharedPreferencesService(prefs));
+  getIt.registerSingleton(DeviceInfoService(info));
 }

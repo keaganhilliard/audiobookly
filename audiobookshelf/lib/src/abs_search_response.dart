@@ -8,7 +8,7 @@ _listEquals(List a, List b) => a.join(',') == b.join(',');
 class AbsSearchResponse {
   final List<AbsAudiobookSearchResult> audiobooks;
   final List<dynamic> tags;
-  final List<Author> authors;
+  final List<_Author> authors;
   final List<AbsSeriesSearchResult> series;
   AbsSearchResponse({
     required this.audiobooks,
@@ -20,7 +20,7 @@ class AbsSearchResponse {
   AbsSearchResponse copyWith({
     List<AbsAudiobookSearchResult>? audiobooks,
     List<dynamic>? tags,
-    List<Author>? authors,
+    List<_Author>? authors,
     List<AbsSeriesSearchResult>? series,
   }) {
     return AbsSearchResponse(
@@ -45,7 +45,8 @@ class AbsSearchResponse {
       audiobooks: List<AbsAudiobookSearchResult>.from(
           map['audiobooks']?.map((x) => AbsAudiobookSearchResult.fromJson(x))),
       tags: List<dynamic>.from(map['tags']),
-      authors: List<Author>.from(map['authors']?.map((x) => Author.fromMap(x))),
+      authors:
+          List<_Author>.from(map['authors']?.map((x) => _Author.fromMap(x))),
       series: List<AbsSeriesSearchResult>.from(
           map['series']?.map((x) => AbsSeriesSearchResult.fromMap(x))),
     );
@@ -142,16 +143,16 @@ class Audiobook {
       audiobook.hashCode ^ matchKey.hashCode ^ matchText.hashCode;
 }
 
-class Author {
+class _Author {
   final String author;
-  Author({
+  _Author({
     required this.author,
   });
 
-  Author copyWith({
+  _Author copyWith({
     String? author,
   }) {
-    return Author(
+    return _Author(
       author: author ?? this.author,
     );
   }
@@ -162,24 +163,25 @@ class Author {
     };
   }
 
-  factory Author.fromMap(Map<String, dynamic> map) {
-    return Author(
+  factory _Author.fromMap(Map<String, dynamic> map) {
+    return _Author(
       author: map['author'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Author.fromJson(String source) => Author.fromMap(json.decode(source));
+  factory _Author.fromJson(String source) =>
+      _Author.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Author(author: $author)';
+  String toString() => '_Author(author: $author)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Author && other.author == author;
+    return other is _Author && other.author == author;
   }
 
   @override

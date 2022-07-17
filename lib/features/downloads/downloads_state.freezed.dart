@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'downloads_state.dart';
@@ -11,35 +12,7 @@ part of 'downloads_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$DownloadsStateTearOff {
-  const _$DownloadsStateTearOff();
-
-  DownloadsStateInitial initial() {
-    return const DownloadsStateInitial();
-  }
-
-  DownloadsStateLoaded loaded({List<MediaItem>? books}) {
-    return DownloadsStateLoaded(
-      books: books,
-    );
-  }
-
-  DownloadsStateLoading loading() {
-    return const DownloadsStateLoading();
-  }
-
-  DownloadsStateErrorDetails error([String? message]) {
-    return DownloadsStateErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $DownloadsState = _$DownloadsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$DownloadsState {
@@ -113,22 +86,22 @@ class _$DownloadsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $DownloadsStateInitialCopyWith<$Res> {
-  factory $DownloadsStateInitialCopyWith(DownloadsStateInitial value,
-          $Res Function(DownloadsStateInitial) then) =
-      _$DownloadsStateInitialCopyWithImpl<$Res>;
+abstract class _$$DownloadsStateInitialCopyWith<$Res> {
+  factory _$$DownloadsStateInitialCopyWith(_$DownloadsStateInitial value,
+          $Res Function(_$DownloadsStateInitial) then) =
+      __$$DownloadsStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$DownloadsStateInitialCopyWithImpl<$Res>
+class __$$DownloadsStateInitialCopyWithImpl<$Res>
     extends _$DownloadsStateCopyWithImpl<$Res>
-    implements $DownloadsStateInitialCopyWith<$Res> {
-  _$DownloadsStateInitialCopyWithImpl(
-      DownloadsStateInitial _value, $Res Function(DownloadsStateInitial) _then)
-      : super(_value, (v) => _then(v as DownloadsStateInitial));
+    implements _$$DownloadsStateInitialCopyWith<$Res> {
+  __$$DownloadsStateInitialCopyWithImpl(_$DownloadsStateInitial _value,
+      $Res Function(_$DownloadsStateInitial) _then)
+      : super(_value, (v) => _then(v as _$DownloadsStateInitial));
 
   @override
-  DownloadsStateInitial get _value => super._value as DownloadsStateInitial;
+  _$DownloadsStateInitial get _value => super._value as _$DownloadsStateInitial;
 }
 
 /// @nodoc
@@ -146,13 +119,13 @@ class _$DownloadsStateInitial
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'DownloadsState.initial'));
+    properties.add(DiagnosticsProperty('type', 'DownloadsState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is DownloadsStateInitial);
+        (other.runtimeType == runtimeType && other is _$DownloadsStateInitial);
   }
 
   @override
@@ -238,31 +211,31 @@ abstract class DownloadsStateInitial implements DownloadsState {
 }
 
 /// @nodoc
-abstract class $DownloadsStateLoadedCopyWith<$Res> {
-  factory $DownloadsStateLoadedCopyWith(DownloadsStateLoaded value,
-          $Res Function(DownloadsStateLoaded) then) =
-      _$DownloadsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$DownloadsStateLoadedCopyWith<$Res> {
+  factory _$$DownloadsStateLoadedCopyWith(_$DownloadsStateLoaded value,
+          $Res Function(_$DownloadsStateLoaded) then) =
+      __$$DownloadsStateLoadedCopyWithImpl<$Res>;
   $Res call({List<MediaItem>? books});
 }
 
 /// @nodoc
-class _$DownloadsStateLoadedCopyWithImpl<$Res>
+class __$$DownloadsStateLoadedCopyWithImpl<$Res>
     extends _$DownloadsStateCopyWithImpl<$Res>
-    implements $DownloadsStateLoadedCopyWith<$Res> {
-  _$DownloadsStateLoadedCopyWithImpl(
-      DownloadsStateLoaded _value, $Res Function(DownloadsStateLoaded) _then)
-      : super(_value, (v) => _then(v as DownloadsStateLoaded));
+    implements _$$DownloadsStateLoadedCopyWith<$Res> {
+  __$$DownloadsStateLoadedCopyWithImpl(_$DownloadsStateLoaded _value,
+      $Res Function(_$DownloadsStateLoaded) _then)
+      : super(_value, (v) => _then(v as _$DownloadsStateLoaded));
 
   @override
-  DownloadsStateLoaded get _value => super._value as DownloadsStateLoaded;
+  _$DownloadsStateLoaded get _value => super._value as _$DownloadsStateLoaded;
 
   @override
   $Res call({
     Object? books = freezed,
   }) {
-    return _then(DownloadsStateLoaded(
+    return _then(_$DownloadsStateLoaded(
       books: books == freezed
-          ? _value.books
+          ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
     ));
@@ -274,10 +247,16 @@ class _$DownloadsStateLoadedCopyWithImpl<$Res>
 class _$DownloadsStateLoaded
     with DiagnosticableTreeMixin
     implements DownloadsStateLoaded {
-  const _$DownloadsStateLoaded({this.books});
+  const _$DownloadsStateLoaded({final List<MediaItem>? books}) : _books = books;
 
+  final List<MediaItem>? _books;
   @override
-  final List<MediaItem>? books;
+  List<MediaItem>? get books {
+    final value = _books;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -296,18 +275,18 @@ class _$DownloadsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is DownloadsStateLoaded &&
-            const DeepCollectionEquality().equals(other.books, books));
+            other is _$DownloadsStateLoaded &&
+            const DeepCollectionEquality().equals(other._books, _books));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(books));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_books));
 
   @JsonKey(ignore: true)
   @override
-  $DownloadsStateLoadedCopyWith<DownloadsStateLoaded> get copyWith =>
-      _$DownloadsStateLoadedCopyWithImpl<DownloadsStateLoaded>(
+  _$$DownloadsStateLoadedCopyWith<_$DownloadsStateLoaded> get copyWith =>
+      __$$DownloadsStateLoadedCopyWithImpl<_$DownloadsStateLoaded>(
           this, _$identity);
 
   @override
@@ -386,32 +365,32 @@ class _$DownloadsStateLoaded
 }
 
 abstract class DownloadsStateLoaded implements DownloadsState {
-  const factory DownloadsStateLoaded({List<MediaItem>? books}) =
+  const factory DownloadsStateLoaded({final List<MediaItem>? books}) =
       _$DownloadsStateLoaded;
 
-  List<MediaItem>? get books;
+  List<MediaItem>? get books => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DownloadsStateLoadedCopyWith<DownloadsStateLoaded> get copyWith =>
+  _$$DownloadsStateLoadedCopyWith<_$DownloadsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DownloadsStateLoadingCopyWith<$Res> {
-  factory $DownloadsStateLoadingCopyWith(DownloadsStateLoading value,
-          $Res Function(DownloadsStateLoading) then) =
-      _$DownloadsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$DownloadsStateLoadingCopyWith<$Res> {
+  factory _$$DownloadsStateLoadingCopyWith(_$DownloadsStateLoading value,
+          $Res Function(_$DownloadsStateLoading) then) =
+      __$$DownloadsStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$DownloadsStateLoadingCopyWithImpl<$Res>
+class __$$DownloadsStateLoadingCopyWithImpl<$Res>
     extends _$DownloadsStateCopyWithImpl<$Res>
-    implements $DownloadsStateLoadingCopyWith<$Res> {
-  _$DownloadsStateLoadingCopyWithImpl(
-      DownloadsStateLoading _value, $Res Function(DownloadsStateLoading) _then)
-      : super(_value, (v) => _then(v as DownloadsStateLoading));
+    implements _$$DownloadsStateLoadingCopyWith<$Res> {
+  __$$DownloadsStateLoadingCopyWithImpl(_$DownloadsStateLoading _value,
+      $Res Function(_$DownloadsStateLoading) _then)
+      : super(_value, (v) => _then(v as _$DownloadsStateLoading));
 
   @override
-  DownloadsStateLoading get _value => super._value as DownloadsStateLoading;
+  _$DownloadsStateLoading get _value => super._value as _$DownloadsStateLoading;
 }
 
 /// @nodoc
@@ -429,13 +408,13 @@ class _$DownloadsStateLoading
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'DownloadsState.loading'));
+    properties.add(DiagnosticsProperty('type', 'DownloadsState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is DownloadsStateLoading);
+        (other.runtimeType == runtimeType && other is _$DownloadsStateLoading);
   }
 
   @override
@@ -521,30 +500,32 @@ abstract class DownloadsStateLoading implements DownloadsState {
 }
 
 /// @nodoc
-abstract class $DownloadsStateErrorDetailsCopyWith<$Res> {
-  factory $DownloadsStateErrorDetailsCopyWith(DownloadsStateErrorDetails value,
-          $Res Function(DownloadsStateErrorDetails) then) =
-      _$DownloadsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$DownloadsStateErrorDetailsCopyWith<$Res> {
+  factory _$$DownloadsStateErrorDetailsCopyWith(
+          _$DownloadsStateErrorDetails value,
+          $Res Function(_$DownloadsStateErrorDetails) then) =
+      __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$DownloadsStateErrorDetailsCopyWithImpl<$Res>
+class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
     extends _$DownloadsStateCopyWithImpl<$Res>
-    implements $DownloadsStateErrorDetailsCopyWith<$Res> {
-  _$DownloadsStateErrorDetailsCopyWithImpl(DownloadsStateErrorDetails _value,
-      $Res Function(DownloadsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as DownloadsStateErrorDetails));
+    implements _$$DownloadsStateErrorDetailsCopyWith<$Res> {
+  __$$DownloadsStateErrorDetailsCopyWithImpl(
+      _$DownloadsStateErrorDetails _value,
+      $Res Function(_$DownloadsStateErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$DownloadsStateErrorDetails));
 
   @override
-  DownloadsStateErrorDetails get _value =>
-      super._value as DownloadsStateErrorDetails;
+  _$DownloadsStateErrorDetails get _value =>
+      super._value as _$DownloadsStateErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(DownloadsStateErrorDetails(
+    return _then(_$DownloadsStateErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -580,7 +561,7 @@ class _$DownloadsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is DownloadsStateErrorDetails &&
+            other is _$DownloadsStateErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -590,10 +571,9 @@ class _$DownloadsStateErrorDetails
 
   @JsonKey(ignore: true)
   @override
-  $DownloadsStateErrorDetailsCopyWith<DownloadsStateErrorDetails>
-      get copyWith =>
-          _$DownloadsStateErrorDetailsCopyWithImpl<DownloadsStateErrorDetails>(
-              this, _$identity);
+  _$$DownloadsStateErrorDetailsCopyWith<_$DownloadsStateErrorDetails>
+      get copyWith => __$$DownloadsStateErrorDetailsCopyWithImpl<
+          _$DownloadsStateErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -671,11 +651,11 @@ class _$DownloadsStateErrorDetails
 }
 
 abstract class DownloadsStateErrorDetails implements DownloadsState {
-  const factory DownloadsStateErrorDetails([String? message]) =
+  const factory DownloadsStateErrorDetails([final String? message]) =
       _$DownloadsStateErrorDetails;
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DownloadsStateErrorDetailsCopyWith<DownloadsStateErrorDetails>
+  _$$DownloadsStateErrorDetailsCopyWith<_$DownloadsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;
 }

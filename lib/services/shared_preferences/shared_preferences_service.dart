@@ -1,11 +1,10 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesServiceProvider =
     Provider<SharedPreferencesService>(((ref) => throw UnimplementedError()));
 
-enum SERVER_TYPE { PLEX, EMBY, AUDIOBOOKSHELF, UNKNOWN }
+enum ServerType { plex, emby, audiobookshelf, unknown }
 
 class SharedPreferencesService {
   SharedPreferencesService(this.sharedPreferences);
@@ -48,38 +47,38 @@ class SharedPreferencesService {
     await sharedPreferences.setString(baseUrlKey, baseUrl);
   }
 
-  String getBaseUrl() => sharedPreferences.getString(baseUrlKey) ?? '';
+  String get baseUrl => sharedPreferences.getString(baseUrlKey) ?? '';
 
   Future<void> setUserToken(String token) async {
     await sharedPreferences.setString(userTokenKey, token);
   }
 
-  String getCurrentToken() => sharedPreferences.getString(userTokenKey) ?? '';
+  String get currentToken => sharedPreferences.getString(userTokenKey) ?? '';
 
-  Future<void> setServerType(SERVER_TYPE? type) async {
+  Future<void> setServerType(ServerType? type) async {
     await sharedPreferences.setString(serverTypeKey, (type?.toString() ?? ''));
   }
 
-  SERVER_TYPE getServerType() => ((key) => SERVER_TYPE.values.firstWhere(
+  ServerType get serverType => ((key) => ServerType.values.firstWhere(
         (element) => element.toString() == key,
-        orElse: () => SERVER_TYPE.UNKNOWN,
+        orElse: () => ServerType.unknown,
       ))(sharedPreferences.getString(serverTypeKey));
 
   Future setServerId(String serverId) async {
     await sharedPreferences.setString(serverIdKey, serverId);
   }
 
-  String getServerId() => sharedPreferences.getString(serverIdKey) ?? '';
+  String get serverId => sharedPreferences.getString(serverIdKey) ?? '';
 
   Future setUserId(String userId) async {
     await sharedPreferences.setString(userIdKey, userId);
   }
 
-  String? getUserId() => sharedPreferences.getString(userIdKey);
+  String? get userId => sharedPreferences.getString(userIdKey);
 
   Future setLibraryId(String libraryId) async {
     await sharedPreferences.setString(libraryKey, libraryId);
   }
 
-  String getLibraryId() => sharedPreferences.getString(libraryKey) ?? '';
+  String get libraryId => sharedPreferences.getString(libraryKey) ?? '';
 }

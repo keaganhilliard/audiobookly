@@ -39,7 +39,7 @@ class PlexRepository extends MediaRepository {
   }
 
   void setRefreshTimer() {
-    _refreshServer = Timer.periodic(Duration(minutes: 1), (timer) {
+    _refreshServer = Timer.periodic(const Duration(minutes: 1), (timer) {
       needsRefresh = true;
       _refreshServer!.cancel();
     });
@@ -74,8 +74,8 @@ class PlexRepository extends MediaRepository {
   @override
   Future getServerAndLibrary() async {
     if (raceCondition != null) await raceCondition!.future;
-    _serverKey ??= _prefs.getServerId();
-    _libraryKey ??= _prefs.getLibraryId();
+    _serverKey ??= _prefs.serverId;
+    _libraryKey ??= _prefs.libraryId;
     if (_server == null) {
       raceCondition = Completer();
       _server = (await _api.getServers())
@@ -88,7 +88,7 @@ class PlexRepository extends MediaRepository {
 
   Future refreshServer() async {
     if (needsRefresh || _server == null) {
-      _serverKey = _prefs.getServerId();
+      _serverKey = _prefs.serverId;
       _server = (await _api.getServers())
           .firstWhereOrNull((server) => server.clientIdentifier == _serverKey);
       if (_server != null) needsRefresh = false;
@@ -271,7 +271,7 @@ class PlexRepository extends MediaRepository {
 
   @override
   String getDownloadUrl(String path) {
-    return getServerUrl(path) + '&download=1';
+    return '${getServerUrl(path)}&download=1';
   }
 
   @override
