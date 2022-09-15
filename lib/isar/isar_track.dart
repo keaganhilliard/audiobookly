@@ -1,46 +1,49 @@
 import 'package:audiobookly/models/track.dart';
 import 'package:isar/isar.dart';
-import './duration_converter.dart';
 
 part 'isar_track.g.dart';
 
 @Collection()
-class IsarTrack implements Track {
-  @Id()
-  int? isarId;
+class IsarTrack {
+  Id? isarId = isarAutoIncrementId;
 
-  @override
   final String id;
 
-  @override
   final String title;
 
-  @override
-  @DurationConverter()
-  final Duration duration;
+  @ignore
+  Duration get duration => Duration(microseconds: isarDuration);
 
-  @override
+  final int isarDuration;
+
   final double downloadProgress;
 
-  @override
   final bool isDownloaded;
 
-  @override
   final String downloadPath;
 
-  @override
   final String bookId;
 
-  @override
   final String downloadTaskId;
 
-  @override
   final int downloadTaskStatus;
+
+  Track toTrack() => Track(
+        id,
+        title,
+        duration,
+        downloadProgress,
+        isDownloaded,
+        downloadPath,
+        bookId,
+        downloadTaskId,
+        downloadTaskStatus,
+      );
 
   IsarTrack(
     this.id,
     this.title,
-    this.duration,
+    this.isarDuration,
     this.downloadProgress,
     this.isDownloaded,
     this.downloadPath,
@@ -50,7 +53,6 @@ class IsarTrack implements Track {
     this.isarId,
   ]);
 
-  @override
   IsarTrack copyWith({
     String? id,
     String? title,
@@ -61,12 +63,12 @@ class IsarTrack implements Track {
     String? bookId,
     String? downloadTaskId,
     int? downloadTaskStatus,
-    int? isarId,
+    Id? isarId,
   }) =>
       IsarTrack(
         id ?? this.id,
         title ?? this.title,
-        duration ?? this.duration,
+        duration?.inMicroseconds ?? isarDuration,
         downloadProgress ?? this.downloadProgress,
         isDownloaded ?? this.isDownloaded,
         downloadPath ?? this.downloadPath,
@@ -74,5 +76,18 @@ class IsarTrack implements Track {
         downloadTaskId ?? this.downloadTaskId,
         downloadTaskStatus ?? this.downloadTaskStatus,
         isarId ?? this.isarId,
+      );
+
+      factory IsarTrack.fromTrack(Track track) => IsarTrack(
+        track.id,
+        track.title,
+        track.duration.inMicroseconds,
+        track.downloadProgress,
+        track.isDownloaded,
+        track.downloadPath,
+        track.bookId,
+        track.downloadTaskId,
+        track.downloadTaskStatus,
+        null,
       );
 }

@@ -105,20 +105,12 @@ class __$$OfflineStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateInitial
-    with DiagnosticableTreeMixin
-    implements OfflineStateInitial {
+class _$OfflineStateInitial implements OfflineStateInitial {
   const _$OfflineStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'OfflineState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'OfflineState.initial'));
   }
 
   @override
@@ -243,9 +235,7 @@ class __$$OfflineStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateLoaded
-    with DiagnosticableTreeMixin
-    implements OfflineStateLoaded {
+class _$OfflineStateLoaded implements OfflineStateLoaded {
   const _$OfflineStateLoaded({final List<MediaItem>? books}) : _books = books;
 
   final List<MediaItem>? _books;
@@ -258,16 +248,8 @@ class _$OfflineStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'OfflineState.loaded(books: $books)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'OfflineState.loaded'))
-      ..add(DiagnosticsProperty('books', books));
   }
 
   @override
@@ -367,7 +349,7 @@ abstract class OfflineStateLoaded implements OfflineState {
   const factory OfflineStateLoaded({final List<MediaItem>? books}) =
       _$OfflineStateLoaded;
 
-  List<MediaItem>? get books => throw _privateConstructorUsedError;
+  List<MediaItem>? get books;
   @JsonKey(ignore: true)
   _$$OfflineStateLoadedCopyWith<_$OfflineStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -394,20 +376,12 @@ class __$$OfflineStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateLoading
-    with DiagnosticableTreeMixin
-    implements OfflineStateLoading {
+class _$OfflineStateLoading implements OfflineStateLoading {
   const _$OfflineStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'OfflineState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'OfflineState.loading'));
   }
 
   @override
@@ -533,25 +507,15 @@ class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements OfflineStateErrorDetails {
+class _$OfflineStateErrorDetails implements OfflineStateErrorDetails {
   const _$OfflineStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'OfflineState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'OfflineState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -652,7 +616,7 @@ abstract class OfflineStateErrorDetails implements OfflineState {
   const factory OfflineStateErrorDetails([final String? message]) =
       _$OfflineStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$OfflineStateErrorDetailsCopyWith<_$OfflineStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

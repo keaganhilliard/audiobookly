@@ -107,20 +107,12 @@ class __$$CollectionsStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateInitial
-    with DiagnosticableTreeMixin
-    implements CollectionsStateInitial {
+class _$CollectionsStateInitial implements CollectionsStateInitial {
   const _$CollectionsStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'CollectionsState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CollectionsState.initial'));
   }
 
   @override
@@ -247,9 +239,7 @@ class __$$CollectionsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateLoaded
-    with DiagnosticableTreeMixin
-    implements CollectionsStateLoaded {
+class _$CollectionsStateLoaded implements CollectionsStateLoaded {
   const _$CollectionsStateLoaded({final List<MediaItem>? collections})
       : _collections = collections;
 
@@ -263,16 +253,8 @@ class _$CollectionsStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'CollectionsState.loaded(collections: $collections)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'CollectionsState.loaded'))
-      ..add(DiagnosticsProperty('collections', collections));
   }
 
   @override
@@ -373,7 +355,7 @@ abstract class CollectionsStateLoaded implements CollectionsState {
   const factory CollectionsStateLoaded({final List<MediaItem>? collections}) =
       _$CollectionsStateLoaded;
 
-  List<MediaItem>? get collections => throw _privateConstructorUsedError;
+  List<MediaItem>? get collections;
   @JsonKey(ignore: true)
   _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -401,20 +383,12 @@ class __$$CollectionsStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateLoading
-    with DiagnosticableTreeMixin
-    implements CollectionsStateLoading {
+class _$CollectionsStateLoading implements CollectionsStateLoading {
   const _$CollectionsStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'CollectionsState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CollectionsState.loading'));
   }
 
   @override
@@ -543,25 +517,15 @@ class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements CollectionsStateErrorDetails {
+class _$CollectionsStateErrorDetails implements CollectionsStateErrorDetails {
   const _$CollectionsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'CollectionsState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'CollectionsState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -661,7 +625,7 @@ abstract class CollectionsStateErrorDetails implements CollectionsState {
   const factory CollectionsStateErrorDetails([final String? message]) =
       _$CollectionsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$CollectionsStateErrorDetailsCopyWith<_$CollectionsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

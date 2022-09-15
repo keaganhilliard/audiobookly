@@ -1,7 +1,5 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
-import 'package:audiobookly/database/entity/sql_book.dart';
-import 'package:audiobookly/database/entity/sql_track.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/chapter.dart';
@@ -148,7 +146,8 @@ extension MediaHelpers on MediaItem {
   List<Chapter> get chapters {
     if (extras != null && extras!.containsKey('chapters')) {
       return [
-        for (final chapter in extras!['chapters']) Chapter.fromJson(chapter, id)
+        for (final chapter in extras!['chapters'])
+          Chapter.fromJson(chapter, id.hashCode)
       ];
     }
     return [];
@@ -163,7 +162,7 @@ extension MediaHelpers on MediaItem {
       );
 
   static MediaItem fromBook(Book book) => MediaItem(
-        id: book.id,
+        id: book.exId,
         title: book.title,
         artist: book.author,
         album: book.title,

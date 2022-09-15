@@ -44,7 +44,7 @@ Future<DeviceInfo> getDeviceInfo() async {
   } else if (Platform.isAndroid) {
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
     return DeviceInfo(
-      uniqueId: androidDeviceInfo.androidId,
+      uniqueId: androidDeviceInfo.id,
       model: androidDeviceInfo.model,
       version: '0.0.1.0',
       platform: 'Android',

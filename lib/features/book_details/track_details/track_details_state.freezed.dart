@@ -107,20 +107,12 @@ class __$$TrackDetailsStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateInitial
-    with DiagnosticableTreeMixin
-    implements TrackDetailsStateInitial {
+class _$TrackDetailsStateInitial implements TrackDetailsStateInitial {
   const _$TrackDetailsStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'TrackDetailsState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'TrackDetailsState.initial'));
   }
 
   @override
@@ -247,9 +239,7 @@ class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateLoaded
-    with DiagnosticableTreeMixin
-    implements TrackDetailsStateLoaded {
+class _$TrackDetailsStateLoaded implements TrackDetailsStateLoaded {
   const _$TrackDetailsStateLoaded({final List<MediaItem>? chapters})
       : _chapters = chapters;
 
@@ -263,16 +253,8 @@ class _$TrackDetailsStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'TrackDetailsState.loaded(chapters: $chapters)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'TrackDetailsState.loaded'))
-      ..add(DiagnosticsProperty('chapters', chapters));
   }
 
   @override
@@ -372,7 +354,7 @@ abstract class TrackDetailsStateLoaded implements TrackDetailsState {
   const factory TrackDetailsStateLoaded({final List<MediaItem>? chapters}) =
       _$TrackDetailsStateLoaded;
 
-  List<MediaItem>? get chapters => throw _privateConstructorUsedError;
+  List<MediaItem>? get chapters;
   @JsonKey(ignore: true)
   _$$TrackDetailsStateLoadedCopyWith<_$TrackDetailsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -400,20 +382,12 @@ class __$$TrackDetailsStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateLoading
-    with DiagnosticableTreeMixin
-    implements TrackDetailsStateLoading {
+class _$TrackDetailsStateLoading implements TrackDetailsStateLoading {
   const _$TrackDetailsStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'TrackDetailsState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'TrackDetailsState.loading'));
   }
 
   @override
@@ -542,25 +516,15 @@ class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements TrackDetailsStateErrorDetails {
+class _$TrackDetailsStateErrorDetails implements TrackDetailsStateErrorDetails {
   const _$TrackDetailsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'TrackDetailsState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'TrackDetailsState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -660,7 +624,7 @@ abstract class TrackDetailsStateErrorDetails implements TrackDetailsState {
   const factory TrackDetailsStateErrorDetails([final String? message]) =
       _$TrackDetailsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$TrackDetailsStateErrorDetailsCopyWith<_$TrackDetailsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

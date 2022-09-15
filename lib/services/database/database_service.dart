@@ -27,7 +27,7 @@ abstract class DatabaseService {
   Future insertChapter(Chapter chapter);
   Future insertChapters(List<Chapter> chapters);
   Future deleteChapters(List<Chapter> chapters);
-  Future<List<Chapter>> getChaptersForBook(String bookId);
+  Future<List<Chapter>> getChaptersForBook(int bookId);
 
   Track getTrackFromMediaItem(
     MediaItem chapter,

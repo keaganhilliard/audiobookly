@@ -104,20 +104,12 @@ class __$$AuthStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateInitial
-    with DiagnosticableTreeMixin
-    implements AuthStateInitial {
+class _$AuthStateInitial implements AuthStateInitial {
   const _$AuthStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthState.initial'));
   }
 
   @override
@@ -242,25 +234,15 @@ class __$$AuthStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateLoaded
-    with DiagnosticableTreeMixin
-    implements AuthStateLoaded {
+class _$AuthStateLoaded implements AuthStateLoaded {
   const _$AuthStateLoaded({this.user});
 
   @override
   final User? user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthState.loaded(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthState.loaded'))
-      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -358,7 +340,7 @@ class _$AuthStateLoaded
 abstract class AuthStateLoaded implements AuthState {
   const factory AuthStateLoaded({final User? user}) = _$AuthStateLoaded;
 
-  User? get user => throw _privateConstructorUsedError;
+  User? get user;
   @JsonKey(ignore: true)
   _$$AuthStateLoadedCopyWith<_$AuthStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -385,20 +367,12 @@ class __$$AuthStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateLoading
-    with DiagnosticableTreeMixin
-    implements AuthStateLoading {
+class _$AuthStateLoading implements AuthStateLoading {
   const _$AuthStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthState.loading'));
   }
 
   @override
@@ -523,25 +497,15 @@ class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements AuthStateErrorDetails {
+class _$AuthStateErrorDetails implements AuthStateErrorDetails {
   const _$AuthStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -641,7 +605,7 @@ abstract class AuthStateErrorDetails implements AuthState {
   const factory AuthStateErrorDetails([final String? message]) =
       _$AuthStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$AuthStateErrorDetailsCopyWith<_$AuthStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

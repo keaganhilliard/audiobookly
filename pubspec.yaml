@@ -26,7 +26,7 @@ dependencies:
   emby_api:
     path: ./emby_api
   audiobookshelf:
-    path: ./audiobookshelf
+    path: ./audiobookshelf_api
   flutter_hooks: ^0.18.2+1
   hooks_riverpod: ^1.0.0-dev.11
   expandable: ^5.0.1
@@ -51,7 +51,7 @@ dependencies:
   # objectbox: ^1.0.0
   floor:
   auto_size_text: ^3.0.0-nullsafety.0
-  device_info_plus: ^3.1.1
+  device_info_plus: ^4.1.2
   get_it: ^7.1.4
   flutter_downloader:
   hive:
@@ -61,9 +61,10 @@ dependencies:
   adaptive_navigation: ^0.0.5
   isar: ^3.0.0-dev.0
   isar_flutter_libs: ^3.0.0-dev.0 # contains the binaries
-  flutter_html: 3.0.0-alpha.3
+  flutter_html: ^3.0.0-alpha.5
   macos_ui:
   cupertino_icons:
+  carousel_slider: ^4.1.1
 
   # dart_chromecast:
   #   git:
@@ -88,7 +89,7 @@ dev_dependencies:
   # objectbox_generator:
   # floor_generator:
   flutter_lints: ^2.0.1
-  flutter_launcher_icons: "^0.9.1"
+  flutter_launcher_icons: ^0.10.0
 
 flutter_icons:
   android: "launcher_icon"

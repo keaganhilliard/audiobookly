@@ -25,9 +25,9 @@ class AbsUtils {
     return theDouble;
   }
 
-  static DateTime? parseDateTime(int? dateInMillis) {
+  static DateTime? parseDateTime(num? dateInMillis) {
     return dateInMillis == null
         ? null
-        : DateTime.fromMillisecondsSinceEpoch(dateInMillis);
+        : DateTime.fromMillisecondsSinceEpoch(dateInMillis.toInt());
   }
 }

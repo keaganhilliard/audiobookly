@@ -40,7 +40,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
         _databaseService!.watchBookById(_mediaId).listen((book) {
       if (book != null) {
         final item = MediaItem(
-          id: book.id,
+          id: book.exId,
           title: book.title,
           displayDescription: book.description,
           artist: book.author,

@@ -13,6 +13,7 @@ import 'package:audiobookly/widgets/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:cast/cast.dart';
 import 'package:audiobookly/utils/jump_icons.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -35,8 +36,8 @@ class PlayerView extends HookConsumerWidget {
       int durationLeft = duration - currentPosition;
       String durationLeftText = Utils.friendlyDuration(
           Duration(milliseconds: (durationLeft / rate).round()));
-      text = (currentPosition / duration * 100).toStringAsFixed(0) +
-          '% ($durationLeftText left)';
+      text =
+          '${(currentPosition / duration * 100).toStringAsFixed(0)}% ($durationLeftText left)';
     }
     return text;
   }
@@ -59,18 +60,6 @@ class PlayerView extends HookConsumerWidget {
         title: Text(
           book?.album ?? book?.title ?? '',
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.list),
-            onPressed: () {
-              navigationService.push(MaterialPageRoute(
-                builder: (context) {
-                  return TracksView();
-                },
-              ));
-            },
-          )
-        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +68,7 @@ class PlayerView extends HookConsumerWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Expanded(
                   flex: 1,
@@ -90,120 +80,86 @@ class PlayerView extends HookConsumerWidget {
                         left: 16.0,
                         right: 16.0,
                       ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          enableInfiniteScroll: false,
+                          height: 400.0,
+                          enlargeCenterPage: true,
                         ),
-                        clipBehavior: Clip.antiAlias,
-                        child: Stack(
-                          children: [
-                            CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              errorWidget: (context, error, child) =>
-                                  const Icon(Icons.book),
-                              imageUrl: (book?.largeThumbnail?.toString() ??
-                                  book?.artUri?.toString())!,
-                              placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
+                        items: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                            // Positioned(
-                            //   top: 5.0,
-                            //   right: 5.0,
-                            //   child: Opacity(
-                            //     opacity: 1,
-                            //     child: IconButton(
-                            //       color: Colors.grey[100],
-                            //       icon: const Icon(Icons.cast),
-                            //       onPressed: () async {
-                            //         showModalBottomSheet(
-                            //             context: context,
-                            //             builder: (context) {
-                            //               return SingleChildScrollView(
-                            //                 child: Padding(
-                            //                   padding:
-                            //                       const EdgeInsets.all(18.0),
-                            //                   child: FutureBuilder<
-                            //                       List<CastDevice>>(
-                            //                     future: CastDiscoveryService()
-                            //                         .search(),
-                            //                     builder: (context, snapshot) {
-                            //                       if (snapshot.hasError) {
-                            //                         return Center(
-                            //                           child: Text(
-                            //                             'Error: ${snapshot.error.toString()}',
-                            //                           ),
-                            //                         );
-                            //                       } else if (!snapshot
-                            //                           .hasData) {
-                            //                         return const Center(
-                            //                           child:
-                            //                               CircularProgressIndicator(),
-                            //                         );
-                            //                       }
-
-                            //                       if (snapshot.data!.isEmpty) {
-                            //                         return Column(
-                            //                           children: const [
-                            //                             Center(
-                            //                               child: Text(
-                            //                                 'No Chromecast found',
-                            //                               ),
-                            //                             ),
-                            //                           ],
-                            //                         );
-                            //                       }
-
-                            //                       return Column(
-                            //                         children: snapshot.data!
-                            //                             .map((device) {
-                            //                           return ListTile(
-                            //                             title:
-                            //                                 Text(device.name),
-                            //                             onTap: () {
-                            //                               // _connectToYourApp(context, device);
-                            //                             },
-                            //                           );
-                            //                         }).toList(),
-                            //                       );
-                            //                     },
-                            //                   ),
-                            //                 ),
-                            //               );
-                            //             });
-                            //       },
-                            //     ),
-                            //   ),
-                            // ),
-                            if (book!.displayDescription?.isNotEmpty ?? false)
-                              Positioned(
-                                bottom: 5.0,
-                                right: 5.0,
-                                child: Opacity(
-                                  opacity: 1,
-                                  child: IconButton(
-                                    color: Colors.grey[100],
-                                    icon: const Icon(Icons.info_outline),
-                                    onPressed: () async {
-                                      showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return SingleChildScrollView(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(18.0),
-                                                child: Html(
-                                                    data: book!
-                                                        .displayDescription!),
-                                              ),
-                                            );
-                                          });
-                                    },
+                            clipBehavior: Clip.antiAlias,
+                            child: Stack(
+                              children: [
+                                CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, error, child) =>
+                                      const Icon(Icons.book),
+                                  imageUrl: (book?.largeThumbnail?.toString() ??
+                                      book?.artUri?.toString())!,
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(),
                                   ),
                                 ),
+                                if (book!.displayDescription?.isNotEmpty ??
+                                    false)
+                                  Positioned(
+                                    bottom: 5.0,
+                                    right: 5.0,
+                                    child: Opacity(
+                                      opacity: 1,
+                                      child: IconButton(
+                                        color: Colors.grey[100],
+                                        icon: const Icon(Icons.info_outline),
+                                        onPressed: () async {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return SingleChildScrollView(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            18.0),
+                                                    child: Html(
+                                                        data: book!
+                                                            .displayDescription!),
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: 400,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Padding(
+                              padding: const EdgeInsets.all(30.0),
+                              child: Text(
+                                book!.displayDescription ??
+                                    'Nothing to see here',
                               ),
-                          ],
-                        ),
+                            ),
+                          ),
+                          Container(
+                            width: 400,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: TracksView(),
+                          )
+                        ],
                       ),
                     ),
                   ),

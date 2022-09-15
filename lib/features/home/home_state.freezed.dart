@@ -110,20 +110,12 @@ class __$$HomeStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateInitial
-    with DiagnosticableTreeMixin
-    implements HomeStateInitial {
+class _$HomeStateInitial implements HomeStateInitial {
   const _$HomeStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HomeState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'HomeState.initial'));
   }
 
   @override
@@ -259,9 +251,7 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateLoaded
-    with DiagnosticableTreeMixin
-    implements HomeStateLoaded {
+class _$HomeStateLoaded implements HomeStateLoaded {
   const _$HomeStateLoaded(
       {final List<MediaItem>? recentlyPlayed,
       final List<MediaItem>? recentlyAdded})
@@ -287,17 +277,8 @@ class _$HomeStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HomeState.loaded(recentlyPlayed: $recentlyPlayed, recentlyAdded: $recentlyAdded)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'HomeState.loaded'))
-      ..add(DiagnosticsProperty('recentlyPlayed', recentlyPlayed))
-      ..add(DiagnosticsProperty('recentlyAdded', recentlyAdded));
   }
 
   @override
@@ -408,8 +389,8 @@ abstract class HomeStateLoaded implements HomeState {
       {final List<MediaItem>? recentlyPlayed,
       final List<MediaItem>? recentlyAdded}) = _$HomeStateLoaded;
 
-  List<MediaItem>? get recentlyPlayed => throw _privateConstructorUsedError;
-  List<MediaItem>? get recentlyAdded => throw _privateConstructorUsedError;
+  List<MediaItem>? get recentlyPlayed;
+  List<MediaItem>? get recentlyAdded;
   @JsonKey(ignore: true)
   _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -436,20 +417,12 @@ class __$$HomeStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateLoading
-    with DiagnosticableTreeMixin
-    implements HomeStateLoading {
+class _$HomeStateLoading implements HomeStateLoading {
   const _$HomeStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HomeState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'HomeState.loading'));
   }
 
   @override
@@ -580,25 +553,15 @@ class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements HomeStateErrorDetails {
+class _$HomeStateErrorDetails implements HomeStateErrorDetails {
   const _$HomeStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HomeState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'HomeState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -704,7 +667,7 @@ abstract class HomeStateErrorDetails implements HomeState {
   const factory HomeStateErrorDetails([final String? message]) =
       _$HomeStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$HomeStateErrorDetailsCopyWith<_$HomeStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

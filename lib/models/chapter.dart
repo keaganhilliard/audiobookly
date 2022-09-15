@@ -11,9 +11,9 @@ class Chapter {
   final double start;
   final double end;
   final String title;
-  final String bookId;
+  final int bookId;
 
-  factory Chapter.fromJson(Map<String, dynamic> json, String bookId) => Chapter(
+  factory Chapter.fromJson(Map<String, dynamic> json, int bookId) => Chapter(
         id: json["id"].toString(),
         start: json["start"].toDouble(),
         end: json["end"].toDouble(),

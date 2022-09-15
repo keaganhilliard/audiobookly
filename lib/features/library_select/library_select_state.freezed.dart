@@ -108,20 +108,12 @@ class __$$LibrarySelectStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateInitial
-    with DiagnosticableTreeMixin
-    implements LibrarySelectStateInitial {
+class _$LibrarySelectStateInitial implements LibrarySelectStateInitial {
   const _$LibrarySelectStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LibrarySelectState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
   }
 
   @override
@@ -248,9 +240,7 @@ class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateLoaded
-    with DiagnosticableTreeMixin
-    implements LibrarySelectStateLoaded {
+class _$LibrarySelectStateLoaded implements LibrarySelectStateLoaded {
   const _$LibrarySelectStateLoaded({final List<Library>? libraries})
       : _libraries = libraries;
 
@@ -264,16 +254,8 @@ class _$LibrarySelectStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LibrarySelectState.loaded(libraries: $libraries)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'LibrarySelectState.loaded'))
-      ..add(DiagnosticsProperty('libraries', libraries));
   }
 
   @override
@@ -375,7 +357,7 @@ abstract class LibrarySelectStateLoaded implements LibrarySelectState {
   const factory LibrarySelectStateLoaded({final List<Library>? libraries}) =
       _$LibrarySelectStateLoaded;
 
-  List<Library>? get libraries => throw _privateConstructorUsedError;
+  List<Library>? get libraries;
   @JsonKey(ignore: true)
   _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
       get copyWith => throw _privateConstructorUsedError;
@@ -404,20 +386,12 @@ class __$$LibrarySelectStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateLoading
-    with DiagnosticableTreeMixin
-    implements LibrarySelectStateLoading {
+class _$LibrarySelectStateLoading implements LibrarySelectStateLoading {
   const _$LibrarySelectStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LibrarySelectState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
   }
 
   @override
@@ -547,7 +521,6 @@ class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LibrarySelectStateErrorDetails
-    with DiagnosticableTreeMixin
     implements LibrarySelectStateErrorDetails {
   const _$LibrarySelectStateErrorDetails([this.message]);
 
@@ -555,16 +528,8 @@ class _$LibrarySelectStateErrorDetails
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LibrarySelectState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'LibrarySelectState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -664,7 +629,7 @@ abstract class LibrarySelectStateErrorDetails implements LibrarySelectState {
   const factory LibrarySelectStateErrorDetails([final String? message]) =
       _$LibrarySelectStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$LibrarySelectStateErrorDetailsCopyWith<_$LibrarySelectStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

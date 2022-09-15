@@ -106,20 +106,12 @@ class __$$DownloadsStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateInitial
-    with DiagnosticableTreeMixin
-    implements DownloadsStateInitial {
+class _$DownloadsStateInitial implements DownloadsStateInitial {
   const _$DownloadsStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'DownloadsState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'DownloadsState.initial'));
   }
 
   @override
@@ -244,9 +236,7 @@ class __$$DownloadsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateLoaded
-    with DiagnosticableTreeMixin
-    implements DownloadsStateLoaded {
+class _$DownloadsStateLoaded implements DownloadsStateLoaded {
   const _$DownloadsStateLoaded({final List<MediaItem>? books}) : _books = books;
 
   final List<MediaItem>? _books;
@@ -259,16 +249,8 @@ class _$DownloadsStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'DownloadsState.loaded(books: $books)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'DownloadsState.loaded'))
-      ..add(DiagnosticsProperty('books', books));
   }
 
   @override
@@ -368,7 +350,7 @@ abstract class DownloadsStateLoaded implements DownloadsState {
   const factory DownloadsStateLoaded({final List<MediaItem>? books}) =
       _$DownloadsStateLoaded;
 
-  List<MediaItem>? get books => throw _privateConstructorUsedError;
+  List<MediaItem>? get books;
   @JsonKey(ignore: true)
   _$$DownloadsStateLoadedCopyWith<_$DownloadsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -395,20 +377,12 @@ class __$$DownloadsStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateLoading
-    with DiagnosticableTreeMixin
-    implements DownloadsStateLoading {
+class _$DownloadsStateLoading implements DownloadsStateLoading {
   const _$DownloadsStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'DownloadsState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'DownloadsState.loading'));
   }
 
   @override
@@ -536,25 +510,15 @@ class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements DownloadsStateErrorDetails {
+class _$DownloadsStateErrorDetails implements DownloadsStateErrorDetails {
   const _$DownloadsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'DownloadsState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'DownloadsState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -654,7 +618,7 @@ abstract class DownloadsStateErrorDetails implements DownloadsState {
   const factory DownloadsStateErrorDetails([final String? message]) =
       _$DownloadsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$DownloadsStateErrorDetailsCopyWith<_$DownloadsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

@@ -106,20 +106,12 @@ class __$$BooksStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BooksStateInitial
-    with DiagnosticableTreeMixin
-    implements BooksStateInitial {
+class _$BooksStateInitial implements BooksStateInitial {
   const _$BooksStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BooksState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'BooksState.initial'));
   }
 
   @override
@@ -250,9 +242,7 @@ class __$$BooksStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BooksStateLoaded
-    with DiagnosticableTreeMixin
-    implements BooksStateLoaded {
+class _$BooksStateLoaded implements BooksStateLoaded {
   const _$BooksStateLoaded({final List<MediaItem>? books, this.currentParent})
       : _books = books;
 
@@ -269,17 +259,8 @@ class _$BooksStateLoaded
   final String? currentParent;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BooksState.loaded(books: $books, currentParent: $currentParent)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BooksState.loaded'))
-      ..add(DiagnosticsProperty('books', books))
-      ..add(DiagnosticsProperty('currentParent', currentParent));
   }
 
   @override
@@ -384,8 +365,8 @@ abstract class BooksStateLoaded implements BooksState {
       {final List<MediaItem>? books,
       final String? currentParent}) = _$BooksStateLoaded;
 
-  List<MediaItem>? get books => throw _privateConstructorUsedError;
-  String? get currentParent => throw _privateConstructorUsedError;
+  List<MediaItem>? get books;
+  String? get currentParent;
   @JsonKey(ignore: true)
   _$$BooksStateLoadedCopyWith<_$BooksStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -412,20 +393,12 @@ class __$$BooksStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BooksStateLoading
-    with DiagnosticableTreeMixin
-    implements BooksStateLoading {
+class _$BooksStateLoading implements BooksStateLoading {
   const _$BooksStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BooksState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'BooksState.loading'));
   }
 
   @override
@@ -552,25 +525,15 @@ class __$$BooksStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BooksStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements BooksStateErrorDetails {
+class _$BooksStateErrorDetails implements BooksStateErrorDetails {
   const _$BooksStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BooksState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BooksState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -671,7 +634,7 @@ abstract class BooksStateErrorDetails implements BooksState {
   const factory BooksStateErrorDetails([final String? message]) =
       _$BooksStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$BooksStateErrorDetailsCopyWith<_$BooksStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

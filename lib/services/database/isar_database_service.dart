@@ -15,7 +15,7 @@ import 'package:rxdart/subjects.dart';
 
 Future<Isar> initIsar() async {
   return await Isar.open(
-    schemas: [IsarBookSchema, IsarChapterSchema, IsarTrackSchema],
+    [IsarBookSchema, IsarChapterSchema, IsarTrackSchema],
     directory: (await getApplicationSupportDirectory()).path,
     inspector: true,
   );
@@ -30,12 +30,12 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Stream<List<Book>> getBooks() {
-    return _db.isarBooks.where().watch(initialReturn: true);
+    return _db.isarBooks.where().watch(initialReturn: true).map((isarBooks) => isarBooks.map((book) => book.toBook()).toList());
   }
 
   @override
   Future<Book?> getBookById(String id) async {
-    return _db.isarBooks.where().filter().idEqualTo(id).findFirst();
+    return (await _db.isarBooks.where().filter().exIdEqualTo(id).findFirst())?.toBook();
   }
 
   @override
@@ -43,18 +43,16 @@ class IsarDatabaseService implements DatabaseService {
     return _db.isarBooks
         .where()
         .filter()
-        .idEqualTo(id)
+        .exIdEqualTo(id)
         .watch(initialReturn: true)
-        .map((books) => books.isEmpty ? null : books.first);
+        .map((books) => books.isEmpty ? null : books.first.toBook());
   }
 
   @override
   Future insertBook(Book book) async {
-    final dbBook = await _db.isarBooks.filter().idEqualTo(book.id).findFirst();
-    await _db.writeTxn((isar) async {
-      return await isar.isarBooks.put(
-        (book as IsarBook).copyWith(
-          isarId: dbBook?.isarId,
+    await _db.writeTxn(() async {
+      return await _db.isarBooks.put(
+        IsarBook.fromBook(book).copyWith(
           lastUpdate: DateTime.now(),
         ),
       );
@@ -63,7 +61,7 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Stream<List<Track>> getTracks() {
-    return _db.isarTracks.where().watch(initialReturn: true);
+    return _db.isarTracks.where().watch(initialReturn: true).map((tracks) => tracks.map((track) => track.toTrack()).toList());
   }
 
   @override
@@ -74,16 +72,16 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Future<Track?> getTrack(String id) async {
-    return _db.isarTracks.where().filter().idEqualTo(id).findFirst();
+    return (await _db.isarTracks.where().filter().idEqualTo(id).findFirst())?.toTrack();
   }
 
   @override
   Future updateTrackDownloadProgress(String taskId, double progress) async {
     Track? track = await getTrackByDownloadTask(taskId);
     if (track != null) {
-      await _db.writeTxn((isar) async {
-        await isar.isarTracks.put(
-          (track as IsarTrack).copyWith(downloadProgress: progress),
+      await _db.writeTxn(() async {
+        await _db.isarTracks.put(
+          IsarTrack.fromTrack(track).copyWith(downloadProgress: progress),
         );
       });
     }
@@ -98,33 +96,33 @@ class IsarDatabaseService implements DatabaseService {
         .filter()
         .bookIdEqualTo(bookId)
         .watch(initialReturn: true)
-        .map((tracks) => {for (final track in tracks) track.id: track});
+        .map((tracks) => {for (final track in tracks) track.id: track.toTrack()});
   }
 
   @override
   Future<Track?> getTrackByDownloadTask(String taskId) async {
-    return _db.isarTracks
+    return ( await _db.isarTracks
         .where()
         .filter()
         .downloadTaskIdEqualTo(taskId)
-        .findFirst();
+        .findFirst())?.toTrack();
   }
 
   @override
   Future insertTrack(Track track) async {
     final dbTrack =
         await _db.isarTracks.filter().idEqualTo(track.id).findFirst();
-    return _db.writeTxn((isar) async {
-      final iTrack = track as IsarTrack;
+    return _db.writeTxn(() async {
+      final iTrack = IsarTrack.fromTrack(track);
       if (dbTrack != null) iTrack.isarId = dbTrack.isarId;
-      return isar.isarTracks.put(iTrack);
+      return _db.isarTracks.put(iTrack);
     });
   }
 
   @override
   Future insertTracks(List<Track> tracks) {
-    return _db.writeTxn((isar) async {
-      return isar.isarTracks.putAll(tracks.cast());
+    return _db.writeTxn(() async {
+      return _db.isarTracks.putAll(tracks.cast());
     });
   }
 
@@ -136,7 +134,7 @@ class IsarDatabaseService implements DatabaseService {
     String path, [
     String downloadTaskId = '',
   ]) =>
-      IsarTrack(
+      Track(
         chapter.id,
         chapter.title,
         chapter.duration ?? Duration.zero,
@@ -155,8 +153,8 @@ class IsarDatabaseService implements DatabaseService {
     bool downloadCompleted,
     bool downloadFailed,
   ) =>
-      IsarBook(
-        null,
+      Book(
+        book.id.hashCode,
         book.id,
         book.title,
         book.artist ?? 'Unknown',
@@ -178,7 +176,7 @@ class IsarDatabaseService implements DatabaseService {
       final bookId = chapters[0].bookId;
       final dbChapters =
           await _db.isarChapters.filter().bookIdEqualTo(bookId).findAll();
-      await _db.writeTxn((isar) async {
+      await _db.writeTxn(() async {
         await _db.isarChapters
             .deleteAll(dbChapters.map((chapter) => chapter.isarId!).toList());
       });
@@ -186,29 +184,29 @@ class IsarDatabaseService implements DatabaseService {
   }
 
   @override
-  Future<List<Chapter>> getChaptersForBook(String bookId) async {
+  Future<List<Chapter>> getChaptersForBook(int bookId) async {
     return _db.isarChapters.where().filter().bookIdEqualTo(bookId).findAll();
   }
 
   @override
   Future insertChapter(Chapter chapter) async {
-    return _db.writeTxn((isar) async {
-      return isar.isarChapters.put(IsarChapter.fromChapter(chapter));
+    return _db.writeTxn(() async {
+      return _db.isarChapters.put(IsarChapter.fromChapter(chapter));
     });
   }
 
   @override
   Future insertChapters(List<Chapter> chapters) {
-    return _db.writeTxn((isar) async {
-      return isar.isarChapters.putAll(
+    return _db.writeTxn(() async {
+      return _db.isarChapters.putAll(
           [for (final chapter in chapters) IsarChapter.fromChapter(chapter)]);
     });
   }
 
   @override
   Future deleteBook(Book book) async {
-    return _db.writeTxn((isar) async {
-      await isar.isarBooks.delete((book as IsarBook).isarId!);
+    return _db.writeTxn(() async {
+        await _db.isarBooks.delete(book.id.hashCode);
     });
   }
 }

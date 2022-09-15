@@ -6,120 +6,124 @@ part of 'isar_track.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
 
 extension GetIsarTrackCollection on Isar {
-  IsarCollection<IsarTrack> get isarTracks => getCollection();
+  IsarCollection<IsarTrack> get isarTracks => this.collection();
 }
 
 const IsarTrackSchema = CollectionSchema(
-  name: 'IsarTrack',
-  schema:
-      '{"name":"IsarTrack","idName":"isarId","properties":[{"name":"bookId","type":"String"},{"name":"downloadPath","type":"String"},{"name":"downloadProgress","type":"Double"},{"name":"downloadTaskId","type":"String"},{"name":"downloadTaskStatus","type":"Long"},{"name":"duration","type":"Long"},{"name":"id","type":"String"},{"name":"isDownloaded","type":"Bool"},{"name":"title","type":"String"}],"indexes":[],"links":[]}',
-  idName: 'isarId',
-  propertyIds: {
-    'bookId': 0,
-    'downloadPath': 1,
-    'downloadProgress': 2,
-    'downloadTaskId': 3,
-    'downloadTaskStatus': 4,
-    'duration': 5,
-    'id': 6,
-    'isDownloaded': 7,
-    'title': 8
+  name: r'IsarTrack',
+  id: 4152992676124368771,
+  properties: {
+    r'bookId': PropertySchema(
+      id: 0,
+      name: r'bookId',
+      type: IsarType.string,
+    ),
+    r'downloadPath': PropertySchema(
+      id: 1,
+      name: r'downloadPath',
+      type: IsarType.string,
+    ),
+    r'downloadProgress': PropertySchema(
+      id: 2,
+      name: r'downloadProgress',
+      type: IsarType.double,
+    ),
+    r'downloadTaskId': PropertySchema(
+      id: 3,
+      name: r'downloadTaskId',
+      type: IsarType.string,
+    ),
+    r'downloadTaskStatus': PropertySchema(
+      id: 4,
+      name: r'downloadTaskStatus',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 5,
+      name: r'id',
+      type: IsarType.string,
+    ),
+    r'isDownloaded': PropertySchema(
+      id: 6,
+      name: r'isDownloaded',
+      type: IsarType.bool,
+    ),
+    r'isarDuration': PropertySchema(
+      id: 7,
+      name: r'isarDuration',
+      type: IsarType.long,
+    ),
+    r'title': PropertySchema(
+      id: 8,
+      name: r'title',
+      type: IsarType.string,
+    )
   },
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {},
-  backlinkLinkNames: {},
-  getId: _isarTrackGetId,
-  setId: _isarTrackSetId,
-  getLinks: _isarTrackGetLinks,
-  attachLinks: _isarTrackAttachLinks,
+  estimateSize: _isarTrackEstimateSize,
   serializeNative: _isarTrackSerializeNative,
   deserializeNative: _isarTrackDeserializeNative,
   deserializePropNative: _isarTrackDeserializePropNative,
   serializeWeb: _isarTrackSerializeWeb,
   deserializeWeb: _isarTrackDeserializeWeb,
   deserializePropWeb: _isarTrackDeserializePropWeb,
-  version: 4,
+  idName: r'isarId',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {},
+  getId: _isarTrackGetId,
+  getLinks: _isarTrackGetLinks,
+  attach: _isarTrackAttach,
+  version: 5,
 );
 
-int? _isarTrackGetId(IsarTrack object) {
-  if (object.isarId == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.isarId;
-  }
+int _isarTrackEstimateSize(
+  IsarTrack object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.bookId.length * 3;
+  bytesCount += 3 + object.downloadPath.length * 3;
+  bytesCount += 3 + object.downloadTaskId.length * 3;
+  bytesCount += 3 + object.id.length * 3;
+  bytesCount += 3 + object.title.length * 3;
+  return bytesCount;
 }
 
-void _isarTrackSetId(IsarTrack object, int id) {
-  object.isarId = id;
+int _isarTrackSerializeNative(
+  IsarTrack object,
+  IsarBinaryWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.bookId);
+  writer.writeString(offsets[1], object.downloadPath);
+  writer.writeDouble(offsets[2], object.downloadProgress);
+  writer.writeString(offsets[3], object.downloadTaskId);
+  writer.writeLong(offsets[4], object.downloadTaskStatus);
+  writer.writeString(offsets[5], object.id);
+  writer.writeBool(offsets[6], object.isDownloaded);
+  writer.writeLong(offsets[7], object.isarDuration);
+  writer.writeString(offsets[8], object.title);
+  return writer.usedBytes;
 }
 
-List<IsarLinkBase> _isarTrackGetLinks(IsarTrack object) {
-  return [];
-}
-
-const _isarTrackDurationConverter = DurationConverter();
-
-void _isarTrackSerializeNative(
-    IsarCollection<IsarTrack> collection,
-    IsarCObject cObj,
-    IsarTrack object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = object.bookId;
-  final _bookId = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_bookId.length) as int;
-  final value1 = object.downloadPath;
-  final _downloadPath = IsarBinaryWriter.utf8Encoder.convert(value1);
-  dynamicSize += (_downloadPath.length) as int;
-  final value2 = object.downloadProgress;
-  final _downloadProgress = value2;
-  final value3 = object.downloadTaskId;
-  final _downloadTaskId = IsarBinaryWriter.utf8Encoder.convert(value3);
-  dynamicSize += (_downloadTaskId.length) as int;
-  final value4 = object.downloadTaskStatus;
-  final _downloadTaskStatus = value4;
-  final value5 = _isarTrackDurationConverter.toIsar(object.duration);
-  final _duration = value5;
-  final value6 = object.id;
-  final _id = IsarBinaryWriter.utf8Encoder.convert(value6);
-  dynamicSize += (_id.length) as int;
-  final value7 = object.isDownloaded;
-  final _isDownloaded = value7;
-  final value8 = object.title;
-  final _title = IsarBinaryWriter.utf8Encoder.convert(value8);
-  dynamicSize += (_title.length) as int;
-  final size = staticSize + dynamicSize;
-
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _bookId);
-  writer.writeBytes(offsets[1], _downloadPath);
-  writer.writeDouble(offsets[2], _downloadProgress);
-  writer.writeBytes(offsets[3], _downloadTaskId);
-  writer.writeLong(offsets[4], _downloadTaskStatus);
-  writer.writeLong(offsets[5], _duration);
-  writer.writeBytes(offsets[6], _id);
-  writer.writeBool(offsets[7], _isDownloaded);
-  writer.writeBytes(offsets[8], _title);
-}
-
-IsarTrack _isarTrackDeserializeNative(IsarCollection<IsarTrack> collection,
-    int id, IsarBinaryReader reader, List<int> offsets) {
+IsarTrack _isarTrackDeserializeNative(
+  int id,
+  IsarBinaryReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = IsarTrack(
-    reader.readString(offsets[6]),
+    reader.readString(offsets[5]),
     reader.readString(offsets[8]),
-    _isarTrackDurationConverter.fromIsar(reader.readLong(offsets[5])),
+    reader.readLong(offsets[7]),
     reader.readDouble(offsets[2]),
-    reader.readBool(offsets[7]),
+    reader.readBool(offsets[6]),
     reader.readString(offsets[1]),
     reader.readString(offsets[0]),
     reader.readString(offsets[3]),
@@ -130,10 +134,13 @@ IsarTrack _isarTrackDeserializeNative(IsarCollection<IsarTrack> collection,
 }
 
 P _isarTrackDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+  Id id,
+  IsarBinaryReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
@@ -145,94 +152,59 @@ P _isarTrackDeserializePropNative<P>(
     case 4:
       return (reader.readLong(offset)) as P;
     case 5:
-      return (_isarTrackDurationConverter.fromIsar(reader.readLong(offset)))
-          as P;
-    case 6:
       return (reader.readString(offset)) as P;
-    case 7:
+    case 6:
       return (reader.readBool(offset)) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _isarTrackSerializeWeb(
+Object _isarTrackSerializeWeb(
     IsarCollection<IsarTrack> collection, IsarTrack object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'bookId', object.bookId);
-  IsarNative.jsObjectSet(jsObj, 'downloadPath', object.downloadPath);
-  IsarNative.jsObjectSet(jsObj, 'downloadProgress', object.downloadProgress);
-  IsarNative.jsObjectSet(jsObj, 'downloadTaskId', object.downloadTaskId);
-  IsarNative.jsObjectSet(
-      jsObj, 'downloadTaskStatus', object.downloadTaskStatus);
-  IsarNative.jsObjectSet(
-      jsObj, 'duration', _isarTrackDurationConverter.toIsar(object.duration));
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'isDownloaded', object.isDownloaded);
-  IsarNative.jsObjectSet(jsObj, 'isarId', object.isarId);
-  IsarNative.jsObjectSet(jsObj, 'title', object.title);
-  return jsObj;
+  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
 }
 
 IsarTrack _isarTrackDeserializeWeb(
-    IsarCollection<IsarTrack> collection, dynamic jsObj) {
-  final object = IsarTrack(
-    IsarNative.jsObjectGet(jsObj, 'id') ?? '',
-    IsarNative.jsObjectGet(jsObj, 'title') ?? '',
-    _isarTrackDurationConverter.fromIsar(
-        IsarNative.jsObjectGet(jsObj, 'duration') ?? double.negativeInfinity),
-    IsarNative.jsObjectGet(jsObj, 'downloadProgress') ??
-        double.negativeInfinity,
-    IsarNative.jsObjectGet(jsObj, 'isDownloaded') ?? false,
-    IsarNative.jsObjectGet(jsObj, 'downloadPath') ?? '',
-    IsarNative.jsObjectGet(jsObj, 'bookId') ?? '',
-    IsarNative.jsObjectGet(jsObj, 'downloadTaskId') ?? '',
-    IsarNative.jsObjectGet(jsObj, 'downloadTaskStatus') ??
-        double.negativeInfinity,
-    IsarNative.jsObjectGet(jsObj, 'isarId'),
-  );
-  return object;
+    IsarCollection<IsarTrack> collection, Object jsObj) {
+  /*final object = IsarTrack(IsarNative.jsObjectGet(jsObj, r'id') ?? '',IsarNative.jsObjectGet(jsObj, r'title') ?? '',IsarNative.jsObjectGet(jsObj, r'isarDuration') ?? (double.negativeInfinity as int),IsarNative.jsObjectGet(jsObj, r'downloadProgress') ?? double.negativeInfinity,IsarNative.jsObjectGet(jsObj, r'isDownloaded') ?? false,IsarNative.jsObjectGet(jsObj, r'downloadPath') ?? '',IsarNative.jsObjectGet(jsObj, r'bookId') ?? '',IsarNative.jsObjectGet(jsObj, r'downloadTaskId') ?? '',IsarNative.jsObjectGet(jsObj, r'downloadTaskStatus') ?? (double.negativeInfinity as int),IsarNative.jsObjectGet(jsObj, r'isarId') ,);*/
+  //return object;
+  throw UnimplementedError();
 }
 
 P _isarTrackDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case 'bookId':
-      return (IsarNative.jsObjectGet(jsObj, 'bookId') ?? '') as P;
-    case 'downloadPath':
-      return (IsarNative.jsObjectGet(jsObj, 'downloadPath') ?? '') as P;
-    case 'downloadProgress':
-      return (IsarNative.jsObjectGet(jsObj, 'downloadProgress') ??
-          double.negativeInfinity) as P;
-    case 'downloadTaskId':
-      return (IsarNative.jsObjectGet(jsObj, 'downloadTaskId') ?? '') as P;
-    case 'downloadTaskStatus':
-      return (IsarNative.jsObjectGet(jsObj, 'downloadTaskStatus') ??
-          double.negativeInfinity) as P;
-    case 'duration':
-      return (_isarTrackDurationConverter.fromIsar(
-          IsarNative.jsObjectGet(jsObj, 'duration') ??
-              double.negativeInfinity)) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? '') as P;
-    case 'isDownloaded':
-      return (IsarNative.jsObjectGet(jsObj, 'isDownloaded') ?? false) as P;
-    case 'isarId':
-      return (IsarNative.jsObjectGet(jsObj, 'isarId')) as P;
-    case 'title':
-      return (IsarNative.jsObjectGet(jsObj, 'title') ?? '') as P;
     default:
-      throw 'Illegal propertyName';
+      throw IsarError('Illegal propertyName');
   }
 }
 
-void _isarTrackAttachLinks(IsarCollection col, int id, IsarTrack object) {}
+int? _isarTrackGetId(IsarTrack object) {
+  if (object.isarId == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.isarId;
+  }
+}
+
+List<IsarLinkBase<dynamic>> _isarTrackGetLinks(IsarTrack object) {
+  return [];
+}
+
+void _isarTrackAttach(IsarCollection<dynamic> col, Id id, IsarTrack object) {
+  object.isarId = id;
+}
 
 extension IsarTrackQueryWhereSort
     on QueryBuilder<IsarTrack, IsarTrack, QWhere> {
   QueryBuilder<IsarTrack, IsarTrack, QAfterWhere> anyIsarId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
@@ -240,45 +212,55 @@ extension IsarTrackQueryWhere
     on QueryBuilder<IsarTrack, IsarTrack, QWhereClause> {
   QueryBuilder<IsarTrack, IsarTrack, QAfterWhereClause> isarIdEqualTo(
       int isarId) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: isarId,
-      includeLower: true,
-      upper: isarId,
-      includeUpper: true,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: isarId,
+        upper: isarId,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterWhereClause> isarIdNotEqualTo(
       int isarId) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: isarId, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: isarId, includeLower: false),
-      );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: isarId, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: isarId, includeUpper: false),
-      );
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
+            );
+      }
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterWhereClause> isarIdGreaterThan(
       int isarId,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: isarId, includeLower: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: isarId, includeLower: include),
+      );
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterWhereClause> isarIdLessThan(
       int isarId,
       {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: isarId, includeUpper: include),
-    );
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: isarId, includeUpper: include),
+      );
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterWhereClause> isarIdBetween(
@@ -287,12 +269,14 @@ extension IsarTrackQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerIsarId,
-      includeLower: includeLower,
-      upper: upperIsarId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerIsarId,
+        includeLower: includeLower,
+        upper: upperIsarId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 }
 
@@ -302,162 +286,176 @@ extension IsarTrackQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'bookId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'bookId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'bookId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'bookId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'bookId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'bookId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'bookId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'bookId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> bookIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'bookId',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'bookId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> downloadPathEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'downloadPath',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'downloadPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadPathGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'downloadPath',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'downloadPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadPathLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'downloadPath',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'downloadPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> downloadPathBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'downloadPath',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'downloadPath',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -465,12 +463,13 @@ extension IsarTrackQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'downloadPath',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'downloadPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -478,64 +477,102 @@ extension IsarTrackQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'downloadPath',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'downloadPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadPathContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'downloadPath',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'downloadPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> downloadPathMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'downloadPath',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'downloadPath',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
-      downloadProgressGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'downloadProgress',
-      value: value,
-    ));
+      downloadProgressEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'downloadProgress',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
-      downloadProgressLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'downloadProgress',
-      value: value,
-    ));
+      downloadProgressGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'downloadProgress',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
-      downloadProgressBetween(double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'downloadProgress',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
-    ));
+      downloadProgressLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'downloadProgress',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      downloadProgressBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'downloadProgress',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -543,60 +580,65 @@ extension IsarTrackQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'downloadTaskId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'downloadTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadTaskIdGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'downloadTaskId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'downloadTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadTaskIdLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'downloadTaskId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'downloadTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadTaskIdBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'downloadTaskId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'downloadTaskId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -604,12 +646,13 @@ extension IsarTrackQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'downloadTaskId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'downloadTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -617,41 +660,45 @@ extension IsarTrackQueryFilter
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'downloadTaskId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'downloadTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadTaskIdContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'downloadTaskId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'downloadTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadTaskIdMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'downloadTaskId',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'downloadTaskId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
       downloadTaskStatusEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'downloadTaskStatus',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'downloadTaskStatus',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -659,12 +706,13 @@ extension IsarTrackQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'downloadTaskStatus',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'downloadTaskStatus',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -672,12 +720,13 @@ extension IsarTrackQueryFilter
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'downloadTaskStatus',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'downloadTaskStatus',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
@@ -687,505 +736,618 @@ extension IsarTrackQueryFilter
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'downloadTaskStatus',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> durationEqualTo(
-      Duration value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'duration',
-      value: _isarTrackDurationConverter.toIsar(value),
-    ));
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> durationGreaterThan(
-    Duration value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'duration',
-      value: _isarTrackDurationConverter.toIsar(value),
-    ));
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> durationLessThan(
-    Duration value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'duration',
-      value: _isarTrackDurationConverter.toIsar(value),
-    ));
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> durationBetween(
-    Duration lower,
-    Duration upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'duration',
-      lower: _isarTrackDurationConverter.toIsar(lower),
-      includeLower: includeLower,
-      upper: _isarTrackDurationConverter.toIsar(upper),
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'downloadTaskStatus',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'id',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'id',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'id',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'id',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'id',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'id',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'id',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'id',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isDownloadedEqualTo(
       bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'isDownloaded',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isDownloaded',
+        value: value,
+      ));
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'isarId',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdEqualTo(
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarDurationEqualTo(
       int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'isarId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isarDuration',
+        value: value,
+      ));
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdGreaterThan(
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      isarDurationGreaterThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'isarId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'isarDuration',
+        value: value,
+      ));
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdLessThan(
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      isarDurationLessThan(
     int value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'isarId',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'isarDuration',
+        value: value,
+      ));
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdBetween(
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarDurationBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'isarId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'isarDuration',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isarId',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query
+          .copyWith(filterNot: !query.filterNot)
+          .addFilterCondition(const FilterCondition.isNull(
+            property: r'isarId',
+          ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isarId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'isarId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'isarId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> isarIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'isarId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'title',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleContains(
       String value,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleMatches(
       String pattern,
       {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'title',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 }
+
+extension IsarTrackQueryObject
+    on QueryBuilder<IsarTrack, IsarTrack, QFilterCondition> {}
 
 extension IsarTrackQueryLinks
     on QueryBuilder<IsarTrack, IsarTrack, QFilterCondition> {}
 
-extension IsarTrackQueryWhereSortBy
-    on QueryBuilder<IsarTrack, IsarTrack, QSortBy> {
+extension IsarTrackQuerySortBy on QueryBuilder<IsarTrack, IsarTrack, QSortBy> {
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByBookId() {
-    return addSortByInternal('bookId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bookId', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByBookIdDesc() {
-    return addSortByInternal('bookId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bookId', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadPath() {
-    return addSortByInternal('downloadPath', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadPath', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadPathDesc() {
-    return addSortByInternal('downloadPath', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadPath', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadProgress() {
-    return addSortByInternal('downloadProgress', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadProgress', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy>
       sortByDownloadProgressDesc() {
-    return addSortByInternal('downloadProgress', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadProgress', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadTaskId() {
-    return addSortByInternal('downloadTaskId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskId', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadTaskIdDesc() {
-    return addSortByInternal('downloadTaskId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskId', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadTaskStatus() {
-    return addSortByInternal('downloadTaskStatus', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskStatus', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy>
       sortByDownloadTaskStatusDesc() {
-    return addSortByInternal('downloadTaskStatus', Sort.desc);
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDuration() {
-    return addSortByInternal('duration', Sort.asc);
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDurationDesc() {
-    return addSortByInternal('duration', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskStatus', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIsDownloaded() {
-    return addSortByInternal('isDownloaded', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDownloaded', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIsDownloadedDesc() {
-    return addSortByInternal('isDownloaded', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDownloaded', Sort.desc);
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIsarId() {
-    return addSortByInternal('isarId', Sort.asc);
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIsarDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarDuration', Sort.asc);
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIsarIdDesc() {
-    return addSortByInternal('isarId', Sort.desc);
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByIsarDurationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarDuration', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByTitle() {
-    return addSortByInternal('title', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByTitleDesc() {
-    return addSortByInternal('title', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
   }
 }
 
-extension IsarTrackQueryWhereSortThenBy
+extension IsarTrackQuerySortThenBy
     on QueryBuilder<IsarTrack, IsarTrack, QSortThenBy> {
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByBookId() {
-    return addSortByInternal('bookId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bookId', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByBookIdDesc() {
-    return addSortByInternal('bookId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bookId', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadPath() {
-    return addSortByInternal('downloadPath', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadPath', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadPathDesc() {
-    return addSortByInternal('downloadPath', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadPath', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadProgress() {
-    return addSortByInternal('downloadProgress', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadProgress', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy>
       thenByDownloadProgressDesc() {
-    return addSortByInternal('downloadProgress', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadProgress', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadTaskId() {
-    return addSortByInternal('downloadTaskId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskId', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadTaskIdDesc() {
-    return addSortByInternal('downloadTaskId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskId', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadTaskStatus() {
-    return addSortByInternal('downloadTaskStatus', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskStatus', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy>
       thenByDownloadTaskStatusDesc() {
-    return addSortByInternal('downloadTaskStatus', Sort.desc);
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDuration() {
-    return addSortByInternal('duration', Sort.asc);
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDurationDesc() {
-    return addSortByInternal('duration', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadTaskStatus', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIsDownloaded() {
-    return addSortByInternal('isDownloaded', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDownloaded', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIsDownloadedDesc() {
-    return addSortByInternal('isDownloaded', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDownloaded', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIsarDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarDuration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIsarDurationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarDuration', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIsarId() {
-    return addSortByInternal('isarId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarId', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByIsarIdDesc() {
-    return addSortByInternal('isarId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarId', Sort.desc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByTitle() {
-    return addSortByInternal('title', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByTitleDesc() {
-    return addSortByInternal('title', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
   }
 }
 
@@ -1193,90 +1355,124 @@ extension IsarTrackQueryWhereDistinct
     on QueryBuilder<IsarTrack, IsarTrack, QDistinct> {
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByBookId(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('bookId', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'bookId', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByDownloadPath(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('downloadPath', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'downloadPath', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByDownloadProgress() {
-    return addDistinctByInternal('downloadProgress');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'downloadProgress');
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByDownloadTaskId(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('downloadTaskId',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'downloadTaskId',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByDownloadTaskStatus() {
-    return addDistinctByInternal('downloadTaskStatus');
-  }
-
-  QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByDuration() {
-    return addDistinctByInternal('duration');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'downloadTaskStatus');
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctById(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('id', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByIsDownloaded() {
-    return addDistinctByInternal('isDownloaded');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isDownloaded');
+    });
   }
 
-  QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByIsarId() {
-    return addDistinctByInternal('isarId');
+  QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByIsarDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isarDuration');
+    });
   }
 
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('title', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
   }
 }
 
 extension IsarTrackQueryProperty
     on QueryBuilder<IsarTrack, IsarTrack, QQueryProperty> {
+  QueryBuilder<IsarTrack, int, QQueryOperations> isarIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isarId');
+    });
+  }
+
   QueryBuilder<IsarTrack, String, QQueryOperations> bookIdProperty() {
-    return addPropertyNameInternal('bookId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'bookId');
+    });
   }
 
   QueryBuilder<IsarTrack, String, QQueryOperations> downloadPathProperty() {
-    return addPropertyNameInternal('downloadPath');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'downloadPath');
+    });
   }
 
   QueryBuilder<IsarTrack, double, QQueryOperations> downloadProgressProperty() {
-    return addPropertyNameInternal('downloadProgress');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'downloadProgress');
+    });
   }
 
   QueryBuilder<IsarTrack, String, QQueryOperations> downloadTaskIdProperty() {
-    return addPropertyNameInternal('downloadTaskId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'downloadTaskId');
+    });
   }
 
   QueryBuilder<IsarTrack, int, QQueryOperations> downloadTaskStatusProperty() {
-    return addPropertyNameInternal('downloadTaskStatus');
-  }
-
-  QueryBuilder<IsarTrack, Duration, QQueryOperations> durationProperty() {
-    return addPropertyNameInternal('duration');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'downloadTaskStatus');
+    });
   }
 
   QueryBuilder<IsarTrack, String, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
   }
 
   QueryBuilder<IsarTrack, bool, QQueryOperations> isDownloadedProperty() {
-    return addPropertyNameInternal('isDownloaded');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isDownloaded');
+    });
   }
 
-  QueryBuilder<IsarTrack, int?, QQueryOperations> isarIdProperty() {
-    return addPropertyNameInternal('isarId');
+  QueryBuilder<IsarTrack, int, QQueryOperations> isarDurationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isarDuration');
+    });
   }
 
   QueryBuilder<IsarTrack, String, QQueryOperations> titleProperty() {
-    return addPropertyNameInternal('title');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
   }
 }

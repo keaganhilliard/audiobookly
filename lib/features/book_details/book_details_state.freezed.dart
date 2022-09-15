@@ -108,20 +108,12 @@ class __$$BookDetailsStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateInitial
-    with DiagnosticableTreeMixin
-    implements BookDetailsStateInitial {
+class _$BookDetailsStateInitial implements BookDetailsStateInitial {
   const _$BookDetailsStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BookDetailsState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'BookDetailsState.initial'));
   }
 
   @override
@@ -254,9 +246,7 @@ class __$$BookDetailsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateLoaded
-    with DiagnosticableTreeMixin
-    implements BookDetailsStateLoaded {
+class _$BookDetailsStateLoaded implements BookDetailsStateLoaded {
   const _$BookDetailsStateLoaded({this.book, final List<MediaItem>? chapters})
       : _chapters = chapters;
 
@@ -272,17 +262,8 @@ class _$BookDetailsStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BookDetailsState.loaded(book: $book, chapters: $chapters)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BookDetailsState.loaded'))
-      ..add(DiagnosticsProperty('book', book))
-      ..add(DiagnosticsProperty('chapters', chapters));
   }
 
   @override
@@ -387,8 +368,8 @@ abstract class BookDetailsStateLoaded implements BookDetailsState {
       {final MediaItem? book,
       final List<MediaItem>? chapters}) = _$BookDetailsStateLoaded;
 
-  MediaItem? get book => throw _privateConstructorUsedError;
-  List<MediaItem>? get chapters => throw _privateConstructorUsedError;
+  MediaItem? get book;
+  List<MediaItem>? get chapters;
   @JsonKey(ignore: true)
   _$$BookDetailsStateLoadedCopyWith<_$BookDetailsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -416,20 +397,12 @@ class __$$BookDetailsStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateLoading
-    with DiagnosticableTreeMixin
-    implements BookDetailsStateLoading {
+class _$BookDetailsStateLoading implements BookDetailsStateLoading {
   const _$BookDetailsStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BookDetailsState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'BookDetailsState.loading'));
   }
 
   @override
@@ -559,25 +532,15 @@ class __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements BookDetailsStateErrorDetails {
+class _$BookDetailsStateErrorDetails implements BookDetailsStateErrorDetails {
   const _$BookDetailsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BookDetailsState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BookDetailsState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -678,7 +641,7 @@ abstract class BookDetailsStateErrorDetails implements BookDetailsState {
   const factory BookDetailsStateErrorDetails([final String? message]) =
       _$BookDetailsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$BookDetailsStateErrorDetailsCopyWith<_$BookDetailsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

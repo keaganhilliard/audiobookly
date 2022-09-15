@@ -106,20 +106,12 @@ class __$$SettingsStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateInitial
-    with DiagnosticableTreeMixin
-    implements SettingsStateInitial {
+class _$SettingsStateInitial implements SettingsStateInitial {
   const _$SettingsStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SettingsState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'SettingsState.initial'));
   }
 
   @override
@@ -244,25 +236,15 @@ class __$$SettingsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateLoaded
-    with DiagnosticableTreeMixin
-    implements SettingsStateLoaded {
+class _$SettingsStateLoaded implements SettingsStateLoaded {
   const _$SettingsStateLoaded({this.user});
 
   @override
   final User? user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SettingsState.loaded(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SettingsState.loaded'))
-      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -361,7 +343,7 @@ class _$SettingsStateLoaded
 abstract class SettingsStateLoaded implements SettingsState {
   const factory SettingsStateLoaded({final User? user}) = _$SettingsStateLoaded;
 
-  User? get user => throw _privateConstructorUsedError;
+  User? get user;
   @JsonKey(ignore: true)
   _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -388,20 +370,12 @@ class __$$SettingsStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateLoading
-    with DiagnosticableTreeMixin
-    implements SettingsStateLoading {
+class _$SettingsStateLoading implements SettingsStateLoading {
   const _$SettingsStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SettingsState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'SettingsState.loading'));
   }
 
   @override
@@ -528,25 +502,15 @@ class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements SettingsStateErrorDetails {
+class _$SettingsStateErrorDetails implements SettingsStateErrorDetails {
   const _$SettingsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SettingsState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SettingsState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -646,7 +610,7 @@ abstract class SettingsStateErrorDetails implements SettingsState {
   const factory SettingsStateErrorDetails([final String? message]) =
       _$SettingsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$SettingsStateErrorDetailsCopyWith<_$SettingsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

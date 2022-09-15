@@ -105,20 +105,12 @@ class __$$AuthorsStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateInitial
-    with DiagnosticableTreeMixin
-    implements AuthorsStateInitial {
+class _$AuthorsStateInitial implements AuthorsStateInitial {
   const _$AuthorsStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthorsState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthorsState.initial'));
   }
 
   @override
@@ -243,9 +235,7 @@ class __$$AuthorsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateLoaded
-    with DiagnosticableTreeMixin
-    implements AuthorsStateLoaded {
+class _$AuthorsStateLoaded implements AuthorsStateLoaded {
   const _$AuthorsStateLoaded({final List<MediaItem>? authors})
       : _authors = authors;
 
@@ -259,16 +249,8 @@ class _$AuthorsStateLoaded
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthorsState.loaded(authors: $authors)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthorsState.loaded'))
-      ..add(DiagnosticsProperty('authors', authors));
   }
 
   @override
@@ -368,7 +350,7 @@ abstract class AuthorsStateLoaded implements AuthorsState {
   const factory AuthorsStateLoaded({final List<MediaItem>? authors}) =
       _$AuthorsStateLoaded;
 
-  List<MediaItem>? get authors => throw _privateConstructorUsedError;
+  List<MediaItem>? get authors;
   @JsonKey(ignore: true)
   _$$AuthorsStateLoadedCopyWith<_$AuthorsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -395,20 +377,12 @@ class __$$AuthorsStateLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateLoading
-    with DiagnosticableTreeMixin
-    implements AuthorsStateLoading {
+class _$AuthorsStateLoading implements AuthorsStateLoading {
   const _$AuthorsStateLoading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthorsState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthorsState.loading'));
   }
 
   @override
@@ -534,25 +508,15 @@ class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements AuthorsStateErrorDetails {
+class _$AuthorsStateErrorDetails implements AuthorsStateErrorDetails {
   const _$AuthorsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthorsState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthorsState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -653,7 +617,7 @@ abstract class AuthorsStateErrorDetails implements AuthorsState {
   const factory AuthorsStateErrorDetails([final String? message]) =
       _$AuthorsStateErrorDetails;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
   _$$AuthorsStateErrorDetailsCopyWith<_$AuthorsStateErrorDetails>
       get copyWith => throw _privateConstructorUsedError;

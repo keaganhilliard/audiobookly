@@ -1,7 +1,8 @@
 import 'package:audiobookly/models/download_status.dart';
 
 class Book {
-  final String id;
+  final int id;
+  final String exId;
   final String title;
   final String author;
   final String narrator;
@@ -18,6 +19,7 @@ class Book {
 
   Book(
     this.id,
+    this.exId,
     this.title,
     this.author,
     this.narrator,
@@ -34,7 +36,8 @@ class Book {
   ]);
 
   Book copyWith({
-    String? id,
+    int? id,
+    String? exId,
     String? title,
     String? author,
     String? narrator,
@@ -51,6 +54,7 @@ class Book {
   }) =>
       Book(
         id ?? this.id,
+        exId ?? this.exId,
         title ?? this.title,
         author ?? this.author,
         narrator ?? this.narrator,
