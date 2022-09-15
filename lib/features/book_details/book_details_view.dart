@@ -196,7 +196,6 @@ class BookDetailsView extends HookConsumerWidget {
                             ),
                           ),
                           FloatingActionButton(
-                            child: const Icon(Icons.play_arrow),
                             foregroundColor: Colors.white,
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
@@ -207,6 +206,7 @@ class BookDetailsView extends HookConsumerWidget {
                               //   arguments: item,
                               // );
                             },
+                            child: const Icon(Icons.play_arrow),
                           ),
                         ],
                       ),
