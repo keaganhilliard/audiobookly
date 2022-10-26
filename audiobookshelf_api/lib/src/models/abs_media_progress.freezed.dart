@@ -34,39 +34,42 @@ mixin _$AbsMediaProgress {
 abstract class $AbsMediaProgressCopyWith<$Res> {
   factory $AbsMediaProgressCopyWith(
           AbsMediaProgress value, $Res Function(AbsMediaProgress) then) =
-      _$AbsMediaProgressCopyWithImpl<$Res>;
+      _$AbsMediaProgressCopyWithImpl<$Res, AbsMediaProgress>;
+  @useResult
   $Res call({int timeListened, double duration, double currentTime});
 }
 
 /// @nodoc
-class _$AbsMediaProgressCopyWithImpl<$Res>
+class _$AbsMediaProgressCopyWithImpl<$Res, $Val extends AbsMediaProgress>
     implements $AbsMediaProgressCopyWith<$Res> {
   _$AbsMediaProgressCopyWithImpl(this._value, this._then);
 
-  final AbsMediaProgress _value;
   // ignore: unused_field
-  final $Res Function(AbsMediaProgress) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timeListened = freezed,
-    Object? duration = freezed,
-    Object? currentTime = freezed,
+    Object? timeListened = null,
+    Object? duration = null,
+    Object? currentTime = null,
   }) {
     return _then(_value.copyWith(
-      timeListened: timeListened == freezed
+      timeListened: null == timeListened
           ? _value.timeListened
           : timeListened // ignore: cast_nullable_to_non_nullable
               as int,
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double,
-      currentTime: currentTime == freezed
+      currentTime: null == currentTime
           ? _value.currentTime
           : currentTime // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 }
 
@@ -77,36 +80,35 @@ abstract class _$$_AbsMediaProgressCopyWith<$Res>
           _$_AbsMediaProgress value, $Res Function(_$_AbsMediaProgress) then) =
       __$$_AbsMediaProgressCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int timeListened, double duration, double currentTime});
 }
 
 /// @nodoc
 class __$$_AbsMediaProgressCopyWithImpl<$Res>
-    extends _$AbsMediaProgressCopyWithImpl<$Res>
+    extends _$AbsMediaProgressCopyWithImpl<$Res, _$_AbsMediaProgress>
     implements _$$_AbsMediaProgressCopyWith<$Res> {
   __$$_AbsMediaProgressCopyWithImpl(
       _$_AbsMediaProgress _value, $Res Function(_$_AbsMediaProgress) _then)
-      : super(_value, (v) => _then(v as _$_AbsMediaProgress));
+      : super(_value, _then);
 
-  @override
-  _$_AbsMediaProgress get _value => super._value as _$_AbsMediaProgress;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timeListened = freezed,
-    Object? duration = freezed,
-    Object? currentTime = freezed,
+    Object? timeListened = null,
+    Object? duration = null,
+    Object? currentTime = null,
   }) {
     return _then(_$_AbsMediaProgress(
-      timeListened: timeListened == freezed
+      timeListened: null == timeListened
           ? _value.timeListened
           : timeListened // ignore: cast_nullable_to_non_nullable
               as int,
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double,
-      currentTime: currentTime == freezed
+      currentTime: null == currentTime
           ? _value.currentTime
           : currentTime // ignore: cast_nullable_to_non_nullable
               as double,
@@ -142,29 +144,30 @@ class _$_AbsMediaProgress implements _AbsMediaProgress {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AbsMediaProgress &&
-            const DeepCollectionEquality()
-                .equals(other.timeListened, timeListened) &&
-            const DeepCollectionEquality().equals(other.duration, duration) &&
-            const DeepCollectionEquality()
-                .equals(other.currentTime, currentTime));
+            (identical(other.timeListened, timeListened) ||
+                other.timeListened == timeListened) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.currentTime, currentTime) ||
+                other.currentTime == currentTime));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(timeListened),
-      const DeepCollectionEquality().hash(duration),
-      const DeepCollectionEquality().hash(currentTime));
+  int get hashCode =>
+      Object.hash(runtimeType, timeListened, duration, currentTime);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AbsMediaProgressCopyWith<_$_AbsMediaProgress> get copyWith =>
       __$$_AbsMediaProgressCopyWithImpl<_$_AbsMediaProgress>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsMediaProgressToJson(this);
+    return _$$_AbsMediaProgressToJson(
+      this,
+    );
   }
 }
 
@@ -178,11 +181,11 @@ abstract class _AbsMediaProgress implements AbsMediaProgress {
       _$_AbsMediaProgress.fromJson;
 
   @override
-  int get timeListened => throw _privateConstructorUsedError;
+  int get timeListened;
   @override
-  double get duration => throw _privateConstructorUsedError;
+  double get duration;
   @override
-  double get currentTime => throw _privateConstructorUsedError;
+  double get currentTime;
   @override
   @JsonKey(ignore: true)
   _$$_AbsMediaProgressCopyWith<_$_AbsMediaProgress> get copyWith =>

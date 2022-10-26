@@ -1,8 +1,9 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/widgets/book_grid_item.dart';
-import 'package:audiobookly/widgets/responsive_grid_view.dart';
+import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
+import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -54,6 +55,7 @@ class BookSearchDelegate extends SearchDelegate {
         return FutureBuilder<List<MediaItem>>(
           future: _repo?.search(query),
           builder: (context, results) {
+            print(results);
             if (!results.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -71,18 +73,19 @@ class BookSearchDelegate extends SearchDelegate {
                               arguments: item.id,
                             );
                           } else {
-                            Navigator.of(context).pushNamed(
-                              Routes.Author,
-                              arguments: {
-                                'id': item.id,
-                                'title': item.title,
-                              },
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => BooksView(
+                                        mediaId: item.id,
+                                        title: item.title,
+                                      )),
                             );
                           }
                         },
-                        thumbnailUrl: item.artUri.toString(),
+                        thumbnailUrl: item.artUri?.toString(),
                         title: item.title,
                         subtitle: item.artist,
+                        showTitle: !item.playable!,
                       );
                     });
               } else {

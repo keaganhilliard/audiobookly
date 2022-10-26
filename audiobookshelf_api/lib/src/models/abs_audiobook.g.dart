@@ -280,6 +280,10 @@ _$_Author _$$_AuthorFromJson(Map<String, dynamic> json) => _$_Author(
       name: json['name'] as String,
       updatedAt: json['updatedAt'] as int?,
       imagePath: json['imagePath'] as String?,
+      description: json['description'] as String?,
+      asin: json['asin'] as String?,
+      numBooks: json['numBooks'] as int?,
+      addedAt: json['addedAt'] as int?,
     );
 
 Map<String, dynamic> _$$_AuthorToJson(_$_Author instance) => <String, dynamic>{
@@ -287,6 +291,10 @@ Map<String, dynamic> _$$_AuthorToJson(_$_Author instance) => <String, dynamic>{
       'name': instance.name,
       'updatedAt': instance.updatedAt,
       'imagePath': instance.imagePath,
+      'description': instance.description,
+      'asin': instance.asin,
+      'numBooks': instance.numBooks,
+      'addedAt': instance.addedAt,
     };
 
 _$_Series _$$_SeriesFromJson(Map<String, dynamic> json) => _$_Series(

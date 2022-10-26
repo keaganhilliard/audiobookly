@@ -7,7 +7,7 @@ part of 'isar_book.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetIsarBookCollection on Isar {
   IsarCollection<IsarBook> get isarBooks => this.collection();
@@ -32,79 +32,74 @@ const IsarBookSchema = CollectionSchema(
       name: r'description',
       type: IsarType.string,
     ),
-    r'downloadCompleted': PropertySchema(
-      id: 3,
-      name: r'downloadCompleted',
-      type: IsarType.bool,
-    ),
-    r'downloadFailed': PropertySchema(
-      id: 4,
-      name: r'downloadFailed',
-      type: IsarType.bool,
-    ),
-    r'downloadRequested': PropertySchema(
-      id: 5,
-      name: r'downloadRequested',
-      type: IsarType.bool,
-    ),
     r'downloadStatus': PropertySchema(
-      id: 6,
+      id: 3,
       name: r'downloadStatus',
       type: IsarType.byte,
-      enumValueMap: _IsarBookdownloadStatusEnumValueMap,
-      valueEnumMap: _IsarBookdownloadStatusValueEnumMap,
+      enumMap: _IsarBookdownloadStatusEnumValueMap,
     ),
     r'exId': PropertySchema(
-      id: 7,
+      id: 4,
       name: r'exId',
       type: IsarType.string,
     ),
     r'isarDuration': PropertySchema(
-      id: 8,
+      id: 5,
       name: r'isarDuration',
       type: IsarType.long,
     ),
     r'isarLastPlayedPosition': PropertySchema(
-      id: 9,
+      id: 6,
       name: r'isarLastPlayedPosition',
       type: IsarType.long,
     ),
     r'isarLastUpdate': PropertySchema(
-      id: 10,
+      id: 7,
       name: r'isarLastUpdate',
       type: IsarType.long,
     ),
     r'narrator': PropertySchema(
-      id: 11,
+      id: 8,
       name: r'narrator',
       type: IsarType.string,
     ),
     r'read': PropertySchema(
-      id: 12,
+      id: 9,
       name: r'read',
       type: IsarType.bool,
     ),
     r'title': PropertySchema(
-      id: 13,
+      id: 10,
       name: r'title',
       type: IsarType.string,
     )
   },
   estimateSize: _isarBookEstimateSize,
-  serializeNative: _isarBookSerializeNative,
-  deserializeNative: _isarBookDeserializeNative,
-  deserializePropNative: _isarBookDeserializePropNative,
-  serializeWeb: _isarBookSerializeWeb,
-  deserializeWeb: _isarBookDeserializeWeb,
-  deserializePropWeb: _isarBookDeserializePropWeb,
+  serialize: _isarBookSerialize,
+  deserialize: _isarBookDeserialize,
+  deserializeProp: _isarBookDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'exId': IndexSchema(
+      id: 2382449665185005046,
+      name: r'exId',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'exId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _isarBookGetId,
   getLinks: _isarBookGetLinks,
   attach: _isarBookAttach,
-  version: 5,
+  version: '3.0.2',
 );
 
 int _isarBookEstimateSize(
@@ -122,59 +117,50 @@ int _isarBookEstimateSize(
   return bytesCount;
 }
 
-int _isarBookSerializeNative(
+void _isarBookSerialize(
   IsarBook object,
-  IsarBinaryWriter writer,
+  IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.artPath);
   writer.writeString(offsets[1], object.author);
   writer.writeString(offsets[2], object.description);
-  writer.writeBool(offsets[3], object.downloadCompleted);
-  writer.writeBool(offsets[4], object.downloadFailed);
-  writer.writeBool(offsets[5], object.downloadRequested);
-  writer.writeByte(offsets[6], object.downloadStatus.index);
-  writer.writeString(offsets[7], object.exId);
-  writer.writeLong(offsets[8], object.isarDuration);
-  writer.writeLong(offsets[9], object.isarLastPlayedPosition);
-  writer.writeLong(offsets[10], object.isarLastUpdate);
-  writer.writeString(offsets[11], object.narrator);
-  writer.writeBool(offsets[12], object.read);
-  writer.writeString(offsets[13], object.title);
-  return writer.usedBytes;
+  writer.writeByte(offsets[3], object.downloadStatus.index);
+  writer.writeString(offsets[4], object.exId);
+  writer.writeLong(offsets[5], object.isarDuration);
+  writer.writeLong(offsets[6], object.isarLastPlayedPosition);
+  writer.writeLong(offsets[7], object.isarLastUpdate);
+  writer.writeString(offsets[8], object.narrator);
+  writer.writeBool(offsets[9], object.read);
+  writer.writeString(offsets[10], object.title);
 }
 
-IsarBook _isarBookDeserializeNative(
-  int id,
-  IsarBinaryReader reader,
+IsarBook _isarBookDeserialize(
+  Id id,
+  IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   final object = IsarBook(
-    id,
-    reader.readString(offsets[7]),
-    reader.readString(offsets[13]),
+    reader.readString(offsets[4]),
+    reader.readString(offsets[10]),
     reader.readString(offsets[1]),
-    reader.readString(offsets[11]),
+    reader.readString(offsets[8]),
     reader.readString(offsets[2]),
     reader.readString(offsets[0]),
-    reader.readLong(offsets[8]),
-    reader.readLong(offsets[9]),
-    reader.readBool(offsets[5]),
-    reader.readBool(offsets[3]),
-    reader.readBool(offsets[4]),
-    reader.readBool(offsets[12]),
-    reader.readLongOrNull(offsets[10]),
-    _IsarBookdownloadStatusValueEnumMap[reader.readByteOrNull(offsets[6])] ??
+    reader.readLong(offsets[5]),
+    reader.readLong(offsets[6]),
+    reader.readBool(offsets[9]),
+    reader.readLongOrNull(offsets[7]),
+    _IsarBookdownloadStatusValueEnumMap[reader.readByteOrNull(offsets[3])] ??
         DownloadStatus.none,
   );
   return object;
 }
 
-P _isarBookDeserializePropNative<P>(
-  Id id,
-  IsarBinaryReader reader,
+P _isarBookDeserializeProp<P>(
+  IsarReader reader,
   int propertyId,
   int offset,
   Map<Type, List<int>> allOffsets,
@@ -187,58 +173,33 @@ P _isarBookDeserializePropNative<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
-    case 4:
-      return (reader.readBool(offset)) as P;
-    case 5:
-      return (reader.readBool(offset)) as P;
-    case 6:
       return (_IsarBookdownloadStatusValueEnumMap[
               reader.readByteOrNull(offset)] ??
           DownloadStatus.none) as P;
+    case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
+    case 6:
+      return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
-    case 8:
-      return (reader.readLong(offset)) as P;
-    case 9:
-      return (reader.readLong(offset)) as P;
-    case 10:
       return (reader.readLongOrNull(offset)) as P;
-    case 11:
+    case 8:
       return (reader.readString(offset)) as P;
-    case 12:
+    case 9:
       return (reader.readBool(offset)) as P;
-    case 13:
+    case 10:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-Object _isarBookSerializeWeb(
-    IsarCollection<IsarBook> collection, IsarBook object) {
-  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
-}
-
-IsarBook _isarBookDeserializeWeb(
-    IsarCollection<IsarBook> collection, Object jsObj) {
-  /*final object = IsarBook(IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int),IsarNative.jsObjectGet(jsObj, r'exId') ?? '',IsarNative.jsObjectGet(jsObj, r'title') ?? '',IsarNative.jsObjectGet(jsObj, r'author') ?? '',IsarNative.jsObjectGet(jsObj, r'narrator') ?? '',IsarNative.jsObjectGet(jsObj, r'description') ?? '',IsarNative.jsObjectGet(jsObj, r'artPath') ?? '',IsarNative.jsObjectGet(jsObj, r'isarDuration') ?? (double.negativeInfinity as int),IsarNative.jsObjectGet(jsObj, r'isarLastPlayedPosition') ?? (double.negativeInfinity as int),IsarNative.jsObjectGet(jsObj, r'downloadRequested') ?? false,IsarNative.jsObjectGet(jsObj, r'downloadCompleted') ?? false,IsarNative.jsObjectGet(jsObj, r'downloadFailed') ?? false,IsarNative.jsObjectGet(jsObj, r'read') ?? false,IsarNative.jsObjectGet(jsObj, r'isarLastUpdate') ,IsarNative.jsObjectGet(jsObj, r'downloadStatus') ,);*/
-  //return object;
-  throw UnimplementedError();
-}
-
-P _isarBookDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    default:
-      throw IsarError('Illegal propertyName');
-  }
-}
-
 const _IsarBookdownloadStatusEnumValueMap = {
-  DownloadStatus.none: 0,
-  DownloadStatus.downloading: 1,
-  DownloadStatus.failed: 2,
-  DownloadStatus.succeeded: 3,
+  'none': 0,
+  'downloading': 1,
+  'failed': 2,
+  'succeeded': 3,
 };
 const _IsarBookdownloadStatusValueEnumMap = {
   0: DownloadStatus.none,
@@ -247,12 +208,8 @@ const _IsarBookdownloadStatusValueEnumMap = {
   3: DownloadStatus.succeeded,
 };
 
-int? _isarBookGetId(IsarBook object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+Id _isarBookGetId(IsarBook object) {
+  return object.id;
 }
 
 List<IsarLinkBase<dynamic>> _isarBookGetLinks(IsarBook object) {
@@ -260,6 +217,60 @@ List<IsarLinkBase<dynamic>> _isarBookGetLinks(IsarBook object) {
 }
 
 void _isarBookAttach(IsarCollection<dynamic> col, Id id, IsarBook object) {}
+
+extension IsarBookByIndex on IsarCollection<IsarBook> {
+  Future<IsarBook?> getByExId(String exId) {
+    return getByIndex(r'exId', [exId]);
+  }
+
+  IsarBook? getByExIdSync(String exId) {
+    return getByIndexSync(r'exId', [exId]);
+  }
+
+  Future<bool> deleteByExId(String exId) {
+    return deleteByIndex(r'exId', [exId]);
+  }
+
+  bool deleteByExIdSync(String exId) {
+    return deleteByIndexSync(r'exId', [exId]);
+  }
+
+  Future<List<IsarBook?>> getAllByExId(List<String> exIdValues) {
+    final values = exIdValues.map((e) => [e]).toList();
+    return getAllByIndex(r'exId', values);
+  }
+
+  List<IsarBook?> getAllByExIdSync(List<String> exIdValues) {
+    final values = exIdValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'exId', values);
+  }
+
+  Future<int> deleteAllByExId(List<String> exIdValues) {
+    final values = exIdValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'exId', values);
+  }
+
+  int deleteAllByExIdSync(List<String> exIdValues) {
+    final values = exIdValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'exId', values);
+  }
+
+  Future<Id> putByExId(IsarBook object) {
+    return putByIndex(r'exId', object);
+  }
+
+  Id putByExIdSync(IsarBook object, {bool saveLinks = true}) {
+    return putByIndexSync(r'exId', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByExId(List<IsarBook> objects) {
+    return putAllByIndex(r'exId', objects);
+  }
+
+  List<Id> putAllByExIdSync(List<IsarBook> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'exId', objects, saveLinks: saveLinks);
+  }
+}
 
 extension IsarBookQueryWhereSort on QueryBuilder<IsarBook, IsarBook, QWhere> {
   QueryBuilder<IsarBook, IsarBook, QAfterWhere> anyId() {
@@ -270,7 +281,7 @@ extension IsarBookQueryWhereSort on QueryBuilder<IsarBook, IsarBook, QWhere> {
 }
 
 extension IsarBookQueryWhere on QueryBuilder<IsarBook, IsarBook, QWhereClause> {
-  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idEqualTo(int id) {
+  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -279,7 +290,7 @@ extension IsarBookQueryWhere on QueryBuilder<IsarBook, IsarBook, QWhereClause> {
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idNotEqualTo(int id) {
+  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -301,7 +312,7 @@ extension IsarBookQueryWhere on QueryBuilder<IsarBook, IsarBook, QWhereClause> {
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idGreaterThan(int id,
+  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -310,7 +321,7 @@ extension IsarBookQueryWhere on QueryBuilder<IsarBook, IsarBook, QWhereClause> {
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -320,8 +331,8 @@ extension IsarBookQueryWhere on QueryBuilder<IsarBook, IsarBook, QWhereClause> {
   }
 
   QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -332,6 +343,50 @@ extension IsarBookQueryWhere on QueryBuilder<IsarBook, IsarBook, QWhereClause> {
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> exIdEqualTo(String exId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'exId',
+        value: [exId],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterWhereClause> exIdNotEqualTo(
+      String exId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'exId',
+              lower: [],
+              upper: [exId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'exId',
+              lower: [exId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'exId',
+              lower: [exId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'exId',
+              lower: [],
+              upper: [exId],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -450,6 +505,24 @@ extension IsarBookQueryFilter
     });
   }
 
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> artPathIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'artPath',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> artPathIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'artPath',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> authorEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -558,6 +631,24 @@ extension IsarBookQueryFilter
         property: r'author',
         wildcard: pattern,
         caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> authorIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'author',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> authorIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'author',
+        value: '',
       ));
     });
   }
@@ -675,32 +766,21 @@ extension IsarBookQueryFilter
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition>
-      downloadCompletedEqualTo(bool value) {
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> descriptionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'downloadCompleted',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> downloadFailedEqualTo(
-      bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'downloadFailed',
-        value: value,
+        property: r'description',
+        value: '',
       ));
     });
   }
 
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition>
-      downloadRequestedEqualTo(bool value) {
+      descriptionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'downloadRequested',
-        value: value,
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'description',
+        value: '',
       ));
     });
   }
@@ -872,7 +952,25 @@ extension IsarBookQueryFilter
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> idEqualTo(int value) {
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> exIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'exId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> exIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'exId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -882,7 +980,7 @@ extension IsarBookQueryFilter
   }
 
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -895,7 +993,7 @@ extension IsarBookQueryFilter
   }
 
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -908,8 +1006,8 @@ extension IsarBookQueryFilter
   }
 
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1046,11 +1144,9 @@ extension IsarBookQueryFilter
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition>
       isarLastUpdateIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query
-          .copyWith(filterNot: !query.filterNot)
-          .addFilterCondition(const FilterCondition.isNull(
-            property: r'isarLastUpdate',
-          ));
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isarLastUpdate',
+      ));
     });
   }
 
@@ -1221,6 +1317,24 @@ extension IsarBookQueryFilter
     });
   }
 
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> narratorIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'narrator',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> narratorIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'narrator',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> readEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -1342,6 +1456,24 @@ extension IsarBookQueryFilter
       ));
     });
   }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension IsarBookQueryObject
@@ -1384,42 +1516,6 @@ extension IsarBookQuerySortBy on QueryBuilder<IsarBook, IsarBook, QSortBy> {
   QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadCompleted() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadCompleted', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadCompletedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadCompleted', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadFailed() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadFailed', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadFailedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadFailed', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadRequested() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadRequested', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadRequestedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadRequested', Sort.desc);
     });
   }
 
@@ -1560,42 +1656,6 @@ extension IsarBookQuerySortThenBy
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadCompleted() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadCompleted', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadCompletedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadCompleted', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadFailed() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadFailed', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadFailedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadFailed', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadRequested() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadRequested', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadRequestedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'downloadRequested', Sort.desc);
-    });
-  }
-
   QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'downloadStatus', Sort.asc);
@@ -1730,24 +1790,6 @@ extension IsarBookQueryWhereDistinct
     });
   }
 
-  QueryBuilder<IsarBook, IsarBook, QDistinct> distinctByDownloadCompleted() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'downloadCompleted');
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QDistinct> distinctByDownloadFailed() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'downloadFailed');
-    });
-  }
-
-  QueryBuilder<IsarBook, IsarBook, QDistinct> distinctByDownloadRequested() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'downloadRequested');
-    });
-  }
-
   QueryBuilder<IsarBook, IsarBook, QDistinct> distinctByDownloadStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'downloadStatus');
@@ -1824,24 +1866,6 @@ extension IsarBookQueryProperty
   QueryBuilder<IsarBook, String, QQueryOperations> descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
-    });
-  }
-
-  QueryBuilder<IsarBook, bool, QQueryOperations> downloadCompletedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'downloadCompleted');
-    });
-  }
-
-  QueryBuilder<IsarBook, bool, QQueryOperations> downloadFailedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'downloadFailed');
-    });
-  }
-
-  QueryBuilder<IsarBook, bool, QQueryOperations> downloadRequestedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'downloadRequested');
     });
   }
 

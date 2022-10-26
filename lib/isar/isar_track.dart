@@ -5,8 +5,9 @@ part 'isar_track.g.dart';
 
 @Collection()
 class IsarTrack {
-  Id? isarId = isarAutoIncrementId;
+  Id? isarId = Isar.autoIncrement;
 
+  @Index(unique: true, replace: true)
   final String id;
 
   final String title;
@@ -22,8 +23,10 @@ class IsarTrack {
 
   final String downloadPath;
 
+  @Index()
   final String bookId;
 
+  @Index(unique: true)
   final String downloadTaskId;
 
   final int downloadTaskStatus;
@@ -78,7 +81,7 @@ class IsarTrack {
         isarId ?? this.isarId,
       );
 
-      factory IsarTrack.fromTrack(Track track) => IsarTrack(
+  factory IsarTrack.fromTrack(Track track) => IsarTrack(
         track.id,
         track.title,
         track.duration.inMicroseconds,

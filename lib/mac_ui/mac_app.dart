@@ -1,3 +1,5 @@
+import 'package:audiobookly/mac_ui/features/home/home.dart';
+import 'package:audiobookly/material_ui/widgets/auth_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -10,50 +12,27 @@ class MacApp extends StatelessWidget {
     return MacosApp(
       title: 'Audiobookly',
       theme: MacosThemeData.light(),
-      darkTheme: MacosThemeData.dark(),
+      darkTheme: MacosThemeData.dark().copyWith(
+        iconTheme: MacosThemeData.dark().iconTheme.copyWith(
+              color: Colors.deepPurple,
+            ),
+        primaryColor: Colors.deepPurple,
+        pushButtonTheme: MacosThemeData.dark().pushButtonTheme.copyWith(
+              color: Colors.deepPurple,
+            ),
+        // iconButtonTheme: MacosThemeData.dark().iconButtonTheme.copyWith(
+        //       backgroundColor: Colors.deepPurple,
+        //     ),
+      ),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: const PlatformMenuBar(
-        menus: [
-          PlatformMenu(
-            label: 'Audiobookly',
-            menus: [
-              PlatformProvidedMenuItem(
-                type: PlatformProvidedMenuItemType.about,
-              ),
-              PlatformProvidedMenuItem(
-                type: PlatformProvidedMenuItemType.quit,
-              ),
-            ],
-          ),
-          PlatformMenu(
-            label: 'View',
-            menus: [
-              PlatformProvidedMenuItem(
-                type: PlatformProvidedMenuItemType.toggleFullScreen,
-              ),
-            ],
-          ),
-          PlatformMenu(
-            label: 'Window',
-            menus: [
-              PlatformProvidedMenuItem(
-                type: PlatformProvidedMenuItemType.minimizeWindow,
-              ),
-              PlatformProvidedMenuItem(
-                type: PlatformProvidedMenuItemType.zoomWindow,
-              ),
-            ],
-          ),
-        ],
-        body: MacosWindow(
-            // sidebar: Sidebar(
-            //     top: MacosSearchField(
-            //       placeholder: 'Search',
-            //     ),
-            //     builder: builder,
-            //     minWidth: minWidth),
-            ),
+      home: AuthWidget(
+        authorizedBuilder: (context) => const Home(),
+        errorBuilder: (context, message) => Container(),
+        loadingBuilder: (context) => const CupertinoActivityIndicator(
+          radius: 30.0,
+        ),
+        unauthorizedBuilder: (context) => Container(),
       ),
     );
   }

@@ -6,15 +6,15 @@ final navigationServiceProvider =
     Provider<NavigationService>((ref) => NavigationService());
 
 class NavigationService {
-  final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   Future pop([dynamic result]) {
     return navigatorKey.currentState!.maybePop(result);
   }
 
   Future pushNamed(String routeName, {arguments}) {
-    return navigatorKey.currentState!.pushNamed(routeName, arguments: arguments);
+    return navigatorKey.currentState!
+        .pushNamed(routeName, arguments: arguments);
   }
 
   Future pushNamedAndRemoveUntilHome(String routeName, {arguments}) {

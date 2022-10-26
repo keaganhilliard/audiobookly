@@ -19,6 +19,7 @@ class PlexTrack extends PlexMetadata {
   String? chapterSource;
   int? viewOffset;
   List<Media>? media;
+  List<Chapter>? chapters;
 
   PlexTrack.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     parentRatingKey = json['parentRatingKey'];
@@ -43,6 +44,9 @@ class PlexTrack extends PlexMetadata {
       json['Media'].forEach((v) {
         media!.add(new Media.fromJson(v));
       });
+    }
+    if (json['Chapter'] != null) {
+      chapters = [for (final v in json['chapter']) Chapter.fromJson(v)];
     }
   }
 
@@ -139,6 +143,46 @@ class Part {
     data['size'] = this.size;
     data['container'] = this.container;
     data['hasThumbnail'] = this.hasThumbnail;
+    return data;
+  }
+}
+
+/*
+{
+  "id": 45559,
+  "filter": "thumb=45559",
+  "tag": "Introduction",
+  "index": 1,
+  "startTimeOffset": 0,
+  "endTimeOffset": 11621
+}
+*/
+
+class Chapter {
+  int? id;
+  String? filter;
+  String? tag;
+  int? index;
+  int? startTimeOffset;
+  String? endTimeOffset;
+
+  Chapter.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    filter = json['filter'];
+    tag = json['tag'];
+    index = json['index'];
+    startTimeOffset = json['startTimeOffset'];
+    endTimeOffset = json['endTimeOffset'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['filter'] = this.filter;
+    data['tag'] = this.tag;
+    data['index'] = this.index;
+    data['startTimeOffset'] = this.startTimeOffset;
+    data['endTimeOffset'] = this.endTimeOffset;
     return data;
   }
 }

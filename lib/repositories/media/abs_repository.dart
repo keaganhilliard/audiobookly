@@ -1,23 +1,31 @@
+import 'dart:convert';
+
+import 'package:audiobookly/models/download_status.dart';
+import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
-import 'package:audiobookly/services/device_info/device_info_service.dart';
-import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
+import 'package:audiobookly/services/device_info/device_info_service.dart'
+    hide DeviceInfo;
 import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookshelf/audiobookshelf.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
-  SharedPreferencesService sharedPreferencesService =
-      ref.watch(sharedPreferencesServiceProvider);
+  String baseUrl =
+      ref.watch(preferencesProvider.select((prefs) => prefs.baseUrl));
+  String userToken =
+      ref.watch(preferencesProvider.select((prefs) => prefs.userToken));
 
   return AudiobookshelfApi(
-    baseUrl: sharedPreferencesService.baseUrl,
-    token: sharedPreferencesService.currentToken,
+    baseUrl: baseUrl,
+    token: userToken,
   );
 });
 
@@ -47,8 +55,6 @@ class AbsRepository extends MediaRepository {
   Uri? _scaledCoverUrl(String? baseUrl, String? id, int? timestamp,
       [int width = 400]) {
     if (baseUrl != null && id != null) {
-      print(
-          '$baseUrl/api/items/$id/cover?token=${_api.token}&ts=$timestamp&width=$width');
       return Uri.parse(
           '$baseUrl/api/items/$id/cover?token=${_api.token}&ts=$timestamp&width=$width&format=webp');
     }
@@ -93,14 +99,14 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<MediaItem>> getAllBooks() async {
-    final books = await _api.getAll(_libraryId);
+    final books = await _api.getAll(_db.getPreferencesSync().libraryId);
     audiobooks = {for (final book in books) book.id: book};
     return [for (final book in books..sort(_sortBooks)) _bookToItem(book)];
   }
 
   @override
   Future<List<MediaItem>> getAuthors() async {
-    return (await _api.getAuthors(_libraryId))
+    return (await _api.getAuthors(_db.getPreferencesSync().libraryId))
         .map(
           (author) => MediaItem(
             id: '@authors/${author.id}',
@@ -110,6 +116,7 @@ class AbsRepository extends MediaRepository {
                 : Uri.parse(
                     '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
             playable: false,
+            displayDescription: author.description,
           ),
         )
         .toList()
@@ -120,7 +127,9 @@ class AbsRepository extends MediaRepository {
   Future<List<MediaItem>> getBooksFromAuthor(String authorId) async {
     return [
       for (final book
-          in (await _api.getBooksForAuthor(_libraryId, authorId)).toList()
+          in (await _api.getBooksForAuthor(
+                  _db.getPreferencesSync().libraryId, authorId))
+              .toList()
             ..sort(_sortBooks))
         _bookToItem(book)
     ];
@@ -244,6 +253,7 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<MediaItem>> getDownloads() async {
     return (await _db.getBooks().first)
+        .where((book) => book.downloadStatus == DownloadStatus.succeeded)
         .map((book) => MediaHelpers.fromBook(book))
         .toList();
   }
@@ -259,7 +269,8 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<MediaItem>> getRecentlyAdded() async {
-    final books = await _api.getRecentlyAdded(_libraryId);
+    final books =
+        await _api.getRecentlyAdded(_db.getPreferencesSync().libraryId);
     return books.map(_bookToItem).toList();
   }
 
@@ -271,6 +282,7 @@ class AbsRepository extends MediaRepository {
       for (final book
           in books.values
               .where((book) =>
+                  !book.id.startsWith('local_') &&
                   !book.isFinished &&
                   (book.progress ?? 0) > 0 &&
                   book.lastUpdate != null)
@@ -295,18 +307,18 @@ class AbsRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getTracksForBook(MediaItem book) async {
-    final apiBook = await _api.getBookInfo(book.id);
+  Future<List<MediaItem>> getTracksForBook(String bookId) async {
+    final apiBook = await _api.getBookInfo(bookId);
     if (apiBook.media.audioFiles == null) {
       return [];
     }
     return [
       for (final file in apiBook.media.audioFiles!)
         MediaItem(
-          id: '${book.id}/${file.metadata.filename}',
-          album: book.title,
-          artist: book.artist,
-          artUri: book.artUri,
+          id: '$bookId/${file.metadata.filename}',
+          album: apiBook.media.metadata.title,
+          artist: apiBook.media.metadata.authors?.join(', '),
+          artUri: _scaledCoverUrl(_api.baseUrl, bookId, apiBook.updatedAt),
           title: file.metadata.filename,
           duration: file.duration != null
               ? AbsUtils.parseDurationFromSeconds(file.duration)
@@ -389,17 +401,69 @@ class AbsRepository extends MediaRepository {
       await _db.insertBook(book.copyWith(lastPlayedPosition: position));
     }
 
-    await _api.updateProgress(progress);
+    if (_sessionId == null) {
+      await playbackStarted(key, position, duration, playbackRate);
+    }
+
+    if (_sessionId != null && _lastCheckinTime != null) {
+      await _api.playbackSessionCheckin(
+        _sessionId!,
+        duration,
+        position,
+        Duration(
+          microseconds: DateTime.now().microsecondsSinceEpoch -
+              _lastCheckinTime!.microsecondsSinceEpoch,
+        ),
+      );
+      _lastCheckinTime = DateTime.now();
+    } else {
+      await _api.updateProgress(progress);
+    }
   }
 
   @override
   Future playbackFinished(String key) async {
-    // TODO: implement playbackFinished
+    print('Playback finished');
+    _sessionId = null;
+    _lastCheckinTime = null;
   }
 
+  String? _sessionId;
+  DateTime? _lastCheckinTime;
+
   @override
-  Future playbackStarted(String key, Duration position, Duration duration,
-      double playbackRate) async {}
+  Future playbackStarted(
+    String key,
+    Duration position,
+    Duration duration,
+    double playbackRate,
+  ) async {
+    // print('LOOKEE HERE: Starting session');
+    _lastCheckinTime = DateTime.now();
+    DeviceInfoService di = getIt();
+    _sessionId = await _api.startPlaybackSession(
+        key,
+        AbsPlayItemRequest(
+          mediaPlayer: 'AVPlayer',
+          forceDirectPlay: true,
+          forceTranscode: false,
+          deviceInfo: DeviceInfo(
+            manufacturer: di.info.manufacturer ?? '',
+            brand: '',
+            clientVersion: '0.0.1',
+            model: di.info.model ?? '',
+            sdkVersion: '',
+          ),
+        ));
+    print(DeviceInfo(
+      manufacturer: di.info.manufacturer ?? '',
+      brand: '',
+      clientVersion: '0.0.1',
+      model: di.info.model ?? '',
+      sdkVersion: '',
+    ).toString());
+    print('LOOKEE HERE: $_sessionId');
+  }
 
   @override
   Future playbackStopped(String key, Duration position, Duration duration,
@@ -419,25 +483,42 @@ class AbsRepository extends MediaRepository {
     progress.progress = position / duration;
     progress.currentTime = Duration(milliseconds: position);
 
-    _api.updateProgress(progress);
+    if (_sessionId != null && _lastCheckinTime != null) {
+      print('We are saving');
+      await _api.playbackSessionCheckin(
+          _sessionId!,
+          Duration(milliseconds: duration),
+          Duration(days: DateTime.now().microsecondsSinceEpoch),
+          Duration(
+              microseconds: DateTime.now().microsecondsSinceEpoch -
+                  _lastCheckinTime!.microsecondsSinceEpoch));
+    } else {
+      _api.updateProgress(progress);
+    }
   }
 
   @override
   Future<List<MediaItem>> search(String search) async {
     final response = await _api.search(_libraryId, search);
     return [
-      for (final book in response.audiobooks) _bookToItem(book.audiobook),
+      for (final book in response.book) _bookToItem(book.libraryItem),
       for (final author in response.authors)
         MediaItem(
-          id: '@authors/${author.author}',
-          title: author.author,
+          id: '@authors/${author.id}',
+          title: author.name,
           playable: false,
+          artUri: author.imagePath == null
+              ? null
+              : Uri.parse(
+                  '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
         ),
       for (final series in response.series)
         MediaItem(
-          id: '@series/${series.series}',
-          title: series.series,
+          id: '@series/${series.series.id}',
+          title: series.series.name,
           playable: false,
+          artUri: _scaledCoverUrl(_api.baseUrl, series.books.first.id,
+              series.books.first.updatedAt),
         )
     ];
   }

@@ -1,30 +1,31 @@
 import 'dart:convert';
 
+import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/abs_audiobook_search_result.dart';
 import 'package:audiobookshelf/src/abs_series_search_result.dart';
 
 _listEquals(List a, List b) => a.join(',') == b.join(',');
 
 class AbsSearchResponse {
-  final List<AbsAudiobookSearchResult> audiobooks;
+  final List<AbsAudiobookSearchResult> book;
   final List<dynamic> tags;
-  final List<_Author> authors;
+  final List<Author> authors;
   final List<AbsSeriesSearchResult> series;
   AbsSearchResponse({
-    required this.audiobooks,
+    required this.book,
     required this.tags,
     required this.authors,
     required this.series,
   });
 
   AbsSearchResponse copyWith({
-    List<AbsAudiobookSearchResult>? audiobooks,
+    List<AbsAudiobookSearchResult>? book,
     List<dynamic>? tags,
-    List<_Author>? authors,
+    List<Author>? authors,
     List<AbsSeriesSearchResult>? series,
   }) {
     return AbsSearchResponse(
-      audiobooks: audiobooks ?? this.audiobooks,
+      book: book ?? this.book,
       tags: tags ?? this.tags,
       authors: authors ?? this.authors,
       series: series ?? this.series,
@@ -33,20 +34,20 @@ class AbsSearchResponse {
 
   Map<String, dynamic> toMap() {
     return {
-      'audiobooks': audiobooks.map((x) => x.toJson()).toList(),
+      'book': book.map((x) => x.toJson()).toList(),
       'tags': tags,
-      'authors': authors.map((x) => x.toMap()).toList(),
+      'authors': authors.map((x) => x.toJson()).toList(),
       'series': series.map((x) => x.toMap()).toList(),
     };
   }
 
   factory AbsSearchResponse.fromMap(Map<String, dynamic> map) {
     return AbsSearchResponse(
-      audiobooks: List<AbsAudiobookSearchResult>.from(
-          map['audiobooks']?.map((x) => AbsAudiobookSearchResult.fromJson(x))),
-      tags: List<dynamic>.from(map['tags']),
+      book: List<AbsAudiobookSearchResult>.from(
+          map['book']?.map((x) => AbsAudiobookSearchResult.fromJson(x))),
+      tags: List<dynamic>.from(map['tags'] ?? []),
       authors:
-          List<_Author>.from(map['authors']?.map((x) => _Author.fromMap(x))),
+          List<Author>.from(map['authors']?.map((x) => Author.fromJson(x))),
       series: List<AbsSeriesSearchResult>.from(
           map['series']?.map((x) => AbsSeriesSearchResult.fromMap(x))),
     );
@@ -59,7 +60,7 @@ class AbsSearchResponse {
 
   @override
   String toString() {
-    return 'AbsSearchResponse(audiobooks: $audiobooks, tags: $tags, authors: $authors, series: $series)';
+    return 'AbsSearchResponse(audiobooks: $book, tags: $tags, authors: $authors, series: $series)';
   }
 
   @override
@@ -74,10 +75,7 @@ class AbsSearchResponse {
 
   @override
   int get hashCode {
-    return audiobooks.hashCode ^
-        tags.hashCode ^
-        authors.hashCode ^
-        series.hashCode;
+    return book.hashCode ^ tags.hashCode ^ authors.hashCode ^ series.hashCode;
   }
 }
 

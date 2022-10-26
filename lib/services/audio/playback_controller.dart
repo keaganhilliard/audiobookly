@@ -3,10 +3,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/default_audio_handler.dart';
 import 'package:audiobookly/services/audio/desktop_audio_handler.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-final playbackControllerProvider =
-    Provider<PlaybackController>((ref) => throw UnimplementedError());
+import 'package:rxdart/rxdart.dart';
 
 Future<AudioHandler> initAudioHandler() async {
   return await AudioService.init(
@@ -50,7 +47,7 @@ abstract class PlaybackController {
   Future skipToQueueItem(int index) async {}
   Future skipToNext() async {}
   Future skipToPrevious() async {}
-  Stream<PlaybackState> get playbackStateStream;
+  ValueStream<PlaybackState> get playbackStateStream;
   Stream<MediaItem?> get currentMediaItemStream;
   MediaItem? get currentMediaItem;
   List<MediaItem>? get currentQueue;
@@ -70,7 +67,8 @@ class AudioHandlerPlaybackController extends PlaybackController {
   @override
   Stream<Duration> get positionStream => AudioService.createPositionStream();
   @override
-  Stream<PlaybackState> get playbackStateStream => _audioHandler.playbackState;
+  ValueStream<PlaybackState> get playbackStateStream =>
+      _audioHandler.playbackState;
   @override
   Stream<MediaItem?> get currentMediaItemStream => _audioHandler.mediaItem;
   @override

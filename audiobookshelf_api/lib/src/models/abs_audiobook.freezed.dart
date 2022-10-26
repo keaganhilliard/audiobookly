@@ -50,7 +50,8 @@ mixin _$AbsAudiobook {
 abstract class $AbsAudiobookCopyWith<$Res> {
   factory $AbsAudiobookCopyWith(
           AbsAudiobook value, $Res Function(AbsAudiobook) then) =
-      _$AbsAudiobookCopyWithImpl<$Res>;
+      _$AbsAudiobookCopyWithImpl<$Res, AbsAudiobook>;
+  @useResult
   $Res call(
       {String id,
       String ino,
@@ -76,22 +77,25 @@ abstract class $AbsAudiobookCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AbsAudiobookCopyWithImpl<$Res> implements $AbsAudiobookCopyWith<$Res> {
+class _$AbsAudiobookCopyWithImpl<$Res, $Val extends AbsAudiobook>
+    implements $AbsAudiobookCopyWith<$Res> {
   _$AbsAudiobookCopyWithImpl(this._value, this._then);
 
-  final AbsAudiobook _value;
   // ignore: unused_field
-  final $Res Function(AbsAudiobook) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? ino = freezed,
-    Object? libraryId = freezed,
-    Object? folderId = freezed,
-    Object? path = freezed,
-    Object? relPath = freezed,
-    Object? isFile = freezed,
+    Object? id = null,
+    Object? ino = null,
+    Object? libraryId = null,
+    Object? folderId = null,
+    Object? path = null,
+    Object? relPath = null,
+    Object? isFile = null,
     Object? mtimeMs = freezed,
     Object? ctimeMs = freezed,
     Object? birthtimeMs = freezed,
@@ -99,96 +103,97 @@ class _$AbsAudiobookCopyWithImpl<$Res> implements $AbsAudiobookCopyWith<$Res> {
     Object? updatedAt = freezed,
     Object? lastScan = freezed,
     Object? scanVersion = freezed,
-    Object? isMissing = freezed,
-    Object? isInvalid = freezed,
-    Object? mediaType = freezed,
-    Object? media = freezed,
-    Object? libraryFiles = freezed,
+    Object? isMissing = null,
+    Object? isInvalid = null,
+    Object? mediaType = null,
+    Object? media = null,
+    Object? libraryFiles = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      ino: ino == freezed
+      ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
               as String,
-      libraryId: libraryId == freezed
+      libraryId: null == libraryId
           ? _value.libraryId
           : libraryId // ignore: cast_nullable_to_non_nullable
               as String,
-      folderId: folderId == freezed
+      folderId: null == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
               as String,
-      path: path == freezed
+      path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      relPath: relPath == freezed
+      relPath: null == relPath
           ? _value.relPath
           : relPath // ignore: cast_nullable_to_non_nullable
               as String,
-      isFile: isFile == freezed
+      isFile: null == isFile
           ? _value.isFile
           : isFile // ignore: cast_nullable_to_non_nullable
               as bool,
-      mtimeMs: mtimeMs == freezed
+      mtimeMs: freezed == mtimeMs
           ? _value.mtimeMs
           : mtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      ctimeMs: ctimeMs == freezed
+      ctimeMs: freezed == ctimeMs
           ? _value.ctimeMs
           : ctimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      birthtimeMs: birthtimeMs == freezed
+      birthtimeMs: freezed == birthtimeMs
           ? _value.birthtimeMs
           : birthtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      addedAt: addedAt == freezed
+      addedAt: freezed == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      lastScan: lastScan == freezed
+      lastScan: freezed == lastScan
           ? _value.lastScan
           : lastScan // ignore: cast_nullable_to_non_nullable
               as int?,
-      scanVersion: scanVersion == freezed
+      scanVersion: freezed == scanVersion
           ? _value.scanVersion
           : scanVersion // ignore: cast_nullable_to_non_nullable
               as String?,
-      isMissing: isMissing == freezed
+      isMissing: null == isMissing
           ? _value.isMissing
           : isMissing // ignore: cast_nullable_to_non_nullable
               as bool,
-      isInvalid: isInvalid == freezed
+      isInvalid: null == isInvalid
           ? _value.isInvalid
           : isInvalid // ignore: cast_nullable_to_non_nullable
               as bool,
-      mediaType: mediaType == freezed
+      mediaType: null == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
               as String,
-      media: media == freezed
+      media: null == media
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as Media,
-      libraryFiles: libraryFiles == freezed
+      libraryFiles: null == libraryFiles
           ? _value.libraryFiles
           : libraryFiles // ignore: cast_nullable_to_non_nullable
               as List<LibraryFile>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MediaCopyWith<$Res> get media {
     return $MediaCopyWith<$Res>(_value.media, (value) {
-      return _then(_value.copyWith(media: value));
+      return _then(_value.copyWith(media: value) as $Val);
     });
   }
 }
@@ -200,6 +205,7 @@ abstract class _$$_AbsAudiobookCopyWith<$Res>
           _$_AbsAudiobook value, $Res Function(_$_AbsAudiobook) then) =
       __$$_AbsAudiobookCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String ino,
@@ -227,24 +233,22 @@ abstract class _$$_AbsAudiobookCopyWith<$Res>
 
 /// @nodoc
 class __$$_AbsAudiobookCopyWithImpl<$Res>
-    extends _$AbsAudiobookCopyWithImpl<$Res>
+    extends _$AbsAudiobookCopyWithImpl<$Res, _$_AbsAudiobook>
     implements _$$_AbsAudiobookCopyWith<$Res> {
   __$$_AbsAudiobookCopyWithImpl(
       _$_AbsAudiobook _value, $Res Function(_$_AbsAudiobook) _then)
-      : super(_value, (v) => _then(v as _$_AbsAudiobook));
+      : super(_value, _then);
 
-  @override
-  _$_AbsAudiobook get _value => super._value as _$_AbsAudiobook;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? ino = freezed,
-    Object? libraryId = freezed,
-    Object? folderId = freezed,
-    Object? path = freezed,
-    Object? relPath = freezed,
-    Object? isFile = freezed,
+    Object? id = null,
+    Object? ino = null,
+    Object? libraryId = null,
+    Object? folderId = null,
+    Object? path = null,
+    Object? relPath = null,
+    Object? isFile = null,
     Object? mtimeMs = freezed,
     Object? ctimeMs = freezed,
     Object? birthtimeMs = freezed,
@@ -252,86 +256,86 @@ class __$$_AbsAudiobookCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? lastScan = freezed,
     Object? scanVersion = freezed,
-    Object? isMissing = freezed,
-    Object? isInvalid = freezed,
-    Object? mediaType = freezed,
-    Object? media = freezed,
-    Object? libraryFiles = freezed,
+    Object? isMissing = null,
+    Object? isInvalid = null,
+    Object? mediaType = null,
+    Object? media = null,
+    Object? libraryFiles = null,
   }) {
     return _then(_$_AbsAudiobook(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      ino: ino == freezed
+      ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
               as String,
-      libraryId: libraryId == freezed
+      libraryId: null == libraryId
           ? _value.libraryId
           : libraryId // ignore: cast_nullable_to_non_nullable
               as String,
-      folderId: folderId == freezed
+      folderId: null == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
               as String,
-      path: path == freezed
+      path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      relPath: relPath == freezed
+      relPath: null == relPath
           ? _value.relPath
           : relPath // ignore: cast_nullable_to_non_nullable
               as String,
-      isFile: isFile == freezed
+      isFile: null == isFile
           ? _value.isFile
           : isFile // ignore: cast_nullable_to_non_nullable
               as bool,
-      mtimeMs: mtimeMs == freezed
+      mtimeMs: freezed == mtimeMs
           ? _value.mtimeMs
           : mtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      ctimeMs: ctimeMs == freezed
+      ctimeMs: freezed == ctimeMs
           ? _value.ctimeMs
           : ctimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      birthtimeMs: birthtimeMs == freezed
+      birthtimeMs: freezed == birthtimeMs
           ? _value.birthtimeMs
           : birthtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      addedAt: addedAt == freezed
+      addedAt: freezed == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      lastScan: lastScan == freezed
+      lastScan: freezed == lastScan
           ? _value.lastScan
           : lastScan // ignore: cast_nullable_to_non_nullable
               as int?,
-      scanVersion: scanVersion == freezed
+      scanVersion: freezed == scanVersion
           ? _value.scanVersion
           : scanVersion // ignore: cast_nullable_to_non_nullable
               as String?,
-      isMissing: isMissing == freezed
+      isMissing: null == isMissing
           ? _value.isMissing
           : isMissing // ignore: cast_nullable_to_non_nullable
               as bool,
-      isInvalid: isInvalid == freezed
+      isInvalid: null == isInvalid
           ? _value.isInvalid
           : isInvalid // ignore: cast_nullable_to_non_nullable
               as bool,
-      mediaType: mediaType == freezed
+      mediaType: null == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
               as String,
-      media: media == freezed
+      media: null == media
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as Media,
-      libraryFiles: libraryFiles == freezed
+      libraryFiles: null == libraryFiles
           ? _value._libraryFiles
           : libraryFiles // ignore: cast_nullable_to_non_nullable
               as List<LibraryFile>,
@@ -420,26 +424,33 @@ class _$_AbsAudiobook implements _AbsAudiobook {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AbsAudiobook &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.ino, ino) &&
-            const DeepCollectionEquality().equals(other.libraryId, libraryId) &&
-            const DeepCollectionEquality().equals(other.folderId, folderId) &&
-            const DeepCollectionEquality().equals(other.path, path) &&
-            const DeepCollectionEquality().equals(other.relPath, relPath) &&
-            const DeepCollectionEquality().equals(other.isFile, isFile) &&
-            const DeepCollectionEquality().equals(other.mtimeMs, mtimeMs) &&
-            const DeepCollectionEquality().equals(other.ctimeMs, ctimeMs) &&
-            const DeepCollectionEquality()
-                .equals(other.birthtimeMs, birthtimeMs) &&
-            const DeepCollectionEquality().equals(other.addedAt, addedAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.lastScan, lastScan) &&
-            const DeepCollectionEquality()
-                .equals(other.scanVersion, scanVersion) &&
-            const DeepCollectionEquality().equals(other.isMissing, isMissing) &&
-            const DeepCollectionEquality().equals(other.isInvalid, isInvalid) &&
-            const DeepCollectionEquality().equals(other.mediaType, mediaType) &&
-            const DeepCollectionEquality().equals(other.media, media) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.ino, ino) || other.ino == ino) &&
+            (identical(other.libraryId, libraryId) ||
+                other.libraryId == libraryId) &&
+            (identical(other.folderId, folderId) ||
+                other.folderId == folderId) &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.relPath, relPath) || other.relPath == relPath) &&
+            (identical(other.isFile, isFile) || other.isFile == isFile) &&
+            (identical(other.mtimeMs, mtimeMs) || other.mtimeMs == mtimeMs) &&
+            (identical(other.ctimeMs, ctimeMs) || other.ctimeMs == ctimeMs) &&
+            (identical(other.birthtimeMs, birthtimeMs) ||
+                other.birthtimeMs == birthtimeMs) &&
+            (identical(other.addedAt, addedAt) || other.addedAt == addedAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.lastScan, lastScan) ||
+                other.lastScan == lastScan) &&
+            (identical(other.scanVersion, scanVersion) ||
+                other.scanVersion == scanVersion) &&
+            (identical(other.isMissing, isMissing) ||
+                other.isMissing == isMissing) &&
+            (identical(other.isInvalid, isInvalid) ||
+                other.isInvalid == isInvalid) &&
+            (identical(other.mediaType, mediaType) ||
+                other.mediaType == mediaType) &&
+            (identical(other.media, media) || other.media == media) &&
             const DeepCollectionEquality()
                 .equals(other._libraryFiles, _libraryFiles));
   }
@@ -448,35 +459,38 @@ class _$_AbsAudiobook implements _AbsAudiobook {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(ino),
-        const DeepCollectionEquality().hash(libraryId),
-        const DeepCollectionEquality().hash(folderId),
-        const DeepCollectionEquality().hash(path),
-        const DeepCollectionEquality().hash(relPath),
-        const DeepCollectionEquality().hash(isFile),
-        const DeepCollectionEquality().hash(mtimeMs),
-        const DeepCollectionEquality().hash(ctimeMs),
-        const DeepCollectionEquality().hash(birthtimeMs),
-        const DeepCollectionEquality().hash(addedAt),
-        const DeepCollectionEquality().hash(updatedAt),
-        const DeepCollectionEquality().hash(lastScan),
-        const DeepCollectionEquality().hash(scanVersion),
-        const DeepCollectionEquality().hash(isMissing),
-        const DeepCollectionEquality().hash(isInvalid),
-        const DeepCollectionEquality().hash(mediaType),
-        const DeepCollectionEquality().hash(media),
+        id,
+        ino,
+        libraryId,
+        folderId,
+        path,
+        relPath,
+        isFile,
+        mtimeMs,
+        ctimeMs,
+        birthtimeMs,
+        addedAt,
+        updatedAt,
+        lastScan,
+        scanVersion,
+        isMissing,
+        isInvalid,
+        mediaType,
+        media,
         const DeepCollectionEquality().hash(_libraryFiles)
       ]);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AbsAudiobookCopyWith<_$_AbsAudiobook> get copyWith =>
       __$$_AbsAudiobookCopyWithImpl<_$_AbsAudiobook>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsAudiobookToJson(this);
+    return _$$_AbsAudiobookToJson(
+      this,
+    );
   }
 }
 
@@ -506,43 +520,43 @@ abstract class _AbsAudiobook implements AbsAudiobook {
       _$_AbsAudiobook.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get ino => throw _privateConstructorUsedError;
+  String get ino;
   @override
-  String get libraryId => throw _privateConstructorUsedError;
+  String get libraryId;
   @override
-  String get folderId => throw _privateConstructorUsedError;
+  String get folderId;
   @override
-  String get path => throw _privateConstructorUsedError;
+  String get path;
   @override
-  String get relPath => throw _privateConstructorUsedError;
+  String get relPath;
   @override
-  bool get isFile => throw _privateConstructorUsedError;
+  bool get isFile;
   @override
-  int? get mtimeMs => throw _privateConstructorUsedError;
+  int? get mtimeMs;
   @override
-  int? get ctimeMs => throw _privateConstructorUsedError;
+  int? get ctimeMs;
   @override
-  int? get birthtimeMs => throw _privateConstructorUsedError;
+  int? get birthtimeMs;
   @override
-  int? get addedAt => throw _privateConstructorUsedError;
+  int? get addedAt;
   @override
-  int? get updatedAt => throw _privateConstructorUsedError;
+  int? get updatedAt;
   @override
-  int? get lastScan => throw _privateConstructorUsedError;
+  int? get lastScan;
   @override
-  String? get scanVersion => throw _privateConstructorUsedError;
+  String? get scanVersion;
   @override
-  bool get isMissing => throw _privateConstructorUsedError;
+  bool get isMissing;
   @override
-  bool get isInvalid => throw _privateConstructorUsedError;
+  bool get isInvalid;
   @override
-  String get mediaType => throw _privateConstructorUsedError;
+  String get mediaType;
   @override
-  Media get media => throw _privateConstructorUsedError;
+  Media get media;
   @override
-  List<LibraryFile> get libraryFiles => throw _privateConstructorUsedError;
+  List<LibraryFile> get libraryFiles;
   @override
   @JsonKey(ignore: true)
   _$$_AbsAudiobookCopyWith<_$_AbsAudiobook> get copyWith =>
@@ -571,7 +585,8 @@ mixin _$LibraryFile {
 abstract class $LibraryFileCopyWith<$Res> {
   factory $LibraryFileCopyWith(
           LibraryFile value, $Res Function(LibraryFile) then) =
-      _$LibraryFileCopyWithImpl<$Res>;
+      _$LibraryFileCopyWithImpl<$Res, LibraryFile>;
+  @useResult
   $Res call(
       {String ino,
       LibraryFileMetadata metadata,
@@ -583,49 +598,53 @@ abstract class $LibraryFileCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LibraryFileCopyWithImpl<$Res> implements $LibraryFileCopyWith<$Res> {
+class _$LibraryFileCopyWithImpl<$Res, $Val extends LibraryFile>
+    implements $LibraryFileCopyWith<$Res> {
   _$LibraryFileCopyWithImpl(this._value, this._then);
 
-  final LibraryFile _value;
   // ignore: unused_field
-  final $Res Function(LibraryFile) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ino = freezed,
-    Object? metadata = freezed,
-    Object? addedAt = freezed,
-    Object? updatedAt = freezed,
-    Object? fileType = freezed,
+    Object? ino = null,
+    Object? metadata = null,
+    Object? addedAt = null,
+    Object? updatedAt = null,
+    Object? fileType = null,
   }) {
     return _then(_value.copyWith(
-      ino: ino == freezed
+      ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
               as String,
-      metadata: metadata == freezed
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as LibraryFileMetadata,
-      addedAt: addedAt == freezed
+      addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int,
-      updatedAt: updatedAt == freezed
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int,
-      fileType: fileType == freezed
+      fileType: null == fileType
           ? _value.fileType
           : fileType // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $LibraryFileMetadataCopyWith<$Res> get metadata {
     return $LibraryFileMetadataCopyWith<$Res>(_value.metadata, (value) {
-      return _then(_value.copyWith(metadata: value));
+      return _then(_value.copyWith(metadata: value) as $Val);
     });
   }
 }
@@ -637,6 +656,7 @@ abstract class _$$_LibraryFileCopyWith<$Res>
           _$_LibraryFile value, $Res Function(_$_LibraryFile) then) =
       __$$_LibraryFileCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String ino,
       LibraryFileMetadata metadata,
@@ -649,41 +669,40 @@ abstract class _$$_LibraryFileCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LibraryFileCopyWithImpl<$Res> extends _$LibraryFileCopyWithImpl<$Res>
+class __$$_LibraryFileCopyWithImpl<$Res>
+    extends _$LibraryFileCopyWithImpl<$Res, _$_LibraryFile>
     implements _$$_LibraryFileCopyWith<$Res> {
   __$$_LibraryFileCopyWithImpl(
       _$_LibraryFile _value, $Res Function(_$_LibraryFile) _then)
-      : super(_value, (v) => _then(v as _$_LibraryFile));
+      : super(_value, _then);
 
-  @override
-  _$_LibraryFile get _value => super._value as _$_LibraryFile;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ino = freezed,
-    Object? metadata = freezed,
-    Object? addedAt = freezed,
-    Object? updatedAt = freezed,
-    Object? fileType = freezed,
+    Object? ino = null,
+    Object? metadata = null,
+    Object? addedAt = null,
+    Object? updatedAt = null,
+    Object? fileType = null,
   }) {
     return _then(_$_LibraryFile(
-      ino: ino == freezed
+      ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
               as String,
-      metadata: metadata == freezed
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as LibraryFileMetadata,
-      addedAt: addedAt == freezed
+      addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int,
-      updatedAt: updatedAt == freezed
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int,
-      fileType: fileType == freezed
+      fileType: null == fileType
           ? _value.fileType
           : fileType // ignore: cast_nullable_to_non_nullable
               as String,
@@ -725,31 +744,32 @@ class _$_LibraryFile implements _LibraryFile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LibraryFile &&
-            const DeepCollectionEquality().equals(other.ino, ino) &&
-            const DeepCollectionEquality().equals(other.metadata, metadata) &&
-            const DeepCollectionEquality().equals(other.addedAt, addedAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.fileType, fileType));
+            (identical(other.ino, ino) || other.ino == ino) &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata) &&
+            (identical(other.addedAt, addedAt) || other.addedAt == addedAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.fileType, fileType) ||
+                other.fileType == fileType));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(ino),
-      const DeepCollectionEquality().hash(metadata),
-      const DeepCollectionEquality().hash(addedAt),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(fileType));
+  int get hashCode =>
+      Object.hash(runtimeType, ino, metadata, addedAt, updatedAt, fileType);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LibraryFileCopyWith<_$_LibraryFile> get copyWith =>
       __$$_LibraryFileCopyWithImpl<_$_LibraryFile>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LibraryFileToJson(this);
+    return _$$_LibraryFileToJson(
+      this,
+    );
   }
 }
 
@@ -765,15 +785,15 @@ abstract class _LibraryFile implements LibraryFile {
       _$_LibraryFile.fromJson;
 
   @override
-  String get ino => throw _privateConstructorUsedError;
+  String get ino;
   @override
-  LibraryFileMetadata get metadata => throw _privateConstructorUsedError;
+  LibraryFileMetadata get metadata;
   @override
-  int get addedAt => throw _privateConstructorUsedError;
+  int get addedAt;
   @override
-  int get updatedAt => throw _privateConstructorUsedError;
+  int get updatedAt;
   @override
-  String get fileType => throw _privateConstructorUsedError;
+  String get fileType;
   @override
   @JsonKey(ignore: true)
   _$$_LibraryFileCopyWith<_$_LibraryFile> get copyWith =>
@@ -805,7 +825,8 @@ mixin _$LibraryFileMetadata {
 abstract class $LibraryFileMetadataCopyWith<$Res> {
   factory $LibraryFileMetadataCopyWith(
           LibraryFileMetadata value, $Res Function(LibraryFileMetadata) then) =
-      _$LibraryFileMetadataCopyWithImpl<$Res>;
+      _$LibraryFileMetadataCopyWithImpl<$Res, LibraryFileMetadata>;
+  @useResult
   $Res call(
       {String filename,
       String ext,
@@ -818,59 +839,61 @@ abstract class $LibraryFileMetadataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LibraryFileMetadataCopyWithImpl<$Res>
+class _$LibraryFileMetadataCopyWithImpl<$Res, $Val extends LibraryFileMetadata>
     implements $LibraryFileMetadataCopyWith<$Res> {
   _$LibraryFileMetadataCopyWithImpl(this._value, this._then);
 
-  final LibraryFileMetadata _value;
   // ignore: unused_field
-  final $Res Function(LibraryFileMetadata) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filename = freezed,
-    Object? ext = freezed,
-    Object? path = freezed,
-    Object? relPath = freezed,
-    Object? size = freezed,
+    Object? filename = null,
+    Object? ext = null,
+    Object? path = null,
+    Object? relPath = null,
+    Object? size = null,
     Object? mtimeMs = freezed,
     Object? ctimeMs = freezed,
     Object? birthtimeMs = freezed,
   }) {
     return _then(_value.copyWith(
-      filename: filename == freezed
+      filename: null == filename
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
               as String,
-      ext: ext == freezed
+      ext: null == ext
           ? _value.ext
           : ext // ignore: cast_nullable_to_non_nullable
               as String,
-      path: path == freezed
+      path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      relPath: relPath == freezed
+      relPath: null == relPath
           ? _value.relPath
           : relPath // ignore: cast_nullable_to_non_nullable
               as String,
-      size: size == freezed
+      size: null == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as int,
-      mtimeMs: mtimeMs == freezed
+      mtimeMs: freezed == mtimeMs
           ? _value.mtimeMs
           : mtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      ctimeMs: ctimeMs == freezed
+      ctimeMs: freezed == ctimeMs
           ? _value.ctimeMs
           : ctimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      birthtimeMs: birthtimeMs == freezed
+      birthtimeMs: freezed == birthtimeMs
           ? _value.birthtimeMs
           : birthtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -881,6 +904,7 @@ abstract class _$$_LibraryFileMetadataCopyWith<$Res>
           $Res Function(_$_LibraryFileMetadata) then) =
       __$$_LibraryFileMetadataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String filename,
       String ext,
@@ -894,56 +918,54 @@ abstract class _$$_LibraryFileMetadataCopyWith<$Res>
 
 /// @nodoc
 class __$$_LibraryFileMetadataCopyWithImpl<$Res>
-    extends _$LibraryFileMetadataCopyWithImpl<$Res>
+    extends _$LibraryFileMetadataCopyWithImpl<$Res, _$_LibraryFileMetadata>
     implements _$$_LibraryFileMetadataCopyWith<$Res> {
   __$$_LibraryFileMetadataCopyWithImpl(_$_LibraryFileMetadata _value,
       $Res Function(_$_LibraryFileMetadata) _then)
-      : super(_value, (v) => _then(v as _$_LibraryFileMetadata));
+      : super(_value, _then);
 
-  @override
-  _$_LibraryFileMetadata get _value => super._value as _$_LibraryFileMetadata;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filename = freezed,
-    Object? ext = freezed,
-    Object? path = freezed,
-    Object? relPath = freezed,
-    Object? size = freezed,
+    Object? filename = null,
+    Object? ext = null,
+    Object? path = null,
+    Object? relPath = null,
+    Object? size = null,
     Object? mtimeMs = freezed,
     Object? ctimeMs = freezed,
     Object? birthtimeMs = freezed,
   }) {
     return _then(_$_LibraryFileMetadata(
-      filename: filename == freezed
+      filename: null == filename
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
               as String,
-      ext: ext == freezed
+      ext: null == ext
           ? _value.ext
           : ext // ignore: cast_nullable_to_non_nullable
               as String,
-      path: path == freezed
+      path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
-      relPath: relPath == freezed
+      relPath: null == relPath
           ? _value.relPath
           : relPath // ignore: cast_nullable_to_non_nullable
               as String,
-      size: size == freezed
+      size: null == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as int,
-      mtimeMs: mtimeMs == freezed
+      mtimeMs: freezed == mtimeMs
           ? _value.mtimeMs
           : mtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      ctimeMs: ctimeMs == freezed
+      ctimeMs: freezed == ctimeMs
           ? _value.ctimeMs
           : ctimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
-      birthtimeMs: birthtimeMs == freezed
+      birthtimeMs: freezed == birthtimeMs
           ? _value.birthtimeMs
           : birthtimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -994,39 +1016,35 @@ class _$_LibraryFileMetadata implements _LibraryFileMetadata {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LibraryFileMetadata &&
-            const DeepCollectionEquality().equals(other.filename, filename) &&
-            const DeepCollectionEquality().equals(other.ext, ext) &&
-            const DeepCollectionEquality().equals(other.path, path) &&
-            const DeepCollectionEquality().equals(other.relPath, relPath) &&
-            const DeepCollectionEquality().equals(other.size, size) &&
-            const DeepCollectionEquality().equals(other.mtimeMs, mtimeMs) &&
-            const DeepCollectionEquality().equals(other.ctimeMs, ctimeMs) &&
-            const DeepCollectionEquality()
-                .equals(other.birthtimeMs, birthtimeMs));
+            (identical(other.filename, filename) ||
+                other.filename == filename) &&
+            (identical(other.ext, ext) || other.ext == ext) &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.relPath, relPath) || other.relPath == relPath) &&
+            (identical(other.size, size) || other.size == size) &&
+            (identical(other.mtimeMs, mtimeMs) || other.mtimeMs == mtimeMs) &&
+            (identical(other.ctimeMs, ctimeMs) || other.ctimeMs == ctimeMs) &&
+            (identical(other.birthtimeMs, birthtimeMs) ||
+                other.birthtimeMs == birthtimeMs));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(filename),
-      const DeepCollectionEquality().hash(ext),
-      const DeepCollectionEquality().hash(path),
-      const DeepCollectionEquality().hash(relPath),
-      const DeepCollectionEquality().hash(size),
-      const DeepCollectionEquality().hash(mtimeMs),
-      const DeepCollectionEquality().hash(ctimeMs),
-      const DeepCollectionEquality().hash(birthtimeMs));
+  int get hashCode => Object.hash(runtimeType, filename, ext, path, relPath,
+      size, mtimeMs, ctimeMs, birthtimeMs);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LibraryFileMetadataCopyWith<_$_LibraryFileMetadata> get copyWith =>
       __$$_LibraryFileMetadataCopyWithImpl<_$_LibraryFileMetadata>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LibraryFileMetadataToJson(this);
+    return _$$_LibraryFileMetadataToJson(
+      this,
+    );
   }
 }
 
@@ -1045,21 +1063,21 @@ abstract class _LibraryFileMetadata implements LibraryFileMetadata {
       _$_LibraryFileMetadata.fromJson;
 
   @override
-  String get filename => throw _privateConstructorUsedError;
+  String get filename;
   @override
-  String get ext => throw _privateConstructorUsedError;
+  String get ext;
   @override
-  String get path => throw _privateConstructorUsedError;
+  String get path;
   @override
-  String get relPath => throw _privateConstructorUsedError;
+  String get relPath;
   @override
-  int get size => throw _privateConstructorUsedError;
+  int get size;
   @override
-  int? get mtimeMs => throw _privateConstructorUsedError;
+  int? get mtimeMs;
   @override
-  int? get ctimeMs => throw _privateConstructorUsedError;
+  int? get ctimeMs;
   @override
-  int? get birthtimeMs => throw _privateConstructorUsedError;
+  int? get birthtimeMs;
   @override
   @JsonKey(ignore: true)
   _$$_LibraryFileMetadataCopyWith<_$_LibraryFileMetadata> get copyWith =>
@@ -1090,7 +1108,8 @@ mixin _$Media {
 /// @nodoc
 abstract class $MediaCopyWith<$Res> {
   factory $MediaCopyWith(Media value, $Res Function(Media) then) =
-      _$MediaCopyWithImpl<$Res>;
+      _$MediaCopyWithImpl<$Res, Media>;
+  @useResult
   $Res call(
       {String libraryItemId,
       MediaMetadata metadata,
@@ -1106,69 +1125,73 @@ abstract class $MediaCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MediaCopyWithImpl<$Res> implements $MediaCopyWith<$Res> {
+class _$MediaCopyWithImpl<$Res, $Val extends Media>
+    implements $MediaCopyWith<$Res> {
   _$MediaCopyWithImpl(this._value, this._then);
 
-  final Media _value;
   // ignore: unused_field
-  final $Res Function(Media) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? libraryItemId = freezed,
-    Object? metadata = freezed,
+    Object? libraryItemId = null,
+    Object? metadata = null,
     Object? coverPath = freezed,
     Object? tags = freezed,
     Object? audioFiles = freezed,
     Object? chapters = freezed,
     Object? missingParts = freezed,
-    Object? ebookFile = freezed,
+    Object? ebookFile = null,
     Object? duration = freezed,
   }) {
     return _then(_value.copyWith(
-      libraryItemId: libraryItemId == freezed
+      libraryItemId: null == libraryItemId
           ? _value.libraryItemId
           : libraryItemId // ignore: cast_nullable_to_non_nullable
               as String,
-      metadata: metadata == freezed
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as MediaMetadata,
-      coverPath: coverPath == freezed
+      coverPath: freezed == coverPath
           ? _value.coverPath
           : coverPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      tags: tags == freezed
+      tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      audioFiles: audioFiles == freezed
+      audioFiles: freezed == audioFiles
           ? _value.audioFiles
           : audioFiles // ignore: cast_nullable_to_non_nullable
               as List<AudioFile>?,
-      chapters: chapters == freezed
+      chapters: freezed == chapters
           ? _value.chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<Chapter>?,
-      missingParts: missingParts == freezed
+      missingParts: freezed == missingParts
           ? _value.missingParts
           : missingParts // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      ebookFile: ebookFile == freezed
+      ebookFile: null == ebookFile
           ? _value.ebookFile
           : ebookFile // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      duration: duration == freezed
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MediaMetadataCopyWith<$Res> get metadata {
     return $MediaMetadataCopyWith<$Res>(_value.metadata, (value) {
-      return _then(_value.copyWith(metadata: value));
+      return _then(_value.copyWith(metadata: value) as $Val);
     });
   }
 }
@@ -1178,6 +1201,7 @@ abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
   factory _$$_MediaCopyWith(_$_Media value, $Res Function(_$_Media) then) =
       __$$_MediaCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String libraryItemId,
       MediaMetadata metadata,
@@ -1194,60 +1218,58 @@ abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res>
+class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
     implements _$$_MediaCopyWith<$Res> {
   __$$_MediaCopyWithImpl(_$_Media _value, $Res Function(_$_Media) _then)
-      : super(_value, (v) => _then(v as _$_Media));
+      : super(_value, _then);
 
-  @override
-  _$_Media get _value => super._value as _$_Media;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? libraryItemId = freezed,
-    Object? metadata = freezed,
+    Object? libraryItemId = null,
+    Object? metadata = null,
     Object? coverPath = freezed,
     Object? tags = freezed,
     Object? audioFiles = freezed,
     Object? chapters = freezed,
     Object? missingParts = freezed,
-    Object? ebookFile = freezed,
+    Object? ebookFile = null,
     Object? duration = freezed,
   }) {
     return _then(_$_Media(
-      libraryItemId: libraryItemId == freezed
+      libraryItemId: null == libraryItemId
           ? _value.libraryItemId
           : libraryItemId // ignore: cast_nullable_to_non_nullable
               as String,
-      metadata: metadata == freezed
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as MediaMetadata,
-      coverPath: coverPath == freezed
+      coverPath: freezed == coverPath
           ? _value.coverPath
           : coverPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      tags: tags == freezed
+      tags: freezed == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      audioFiles: audioFiles == freezed
+      audioFiles: freezed == audioFiles
           ? _value._audioFiles
           : audioFiles // ignore: cast_nullable_to_non_nullable
               as List<AudioFile>?,
-      chapters: chapters == freezed
+      chapters: freezed == chapters
           ? _value._chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<Chapter>?,
-      missingParts: missingParts == freezed
+      missingParts: freezed == missingParts
           ? _value._missingParts
           : missingParts // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      ebookFile: ebookFile == freezed
+      ebookFile: null == ebookFile
           ? _value.ebookFile
           : ebookFile // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      duration: duration == freezed
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double?,
@@ -1333,10 +1355,12 @@ class _$_Media implements _Media {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Media &&
-            const DeepCollectionEquality()
-                .equals(other.libraryItemId, libraryItemId) &&
-            const DeepCollectionEquality().equals(other.metadata, metadata) &&
-            const DeepCollectionEquality().equals(other.coverPath, coverPath) &&
+            (identical(other.libraryItemId, libraryItemId) ||
+                other.libraryItemId == libraryItemId) &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata) &&
+            (identical(other.coverPath, coverPath) ||
+                other.coverPath == coverPath) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality()
                 .equals(other._audioFiles, _audioFiles) &&
@@ -1344,31 +1368,35 @@ class _$_Media implements _Media {
             const DeepCollectionEquality()
                 .equals(other._missingParts, _missingParts) &&
             const DeepCollectionEquality().equals(other.ebookFile, ebookFile) &&
-            const DeepCollectionEquality().equals(other.duration, duration));
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(libraryItemId),
-      const DeepCollectionEquality().hash(metadata),
-      const DeepCollectionEquality().hash(coverPath),
+      libraryItemId,
+      metadata,
+      coverPath,
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_audioFiles),
       const DeepCollectionEquality().hash(_chapters),
       const DeepCollectionEquality().hash(_missingParts),
       const DeepCollectionEquality().hash(ebookFile),
-      const DeepCollectionEquality().hash(duration));
+      duration);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MediaCopyWith<_$_Media> get copyWith =>
       __$$_MediaCopyWithImpl<_$_Media>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaToJson(this);
+    return _$$_MediaToJson(
+      this,
+    );
   }
 }
 
@@ -1387,23 +1415,23 @@ abstract class _Media implements Media {
   factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
 
   @override
-  String get libraryItemId => throw _privateConstructorUsedError;
+  String get libraryItemId;
   @override
-  MediaMetadata get metadata => throw _privateConstructorUsedError;
+  MediaMetadata get metadata;
   @override
-  String? get coverPath => throw _privateConstructorUsedError;
+  String? get coverPath;
   @override
-  List<String>? get tags => throw _privateConstructorUsedError;
+  List<String>? get tags;
   @override
-  List<AudioFile>? get audioFiles => throw _privateConstructorUsedError;
+  List<AudioFile>? get audioFiles;
   @override
-  List<Chapter>? get chapters => throw _privateConstructorUsedError;
+  List<Chapter>? get chapters;
   @override
-  List<String>? get missingParts => throw _privateConstructorUsedError;
+  List<String>? get missingParts;
   @override
-  dynamic get ebookFile => throw _privateConstructorUsedError;
+  dynamic get ebookFile;
   @override
-  double? get duration => throw _privateConstructorUsedError;
+  double? get duration;
   @override
   @JsonKey(ignore: true)
   _$$_MediaCopyWith<_$_Media> get copyWith =>
@@ -1451,7 +1479,8 @@ mixin _$AudioFile {
 /// @nodoc
 abstract class $AudioFileCopyWith<$Res> {
   factory $AudioFileCopyWith(AudioFile value, $Res Function(AudioFile) then) =
-      _$AudioFileCopyWithImpl<$Res>;
+      _$AudioFileCopyWithImpl<$Res, AudioFile>;
+  @useResult
   $Res call(
       {int index,
       String ino,
@@ -1484,28 +1513,31 @@ abstract class $AudioFileCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AudioFileCopyWithImpl<$Res> implements $AudioFileCopyWith<$Res> {
+class _$AudioFileCopyWithImpl<$Res, $Val extends AudioFile>
+    implements $AudioFileCopyWith<$Res> {
   _$AudioFileCopyWithImpl(this._value, this._then);
 
-  final AudioFile _value;
   // ignore: unused_field
-  final $Res Function(AudioFile) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? index = freezed,
-    Object? ino = freezed,
-    Object? metadata = freezed,
+    Object? index = null,
+    Object? ino = null,
+    Object? metadata = null,
     Object? addedAt = freezed,
     Object? updatedAt = freezed,
     Object? trackNumFromMeta = freezed,
-    Object? discNumFromMeta = freezed,
-    Object? trackNumFromFilename = freezed,
-    Object? discNumFromFilename = freezed,
-    Object? manuallyVerified = freezed,
-    Object? invalid = freezed,
-    Object? exclude = freezed,
-    Object? error = freezed,
+    Object? discNumFromMeta = null,
+    Object? trackNumFromFilename = null,
+    Object? discNumFromFilename = null,
+    Object? manuallyVerified = null,
+    Object? invalid = null,
+    Object? exclude = null,
+    Object? error = null,
     Object? format = freezed,
     Object? duration = freezed,
     Object? bitRate = freezed,
@@ -1515,125 +1547,127 @@ class _$AudioFileCopyWithImpl<$Res> implements $AudioFileCopyWith<$Res> {
     Object? channels = freezed,
     Object? channelLayout = freezed,
     Object? chapters = freezed,
-    Object? embeddedCoverArt = freezed,
-    Object? metaTags = freezed,
+    Object? embeddedCoverArt = null,
+    Object? metaTags = null,
     Object? mimeType = freezed,
   }) {
     return _then(_value.copyWith(
-      index: index == freezed
+      index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-      ino: ino == freezed
+      ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
               as String,
-      metadata: metadata == freezed
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as LibraryFileMetadata,
-      addedAt: addedAt == freezed
+      addedAt: freezed == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      trackNumFromMeta: trackNumFromMeta == freezed
+      trackNumFromMeta: freezed == trackNumFromMeta
           ? _value.trackNumFromMeta
           : trackNumFromMeta // ignore: cast_nullable_to_non_nullable
               as int?,
-      discNumFromMeta: discNumFromMeta == freezed
+      discNumFromMeta: null == discNumFromMeta
           ? _value.discNumFromMeta
           : discNumFromMeta // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      trackNumFromFilename: trackNumFromFilename == freezed
+      trackNumFromFilename: null == trackNumFromFilename
           ? _value.trackNumFromFilename
           : trackNumFromFilename // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      discNumFromFilename: discNumFromFilename == freezed
+      discNumFromFilename: null == discNumFromFilename
           ? _value.discNumFromFilename
           : discNumFromFilename // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      manuallyVerified: manuallyVerified == freezed
+      manuallyVerified: null == manuallyVerified
           ? _value.manuallyVerified
           : manuallyVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      invalid: invalid == freezed
+      invalid: null == invalid
           ? _value.invalid
           : invalid // ignore: cast_nullable_to_non_nullable
               as bool,
-      exclude: exclude == freezed
+      exclude: null == exclude
           ? _value.exclude
           : exclude // ignore: cast_nullable_to_non_nullable
               as bool,
-      error: error == freezed
+      error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      format: format == freezed
+      format: freezed == format
           ? _value.format
           : format // ignore: cast_nullable_to_non_nullable
               as String?,
-      duration: duration == freezed
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double?,
-      bitRate: bitRate == freezed
+      bitRate: freezed == bitRate
           ? _value.bitRate
           : bitRate // ignore: cast_nullable_to_non_nullable
               as int?,
-      language: language == freezed
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
-      codec: codec == freezed
+      codec: freezed == codec
           ? _value.codec
           : codec // ignore: cast_nullable_to_non_nullable
               as String?,
-      timeBase: timeBase == freezed
+      timeBase: freezed == timeBase
           ? _value.timeBase
           : timeBase // ignore: cast_nullable_to_non_nullable
               as String?,
-      channels: channels == freezed
+      channels: freezed == channels
           ? _value.channels
           : channels // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelLayout: channelLayout == freezed
+      channelLayout: freezed == channelLayout
           ? _value.channelLayout
           : channelLayout // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapters: chapters == freezed
+      chapters: freezed == chapters
           ? _value.chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<Chapter>?,
-      embeddedCoverArt: embeddedCoverArt == freezed
+      embeddedCoverArt: null == embeddedCoverArt
           ? _value.embeddedCoverArt
           : embeddedCoverArt // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      metaTags: metaTags == freezed
+      metaTags: null == metaTags
           ? _value.metaTags
           : metaTags // ignore: cast_nullable_to_non_nullable
               as MetaTags,
-      mimeType: mimeType == freezed
+      mimeType: freezed == mimeType
           ? _value.mimeType
           : mimeType // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $LibraryFileMetadataCopyWith<$Res> get metadata {
     return $LibraryFileMetadataCopyWith<$Res>(_value.metadata, (value) {
-      return _then(_value.copyWith(metadata: value));
+      return _then(_value.copyWith(metadata: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MetaTagsCopyWith<$Res> get metaTags {
     return $MetaTagsCopyWith<$Res>(_value.metaTags, (value) {
-      return _then(_value.copyWith(metaTags: value));
+      return _then(_value.copyWith(metaTags: value) as $Val);
     });
   }
 }
@@ -1644,6 +1678,7 @@ abstract class _$$_AudioFileCopyWith<$Res> implements $AudioFileCopyWith<$Res> {
           _$_AudioFile value, $Res Function(_$_AudioFile) then) =
       __$$_AudioFileCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int index,
       String ino,
@@ -1678,30 +1713,29 @@ abstract class _$$_AudioFileCopyWith<$Res> implements $AudioFileCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AudioFileCopyWithImpl<$Res> extends _$AudioFileCopyWithImpl<$Res>
+class __$$_AudioFileCopyWithImpl<$Res>
+    extends _$AudioFileCopyWithImpl<$Res, _$_AudioFile>
     implements _$$_AudioFileCopyWith<$Res> {
   __$$_AudioFileCopyWithImpl(
       _$_AudioFile _value, $Res Function(_$_AudioFile) _then)
-      : super(_value, (v) => _then(v as _$_AudioFile));
+      : super(_value, _then);
 
-  @override
-  _$_AudioFile get _value => super._value as _$_AudioFile;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? index = freezed,
-    Object? ino = freezed,
-    Object? metadata = freezed,
+    Object? index = null,
+    Object? ino = null,
+    Object? metadata = null,
     Object? addedAt = freezed,
     Object? updatedAt = freezed,
     Object? trackNumFromMeta = freezed,
-    Object? discNumFromMeta = freezed,
-    Object? trackNumFromFilename = freezed,
-    Object? discNumFromFilename = freezed,
-    Object? manuallyVerified = freezed,
-    Object? invalid = freezed,
-    Object? exclude = freezed,
-    Object? error = freezed,
+    Object? discNumFromMeta = null,
+    Object? trackNumFromFilename = null,
+    Object? discNumFromFilename = null,
+    Object? manuallyVerified = null,
+    Object? invalid = null,
+    Object? exclude = null,
+    Object? error = null,
     Object? format = freezed,
     Object? duration = freezed,
     Object? bitRate = freezed,
@@ -1711,108 +1745,108 @@ class __$$_AudioFileCopyWithImpl<$Res> extends _$AudioFileCopyWithImpl<$Res>
     Object? channels = freezed,
     Object? channelLayout = freezed,
     Object? chapters = freezed,
-    Object? embeddedCoverArt = freezed,
-    Object? metaTags = freezed,
+    Object? embeddedCoverArt = null,
+    Object? metaTags = null,
     Object? mimeType = freezed,
   }) {
     return _then(_$_AudioFile(
-      index: index == freezed
+      index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-      ino: ino == freezed
+      ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
               as String,
-      metadata: metadata == freezed
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as LibraryFileMetadata,
-      addedAt: addedAt == freezed
+      addedAt: freezed == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      trackNumFromMeta: trackNumFromMeta == freezed
+      trackNumFromMeta: freezed == trackNumFromMeta
           ? _value.trackNumFromMeta
           : trackNumFromMeta // ignore: cast_nullable_to_non_nullable
               as int?,
-      discNumFromMeta: discNumFromMeta == freezed
+      discNumFromMeta: null == discNumFromMeta
           ? _value.discNumFromMeta
           : discNumFromMeta // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      trackNumFromFilename: trackNumFromFilename == freezed
+      trackNumFromFilename: null == trackNumFromFilename
           ? _value.trackNumFromFilename
           : trackNumFromFilename // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      discNumFromFilename: discNumFromFilename == freezed
+      discNumFromFilename: null == discNumFromFilename
           ? _value.discNumFromFilename
           : discNumFromFilename // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      manuallyVerified: manuallyVerified == freezed
+      manuallyVerified: null == manuallyVerified
           ? _value.manuallyVerified
           : manuallyVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      invalid: invalid == freezed
+      invalid: null == invalid
           ? _value.invalid
           : invalid // ignore: cast_nullable_to_non_nullable
               as bool,
-      exclude: exclude == freezed
+      exclude: null == exclude
           ? _value.exclude
           : exclude // ignore: cast_nullable_to_non_nullable
               as bool,
-      error: error == freezed
+      error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      format: format == freezed
+      format: freezed == format
           ? _value.format
           : format // ignore: cast_nullable_to_non_nullable
               as String?,
-      duration: duration == freezed
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double?,
-      bitRate: bitRate == freezed
+      bitRate: freezed == bitRate
           ? _value.bitRate
           : bitRate // ignore: cast_nullable_to_non_nullable
               as int?,
-      language: language == freezed
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
-      codec: codec == freezed
+      codec: freezed == codec
           ? _value.codec
           : codec // ignore: cast_nullable_to_non_nullable
               as String?,
-      timeBase: timeBase == freezed
+      timeBase: freezed == timeBase
           ? _value.timeBase
           : timeBase // ignore: cast_nullable_to_non_nullable
               as String?,
-      channels: channels == freezed
+      channels: freezed == channels
           ? _value.channels
           : channels // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelLayout: channelLayout == freezed
+      channelLayout: freezed == channelLayout
           ? _value.channelLayout
           : channelLayout // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapters: chapters == freezed
+      chapters: freezed == chapters
           ? _value._chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<Chapter>?,
-      embeddedCoverArt: embeddedCoverArt == freezed
+      embeddedCoverArt: null == embeddedCoverArt
           ? _value.embeddedCoverArt
           : embeddedCoverArt // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      metaTags: metaTags == freezed
+      metaTags: null == metaTags
           ? _value.metaTags
           : metaTags // ignore: cast_nullable_to_non_nullable
               as MetaTags,
-      mimeType: mimeType == freezed
+      mimeType: freezed == mimeType
           ? _value.mimeType
           : mimeType // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1922,79 +1956,90 @@ class _$_AudioFile implements _AudioFile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AudioFile &&
-            const DeepCollectionEquality().equals(other.index, index) &&
-            const DeepCollectionEquality().equals(other.ino, ino) &&
-            const DeepCollectionEquality().equals(other.metadata, metadata) &&
-            const DeepCollectionEquality().equals(other.addedAt, addedAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality()
-                .equals(other.trackNumFromMeta, trackNumFromMeta) &&
+            (identical(other.index, index) || other.index == index) &&
+            (identical(other.ino, ino) || other.ino == ino) &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata) &&
+            (identical(other.addedAt, addedAt) || other.addedAt == addedAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.trackNumFromMeta, trackNumFromMeta) ||
+                other.trackNumFromMeta == trackNumFromMeta) &&
             const DeepCollectionEquality()
                 .equals(other.discNumFromMeta, discNumFromMeta) &&
             const DeepCollectionEquality()
                 .equals(other.trackNumFromFilename, trackNumFromFilename) &&
             const DeepCollectionEquality()
                 .equals(other.discNumFromFilename, discNumFromFilename) &&
-            const DeepCollectionEquality()
-                .equals(other.manuallyVerified, manuallyVerified) &&
-            const DeepCollectionEquality().equals(other.invalid, invalid) &&
-            const DeepCollectionEquality().equals(other.exclude, exclude) &&
+            (identical(other.manuallyVerified, manuallyVerified) ||
+                other.manuallyVerified == manuallyVerified) &&
+            (identical(other.invalid, invalid) || other.invalid == invalid) &&
+            (identical(other.exclude, exclude) || other.exclude == exclude) &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.format, format) &&
-            const DeepCollectionEquality().equals(other.duration, duration) &&
-            const DeepCollectionEquality().equals(other.bitRate, bitRate) &&
-            const DeepCollectionEquality().equals(other.language, language) &&
-            const DeepCollectionEquality().equals(other.codec, codec) &&
-            const DeepCollectionEquality().equals(other.timeBase, timeBase) &&
-            const DeepCollectionEquality().equals(other.channels, channels) &&
-            const DeepCollectionEquality()
-                .equals(other.channelLayout, channelLayout) &&
+            (identical(other.format, format) || other.format == format) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.bitRate, bitRate) || other.bitRate == bitRate) &&
+            (identical(other.language, language) ||
+                other.language == language) &&
+            (identical(other.codec, codec) || other.codec == codec) &&
+            (identical(other.timeBase, timeBase) ||
+                other.timeBase == timeBase) &&
+            (identical(other.channels, channels) ||
+                other.channels == channels) &&
+            (identical(other.channelLayout, channelLayout) ||
+                other.channelLayout == channelLayout) &&
             const DeepCollectionEquality().equals(other._chapters, _chapters) &&
             const DeepCollectionEquality()
                 .equals(other.embeddedCoverArt, embeddedCoverArt) &&
-            const DeepCollectionEquality().equals(other.metaTags, metaTags) &&
-            const DeepCollectionEquality().equals(other.mimeType, mimeType));
+            (identical(other.metaTags, metaTags) ||
+                other.metaTags == metaTags) &&
+            (identical(other.mimeType, mimeType) ||
+                other.mimeType == mimeType));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(index),
-        const DeepCollectionEquality().hash(ino),
-        const DeepCollectionEquality().hash(metadata),
-        const DeepCollectionEquality().hash(addedAt),
-        const DeepCollectionEquality().hash(updatedAt),
-        const DeepCollectionEquality().hash(trackNumFromMeta),
+        index,
+        ino,
+        metadata,
+        addedAt,
+        updatedAt,
+        trackNumFromMeta,
         const DeepCollectionEquality().hash(discNumFromMeta),
         const DeepCollectionEquality().hash(trackNumFromFilename),
         const DeepCollectionEquality().hash(discNumFromFilename),
-        const DeepCollectionEquality().hash(manuallyVerified),
-        const DeepCollectionEquality().hash(invalid),
-        const DeepCollectionEquality().hash(exclude),
+        manuallyVerified,
+        invalid,
+        exclude,
         const DeepCollectionEquality().hash(error),
-        const DeepCollectionEquality().hash(format),
-        const DeepCollectionEquality().hash(duration),
-        const DeepCollectionEquality().hash(bitRate),
-        const DeepCollectionEquality().hash(language),
-        const DeepCollectionEquality().hash(codec),
-        const DeepCollectionEquality().hash(timeBase),
-        const DeepCollectionEquality().hash(channels),
-        const DeepCollectionEquality().hash(channelLayout),
+        format,
+        duration,
+        bitRate,
+        language,
+        codec,
+        timeBase,
+        channels,
+        channelLayout,
         const DeepCollectionEquality().hash(_chapters),
         const DeepCollectionEquality().hash(embeddedCoverArt),
-        const DeepCollectionEquality().hash(metaTags),
-        const DeepCollectionEquality().hash(mimeType)
+        metaTags,
+        mimeType
       ]);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AudioFileCopyWith<_$_AudioFile> get copyWith =>
       __$$_AudioFileCopyWithImpl<_$_AudioFile>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AudioFileToJson(this);
+    return _$$_AudioFileToJson(
+      this,
+    );
   }
 }
 
@@ -2030,55 +2075,55 @@ abstract class _AudioFile implements AudioFile {
       _$_AudioFile.fromJson;
 
   @override
-  int get index => throw _privateConstructorUsedError;
+  int get index;
   @override
-  String get ino => throw _privateConstructorUsedError;
+  String get ino;
   @override
-  LibraryFileMetadata get metadata => throw _privateConstructorUsedError;
+  LibraryFileMetadata get metadata;
   @override
-  int? get addedAt => throw _privateConstructorUsedError;
+  int? get addedAt;
   @override
-  int? get updatedAt => throw _privateConstructorUsedError;
+  int? get updatedAt;
   @override
-  int? get trackNumFromMeta => throw _privateConstructorUsedError;
+  int? get trackNumFromMeta;
   @override
-  dynamic get discNumFromMeta => throw _privateConstructorUsedError;
+  dynamic get discNumFromMeta;
   @override
-  dynamic get trackNumFromFilename => throw _privateConstructorUsedError;
+  dynamic get trackNumFromFilename;
   @override
-  dynamic get discNumFromFilename => throw _privateConstructorUsedError;
+  dynamic get discNumFromFilename;
   @override
-  bool get manuallyVerified => throw _privateConstructorUsedError;
+  bool get manuallyVerified;
   @override
-  bool get invalid => throw _privateConstructorUsedError;
+  bool get invalid;
   @override
-  bool get exclude => throw _privateConstructorUsedError;
+  bool get exclude;
   @override
-  dynamic get error => throw _privateConstructorUsedError;
+  dynamic get error;
   @override
-  String? get format => throw _privateConstructorUsedError;
+  String? get format;
   @override
-  double? get duration => throw _privateConstructorUsedError;
+  double? get duration;
   @override
-  int? get bitRate => throw _privateConstructorUsedError;
+  int? get bitRate;
   @override
-  String? get language => throw _privateConstructorUsedError;
+  String? get language;
   @override
-  String? get codec => throw _privateConstructorUsedError;
+  String? get codec;
   @override
-  String? get timeBase => throw _privateConstructorUsedError;
+  String? get timeBase;
   @override
-  int? get channels => throw _privateConstructorUsedError;
+  int? get channels;
   @override
-  String? get channelLayout => throw _privateConstructorUsedError;
+  String? get channelLayout;
   @override
-  List<Chapter>? get chapters => throw _privateConstructorUsedError;
+  List<Chapter>? get chapters;
   @override
-  dynamic get embeddedCoverArt => throw _privateConstructorUsedError;
+  dynamic get embeddedCoverArt;
   @override
-  MetaTags get metaTags => throw _privateConstructorUsedError;
+  MetaTags get metaTags;
   @override
-  String? get mimeType => throw _privateConstructorUsedError;
+  String? get mimeType;
   @override
   @JsonKey(ignore: true)
   _$$_AudioFileCopyWith<_$_AudioFile> get copyWith =>
@@ -2106,7 +2151,8 @@ mixin _$Chapter {
 /// @nodoc
 abstract class $ChapterCopyWith<$Res> {
   factory $ChapterCopyWith(Chapter value, $Res Function(Chapter) then) =
-      _$ChapterCopyWithImpl<$Res>;
+      _$ChapterCopyWithImpl<$Res, Chapter>;
+  @useResult
   $Res call(
       {int id,
       @JsonKey(fromJson: _coerceStringToDouble) double start,
@@ -2115,38 +2161,41 @@ abstract class $ChapterCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChapterCopyWithImpl<$Res> implements $ChapterCopyWith<$Res> {
+class _$ChapterCopyWithImpl<$Res, $Val extends Chapter>
+    implements $ChapterCopyWith<$Res> {
   _$ChapterCopyWithImpl(this._value, this._then);
 
-  final Chapter _value;
   // ignore: unused_field
-  final $Res Function(Chapter) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? start = freezed,
-    Object? end = freezed,
-    Object? title = freezed,
+    Object? id = null,
+    Object? start = null,
+    Object? end = null,
+    Object? title = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      start: start == freezed
+      start: null == start
           ? _value.start
           : start // ignore: cast_nullable_to_non_nullable
               as double,
-      end: end == freezed
+      end: null == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
               as double,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2156,6 +2205,7 @@ abstract class _$$_ChapterCopyWith<$Res> implements $ChapterCopyWith<$Res> {
           _$_Chapter value, $Res Function(_$_Chapter) then) =
       __$$_ChapterCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       @JsonKey(fromJson: _coerceStringToDouble) double start,
@@ -2164,35 +2214,34 @@ abstract class _$$_ChapterCopyWith<$Res> implements $ChapterCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChapterCopyWithImpl<$Res> extends _$ChapterCopyWithImpl<$Res>
+class __$$_ChapterCopyWithImpl<$Res>
+    extends _$ChapterCopyWithImpl<$Res, _$_Chapter>
     implements _$$_ChapterCopyWith<$Res> {
   __$$_ChapterCopyWithImpl(_$_Chapter _value, $Res Function(_$_Chapter) _then)
-      : super(_value, (v) => _then(v as _$_Chapter));
+      : super(_value, _then);
 
-  @override
-  _$_Chapter get _value => super._value as _$_Chapter;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? start = freezed,
-    Object? end = freezed,
-    Object? title = freezed,
+    Object? id = null,
+    Object? start = null,
+    Object? end = null,
+    Object? title = null,
   }) {
     return _then(_$_Chapter(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      start: start == freezed
+      start: null == start
           ? _value.start
           : start // ignore: cast_nullable_to_non_nullable
               as double,
-      end: end == freezed
+      end: null == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
               as double,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2233,29 +2282,27 @@ class _$_Chapter implements _Chapter {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Chapter &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.start, start) &&
-            const DeepCollectionEquality().equals(other.end, end) &&
-            const DeepCollectionEquality().equals(other.title, title));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.start, start) || other.start == start) &&
+            (identical(other.end, end) || other.end == end) &&
+            (identical(other.title, title) || other.title == title));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(start),
-      const DeepCollectionEquality().hash(end),
-      const DeepCollectionEquality().hash(title));
+  int get hashCode => Object.hash(runtimeType, id, start, end, title);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChapterCopyWith<_$_Chapter> get copyWith =>
       __$$_ChapterCopyWithImpl<_$_Chapter>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChapterToJson(this);
+    return _$$_ChapterToJson(
+      this,
+    );
   }
 }
 
@@ -2269,15 +2316,15 @@ abstract class _Chapter implements Chapter {
   factory _Chapter.fromJson(Map<String, dynamic> json) = _$_Chapter.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
   @JsonKey(fromJson: _coerceStringToDouble)
-  double get start => throw _privateConstructorUsedError;
+  double get start;
   @override
   @JsonKey(fromJson: _coerceStringToDouble)
-  double get end => throw _privateConstructorUsedError;
+  double get end;
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
   @JsonKey(ignore: true)
   _$$_ChapterCopyWith<_$_Chapter> get copyWith =>
@@ -2310,7 +2357,8 @@ mixin _$MetaTags {
 /// @nodoc
 abstract class $MetaTagsCopyWith<$Res> {
   factory $MetaTagsCopyWith(MetaTags value, $Res Function(MetaTags) then) =
-      _$MetaTagsCopyWithImpl<$Res>;
+      _$MetaTagsCopyWithImpl<$Res, MetaTags>;
+  @useResult
   $Res call(
       {String? tagAlbum,
       String? tagArtist,
@@ -2325,13 +2373,16 @@ abstract class $MetaTagsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MetaTagsCopyWithImpl<$Res> implements $MetaTagsCopyWith<$Res> {
+class _$MetaTagsCopyWithImpl<$Res, $Val extends MetaTags>
+    implements $MetaTagsCopyWith<$Res> {
   _$MetaTagsCopyWithImpl(this._value, this._then);
 
-  final MetaTags _value;
   // ignore: unused_field
-  final $Res Function(MetaTags) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? tagAlbum = freezed,
@@ -2346,47 +2397,47 @@ class _$MetaTagsCopyWithImpl<$Res> implements $MetaTagsCopyWith<$Res> {
     Object? tagEncoder = freezed,
   }) {
     return _then(_value.copyWith(
-      tagAlbum: tagAlbum == freezed
+      tagAlbum: freezed == tagAlbum
           ? _value.tagAlbum
           : tagAlbum // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagArtist: tagArtist == freezed
+      tagArtist: freezed == tagArtist
           ? _value.tagArtist
           : tagArtist // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagGenre: tagGenre == freezed
+      tagGenre: freezed == tagGenre
           ? _value.tagGenre
           : tagGenre // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagTitle: tagTitle == freezed
+      tagTitle: freezed == tagTitle
           ? _value.tagTitle
           : tagTitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagTrack: tagTrack == freezed
+      tagTrack: freezed == tagTrack
           ? _value.tagTrack
           : tagTrack // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagAlbumArtist: tagAlbumArtist == freezed
+      tagAlbumArtist: freezed == tagAlbumArtist
           ? _value.tagAlbumArtist
           : tagAlbumArtist // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagDate: tagDate == freezed
+      tagDate: freezed == tagDate
           ? _value.tagDate
           : tagDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagComposer: tagComposer == freezed
+      tagComposer: freezed == tagComposer
           ? _value.tagComposer
           : tagComposer // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagDescription: tagDescription == freezed
+      tagDescription: freezed == tagDescription
           ? _value.tagDescription
           : tagDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagEncoder: tagEncoder == freezed
+      tagEncoder: freezed == tagEncoder
           ? _value.tagEncoder
           : tagEncoder // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2396,6 +2447,7 @@ abstract class _$$_MetaTagsCopyWith<$Res> implements $MetaTagsCopyWith<$Res> {
           _$_MetaTags value, $Res Function(_$_MetaTags) then) =
       __$$_MetaTagsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? tagAlbum,
       String? tagArtist,
@@ -2410,15 +2462,14 @@ abstract class _$$_MetaTagsCopyWith<$Res> implements $MetaTagsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MetaTagsCopyWithImpl<$Res> extends _$MetaTagsCopyWithImpl<$Res>
+class __$$_MetaTagsCopyWithImpl<$Res>
+    extends _$MetaTagsCopyWithImpl<$Res, _$_MetaTags>
     implements _$$_MetaTagsCopyWith<$Res> {
   __$$_MetaTagsCopyWithImpl(
       _$_MetaTags _value, $Res Function(_$_MetaTags) _then)
-      : super(_value, (v) => _then(v as _$_MetaTags));
+      : super(_value, _then);
 
-  @override
-  _$_MetaTags get _value => super._value as _$_MetaTags;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? tagAlbum = freezed,
@@ -2433,43 +2484,43 @@ class __$$_MetaTagsCopyWithImpl<$Res> extends _$MetaTagsCopyWithImpl<$Res>
     Object? tagEncoder = freezed,
   }) {
     return _then(_$_MetaTags(
-      tagAlbum: tagAlbum == freezed
+      tagAlbum: freezed == tagAlbum
           ? _value.tagAlbum
           : tagAlbum // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagArtist: tagArtist == freezed
+      tagArtist: freezed == tagArtist
           ? _value.tagArtist
           : tagArtist // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagGenre: tagGenre == freezed
+      tagGenre: freezed == tagGenre
           ? _value.tagGenre
           : tagGenre // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagTitle: tagTitle == freezed
+      tagTitle: freezed == tagTitle
           ? _value.tagTitle
           : tagTitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagTrack: tagTrack == freezed
+      tagTrack: freezed == tagTrack
           ? _value.tagTrack
           : tagTrack // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagAlbumArtist: tagAlbumArtist == freezed
+      tagAlbumArtist: freezed == tagAlbumArtist
           ? _value.tagAlbumArtist
           : tagAlbumArtist // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagDate: tagDate == freezed
+      tagDate: freezed == tagDate
           ? _value.tagDate
           : tagDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagComposer: tagComposer == freezed
+      tagComposer: freezed == tagComposer
           ? _value.tagComposer
           : tagComposer // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagDescription: tagDescription == freezed
+      tagDescription: freezed == tagDescription
           ? _value.tagDescription
           : tagDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      tagEncoder: tagEncoder == freezed
+      tagEncoder: freezed == tagEncoder
           ? _value.tagEncoder
           : tagEncoder // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -2526,45 +2577,53 @@ class _$_MetaTags implements _MetaTags {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MetaTags &&
-            const DeepCollectionEquality().equals(other.tagAlbum, tagAlbum) &&
-            const DeepCollectionEquality().equals(other.tagArtist, tagArtist) &&
-            const DeepCollectionEquality().equals(other.tagGenre, tagGenre) &&
-            const DeepCollectionEquality().equals(other.tagTitle, tagTitle) &&
-            const DeepCollectionEquality().equals(other.tagTrack, tagTrack) &&
-            const DeepCollectionEquality()
-                .equals(other.tagAlbumArtist, tagAlbumArtist) &&
-            const DeepCollectionEquality().equals(other.tagDate, tagDate) &&
-            const DeepCollectionEquality()
-                .equals(other.tagComposer, tagComposer) &&
-            const DeepCollectionEquality()
-                .equals(other.tagDescription, tagDescription) &&
-            const DeepCollectionEquality()
-                .equals(other.tagEncoder, tagEncoder));
+            (identical(other.tagAlbum, tagAlbum) ||
+                other.tagAlbum == tagAlbum) &&
+            (identical(other.tagArtist, tagArtist) ||
+                other.tagArtist == tagArtist) &&
+            (identical(other.tagGenre, tagGenre) ||
+                other.tagGenre == tagGenre) &&
+            (identical(other.tagTitle, tagTitle) ||
+                other.tagTitle == tagTitle) &&
+            (identical(other.tagTrack, tagTrack) ||
+                other.tagTrack == tagTrack) &&
+            (identical(other.tagAlbumArtist, tagAlbumArtist) ||
+                other.tagAlbumArtist == tagAlbumArtist) &&
+            (identical(other.tagDate, tagDate) || other.tagDate == tagDate) &&
+            (identical(other.tagComposer, tagComposer) ||
+                other.tagComposer == tagComposer) &&
+            (identical(other.tagDescription, tagDescription) ||
+                other.tagDescription == tagDescription) &&
+            (identical(other.tagEncoder, tagEncoder) ||
+                other.tagEncoder == tagEncoder));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(tagAlbum),
-      const DeepCollectionEquality().hash(tagArtist),
-      const DeepCollectionEquality().hash(tagGenre),
-      const DeepCollectionEquality().hash(tagTitle),
-      const DeepCollectionEquality().hash(tagTrack),
-      const DeepCollectionEquality().hash(tagAlbumArtist),
-      const DeepCollectionEquality().hash(tagDate),
-      const DeepCollectionEquality().hash(tagComposer),
-      const DeepCollectionEquality().hash(tagDescription),
-      const DeepCollectionEquality().hash(tagEncoder));
+      tagAlbum,
+      tagArtist,
+      tagGenre,
+      tagTitle,
+      tagTrack,
+      tagAlbumArtist,
+      tagDate,
+      tagComposer,
+      tagDescription,
+      tagEncoder);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MetaTagsCopyWith<_$_MetaTags> get copyWith =>
       __$$_MetaTagsCopyWithImpl<_$_MetaTags>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MetaTagsToJson(this);
+    return _$$_MetaTagsToJson(
+      this,
+    );
   }
 }
 
@@ -2584,25 +2643,25 @@ abstract class _MetaTags implements MetaTags {
   factory _MetaTags.fromJson(Map<String, dynamic> json) = _$_MetaTags.fromJson;
 
   @override
-  String? get tagAlbum => throw _privateConstructorUsedError;
+  String? get tagAlbum;
   @override
-  String? get tagArtist => throw _privateConstructorUsedError;
+  String? get tagArtist;
   @override
-  String? get tagGenre => throw _privateConstructorUsedError;
+  String? get tagGenre;
   @override
-  String? get tagTitle => throw _privateConstructorUsedError;
+  String? get tagTitle;
   @override
-  String? get tagTrack => throw _privateConstructorUsedError;
+  String? get tagTrack;
   @override
-  String? get tagAlbumArtist => throw _privateConstructorUsedError;
+  String? get tagAlbumArtist;
   @override
-  String? get tagDate => throw _privateConstructorUsedError;
+  String? get tagDate;
   @override
-  String? get tagComposer => throw _privateConstructorUsedError;
+  String? get tagComposer;
   @override
-  String? get tagDescription => throw _privateConstructorUsedError;
+  String? get tagDescription;
   @override
-  String? get tagEncoder => throw _privateConstructorUsedError;
+  String? get tagEncoder;
   @override
   @JsonKey(ignore: true)
   _$$_MetaTagsCopyWith<_$_MetaTags> get copyWith =>
@@ -2640,7 +2699,8 @@ mixin _$MediaMetadata {
 abstract class $MediaMetadataCopyWith<$Res> {
   factory $MediaMetadataCopyWith(
           MediaMetadata value, $Res Function(MediaMetadata) then) =
-      _$MediaMetadataCopyWithImpl<$Res>;
+      _$MediaMetadataCopyWithImpl<$Res, MediaMetadata>;
+  @useResult
   $Res call(
       {String? title,
       String? subtitle,
@@ -2659,14 +2719,16 @@ abstract class $MediaMetadataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MediaMetadataCopyWithImpl<$Res>
+class _$MediaMetadataCopyWithImpl<$Res, $Val extends MediaMetadata>
     implements $MediaMetadataCopyWith<$Res> {
   _$MediaMetadataCopyWithImpl(this._value, this._then);
 
-  final MediaMetadata _value;
   // ignore: unused_field
-  final $Res Function(MediaMetadata) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? title = freezed,
@@ -2685,63 +2747,63 @@ class _$MediaMetadataCopyWithImpl<$Res>
     Object? explicit = freezed,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      subtitle: subtitle == freezed
+      subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      authors: authors == freezed
+      authors: freezed == authors
           ? _value.authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<Author>?,
-      narrators: narrators == freezed
+      narrators: freezed == narrators
           ? _value.narrators
           : narrators // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      series: series == freezed
+      series: freezed == series
           ? _value.series
           : series // ignore: cast_nullable_to_non_nullable
               as List<Series>?,
-      genres: genres == freezed
+      genres: freezed == genres
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      publishedYear: publishedYear == freezed
+      publishedYear: freezed == publishedYear
           ? _value.publishedYear
           : publishedYear // ignore: cast_nullable_to_non_nullable
               as String?,
-      publishedDate: publishedDate == freezed
+      publishedDate: freezed == publishedDate
           ? _value.publishedDate
           : publishedDate // ignore: cast_nullable_to_non_nullable
               as int?,
-      publisher: publisher == freezed
+      publisher: freezed == publisher
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      isbn: isbn == freezed
+      isbn: freezed == isbn
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
               as String?,
-      asin: asin == freezed
+      asin: freezed == asin
           ? _value.asin
           : asin // ignore: cast_nullable_to_non_nullable
               as String?,
-      language: language == freezed
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
-      explicit: explicit == freezed
+      explicit: freezed == explicit
           ? _value.explicit
           : explicit // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2752,6 +2814,7 @@ abstract class _$$_MediaMetadataCopyWith<$Res>
           _$_MediaMetadata value, $Res Function(_$_MediaMetadata) then) =
       __$$_MediaMetadataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? title,
       String? subtitle,
@@ -2771,15 +2834,13 @@ abstract class _$$_MediaMetadataCopyWith<$Res>
 
 /// @nodoc
 class __$$_MediaMetadataCopyWithImpl<$Res>
-    extends _$MediaMetadataCopyWithImpl<$Res>
+    extends _$MediaMetadataCopyWithImpl<$Res, _$_MediaMetadata>
     implements _$$_MediaMetadataCopyWith<$Res> {
   __$$_MediaMetadataCopyWithImpl(
       _$_MediaMetadata _value, $Res Function(_$_MediaMetadata) _then)
-      : super(_value, (v) => _then(v as _$_MediaMetadata));
+      : super(_value, _then);
 
-  @override
-  _$_MediaMetadata get _value => super._value as _$_MediaMetadata;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? title = freezed,
@@ -2798,59 +2859,59 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
     Object? explicit = freezed,
   }) {
     return _then(_$_MediaMetadata(
-      title: title == freezed
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      subtitle: subtitle == freezed
+      subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      authors: authors == freezed
+      authors: freezed == authors
           ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<Author>?,
-      narrators: narrators == freezed
+      narrators: freezed == narrators
           ? _value._narrators
           : narrators // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      series: series == freezed
+      series: freezed == series
           ? _value._series
           : series // ignore: cast_nullable_to_non_nullable
               as List<Series>?,
-      genres: genres == freezed
+      genres: freezed == genres
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      publishedYear: publishedYear == freezed
+      publishedYear: freezed == publishedYear
           ? _value.publishedYear
           : publishedYear // ignore: cast_nullable_to_non_nullable
               as String?,
-      publishedDate: publishedDate == freezed
+      publishedDate: freezed == publishedDate
           ? _value.publishedDate
           : publishedDate // ignore: cast_nullable_to_non_nullable
               as int?,
-      publisher: publisher == freezed
+      publisher: freezed == publisher
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      isbn: isbn == freezed
+      isbn: freezed == isbn
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
               as String?,
-      asin: asin == freezed
+      asin: freezed == asin
           ? _value.asin
           : asin // ignore: cast_nullable_to_non_nullable
               as String?,
-      language: language == freezed
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
-      explicit: explicit == freezed
+      explicit: freezed == explicit
           ? _value.explicit
           : explicit // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -2951,53 +3012,60 @@ class _$_MediaMetadata implements _MediaMetadata {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MediaMetadata &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.subtitle, subtitle) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.subtitle, subtitle) ||
+                other.subtitle == subtitle) &&
             const DeepCollectionEquality().equals(other._authors, _authors) &&
             const DeepCollectionEquality()
                 .equals(other._narrators, _narrators) &&
             const DeepCollectionEquality().equals(other._series, _series) &&
             const DeepCollectionEquality().equals(other._genres, _genres) &&
-            const DeepCollectionEquality()
-                .equals(other.publishedYear, publishedYear) &&
-            const DeepCollectionEquality()
-                .equals(other.publishedDate, publishedDate) &&
-            const DeepCollectionEquality().equals(other.publisher, publisher) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.isbn, isbn) &&
-            const DeepCollectionEquality().equals(other.asin, asin) &&
-            const DeepCollectionEquality().equals(other.language, language) &&
-            const DeepCollectionEquality().equals(other.explicit, explicit));
+            (identical(other.publishedYear, publishedYear) ||
+                other.publishedYear == publishedYear) &&
+            (identical(other.publishedDate, publishedDate) ||
+                other.publishedDate == publishedDate) &&
+            (identical(other.publisher, publisher) ||
+                other.publisher == publisher) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.isbn, isbn) || other.isbn == isbn) &&
+            (identical(other.asin, asin) || other.asin == asin) &&
+            (identical(other.language, language) ||
+                other.language == language) &&
+            (identical(other.explicit, explicit) ||
+                other.explicit == explicit));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(subtitle),
+      title,
+      subtitle,
       const DeepCollectionEquality().hash(_authors),
       const DeepCollectionEquality().hash(_narrators),
       const DeepCollectionEquality().hash(_series),
       const DeepCollectionEquality().hash(_genres),
-      const DeepCollectionEquality().hash(publishedYear),
-      const DeepCollectionEquality().hash(publishedDate),
-      const DeepCollectionEquality().hash(publisher),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(isbn),
-      const DeepCollectionEquality().hash(asin),
-      const DeepCollectionEquality().hash(language),
-      const DeepCollectionEquality().hash(explicit));
+      publishedYear,
+      publishedDate,
+      publisher,
+      description,
+      isbn,
+      asin,
+      language,
+      explicit);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MediaMetadataCopyWith<_$_MediaMetadata> get copyWith =>
       __$$_MediaMetadataCopyWithImpl<_$_MediaMetadata>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaMetadataToJson(this);
+    return _$$_MediaMetadataToJson(
+      this,
+    );
   }
 }
 
@@ -3022,33 +3090,33 @@ abstract class _MediaMetadata implements MediaMetadata {
       _$_MediaMetadata.fromJson;
 
   @override
-  String? get title => throw _privateConstructorUsedError;
+  String? get title;
   @override
-  String? get subtitle => throw _privateConstructorUsedError;
+  String? get subtitle;
   @override
-  List<Author>? get authors => throw _privateConstructorUsedError;
+  List<Author>? get authors;
   @override
-  List<String>? get narrators => throw _privateConstructorUsedError;
+  List<String>? get narrators;
   @override
-  List<Series>? get series => throw _privateConstructorUsedError;
+  List<Series>? get series;
   @override
-  List<String>? get genres => throw _privateConstructorUsedError;
+  List<String>? get genres;
   @override
-  String? get publishedYear => throw _privateConstructorUsedError;
+  String? get publishedYear;
   @override
-  int? get publishedDate => throw _privateConstructorUsedError;
+  int? get publishedDate;
   @override
-  String? get publisher => throw _privateConstructorUsedError;
+  String? get publisher;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  String? get isbn => throw _privateConstructorUsedError;
+  String? get isbn;
   @override
-  String? get asin => throw _privateConstructorUsedError;
+  String? get asin;
   @override
-  String? get language => throw _privateConstructorUsedError;
+  String? get language;
   @override
-  bool? get explicit => throw _privateConstructorUsedError;
+  bool? get explicit;
   @override
   @JsonKey(ignore: true)
   _$$_MediaMetadataCopyWith<_$_MediaMetadata> get copyWith =>
@@ -3065,6 +3133,10 @@ mixin _$Author {
   String get name => throw _privateConstructorUsedError;
   int? get updatedAt => throw _privateConstructorUsedError;
   String? get imagePath => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get asin => throw _privateConstructorUsedError;
+  int? get numBooks => throw _privateConstructorUsedError;
+  int? get addedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -3074,43 +3146,75 @@ mixin _$Author {
 /// @nodoc
 abstract class $AuthorCopyWith<$Res> {
   factory $AuthorCopyWith(Author value, $Res Function(Author) then) =
-      _$AuthorCopyWithImpl<$Res>;
-  $Res call({String id, String name, int? updatedAt, String? imagePath});
+      _$AuthorCopyWithImpl<$Res, Author>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      int? updatedAt,
+      String? imagePath,
+      String? description,
+      String? asin,
+      int? numBooks,
+      int? addedAt});
 }
 
 /// @nodoc
-class _$AuthorCopyWithImpl<$Res> implements $AuthorCopyWith<$Res> {
+class _$AuthorCopyWithImpl<$Res, $Val extends Author>
+    implements $AuthorCopyWith<$Res> {
   _$AuthorCopyWithImpl(this._value, this._then);
 
-  final Author _value;
   // ignore: unused_field
-  final $Res Function(Author) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
     Object? updatedAt = freezed,
     Object? imagePath = freezed,
+    Object? description = freezed,
+    Object? asin = freezed,
+    Object? numBooks = freezed,
+    Object? addedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      imagePath: imagePath == freezed
+      imagePath: freezed == imagePath
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      asin: freezed == asin
+          ? _value.asin
+          : asin // ignore: cast_nullable_to_non_nullable
+              as String?,
+      numBooks: freezed == numBooks
+          ? _value.numBooks
+          : numBooks // ignore: cast_nullable_to_non_nullable
+              as int?,
+      addedAt: freezed == addedAt
+          ? _value.addedAt
+          : addedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
   }
 }
 
@@ -3119,42 +3223,70 @@ abstract class _$$_AuthorCopyWith<$Res> implements $AuthorCopyWith<$Res> {
   factory _$$_AuthorCopyWith(_$_Author value, $Res Function(_$_Author) then) =
       __$$_AuthorCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, int? updatedAt, String? imagePath});
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      int? updatedAt,
+      String? imagePath,
+      String? description,
+      String? asin,
+      int? numBooks,
+      int? addedAt});
 }
 
 /// @nodoc
-class __$$_AuthorCopyWithImpl<$Res> extends _$AuthorCopyWithImpl<$Res>
+class __$$_AuthorCopyWithImpl<$Res>
+    extends _$AuthorCopyWithImpl<$Res, _$_Author>
     implements _$$_AuthorCopyWith<$Res> {
   __$$_AuthorCopyWithImpl(_$_Author _value, $Res Function(_$_Author) _then)
-      : super(_value, (v) => _then(v as _$_Author));
+      : super(_value, _then);
 
-  @override
-  _$_Author get _value => super._value as _$_Author;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
     Object? updatedAt = freezed,
     Object? imagePath = freezed,
+    Object? description = freezed,
+    Object? asin = freezed,
+    Object? numBooks = freezed,
+    Object? addedAt = freezed,
   }) {
     return _then(_$_Author(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as int?,
-      imagePath: imagePath == freezed
+      imagePath: freezed == imagePath
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
               as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      asin: freezed == asin
+          ? _value.asin
+          : asin // ignore: cast_nullable_to_non_nullable
+              as String?,
+      numBooks: freezed == numBooks
+          ? _value.numBooks
+          : numBooks // ignore: cast_nullable_to_non_nullable
+              as int?,
+      addedAt: freezed == addedAt
+          ? _value.addedAt
+          : addedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -3163,7 +3295,14 @@ class __$$_AuthorCopyWithImpl<$Res> extends _$AuthorCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Author implements _Author {
   const _$_Author(
-      {required this.id, required this.name, this.updatedAt, this.imagePath});
+      {required this.id,
+      required this.name,
+      this.updatedAt,
+      this.imagePath,
+      this.description,
+      this.asin,
+      this.numBooks,
+      this.addedAt});
 
   factory _$_Author.fromJson(Map<String, dynamic> json) =>
       _$$_AuthorFromJson(json);
@@ -3176,10 +3315,18 @@ class _$_Author implements _Author {
   final int? updatedAt;
   @override
   final String? imagePath;
+  @override
+  final String? description;
+  @override
+  final String? asin;
+  @override
+  final int? numBooks;
+  @override
+  final int? addedAt;
 
   @override
   String toString() {
-    return 'Author(id: $id, name: $name, updatedAt: $updatedAt, imagePath: $imagePath)';
+    return 'Author(id: $id, name: $name, updatedAt: $updatedAt, imagePath: $imagePath, description: $description, asin: $asin, numBooks: $numBooks, addedAt: $addedAt)';
   }
 
   @override
@@ -3187,29 +3334,36 @@ class _$_Author implements _Author {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Author &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.imagePath, imagePath));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.imagePath, imagePath) ||
+                other.imagePath == imagePath) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.asin, asin) || other.asin == asin) &&
+            (identical(other.numBooks, numBooks) ||
+                other.numBooks == numBooks) &&
+            (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(imagePath));
+  int get hashCode => Object.hash(runtimeType, id, name, updatedAt, imagePath,
+      description, asin, numBooks, addedAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthorCopyWith<_$_Author> get copyWith =>
       __$$_AuthorCopyWithImpl<_$_Author>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthorToJson(this);
+    return _$$_AuthorToJson(
+      this,
+    );
   }
 }
 
@@ -3218,18 +3372,30 @@ abstract class _Author implements Author {
       {required final String id,
       required final String name,
       final int? updatedAt,
-      final String? imagePath}) = _$_Author;
+      final String? imagePath,
+      final String? description,
+      final String? asin,
+      final int? numBooks,
+      final int? addedAt}) = _$_Author;
 
   factory _Author.fromJson(Map<String, dynamic> json) = _$_Author.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  int? get updatedAt => throw _privateConstructorUsedError;
+  int? get updatedAt;
   @override
-  String? get imagePath => throw _privateConstructorUsedError;
+  String? get imagePath;
+  @override
+  String? get description;
+  @override
+  String? get asin;
+  @override
+  int? get numBooks;
+  @override
+  int? get addedAt;
   @override
   @JsonKey(ignore: true)
   _$$_AuthorCopyWith<_$_Author> get copyWith =>
@@ -3254,38 +3420,42 @@ mixin _$Series {
 /// @nodoc
 abstract class $SeriesCopyWith<$Res> {
   factory $SeriesCopyWith(Series value, $Res Function(Series) then) =
-      _$SeriesCopyWithImpl<$Res>;
+      _$SeriesCopyWithImpl<$Res, Series>;
+  @useResult
   $Res call({String id, String name, String? sequence});
 }
 
 /// @nodoc
-class _$SeriesCopyWithImpl<$Res> implements $SeriesCopyWith<$Res> {
+class _$SeriesCopyWithImpl<$Res, $Val extends Series>
+    implements $SeriesCopyWith<$Res> {
   _$SeriesCopyWithImpl(this._value, this._then);
 
-  final Series _value;
   // ignore: unused_field
-  final $Res Function(Series) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
     Object? sequence = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      sequence: sequence == freezed
+      sequence: freezed == sequence
           ? _value.sequence
           : sequence // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -3294,34 +3464,34 @@ abstract class _$$_SeriesCopyWith<$Res> implements $SeriesCopyWith<$Res> {
   factory _$$_SeriesCopyWith(_$_Series value, $Res Function(_$_Series) then) =
       __$$_SeriesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String id, String name, String? sequence});
 }
 
 /// @nodoc
-class __$$_SeriesCopyWithImpl<$Res> extends _$SeriesCopyWithImpl<$Res>
+class __$$_SeriesCopyWithImpl<$Res>
+    extends _$SeriesCopyWithImpl<$Res, _$_Series>
     implements _$$_SeriesCopyWith<$Res> {
   __$$_SeriesCopyWithImpl(_$_Series _value, $Res Function(_$_Series) _then)
-      : super(_value, (v) => _then(v as _$_Series));
+      : super(_value, _then);
 
-  @override
-  _$_Series get _value => super._value as _$_Series;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
     Object? sequence = freezed,
   }) {
     return _then(_$_Series(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      sequence: sequence == freezed
+      sequence: freezed == sequence
           ? _value.sequence
           : sequence // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -3354,27 +3524,27 @@ class _$_Series implements _Series {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Series &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.sequence, sequence));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.sequence, sequence) ||
+                other.sequence == sequence));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(sequence));
+  int get hashCode => Object.hash(runtimeType, id, name, sequence);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeriesCopyWith<_$_Series> get copyWith =>
       __$$_SeriesCopyWithImpl<_$_Series>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SeriesToJson(this);
+    return _$$_SeriesToJson(
+      this,
+    );
   }
 }
 
@@ -3387,11 +3557,11 @@ abstract class _Series implements Series {
   factory _Series.fromJson(Map<String, dynamic> json) = _$_Series.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String? get sequence => throw _privateConstructorUsedError;
+  String? get sequence;
   @override
   @JsonKey(ignore: true)
   _$$_SeriesCopyWith<_$_Series> get copyWith =>

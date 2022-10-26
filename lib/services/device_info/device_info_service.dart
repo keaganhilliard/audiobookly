@@ -3,16 +3,24 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:get_it/get_it.dart';
 
 final deviceInfoServiceProvider =
-    Provider<DeviceInfoService>(((ref) => throw UnimplementedError()));
+    Provider<DeviceInfoService>(((ref) => GetIt.I.get()));
 
 class DeviceInfo {
   String? uniqueId;
   String? version;
   String? model;
   String? platform;
-  DeviceInfo({this.uniqueId, this.version, this.model, this.platform});
+  String? manufacturer;
+  DeviceInfo({
+    this.uniqueId,
+    this.version,
+    this.model,
+    this.platform,
+    this.manufacturer,
+  });
 }
 
 Future<DeviceInfo> getDeviceInfo() async {
@@ -46,6 +54,7 @@ Future<DeviceInfo> getDeviceInfo() async {
     return DeviceInfo(
       uniqueId: androidDeviceInfo.id,
       model: androidDeviceInfo.model,
+      manufacturer: androidDeviceInfo.manufacturer,
       version: '0.0.1.0',
       platform: 'Android',
     );
@@ -53,9 +62,10 @@ Future<DeviceInfo> getDeviceInfo() async {
     IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
     return DeviceInfo(
       uniqueId: iosInfo.identifierForVendor,
-      model: iosInfo.model,
-      platform: 'iOS',
+      model: iosInfo.utsname.machine,
       version: '0.0.1.0',
+      platform: iosInfo.model,
+      manufacturer: 'Apple',
     );
   } else {
     return DeviceInfo(

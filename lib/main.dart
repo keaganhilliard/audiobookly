@@ -1,18 +1,13 @@
 import 'dart:async';
-import 'package:audiobookly/constants/app_constants.dart';
-import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'dart:io';
+import 'package:audiobookly/ios_ui/ios_app.dart';
+import 'package:audiobookly/mac_ui/mac_app.dart';
+import 'package:audiobookly/material_ui/material_app.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
-import 'package:audiobookly/services/navigation/navigation_service.dart';
-import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
-import 'package:audiobookly/features/player/mini_player.dart';
-import 'package:audiobookly/features/welcome_view/welcome_view.dart';
 import 'package:audiobookly/singletons.dart';
-import 'package:audiobookly/widgets/adaptive_scaffold.dart';
-import 'package:audiobookly/widgets/auth_widget.dart';
-import 'package:audiobookly/widgets/router.dart' as r;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
@@ -20,149 +15,23 @@ Future<void> main() async {
 
   await registerSingletons();
   runApp(
-    ProviderScope(
-      overrides: [
-        playbackControllerProvider.overrideWithValue(
-          getIt<PlaybackController>(),
-        ),
-        sharedPreferencesServiceProvider.overrideWithValue(
-          getIt<SharedPreferencesService>(),
-        ),
-        deviceInfoServiceProvider.overrideWithValue(
-          getIt<DeviceInfoService>(),
-        ),
-        databaseServiceProvider.overrideWithValue(
-          getIt<DatabaseService>(),
-        )
-      ],
+    const ProviderScope(
       child: AudiobooklyApp(),
     ),
   );
 }
 
 class AudiobooklyApp extends HookConsumerWidget {
-  final _navigatorKey = GlobalKey<NavigatorState>();
-  final routeMap = [
-    Routes.Home,
-    Routes.Authors,
-    Routes.Books,
-    Routes.Collections,
-    Routes.Series,
-  ];
-
-  AudiobooklyApp({Key? key}) : super(key: key);
+  const AudiobooklyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final navigationService = ref.watch(navigationServiceProvider);
-    final sharedPreferencesService =
-        ref.watch(sharedPreferencesServiceProvider);
-    final currentIndex = useState(0);
-    // timeDilation = 7.0;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Audiobookly',
-      navigatorKey: navigationService.navigatorKey,
-      onGenerateRoute: r.Router.generateRoute,
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(
-        useMaterial3: true,
-        primaryColor: Colors.deepPurple,
-        appBarTheme: const AppBarTheme(),
-        brightness: Brightness.light,
-        indicatorColor: Colors.deepPurple,
-        secondaryHeaderColor: Colors.deepPurple,
-        sliderTheme: const SliderThemeData(
-          overlayColor: Colors.deepPurple,
-          thumbColor: Colors.deepPurple,
-          activeTrackColor: Colors.deepPurple,
-        ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-          accentColor: Colors.deepPurple,
-          brightness: Brightness.light,
-        ).copyWith(secondary: Colors.deepPurple),
-        // canvasColor: Colors.grey[900],
-      ),
-      darkTheme: ThemeData(
-        indicatorColor: Colors.deepPurple,
-        cardTheme: const CardTheme(
-          clipBehavior: Clip.antiAlias,
-          color: Colors.black,
-        ),
-        sliderTheme: const SliderThemeData(
-          overlayColor: Colors.deepPurple,
-          thumbColor: Colors.deepPurple,
-          activeTrackColor: Colors.deepPurple,
-        ),
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-          accentColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-          backgroundColor: Colors.grey[900],
-        ).copyWith(secondary: Colors.deepPurple),
-        // canvasColor: Colors.grey[900],
-      ),
-      home: AuthWidget(
-        authorizedBuilder: (context) {
-          return WillPopScope(
-            onWillPop: () async {
-              return !await _navigatorKey.currentState!.maybePop();
-            },
-            child: AdaptiveScaffold(
-                title: const Text('Audiobookly'),
-                body: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Navigator(
-                        key: _navigatorKey,
-                        onGenerateRoute: r.Router.generateRoute,
-                        initialRoute: Routes.Home,
-                      ),
-                    ),
-                    const MiniPlayer(),
-                  ],
-                ),
-                currentIndex: currentIndex.value,
-                onNavigationIndexChange: (index) {
-                  if (index != currentIndex.value) {
-                    String oldRoute = routeMap[currentIndex.value];
-                    String newRoute = routeMap[index];
-                    currentIndex.value = index;
-                    _navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                      newRoute,
-                      ModalRoute.withName(oldRoute),
-                    );
-                  }
-                },
-                destinations: [
-                  const Destination(
-                    title: 'Home',
-                    icon: Icons.home,
-                  ),
-                  const Destination(
-                    title: 'Authors',
-                    icon: Icons.person,
-                  ),
-                  const Destination(
-                    title: 'Books',
-                    icon: Icons.book,
-                  ),
-                  const Destination(
-                    title: 'Collections',
-                    icon: Icons.collections_bookmark,
-                  ),
-                  if (sharedPreferencesService.serverType ==
-                      ServerType.audiobookshelf)
-                    const Destination(title: 'Series', icon: Icons.window),
-                ]),
-          );
-        },
-        unauthorizedBuilder: (context) => const WelcomeView(),
-      ),
-    );
+    if (!kIsWeb && Platform.isIOS) {
+      return const IosApp();
+    }
+    if (!kIsWeb && Platform.isMacOS) {
+      return const MacApp();
+    }
+    return AbMaterialApp();
   }
 }

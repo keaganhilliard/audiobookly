@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/Jump.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,10 +21,16 @@ class Jump {
   static const _kFontFam = 'Jump';
   static const String? _kFontPkg = null;
 
-  static const IconData forward_15 = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData replay_15 = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData replay_30 = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData forward_30 = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData forward_10 = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData replay_10 = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData forward_15 =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData replay_15 =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData replay_30 =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData forward_30 =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData forward_10 =
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData replay_10 =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

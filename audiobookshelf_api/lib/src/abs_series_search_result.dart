@@ -3,34 +3,34 @@ import 'dart:convert';
 import 'package:audiobookshelf/audiobookshelf.dart';
 
 class AbsSeriesSearchResult {
-  final String series;
-  final List<AbsAudiobook> audiobooks;
+  final Series series;
+  final List<AbsAudiobook> books;
   AbsSeriesSearchResult({
     required this.series,
-    required this.audiobooks,
+    required this.books,
   });
 
   AbsSeriesSearchResult copyWith({
-    String? series,
-    List<AbsAudiobook>? audiobooks,
+    Series? series,
+    List<AbsAudiobook>? books,
   }) {
     return AbsSeriesSearchResult(
       series: series ?? this.series,
-      audiobooks: audiobooks ?? this.audiobooks,
+      books: books ?? this.books,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'series': series,
-      'audiobooks': audiobooks,
+      'books': books,
     };
   }
 
   factory AbsSeriesSearchResult.fromMap(Map<String, dynamic> map) {
     return AbsSeriesSearchResult(
-      series: map['series'],
-      audiobooks: [for (final a in map['audiobooks']) AbsAudiobook.fromJson(a)],
+      series: Series.fromJson(map['series']),
+      books: [for (final a in map['books']) AbsAudiobook.fromJson(a)],
     );
   }
 
@@ -40,8 +40,7 @@ class AbsSeriesSearchResult {
       AbsSeriesSearchResult.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'AbsSeriesSearchResult(series: $series, audiobooks: $audiobooks)';
+  String toString() => 'AbsSeriesSearchResult(series: $series, books: $books)';
 
   @override
   bool operator ==(Object other) {
@@ -51,5 +50,5 @@ class AbsSeriesSearchResult {
   }
 
   @override
-  int get hashCode => series.hashCode ^ audiobooks.hashCode;
+  int get hashCode => series.hashCode ^ books.hashCode;
 }

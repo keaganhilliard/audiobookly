@@ -180,6 +180,10 @@ class Author with _$Author {
     required String name,
     int? updatedAt,
     String? imagePath,
+    String? description,
+    String? asin,
+    int? numBooks,
+    int? addedAt,
   }) = _Author;
 
   factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);

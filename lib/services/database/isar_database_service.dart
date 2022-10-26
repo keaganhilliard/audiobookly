@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/isar/isar_book.dart';
 import 'package:audiobookly/isar/isar_chapter.dart';
+import 'package:audiobookly/isar/isar_preferences.dart';
 import 'package:audiobookly/isar/isar_track.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
+import 'package:audiobookly/models/download_status.dart';
+import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:isar/isar.dart';
@@ -15,7 +18,7 @@ import 'package:rxdart/subjects.dart';
 
 Future<Isar> initIsar() async {
   return await Isar.open(
-    [IsarBookSchema, IsarChapterSchema, IsarTrackSchema],
+    [IsarBookSchema, IsarChapterSchema, IsarTrackSchema, IsarPreferencesSchema],
     directory: (await getApplicationSupportDirectory()).path,
     inspector: true,
   );
@@ -30,22 +33,22 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Stream<List<Book>> getBooks() {
-    return _db.isarBooks.where().watch(initialReturn: true).map((isarBooks) => isarBooks.map((book) => book.toBook()).toList());
+    return _db.isarBooks
+        .where()
+        .watch(fireImmediately: true)
+        .map((isarBooks) => isarBooks.map((book) => book.toBook()).toList());
   }
 
   @override
   Future<Book?> getBookById(String id) async {
-    return (await _db.isarBooks.where().filter().exIdEqualTo(id).findFirst())?.toBook();
+    return (await _db.isarBooks.getByExId(id))?.toBook();
   }
 
   @override
   Stream<Book?> watchBookById(String id) {
     return _db.isarBooks
-        .where()
-        .filter()
-        .exIdEqualTo(id)
-        .watch(initialReturn: true)
-        .map((books) => books.isEmpty ? null : books.first.toBook());
+        .watchLazy(fireImmediately: true)
+        .map((_) => _db.isarBooks.getByExIdSync(id)?.toBook());
   }
 
   @override
@@ -61,27 +64,35 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Stream<List<Track>> getTracks() {
-    return _db.isarTracks.where().watch(initialReturn: true).map((tracks) => tracks.map((track) => track.toTrack()).toList());
+    return _db.isarTracks
+        .where()
+        .watch(fireImmediately: true)
+        .map((tracks) => tracks.map((track) => track.toTrack()).toList());
   }
 
   @override
   Future<int> deleteTracks(List<Track> tracks) async {
-    return await _db.isarTracks.deleteAll(
-        tracks.map((track) => (track as IsarTrack).isarId!).toList());
+    int count = 0;
+    await _db.writeTxn(() async {
+      count = await _db.isarTracks
+          .deleteAllById(tracks.map((track) => track.id).toList());
+    });
+    return count;
   }
 
   @override
   Future<Track?> getTrack(String id) async {
-    return (await _db.isarTracks.where().filter().idEqualTo(id).findFirst())?.toTrack();
+    return (await _db.isarTracks.getById(id))?.toTrack();
   }
 
   @override
-  Future updateTrackDownloadProgress(String taskId, double progress) async {
-    Track? track = await getTrackByDownloadTask(taskId);
+  Future updateTrackDownloadProgress(
+      String taskId, double progress, bool completed) async {
+    IsarTrack? track = await _db.isarTracks.getByDownloadTaskId(taskId);
     if (track != null) {
       await _db.writeTxn(() async {
         await _db.isarTracks.put(
-          IsarTrack.fromTrack(track).copyWith(downloadProgress: progress),
+          track.copyWith(downloadProgress: progress, isDownloaded: completed),
         );
       });
     }
@@ -90,39 +101,36 @@ class IsarDatabaseService implements DatabaseService {
   Map<String, BehaviorSubject<Map<String, Track>>> trackListeners = {};
 
   @override
-  Stream<Map<String, Track>> getTracksForBookId(String bookId) {
+  Stream<List<Track>> getTracksForBookId(String bookId) {
     return _db.isarTracks
-        .where()
         .filter()
         .bookIdEqualTo(bookId)
-        .watch(initialReturn: true)
-        .map((tracks) => {for (final track in tracks) track.id: track.toTrack()});
+        .watch(fireImmediately: true)
+        .map(
+          (tracks) => [
+            for (final track in tracks) track.toTrack(),
+          ],
+        );
   }
 
   @override
   Future<Track?> getTrackByDownloadTask(String taskId) async {
-    return ( await _db.isarTracks
-        .where()
-        .filter()
-        .downloadTaskIdEqualTo(taskId)
-        .findFirst())?.toTrack();
+    return (await _db.isarTracks.getByDownloadTaskId(taskId))?.toTrack();
   }
 
   @override
   Future insertTrack(Track track) async {
-    final dbTrack =
-        await _db.isarTracks.filter().idEqualTo(track.id).findFirst();
     return _db.writeTxn(() async {
-      final iTrack = IsarTrack.fromTrack(track);
-      if (dbTrack != null) iTrack.isarId = dbTrack.isarId;
-      return _db.isarTracks.put(iTrack);
+      await _db.isarTracks.putById(IsarTrack.fromTrack(track));
     });
   }
 
   @override
-  Future insertTracks(List<Track> tracks) {
+  Future insertTracks(List<Track> tracks) async {
     return _db.writeTxn(() async {
-      return _db.isarTracks.putAll(tracks.cast());
+      await _db.isarTracks.putAllById(
+        tracks.map((track) => IsarTrack.fromTrack(track)).toList(),
+      );
     });
   }
 
@@ -149,25 +157,20 @@ class IsarDatabaseService implements DatabaseService {
   @override
   Book getBookFromMediaItem(
     MediaItem book,
-    bool downloadRequested,
-    bool downloadCompleted,
-    bool downloadFailed,
+    DownloadStatus status,
   ) =>
       Book(
-        book.id.hashCode,
         book.id,
         book.title,
         book.artist ?? 'Unknown',
         book.narrator ?? 'Unkown',
         book.displayDescription ?? '',
-        book.artUri.toString(),
+        book.artUri?.toString() ?? '',
         book.duration ?? Duration.zero,
         book.viewOffset,
-        downloadRequested,
-        downloadCompleted,
-        downloadFailed,
         book.played,
         DateTime.now(),
+        status,
       );
 
   @override
@@ -184,8 +187,12 @@ class IsarDatabaseService implements DatabaseService {
   }
 
   @override
-  Future<List<Chapter>> getChaptersForBook(int bookId) async {
-    return _db.isarChapters.where().filter().bookIdEqualTo(bookId).findAll();
+  Future<List<Chapter>> getChaptersForBook(String bookId) async {
+    return _db.isarChapters
+        .filter()
+        .bookIdEqualTo(bookId)
+        .sortByStart()
+        .findAll();
   }
 
   @override
@@ -206,7 +213,31 @@ class IsarDatabaseService implements DatabaseService {
   @override
   Future deleteBook(Book book) async {
     return _db.writeTxn(() async {
-        await _db.isarBooks.delete(book.id.hashCode);
+      await _db.isarBooks.deleteByExId(book.id);
     });
+  }
+
+  @override
+  Future insertPreferences(Preferences prefs) {
+    print('Writing preferences for some reason');
+    return _db.writeTxn(() async {
+      await _db.isarPreferences.put(IsarPreferences.fromPreferences(prefs));
+    });
+  }
+
+  @override
+  Preferences getPreferencesSync() {
+    if (_db.isarPreferences.countSync() < 1) {
+      print('here there be dragons');
+      _db.writeTxnSync(() => _db.isarPreferences.putSync(IsarPreferences()));
+    }
+    return _db.isarPreferences.getSync(0)!.toPreferences();
+  }
+
+  @override
+  Stream<Preferences?> watchPreferences() {
+    return _db.isarPreferences
+        .watchObject(0)
+        .map((prefs) => prefs?.toPreferences());
   }
 }

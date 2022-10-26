@@ -2,43 +2,48 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audiobookly/models/download_status.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/downloader.dart';
+import 'package:audiobookly/utils/utils.dart';
 import 'package:path/path.dart' as p;
 
 class DesktopDownloader extends Downloader {
-  DesktopDownloader(DatabaseService _db) : super(_db);
+  DesktopDownloader(DatabaseService db) : super(db);
 
   @override
   Future downloadFile(
-    String id,
-    String url,
+    Track track,
+    Uri url,
     String path, [
-    String? filename,
+    String? fileName,
   ]) async {
-    StreamSubscription? sub;
+    late StreamSubscription sub;
     Completer completer = Completer();
     print(url);
     try {
-      final track = await db.getTrack(id);
-
       HttpClient client = HttpClient();
-      HttpClientRequest request = await client.getUrl(Uri.parse(url));
+      HttpClientRequest request = await client.getUrl(url);
       request.headers.set('Accept', '*/*');
       request.headers.set('Connection', 'keep-alive');
       request.headers.set(HttpHeaders.rangeHeader, 'bytes=0');
+      track = track.copyWith(downloadTaskId: track.id);
 
       HttpClientResponse response = await request.close();
       final total = response.headers.contentLength;
       try {
-        filename ??= RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
+        fileName ??= RegExp(r'(["])(?:(?=(\\?))\2.)*?\1')
             .firstMatch(response.headers.value('content-disposition')!)!
             .group(0)!
             .replaceAll(RegExp(r'"'), '');
       } catch (e, stack) {
-        filename ??= id;
+        fileName ??= track.id;
       }
-      final downloadPath = p.join(path, filename);
+      final downloadPath = p.join(
+        (await Utils.getBasePath())!.path,
+        path,
+        fileName,
+      );
       final file = File(downloadPath);
       await file.create(recursive: true);
 
@@ -46,31 +51,28 @@ class DesktopDownloader extends Downloader {
       double debouncer = 0;
       final fileSink = await file.open(mode: FileMode.writeOnlyAppend);
       sub = response.asBroadcastStream().listen((data) async {
-        sub!.pause();
+        sub.pause();
         await fileSink.writeFrom(data);
         final currentProgress = saved + data.length;
         final currentPercentage = currentProgress / total;
         saved = currentProgress;
         if (currentPercentage - debouncer > 0.01) {
-          if (track != null) {
-            await db.insertTrack(
-                track.copyWith(downloadProgress: currentPercentage));
-          }
+          await db.insertTrack(track.copyWith(
+            downloadProgress: currentPercentage,
+            downloadTaskId: track.id,
+          ));
           debouncer = currentPercentage;
         }
         sub.resume();
       }, onDone: () async {
         await fileSink.close();
-        // final track = await db.getTrack(id);
-        if (track != null) {
-          await db.insertTrack(
-            track.copyWith(
-              downloadProgress: 1,
-              downloadPath: downloadPath,
-              isDownloaded: true,
-            ),
-          );
-        }
+        await db.insertTrack(
+          track.copyWith(
+            downloadProgress: 1,
+            downloadPath: p.join(path, fileName),
+            isDownloaded: true,
+          ),
+        );
         completer.complete();
       });
     } catch (e, stack) {
@@ -90,7 +92,7 @@ class DesktopDownloader extends Downloader {
     StreamSubscription? trackSub;
     trackSub = db
         .getTracksForBookId(parentId)
-        .where((tracks) => tracks.values.every((track) => track.isDownloaded))
+        .where((tracks) => tracks.every((track) => track.isDownloaded))
         .listen((tracks) async {
       trackSub?.cancel();
       print('ALL DONE');
@@ -99,9 +101,6 @@ class DesktopDownloader extends Downloader {
       if (book != null) {
         await db.insertBook(
           book.copyWith(
-            downloadRequested: true,
-            downloadCompleted: true,
-            downloadFailed: false,
             downloadStatus: DownloadStatus.succeeded,
           ),
         );

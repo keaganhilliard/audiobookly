@@ -106,7 +106,7 @@ abstract class MediaRepository {
   Future<List<MediaItem>> getBooksFromSeries(String seriesId);
   Future<List<MediaItem>> search(String search);
   Future<List<Library>> getLibraries();
-  Future<List<MediaItem>> getTracksForBook(MediaItem book);
+  Future<List<MediaItem>> getTracksForBook(String bookId);
   Future<MediaItem> getAlbumFromId(String? mediaId);
   Future<User> getUser();
   Future<String> getLoginUrl();

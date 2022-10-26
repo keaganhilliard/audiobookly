@@ -35,7 +35,8 @@ mixin _$AbsPlayItemRequest {
 abstract class $AbsPlayItemRequestCopyWith<$Res> {
   factory $AbsPlayItemRequestCopyWith(
           AbsPlayItemRequest value, $Res Function(AbsPlayItemRequest) then) =
-      _$AbsPlayItemRequestCopyWithImpl<$Res>;
+      _$AbsPlayItemRequestCopyWithImpl<$Res, AbsPlayItemRequest>;
+  @useResult
   $Res call(
       {String mediaPlayer,
       bool forceDirectPlay,
@@ -46,45 +47,48 @@ abstract class $AbsPlayItemRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AbsPlayItemRequestCopyWithImpl<$Res>
+class _$AbsPlayItemRequestCopyWithImpl<$Res, $Val extends AbsPlayItemRequest>
     implements $AbsPlayItemRequestCopyWith<$Res> {
   _$AbsPlayItemRequestCopyWithImpl(this._value, this._then);
 
-  final AbsPlayItemRequest _value;
   // ignore: unused_field
-  final $Res Function(AbsPlayItemRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mediaPlayer = freezed,
-    Object? forceDirectPlay = freezed,
-    Object? forceTranscode = freezed,
-    Object? deviceInfo = freezed,
+    Object? mediaPlayer = null,
+    Object? forceDirectPlay = null,
+    Object? forceTranscode = null,
+    Object? deviceInfo = null,
   }) {
     return _then(_value.copyWith(
-      mediaPlayer: mediaPlayer == freezed
+      mediaPlayer: null == mediaPlayer
           ? _value.mediaPlayer
           : mediaPlayer // ignore: cast_nullable_to_non_nullable
               as String,
-      forceDirectPlay: forceDirectPlay == freezed
+      forceDirectPlay: null == forceDirectPlay
           ? _value.forceDirectPlay
           : forceDirectPlay // ignore: cast_nullable_to_non_nullable
               as bool,
-      forceTranscode: forceTranscode == freezed
+      forceTranscode: null == forceTranscode
           ? _value.forceTranscode
           : forceTranscode // ignore: cast_nullable_to_non_nullable
               as bool,
-      deviceInfo: deviceInfo == freezed
+      deviceInfo: null == deviceInfo
           ? _value.deviceInfo
           : deviceInfo // ignore: cast_nullable_to_non_nullable
               as DeviceInfo,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $DeviceInfoCopyWith<$Res> get deviceInfo {
     return $DeviceInfoCopyWith<$Res>(_value.deviceInfo, (value) {
-      return _then(_value.copyWith(deviceInfo: value));
+      return _then(_value.copyWith(deviceInfo: value) as $Val);
     });
   }
 }
@@ -96,6 +100,7 @@ abstract class _$$_AbsPlayItemRequestCopyWith<$Res>
           $Res Function(_$_AbsPlayItemRequest) then) =
       __$$_AbsPlayItemRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String mediaPlayer,
       bool forceDirectPlay,
@@ -108,36 +113,34 @@ abstract class _$$_AbsPlayItemRequestCopyWith<$Res>
 
 /// @nodoc
 class __$$_AbsPlayItemRequestCopyWithImpl<$Res>
-    extends _$AbsPlayItemRequestCopyWithImpl<$Res>
+    extends _$AbsPlayItemRequestCopyWithImpl<$Res, _$_AbsPlayItemRequest>
     implements _$$_AbsPlayItemRequestCopyWith<$Res> {
   __$$_AbsPlayItemRequestCopyWithImpl(
       _$_AbsPlayItemRequest _value, $Res Function(_$_AbsPlayItemRequest) _then)
-      : super(_value, (v) => _then(v as _$_AbsPlayItemRequest));
+      : super(_value, _then);
 
-  @override
-  _$_AbsPlayItemRequest get _value => super._value as _$_AbsPlayItemRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mediaPlayer = freezed,
-    Object? forceDirectPlay = freezed,
-    Object? forceTranscode = freezed,
-    Object? deviceInfo = freezed,
+    Object? mediaPlayer = null,
+    Object? forceDirectPlay = null,
+    Object? forceTranscode = null,
+    Object? deviceInfo = null,
   }) {
     return _then(_$_AbsPlayItemRequest(
-      mediaPlayer: mediaPlayer == freezed
+      mediaPlayer: null == mediaPlayer
           ? _value.mediaPlayer
           : mediaPlayer // ignore: cast_nullable_to_non_nullable
               as String,
-      forceDirectPlay: forceDirectPlay == freezed
+      forceDirectPlay: null == forceDirectPlay
           ? _value.forceDirectPlay
           : forceDirectPlay // ignore: cast_nullable_to_non_nullable
               as bool,
-      forceTranscode: forceTranscode == freezed
+      forceTranscode: null == forceTranscode
           ? _value.forceTranscode
           : forceTranscode // ignore: cast_nullable_to_non_nullable
               as bool,
-      deviceInfo: deviceInfo == freezed
+      deviceInfo: null == deviceInfo
           ? _value.deviceInfo
           : deviceInfo // ignore: cast_nullable_to_non_nullable
               as DeviceInfo,
@@ -176,34 +179,33 @@ class _$_AbsPlayItemRequest implements _AbsPlayItemRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AbsPlayItemRequest &&
-            const DeepCollectionEquality()
-                .equals(other.mediaPlayer, mediaPlayer) &&
-            const DeepCollectionEquality()
-                .equals(other.forceDirectPlay, forceDirectPlay) &&
-            const DeepCollectionEquality()
-                .equals(other.forceTranscode, forceTranscode) &&
-            const DeepCollectionEquality()
-                .equals(other.deviceInfo, deviceInfo));
+            (identical(other.mediaPlayer, mediaPlayer) ||
+                other.mediaPlayer == mediaPlayer) &&
+            (identical(other.forceDirectPlay, forceDirectPlay) ||
+                other.forceDirectPlay == forceDirectPlay) &&
+            (identical(other.forceTranscode, forceTranscode) ||
+                other.forceTranscode == forceTranscode) &&
+            (identical(other.deviceInfo, deviceInfo) ||
+                other.deviceInfo == deviceInfo));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(mediaPlayer),
-      const DeepCollectionEquality().hash(forceDirectPlay),
-      const DeepCollectionEquality().hash(forceTranscode),
-      const DeepCollectionEquality().hash(deviceInfo));
+      runtimeType, mediaPlayer, forceDirectPlay, forceTranscode, deviceInfo);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AbsPlayItemRequestCopyWith<_$_AbsPlayItemRequest> get copyWith =>
       __$$_AbsPlayItemRequestCopyWithImpl<_$_AbsPlayItemRequest>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsPlayItemRequestToJson(this);
+    return _$$_AbsPlayItemRequestToJson(
+      this,
+    );
   }
 }
 
@@ -218,13 +220,13 @@ abstract class _AbsPlayItemRequest implements AbsPlayItemRequest {
       _$_AbsPlayItemRequest.fromJson;
 
   @override
-  String get mediaPlayer => throw _privateConstructorUsedError;
+  String get mediaPlayer;
   @override
-  bool get forceDirectPlay => throw _privateConstructorUsedError;
+  bool get forceDirectPlay;
   @override
-  bool get forceTranscode => throw _privateConstructorUsedError;
+  bool get forceTranscode;
   @override
-  DeviceInfo get deviceInfo => throw _privateConstructorUsedError;
+  DeviceInfo get deviceInfo;
   @override
   @JsonKey(ignore: true)
   _$$_AbsPlayItemRequestCopyWith<_$_AbsPlayItemRequest> get copyWith =>
@@ -253,7 +255,8 @@ mixin _$DeviceInfo {
 abstract class $DeviceInfoCopyWith<$Res> {
   factory $DeviceInfoCopyWith(
           DeviceInfo value, $Res Function(DeviceInfo) then) =
-      _$DeviceInfoCopyWithImpl<$Res>;
+      _$DeviceInfoCopyWithImpl<$Res, DeviceInfo>;
+  @useResult
   $Res call(
       {String manufacturer,
       String model,
@@ -263,43 +266,46 @@ abstract class $DeviceInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DeviceInfoCopyWithImpl<$Res> implements $DeviceInfoCopyWith<$Res> {
+class _$DeviceInfoCopyWithImpl<$Res, $Val extends DeviceInfo>
+    implements $DeviceInfoCopyWith<$Res> {
   _$DeviceInfoCopyWithImpl(this._value, this._then);
 
-  final DeviceInfo _value;
   // ignore: unused_field
-  final $Res Function(DeviceInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? manufacturer = freezed,
-    Object? model = freezed,
-    Object? brand = freezed,
-    Object? sdkVersion = freezed,
-    Object? clientVersion = freezed,
+    Object? manufacturer = null,
+    Object? model = null,
+    Object? brand = null,
+    Object? sdkVersion = null,
+    Object? clientVersion = null,
   }) {
     return _then(_value.copyWith(
-      manufacturer: manufacturer == freezed
+      manufacturer: null == manufacturer
           ? _value.manufacturer
           : manufacturer // ignore: cast_nullable_to_non_nullable
               as String,
-      model: model == freezed
+      model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
               as String,
-      brand: brand == freezed
+      brand: null == brand
           ? _value.brand
           : brand // ignore: cast_nullable_to_non_nullable
               as String,
-      sdkVersion: sdkVersion == freezed
+      sdkVersion: null == sdkVersion
           ? _value.sdkVersion
           : sdkVersion // ignore: cast_nullable_to_non_nullable
               as String,
-      clientVersion: clientVersion == freezed
+      clientVersion: null == clientVersion
           ? _value.clientVersion
           : clientVersion // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -310,6 +316,7 @@ abstract class _$$_DeviceInfoCopyWith<$Res>
           _$_DeviceInfo value, $Res Function(_$_DeviceInfo) then) =
       __$$_DeviceInfoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String manufacturer,
       String model,
@@ -319,41 +326,40 @@ abstract class _$$_DeviceInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
+class __$$_DeviceInfoCopyWithImpl<$Res>
+    extends _$DeviceInfoCopyWithImpl<$Res, _$_DeviceInfo>
     implements _$$_DeviceInfoCopyWith<$Res> {
   __$$_DeviceInfoCopyWithImpl(
       _$_DeviceInfo _value, $Res Function(_$_DeviceInfo) _then)
-      : super(_value, (v) => _then(v as _$_DeviceInfo));
+      : super(_value, _then);
 
-  @override
-  _$_DeviceInfo get _value => super._value as _$_DeviceInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? manufacturer = freezed,
-    Object? model = freezed,
-    Object? brand = freezed,
-    Object? sdkVersion = freezed,
-    Object? clientVersion = freezed,
+    Object? manufacturer = null,
+    Object? model = null,
+    Object? brand = null,
+    Object? sdkVersion = null,
+    Object? clientVersion = null,
   }) {
     return _then(_$_DeviceInfo(
-      manufacturer: manufacturer == freezed
+      manufacturer: null == manufacturer
           ? _value.manufacturer
           : manufacturer // ignore: cast_nullable_to_non_nullable
               as String,
-      model: model == freezed
+      model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
               as String,
-      brand: brand == freezed
+      brand: null == brand
           ? _value.brand
           : brand // ignore: cast_nullable_to_non_nullable
               as String,
-      sdkVersion: sdkVersion == freezed
+      sdkVersion: null == sdkVersion
           ? _value.sdkVersion
           : sdkVersion // ignore: cast_nullable_to_non_nullable
               as String,
-      clientVersion: clientVersion == freezed
+      clientVersion: null == clientVersion
           ? _value.clientVersion
           : clientVersion // ignore: cast_nullable_to_non_nullable
               as String,
@@ -395,34 +401,32 @@ class _$_DeviceInfo implements _DeviceInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeviceInfo &&
-            const DeepCollectionEquality()
-                .equals(other.manufacturer, manufacturer) &&
-            const DeepCollectionEquality().equals(other.model, model) &&
-            const DeepCollectionEquality().equals(other.brand, brand) &&
-            const DeepCollectionEquality()
-                .equals(other.sdkVersion, sdkVersion) &&
-            const DeepCollectionEquality()
-                .equals(other.clientVersion, clientVersion));
+            (identical(other.manufacturer, manufacturer) ||
+                other.manufacturer == manufacturer) &&
+            (identical(other.model, model) || other.model == model) &&
+            (identical(other.brand, brand) || other.brand == brand) &&
+            (identical(other.sdkVersion, sdkVersion) ||
+                other.sdkVersion == sdkVersion) &&
+            (identical(other.clientVersion, clientVersion) ||
+                other.clientVersion == clientVersion));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(manufacturer),
-      const DeepCollectionEquality().hash(model),
-      const DeepCollectionEquality().hash(brand),
-      const DeepCollectionEquality().hash(sdkVersion),
-      const DeepCollectionEquality().hash(clientVersion));
+      runtimeType, manufacturer, model, brand, sdkVersion, clientVersion);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeviceInfoCopyWith<_$_DeviceInfo> get copyWith =>
       __$$_DeviceInfoCopyWithImpl<_$_DeviceInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeviceInfoToJson(this);
+    return _$$_DeviceInfoToJson(
+      this,
+    );
   }
 }
 
@@ -438,15 +442,15 @@ abstract class _DeviceInfo implements DeviceInfo {
       _$_DeviceInfo.fromJson;
 
   @override
-  String get manufacturer => throw _privateConstructorUsedError;
+  String get manufacturer;
   @override
-  String get model => throw _privateConstructorUsedError;
+  String get model;
   @override
-  String get brand => throw _privateConstructorUsedError;
+  String get brand;
   @override
-  String get sdkVersion => throw _privateConstructorUsedError;
+  String get sdkVersion;
   @override
-  String get clientVersion => throw _privateConstructorUsedError;
+  String get clientVersion;
   @override
   @JsonKey(ignore: true)
   _$$_DeviceInfoCopyWith<_$_DeviceInfo> get copyWith =>

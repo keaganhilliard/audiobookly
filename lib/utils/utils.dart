@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/book.dart';
@@ -6,6 +8,8 @@ import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 
 class Utils {
   static String getTimeValue(Duration? time) {
@@ -16,8 +20,25 @@ class Utils {
         '$time';
   }
 
+  static Future<Directory?> getBasePath() async {
+    try {
+      return await getApplicationDocumentsDirectory();
+    } catch (e) {
+      return await getApplicationDocumentsDirectory();
+    }
+  }
+
+  static getCacheDir(MediaItem? item) {
+    if (item != null) {
+      return p.join(
+        'Audiobooks',
+        item.artist ?? 'Unknown',
+        item.title,
+      );
+    }
+  }
+
   static MediaItem chapterToItem(Chapter chapter) {
-    print('Chapter ${chapter.toJson()}');
     return MediaItem(
         id: chapter.id,
         title: chapter.title,
@@ -107,7 +128,13 @@ class Utils {
   static String friendlyDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
-    return '$hours hour${hours != 1 ? "s" : ""} and $minutes minute${minutes != 1 ? "s" : ""}';
+    final hoursText = hours > 0 ? '$hours hour${hours != 1 ? "s" : ""}' : '';
+    final minutesText =
+        minutes > 0 ? '$minutes minute${minutes != 1 ? "s" : ""}' : '';
+    List<String> pieces = [];
+    if (hoursText.isNotEmpty) pieces.add(hoursText);
+    if (minutesText.isNotEmpty) pieces.add(minutesText);
+    return pieces.join(' and ');
   }
 
   static String friendlyDurationFromItems(List<MediaItem> items) {
@@ -125,6 +152,20 @@ extension ListHelpers<T> on List<T> {
 
 extension StringHelpers on String {
   Uri? get uri => Uri.parse(this);
+  int get fastHash {
+    var hash = 0xcbf29ce484222325;
+
+    var i = 0;
+    while (i < length) {
+      final codeUnit = codeUnitAt(i++);
+      hash ^= codeUnit >> 8;
+      hash *= 0x100000001b3;
+      hash ^= codeUnit & 0xFF;
+      hash *= 0x100000001b3;
+    }
+
+    return hash;
+  }
 }
 
 extension MediaHelpers on MediaItem {
@@ -142,12 +183,20 @@ extension MediaHelpers on MediaItem {
       ? Duration.zero
       : Duration(milliseconds: extras?['viewOffset']);
 
+  Duration get currentTrackStartingPosition =>
+      extras?['currentTrackStartingPosition'] == null
+          ? Duration.zero
+          : Duration(milliseconds: extras?['currentTrackStartingPosition']);
+
+  Duration get currentTrackLength => extras?['currentTrackLength'] == null
+      ? Duration.zero
+      : Duration(milliseconds: extras?['currentTrackLength']);
+
   Uri? get largeThumbnail => (extras?['largeThumbnail'] as String?)?.uri;
   List<Chapter> get chapters {
     if (extras != null && extras!.containsKey('chapters')) {
       return [
-        for (final chapter in extras!['chapters'])
-          Chapter.fromJson(chapter, id.hashCode)
+        for (final chapter in extras!['chapters']) Chapter.fromJson(chapter, id)
       ];
     }
     return [];
@@ -162,7 +211,7 @@ extension MediaHelpers on MediaItem {
       );
 
   static MediaItem fromBook(Book book) => MediaItem(
-        id: book.exId,
+        id: book.id,
         title: book.title,
         artist: book.author,
         album: book.title,
@@ -195,4 +244,8 @@ extension MediaHelpers on MediaItem {
         },
         duration: track.duration,
       );
+}
+
+bool nullOrEmpty(List? check) {
+  return check?.isEmpty ?? true;
 }

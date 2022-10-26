@@ -6,20 +6,21 @@ part 'isar_chapter.g.dart';
 @Collection()
 class IsarChapter implements Chapter {
   IsarChapter({
+    this.isarId,
     required this.id,
-    required this.isarId,
     required this.start,
     required this.end,
     required this.title,
     required this.bookId,
   });
 
-  Id? isarId = isarAutoIncrementId;
+  Id? isarId = Isar.autoIncrement;
 
   @override
   double end;
 
   @override
+  @Index(unique: true, replace: true)
   String id;
 
   @override
@@ -29,11 +30,11 @@ class IsarChapter implements Chapter {
   String title;
 
   @override
-  int bookId;
+  @Index()
+  String bookId;
 
   factory IsarChapter.fromChapter(Chapter chapter) => IsarChapter(
         id: '${chapter.bookId}.${chapter.id}',
-        isarId: '${chapter.bookId}.${chapter.id}'.hashCode,
         start: chapter.start,
         end: chapter.end,
         title: chapter.title,
@@ -42,7 +43,6 @@ class IsarChapter implements Chapter {
 
   factory IsarChapter.fromJson(Map<String, dynamic> json) => IsarChapter(
         id: json["id"],
-        isarId: json["id"].hashCode,
         start: json["start"].toDouble(),
         end: json["end"].toDouble(),
         title: json["title"],

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/plex_media_item.dart';
+import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
-import 'package:audiobookly/services/shared_preferences/shared_preferences_service.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:plex_api/plex_api.dart';
 
@@ -22,11 +22,11 @@ class PlexRepository extends MediaRepository {
   String? _libraryKey;
   Timer? _refreshServer;
   bool needsRefresh = false;
-  final SharedPreferencesService _prefs;
+  final Preferences _prefs;
 
   PlexRepository({
     required PlexApi api,
-    required SharedPreferencesService prefs,
+    required Preferences prefs,
     PlexServer? server,
     String? serverKey,
     String? libraryKey,
@@ -174,8 +174,10 @@ class PlexRepository extends MediaRepository {
   @override
   Future<PlexMediaItem> getAlbumFromId(String? mediaId) async {
     await refreshServer();
-    return PlexMediaItem.fromPlexAlbum(
+    final item = PlexMediaItem.fromPlexAlbum(
         await _server!.getAlbumFromKey(mediaId!), _server!);
+
+    return item;
   }
 
   @override
@@ -229,9 +231,9 @@ class PlexRepository extends MediaRepository {
   ) async {}
 
   @override
-  Future<List<PlexMediaItem>> getTracksForBook(MediaItem book) async {
+  Future<List<PlexMediaItem>> getTracksForBook(String bookId) async {
     await refreshServer();
-    return (await _server!.getTracks(book.id))!
+    return (await _server!.getTracks(bookId))!
         .map((track) => PlexMediaItem.fromPlexTrack(track, _server!))
         .toList();
   }

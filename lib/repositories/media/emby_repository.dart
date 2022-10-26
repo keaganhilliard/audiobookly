@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -108,9 +109,9 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getTracksForBook(MediaItem book) async {
+  Future<List<MediaItem>> getTracksForBook(String bookId) async {
     return getItemsFromEmbyItems(
-      (await _api.getItemsForAlbum(book.id)),
+      (await _api.getItemsForAlbum(bookId)),
       this,
     );
   }
@@ -217,7 +218,7 @@ class EmbyRepository extends MediaRepository {
     } else {
       final album = await getAlbumFromId(itemId);
       _db.insertBook(
-          _db.getBookFromMediaItem(album, false, false, false).copyWith(
+          _db.getBookFromMediaItem(album, DownloadStatus.none).copyWith(
                 read: true,
                 lastPlayedPosition: Duration.zero,
               ));
@@ -233,7 +234,7 @@ class EmbyRepository extends MediaRepository {
     } else {
       final album = await getAlbumFromId(itemId);
       _db.insertBook(_db
-          .getBookFromMediaItem(album, false, false, false)
+          .getBookFromMediaItem(album, DownloadStatus.none)
           .copyWith(read: false));
     }
     return _api.markUnplayed(itemId);

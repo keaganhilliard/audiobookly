@@ -232,6 +232,16 @@ class PlexApi {
     return sections.mediaContainer!.metadata?.cast();
   }
 
+  Future<PlexTrack?> getTrack(PlexServer server, String trackRatingKey) async {
+    http.Response response = await http.get(
+        Uri.parse(
+            '${server.mainConnection!.uri}/library/metadata/$trackRatingKey?includeChapters=1'),
+        headers: headers.toMap(overrideToken: server.accessToken));
+    PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
+        jsonDecode(utf8.decode(response.bodyBytes)));
+    return sections.mediaContainer!.metadata?.cast<PlexTrack>()[0];
+  }
+
   Future<List<PlexCollection>?> getCollections(
       PlexServer server, String libraryKey) async {
     http.Response response = await http.get(

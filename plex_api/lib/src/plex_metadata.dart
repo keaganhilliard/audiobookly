@@ -53,5 +53,4 @@ class PlexMetadata {
     data['updatedAt'] = this.updatedAt;
     return data;
   }
-
 }

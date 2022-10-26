@@ -195,6 +195,10 @@ class PlexServer {
     return await api!.getTracks(this, albumRatingKey);
   }
 
+  Future<PlexTrack?> getTrack(String trackRatingKey) async {
+    return await api!.getTrack(this, trackRatingKey);
+  }
+
   Future<List<PlexCollection>?> getCollections(String libraryKey) async {
     return await api!.getCollections(this, libraryKey);
   }

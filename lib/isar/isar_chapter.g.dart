@@ -7,7 +7,7 @@ part of 'isar_chapter.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
 extension GetIsarChapterCollection on Isar {
   IsarCollection<IsarChapter> get isarChapters => this.collection();
@@ -20,7 +20,7 @@ const IsarChapterSchema = CollectionSchema(
     r'bookId': PropertySchema(
       id: 0,
       name: r'bookId',
-      type: IsarType.long,
+      type: IsarType.string,
     ),
     r'end': PropertySchema(
       id: 1,
@@ -44,20 +44,44 @@ const IsarChapterSchema = CollectionSchema(
     )
   },
   estimateSize: _isarChapterEstimateSize,
-  serializeNative: _isarChapterSerializeNative,
-  deserializeNative: _isarChapterDeserializeNative,
-  deserializePropNative: _isarChapterDeserializePropNative,
-  serializeWeb: _isarChapterSerializeWeb,
-  deserializeWeb: _isarChapterDeserializeWeb,
-  deserializePropWeb: _isarChapterDeserializePropWeb,
+  serialize: _isarChapterSerialize,
+  deserialize: _isarChapterDeserialize,
+  deserializeProp: _isarChapterDeserializeProp,
   idName: r'isarId',
-  indexes: {},
+  indexes: {
+    r'id': IndexSchema(
+      id: -3268401673993471357,
+      name: r'id',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'id',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'bookId': IndexSchema(
+      id: 3567540928881766442,
+      name: r'bookId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'bookId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _isarChapterGetId,
   getLinks: _isarChapterGetLinks,
   attach: _isarChapterAttach,
-  version: 5,
+  version: '3.0.2',
 );
 
 int _isarChapterEstimateSize(
@@ -66,33 +90,33 @@ int _isarChapterEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.bookId.length * 3;
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.title.length * 3;
   return bytesCount;
 }
 
-int _isarChapterSerializeNative(
+void _isarChapterSerialize(
   IsarChapter object,
-  IsarBinaryWriter writer,
+  IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.bookId);
+  writer.writeString(offsets[0], object.bookId);
   writer.writeDouble(offsets[1], object.end);
   writer.writeString(offsets[2], object.id);
   writer.writeDouble(offsets[3], object.start);
   writer.writeString(offsets[4], object.title);
-  return writer.usedBytes;
 }
 
-IsarChapter _isarChapterDeserializeNative(
-  int id,
-  IsarBinaryReader reader,
+IsarChapter _isarChapterDeserialize(
+  Id id,
+  IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   final object = IsarChapter(
-    bookId: reader.readLong(offsets[0]),
+    bookId: reader.readString(offsets[0]),
     end: reader.readDouble(offsets[1]),
     id: reader.readString(offsets[2]),
     isarId: id,
@@ -102,16 +126,15 @@ IsarChapter _isarChapterDeserializeNative(
   return object;
 }
 
-P _isarChapterDeserializePropNative<P>(
-  Id id,
-  IsarBinaryReader reader,
+P _isarChapterDeserializeProp<P>(
+  IsarReader reader,
   int propertyId,
   int offset,
   Map<Type, List<int>> allOffsets,
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readDouble(offset)) as P;
     case 2:
@@ -125,31 +148,8 @@ P _isarChapterDeserializePropNative<P>(
   }
 }
 
-Object _isarChapterSerializeWeb(
-    IsarCollection<IsarChapter> collection, IsarChapter object) {
-  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
-}
-
-IsarChapter _isarChapterDeserializeWeb(
-    IsarCollection<IsarChapter> collection, Object jsObj) {
-  /*final object = IsarChapter(bookId: IsarNative.jsObjectGet(jsObj, r'bookId') ?? (double.negativeInfinity as int),end: IsarNative.jsObjectGet(jsObj, r'end') ?? double.negativeInfinity,id: IsarNative.jsObjectGet(jsObj, r'id') ?? '',isarId: IsarNative.jsObjectGet(jsObj, r'isarId') ,start: IsarNative.jsObjectGet(jsObj, r'start') ?? double.negativeInfinity,title: IsarNative.jsObjectGet(jsObj, r'title') ?? '',);*/
-  //return object;
-  throw UnimplementedError();
-}
-
-P _isarChapterDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    default:
-      throw IsarError('Illegal propertyName');
-  }
-}
-
-int? _isarChapterGetId(IsarChapter object) {
-  if (object.isarId == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.isarId;
-  }
+Id _isarChapterGetId(IsarChapter object) {
+  return object.isarId ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _isarChapterGetLinks(IsarChapter object) {
@@ -159,6 +159,60 @@ List<IsarLinkBase<dynamic>> _isarChapterGetLinks(IsarChapter object) {
 void _isarChapterAttach(
     IsarCollection<dynamic> col, Id id, IsarChapter object) {
   object.isarId = id;
+}
+
+extension IsarChapterByIndex on IsarCollection<IsarChapter> {
+  Future<IsarChapter?> getById(String id) {
+    return getByIndex(r'id', [id]);
+  }
+
+  IsarChapter? getByIdSync(String id) {
+    return getByIndexSync(r'id', [id]);
+  }
+
+  Future<bool> deleteById(String id) {
+    return deleteByIndex(r'id', [id]);
+  }
+
+  bool deleteByIdSync(String id) {
+    return deleteByIndexSync(r'id', [id]);
+  }
+
+  Future<List<IsarChapter?>> getAllById(List<String> idValues) {
+    final values = idValues.map((e) => [e]).toList();
+    return getAllByIndex(r'id', values);
+  }
+
+  List<IsarChapter?> getAllByIdSync(List<String> idValues) {
+    final values = idValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'id', values);
+  }
+
+  Future<int> deleteAllById(List<String> idValues) {
+    final values = idValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'id', values);
+  }
+
+  int deleteAllByIdSync(List<String> idValues) {
+    final values = idValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'id', values);
+  }
+
+  Future<Id> putById(IsarChapter object) {
+    return putByIndex(r'id', object);
+  }
+
+  Id putByIdSync(IsarChapter object, {bool saveLinks = true}) {
+    return putByIndexSync(r'id', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllById(List<IsarChapter> objects) {
+    return putAllByIndex(r'id', objects);
+  }
+
+  List<Id> putAllByIdSync(List<IsarChapter> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
+  }
 }
 
 extension IsarChapterQueryWhereSort
@@ -173,7 +227,7 @@ extension IsarChapterQueryWhereSort
 extension IsarChapterQueryWhere
     on QueryBuilder<IsarChapter, IsarChapter, QWhereClause> {
   QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> isarIdEqualTo(
-      int isarId) {
+      Id isarId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: isarId,
@@ -183,7 +237,7 @@ extension IsarChapterQueryWhere
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> isarIdNotEqualTo(
-      int isarId) {
+      Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -206,7 +260,7 @@ extension IsarChapterQueryWhere
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> isarIdGreaterThan(
-      int isarId,
+      Id isarId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -216,7 +270,7 @@ extension IsarChapterQueryWhere
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> isarIdLessThan(
-      int isarId,
+      Id isarId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -226,8 +280,8 @@ extension IsarChapterQueryWhere
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> isarIdBetween(
-    int lowerIsarId,
-    int upperIsarId, {
+    Id lowerIsarId,
+    Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -240,52 +294,150 @@ extension IsarChapterQueryWhere
       ));
     });
   }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> idEqualTo(
+      String id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'id',
+        value: [id],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> idNotEqualTo(
+      String id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'id',
+              lower: [],
+              upper: [id],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'id',
+              lower: [id],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'id',
+              lower: [id],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'id',
+              lower: [],
+              upper: [id],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> bookIdEqualTo(
+      String bookId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'bookId',
+        value: [bookId],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterWhereClause> bookIdNotEqualTo(
+      String bookId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'bookId',
+              lower: [],
+              upper: [bookId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'bookId',
+              lower: [bookId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'bookId',
+              lower: [bookId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'bookId',
+              lower: [],
+              upper: [bookId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
 }
 
 extension IsarChapterQueryFilter
     on QueryBuilder<IsarChapter, IsarChapter, QFilterCondition> {
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> bookIdEqualTo(
-      int value) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'bookId',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
       bookIdGreaterThan(
-    int value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'bookId',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> bookIdLessThan(
-    int value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'bookId',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> bookIdBetween(
-    int lower,
-    int upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -294,6 +446,78 @@ extension IsarChapterQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
+      bookIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> bookIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> bookIdContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'bookId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> bookIdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'bookId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
+      bookIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'bookId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
+      bookIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'bookId',
+        value: '',
       ));
     });
   }
@@ -472,6 +696,24 @@ extension IsarChapterQueryFilter
     });
   }
 
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> idIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> idIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'id',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> isarIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -483,16 +725,14 @@ extension IsarChapterQueryFilter
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
       isarIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query
-          .copyWith(filterNot: !query.filterNot)
-          .addFilterCondition(const FilterCondition.isNull(
-            property: r'isarId',
-          ));
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isarId',
+      ));
     });
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> isarIdEqualTo(
-      int? value) {
+      Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isarId',
@@ -503,7 +743,7 @@ extension IsarChapterQueryFilter
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
       isarIdGreaterThan(
-    int? value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -516,7 +756,7 @@ extension IsarChapterQueryFilter
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> isarIdLessThan(
-    int? value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -529,8 +769,8 @@ extension IsarChapterQueryFilter
   }
 
   QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> isarIdBetween(
-    int? lower,
-    int? upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -720,6 +960,25 @@ extension IsarChapterQueryFilter
       ));
     });
   }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition> titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarChapter, IsarChapter, QAfterFilterCondition>
+      titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension IsarChapterQueryObject
@@ -868,9 +1127,10 @@ extension IsarChapterQuerySortThenBy
 
 extension IsarChapterQueryWhereDistinct
     on QueryBuilder<IsarChapter, IsarChapter, QDistinct> {
-  QueryBuilder<IsarChapter, IsarChapter, QDistinct> distinctByBookId() {
+  QueryBuilder<IsarChapter, IsarChapter, QDistinct> distinctByBookId(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'bookId');
+      return query.addDistinctBy(r'bookId', caseSensitive: caseSensitive);
     });
   }
 
@@ -909,7 +1169,7 @@ extension IsarChapterQueryProperty
     });
   }
 
-  QueryBuilder<IsarChapter, int, QQueryOperations> bookIdProperty() {
+  QueryBuilder<IsarChapter, String, QQueryOperations> bookIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'bookId');
     });

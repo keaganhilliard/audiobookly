@@ -70,7 +70,7 @@ class AudiobookshelfApi {
       },
     );
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-    print(decodedResponse);
+    // print(decodedResponse);
     user = AbsUser.fromJson(decodedResponse['user']);
     return user!;
   }
@@ -147,7 +147,6 @@ class AudiobookshelfApi {
         'authorization': 'Bearer $token',
       },
     );
-
     return jsonDecode(utf8.decode(response.bodyBytes))
         .map<Author>((el) => Author.fromJson(el))
         .toList();
@@ -185,7 +184,6 @@ class AudiobookshelfApi {
         'authorization': 'Bearer $token',
       },
     );
-
     return AbsSearchResponse.fromMap(
       jsonDecode(
         utf8.decode(response.bodyBytes),
@@ -233,26 +231,29 @@ class AudiobookshelfApi {
     )).books;
   }
 
-  Future startPlaybackSession(String id, AbsPlayItemRequest playRequest) async {
+  Future<String> startPlaybackSession(
+      String id, AbsPlayItemRequest playRequest) async {
     http.Response response = await client.post(
       createUri(baseUrl!, '/api/items/$id/play'),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
       },
+      body: jsonEncode(playRequest.toJson()),
     );
+    return jsonDecode(response.body)['id'];
   }
 
   Future markPlayed(String itemId) async {
-    await patchAudiobook(itemId, true);
+    (await patchAudiobook(itemId, true));
   }
 
   Future markUnplayed(String itemId) async {
     await patchAudiobook(itemId, false);
   }
 
-  Future patchAudiobook(String itemId, bool isRead) async {
-    await client.patch(createUri(baseUrl!, '/api/me/progress/$itemId'),
+  Future<http.Response> patchAudiobook(String itemId, bool isRead) async {
+    return await client.patch(createUri(baseUrl!, '/api/me/progress/$itemId'),
         headers: {
           'content-type': 'application/json',
           'authorization': 'Bearer $token',
@@ -269,6 +270,20 @@ class AudiobookshelfApi {
         body: utf8.encode(jsonEncode(progress.toJson())));
   }
 
+  Future playbackSessionCheckin(String sessionId, Duration duration,
+      Duration currentTime, Duration timeListened) async {
+    await client.post(createUri(baseUrl!, '/api/session/$sessionId/sync'),
+        headers: {
+          'content-type': 'application/json',
+          'authorization': 'Bearer $token',
+        },
+        body: utf8.encode(jsonEncode({
+          'currentTime': durationToSeconds(currentTime),
+          'timeListened': durationToSeconds(timeListened),
+          'duration': durationToSeconds(duration),
+        })));
+  }
+
   Future sendProgressSync(String sessionId, AbsMediaProgress progress) async {
     await client.post(
       createUri(baseUrl!, '/api/session/$sessionId/sync'),
@@ -279,6 +294,12 @@ class AudiobookshelfApi {
       body: utf8.encode(jsonEncode(progress.toJson())),
     );
   }
+}
+
+const microToSeconds = 1000000;
+
+double durationToSeconds(Duration dur) {
+  return dur.inMicroseconds / microToSeconds;
 }
 
 List<AbsAudiobook> _convertBody(List<int> bodyBytes) {
