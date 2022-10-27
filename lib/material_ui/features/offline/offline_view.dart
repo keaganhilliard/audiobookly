@@ -71,7 +71,7 @@ class Offline extends HookConsumerWidget {
                           thumbnailUrl: book.artUri?.toString(),
                           title: book.title,
                           subtitle: book.artist,
-                          progress: Utils.getProgess(item: book),
+                          progress: Utils.getProgress(item: book),
                           played: book.played,
                         );
                       },

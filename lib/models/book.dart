@@ -53,4 +53,8 @@ class Book {
         lastUpdate ?? this.lastUpdate,
         downloadStatus ?? this.downloadStatus,
       );
+
+  @override
+  String toString() =>
+      'Book(id: $id, title: $title, author: $author, narrator: $narrator, description: $description, artPath: $artPath, duration: $duration, lastPlayedPosition: $lastPlayedPosition, read: $read, lastUpdate: $lastUpdate, downloadStatus: $downloadStatus)';
 }

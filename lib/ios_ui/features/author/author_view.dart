@@ -58,7 +58,7 @@ class AuthorView extends HookConsumerWidget {
                   placeholder: CupertinoIcons.book_fill,
                   showTitle: false,
                   played: book.played,
-                  progress: book.played ? 0 : Utils.getProgess(item: book),
+                  progress: book.played ? 0 : Utils.getProgress(item: book),
                 );
               },
             ),

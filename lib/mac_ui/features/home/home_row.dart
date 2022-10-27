@@ -102,7 +102,7 @@ class HomeRow extends HookConsumerWidget {
                                     //     .playFromId(book.id);
                                   },
                                   height: height,
-                                  progress: Utils.getProgess(item: book),
+                                  progress: Utils.getProgress(item: book),
                                   thumbnailUrl: book.artUri?.toString(),
                                   title: book.title,
                                   subtitle: book.artist,

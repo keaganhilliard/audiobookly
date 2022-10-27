@@ -105,7 +105,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           currentQueueItem!.end,
         );
         bool shouldChange = currentState != DurationState.between;
-        final oldChapterIndex = chapterIndex ?? 0;
         while (currentState != DurationState.between) {
           if (currentState == DurationState.before) {
             chapterIndex = chapterIndex == null ? 0 : chapterIndex! - 1;
@@ -120,10 +119,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         }
         if (shouldChange) {
           setCurrentMediaItem();
-          if (pauseOnNext && (chapterIndex ?? 0) > oldChapterIndex) {
-            pauseOnNext = false;
-            pause();
-          }
         }
       }
     });
@@ -173,8 +168,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }
   }
 
-  bool pauseOnNext = false;
-
   Future<void> _init() async {
     // We configure the audio session for speech since we're playing a podcast.
     // You can also put this in your app's initialisation if your app doesn't
@@ -187,16 +180,12 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     // Broadcast media item changes.
     _player.currentIndexStream.listen((currentIndex) async {
       if (index != null) {
-        await updateProgress(AudiobooklyPlaybackState.STOPPED, true);
+        // await updateProgress(AudiobooklyPlaybackState.STOPPED, true);
 
         if (_player.playing) {
           await updateProgress(AudiobooklyPlaybackState.PLAYING);
         }
         setCurrentMediaItem();
-      }
-      if (pauseOnNext) {
-        pauseOnNext = false;
-        pause();
       }
     });
 
@@ -209,15 +198,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       }
     });
 
-    final info = await getDeviceInfo();
-
-    container = ProviderContainer(
-      overrides: [
-        deviceInfoServiceProvider.overrideWithValue(
-          DeviceInfoService(info),
-        )
-      ],
-    );
+    container = ProviderContainer();
     await _repository?.getServerAndLibrary();
     if (_currentMedia != null) {
       playFromMediaId(_currentMedia);
@@ -269,20 +250,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         await skipToQueueItem(chapterIndex! - 1);
       } else {
         await _player.seekToPrevious();
-      }
-    } else if (name == 'setTimer') {
-      if (extras?['type'] == 'endOfTrack') {
-        pauseOnNext = true;
-      } else if (extras?['type'] == 'cancel') {
-        _pauseTimer?.cancel();
-        _pauseTimer = null;
-      } else {
-        final minutes = extras?['minutes'];
-        if (minutes != null) {
-          _pauseTimer = Timer(Duration(minutes: minutes), () {
-            if (_player.playing) pause();
-          });
-        }
       }
     }
   }

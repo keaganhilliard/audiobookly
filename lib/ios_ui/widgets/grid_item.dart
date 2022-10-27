@@ -49,29 +49,27 @@ class GridItem extends StatelessWidget {
               children: <Widget>[
                 Flexible(
                   flex: 3,
-                  child: CachedNetworkImage(
-                    imageUrl: thumbnailUrl!,
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                    errorWidget: (context, message, thing) => Container(
-                      constraints: const BoxConstraints.expand(),
-                      // color: Colors.black,
-                      child: PlaceHolder(
-                        title: showTitle ? null : title,
-                        placeholder: placeholder,
-                        subtitle: showTitle ? null : subtitle,
-                      ),
-                    ),
-                    placeholder: (context, url) => Container(
-                      constraints: const BoxConstraints.expand(),
-                      // color: Colors.black,
-                      child: PlaceHolder(
-                        title: showTitle ? null : title,
-                        placeholder: placeholder,
-                        subtitle: showTitle ? null : subtitle,
-                      ),
-                    ),
-                  ),
+                  child: thumbnailUrl == null
+                      ? PlaceHolder(
+                          title: showTitle ? null : title,
+                          placeholder: placeholder,
+                          subtitle: showTitle ? null : subtitle,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: thumbnailUrl!,
+                          fit: BoxFit.contain,
+                          alignment: Alignment.center,
+                          errorWidget: (context, message, thing) => PlaceHolder(
+                            title: showTitle ? null : title,
+                            placeholder: placeholder,
+                            subtitle: showTitle ? null : subtitle,
+                          ),
+                          placeholder: (context, url) => PlaceHolder(
+                            title: showTitle ? null : title,
+                            placeholder: placeholder,
+                            subtitle: showTitle ? null : subtitle,
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -136,33 +134,37 @@ class PlaceHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          placeholder,
-          size: 50.0,
-        ),
-        if (title != null)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              title!,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              // style: const TextStyle(fontSize: 13),
-              textAlign: TextAlign.center,
-            ),
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      // color: Colors.black,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            placeholder,
+            size: 50.0,
           ),
-        if (subtitle != null)
-          Text(
-            subtitle!,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.grey[400]),
-            textAlign: TextAlign.center,
-          )
-      ],
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                title!,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                // style: const TextStyle(fontSize: 13),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          if (subtitle != null)
+            Text(
+              subtitle!,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.grey[400]),
+              textAlign: TextAlign.center,
+            )
+        ],
+      ),
     );
   }
 }

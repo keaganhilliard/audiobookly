@@ -109,7 +109,7 @@ class Utils {
         });
   }
 
-  static double getProgess({MediaItem? item, Book? book}) {
+  static double getProgress({MediaItem? item, Book? book}) {
     if (book != null && book.duration != Duration.zero) {
       return book.lastPlayedPosition.inMilliseconds /
           book.duration.inMilliseconds;

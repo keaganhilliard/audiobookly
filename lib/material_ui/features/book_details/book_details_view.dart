@@ -37,7 +37,7 @@ class BookDetailsView extends HookConsumerWidget {
       loading: _loadingIndicator,
       error: (message) => Center(child: Text('Something went wrong $message')),
       loaded: (item, chapters) {
-        final progress = Utils.getProgess(item: item);
+        final progress = Utils.getProgress(item: item);
 
         return Scaffold(
           body: SafeArea(
