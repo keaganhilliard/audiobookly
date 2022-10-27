@@ -43,7 +43,6 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
     state.whenOrNull(
       loaded: (book, chapters) async {
         await _downloadService!.downloadBook(book!, chapters!);
-        refreshForDownloads();
       },
     );
   }
@@ -93,6 +92,10 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
       book = await _repository!.getAlbumFromId(_mediaId);
       chapters = await _repository!.getTracksForBook(_mediaId);
       dbBook = await _databaseService?.getBookById(_mediaId);
+      book = book.copyWith(extras: {
+        ...book.extras ?? {},
+        ...{'cached': dbBook?.downloadStatus == DownloadStatus.succeeded}
+      });
     } catch (e, stack) {
       log('No data from server $e, $stack');
       log('State $state');
