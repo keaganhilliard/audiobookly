@@ -129,7 +129,7 @@ class BookDetailsView extends HookConsumerWidget {
                               item,
                               chapters!,
                             );
-                            bookDetails.refreshForDownloads();
+                            // bookDetails.refreshForDownloads();
                           },
                         ),
                       if (item.played)

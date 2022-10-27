@@ -31,15 +31,36 @@ class SeekBar extends HookWidget {
         children: [
           Container(
             padding: EdgeInsets.zero,
-            constraints: const BoxConstraints.expand(height: 5),
+            constraints: const BoxConstraints.expand(height: 6.0),
             child: BetterCupertinoSlider(
               configure: BetterCupertinoSliderConfigure(
+                trackHorizontalPadding: 0.0,
                 // thumbRadius: 5.0,
                 additionalConstraints: const BoxConstraints.expand(),
-                trackHeight: 5,
-                thumbPainter: (canvas, rect) {},
+                trackHeight: 6.0,
+                thumbPainter: (canvas, rect) {
+                  if (showPosition.value) {
+                    final RRect rrect = RRect.fromRectAndRadius(
+                      Rect.fromLTRB(rect.left + 5, 47, rect.right - 5, 60),
+                      const Radius.circular(2.0),
+                    );
+                    for (final BoxShadow shadow in kBetterSliderBoxShadows) {
+                      canvas.drawRRect(
+                          rrect.shift(shadow.offset), shadow.toPaint());
+                    }
+                    canvas.drawRRect(
+                      rrect.inflate(0.5),
+                      Paint()..color = Colors.black.withOpacity(0.5),
+                    );
+                    canvas.drawRRect(
+                      rrect,
+                      Paint()..color = Colors.deepPurple,
+                    );
+                  }
+                },
                 trackLeftColor: Colors.deepPurple,
-                trackRightColor: const Color.fromRGBO(0, 0, 0, 0.5),
+                trackRightColor: const Color.fromRGBO(
+                    109, 109, 109, 1), // const Color.fromRGBO(0, 0, 0, 0.5),
               ),
               // thumbColor: Colors.deepPurple,
               // activeColor: Colors.deepPurple,
@@ -65,38 +86,45 @@ class SeekBar extends HookWidget {
               },
             ),
           ),
-          // if (showPosition.value)
-          Positioned(
-            right: 8.0,
-            bottom: 8.0,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 100),
-              opacity: showPosition.value ? 1.0 : 0.0,
-              child: Text(
+          _Label(
+            show: showPosition.value,
+            text:
                 '-${Utils.getTimeValue(duration! - (dragValue.value ?? position ?? Duration.zero))}',
-                style: MacosTheme.of(context)
-                    .typography
-                    .callout
-                    .copyWith(color: const Color.fromRGBO(109, 109, 109, 1)),
-              ),
-            ),
+            left: false,
           ),
-          Positioned(
-            left: 8.0,
-            bottom: 8.0,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 100),
-              opacity: showPosition.value ? 1.0 : 0.0,
-              child: Text(
-                Utils.getTimeValue(dragValue.value ?? position),
-                style: MacosTheme.of(context)
-                    .typography
-                    .callout
-                    .copyWith(color: const Color.fromRGBO(109, 109, 109, 1)),
-              ),
-            ),
+          _Label(
+            show: showPosition.value,
+            text: Utils.getTimeValue(dragValue.value ?? position),
+            left: true,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _Label extends StatelessWidget {
+  final bool show;
+  final String text;
+  final bool left;
+  const _Label({required this.show, required this.text, required this.left});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: left ? 8.0 : null,
+      right: left ? null : 8.0,
+      bottom: 8.0,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 100),
+        opacity: show ? 1.0 : 0.0,
+        child: Text(
+          text,
+          style: MacosTheme.of(context)
+              .typography
+              .callout
+              .copyWith(color: const Color.fromRGBO(109, 109, 109, 1)),
+        ),
       ),
     );
   }

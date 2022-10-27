@@ -25,7 +25,7 @@ class HomeRow extends HookConsumerWidget {
       double pageMove,
       Future<void> Function({required Duration duration, required Curve curve})
           mover) async {
-    for (var i = 0; i < pageMove; i++) {
+    for (var i = 0; i < pageMove - 1; i++) {
       await mover(
         duration: Duration(milliseconds: (300 / pageMove).floor()),
         curve: Curves.linear,
@@ -36,7 +36,6 @@ class HomeRow extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = useState(PageController(viewportFraction: 0.588));
-    final playbackController = GetIt.I<PlaybackController>();
     final pageMove = useState(1.0);
     return LayoutBuilder(builder: (context, constraints) {
       debouncer.run(() {

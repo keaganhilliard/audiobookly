@@ -292,26 +292,85 @@ class BookDetailsView extends HookConsumerWidget {
                                             ],
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 40.0),
-                                          child: MacosIconButton(
-                                            backgroundColor: MacosColors
-                                                .systemGrayColor
-                                                .withOpacity(0.1),
-                                            shape: BoxShape.circle,
-                                            onPressed: () {
-                                              downloadService?.downloadBook(
-                                                  item, chapters!);
-                                              bookDetails.refreshForDownloads();
-                                            },
-                                            icon: const MacosIconWithFontweight(
-                                              CupertinoIcons.down_arrow,
-                                              fontWeight: FontWeight.w900,
-                                              size: 40,
+                                        if (!item.downloading && !item.cached)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 40.0),
+                                            child: MacosIconButton(
+                                              backgroundColor: MacosColors
+                                                  .systemGrayColor
+                                                  .withOpacity(0.1),
+                                              shape: BoxShape.circle,
+                                              onPressed: () {
+                                                downloadService?.downloadBook(
+                                                  item,
+                                                  chapters!,
+                                                );
+                                              },
+                                              icon:
+                                                  const MacosIconWithFontweight(
+                                                CupertinoIcons.down_arrow,
+                                                fontWeight: FontWeight.w900,
+                                                size: 40,
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                        if (item.downloading)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 40.0),
+                                            child: Stack(
+                                              children: [
+                                                const Positioned.fill(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Colors.deepPurple,
+                                                  ),
+                                                ),
+                                                MacosIconButton(
+                                                  backgroundColor: MacosColors
+                                                      .systemGrayColor
+                                                      .withOpacity(0.1),
+                                                  shape: BoxShape.circle,
+                                                  onPressed: () {
+                                                    downloadService
+                                                        ?.downloadBook(
+                                                      item,
+                                                      chapters!,
+                                                    );
+                                                  },
+                                                  icon:
+                                                      const MacosIconWithFontweight(
+                                                    CupertinoIcons.stop_fill,
+                                                    fontWeight: FontWeight.w900,
+                                                    size: 40,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (item.cached)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 40.0),
+                                            child: MacosIconButton(
+                                              backgroundColor: MacosColors
+                                                  .systemGrayColor
+                                                  .withOpacity(0.1),
+                                              shape: BoxShape.circle,
+                                              onPressed: () {
+                                                downloadService?.deleteDownload(
+                                                  item,
+                                                );
+                                              },
+                                              icon:
+                                                  const MacosIconWithFontweight(
+                                                CupertinoIcons.delete,
+                                                fontWeight: FontWeight.w900,
+                                                size: 40,
+                                              ),
+                                            ),
+                                          ),
                                       ],
                                     ),
                                   )

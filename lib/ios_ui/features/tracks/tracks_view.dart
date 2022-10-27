@@ -71,9 +71,6 @@ class TracksView extends HookConsumerWidget {
                       }),
                     ),
                   CupertinoListTile(
-                    // backgroundColor: currentTrack
-                    // ? const Color.fromRGBO(103, 58, 183, 0.3)
-                    // : null,
                     leading: Text(
                       (index + 1).toString().padLeft(totalTrackDigits, '0'),
                       style: const TextStyle(

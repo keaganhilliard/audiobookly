@@ -67,6 +67,15 @@ Future<DeviceInfo> getDeviceInfo() async {
       platform: iosInfo.model,
       manufacturer: 'Apple',
     );
+  } else if (Platform.isMacOS) {
+    MacOsDeviceInfo macOsDeviceInfo = await deviceInfo.macOsInfo;
+    return DeviceInfo(
+      uniqueId: macOsDeviceInfo.systemGUID,
+      model: macOsDeviceInfo.model,
+      version: '0.0.1.0',
+      platform: macOsDeviceInfo.model,
+      manufacturer: 'Apple',
+    );
   } else {
     return DeviceInfo(
       uniqueId: 'AUDIOBOOKLY_WEB',

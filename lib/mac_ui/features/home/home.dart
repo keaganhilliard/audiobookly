@@ -1,4 +1,4 @@
-import 'package:audiobookly/ios_ui/features/tracks/tracks_view.dart';
+import 'package:audiobookly/mac_ui/features/tracks/tracks_view.dart';
 import 'package:audiobookly/mac_ui/features/settings/settings_view.dart';
 import 'package:audiobookly/mac_ui/features/authors/authors_view.dart';
 import 'package:audiobookly/mac_ui/features/books/books_view.dart';
@@ -138,7 +138,10 @@ class Home extends HookWidget {
           minWidth: 200.0,
         ),
         endSidebar: Sidebar(
-          builder: (context, sContorller) => TracksView(),
+          topOffset: 59,
+          builder: (context, scrollController) => TracksView(
+            controller: scrollController,
+          ),
           minWidth: 250,
           startWidth: 250,
           isResizable: false,
@@ -169,7 +172,7 @@ class AbParentScaffold extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MacosScaffold(
-      toolBar: getHomeToolbar2(context, ref),
+      toolBar: getHomeToolbar(context, ref),
       children: [
         ContentArea(
           builder: (context, scrollController) => CupertinoTabView(

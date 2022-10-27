@@ -67,7 +67,7 @@ class BookDetailsView extends HookConsumerWidget {
                           downloadService?.deleteDownload(
                             item,
                           );
-                          bookDetails.refreshForDownloads();
+                          // bookDetails.refreshForDownloads();
                         },
                         child: const Icon(CupertinoIcons.delete_solid),
                       ),

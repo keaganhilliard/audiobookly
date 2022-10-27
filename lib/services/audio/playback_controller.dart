@@ -44,6 +44,8 @@ abstract class PlaybackController {
   Future pause() async {}
   Future seek(int position) async {}
   Future setSpeed(double speed) async {}
+  Future increaseSpeed();
+  Future decreaseSpeed();
   Future skipToQueueItem(int index) async {}
   Future skipToNext() async {}
   Future skipToPrevious() async {}
@@ -172,5 +174,15 @@ class AudioHandlerPlaybackController extends PlaybackController {
       'setTimer',
       {'type': 'cancel'},
     );
+  }
+
+  @override
+  Future decreaseSpeed() async {
+    await setSpeed(playbackStateStream.value.speed - 0.05);
+  }
+
+  @override
+  Future increaseSpeed() async {
+    await setSpeed(playbackStateStream.value.speed + 0.05);
   }
 }

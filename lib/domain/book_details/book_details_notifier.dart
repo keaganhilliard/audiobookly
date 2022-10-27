@@ -87,10 +87,12 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
 
     MediaItem? book;
     List<MediaItem>? chapters;
+    Book? dbBook;
     try {
       log('Getting for mediaId $_mediaId');
       book = await _repository!.getAlbumFromId(_mediaId);
       chapters = await _repository!.getTracksForBook(_mediaId);
+      dbBook = await _databaseService?.getBookById(_mediaId);
     } catch (e, stack) {
       log('No data from server $e, $stack');
       log('State $state');
