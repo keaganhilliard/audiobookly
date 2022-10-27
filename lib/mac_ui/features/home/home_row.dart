@@ -47,7 +47,6 @@ class HomeRow extends HookConsumerWidget {
         }
       });
       return HookBuilder(builder: (context) {
-        // usePageController(viewportFraction: 250 / constraints.maxWidth);
         final showForwardButton = useState(false);
         final showBackButton = useState(false);
         return Column(
@@ -61,9 +60,9 @@ class HomeRow extends HookConsumerWidget {
                   style: const TextStyle(fontSize: 24),
                 )),
             MouseRegion(
-              onEnter: (event) {
+              onHover: (event) {
                 if ((items?.length ?? 0) > pageMove.value) {
-                  showBackButton.value = true;
+                  showBackButton.value = pageController.value.page != 0;
                   showForwardButton.value = true;
                 }
               },
