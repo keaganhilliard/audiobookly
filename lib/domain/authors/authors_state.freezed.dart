@@ -26,10 +26,10 @@ mixin _$AuthorsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$AuthorsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthorsStateInitial value)? initial,
-    TResult Function(AuthorsStateLoaded value)? loaded,
-    TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateInitial value)? initial,
+    TResult? Function(AuthorsStateLoaded value)? loaded,
+    TResult? Function(AuthorsStateLoading value)? loading,
+    TResult? Function(AuthorsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,16 +72,18 @@ mixin _$AuthorsState {
 abstract class $AuthorsStateCopyWith<$Res> {
   factory $AuthorsStateCopyWith(
           AuthorsState value, $Res Function(AuthorsState) then) =
-      _$AuthorsStateCopyWithImpl<$Res>;
+      _$AuthorsStateCopyWithImpl<$Res, AuthorsState>;
 }
 
 /// @nodoc
-class _$AuthorsStateCopyWithImpl<$Res> implements $AuthorsStateCopyWith<$Res> {
+class _$AuthorsStateCopyWithImpl<$Res, $Val extends AuthorsState>
+    implements $AuthorsStateCopyWith<$Res> {
   _$AuthorsStateCopyWithImpl(this._value, this._then);
 
-  final AuthorsState _value;
   // ignore: unused_field
-  final $Res Function(AuthorsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -93,24 +95,29 @@ abstract class _$$AuthorsStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$AuthorsStateInitialCopyWithImpl<$Res>
-    extends _$AuthorsStateCopyWithImpl<$Res>
+    extends _$AuthorsStateCopyWithImpl<$Res, _$AuthorsStateInitial>
     implements _$$AuthorsStateInitialCopyWith<$Res> {
   __$$AuthorsStateInitialCopyWithImpl(
       _$AuthorsStateInitial _value, $Res Function(_$AuthorsStateInitial) _then)
-      : super(_value, (v) => _then(v as _$AuthorsStateInitial));
-
-  @override
-  _$AuthorsStateInitial get _value => super._value as _$AuthorsStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthorsStateInitial implements AuthorsStateInitial {
+class _$AuthorsStateInitial
+    with DiagnosticableTreeMixin
+    implements AuthorsStateInitial {
   const _$AuthorsStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthorsState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthorsState.initial'));
   }
 
   @override
@@ -136,10 +143,10 @@ class _$AuthorsStateInitial implements AuthorsStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -173,10 +180,10 @@ class _$AuthorsStateInitial implements AuthorsStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthorsStateInitial value)? initial,
-    TResult Function(AuthorsStateLoaded value)? loaded,
-    TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateInitial value)? initial,
+    TResult? Function(AuthorsStateLoaded value)? loaded,
+    TResult? Function(AuthorsStateLoading value)? loading,
+    TResult? Function(AuthorsStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -206,26 +213,25 @@ abstract class _$$AuthorsStateLoadedCopyWith<$Res> {
   factory _$$AuthorsStateLoadedCopyWith(_$AuthorsStateLoaded value,
           $Res Function(_$AuthorsStateLoaded) then) =
       __$$AuthorsStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MediaItem>? authors});
 }
 
 /// @nodoc
 class __$$AuthorsStateLoadedCopyWithImpl<$Res>
-    extends _$AuthorsStateCopyWithImpl<$Res>
+    extends _$AuthorsStateCopyWithImpl<$Res, _$AuthorsStateLoaded>
     implements _$$AuthorsStateLoadedCopyWith<$Res> {
   __$$AuthorsStateLoadedCopyWithImpl(
       _$AuthorsStateLoaded _value, $Res Function(_$AuthorsStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$AuthorsStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$AuthorsStateLoaded get _value => super._value as _$AuthorsStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? authors = freezed,
   }) {
     return _then(_$AuthorsStateLoaded(
-      authors: authors == freezed
+      authors: freezed == authors
           ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -235,7 +241,9 @@ class __$$AuthorsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateLoaded implements AuthorsStateLoaded {
+class _$AuthorsStateLoaded
+    with DiagnosticableTreeMixin
+    implements AuthorsStateLoaded {
   const _$AuthorsStateLoaded({final List<MediaItem>? authors})
       : _authors = authors;
 
@@ -249,8 +257,16 @@ class _$AuthorsStateLoaded implements AuthorsStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthorsState.loaded(authors: $authors)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthorsState.loaded'))
+      ..add(DiagnosticsProperty('authors', authors));
   }
 
   @override
@@ -267,6 +283,7 @@ class _$AuthorsStateLoaded implements AuthorsStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthorsStateLoadedCopyWith<_$AuthorsStateLoaded> get copyWith =>
       __$$AuthorsStateLoadedCopyWithImpl<_$AuthorsStateLoaded>(
           this, _$identity);
@@ -285,10 +302,10 @@ class _$AuthorsStateLoaded implements AuthorsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(authors);
   }
@@ -322,10 +339,10 @@ class _$AuthorsStateLoaded implements AuthorsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthorsStateInitial value)? initial,
-    TResult Function(AuthorsStateLoaded value)? loaded,
-    TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateInitial value)? initial,
+    TResult? Function(AuthorsStateLoaded value)? loaded,
+    TResult? Function(AuthorsStateLoading value)? loading,
+    TResult? Function(AuthorsStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -365,24 +382,29 @@ abstract class _$$AuthorsStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$AuthorsStateLoadingCopyWithImpl<$Res>
-    extends _$AuthorsStateCopyWithImpl<$Res>
+    extends _$AuthorsStateCopyWithImpl<$Res, _$AuthorsStateLoading>
     implements _$$AuthorsStateLoadingCopyWith<$Res> {
   __$$AuthorsStateLoadingCopyWithImpl(
       _$AuthorsStateLoading _value, $Res Function(_$AuthorsStateLoading) _then)
-      : super(_value, (v) => _then(v as _$AuthorsStateLoading));
-
-  @override
-  _$AuthorsStateLoading get _value => super._value as _$AuthorsStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthorsStateLoading implements AuthorsStateLoading {
+class _$AuthorsStateLoading
+    with DiagnosticableTreeMixin
+    implements AuthorsStateLoading {
   const _$AuthorsStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthorsState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthorsState.loading'));
   }
 
   @override
@@ -408,10 +430,10 @@ class _$AuthorsStateLoading implements AuthorsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -445,10 +467,10 @@ class _$AuthorsStateLoading implements AuthorsStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthorsStateInitial value)? initial,
-    TResult Function(AuthorsStateLoaded value)? loaded,
-    TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateInitial value)? initial,
+    TResult? Function(AuthorsStateLoaded value)? loaded,
+    TResult? Function(AuthorsStateLoading value)? loading,
+    TResult? Function(AuthorsStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -478,27 +500,25 @@ abstract class _$$AuthorsStateErrorDetailsCopyWith<$Res> {
   factory _$$AuthorsStateErrorDetailsCopyWith(_$AuthorsStateErrorDetails value,
           $Res Function(_$AuthorsStateErrorDetails) then) =
       __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$AuthorsStateCopyWithImpl<$Res>
+    extends _$AuthorsStateCopyWithImpl<$Res, _$AuthorsStateErrorDetails>
     implements _$$AuthorsStateErrorDetailsCopyWith<$Res> {
   __$$AuthorsStateErrorDetailsCopyWithImpl(_$AuthorsStateErrorDetails _value,
       $Res Function(_$AuthorsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$AuthorsStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$AuthorsStateErrorDetails get _value =>
-      super._value as _$AuthorsStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$AuthorsStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -508,15 +528,25 @@ class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateErrorDetails implements AuthorsStateErrorDetails {
+class _$AuthorsStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements AuthorsStateErrorDetails {
   const _$AuthorsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthorsState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthorsState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -524,15 +554,15 @@ class _$AuthorsStateErrorDetails implements AuthorsStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthorsStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthorsStateErrorDetailsCopyWith<_$AuthorsStateErrorDetails>
       get copyWith =>
           __$$AuthorsStateErrorDetailsCopyWithImpl<_$AuthorsStateErrorDetails>(
@@ -552,10 +582,10 @@ class _$AuthorsStateErrorDetails implements AuthorsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -589,10 +619,10 @@ class _$AuthorsStateErrorDetails implements AuthorsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthorsStateInitial value)? initial,
-    TResult Function(AuthorsStateLoaded value)? loaded,
-    TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateInitial value)? initial,
+    TResult? Function(AuthorsStateLoaded value)? loaded,
+    TResult? Function(AuthorsStateLoading value)? loading,
+    TResult? Function(AuthorsStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

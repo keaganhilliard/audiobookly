@@ -26,10 +26,10 @@ mixin _$TrackDetailsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$TrackDetailsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TrackDetailsStateInitial value)? initial,
-    TResult Function(TrackDetailsStateLoaded value)? loaded,
-    TResult Function(TrackDetailsStateLoading value)? loading,
-    TResult Function(TrackDetailsStateErrorDetails value)? error,
+    TResult? Function(TrackDetailsStateInitial value)? initial,
+    TResult? Function(TrackDetailsStateLoaded value)? loaded,
+    TResult? Function(TrackDetailsStateLoading value)? loading,
+    TResult? Function(TrackDetailsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$TrackDetailsState {
 abstract class $TrackDetailsStateCopyWith<$Res> {
   factory $TrackDetailsStateCopyWith(
           TrackDetailsState value, $Res Function(TrackDetailsState) then) =
-      _$TrackDetailsStateCopyWithImpl<$Res>;
+      _$TrackDetailsStateCopyWithImpl<$Res, TrackDetailsState>;
 }
 
 /// @nodoc
-class _$TrackDetailsStateCopyWithImpl<$Res>
+class _$TrackDetailsStateCopyWithImpl<$Res, $Val extends TrackDetailsState>
     implements $TrackDetailsStateCopyWith<$Res> {
   _$TrackDetailsStateCopyWithImpl(this._value, this._then);
 
-  final TrackDetailsState _value;
   // ignore: unused_field
-  final $Res Function(TrackDetailsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,25 +95,29 @@ abstract class _$$TrackDetailsStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$TrackDetailsStateInitialCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateInitial>
     implements _$$TrackDetailsStateInitialCopyWith<$Res> {
   __$$TrackDetailsStateInitialCopyWithImpl(_$TrackDetailsStateInitial _value,
       $Res Function(_$TrackDetailsStateInitial) _then)
-      : super(_value, (v) => _then(v as _$TrackDetailsStateInitial));
-
-  @override
-  _$TrackDetailsStateInitial get _value =>
-      super._value as _$TrackDetailsStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$TrackDetailsStateInitial implements TrackDetailsStateInitial {
+class _$TrackDetailsStateInitial
+    with DiagnosticableTreeMixin
+    implements TrackDetailsStateInitial {
   const _$TrackDetailsStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'TrackDetailsState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'TrackDetailsState.initial'));
   }
 
   @override
@@ -139,10 +144,10 @@ class _$TrackDetailsStateInitial implements TrackDetailsStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -176,10 +181,10 @@ class _$TrackDetailsStateInitial implements TrackDetailsStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TrackDetailsStateInitial value)? initial,
-    TResult Function(TrackDetailsStateLoaded value)? loaded,
-    TResult Function(TrackDetailsStateLoading value)? loading,
-    TResult Function(TrackDetailsStateErrorDetails value)? error,
+    TResult? Function(TrackDetailsStateInitial value)? initial,
+    TResult? Function(TrackDetailsStateLoaded value)? loaded,
+    TResult? Function(TrackDetailsStateLoading value)? loading,
+    TResult? Function(TrackDetailsStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -209,27 +214,25 @@ abstract class _$$TrackDetailsStateLoadedCopyWith<$Res> {
   factory _$$TrackDetailsStateLoadedCopyWith(_$TrackDetailsStateLoaded value,
           $Res Function(_$TrackDetailsStateLoaded) then) =
       __$$TrackDetailsStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MediaItem>? chapters});
 }
 
 /// @nodoc
 class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateLoaded>
     implements _$$TrackDetailsStateLoadedCopyWith<$Res> {
   __$$TrackDetailsStateLoadedCopyWithImpl(_$TrackDetailsStateLoaded _value,
       $Res Function(_$TrackDetailsStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$TrackDetailsStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$TrackDetailsStateLoaded get _value =>
-      super._value as _$TrackDetailsStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? chapters = freezed,
   }) {
     return _then(_$TrackDetailsStateLoaded(
-      chapters: chapters == freezed
+      chapters: freezed == chapters
           ? _value._chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -239,7 +242,9 @@ class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateLoaded implements TrackDetailsStateLoaded {
+class _$TrackDetailsStateLoaded
+    with DiagnosticableTreeMixin
+    implements TrackDetailsStateLoaded {
   const _$TrackDetailsStateLoaded({final List<MediaItem>? chapters})
       : _chapters = chapters;
 
@@ -253,8 +258,16 @@ class _$TrackDetailsStateLoaded implements TrackDetailsStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'TrackDetailsState.loaded(chapters: $chapters)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TrackDetailsState.loaded'))
+      ..add(DiagnosticsProperty('chapters', chapters));
   }
 
   @override
@@ -271,6 +284,7 @@ class _$TrackDetailsStateLoaded implements TrackDetailsStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$TrackDetailsStateLoadedCopyWith<_$TrackDetailsStateLoaded> get copyWith =>
       __$$TrackDetailsStateLoadedCopyWithImpl<_$TrackDetailsStateLoaded>(
           this, _$identity);
@@ -289,10 +303,10 @@ class _$TrackDetailsStateLoaded implements TrackDetailsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(chapters);
   }
@@ -326,10 +340,10 @@ class _$TrackDetailsStateLoaded implements TrackDetailsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TrackDetailsStateInitial value)? initial,
-    TResult Function(TrackDetailsStateLoaded value)? loaded,
-    TResult Function(TrackDetailsStateLoading value)? loading,
-    TResult Function(TrackDetailsStateErrorDetails value)? error,
+    TResult? Function(TrackDetailsStateInitial value)? initial,
+    TResult? Function(TrackDetailsStateLoaded value)? loaded,
+    TResult? Function(TrackDetailsStateLoading value)? loading,
+    TResult? Function(TrackDetailsStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -369,25 +383,29 @@ abstract class _$$TrackDetailsStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$TrackDetailsStateLoadingCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateLoading>
     implements _$$TrackDetailsStateLoadingCopyWith<$Res> {
   __$$TrackDetailsStateLoadingCopyWithImpl(_$TrackDetailsStateLoading _value,
       $Res Function(_$TrackDetailsStateLoading) _then)
-      : super(_value, (v) => _then(v as _$TrackDetailsStateLoading));
-
-  @override
-  _$TrackDetailsStateLoading get _value =>
-      super._value as _$TrackDetailsStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$TrackDetailsStateLoading implements TrackDetailsStateLoading {
+class _$TrackDetailsStateLoading
+    with DiagnosticableTreeMixin
+    implements TrackDetailsStateLoading {
   const _$TrackDetailsStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'TrackDetailsState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'TrackDetailsState.loading'));
   }
 
   @override
@@ -414,10 +432,10 @@ class _$TrackDetailsStateLoading implements TrackDetailsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -451,10 +469,10 @@ class _$TrackDetailsStateLoading implements TrackDetailsStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TrackDetailsStateInitial value)? initial,
-    TResult Function(TrackDetailsStateLoaded value)? loaded,
-    TResult Function(TrackDetailsStateLoading value)? loading,
-    TResult Function(TrackDetailsStateErrorDetails value)? error,
+    TResult? Function(TrackDetailsStateInitial value)? initial,
+    TResult? Function(TrackDetailsStateLoaded value)? loaded,
+    TResult? Function(TrackDetailsStateLoading value)? loading,
+    TResult? Function(TrackDetailsStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -485,28 +503,27 @@ abstract class _$$TrackDetailsStateErrorDetailsCopyWith<$Res> {
           _$TrackDetailsStateErrorDetails value,
           $Res Function(_$TrackDetailsStateErrorDetails) then) =
       __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res,
+        _$TrackDetailsStateErrorDetails>
     implements _$$TrackDetailsStateErrorDetailsCopyWith<$Res> {
   __$$TrackDetailsStateErrorDetailsCopyWithImpl(
       _$TrackDetailsStateErrorDetails _value,
       $Res Function(_$TrackDetailsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$TrackDetailsStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$TrackDetailsStateErrorDetails get _value =>
-      super._value as _$TrackDetailsStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$TrackDetailsStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -516,15 +533,25 @@ class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateErrorDetails implements TrackDetailsStateErrorDetails {
+class _$TrackDetailsStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements TrackDetailsStateErrorDetails {
   const _$TrackDetailsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'TrackDetailsState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TrackDetailsState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -532,15 +559,15 @@ class _$TrackDetailsStateErrorDetails implements TrackDetailsStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TrackDetailsStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$TrackDetailsStateErrorDetailsCopyWith<_$TrackDetailsStateErrorDetails>
       get copyWith => __$$TrackDetailsStateErrorDetailsCopyWithImpl<
           _$TrackDetailsStateErrorDetails>(this, _$identity);
@@ -559,10 +586,10 @@ class _$TrackDetailsStateErrorDetails implements TrackDetailsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -596,10 +623,10 @@ class _$TrackDetailsStateErrorDetails implements TrackDetailsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TrackDetailsStateInitial value)? initial,
-    TResult Function(TrackDetailsStateLoaded value)? loaded,
-    TResult Function(TrackDetailsStateLoading value)? loading,
-    TResult Function(TrackDetailsStateErrorDetails value)? error,
+    TResult? Function(TrackDetailsStateInitial value)? initial,
+    TResult? Function(TrackDetailsStateLoaded value)? loaded,
+    TResult? Function(TrackDetailsStateLoading value)? loading,
+    TResult? Function(TrackDetailsStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

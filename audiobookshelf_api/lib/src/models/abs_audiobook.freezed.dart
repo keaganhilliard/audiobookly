@@ -1096,7 +1096,7 @@ mixin _$Media {
   List<String>? get tags => throw _privateConstructorUsedError;
   List<AudioFile>? get audioFiles => throw _privateConstructorUsedError;
   List<Chapter>? get chapters => throw _privateConstructorUsedError;
-  List<String>? get missingParts => throw _privateConstructorUsedError;
+  List<dynamic>? get missingParts => throw _privateConstructorUsedError;
   dynamic get ebookFile => throw _privateConstructorUsedError;
   double? get duration => throw _privateConstructorUsedError;
 
@@ -1117,7 +1117,7 @@ abstract class $MediaCopyWith<$Res> {
       List<String>? tags,
       List<AudioFile>? audioFiles,
       List<Chapter>? chapters,
-      List<String>? missingParts,
+      List<dynamic>? missingParts,
       dynamic ebookFile,
       double? duration});
 
@@ -1175,7 +1175,7 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
       missingParts: freezed == missingParts
           ? _value.missingParts
           : missingParts // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<dynamic>?,
       ebookFile: null == ebookFile
           ? _value.ebookFile
           : ebookFile // ignore: cast_nullable_to_non_nullable
@@ -1209,7 +1209,7 @@ abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
       List<String>? tags,
       List<AudioFile>? audioFiles,
       List<Chapter>? chapters,
-      List<String>? missingParts,
+      List<dynamic>? missingParts,
       dynamic ebookFile,
       double? duration});
 
@@ -1264,7 +1264,7 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
       missingParts: freezed == missingParts
           ? _value._missingParts
           : missingParts // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<dynamic>?,
       ebookFile: null == ebookFile
           ? _value.ebookFile
           : ebookFile // ignore: cast_nullable_to_non_nullable
@@ -1287,7 +1287,7 @@ class _$_Media implements _Media {
       final List<String>? tags,
       final List<AudioFile>? audioFiles,
       final List<Chapter>? chapters,
-      final List<String>? missingParts,
+      final List<dynamic>? missingParts,
       this.ebookFile,
       this.duration})
       : _tags = tags,
@@ -1331,9 +1331,9 @@ class _$_Media implements _Media {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<String>? _missingParts;
+  final List<dynamic>? _missingParts;
   @override
-  List<String>? get missingParts {
+  List<dynamic>? get missingParts {
     final value = _missingParts;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -1408,7 +1408,7 @@ abstract class _Media implements Media {
       final List<String>? tags,
       final List<AudioFile>? audioFiles,
       final List<Chapter>? chapters,
-      final List<String>? missingParts,
+      final List<dynamic>? missingParts,
       final dynamic ebookFile,
       final double? duration}) = _$_Media;
 
@@ -1427,7 +1427,7 @@ abstract class _Media implements Media {
   @override
   List<Chapter>? get chapters;
   @override
-  List<String>? get missingParts;
+  List<dynamic>? get missingParts;
   @override
   dynamic get ebookFile;
   @override

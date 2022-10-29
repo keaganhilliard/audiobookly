@@ -111,9 +111,7 @@ _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
       chapters: (json['chapters'] as List<dynamic>?)
           ?.map((e) => Chapter.fromJson(e as Map<String, dynamic>))
           .toList(),
-      missingParts: (json['missingParts'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      missingParts: json['missingParts'] as List<dynamic>?,
       ebookFile: json['ebookFile'],
       duration: (json['duration'] as num?)?.toDouble(),
     );

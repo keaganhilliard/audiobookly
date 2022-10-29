@@ -27,10 +27,10 @@ mixin _$BookDetailsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,10 +52,10 @@ mixin _$BookDetailsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(BookDetailsStateInitial value)? initial,
-    TResult Function(BookDetailsStateLoaded value)? loaded,
-    TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateInitial value)? initial,
+    TResult? Function(BookDetailsStateLoaded value)? loaded,
+    TResult? Function(BookDetailsStateLoading value)? loading,
+    TResult? Function(BookDetailsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,17 +73,18 @@ mixin _$BookDetailsState {
 abstract class $BookDetailsStateCopyWith<$Res> {
   factory $BookDetailsStateCopyWith(
           BookDetailsState value, $Res Function(BookDetailsState) then) =
-      _$BookDetailsStateCopyWithImpl<$Res>;
+      _$BookDetailsStateCopyWithImpl<$Res, BookDetailsState>;
 }
 
 /// @nodoc
-class _$BookDetailsStateCopyWithImpl<$Res>
+class _$BookDetailsStateCopyWithImpl<$Res, $Val extends BookDetailsState>
     implements $BookDetailsStateCopyWith<$Res> {
   _$BookDetailsStateCopyWithImpl(this._value, this._then);
 
-  final BookDetailsState _value;
   // ignore: unused_field
-  final $Res Function(BookDetailsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -95,25 +96,29 @@ abstract class _$$BookDetailsStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$BookDetailsStateInitialCopyWithImpl<$Res>
-    extends _$BookDetailsStateCopyWithImpl<$Res>
+    extends _$BookDetailsStateCopyWithImpl<$Res, _$BookDetailsStateInitial>
     implements _$$BookDetailsStateInitialCopyWith<$Res> {
   __$$BookDetailsStateInitialCopyWithImpl(_$BookDetailsStateInitial _value,
       $Res Function(_$BookDetailsStateInitial) _then)
-      : super(_value, (v) => _then(v as _$BookDetailsStateInitial));
-
-  @override
-  _$BookDetailsStateInitial get _value =>
-      super._value as _$BookDetailsStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$BookDetailsStateInitial implements BookDetailsStateInitial {
+class _$BookDetailsStateInitial
+    with DiagnosticableTreeMixin
+    implements BookDetailsStateInitial {
   const _$BookDetailsStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BookDetailsState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'BookDetailsState.initial'));
   }
 
   @override
@@ -141,10 +146,10 @@ class _$BookDetailsStateInitial implements BookDetailsStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -178,10 +183,10 @@ class _$BookDetailsStateInitial implements BookDetailsStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(BookDetailsStateInitial value)? initial,
-    TResult Function(BookDetailsStateLoaded value)? loaded,
-    TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateInitial value)? initial,
+    TResult? Function(BookDetailsStateLoaded value)? loaded,
+    TResult? Function(BookDetailsStateLoading value)? loading,
+    TResult? Function(BookDetailsStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -211,32 +216,30 @@ abstract class _$$BookDetailsStateLoadedCopyWith<$Res> {
   factory _$$BookDetailsStateLoadedCopyWith(_$BookDetailsStateLoaded value,
           $Res Function(_$BookDetailsStateLoaded) then) =
       __$$BookDetailsStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({MediaItem? book, List<MediaItem>? chapters});
 }
 
 /// @nodoc
 class __$$BookDetailsStateLoadedCopyWithImpl<$Res>
-    extends _$BookDetailsStateCopyWithImpl<$Res>
+    extends _$BookDetailsStateCopyWithImpl<$Res, _$BookDetailsStateLoaded>
     implements _$$BookDetailsStateLoadedCopyWith<$Res> {
   __$$BookDetailsStateLoadedCopyWithImpl(_$BookDetailsStateLoaded _value,
       $Res Function(_$BookDetailsStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$BookDetailsStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$BookDetailsStateLoaded get _value =>
-      super._value as _$BookDetailsStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? book = freezed,
     Object? chapters = freezed,
   }) {
     return _then(_$BookDetailsStateLoaded(
-      book: book == freezed
+      book: freezed == book
           ? _value.book
           : book // ignore: cast_nullable_to_non_nullable
               as MediaItem?,
-      chapters: chapters == freezed
+      chapters: freezed == chapters
           ? _value._chapters
           : chapters // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -246,7 +249,9 @@ class __$$BookDetailsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateLoaded implements BookDetailsStateLoaded {
+class _$BookDetailsStateLoaded
+    with DiagnosticableTreeMixin
+    implements BookDetailsStateLoaded {
   const _$BookDetailsStateLoaded({this.book, final List<MediaItem>? chapters})
       : _chapters = chapters;
 
@@ -262,8 +267,17 @@ class _$BookDetailsStateLoaded implements BookDetailsStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BookDetailsState.loaded(book: $book, chapters: $chapters)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BookDetailsState.loaded'))
+      ..add(DiagnosticsProperty('book', book))
+      ..add(DiagnosticsProperty('chapters', chapters));
   }
 
   @override
@@ -271,18 +285,17 @@ class _$BookDetailsStateLoaded implements BookDetailsStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookDetailsStateLoaded &&
-            const DeepCollectionEquality().equals(other.book, book) &&
+            (identical(other.book, book) || other.book == book) &&
             const DeepCollectionEquality().equals(other._chapters, _chapters));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(book),
-      const DeepCollectionEquality().hash(_chapters));
+      runtimeType, book, const DeepCollectionEquality().hash(_chapters));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$BookDetailsStateLoadedCopyWith<_$BookDetailsStateLoaded> get copyWith =>
       __$$BookDetailsStateLoadedCopyWithImpl<_$BookDetailsStateLoaded>(
           this, _$identity);
@@ -302,10 +315,10 @@ class _$BookDetailsStateLoaded implements BookDetailsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(book, chapters);
   }
@@ -339,10 +352,10 @@ class _$BookDetailsStateLoaded implements BookDetailsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(BookDetailsStateInitial value)? initial,
-    TResult Function(BookDetailsStateLoaded value)? loaded,
-    TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateInitial value)? initial,
+    TResult? Function(BookDetailsStateLoaded value)? loaded,
+    TResult? Function(BookDetailsStateLoading value)? loading,
+    TResult? Function(BookDetailsStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -384,25 +397,29 @@ abstract class _$$BookDetailsStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$BookDetailsStateLoadingCopyWithImpl<$Res>
-    extends _$BookDetailsStateCopyWithImpl<$Res>
+    extends _$BookDetailsStateCopyWithImpl<$Res, _$BookDetailsStateLoading>
     implements _$$BookDetailsStateLoadingCopyWith<$Res> {
   __$$BookDetailsStateLoadingCopyWithImpl(_$BookDetailsStateLoading _value,
       $Res Function(_$BookDetailsStateLoading) _then)
-      : super(_value, (v) => _then(v as _$BookDetailsStateLoading));
-
-  @override
-  _$BookDetailsStateLoading get _value =>
-      super._value as _$BookDetailsStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$BookDetailsStateLoading implements BookDetailsStateLoading {
+class _$BookDetailsStateLoading
+    with DiagnosticableTreeMixin
+    implements BookDetailsStateLoading {
   const _$BookDetailsStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BookDetailsState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'BookDetailsState.loading'));
   }
 
   @override
@@ -430,10 +447,10 @@ class _$BookDetailsStateLoading implements BookDetailsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -467,10 +484,10 @@ class _$BookDetailsStateLoading implements BookDetailsStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(BookDetailsStateInitial value)? initial,
-    TResult Function(BookDetailsStateLoaded value)? loaded,
-    TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateInitial value)? initial,
+    TResult? Function(BookDetailsStateLoaded value)? loaded,
+    TResult? Function(BookDetailsStateLoading value)? loading,
+    TResult? Function(BookDetailsStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -501,28 +518,26 @@ abstract class _$$BookDetailsStateErrorDetailsCopyWith<$Res> {
           _$BookDetailsStateErrorDetails value,
           $Res Function(_$BookDetailsStateErrorDetails) then) =
       __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$BookDetailsStateCopyWithImpl<$Res>
+    extends _$BookDetailsStateCopyWithImpl<$Res, _$BookDetailsStateErrorDetails>
     implements _$$BookDetailsStateErrorDetailsCopyWith<$Res> {
   __$$BookDetailsStateErrorDetailsCopyWithImpl(
       _$BookDetailsStateErrorDetails _value,
       $Res Function(_$BookDetailsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$BookDetailsStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$BookDetailsStateErrorDetails get _value =>
-      super._value as _$BookDetailsStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$BookDetailsStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -532,15 +547,25 @@ class __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateErrorDetails implements BookDetailsStateErrorDetails {
+class _$BookDetailsStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements BookDetailsStateErrorDetails {
   const _$BookDetailsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BookDetailsState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BookDetailsState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -548,15 +573,15 @@ class _$BookDetailsStateErrorDetails implements BookDetailsStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookDetailsStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$BookDetailsStateErrorDetailsCopyWith<_$BookDetailsStateErrorDetails>
       get copyWith => __$$BookDetailsStateErrorDetailsCopyWithImpl<
           _$BookDetailsStateErrorDetails>(this, _$identity);
@@ -576,10 +601,10 @@ class _$BookDetailsStateErrorDetails implements BookDetailsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -613,10 +638,10 @@ class _$BookDetailsStateErrorDetails implements BookDetailsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(BookDetailsStateInitial value)? initial,
-    TResult Function(BookDetailsStateLoaded value)? loaded,
-    TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateInitial value)? initial,
+    TResult? Function(BookDetailsStateLoaded value)? loaded,
+    TResult? Function(BookDetailsStateLoading value)? loading,
+    TResult? Function(BookDetailsStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

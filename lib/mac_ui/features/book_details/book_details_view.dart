@@ -31,6 +31,14 @@ class BookDetailsView extends HookConsumerWidget {
     final state = ref.watch(bookDetailsStateProvider(mediaId));
     final downloadService = ref.watch(downloadServiceProvider);
     final playbackController = GetIt.I<PlaybackController>();
+    final mounted = useIsMounted();
+    useEffect(() {
+      if (mounted()) {
+        print('Mounted');
+        bookDetails.getDetails();
+      }
+    }, [mounted()]);
+
     return state.when(
       initial: _loadingIndicator,
       loading: _loadingIndicator,
@@ -193,25 +201,33 @@ class BookDetailsView extends HookConsumerWidget {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Text(
-                                                        item.displayDescription ??
-                                                            '',
-                                                        softWrap: true,
-                                                        overflow: TextOverflow
-                                                            .visible,
-                                                        style: MacosTheme.of(
-                                                                context)
-                                                            .typography
-                                                            .body,
+                                                      Expanded(
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          child: Text(
+                                                            item.displayDescription ??
+                                                                '',
+                                                            softWrap: true,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .visible,
+                                                            style:
+                                                                MacosTheme.of(
+                                                                        context)
+                                                                    .typography
+                                                                    .body,
+                                                          ),
+                                                        ),
                                                       ),
                                                       PushButton(
-                                                        child: Text('Dismiss'),
                                                         buttonSize:
                                                             ButtonSize.large,
                                                         onPressed: () =>
                                                             Navigator.of(
                                                                     context)
                                                                 .pop(),
+                                                        child: const Text(
+                                                            'Dismiss'),
                                                       )
                                                     ],
                                                   ),
@@ -480,9 +496,6 @@ class BookDetailsView extends HookConsumerWidget {
                       child: Container(),
                     );
                   }),
-                  const SliverToBoxAdapter(
-                    child: BottomPadding(),
-                  ),
                 ],
               );
             }),

@@ -28,12 +28,12 @@ mixin _$HomeState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? recentlyPlayed,
             List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
         loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,10 +57,10 @@ mixin _$HomeState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateInitial value)? initial,
-    TResult Function(HomeStateLoaded value)? loaded,
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateInitial value)? initial,
+    TResult? Function(HomeStateLoaded value)? loaded,
+    TResult? Function(HomeStateLoading value)? loading,
+    TResult? Function(HomeStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,16 +77,18 @@ mixin _$HomeState {
 /// @nodoc
 abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
-      _$HomeStateCopyWithImpl<$Res>;
+      _$HomeStateCopyWithImpl<$Res, HomeState>;
 }
 
 /// @nodoc
-class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
+class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
+    implements $HomeStateCopyWith<$Res> {
   _$HomeStateCopyWithImpl(this._value, this._then);
 
-  final HomeState _value;
   // ignore: unused_field
-  final $Res Function(HomeState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -98,24 +100,29 @@ abstract class _$$HomeStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$HomeStateInitialCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateInitial>
     implements _$$HomeStateInitialCopyWith<$Res> {
   __$$HomeStateInitialCopyWithImpl(
       _$HomeStateInitial _value, $Res Function(_$HomeStateInitial) _then)
-      : super(_value, (v) => _then(v as _$HomeStateInitial));
-
-  @override
-  _$HomeStateInitial get _value => super._value as _$HomeStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$HomeStateInitial implements HomeStateInitial {
+class _$HomeStateInitial
+    with DiagnosticableTreeMixin
+    implements HomeStateInitial {
   const _$HomeStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'HomeState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'HomeState.initial'));
   }
 
   @override
@@ -143,12 +150,12 @@ class _$HomeStateInitial implements HomeStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? recentlyPlayed,
             List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
         loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -184,10 +191,10 @@ class _$HomeStateInitial implements HomeStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateInitial value)? initial,
-    TResult Function(HomeStateLoaded value)? loaded,
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateInitial value)? initial,
+    TResult? Function(HomeStateLoaded value)? loaded,
+    TResult? Function(HomeStateLoading value)? loading,
+    TResult? Function(HomeStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -217,6 +224,7 @@ abstract class _$$HomeStateLoadedCopyWith<$Res> {
   factory _$$HomeStateLoadedCopyWith(
           _$HomeStateLoaded value, $Res Function(_$HomeStateLoaded) then) =
       __$$HomeStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {List<MediaItem>? recentlyPlayed,
       List<MediaItem>? recentlyAdded,
@@ -225,15 +233,13 @@ abstract class _$$HomeStateLoadedCopyWith<$Res> {
 
 /// @nodoc
 class __$$HomeStateLoadedCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateLoaded>
     implements _$$HomeStateLoadedCopyWith<$Res> {
   __$$HomeStateLoadedCopyWithImpl(
       _$HomeStateLoaded _value, $Res Function(_$HomeStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$HomeStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$HomeStateLoaded get _value => super._value as _$HomeStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? recentlyPlayed = freezed,
@@ -241,15 +247,15 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
     Object? downloaded = freezed,
   }) {
     return _then(_$HomeStateLoaded(
-      recentlyPlayed: recentlyPlayed == freezed
+      recentlyPlayed: freezed == recentlyPlayed
           ? _value._recentlyPlayed
           : recentlyPlayed // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
-      recentlyAdded: recentlyAdded == freezed
+      recentlyAdded: freezed == recentlyAdded
           ? _value._recentlyAdded
           : recentlyAdded // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
-      downloaded: downloaded == freezed
+      downloaded: freezed == downloaded
           ? _value._downloaded
           : downloaded // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -259,7 +265,9 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateLoaded implements HomeStateLoaded {
+class _$HomeStateLoaded
+    with DiagnosticableTreeMixin
+    implements HomeStateLoaded {
   const _$HomeStateLoaded(
       {final List<MediaItem>? recentlyPlayed,
       final List<MediaItem>? recentlyAdded,
@@ -296,8 +304,18 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'HomeState.loaded(recentlyPlayed: $recentlyPlayed, recentlyAdded: $recentlyAdded, downloaded: $downloaded)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeState.loaded'))
+      ..add(DiagnosticsProperty('recentlyPlayed', recentlyPlayed))
+      ..add(DiagnosticsProperty('recentlyAdded', recentlyAdded))
+      ..add(DiagnosticsProperty('downloaded', downloaded));
   }
 
   @override
@@ -322,6 +340,7 @@ class _$HomeStateLoaded implements HomeStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
       __$$HomeStateLoadedCopyWithImpl<_$HomeStateLoaded>(this, _$identity);
 
@@ -341,12 +360,12 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? recentlyPlayed,
             List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
         loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(recentlyPlayed, recentlyAdded, downloaded);
   }
@@ -382,10 +401,10 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateInitial value)? initial,
-    TResult Function(HomeStateLoaded value)? loaded,
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateInitial value)? initial,
+    TResult? Function(HomeStateLoaded value)? loaded,
+    TResult? Function(HomeStateLoading value)? loading,
+    TResult? Function(HomeStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -429,24 +448,29 @@ abstract class _$$HomeStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$HomeStateLoadingCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateLoading>
     implements _$$HomeStateLoadingCopyWith<$Res> {
   __$$HomeStateLoadingCopyWithImpl(
       _$HomeStateLoading _value, $Res Function(_$HomeStateLoading) _then)
-      : super(_value, (v) => _then(v as _$HomeStateLoading));
-
-  @override
-  _$HomeStateLoading get _value => super._value as _$HomeStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$HomeStateLoading implements HomeStateLoading {
+class _$HomeStateLoading
+    with DiagnosticableTreeMixin
+    implements HomeStateLoading {
   const _$HomeStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'HomeState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'HomeState.loading'));
   }
 
   @override
@@ -474,12 +498,12 @@ class _$HomeStateLoading implements HomeStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? recentlyPlayed,
             List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
         loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -515,10 +539,10 @@ class _$HomeStateLoading implements HomeStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateInitial value)? initial,
-    TResult Function(HomeStateLoaded value)? loaded,
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateInitial value)? initial,
+    TResult? Function(HomeStateLoaded value)? loaded,
+    TResult? Function(HomeStateLoading value)? loading,
+    TResult? Function(HomeStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -548,26 +572,25 @@ abstract class _$$HomeStateErrorDetailsCopyWith<$Res> {
   factory _$$HomeStateErrorDetailsCopyWith(_$HomeStateErrorDetails value,
           $Res Function(_$HomeStateErrorDetails) then) =
       __$$HomeStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateErrorDetails>
     implements _$$HomeStateErrorDetailsCopyWith<$Res> {
   __$$HomeStateErrorDetailsCopyWithImpl(_$HomeStateErrorDetails _value,
       $Res Function(_$HomeStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$HomeStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$HomeStateErrorDetails get _value => super._value as _$HomeStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$HomeStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -577,15 +600,25 @@ class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateErrorDetails implements HomeStateErrorDetails {
+class _$HomeStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements HomeStateErrorDetails {
   const _$HomeStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'HomeState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HomeState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -593,15 +626,15 @@ class _$HomeStateErrorDetails implements HomeStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$HomeStateErrorDetailsCopyWith<_$HomeStateErrorDetails> get copyWith =>
       __$$HomeStateErrorDetailsCopyWithImpl<_$HomeStateErrorDetails>(
           this, _$identity);
@@ -622,12 +655,12 @@ class _$HomeStateErrorDetails implements HomeStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? recentlyPlayed,
             List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
         loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -663,10 +696,10 @@ class _$HomeStateErrorDetails implements HomeStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateInitial value)? initial,
-    TResult Function(HomeStateLoaded value)? loaded,
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateInitial value)? initial,
+    TResult? Function(HomeStateLoaded value)? loaded,
+    TResult? Function(HomeStateLoading value)? loading,
+    TResult? Function(HomeStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

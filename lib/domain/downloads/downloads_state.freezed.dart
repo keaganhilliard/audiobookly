@@ -26,10 +26,10 @@ mixin _$DownloadsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$DownloadsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DownloadsStateInitial value)? initial,
-    TResult Function(DownloadsStateLoaded value)? loaded,
-    TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateInitial value)? initial,
+    TResult? Function(DownloadsStateLoaded value)? loaded,
+    TResult? Function(DownloadsStateLoading value)? loading,
+    TResult? Function(DownloadsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$DownloadsState {
 abstract class $DownloadsStateCopyWith<$Res> {
   factory $DownloadsStateCopyWith(
           DownloadsState value, $Res Function(DownloadsState) then) =
-      _$DownloadsStateCopyWithImpl<$Res>;
+      _$DownloadsStateCopyWithImpl<$Res, DownloadsState>;
 }
 
 /// @nodoc
-class _$DownloadsStateCopyWithImpl<$Res>
+class _$DownloadsStateCopyWithImpl<$Res, $Val extends DownloadsState>
     implements $DownloadsStateCopyWith<$Res> {
   _$DownloadsStateCopyWithImpl(this._value, this._then);
 
-  final DownloadsState _value;
   // ignore: unused_field
-  final $Res Function(DownloadsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,24 +95,29 @@ abstract class _$$DownloadsStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$DownloadsStateInitialCopyWithImpl<$Res>
-    extends _$DownloadsStateCopyWithImpl<$Res>
+    extends _$DownloadsStateCopyWithImpl<$Res, _$DownloadsStateInitial>
     implements _$$DownloadsStateInitialCopyWith<$Res> {
   __$$DownloadsStateInitialCopyWithImpl(_$DownloadsStateInitial _value,
       $Res Function(_$DownloadsStateInitial) _then)
-      : super(_value, (v) => _then(v as _$DownloadsStateInitial));
-
-  @override
-  _$DownloadsStateInitial get _value => super._value as _$DownloadsStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$DownloadsStateInitial implements DownloadsStateInitial {
+class _$DownloadsStateInitial
+    with DiagnosticableTreeMixin
+    implements DownloadsStateInitial {
   const _$DownloadsStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DownloadsState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'DownloadsState.initial'));
   }
 
   @override
@@ -137,10 +143,10 @@ class _$DownloadsStateInitial implements DownloadsStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -174,10 +180,10 @@ class _$DownloadsStateInitial implements DownloadsStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DownloadsStateInitial value)? initial,
-    TResult Function(DownloadsStateLoaded value)? loaded,
-    TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateInitial value)? initial,
+    TResult? Function(DownloadsStateLoaded value)? loaded,
+    TResult? Function(DownloadsStateLoading value)? loading,
+    TResult? Function(DownloadsStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -207,26 +213,25 @@ abstract class _$$DownloadsStateLoadedCopyWith<$Res> {
   factory _$$DownloadsStateLoadedCopyWith(_$DownloadsStateLoaded value,
           $Res Function(_$DownloadsStateLoaded) then) =
       __$$DownloadsStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MediaItem>? books});
 }
 
 /// @nodoc
 class __$$DownloadsStateLoadedCopyWithImpl<$Res>
-    extends _$DownloadsStateCopyWithImpl<$Res>
+    extends _$DownloadsStateCopyWithImpl<$Res, _$DownloadsStateLoaded>
     implements _$$DownloadsStateLoadedCopyWith<$Res> {
   __$$DownloadsStateLoadedCopyWithImpl(_$DownloadsStateLoaded _value,
       $Res Function(_$DownloadsStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$DownloadsStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$DownloadsStateLoaded get _value => super._value as _$DownloadsStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? books = freezed,
   }) {
     return _then(_$DownloadsStateLoaded(
-      books: books == freezed
+      books: freezed == books
           ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -236,7 +241,9 @@ class __$$DownloadsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateLoaded implements DownloadsStateLoaded {
+class _$DownloadsStateLoaded
+    with DiagnosticableTreeMixin
+    implements DownloadsStateLoaded {
   const _$DownloadsStateLoaded({final List<MediaItem>? books}) : _books = books;
 
   final List<MediaItem>? _books;
@@ -249,8 +256,16 @@ class _$DownloadsStateLoaded implements DownloadsStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DownloadsState.loaded(books: $books)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DownloadsState.loaded'))
+      ..add(DiagnosticsProperty('books', books));
   }
 
   @override
@@ -267,6 +282,7 @@ class _$DownloadsStateLoaded implements DownloadsStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$DownloadsStateLoadedCopyWith<_$DownloadsStateLoaded> get copyWith =>
       __$$DownloadsStateLoadedCopyWithImpl<_$DownloadsStateLoaded>(
           this, _$identity);
@@ -285,10 +301,10 @@ class _$DownloadsStateLoaded implements DownloadsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(books);
   }
@@ -322,10 +338,10 @@ class _$DownloadsStateLoaded implements DownloadsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DownloadsStateInitial value)? initial,
-    TResult Function(DownloadsStateLoaded value)? loaded,
-    TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateInitial value)? initial,
+    TResult? Function(DownloadsStateLoaded value)? loaded,
+    TResult? Function(DownloadsStateLoading value)? loading,
+    TResult? Function(DownloadsStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -365,24 +381,29 @@ abstract class _$$DownloadsStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$DownloadsStateLoadingCopyWithImpl<$Res>
-    extends _$DownloadsStateCopyWithImpl<$Res>
+    extends _$DownloadsStateCopyWithImpl<$Res, _$DownloadsStateLoading>
     implements _$$DownloadsStateLoadingCopyWith<$Res> {
   __$$DownloadsStateLoadingCopyWithImpl(_$DownloadsStateLoading _value,
       $Res Function(_$DownloadsStateLoading) _then)
-      : super(_value, (v) => _then(v as _$DownloadsStateLoading));
-
-  @override
-  _$DownloadsStateLoading get _value => super._value as _$DownloadsStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$DownloadsStateLoading implements DownloadsStateLoading {
+class _$DownloadsStateLoading
+    with DiagnosticableTreeMixin
+    implements DownloadsStateLoading {
   const _$DownloadsStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DownloadsState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'DownloadsState.loading'));
   }
 
   @override
@@ -408,10 +429,10 @@ class _$DownloadsStateLoading implements DownloadsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -445,10 +466,10 @@ class _$DownloadsStateLoading implements DownloadsStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DownloadsStateInitial value)? initial,
-    TResult Function(DownloadsStateLoaded value)? loaded,
-    TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateInitial value)? initial,
+    TResult? Function(DownloadsStateLoaded value)? loaded,
+    TResult? Function(DownloadsStateLoading value)? loading,
+    TResult? Function(DownloadsStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -479,28 +500,26 @@ abstract class _$$DownloadsStateErrorDetailsCopyWith<$Res> {
           _$DownloadsStateErrorDetails value,
           $Res Function(_$DownloadsStateErrorDetails) then) =
       __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$DownloadsStateCopyWithImpl<$Res>
+    extends _$DownloadsStateCopyWithImpl<$Res, _$DownloadsStateErrorDetails>
     implements _$$DownloadsStateErrorDetailsCopyWith<$Res> {
   __$$DownloadsStateErrorDetailsCopyWithImpl(
       _$DownloadsStateErrorDetails _value,
       $Res Function(_$DownloadsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$DownloadsStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$DownloadsStateErrorDetails get _value =>
-      super._value as _$DownloadsStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$DownloadsStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -510,15 +529,25 @@ class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateErrorDetails implements DownloadsStateErrorDetails {
+class _$DownloadsStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements DownloadsStateErrorDetails {
   const _$DownloadsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DownloadsState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DownloadsState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -526,15 +555,15 @@ class _$DownloadsStateErrorDetails implements DownloadsStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DownloadsStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$DownloadsStateErrorDetailsCopyWith<_$DownloadsStateErrorDetails>
       get copyWith => __$$DownloadsStateErrorDetailsCopyWithImpl<
           _$DownloadsStateErrorDetails>(this, _$identity);
@@ -553,10 +582,10 @@ class _$DownloadsStateErrorDetails implements DownloadsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -590,10 +619,10 @@ class _$DownloadsStateErrorDetails implements DownloadsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DownloadsStateInitial value)? initial,
-    TResult Function(DownloadsStateLoaded value)? loaded,
-    TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateInitial value)? initial,
+    TResult? Function(DownloadsStateLoaded value)? loaded,
+    TResult? Function(DownloadsStateLoading value)? loading,
+    TResult? Function(DownloadsStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

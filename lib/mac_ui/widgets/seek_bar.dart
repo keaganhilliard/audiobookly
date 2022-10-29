@@ -41,7 +41,7 @@ class SeekBar extends HookWidget {
                 thumbPainter: (canvas, rect) {
                   if (showPosition.value) {
                     final RRect rrect = RRect.fromRectAndRadius(
-                      Rect.fromLTRB(rect.left + 5, 47, rect.right - 5, 60),
+                      Rect.fromLTRB(rect.left + 5, 44, rect.right - 5, 60),
                       const Radius.circular(2.0),
                     );
                     for (final BoxShadow shadow in kBetterSliderBoxShadows) {
@@ -114,7 +114,7 @@ class _Label extends StatelessWidget {
     return Positioned(
       left: left ? 8.0 : null,
       right: left ? null : 8.0,
-      bottom: 8.0,
+      bottom: 10.0,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 100),
         opacity: show ? 1.0 : 0.0,

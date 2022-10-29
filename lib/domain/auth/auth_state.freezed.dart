@@ -27,11 +27,11 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function()? offline,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function()? offline,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,11 +55,11 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthStateInitial value)? initial,
-    TResult Function(AuthStateLoaded value)? loaded,
-    TResult Function(AuthStateLoading value)? loading,
-    TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateInitial value)? initial,
+    TResult? Function(AuthStateLoaded value)? loaded,
+    TResult? Function(AuthStateLoading value)? loading,
+    TResult? Function(AuthStateOffline value)? offline,
+    TResult? Function(AuthStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,16 +77,18 @@ mixin _$AuthState {
 /// @nodoc
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
-      _$AuthStateCopyWithImpl<$Res>;
+      _$AuthStateCopyWithImpl<$Res, AuthState>;
 }
 
 /// @nodoc
-class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
+class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
+    implements $AuthStateCopyWith<$Res> {
   _$AuthStateCopyWithImpl(this._value, this._then);
 
-  final AuthState _value;
   // ignore: unused_field
-  final $Res Function(AuthState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -98,24 +100,29 @@ abstract class _$$AuthStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$AuthStateInitialCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateInitial>
     implements _$$AuthStateInitialCopyWith<$Res> {
   __$$AuthStateInitialCopyWithImpl(
       _$AuthStateInitial _value, $Res Function(_$AuthStateInitial) _then)
-      : super(_value, (v) => _then(v as _$AuthStateInitial));
-
-  @override
-  _$AuthStateInitial get _value => super._value as _$AuthStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthStateInitial implements AuthStateInitial {
+class _$AuthStateInitial
+    with DiagnosticableTreeMixin
+    implements AuthStateInitial {
   const _$AuthStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthState.initial'));
   }
 
   @override
@@ -142,11 +149,11 @@ class _$AuthStateInitial implements AuthStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function()? offline,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function()? offline,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -182,11 +189,11 @@ class _$AuthStateInitial implements AuthStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthStateInitial value)? initial,
-    TResult Function(AuthStateLoaded value)? loaded,
-    TResult Function(AuthStateLoading value)? loading,
-    TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateInitial value)? initial,
+    TResult? Function(AuthStateLoaded value)? loaded,
+    TResult? Function(AuthStateLoading value)? loading,
+    TResult? Function(AuthStateOffline value)? offline,
+    TResult? Function(AuthStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -217,26 +224,25 @@ abstract class _$$AuthStateLoadedCopyWith<$Res> {
   factory _$$AuthStateLoadedCopyWith(
           _$AuthStateLoaded value, $Res Function(_$AuthStateLoaded) then) =
       __$$AuthStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({User? user});
 }
 
 /// @nodoc
 class __$$AuthStateLoadedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateLoaded>
     implements _$$AuthStateLoadedCopyWith<$Res> {
   __$$AuthStateLoadedCopyWithImpl(
       _$AuthStateLoaded _value, $Res Function(_$AuthStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$AuthStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$AuthStateLoaded get _value => super._value as _$AuthStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? user = freezed,
   }) {
     return _then(_$AuthStateLoaded(
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
@@ -246,15 +252,25 @@ class __$$AuthStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateLoaded implements AuthStateLoaded {
+class _$AuthStateLoaded
+    with DiagnosticableTreeMixin
+    implements AuthStateLoaded {
   const _$AuthStateLoaded({this.user});
 
   @override
   final User? user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.loaded(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthState.loaded'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -262,15 +278,15 @@ class _$AuthStateLoaded implements AuthStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthStateLoaded &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthStateLoadedCopyWith<_$AuthStateLoaded> get copyWith =>
       __$$AuthStateLoadedCopyWithImpl<_$AuthStateLoaded>(this, _$identity);
 
@@ -289,11 +305,11 @@ class _$AuthStateLoaded implements AuthStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function()? offline,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function()? offline,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(user);
   }
@@ -329,11 +345,11 @@ class _$AuthStateLoaded implements AuthStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthStateInitial value)? initial,
-    TResult Function(AuthStateLoaded value)? loaded,
-    TResult Function(AuthStateLoading value)? loading,
-    TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateInitial value)? initial,
+    TResult? Function(AuthStateLoaded value)? loaded,
+    TResult? Function(AuthStateLoading value)? loading,
+    TResult? Function(AuthStateOffline value)? offline,
+    TResult? Function(AuthStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -373,24 +389,29 @@ abstract class _$$AuthStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$AuthStateLoadingCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateLoading>
     implements _$$AuthStateLoadingCopyWith<$Res> {
   __$$AuthStateLoadingCopyWithImpl(
       _$AuthStateLoading _value, $Res Function(_$AuthStateLoading) _then)
-      : super(_value, (v) => _then(v as _$AuthStateLoading));
-
-  @override
-  _$AuthStateLoading get _value => super._value as _$AuthStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthStateLoading implements AuthStateLoading {
+class _$AuthStateLoading
+    with DiagnosticableTreeMixin
+    implements AuthStateLoading {
   const _$AuthStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthState.loading'));
   }
 
   @override
@@ -417,11 +438,11 @@ class _$AuthStateLoading implements AuthStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function()? offline,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function()? offline,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -457,11 +478,11 @@ class _$AuthStateLoading implements AuthStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthStateInitial value)? initial,
-    TResult Function(AuthStateLoaded value)? loaded,
-    TResult Function(AuthStateLoading value)? loading,
-    TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateInitial value)? initial,
+    TResult? Function(AuthStateLoaded value)? loaded,
+    TResult? Function(AuthStateLoading value)? loading,
+    TResult? Function(AuthStateOffline value)? offline,
+    TResult? Function(AuthStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -496,24 +517,29 @@ abstract class _$$AuthStateOfflineCopyWith<$Res> {
 
 /// @nodoc
 class __$$AuthStateOfflineCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateOffline>
     implements _$$AuthStateOfflineCopyWith<$Res> {
   __$$AuthStateOfflineCopyWithImpl(
       _$AuthStateOffline _value, $Res Function(_$AuthStateOffline) _then)
-      : super(_value, (v) => _then(v as _$AuthStateOffline));
-
-  @override
-  _$AuthStateOffline get _value => super._value as _$AuthStateOffline;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthStateOffline implements AuthStateOffline {
+class _$AuthStateOffline
+    with DiagnosticableTreeMixin
+    implements AuthStateOffline {
   const _$AuthStateOffline();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.offline()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthState.offline'));
   }
 
   @override
@@ -540,11 +566,11 @@ class _$AuthStateOffline implements AuthStateOffline {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function()? offline,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function()? offline,
+    TResult? Function(String? message)? error,
   }) {
     return offline?.call();
   }
@@ -580,11 +606,11 @@ class _$AuthStateOffline implements AuthStateOffline {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthStateInitial value)? initial,
-    TResult Function(AuthStateLoaded value)? loaded,
-    TResult Function(AuthStateLoading value)? loading,
-    TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateInitial value)? initial,
+    TResult? Function(AuthStateLoaded value)? loaded,
+    TResult? Function(AuthStateLoading value)? loading,
+    TResult? Function(AuthStateOffline value)? offline,
+    TResult? Function(AuthStateErrorDetails value)? error,
   }) {
     return offline?.call(this);
   }
@@ -615,26 +641,25 @@ abstract class _$$AuthStateErrorDetailsCopyWith<$Res> {
   factory _$$AuthStateErrorDetailsCopyWith(_$AuthStateErrorDetails value,
           $Res Function(_$AuthStateErrorDetails) then) =
       __$$AuthStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateErrorDetails>
     implements _$$AuthStateErrorDetailsCopyWith<$Res> {
   __$$AuthStateErrorDetailsCopyWithImpl(_$AuthStateErrorDetails _value,
       $Res Function(_$AuthStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$AuthStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$AuthStateErrorDetails get _value => super._value as _$AuthStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$AuthStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -644,15 +669,25 @@ class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateErrorDetails implements AuthStateErrorDetails {
+class _$AuthStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements AuthStateErrorDetails {
   const _$AuthStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -660,15 +695,15 @@ class _$AuthStateErrorDetails implements AuthStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthStateErrorDetailsCopyWith<_$AuthStateErrorDetails> get copyWith =>
       __$$AuthStateErrorDetailsCopyWithImpl<_$AuthStateErrorDetails>(
           this, _$identity);
@@ -688,11 +723,11 @@ class _$AuthStateErrorDetails implements AuthStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function()? offline,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function()? offline,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -728,11 +763,11 @@ class _$AuthStateErrorDetails implements AuthStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthStateInitial value)? initial,
-    TResult Function(AuthStateLoaded value)? loaded,
-    TResult Function(AuthStateLoading value)? loading,
-    TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateInitial value)? initial,
+    TResult? Function(AuthStateLoaded value)? loaded,
+    TResult? Function(AuthStateLoading value)? loading,
+    TResult? Function(AuthStateOffline value)? offline,
+    TResult? Function(AuthStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

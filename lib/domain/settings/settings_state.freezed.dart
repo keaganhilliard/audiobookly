@@ -26,10 +26,10 @@ mixin _$SettingsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$SettingsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SettingsStateInitial value)? initial,
-    TResult Function(SettingsStateLoaded value)? loaded,
-    TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateInitial value)? initial,
+    TResult? Function(SettingsStateLoaded value)? loaded,
+    TResult? Function(SettingsStateLoading value)? loading,
+    TResult? Function(SettingsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$SettingsState {
 abstract class $SettingsStateCopyWith<$Res> {
   factory $SettingsStateCopyWith(
           SettingsState value, $Res Function(SettingsState) then) =
-      _$SettingsStateCopyWithImpl<$Res>;
+      _$SettingsStateCopyWithImpl<$Res, SettingsState>;
 }
 
 /// @nodoc
-class _$SettingsStateCopyWithImpl<$Res>
+class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     implements $SettingsStateCopyWith<$Res> {
   _$SettingsStateCopyWithImpl(this._value, this._then);
 
-  final SettingsState _value;
   // ignore: unused_field
-  final $Res Function(SettingsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,24 +95,29 @@ abstract class _$$SettingsStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$SettingsStateInitialCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateInitial>
     implements _$$SettingsStateInitialCopyWith<$Res> {
   __$$SettingsStateInitialCopyWithImpl(_$SettingsStateInitial _value,
       $Res Function(_$SettingsStateInitial) _then)
-      : super(_value, (v) => _then(v as _$SettingsStateInitial));
-
-  @override
-  _$SettingsStateInitial get _value => super._value as _$SettingsStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SettingsStateInitial implements SettingsStateInitial {
+class _$SettingsStateInitial
+    with DiagnosticableTreeMixin
+    implements SettingsStateInitial {
   const _$SettingsStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SettingsState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SettingsState.initial'));
   }
 
   @override
@@ -137,10 +143,10 @@ class _$SettingsStateInitial implements SettingsStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -174,10 +180,10 @@ class _$SettingsStateInitial implements SettingsStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SettingsStateInitial value)? initial,
-    TResult Function(SettingsStateLoaded value)? loaded,
-    TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateInitial value)? initial,
+    TResult? Function(SettingsStateLoaded value)? loaded,
+    TResult? Function(SettingsStateLoading value)? loading,
+    TResult? Function(SettingsStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -207,26 +213,25 @@ abstract class _$$SettingsStateLoadedCopyWith<$Res> {
   factory _$$SettingsStateLoadedCopyWith(_$SettingsStateLoaded value,
           $Res Function(_$SettingsStateLoaded) then) =
       __$$SettingsStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({User? user});
 }
 
 /// @nodoc
 class __$$SettingsStateLoadedCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateLoaded>
     implements _$$SettingsStateLoadedCopyWith<$Res> {
   __$$SettingsStateLoadedCopyWithImpl(
       _$SettingsStateLoaded _value, $Res Function(_$SettingsStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$SettingsStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$SettingsStateLoaded get _value => super._value as _$SettingsStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? user = freezed,
   }) {
     return _then(_$SettingsStateLoaded(
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
@@ -236,15 +241,25 @@ class __$$SettingsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateLoaded implements SettingsStateLoaded {
+class _$SettingsStateLoaded
+    with DiagnosticableTreeMixin
+    implements SettingsStateLoaded {
   const _$SettingsStateLoaded({this.user});
 
   @override
   final User? user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SettingsState.loaded(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SettingsState.loaded'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -252,15 +267,15 @@ class _$SettingsStateLoaded implements SettingsStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateLoaded &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
       __$$SettingsStateLoadedCopyWithImpl<_$SettingsStateLoaded>(
           this, _$identity);
@@ -279,10 +294,10 @@ class _$SettingsStateLoaded implements SettingsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(user);
   }
@@ -316,10 +331,10 @@ class _$SettingsStateLoaded implements SettingsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SettingsStateInitial value)? initial,
-    TResult Function(SettingsStateLoaded value)? loaded,
-    TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateInitial value)? initial,
+    TResult? Function(SettingsStateLoaded value)? loaded,
+    TResult? Function(SettingsStateLoading value)? loading,
+    TResult? Function(SettingsStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -358,24 +373,29 @@ abstract class _$$SettingsStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$SettingsStateLoadingCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateLoading>
     implements _$$SettingsStateLoadingCopyWith<$Res> {
   __$$SettingsStateLoadingCopyWithImpl(_$SettingsStateLoading _value,
       $Res Function(_$SettingsStateLoading) _then)
-      : super(_value, (v) => _then(v as _$SettingsStateLoading));
-
-  @override
-  _$SettingsStateLoading get _value => super._value as _$SettingsStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SettingsStateLoading implements SettingsStateLoading {
+class _$SettingsStateLoading
+    with DiagnosticableTreeMixin
+    implements SettingsStateLoading {
   const _$SettingsStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SettingsState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SettingsState.loading'));
   }
 
   @override
@@ -401,10 +421,10 @@ class _$SettingsStateLoading implements SettingsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -438,10 +458,10 @@ class _$SettingsStateLoading implements SettingsStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SettingsStateInitial value)? initial,
-    TResult Function(SettingsStateLoaded value)? loaded,
-    TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateInitial value)? initial,
+    TResult? Function(SettingsStateLoaded value)? loaded,
+    TResult? Function(SettingsStateLoading value)? loading,
+    TResult? Function(SettingsStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -472,27 +492,25 @@ abstract class _$$SettingsStateErrorDetailsCopyWith<$Res> {
           _$SettingsStateErrorDetails value,
           $Res Function(_$SettingsStateErrorDetails) then) =
       __$$SettingsStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateErrorDetails>
     implements _$$SettingsStateErrorDetailsCopyWith<$Res> {
   __$$SettingsStateErrorDetailsCopyWithImpl(_$SettingsStateErrorDetails _value,
       $Res Function(_$SettingsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$SettingsStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$SettingsStateErrorDetails get _value =>
-      super._value as _$SettingsStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$SettingsStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -502,15 +520,25 @@ class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateErrorDetails implements SettingsStateErrorDetails {
+class _$SettingsStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements SettingsStateErrorDetails {
   const _$SettingsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SettingsState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SettingsState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -518,15 +546,15 @@ class _$SettingsStateErrorDetails implements SettingsStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$SettingsStateErrorDetailsCopyWith<_$SettingsStateErrorDetails>
       get copyWith => __$$SettingsStateErrorDetailsCopyWithImpl<
           _$SettingsStateErrorDetails>(this, _$identity);
@@ -545,10 +573,10 @@ class _$SettingsStateErrorDetails implements SettingsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(User? user)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(User? user)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -582,10 +610,10 @@ class _$SettingsStateErrorDetails implements SettingsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SettingsStateInitial value)? initial,
-    TResult Function(SettingsStateLoaded value)? loaded,
-    TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateInitial value)? initial,
+    TResult? Function(SettingsStateLoaded value)? loaded,
+    TResult? Function(SettingsStateLoading value)? loading,
+    TResult? Function(SettingsStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

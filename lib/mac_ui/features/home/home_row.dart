@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/mac_ui/features/book_details/book_details_view.dart';
-import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:clickup_fading_scroll/clickup_fading_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/material.dart' show LinearProgressIndicator, Colors;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/played_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -86,7 +84,6 @@ class HomeRow extends HookConsumerWidget {
                               itemCount: items!.length,
                               itemBuilder: (context, index) {
                                 final MediaItem book = items![index];
-
                                 return CoverItem(
                                   onTap: () async {
                                     Navigator.of(context).push(
@@ -134,21 +131,22 @@ class HomeRow extends HookConsumerWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            padding: EdgeInsets.all(0.0),
+                            padding: const EdgeInsets.all(0.0),
                             color: const Color.fromRGBO(0, 0, 0, 0.3),
                             height: height! - 20,
                             child: CupertinoButton(
-                                onPressed: () async {
-                                  await _handlePageMove(
-                                    pageMove.value,
-                                    pageController.value.nextPage,
-                                  );
-                                },
-                                child: const MacosIcon(
-                                  size: 40,
-                                  CupertinoIcons.forward,
-                                  color: MacosColors.systemGrayColor,
-                                )),
+                              onPressed: () async {
+                                await _handlePageMove(
+                                  pageMove.value,
+                                  pageController.value.nextPage,
+                                );
+                              },
+                              child: const MacosIcon(
+                                size: 40,
+                                CupertinoIcons.forward,
+                                color: MacosColors.systemGrayColor,
+                              ),
+                            ),
                           ),
                         ),
                     ],

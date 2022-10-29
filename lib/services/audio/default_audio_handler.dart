@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:audio_session/audio_session.dart';
 import 'package:audiobookly/services/database/database_service.dart';
-import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audio_service/audio_service.dart';
@@ -298,6 +297,17 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> play() async {
     await completer.future;
+    try {
+      final item = await _repository!.getAlbumFromId(_currentMedia);
+      final position = _findPostionDurationForAlbum(item);
+      if (position > currentPosition) {
+        await seek(position);
+      }
+    } catch (e) {
+      print(e);
+      log(e.toString());
+    }
+
     _player.play();
     // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
     log('Playing progress should fire bitch');
@@ -572,6 +582,20 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     } else {
       MediaItem item = findLatestTrack();
       return _QueuePosition(tracks.indexOf(item), item.viewOffset);
+    }
+  }
+
+  Duration _findPostionDurationForAlbum(MediaItem album) {
+    if (album.viewOffset != Duration.zero) {
+      return album.viewOffset;
+    } else {
+      MediaItem item = findLatestTrack();
+      final trackIndex = tracks.indexOf(item);
+      Duration positionDuration = Duration.zero;
+      for (final track in tracks.sublist(0, trackIndex + 1)) {
+        positionDuration += track.duration ?? Duration.zero;
+      }
+      return positionDuration + item.viewOffset;
     }
   }
 }

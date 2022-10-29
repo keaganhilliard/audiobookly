@@ -26,10 +26,10 @@ mixin _$LibrarySelectState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$LibrarySelectState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LibrarySelectStateInitial value)? initial,
-    TResult Function(LibrarySelectStateLoaded value)? loaded,
-    TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateInitial value)? initial,
+    TResult? Function(LibrarySelectStateLoaded value)? loaded,
+    TResult? Function(LibrarySelectStateLoading value)? loading,
+    TResult? Function(LibrarySelectStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$LibrarySelectState {
 abstract class $LibrarySelectStateCopyWith<$Res> {
   factory $LibrarySelectStateCopyWith(
           LibrarySelectState value, $Res Function(LibrarySelectState) then) =
-      _$LibrarySelectStateCopyWithImpl<$Res>;
+      _$LibrarySelectStateCopyWithImpl<$Res, LibrarySelectState>;
 }
 
 /// @nodoc
-class _$LibrarySelectStateCopyWithImpl<$Res>
+class _$LibrarySelectStateCopyWithImpl<$Res, $Val extends LibrarySelectState>
     implements $LibrarySelectStateCopyWith<$Res> {
   _$LibrarySelectStateCopyWithImpl(this._value, this._then);
 
-  final LibrarySelectState _value;
   // ignore: unused_field
-  final $Res Function(LibrarySelectState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -95,25 +96,29 @@ abstract class _$$LibrarySelectStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$LibrarySelectStateInitialCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateInitial>
     implements _$$LibrarySelectStateInitialCopyWith<$Res> {
   __$$LibrarySelectStateInitialCopyWithImpl(_$LibrarySelectStateInitial _value,
       $Res Function(_$LibrarySelectStateInitial) _then)
-      : super(_value, (v) => _then(v as _$LibrarySelectStateInitial));
-
-  @override
-  _$LibrarySelectStateInitial get _value =>
-      super._value as _$LibrarySelectStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LibrarySelectStateInitial implements LibrarySelectStateInitial {
+class _$LibrarySelectStateInitial
+    with DiagnosticableTreeMixin
+    implements LibrarySelectStateInitial {
   const _$LibrarySelectStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LibrarySelectState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.initial'));
   }
 
   @override
@@ -140,10 +145,10 @@ class _$LibrarySelectStateInitial implements LibrarySelectStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -177,10 +182,10 @@ class _$LibrarySelectStateInitial implements LibrarySelectStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LibrarySelectStateInitial value)? initial,
-    TResult Function(LibrarySelectStateLoaded value)? loaded,
-    TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateInitial value)? initial,
+    TResult? Function(LibrarySelectStateLoaded value)? loaded,
+    TResult? Function(LibrarySelectStateLoading value)? loading,
+    TResult? Function(LibrarySelectStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -210,27 +215,25 @@ abstract class _$$LibrarySelectStateLoadedCopyWith<$Res> {
   factory _$$LibrarySelectStateLoadedCopyWith(_$LibrarySelectStateLoaded value,
           $Res Function(_$LibrarySelectStateLoaded) then) =
       __$$LibrarySelectStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<Library>? libraries});
 }
 
 /// @nodoc
 class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateLoaded>
     implements _$$LibrarySelectStateLoadedCopyWith<$Res> {
   __$$LibrarySelectStateLoadedCopyWithImpl(_$LibrarySelectStateLoaded _value,
       $Res Function(_$LibrarySelectStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$LibrarySelectStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$LibrarySelectStateLoaded get _value =>
-      super._value as _$LibrarySelectStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? libraries = freezed,
   }) {
     return _then(_$LibrarySelectStateLoaded(
-      libraries: libraries == freezed
+      libraries: freezed == libraries
           ? _value._libraries
           : libraries // ignore: cast_nullable_to_non_nullable
               as List<Library>?,
@@ -240,7 +243,9 @@ class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateLoaded implements LibrarySelectStateLoaded {
+class _$LibrarySelectStateLoaded
+    with DiagnosticableTreeMixin
+    implements LibrarySelectStateLoaded {
   const _$LibrarySelectStateLoaded({final List<Library>? libraries})
       : _libraries = libraries;
 
@@ -254,8 +259,16 @@ class _$LibrarySelectStateLoaded implements LibrarySelectStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LibrarySelectState.loaded(libraries: $libraries)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LibrarySelectState.loaded'))
+      ..add(DiagnosticsProperty('libraries', libraries));
   }
 
   @override
@@ -273,6 +286,7 @@ class _$LibrarySelectStateLoaded implements LibrarySelectStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
       get copyWith =>
           __$$LibrarySelectStateLoadedCopyWithImpl<_$LibrarySelectStateLoaded>(
@@ -292,10 +306,10 @@ class _$LibrarySelectStateLoaded implements LibrarySelectStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(libraries);
   }
@@ -329,10 +343,10 @@ class _$LibrarySelectStateLoaded implements LibrarySelectStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LibrarySelectStateInitial value)? initial,
-    TResult Function(LibrarySelectStateLoaded value)? loaded,
-    TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateInitial value)? initial,
+    TResult? Function(LibrarySelectStateLoaded value)? loaded,
+    TResult? Function(LibrarySelectStateLoading value)? loading,
+    TResult? Function(LibrarySelectStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -373,25 +387,29 @@ abstract class _$$LibrarySelectStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$LibrarySelectStateLoadingCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateLoading>
     implements _$$LibrarySelectStateLoadingCopyWith<$Res> {
   __$$LibrarySelectStateLoadingCopyWithImpl(_$LibrarySelectStateLoading _value,
       $Res Function(_$LibrarySelectStateLoading) _then)
-      : super(_value, (v) => _then(v as _$LibrarySelectStateLoading));
-
-  @override
-  _$LibrarySelectStateLoading get _value =>
-      super._value as _$LibrarySelectStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LibrarySelectStateLoading implements LibrarySelectStateLoading {
+class _$LibrarySelectStateLoading
+    with DiagnosticableTreeMixin
+    implements LibrarySelectStateLoading {
   const _$LibrarySelectStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LibrarySelectState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'LibrarySelectState.loading'));
   }
 
   @override
@@ -418,10 +436,10 @@ class _$LibrarySelectStateLoading implements LibrarySelectStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -455,10 +473,10 @@ class _$LibrarySelectStateLoading implements LibrarySelectStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LibrarySelectStateInitial value)? initial,
-    TResult Function(LibrarySelectStateLoaded value)? loaded,
-    TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateInitial value)? initial,
+    TResult? Function(LibrarySelectStateLoaded value)? loaded,
+    TResult? Function(LibrarySelectStateLoading value)? loading,
+    TResult? Function(LibrarySelectStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -489,28 +507,27 @@ abstract class _$$LibrarySelectStateErrorDetailsCopyWith<$Res> {
           _$LibrarySelectStateErrorDetails value,
           $Res Function(_$LibrarySelectStateErrorDetails) then) =
       __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res,
+        _$LibrarySelectStateErrorDetails>
     implements _$$LibrarySelectStateErrorDetailsCopyWith<$Res> {
   __$$LibrarySelectStateErrorDetailsCopyWithImpl(
       _$LibrarySelectStateErrorDetails _value,
       $Res Function(_$LibrarySelectStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$LibrarySelectStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$LibrarySelectStateErrorDetails get _value =>
-      super._value as _$LibrarySelectStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$LibrarySelectStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -521,6 +538,7 @@ class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LibrarySelectStateErrorDetails
+    with DiagnosticableTreeMixin
     implements LibrarySelectStateErrorDetails {
   const _$LibrarySelectStateErrorDetails([this.message]);
 
@@ -528,8 +546,16 @@ class _$LibrarySelectStateErrorDetails
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LibrarySelectState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LibrarySelectState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -537,15 +563,15 @@ class _$LibrarySelectStateErrorDetails
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LibrarySelectStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$LibrarySelectStateErrorDetailsCopyWith<_$LibrarySelectStateErrorDetails>
       get copyWith => __$$LibrarySelectStateErrorDetailsCopyWithImpl<
           _$LibrarySelectStateErrorDetails>(this, _$identity);
@@ -564,10 +590,10 @@ class _$LibrarySelectStateErrorDetails
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -601,10 +627,10 @@ class _$LibrarySelectStateErrorDetails
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LibrarySelectStateInitial value)? initial,
-    TResult Function(LibrarySelectStateLoaded value)? loaded,
-    TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateInitial value)? initial,
+    TResult? Function(LibrarySelectStateLoaded value)? loaded,
+    TResult? Function(LibrarySelectStateLoading value)? loading,
+    TResult? Function(LibrarySelectStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

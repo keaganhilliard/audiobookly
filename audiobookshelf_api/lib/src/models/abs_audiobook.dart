@@ -71,7 +71,7 @@ class Media with _$Media {
     List<String>? tags,
     List<AudioFile>? audioFiles,
     List<Chapter>? chapters,
-    List<String>? missingParts,
+    List<dynamic>? missingParts,
     dynamic ebookFile,
     double? duration,
   }) = _Media;

@@ -28,16 +28,6 @@ class Utils {
     }
   }
 
-  static getCacheDir(MediaItem? item) {
-    if (item != null) {
-      return p.join(
-        'Audiobooks',
-        item.artist ?? 'Unknown',
-        item.title,
-      );
-    }
-  }
-
   static MediaItem chapterToItem(Chapter chapter) {
     return MediaItem(
         id: chapter.id,
@@ -51,7 +41,7 @@ class Utils {
         extras: {'start': chapter.start, 'end': chapter.end});
   }
 
-  static _getNarrator(EmbyItem item) {
+  static String? _getNarrator(EmbyItem item) {
     if (item.composers?.isNotEmpty ?? false) {
       return item.composers!.map((artist) => artist.name).join(', ');
     }
@@ -64,10 +54,11 @@ class Utils {
     return narrator.isNotEmpty ? narrator : item.albumArtist;
   }
 
-  static format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
-  static cleanPath(String path) =>
+  static String format(Duration d) =>
+      d.toString().split('.').first.padLeft(8, "0");
+  static String cleanPath(String path) =>
       path.replaceAll(RegExp(r'([^a-zA-Z0-9 /\.]+)'), '-');
-  static cleanFileName(String fileName) =>
+  static String cleanFileName(String fileName) =>
       fileName.replaceAll(RegExp(r'([^a-zA-Z0-9 \.]+)'), '-');
   static MediaItem mediaItemfromEmbyItem(EmbyItem item, MediaRepository repo) {
     return MediaItem(

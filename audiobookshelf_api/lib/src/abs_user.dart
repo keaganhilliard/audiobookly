@@ -76,7 +76,7 @@ class Settings {
   String? orderBy;
   bool? orderDesc;
   String? filterBy;
-  double? playbackRate;
+  num? playbackRate;
   int? bookshelfCoverSize;
 
   Settings({

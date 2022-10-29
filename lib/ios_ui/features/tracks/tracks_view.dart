@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
@@ -87,8 +88,17 @@ class TracksView extends HookConsumerWidget {
                       track.title,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    additionalInfo: Text(
-                        '${Utils.format(Duration(milliseconds: track.duration!.inMilliseconds))}'),
+                    additionalInfo: currentTrack
+                        ? PlaybackPosition(builder: (context, position) {
+                            if (position != null) {
+                              final currentTrackPosition =
+                                  position - item!.currentTrackStartingPosition;
+                              return Text(
+                                  '-${Utils.format(track.duration! - currentTrackPosition)}');
+                            }
+                            return Text(Utils.format(track.duration!));
+                          })
+                        : Text(Utils.format(track.duration!)),
                   ),
                 ],
               );

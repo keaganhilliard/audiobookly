@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
@@ -8,6 +9,7 @@ import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TracksView extends HookConsumerWidget {
@@ -50,15 +52,11 @@ class TracksView extends HookConsumerWidget {
                                 LayoutBuilder(builder: (context, constraints) {
                               return Align(
                                 alignment: Alignment.centerLeft,
-                                child: HookBuilder(
-                                  builder: (context) {
-                                    final position = useStream(
-                                        playbackController.positionStream);
+                                child: PlaybackPosition(
+                                  builder: (context, position) {
                                     double scalar = 0;
-                                    if (position.hasData &&
-                                        position.data != null) {
-                                      final currentTrackPosition = position
-                                              .data! -
+                                    if (position != null) {
+                                      final currentTrackPosition = position -
                                           item!.currentTrackStartingPosition;
                                       scalar =
                                           currentTrackPosition.inMilliseconds /
@@ -66,11 +64,25 @@ class TracksView extends HookConsumerWidget {
                                                   .inMilliseconds;
                                     }
                                     return Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0)),
                                       height: constraints.maxHeight,
-                                      width: constraints.maxWidth *
-                                          (scalar > 0 ? scalar : 0),
-                                      color: const Color.fromRGBO(
-                                          103, 58, 183, 0.3),
+                                      width: constraints.maxWidth,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: const BoxDecoration(
+                                            color: Color.fromRGBO(
+                                                103, 58, 183, 0.3),
+                                          ),
+                                          height: constraints.maxHeight,
+                                          width: constraints.maxWidth *
+                                              (scalar > 0 ? scalar : 0),
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),
@@ -99,8 +111,18 @@ class TracksView extends HookConsumerWidget {
                             entry.value.title,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          additionalInfo: Text(
-                              '${Utils.format(Duration(milliseconds: entry.value.duration!.inMilliseconds))}'),
+                          additionalInfo: entry.key == currentTrackIndex
+                              ? PlaybackPosition(builder: (context, position) {
+                                  if (position != null) {
+                                    final currentTrackPosition = position -
+                                        item!.currentTrackStartingPosition;
+                                    return Text(
+                                        '-${Utils.format(entry.value.duration! - currentTrackPosition)}');
+                                  }
+                                  return Text(
+                                      Utils.format(entry.value.duration!));
+                                })
+                              : Text(Utils.format(entry.value.duration!)),
                         ),
                       ],
                     )

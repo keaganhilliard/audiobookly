@@ -26,10 +26,10 @@ mixin _$OfflineState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$OfflineState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(OfflineStateInitial value)? initial,
-    TResult Function(OfflineStateLoaded value)? loaded,
-    TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateInitial value)? initial,
+    TResult? Function(OfflineStateLoaded value)? loaded,
+    TResult? Function(OfflineStateLoading value)? loading,
+    TResult? Function(OfflineStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,16 +72,18 @@ mixin _$OfflineState {
 abstract class $OfflineStateCopyWith<$Res> {
   factory $OfflineStateCopyWith(
           OfflineState value, $Res Function(OfflineState) then) =
-      _$OfflineStateCopyWithImpl<$Res>;
+      _$OfflineStateCopyWithImpl<$Res, OfflineState>;
 }
 
 /// @nodoc
-class _$OfflineStateCopyWithImpl<$Res> implements $OfflineStateCopyWith<$Res> {
+class _$OfflineStateCopyWithImpl<$Res, $Val extends OfflineState>
+    implements $OfflineStateCopyWith<$Res> {
   _$OfflineStateCopyWithImpl(this._value, this._then);
 
-  final OfflineState _value;
   // ignore: unused_field
-  final $Res Function(OfflineState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -93,24 +95,29 @@ abstract class _$$OfflineStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$OfflineStateInitialCopyWithImpl<$Res>
-    extends _$OfflineStateCopyWithImpl<$Res>
+    extends _$OfflineStateCopyWithImpl<$Res, _$OfflineStateInitial>
     implements _$$OfflineStateInitialCopyWith<$Res> {
   __$$OfflineStateInitialCopyWithImpl(
       _$OfflineStateInitial _value, $Res Function(_$OfflineStateInitial) _then)
-      : super(_value, (v) => _then(v as _$OfflineStateInitial));
-
-  @override
-  _$OfflineStateInitial get _value => super._value as _$OfflineStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$OfflineStateInitial implements OfflineStateInitial {
+class _$OfflineStateInitial
+    with DiagnosticableTreeMixin
+    implements OfflineStateInitial {
   const _$OfflineStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'OfflineState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'OfflineState.initial'));
   }
 
   @override
@@ -136,10 +143,10 @@ class _$OfflineStateInitial implements OfflineStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -173,10 +180,10 @@ class _$OfflineStateInitial implements OfflineStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(OfflineStateInitial value)? initial,
-    TResult Function(OfflineStateLoaded value)? loaded,
-    TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateInitial value)? initial,
+    TResult? Function(OfflineStateLoaded value)? loaded,
+    TResult? Function(OfflineStateLoading value)? loading,
+    TResult? Function(OfflineStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -206,26 +213,25 @@ abstract class _$$OfflineStateLoadedCopyWith<$Res> {
   factory _$$OfflineStateLoadedCopyWith(_$OfflineStateLoaded value,
           $Res Function(_$OfflineStateLoaded) then) =
       __$$OfflineStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MediaItem>? books});
 }
 
 /// @nodoc
 class __$$OfflineStateLoadedCopyWithImpl<$Res>
-    extends _$OfflineStateCopyWithImpl<$Res>
+    extends _$OfflineStateCopyWithImpl<$Res, _$OfflineStateLoaded>
     implements _$$OfflineStateLoadedCopyWith<$Res> {
   __$$OfflineStateLoadedCopyWithImpl(
       _$OfflineStateLoaded _value, $Res Function(_$OfflineStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$OfflineStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$OfflineStateLoaded get _value => super._value as _$OfflineStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? books = freezed,
   }) {
     return _then(_$OfflineStateLoaded(
-      books: books == freezed
+      books: freezed == books
           ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -235,7 +241,9 @@ class __$$OfflineStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateLoaded implements OfflineStateLoaded {
+class _$OfflineStateLoaded
+    with DiagnosticableTreeMixin
+    implements OfflineStateLoaded {
   const _$OfflineStateLoaded({final List<MediaItem>? books}) : _books = books;
 
   final List<MediaItem>? _books;
@@ -248,8 +256,16 @@ class _$OfflineStateLoaded implements OfflineStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'OfflineState.loaded(books: $books)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OfflineState.loaded'))
+      ..add(DiagnosticsProperty('books', books));
   }
 
   @override
@@ -266,6 +282,7 @@ class _$OfflineStateLoaded implements OfflineStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$OfflineStateLoadedCopyWith<_$OfflineStateLoaded> get copyWith =>
       __$$OfflineStateLoadedCopyWithImpl<_$OfflineStateLoaded>(
           this, _$identity);
@@ -284,10 +301,10 @@ class _$OfflineStateLoaded implements OfflineStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(books);
   }
@@ -321,10 +338,10 @@ class _$OfflineStateLoaded implements OfflineStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(OfflineStateInitial value)? initial,
-    TResult Function(OfflineStateLoaded value)? loaded,
-    TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateInitial value)? initial,
+    TResult? Function(OfflineStateLoaded value)? loaded,
+    TResult? Function(OfflineStateLoading value)? loading,
+    TResult? Function(OfflineStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -364,24 +381,29 @@ abstract class _$$OfflineStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$OfflineStateLoadingCopyWithImpl<$Res>
-    extends _$OfflineStateCopyWithImpl<$Res>
+    extends _$OfflineStateCopyWithImpl<$Res, _$OfflineStateLoading>
     implements _$$OfflineStateLoadingCopyWith<$Res> {
   __$$OfflineStateLoadingCopyWithImpl(
       _$OfflineStateLoading _value, $Res Function(_$OfflineStateLoading) _then)
-      : super(_value, (v) => _then(v as _$OfflineStateLoading));
-
-  @override
-  _$OfflineStateLoading get _value => super._value as _$OfflineStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$OfflineStateLoading implements OfflineStateLoading {
+class _$OfflineStateLoading
+    with DiagnosticableTreeMixin
+    implements OfflineStateLoading {
   const _$OfflineStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'OfflineState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'OfflineState.loading'));
   }
 
   @override
@@ -407,10 +429,10 @@ class _$OfflineStateLoading implements OfflineStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -444,10 +466,10 @@ class _$OfflineStateLoading implements OfflineStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(OfflineStateInitial value)? initial,
-    TResult Function(OfflineStateLoaded value)? loaded,
-    TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateInitial value)? initial,
+    TResult? Function(OfflineStateLoaded value)? loaded,
+    TResult? Function(OfflineStateLoading value)? loading,
+    TResult? Function(OfflineStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -477,27 +499,25 @@ abstract class _$$OfflineStateErrorDetailsCopyWith<$Res> {
   factory _$$OfflineStateErrorDetailsCopyWith(_$OfflineStateErrorDetails value,
           $Res Function(_$OfflineStateErrorDetails) then) =
       __$$OfflineStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
-    extends _$OfflineStateCopyWithImpl<$Res>
+    extends _$OfflineStateCopyWithImpl<$Res, _$OfflineStateErrorDetails>
     implements _$$OfflineStateErrorDetailsCopyWith<$Res> {
   __$$OfflineStateErrorDetailsCopyWithImpl(_$OfflineStateErrorDetails _value,
       $Res Function(_$OfflineStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$OfflineStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$OfflineStateErrorDetails get _value =>
-      super._value as _$OfflineStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$OfflineStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -507,15 +527,25 @@ class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateErrorDetails implements OfflineStateErrorDetails {
+class _$OfflineStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements OfflineStateErrorDetails {
   const _$OfflineStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'OfflineState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OfflineState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -523,15 +553,15 @@ class _$OfflineStateErrorDetails implements OfflineStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OfflineStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$OfflineStateErrorDetailsCopyWith<_$OfflineStateErrorDetails>
       get copyWith =>
           __$$OfflineStateErrorDetailsCopyWithImpl<_$OfflineStateErrorDetails>(
@@ -551,10 +581,10 @@ class _$OfflineStateErrorDetails implements OfflineStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -588,10 +618,10 @@ class _$OfflineStateErrorDetails implements OfflineStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(OfflineStateInitial value)? initial,
-    TResult Function(OfflineStateLoaded value)? loaded,
-    TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateInitial value)? initial,
+    TResult? Function(OfflineStateLoaded value)? loaded,
+    TResult? Function(OfflineStateLoading value)? loading,
+    TResult? Function(OfflineStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }

@@ -1,14 +1,10 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/mac_ui/features/home/home.dart';
-import 'package:audiobookly/mac_ui/features/home/home_view.dart';
 import 'package:audiobookly/mac_ui/widgets/seek_bar.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -40,7 +36,7 @@ ToolBar getHomeToolbar(BuildContext context, WidgetRef ref) {
           tooltipMessage: 'Rewind',
           showLabel: false,
           onPressed: () {
-            playbackController.fastForward();
+            playbackController.rewind();
           },
         ),
         HookBuilder(
@@ -61,13 +57,16 @@ ToolBar getHomeToolbar(BuildContext context, WidgetRef ref) {
                     AudioProcessingState.idle) {
               final PlaybackState state = playbackState.data!;
               if (state.playing) {
-                iconButton = makeLeadingAction(context,
-                    label: 'pause',
-                    icon: const MacosIcon(CupertinoIcons.pause_fill),
-                    tooltipMessage: 'Pause',
-                    showLabel: false, onPressed: () {
-                  playbackController.pause();
-                });
+                iconButton = makeLeadingAction(
+                  context,
+                  label: 'pause',
+                  icon: const MacosIcon(CupertinoIcons.pause_fill),
+                  tooltipMessage: 'Pause',
+                  showLabel: false,
+                  onPressed: () {
+                    playbackController.pause();
+                  },
+                );
               }
             }
             return iconButton;
@@ -124,6 +123,7 @@ ToolBar getHomeToolbar(BuildContext context, WidgetRef ref) {
             return Row(
               children: [
                 CachedNetworkImage(
+                  memCacheWidth: 50,
                   fit: BoxFit.contain,
                   imageUrl: item.artUri?.toString() ?? '',
                   placeholder: (context, url) => const Center(
@@ -195,6 +195,7 @@ ToolBar getHomeToolbar(BuildContext context, WidgetRef ref) {
         color: MacosTheme.of(context).canvasColor.withOpacity(0.3)),
     // title: const Text('Audiobookly'),
     height: 60.0,
+
     actions: [
       ToolBarIconButton(
         label: 'Slow down',

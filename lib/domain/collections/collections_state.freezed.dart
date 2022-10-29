@@ -26,10 +26,10 @@ mixin _$CollectionsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$CollectionsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CollectionsStateInitial value)? initial,
-    TResult Function(CollectionsStateLoaded value)? loaded,
-    TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateInitial value)? initial,
+    TResult? Function(CollectionsStateLoaded value)? loaded,
+    TResult? Function(CollectionsStateLoading value)? loading,
+    TResult? Function(CollectionsStateErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$CollectionsState {
 abstract class $CollectionsStateCopyWith<$Res> {
   factory $CollectionsStateCopyWith(
           CollectionsState value, $Res Function(CollectionsState) then) =
-      _$CollectionsStateCopyWithImpl<$Res>;
+      _$CollectionsStateCopyWithImpl<$Res, CollectionsState>;
 }
 
 /// @nodoc
-class _$CollectionsStateCopyWithImpl<$Res>
+class _$CollectionsStateCopyWithImpl<$Res, $Val extends CollectionsState>
     implements $CollectionsStateCopyWith<$Res> {
   _$CollectionsStateCopyWithImpl(this._value, this._then);
 
-  final CollectionsState _value;
   // ignore: unused_field
-  final $Res Function(CollectionsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,25 +95,29 @@ abstract class _$$CollectionsStateInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$CollectionsStateInitialCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateInitial>
     implements _$$CollectionsStateInitialCopyWith<$Res> {
   __$$CollectionsStateInitialCopyWithImpl(_$CollectionsStateInitial _value,
       $Res Function(_$CollectionsStateInitial) _then)
-      : super(_value, (v) => _then(v as _$CollectionsStateInitial));
-
-  @override
-  _$CollectionsStateInitial get _value =>
-      super._value as _$CollectionsStateInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$CollectionsStateInitial implements CollectionsStateInitial {
+class _$CollectionsStateInitial
+    with DiagnosticableTreeMixin
+    implements CollectionsStateInitial {
   const _$CollectionsStateInitial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'CollectionsState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'CollectionsState.initial'));
   }
 
   @override
@@ -139,10 +144,10 @@ class _$CollectionsStateInitial implements CollectionsStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -176,10 +181,10 @@ class _$CollectionsStateInitial implements CollectionsStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CollectionsStateInitial value)? initial,
-    TResult Function(CollectionsStateLoaded value)? loaded,
-    TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateInitial value)? initial,
+    TResult? Function(CollectionsStateLoaded value)? loaded,
+    TResult? Function(CollectionsStateLoading value)? loading,
+    TResult? Function(CollectionsStateErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -209,27 +214,25 @@ abstract class _$$CollectionsStateLoadedCopyWith<$Res> {
   factory _$$CollectionsStateLoadedCopyWith(_$CollectionsStateLoaded value,
           $Res Function(_$CollectionsStateLoaded) then) =
       __$$CollectionsStateLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MediaItem>? collections});
 }
 
 /// @nodoc
 class __$$CollectionsStateLoadedCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateLoaded>
     implements _$$CollectionsStateLoadedCopyWith<$Res> {
   __$$CollectionsStateLoadedCopyWithImpl(_$CollectionsStateLoaded _value,
       $Res Function(_$CollectionsStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$CollectionsStateLoaded));
+      : super(_value, _then);
 
-  @override
-  _$CollectionsStateLoaded get _value =>
-      super._value as _$CollectionsStateLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? collections = freezed,
   }) {
     return _then(_$CollectionsStateLoaded(
-      collections: collections == freezed
+      collections: freezed == collections
           ? _value._collections
           : collections // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
@@ -239,7 +242,9 @@ class __$$CollectionsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateLoaded implements CollectionsStateLoaded {
+class _$CollectionsStateLoaded
+    with DiagnosticableTreeMixin
+    implements CollectionsStateLoaded {
   const _$CollectionsStateLoaded({final List<MediaItem>? collections})
       : _collections = collections;
 
@@ -253,8 +258,16 @@ class _$CollectionsStateLoaded implements CollectionsStateLoaded {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'CollectionsState.loaded(collections: $collections)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CollectionsState.loaded'))
+      ..add(DiagnosticsProperty('collections', collections));
   }
 
   @override
@@ -272,6 +285,7 @@ class _$CollectionsStateLoaded implements CollectionsStateLoaded {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
       __$$CollectionsStateLoadedCopyWithImpl<_$CollectionsStateLoaded>(
           this, _$identity);
@@ -290,10 +304,10 @@ class _$CollectionsStateLoaded implements CollectionsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loaded?.call(collections);
   }
@@ -327,10 +341,10 @@ class _$CollectionsStateLoaded implements CollectionsStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CollectionsStateInitial value)? initial,
-    TResult Function(CollectionsStateLoaded value)? loaded,
-    TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateInitial value)? initial,
+    TResult? Function(CollectionsStateLoaded value)? loaded,
+    TResult? Function(CollectionsStateLoading value)? loading,
+    TResult? Function(CollectionsStateErrorDetails value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -370,25 +384,29 @@ abstract class _$$CollectionsStateLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$CollectionsStateLoadingCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateLoading>
     implements _$$CollectionsStateLoadingCopyWith<$Res> {
   __$$CollectionsStateLoadingCopyWithImpl(_$CollectionsStateLoading _value,
       $Res Function(_$CollectionsStateLoading) _then)
-      : super(_value, (v) => _then(v as _$CollectionsStateLoading));
-
-  @override
-  _$CollectionsStateLoading get _value =>
-      super._value as _$CollectionsStateLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$CollectionsStateLoading implements CollectionsStateLoading {
+class _$CollectionsStateLoading
+    with DiagnosticableTreeMixin
+    implements CollectionsStateLoading {
   const _$CollectionsStateLoading();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'CollectionsState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'CollectionsState.loading'));
   }
 
   @override
@@ -415,10 +433,10 @@ class _$CollectionsStateLoading implements CollectionsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -452,10 +470,10 @@ class _$CollectionsStateLoading implements CollectionsStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CollectionsStateInitial value)? initial,
-    TResult Function(CollectionsStateLoaded value)? loaded,
-    TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateInitial value)? initial,
+    TResult? Function(CollectionsStateLoaded value)? loaded,
+    TResult? Function(CollectionsStateLoading value)? loading,
+    TResult? Function(CollectionsStateErrorDetails value)? error,
   }) {
     return loading?.call(this);
   }
@@ -486,28 +504,26 @@ abstract class _$$CollectionsStateErrorDetailsCopyWith<$Res> {
           _$CollectionsStateErrorDetails value,
           $Res Function(_$CollectionsStateErrorDetails) then) =
       __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
 class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateErrorDetails>
     implements _$$CollectionsStateErrorDetailsCopyWith<$Res> {
   __$$CollectionsStateErrorDetailsCopyWithImpl(
       _$CollectionsStateErrorDetails _value,
       $Res Function(_$CollectionsStateErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$CollectionsStateErrorDetails));
+      : super(_value, _then);
 
-  @override
-  _$CollectionsStateErrorDetails get _value =>
-      super._value as _$CollectionsStateErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
     return _then(_$CollectionsStateErrorDetails(
-      message == freezed
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -517,15 +533,25 @@ class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateErrorDetails implements CollectionsStateErrorDetails {
+class _$CollectionsStateErrorDetails
+    with DiagnosticableTreeMixin
+    implements CollectionsStateErrorDetails {
   const _$CollectionsStateErrorDetails([this.message]);
 
   @override
   final String? message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'CollectionsState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CollectionsState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -533,15 +559,15 @@ class _$CollectionsStateErrorDetails implements CollectionsStateErrorDetails {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CollectionsStateErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$CollectionsStateErrorDetailsCopyWith<_$CollectionsStateErrorDetails>
       get copyWith => __$$CollectionsStateErrorDetailsCopyWithImpl<
           _$CollectionsStateErrorDetails>(this, _$identity);
@@ -560,10 +586,10 @@ class _$CollectionsStateErrorDetails implements CollectionsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
-    TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -597,10 +623,10 @@ class _$CollectionsStateErrorDetails implements CollectionsStateErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CollectionsStateInitial value)? initial,
-    TResult Function(CollectionsStateLoaded value)? loaded,
-    TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateInitial value)? initial,
+    TResult? Function(CollectionsStateLoaded value)? loaded,
+    TResult? Function(CollectionsStateLoading value)? loading,
+    TResult? Function(CollectionsStateErrorDetails value)? error,
   }) {
     return error?.call(this);
   }
