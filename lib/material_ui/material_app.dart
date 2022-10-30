@@ -57,6 +57,7 @@ class AbMaterialApp extends HookConsumerWidget {
         // canvasColor: Colors.grey[900],
       ),
       darkTheme: ThemeData(
+        useMaterial3: true,
         indicatorColor: Colors.deepPurple,
         cardTheme: const CardTheme(
           clipBehavior: Clip.antiAlias,

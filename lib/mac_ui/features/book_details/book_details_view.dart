@@ -6,6 +6,7 @@ import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -278,31 +279,95 @@ class BookDetailsView extends HookConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        PushButton(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 32.0,
-                                            vertical: 7.0,
-                                          ),
-                                          buttonSize: ButtonSize.large,
-                                          onPressed: () {
-                                            playbackController
-                                                .playFromId(item.id);
-                                          },
+                                        Expanded(
                                           child: Row(
                                             children: [
-                                              const MacosIcon(
-                                                CupertinoIcons.play_fill,
-                                                color: MacosColors.white,
-                                                size: 13.0,
+                                              PushButton(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 32.0,
+                                                  vertical: 7.0,
+                                                ),
+                                                buttonSize: ButtonSize.large,
+                                                onPressed: () {
+                                                  playbackController
+                                                      .playFromId(item.id);
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    const MacosIcon(
+                                                      CupertinoIcons.play_fill,
+                                                      color: MacosColors.white,
+                                                      size: 13.0,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 6.0),
+                                                      child: Text(
+                                                        'Play',
+                                                        style: MacosTheme.of(
+                                                                context)
+                                                            .typography
+                                                            .body,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 6.0),
-                                                child: Text(
-                                                  'Play',
-                                                  style: MacosTheme.of(context)
-                                                      .typography
-                                                      .body,
+                                                    left: 8.0),
+                                                child: PushButton(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 32.0,
+                                                    vertical: 7.0,
+                                                  ),
+                                                  buttonSize: ButtonSize.large,
+                                                  onPressed: () async {
+                                                    if (!item.played) {
+                                                      await ref
+                                                          .read(
+                                                              mediaRepositoryProvider)
+                                                          ?.markPlayed(item.id);
+                                                      await bookDetails
+                                                          .getDetails();
+                                                    } else {
+                                                      await ref
+                                                          .read(
+                                                              mediaRepositoryProvider)
+                                                          ?.markUnplayed(
+                                                              item.id);
+                                                      await bookDetails
+                                                          .getDetails();
+                                                    }
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      const MacosIcon(
+                                                        CupertinoIcons.book,
+                                                        color:
+                                                            MacosColors.white,
+                                                        size: 13.0,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 6.0),
+                                                        child: Text(
+                                                          item.played
+                                                              ? 'Mark as unread'
+                                                              : 'Mark as read',
+                                                          style: MacosTheme.of(
+                                                                  context)
+                                                              .typography
+                                                              .body,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],

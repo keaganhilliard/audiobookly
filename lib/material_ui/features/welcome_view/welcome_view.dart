@@ -47,7 +47,7 @@ class WelcomeView extends HookConsumerWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.green,
+                backgroundColor: const Color.fromRGBO(161, 133, 67, 1),
               ),
               onPressed: () {
                 navigationService.push(

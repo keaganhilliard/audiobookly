@@ -47,7 +47,7 @@ dependencies:
   # cast:
   collection: ^1.15.0-nullsafety.4
   auto_size_text: ^3.0.0-nullsafety.0
-  device_info_plus: ^7.0.1
+  device_info_plus: ^8.0.0
   get_it: ^7.1.4
   flutter_cache_manager:
   reorderable_grid_view: ^2.2.1
@@ -64,6 +64,7 @@ dependencies:
   declarative_refresh_indicator: ^0.1.0
   adaptive_navigation: ^0.0.7
   scroll_to_index: ^3.0.1
+  cupertino_lists: ^1.0.1
 
   # dart_chromecast:
   #   git:
@@ -91,9 +92,10 @@ dev_dependencies:
 
 flutter_icons:
   android: "launcher_icon"
-  ios: true
-  image_path: "assets/audiobookly_launcher_round.png"
-  remove_alpha_ios: true
+  ios: false
+  image_path: "assets/audiobookly_icon.png"
+  # adaptive_icon_background: "#673AB7"
+  # adaptive_icon_foreground: "assets/AbLogoStripped.png"
 
 flutter:
   uses-material-design: true

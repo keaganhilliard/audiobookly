@@ -61,10 +61,22 @@ class TracksView extends HookConsumerWidget {
                                     item.currentTrackLength.inMilliseconds;
                               }
                               return Container(
-                                height: constraints.maxHeight,
-                                width: constraints.maxWidth *
-                                    (scalar > 0 ? scalar : 0),
-                                color: const Color.fromRGBO(103, 58, 183, 0.3),
+                                clipBehavior: Clip.antiAlias,
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    height: constraints.maxHeight,
+                                    width: constraints.maxWidth *
+                                        (scalar > 0 ? scalar : 0),
+                                    color:
+                                        const Color.fromRGBO(103, 58, 183, 0.3),
+                                  ),
+                                ),
                               );
                             },
                           ),
@@ -79,12 +91,6 @@ class TracksView extends HookConsumerWidget {
                         playbackController.skipToQueueItem(index);
                       }
                     },
-                    trailing: currentTrack
-                        ? IconButton(
-                            icon: const Icon(Icons.poll),
-                            onPressed: () {},
-                          )
-                        : null,
                     title: Text(
                       '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title.isEmpty ? '' : ' - ' + track.title}',
                       overflow: TextOverflow.ellipsis,

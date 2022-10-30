@@ -3,6 +3,7 @@ import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
+import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/utils/utils.dart';
@@ -67,7 +68,9 @@ class TracksView extends HookConsumerWidget {
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(8.0)),
+                                              BorderRadius.circular(8.0),
+                                          color: MacosColors.black
+                                              .withOpacity(0.5)),
                                       height: constraints.maxHeight,
                                       width: constraints.maxWidth,
                                       child: Align(
@@ -107,9 +110,12 @@ class TracksView extends HookConsumerWidget {
                               playbackController.skipToQueueItem(entry.key);
                             }
                           },
-                          title: Text(
-                            entry.value.title,
-                            overflow: TextOverflow.ellipsis,
+                          title: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 100),
+                            child: Text(
+                              entry.value.title,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           additionalInfo: entry.key == currentTrackIndex
                               ? PlaybackPosition(builder: (context, position) {

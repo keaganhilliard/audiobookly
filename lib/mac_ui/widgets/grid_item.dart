@@ -59,6 +59,8 @@ class GridItem extends StatelessWidget {
                         )
                       : CachedNetworkImage(
                           imageUrl: thumbnailUrl!,
+                          memCacheWidth: 180,
+                          maxWidthDiskCache: 400,
                           fit: BoxFit.contain,
                           alignment: Alignment.center,
                           errorWidget: (context, message, thing) => Container(

@@ -65,7 +65,7 @@ SPEC CHECKSUMS:
   audio_service: b88ff778e0e3915efd4cd1a5ad6f0beef0c950a9
   audio_session: dea1f41890dbf1718f04a56f1d6150fd50039b72
   device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
-  FlutterMacOS: 85f90bfb3f1703249cf1539e4dfbff31e8584698
+  FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   isar_flutter_libs: a775292698f2a56059161ae9c011071ab7984d96
   just_audio: 9b67ca7b97c61cfc9784ea23cd8cc55eb226d489
