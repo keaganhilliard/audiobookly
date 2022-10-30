@@ -3,7 +3,6 @@ import 'package:audiobookly/mac_ui/features/book_details/book_details_view.dart'
 import 'package:audiobookly/mac_ui/widgets/ab_grid.dart';
 import 'package:audiobookly/mac_ui/widgets/ab_scaffold.dart';
 import 'package:audiobookly/mac_ui/widgets/grid_item.dart';
-import 'package:audiobookly/mac_ui/features/home/home_row.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';

@@ -27,7 +27,7 @@ class MacApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: AuthWidget(
-        authorizedBuilder: (context) => const Home(),
+        authorizedBuilder: (context) => Home(),
         errorBuilder: (context, message) => Container(),
         loadingBuilder: (context) => const CupertinoActivityIndicator(
           radius: 30.0,

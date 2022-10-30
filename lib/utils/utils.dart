@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
@@ -239,4 +240,16 @@ extension MediaHelpers on MediaItem {
 
 bool nullOrEmpty(List? check) {
   return check?.isEmpty ?? true;
+}
+
+class Debouncer {
+  Debouncer({required this.milliseconds});
+  final int milliseconds;
+  Timer? _timer;
+  void run(VoidCallback action) {
+    if (_timer?.isActive ?? false) {
+      _timer?.cancel();
+    }
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
 }

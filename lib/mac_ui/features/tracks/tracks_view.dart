@@ -111,7 +111,7 @@ class TracksView extends HookConsumerWidget {
                             }
                           },
                           title: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 100),
+                            constraints: const BoxConstraints(maxWidth: 99),
                             child: Text(
                               entry.value.title,
                               overflow: TextOverflow.ellipsis,

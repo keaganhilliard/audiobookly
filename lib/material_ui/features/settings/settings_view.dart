@@ -50,6 +50,10 @@ class SettingsView extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
               child: const Text('Logout'),
               onPressed: () async {
                 await auth.logout();

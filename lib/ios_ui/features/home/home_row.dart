@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/ios_ui/features/book_details/book_details_view.dart';
-import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/material.dart' show LinearProgressIndicator, Colors;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/played_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,7 +18,6 @@ class HomeRow extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = useState(PageController(viewportFraction: 0.588));
-    final playbackController = GetIt.I<PlaybackController>();
     return LayoutBuilder(builder: (context, constraints) {
       debouncer.run(() {
         if (pageController.value.viewportFraction !=
@@ -163,17 +158,5 @@ class CoverItem extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class Debouncer {
-  Debouncer({required this.milliseconds});
-  final int milliseconds;
-  Timer? _timer;
-  void run(VoidCallback action) {
-    if (_timer?.isActive ?? false) {
-      _timer?.cancel();
-    }
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
   }
 }

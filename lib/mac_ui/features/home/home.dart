@@ -1,5 +1,7 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/domain/search/search_notifier.dart';
 import 'package:audiobookly/mac_ui/features/book_details/book_details_view.dart';
+import 'package:audiobookly/mac_ui/features/search/search_view.dart';
 import 'package:audiobookly/mac_ui/features/tracks/tracks_view.dart';
 import 'package:audiobookly/mac_ui/features/settings/settings_view.dart';
 import 'package:audiobookly/mac_ui/features/authors/authors_view.dart';
@@ -10,6 +12,7 @@ import 'package:audiobookly/mac_ui/features/home/home_view.dart';
 import 'package:audiobookly/mac_ui/features/series/series_view.dart';
 import 'package:audiobookly/mac_ui/widgets/lazy_indexed_stack.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,7 +21,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class Home extends HookWidget {
-  const Home({super.key});
+  Home({super.key});
+  final searchDebouncer = Debouncer(milliseconds: 1000);
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +70,11 @@ class Home extends HookWidget {
               placeholder: 'Search',
               onTap: () {
                 currentIndex.value = 5;
+              },
+              onChanged: (value) {
+                searchDebouncer.run(() {
+                  ref.read(searchStateProvider.notifier).search(value);
+                });
               },
             );
           }),
@@ -192,7 +201,7 @@ class Home extends HookWidget {
                     }),
                     //SearchViewStub
                     CupertinoTabView(builder: (context) {
-                      return Container();
+                      return const SearchView();
                     }),
                   ],
                 ),
