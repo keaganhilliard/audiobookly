@@ -240,9 +240,7 @@ _$_MediaMetadata _$$_MediaMetadataFromJson(Map<String, dynamic> json) =>
       narrators: (json['narrators'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      series: (json['series'] as List<dynamic>?)
-          ?.map((e) => Series.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      series: _coerceToList(json['series']),
       genres:
           (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList(),
       publishedYear: json['publishedYear'] as String?,

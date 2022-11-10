@@ -18,7 +18,13 @@ import 'package:path/path.dart' as p;
 enum DurationState { between, before, after }
 
 class AudiobooklyAudioHandler extends BaseAudioHandler {
-  final _player = AudioPlayer();
+  final _player = AudioPlayer(
+    audioLoadConfiguration: AudioLoadConfiguration(
+      darwinLoadControl: DarwinLoadControl(
+        preferredForwardBufferDuration: const Duration(seconds: 30),
+      ),
+    ),
+  );
   final completer = Completer();
 
   AudiobooklyAudioHandler() {
@@ -337,6 +343,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       await updateProgress(AudiobooklyPlaybackState.STOPPED);
     }
     await _player.stop();
+    // await _player.dispose();
+    // _player = ;
     _currentMedia = null;
     _currentMediaItem = null;
     tracks = [];

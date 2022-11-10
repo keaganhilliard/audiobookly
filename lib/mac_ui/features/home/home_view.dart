@@ -3,6 +3,7 @@ import 'package:audiobookly/mac_ui/widgets/ab_scaffold.dart';
 import 'package:audiobookly/mac_ui/features/home/home_row.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeView extends HookConsumerWidget {
@@ -13,37 +14,49 @@ class HomeView extends HookConsumerWidget {
     final state = ref.watch(homeStateProvider);
     const double rowHeight = 250;
 
-    return AbScaffold(
-      child: state.when(
-        initial: () => const SliverToBoxAdapter(),
-        loaded: (recentlyPlayed, recentlyAdded, downloaded) => SliverList(
-          delegate: SliverChildListDelegate([
-            if (!nullOrEmpty(recentlyPlayed))
-              HomeRow(
-                height: rowHeight,
-                title: 'Continue Listening',
-                items: recentlyPlayed,
-              ),
-            if (!nullOrEmpty(recentlyAdded))
-              HomeRow(
-                height: rowHeight,
-                title: 'Recently Added',
-                items: recentlyAdded,
-              ),
-            if (!nullOrEmpty(downloaded))
-              HomeRow(
-                height: rowHeight,
-                title: 'Downloaded',
-                items: downloaded,
-              ),
-          ]),
-        ),
-        loading: () => const SliverFillRemaining(
-          child: Center(
-            child: CupertinoActivityIndicator(radius: 30),
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.keyR, meta: true): () {
+          print('Refreshing');
+          ref.read(homeStateProvider.notifier).refresh();
+        }
+      },
+      child: AbScaffold(
+        child: state.when(
+          initial: () => const SliverToBoxAdapter(),
+          loaded: (recentlyPlayed, recentlyAdded, downloaded) => SliverList(
+            delegate: SliverChildListDelegate([
+              if (!nullOrEmpty(recentlyPlayed))
+                HomeRow(
+                  height: rowHeight,
+                  title: 'Continue Listening',
+                  items: recentlyPlayed,
+                ),
+              if (!nullOrEmpty(recentlyAdded))
+                HomeRow(
+                  height: rowHeight,
+                  title: 'Recently Added',
+                  items: recentlyAdded,
+                ),
+              if (!nullOrEmpty(downloaded))
+                HomeRow(
+                  height: rowHeight,
+                  title: 'Downloaded',
+                  items: downloaded,
+                ),
+            ]),
+          ),
+          loading: () => const SliverFillRemaining(
+            child: Center(
+              child: CupertinoActivityIndicator(radius: 30),
+            ),
+          ),
+          error: (message) => SliverToBoxAdapter(
+            child: Center(
+              child: Text(message ?? 'Error'),
+            ),
           ),
         ),
-        error: (message) => const SliverToBoxAdapter(),
       ),
     );
   }

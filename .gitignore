@@ -34,6 +34,7 @@ local.properties
 .pub-cache/
 .pub/
 build/
+key.properties
 
 # Android related
 **/android/**/gradle-wrapper.jar

@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/mac_ui/features/tracks/tracks_view.dart';
 import 'package:audiobookly/mac_ui/widgets/seek_bar.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/widgets/playback_position.dart';
@@ -237,8 +238,14 @@ ToolBar getHomeToolbar(BuildContext context, WidgetRef ref) {
         tooltipMessage: 'Chapters',
         showLabel: false,
         onPressed: () {
-          MacosWindowScope.of(context).toggleEndSidebar();
-          // ref.read(showTracks.notifier).state = !ref.read(showTracks);
+          showMacosSheet(
+            barrierDismissible: true,
+            barrierLabel: 'Hello',
+            context: context,
+            builder: (context) {
+              return MacosSheet(child: TracksView());
+            },
+          );
         },
       ),
     ],

@@ -1,5 +1,6 @@
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_notifier.dart';
+import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,6 +15,7 @@ class SettingsView extends HookConsumerWidget {
   Widget build(context, ref) {
     final state = ref.watch(settingsStateProvider);
     final auth = ref.watch(authNotifierProvider.notifier);
+    final navigationService = ref.watch(navigationServiceProvider);
     return state.when(
         initial: () => const Center(
                 child: CupertinoActivityIndicator(
@@ -45,6 +47,7 @@ class SettingsView extends HookConsumerWidget {
                   child: const Text('Logout'),
                   onPressed: () async {
                     await auth.logout();
+                    navigationService.pop();
                   },
                 ),
               )

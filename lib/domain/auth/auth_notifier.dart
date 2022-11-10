@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audiobookly/domain/server_select/server_select.dart';
 import 'package:audiobookly/ios_ui/features/library_select/library_select_view.dart';
+import 'package:audiobookly/mac_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/user.dart';
@@ -50,15 +51,34 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<bool> formLogin(
+    String baseUrl,
+    String username,
+    String password,
+    ServerType serverType,
+  ) async {
+    if (serverType == ServerType.audiobookshelf) {
+      return await absLogin(baseUrl, username, password);
+    } else if (serverType == ServerType.emby) {
+      return await embyLogin(baseUrl, username, password);
+    }
+    return false;
+  }
+
   Future<bool> embyLogin(
     String baseUrl,
     String username,
     String password,
   ) async {
-    User u = await _ref
-        .read(embyAuthRepoProvider)
-        .login(baseUrl, username, password);
-    return u.token != null;
+    User? u;
+    try {
+      u = await _ref
+          .read(embyAuthRepoProvider)
+          .login(baseUrl, username, password);
+    } catch (e) {
+      print(e);
+    }
+    return u?.token != null;
   }
 
   Future<bool> absLogin(
@@ -66,9 +86,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String username,
     String password,
   ) async {
-    User u =
-        await _ref.read(absAuthRepoProvider).login(baseUrl, username, password);
-    return u.token != null;
+    User? u;
+    try {
+      u = await _ref
+          .read(absAuthRepoProvider)
+          .login(baseUrl, username, password);
+    } catch (e) {
+      print(e);
+    }
+    return u?.token != null;
   }
 
   Future<bool> plexLogin() async {
@@ -164,12 +190,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
       } else if (prefs.serverType == ServerType.audiobookshelf) {
         final userRepo = _ref.read(absAuthRepoProvider);
         user = await userRepo.getUser(prefs.userToken);
-        print(user);
         if (prefs.libraryId.isEmpty) {
-          if (Platform.isIOS || Platform.isMacOS) {
+          if (Platform.isIOS) {
             await navigationService.push(
               CupertinoPageRoute(builder: (context) {
                 return const IosLibrarySelectView();
+              }),
+            );
+          } else if (Platform.isMacOS) {
+            await navigationService.push(
+              CupertinoPageRoute(builder: (context) {
+                return const MacosLibrarySelectView();
               }),
             );
           } else {

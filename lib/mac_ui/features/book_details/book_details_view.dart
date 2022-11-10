@@ -35,7 +35,6 @@ class BookDetailsView extends HookConsumerWidget {
     final mounted = useIsMounted();
     useEffect(() {
       if (mounted()) {
-        print('Mounted');
         bookDetails.getDetails();
       }
     }, [mounted()]);
@@ -168,71 +167,18 @@ class BookDetailsView extends HookConsumerWidget {
                                           barrierColor: MacosColors.black
                                               .withOpacity(0.7),
                                           context: context,
-                                          builder: (context) => Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  4,
-                                              vertical: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  4,
-                                            ),
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Container(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  maxWidth: 500,
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.all(24.0),
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    color:
-                                                        MacosTheme.of(context)
-                                                            .canvasColor),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          child: Text(
-                                                            item.displayDescription ??
-                                                                '',
-                                                            softWrap: true,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .visible,
-                                                            style:
-                                                                MacosTheme.of(
-                                                                        context)
-                                                                    .typography
-                                                                    .body,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      PushButton(
-                                                        buttonSize:
-                                                            ButtonSize.large,
-                                                        onPressed: () =>
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop(),
-                                                        child: const Text(
-                                                            'Dismiss'),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
+                                          builder: (context) => MacosSheet(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(24.0),
+                                              child: Text(
+                                                item.displayDescription ?? '',
+                                                softWrap: true,
+                                                textAlign: TextAlign.justify,
+                                                overflow: TextOverflow.visible,
+                                                style: MacosTheme.of(context)
+                                                    .typography
+                                                    .title2,
                                               ),
                                             ),
                                           ),
@@ -483,14 +429,14 @@ class BookDetailsView extends HookConsumerWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 40.0),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0)),
-                                        child: CupertinoListTile(
+                                  child: Container(
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0)),
+                                    child: Stack(
+                                      children: [
+                                        CupertinoListTile(
                                           leading: Text(
                                             '${index + 1}',
                                             style: MacosTheme.of(context)
@@ -532,22 +478,22 @@ class BookDetailsView extends HookConsumerWidget {
                                                       color: MacosColors
                                                           .systemGrayColor)),
                                         ),
-                                      ),
-                                      if (chapter.downloadProgress != 0 &&
-                                          !chapter.cached)
-                                        Positioned.fill(
-                                          child: Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: LinearProgressIndicator(
-                                              minHeight: 6.0,
-                                              value: chapter.downloadProgress,
-                                              color: Colors.deepPurple,
-                                              backgroundColor:
-                                                  Colors.transparent,
+                                        if (chapter.downloadProgress != 0 &&
+                                            !chapter.cached)
+                                          Positioned.fill(
+                                            child: Align(
+                                              alignment: Alignment.bottomCenter,
+                                              child: LinearProgressIndicator(
+                                                minHeight: 6.0,
+                                                value: chapter.downloadProgress,
+                                                color: Colors.deepPurple,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

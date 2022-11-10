@@ -2678,6 +2678,7 @@ mixin _$MediaMetadata {
   String? get subtitle => throw _privateConstructorUsedError;
   List<Author>? get authors => throw _privateConstructorUsedError;
   List<String>? get narrators => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _coerceToList)
   List<Series>? get series => throw _privateConstructorUsedError;
   List<String>? get genres => throw _privateConstructorUsedError;
   String? get publishedYear => throw _privateConstructorUsedError;
@@ -2706,7 +2707,7 @@ abstract class $MediaMetadataCopyWith<$Res> {
       String? subtitle,
       List<Author>? authors,
       List<String>? narrators,
-      List<Series>? series,
+      @JsonKey(fromJson: _coerceToList) List<Series>? series,
       List<String>? genres,
       String? publishedYear,
       int? publishedDate,
@@ -2820,7 +2821,7 @@ abstract class _$$_MediaMetadataCopyWith<$Res>
       String? subtitle,
       List<Author>? authors,
       List<String>? narrators,
-      List<Series>? series,
+      @JsonKey(fromJson: _coerceToList) List<Series>? series,
       List<String>? genres,
       String? publishedYear,
       int? publishedDate,
@@ -2927,7 +2928,7 @@ class _$_MediaMetadata implements _MediaMetadata {
       this.subtitle,
       final List<Author>? authors,
       final List<String>? narrators,
-      final List<Series>? series,
+      @JsonKey(fromJson: _coerceToList) final List<Series>? series,
       final List<String>? genres,
       this.publishedYear,
       this.publishedDate,
@@ -2969,6 +2970,7 @@ class _$_MediaMetadata implements _MediaMetadata {
 
   final List<Series>? _series;
   @override
+  @JsonKey(fromJson: _coerceToList)
   List<Series>? get series {
     final value = _series;
     if (value == null) return null;
@@ -3075,7 +3077,7 @@ abstract class _MediaMetadata implements MediaMetadata {
       final String? subtitle,
       final List<Author>? authors,
       final List<String>? narrators,
-      final List<Series>? series,
+      @JsonKey(fromJson: _coerceToList) final List<Series>? series,
       final List<String>? genres,
       final String? publishedYear,
       final int? publishedDate,
@@ -3098,6 +3100,7 @@ abstract class _MediaMetadata implements MediaMetadata {
   @override
   List<String>? get narrators;
   @override
+  @JsonKey(fromJson: _coerceToList)
   List<Series>? get series;
   @override
   List<String>? get genres;

@@ -35,127 +35,130 @@ class HomeRow extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = useState(PageController(viewportFraction: 0.588));
     final pageMove = useState(1.0);
-    return LayoutBuilder(builder: (context, constraints) {
-      debouncer.run(() {
-        if (pageController.value.viewportFraction !=
-            250 / constraints.maxWidth) {
-          pageController.value =
-              PageController(viewportFraction: 250 / constraints.maxWidth);
-          pageMove.value = constraints.maxWidth / 250;
-        }
-      });
-      return HookBuilder(builder: (context) {
-        final showForwardButton = useState(false);
-        final showBackButton = useState(false);
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
-                child: Text(
-                  title!,
-                  style: const TextStyle(fontSize: 24),
-                )),
-            MouseRegion(
-              onHover: (event) {
-                if ((items?.length ?? 0) > pageMove.value) {
-                  showBackButton.value = pageController.value.page != 0;
-                  showForwardButton.value = true;
-                }
-              },
-              onExit: (event) {
-                showBackButton.value = false;
-                showForwardButton.value = false;
-              },
-              child: SizedBox(
-                  height: height,
-                  child: Stack(
-                    children: [
-                      FadingScroll(
-                          controller: pageController.value,
-                          builder: (context, scrollController) {
-                            return PageView.builder(
-                              clipBehavior: Clip.antiAlias,
-                              controller: pageController.value,
-                              pageSnapping: false,
-                              padEnds: false,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: items!.length,
-                              itemBuilder: (context, index) {
-                                final MediaItem book = items![index];
-                                return CoverItem(
-                                  onTap: () async {
-                                    Navigator.of(context).push(
-                                      CupertinoPageRoute(
-                                        builder: (context) {
-                                          return BookDetailsView(
-                                              mediaId: book.id);
-                                        },
-                                      ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: LayoutBuilder(builder: (context, constraints) {
+        debouncer.run(() {
+          if (pageController.value.viewportFraction !=
+              250 / constraints.maxWidth) {
+            pageController.value =
+                PageController(viewportFraction: 250 / constraints.maxWidth);
+            pageMove.value = constraints.maxWidth / 250;
+          }
+        });
+        return HookBuilder(builder: (context) {
+          final showForwardButton = useState(false);
+          final showBackButton = useState(false);
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 8.0),
+                  child: Text(
+                    title!,
+                    style: const TextStyle(fontSize: 24),
+                  )),
+              MouseRegion(
+                onHover: (event) {
+                  if ((items?.length ?? 0) > pageMove.value) {
+                    showBackButton.value = pageController.value.page != 0;
+                    showForwardButton.value = true;
+                  }
+                },
+                onExit: (event) {
+                  showBackButton.value = false;
+                  showForwardButton.value = false;
+                },
+                child: SizedBox(
+                    height: height,
+                    child: Stack(
+                      children: [
+                        FadingScroll(
+                            controller: pageController.value,
+                            builder: (context, scrollController) {
+                              return PageView.builder(
+                                clipBehavior: Clip.antiAlias,
+                                controller: pageController.value,
+                                pageSnapping: false,
+                                padEnds: false,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: items!.length,
+                                itemBuilder: (context, index) {
+                                  final MediaItem book = items![index];
+                                  return CoverItem(
+                                    onTap: () async {
+                                      Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                          builder: (context) {
+                                            return BookDetailsView(
+                                                mediaId: book.id);
+                                          },
+                                        ),
+                                      );
+                                      // await playbackController
+                                      //     .playFromId(book.id);
+                                    },
+                                    height: height,
+                                    progress: Utils.getProgress(item: book),
+                                    thumbnailUrl: book.artUri?.toString(),
+                                    title: book.title,
+                                    subtitle: book.artist,
+                                    played: book.played,
+                                  );
+                                },
+                              );
+                            }),
+                        if (showBackButton.value)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              color: const Color.fromRGBO(0, 0, 0, 0.3),
+                              height: height! - 10,
+                              child: CupertinoButton(
+                                  onPressed: () async {
+                                    await _handlePageMove(
+                                      pageMove.value,
+                                      pageController.value.previousPage,
                                     );
-                                    // await playbackController
-                                    //     .playFromId(book.id);
                                   },
-                                  height: height,
-                                  progress: Utils.getProgress(item: book),
-                                  thumbnailUrl: book.artUri?.toString(),
-                                  title: book.title,
-                                  subtitle: book.artist,
-                                  played: book.played,
-                                );
-                              },
-                            );
-                          }),
-                      if (showBackButton.value)
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            color: const Color.fromRGBO(0, 0, 0, 0.3),
-                            height: height! - 10,
-                            child: CupertinoButton(
+                                  child: const MacosIcon(
+                                    size: 40,
+                                    CupertinoIcons.back,
+                                    color: MacosColors.systemGrayColor,
+                                  )),
+                            ),
+                          ),
+                        if (showForwardButton.value)
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              padding: const EdgeInsets.all(0.0),
+                              color: const Color.fromRGBO(0, 0, 0, 0.3),
+                              height: height! - 20,
+                              child: CupertinoButton(
                                 onPressed: () async {
                                   await _handlePageMove(
                                     pageMove.value,
-                                    pageController.value.previousPage,
+                                    pageController.value.nextPage,
                                   );
                                 },
                                 child: const MacosIcon(
                                   size: 40,
-                                  CupertinoIcons.back,
+                                  CupertinoIcons.forward,
                                   color: MacosColors.systemGrayColor,
-                                )),
-                          ),
-                        ),
-                      if (showForwardButton.value)
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            padding: const EdgeInsets.all(0.0),
-                            color: const Color.fromRGBO(0, 0, 0, 0.3),
-                            height: height! - 20,
-                            child: CupertinoButton(
-                              onPressed: () async {
-                                await _handlePageMove(
-                                  pageMove.value,
-                                  pageController.value.nextPage,
-                                );
-                              },
-                              child: const MacosIcon(
-                                size: 40,
-                                CupertinoIcons.forward,
-                                color: MacosColors.systemGrayColor,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
-                  )),
-            ),
-          ],
-        );
-      });
-    });
+                      ],
+                    )),
+              ),
+            ],
+          );
+        });
+      }),
+    );
   }
 }
 
@@ -210,7 +213,28 @@ class CoverItem extends StatelessWidget {
                     imageUrl: thumbnailUrl!,
                     fit: BoxFit.contain,
                     alignment: Alignment.center,
-                    errorWidget: (context, error, child) => Text(title ?? ''),
+                    errorWidget: (context, error, child) => Container(
+                      color: Colors.black,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const MacosIcon(
+                                CupertinoIcons.book_solid,
+                                size: 50.0,
+                              ),
+                              Text(
+                                title ?? '',
+                                style: MacosTheme.of(context).typography.title2,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     placeholder: (context, url) => Container(
                       color: Colors.black,
                       child: const MacosIcon(

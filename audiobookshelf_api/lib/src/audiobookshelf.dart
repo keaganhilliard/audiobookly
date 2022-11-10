@@ -4,6 +4,7 @@ import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/abs_search_response.dart';
 import 'package:audiobookshelf/src/models/abs_media_progress.dart';
 import 'package:audiobookshelf/src/models/abs_play_item_request.dart';
+import 'package:audiobookshelf/src/models/abs_series.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -229,6 +230,45 @@ class AudiobookshelfApi {
     return AbsCollection.fromMap(jsonDecode(
       utf8.decode(response.bodyBytes),
     )).books;
+  }
+
+  Future<List<AbsSeries>> getSeries(String libraryId) async {
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/libraries/$libraryId/series'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(
+      utf8.decode(response.bodyBytes),
+    )['results']
+        .map<AbsSeries>((x) => AbsSeries.fromJson(x))
+        .toList();
+  }
+
+  Future<List<AbsAudiobook>> getBooksForSeries(
+      String libraryId, String seriesId) async {
+    final encodedSeriesId = base64Encode(utf8.encode(seriesId));
+    http.Response response = await client.get(
+      createUri(
+        baseUrl!,
+        '/api/libraries/$libraryId/items',
+        {
+          'expanded': '1',
+          'filter': 'series.$encodedSeriesId',
+        },
+      ),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(utf8.decode(response.bodyBytes))['results']
+        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+        .toList();
   }
 
   Future<String> startPlaybackSession(

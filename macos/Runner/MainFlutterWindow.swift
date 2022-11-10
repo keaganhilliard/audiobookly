@@ -42,18 +42,20 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
     self.contentViewController = blurryContainerViewController
     self.setFrame(windowFrame, display: true)
 
-    if #available(macOS 10.13, *) {
-      let customToolbar = NSToolbar()
-      customToolbar.showsBaselineSeparator = false
-      self.toolbar = customToolbar
-    }
+    // if #available(macOS 10.13, *) {
+    //   let customToolbar = NSToolbar()
+    //   customToolbar.showsBaselineSeparator = false
+
+    //   self.toolbar = customToolbar
+    // }
 
     self.titleVisibility = .hidden
     self.titlebarAppearsTransparent = true
-    if #available(macOS 11.0, *) {
-      // Use .expanded if the app will have a title bar, else use .unified
-      self.toolbarStyle = .unified
-    }
+    self.minSize = NSSize(width: 1100.0, height: 400.0)
+    // if #available(macOS 11.0, *) {
+    //   // Use .expanded if the app will have a title bar, else use .unified
+    //   self.toolbarStyle = .unified
+    // }
 
     self.isMovableByWindowBackground = true
     self.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)

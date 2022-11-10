@@ -1,5 +1,10 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/domain/authors/authors_notifier.dart';
+import 'package:audiobookly/domain/books/books_notifier.dart';
+import 'package:audiobookly/domain/collections/collections_notifier.dart';
+import 'package:audiobookly/domain/home/home_notifier.dart';
 import 'package:audiobookly/domain/search/search_notifier.dart';
+import 'package:audiobookly/domain/series/series_notifier.dart';
 import 'package:audiobookly/mac_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/mac_ui/features/search/search_view.dart';
 import 'package:audiobookly/mac_ui/features/tracks/tracks_view.dart';
@@ -12,32 +17,62 @@ import 'package:audiobookly/mac_ui/features/home/home_view.dart';
 import 'package:audiobookly/mac_ui/features/series/series_view.dart';
 import 'package:audiobookly/mac_ui/widgets/lazy_indexed_stack.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class Home extends HookWidget {
+class Home extends HookConsumerWidget {
   Home({super.key});
   final searchDebouncer = Debouncer(milliseconds: 1000);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = useState(0);
-    final lifecycle = useAppLifecycleState();
-    print(lifecycle);
     return PlatformMenuBar(
-      menus: const [
+      menus: [
         PlatformMenu(
           label: 'Audiobookly',
           menus: [
-            PlatformProvidedMenuItem(
+            const PlatformProvidedMenuItem(
               type: PlatformProvidedMenuItemType.about,
             ),
-            PlatformProvidedMenuItem(
+            PlatformMenuItem(
+              label: 'Stop playback',
+              onSelected: () {
+                GetIt.I<PlaybackController>().stop();
+              },
+            ),
+            PlatformMenuItem(
+              label: 'Refresh page',
+              shortcut:
+                  const SingleActivator(LogicalKeyboardKey.keyR, meta: true),
+              onSelected: () async {
+                switch (currentIndex.value) {
+                  case 0:
+                    return ref.read(homeStateProvider.notifier).refresh();
+                  case 1:
+                    return ref
+                        .read(booksStateProvider(null).notifier)
+                        .refresh();
+                  case 2:
+                    return ref.read(authorsStateProvider.notifier).refresh();
+                  case 3:
+                    return ref
+                        .read(collectionsStateProvider.notifier)
+                        .refresh();
+                  case 4:
+                    return ref.read(seriesStateProvider.notifier).refresh();
+                }
+                // GetIt.I<PlaybackController>().stop();
+              },
+            ),
+            const PlatformProvidedMenuItem(
               type: PlatformProvidedMenuItemType.quit,
             ),
           ],
@@ -50,7 +85,7 @@ class Home extends HookWidget {
         //     ),
         //   ],
         // ),
-        PlatformMenu(
+        const PlatformMenu(
           label: 'Window',
           menus: [
             PlatformProvidedMenuItem(
@@ -150,31 +185,16 @@ class Home extends HookWidget {
                   barrierLabel: 'Hello',
                   context: context,
                   builder: (context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(60.0),
-                      child: MacosScaffold(children: [
-                        ContentArea(
-                          builder: (context, scrollController) =>
-                              const SettingsView(),
-                        )
-                      ]),
+                    return const MacosSheet(
+                      child: SettingsView(),
                     );
                   },
                 );
               },
             );
           }),
-          minWidth: 200.0,
-        ),
-        endSidebar: Sidebar(
-          topOffset: 59,
-          builder: (context, scrollController) => TracksView(
-            controller: scrollController,
-          ),
-          minWidth: 250,
-          startWidth: 250,
-          isResizable: false,
-          shownByDefault: false,
+          minWidth: 150.0,
+          maxWidth: 200.0,
         ),
         child: Consumer(builder: (context, ref, child) {
           return MacosScaffold(
@@ -199,7 +219,6 @@ class Home extends HookWidget {
                     CupertinoTabView(builder: (context) {
                       return SeriesView();
                     }),
-                    //SearchViewStub
                     CupertinoTabView(builder: (context) {
                       return const SearchView();
                     }),

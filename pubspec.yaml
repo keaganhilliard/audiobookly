@@ -11,7 +11,7 @@ description: An audiobook player for Plex built using Flutter.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.0
+version: 0.1.0+2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -92,10 +92,10 @@ dev_dependencies:
 
 flutter_icons:
   android: "launcher_icon"
-  ios: false
-  image_path: "assets/audiobookly_icon.png"
-  # adaptive_icon_background: "#673AB7"
-  # adaptive_icon_foreground: "assets/AbLogoStripped.png"
+  ios: true
+  image_path: "assets/new_ab_icon.png"
+  adaptive_icon_background: "#673AB7"
+  adaptive_icon_foreground: "assets/new_ab_icon.png"
 
 flutter:
   uses-material-design: true

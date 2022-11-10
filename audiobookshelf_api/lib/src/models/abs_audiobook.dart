@@ -131,6 +131,10 @@ double _coerceStringToDouble(dynamic shouldBeADouble) =>
         ? double.parse(shouldBeADouble)
         : shouldBeADouble.toDouble();
 
+List<Series> _coerceToList(dynamic series) => series is Map
+    ? [Series.fromJson(series as Map<String, dynamic>)]
+    : [for (final serie in series) Series.fromJson(serie)];
+
 @freezed
 class MetaTags with _$MetaTags {
   const factory MetaTags({
@@ -157,7 +161,7 @@ class MediaMetadata with _$MediaMetadata {
     String? subtitle,
     List<Author>? authors,
     List<String>? narrators,
-    List<Series>? series,
+    @JsonKey(fromJson: _coerceToList) List<Series>? series,
     List<String>? genres,
     String? publishedYear,
     int? publishedDate,
