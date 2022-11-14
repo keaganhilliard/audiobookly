@@ -342,10 +342,13 @@ class BookDetailsView extends HookConsumerWidget {
                                 await playbackController.playFromId(item.id);
                                 await playbackController.skipToQueueItem(index);
                               },
-                              title: AutoSizeText(
-                                chapter.title,
-                                group: group,
-                                maxLines: 2,
+                              title: SizedBox(
+                                width: 290,
+                                child: Text(
+                                  chapter.title,
+                                  overflow: TextOverflow.ellipsis,
+                                  // maxLines: 2,
+                                ),
                               ),
                               additionalInfo: Text(
                                 Utils.getTimeValue(chapter.duration),

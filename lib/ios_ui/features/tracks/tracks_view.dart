@@ -85,9 +85,12 @@ class TracksView extends HookConsumerWidget {
                         playbackController.skipToQueueItem(index);
                       }
                     },
-                    title: Text(
-                      track.title,
-                      overflow: TextOverflow.ellipsis,
+                    title: SizedBox(
+                      width: 240,
+                      child: Text(
+                        track.title,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     additionalInfo: currentTrack
                         ? PlaybackPosition(builder: (context, position) {

@@ -386,6 +386,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  flutter_carplay:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: combine-all
+      resolved-ref: "29940105faccbd65361e749c5959759bc196a317"
+      url: "https://github.com/icapps/flutter_carplay.git"
+    source: git
+    version: "1.0.3"
   flutter_hooks:
     dependency: "direct main"
     description:
