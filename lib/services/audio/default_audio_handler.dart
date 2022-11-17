@@ -103,7 +103,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       });
     }
     _positionSub ??= _player.positionStream.listen((position) {
-      if (currentQueueItem?.extras?.containsKey('end') ?? false) {
+      if ((currentQueueItem?.extras?.containsKey('start') ?? false) &&
+          (currentQueueItem?.extras?.containsKey('end') ?? false)) {
         var currentState = durationBetween(
           currentPosition,
           currentQueueItem!.start,
@@ -221,7 +222,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     if (currentQueueItem != null) {
       mediaItem.add(
         currentQueueItem!.copyWith(
-          id: currentQueueItem!.id,
+          id: _currentMediaItem!.id,
           duration: totalDuration,
           artUri: _currentMediaItem?.artUri,
           displayDescription: _currentMediaItem?.displayDescription,
@@ -303,10 +304,14 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> play() async {
     await completer.future;
+    if (_currentMedia == null) {
+      final items = await _repository!.getChildren(AudioService.recentRootId);
+      if (items.isNotEmpty) await prepareFromMediaId(items[0].id);
+    }
     try {
       final item = await _repository!.getAlbumFromId(_currentMedia);
       final position = _findPostionDurationForAlbum(item);
-      if (position > currentPosition) {
+      if (position > currentPosition && !item.played) {
         await seek(position);
       }
     } catch (e) {
@@ -316,7 +321,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
     _player.play();
     // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
-    log('Playing progress should fire bitch');
     await updateProgress(AudiobooklyPlaybackState.PLAYING);
     // await super.play();
   }
@@ -534,12 +538,37 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }
   }
 
+  bool preparedFromSearch = false;
+
+  @override
+  Future<void> prepareFromSearch(String query,
+      [Map<String, dynamic>? extras]) async {
+    playbackState.add(playbackState.value
+        .copyWith(processingState: AudioProcessingState.loading));
+    await completer.future;
+    List<MediaItem> items = await _repository!.search(query);
+    if (items.isNotEmpty) {
+      await prepareFromMediaId(items[0].id);
+    }
+    preparedFromSearch = true;
+    _broadcastState();
+    return super.prepareFromSearch(query, extras);
+  }
+
   @override
   Future<void> playFromSearch(String query,
       [Map<String, dynamic>? extras]) async {
+    playbackState.add(playbackState.value
+        .copyWith(processingState: AudioProcessingState.loading));
     await completer.future;
-    List<MediaItem> items = await _repository!.search(query);
-    if (items.isNotEmpty) await playFromMediaId(items[0].id);
+    if (preparedFromSearch) {
+      preparedFromSearch = false;
+      await play();
+    } else {
+      List<MediaItem> items = await _repository!.search(query);
+      if (items.isNotEmpty) await playFromMediaId(items[0].id);
+    }
+    _broadcastState();
     return super.playFromSearch(query, extras);
   }
 
@@ -553,6 +582,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future playFromMediaId(String? mediaId,
       [Map<String, dynamic>? extras]) async {
+    print('Playing $mediaId');
     await completer.future;
     await prepareFromMediaId(mediaId, extras);
     _player.play();
@@ -585,6 +615,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   _QueuePosition _findPositionForAlbum(MediaItem album) {
+    if (album.played) {
+      return _QueuePosition(0, Duration.zero);
+    }
     if (album.viewOffset != Duration.zero) {
       return _findPostion(album.viewOffset);
     } else {

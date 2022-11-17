@@ -10,10 +10,14 @@ class SeekBar extends HookWidget {
   final Duration? position;
   final Future<void> Function(Duration)? onChanged;
   final Future<void> Function(Duration)? onChangeEnd;
+  final Color primaryColor;
+  final Color secondaryColor;
 
   const SeekBar({
     required this.duration,
     required this.position,
+    this.primaryColor = Colors.deepPurple,
+    this.secondaryColor = const Color.fromRGBO(128, 128, 128, 1.0),
     this.onChanged,
     this.onChangeEnd,
   });
@@ -30,8 +34,8 @@ class SeekBar extends HookWidget {
                 thumbRadius: 5.0,
                 trackHeight: 10,
                 thumbPainter: (canvas, rect) {},
-                trackLeftColor: Colors.deepPurple,
-                trackRightColor: const Color.fromRGBO(128, 128, 128, 0.15)),
+                trackLeftColor: primaryColor,
+                trackRightColor: secondaryColor.withOpacity(0.15)),
             // thumbColor: Colors.deepPurple,
             // activeColor: Colors.deepPurple,
             min: 0.0,
@@ -61,9 +65,9 @@ class SeekBar extends HookWidget {
           bottom: 0.0,
           child: Text(
             Utils.getTimeValue(duration),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15.0,
-              color: Color.fromRGBO(128, 128, 128, 1.0),
+              color: secondaryColor,
             ),
           ),
         ),
@@ -72,9 +76,9 @@ class SeekBar extends HookWidget {
           bottom: 0.0,
           child: Text(
             Utils.getTimeValue(dragValue.value ?? position),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15.0,
-              color: Color.fromRGBO(128, 128, 128, 1.0),
+              color: secondaryColor,
             ),
           ),
         ),

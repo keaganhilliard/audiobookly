@@ -28,12 +28,12 @@ class RewindButton extends HookConsumerWidget {
     final prefs = ref.watch(preferencesProvider);
 
     return CupertinoButton(
-      color: color,
       padding: padding,
       onPressed: playbackController.rewind,
       child: Icon(
         iconMap[prefs.rewindInterval.toString()],
         size: iconSize,
+        color: color,
       ),
     );
   }

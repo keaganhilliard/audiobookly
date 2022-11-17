@@ -48,26 +48,33 @@ class TracksView extends HookConsumerWidget {
                   if (currentTrack)
                     Positioned.fill(
                       child: LayoutBuilder(builder: (context, constraints) {
-                        return Align(
-                          alignment: Alignment.centerLeft,
-                          child: HookBuilder(
-                            builder: (context) {
-                              final position =
-                                  useStream(playbackController.positionStream);
-                              double scalar = 0;
-                              if (position.hasData && position.data != null) {
-                                final currentTrackPosition = position.data! -
-                                    item!.currentTrackStartingPosition;
-                                scalar = currentTrackPosition.inMilliseconds /
-                                    item.currentTrackLength.inMilliseconds;
-                              }
-                              return Container(
-                                height: constraints.maxHeight,
-                                width: constraints.maxWidth *
-                                    (scalar > 0 ? scalar : 0),
-                                color: const Color.fromRGBO(103, 58, 183, 0.3),
-                              );
-                            },
+                        return Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: HookBuilder(
+                              builder: (context) {
+                                final position = useStream(
+                                    playbackController.positionStream);
+                                double scalar = 0;
+                                if (position.hasData && position.data != null) {
+                                  final currentTrackPosition = position.data! -
+                                      item!.currentTrackStartingPosition;
+                                  scalar = currentTrackPosition.inMilliseconds /
+                                      item.currentTrackLength.inMilliseconds;
+                                }
+                                return Container(
+                                  height: constraints.maxHeight,
+                                  width: constraints.maxWidth *
+                                      (scalar > 0 ? scalar : 0),
+                                  color:
+                                      const Color.fromRGBO(103, 58, 183, 0.3),
+                                );
+                              },
+                            ),
                           ),
                         );
                       }),
@@ -98,11 +105,11 @@ class TracksView extends HookConsumerWidget {
                               final currentTrackPosition =
                                   position - item!.currentTrackStartingPosition;
                               return Text(
-                                  '-${Utils.format(track.duration! - currentTrackPosition)}');
+                                  '-${Utils.getTimeValue(track.duration! - currentTrackPosition)}');
                             }
-                            return Text(Utils.format(track.duration!));
+                            return Text(Utils.getTimeValue(track.duration!));
                           })
-                        : Text(Utils.format(track.duration!)),
+                        : Text(Utils.getTimeValue(track.duration!)),
                   ),
                 ],
               );

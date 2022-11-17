@@ -62,7 +62,11 @@ abstract class MediaRepository {
         ];
         return await Future.value(items);
       case AudioService.recentRootId:
-        return (await getRecentlyPlayed()).take(1).toList();
+        var recents = (await getRecentlyPlayed()).take(1).toList();
+        if (recents.isEmpty) {
+          recents = (await getRecentlyAdded()).take(1).toList();
+        }
+        return recents;
       case MediaIds.AUTHORS_ID:
         if (pieces.length > 1) {
           return await getBooksFromAuthor(pieces[1]);

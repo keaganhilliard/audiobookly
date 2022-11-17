@@ -28,12 +28,12 @@ class ForwardButton extends HookConsumerWidget {
     final prefs = ref.watch(preferencesProvider);
 
     return CupertinoButton(
-      color: color,
       padding: padding,
       onPressed: playbackController.fastForward,
       child: Icon(
         iconMap[prefs.fastForwardInterval.toString()],
         size: iconSize,
+        color: color,
       ),
     );
   }

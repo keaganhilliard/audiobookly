@@ -34,7 +34,7 @@ class PlayerView extends HookConsumerWidget {
     return text;
   }
 
-  const PlayerView({this.book, Key? key}) : super(key: key);
+  const PlayerView({this.book, super.key});
 
   @override
   Widget build(context, ref) {
@@ -101,7 +101,9 @@ class PlayerView extends HookConsumerWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(30.0),
                                 child: SingleChildScrollView(
-                                  child: Text(book!.displayDescription!),
+                                  child: Text(
+                                    book!.displayDescription!,
+                                  ),
                                 ),
                               ),
                             ),
@@ -123,10 +125,16 @@ class PlayerView extends HookConsumerWidget {
                   child: Text(
                     book?.album ?? '',
                     textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 25.0,
+                    ),
                   ),
                 ),
                 Text(
                   book?.artist ?? '',
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                  ),
                 ),
               ],
             ),
@@ -167,18 +175,25 @@ class PlayerView extends HookConsumerWidget {
                               onPressed: () {
                                 playbackController.skipToPrevious();
                               },
-                              child: const Icon(Icons.skip_previous),
+                              child: const Icon(
+                                Icons.skip_previous,
+                              ),
                             ),
                             Expanded(
                               child: Center(
-                                child: Text(item.title),
+                                child: Text(
+                                  item.title,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                             CupertinoButton(
                               onPressed: () {
                                 playbackController.skipToNext();
                               },
-                              child: const Icon(Icons.skip_next),
+                              child: const Icon(
+                                Icons.skip_next,
+                              ),
                             ),
                           ],
                         ),
@@ -220,11 +235,12 @@ class PlayerView extends HookConsumerWidget {
                                               Utils.getTimeValue(timeLeft.data),
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
-                                                // color: Colors.white,
                                                 fontSize: 9.0,
                                               ),
                                             )
-                                          : const Icon(Icons.snooze),
+                                          : const Icon(
+                                              Icons.snooze,
+                                            ),
                                   onPressed: () async {
                                     Duration? time;
                                     CupertinoActionSheetAction createOption(
@@ -268,7 +284,9 @@ class PlayerView extends HookConsumerWidget {
                                 );
                               },
                             ),
-                            RewindButton(iconSize: 35),
+                            RewindButton(
+                              iconSize: 35,
+                            ),
                             Stack(
                               children: [
                                 Positioned.fill(
@@ -312,7 +330,9 @@ class PlayerView extends HookConsumerWidget {
                                 ),
                               ],
                             ),
-                            ForwardButton(iconSize: 35),
+                            ForwardButton(
+                              iconSize: 35,
+                            ),
                             CupertinoButton(
                               onPressed: () => {
                                 showCupertinoModalPopup(
@@ -360,7 +380,6 @@ class PlayerView extends HookConsumerWidget {
                                 '${state?.speed.toStringAsFixed(2)}x',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
-                                  // color: Colors.white,
                                   fontSize: 10.0,
                                 ),
                               ), //............

@@ -174,7 +174,10 @@ class PlayerView extends HookConsumerWidget {
                             ),
                             Expanded(
                               child: Center(
-                                child: Text(item.title),
+                                child: Text(
+                                  item.title,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                             IconButton(

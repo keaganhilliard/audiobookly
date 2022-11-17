@@ -195,11 +195,11 @@ extension MediaHelpers on MediaItem {
   }
 
   Duration get start => Duration(
-        milliseconds: (extras!['start'] * 1000).round(),
+        milliseconds: ((extras?['start'] ?? 0) * 1000).round(),
       );
 
   Duration get end => Duration(
-        milliseconds: (extras!['end'] * 1000).round(),
+        milliseconds: ((extras?['end'] ?? 0) * 1000).round(),
       );
 
   static MediaItem fromBook(Book book) => MediaItem(
