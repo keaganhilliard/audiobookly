@@ -13,7 +13,6 @@ Future<AudioHandler> initAudioHandler() async {
       androidNotificationChannelName: 'Audiobookly',
       androidNotificationChannelDescription: 'Audio playback notification',
       androidNotificationOngoing: true,
-      // androidEnableQueue: true,
       androidNotificationClickStartsActivity: true,
       androidStopForegroundOnPause: true,
       rewindInterval: Duration(seconds: 15),

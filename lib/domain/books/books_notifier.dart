@@ -27,7 +27,7 @@ class BooksNotifier extends StateNotifier<BooksState> {
   Future<void> getBooks() async {
     try {
       state = const BooksState.loading();
-      books = await _repository!.getChildren(_parentId ?? MediaIds.BOOKS_ID, 0);
+      books = await _repository!.getChildren(_parentId ?? MediaIds.BOOKS_ID);
       state = BooksState.loaded(books: books, currentParent: _parentId);
     } catch (e, stack) {
       state = BooksState.error(
