@@ -76,10 +76,18 @@ class AudiobookshelfApi {
     return user!;
   }
 
-  Future<List<AbsAudiobook>> getAll(String library) async {
+  Future<List<AbsAudiobookMinified>> getAll(
+    String library, [
+    int? page,
+    String sort = 'media.metadata.authorName',
+  ]) async {
+    var queryParams = {'sort': sort, 'minified': '1'};
+    if (page != null) {
+      queryParams.putIfAbsent('page', () => '$page');
+      queryParams.putIfAbsent('limit', () => '100');
+    }
     http.Response response = await client.get(
-      createUri(
-          baseUrl!, '/api/libraries/$library/items'), // {'minified': '1'}),
+      createUri(baseUrl!, '/api/libraries/$library/items', queryParams),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
@@ -220,7 +228,10 @@ class AudiobookshelfApi {
 
   Future<List<AbsAudiobook>> getBooksForCollection(String collectionId) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/collections/$collectionId'),
+      createUri(
+        baseUrl!,
+        '/api/collections/$collectionId',
+      ),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
@@ -234,7 +245,8 @@ class AudiobookshelfApi {
 
   Future<List<AbsSeries>> getSeries(String libraryId) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/libraries/$libraryId/series'),
+      createUri(
+          baseUrl!, '/api/libraries/$libraryId/series', {'minified': '1'}),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
@@ -342,8 +354,8 @@ double durationToSeconds(Duration dur) {
   return dur.inMicroseconds / microToSeconds;
 }
 
-List<AbsAudiobook> _convertBody(List<int> bodyBytes) {
+List<AbsAudiobookMinified> _convertBody(List<int> bodyBytes) {
   return jsonDecode(utf8.decode(bodyBytes))['results']
-      .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+      .map<AbsAudiobookMinified>((el) => AbsAudiobookMinified.fromJson(el))
       .toList();
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:audiobookly/domain/track_details/track_details_notifier.dart';
 import 'package:audiobookly/domain/track_details/track_details_state.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
 import 'package:audiobookly/providers.dart';
@@ -36,8 +37,8 @@ class BookDetailsView extends HookConsumerWidget {
       initial: _loadingIndicator,
       loading: _loadingIndicator,
       error: (message) => Center(child: Text('Something went wrong $message')),
-      loaded: (item, chapters) {
-        final progress = Utils.getProgress(item: item);
+      loaded: (book, tracks) {
+        final progress = Utils.getProgress(book: book);
 
         return Scaffold(
           body: SafeArea(
@@ -58,7 +59,7 @@ class BookDetailsView extends HookConsumerWidget {
                     pinned: true,
                     title: FittedBox(
                       fit: BoxFit.fitWidth,
-                      child: Text(item!.title),
+                      child: Text(book!.title),
                     ),
                     actions: [
                       if (kIsWeb || (!Platform.isIOS && !Platform.isAndroid))
@@ -66,20 +67,20 @@ class BookDetailsView extends HookConsumerWidget {
                           onPressed: () => refreshState.currentState?.show(),
                           icon: const Icon(Icons.refresh),
                         ),
-                      if (item.cached ||
-                          (!item.downloading &&
-                              (chapters?.any((chapter) => chapter.cached) ??
+                      if (book.downloadStatus == DownloadStatus.succeeded ||
+                          (book.downloadStatus != DownloadStatus.downloading &&
+                              (tracks?.any((track) => track.isDownloaded) ??
                                   false)))
                         IconButton(
                           onPressed: () async {
                             downloadService?.deleteDownload(
-                              item,
+                              book,
                             );
                             bookDetails.refreshForDownloads();
                           },
                           icon: const Icon(Icons.delete_forever),
                         ),
-                      if (item.downloading)
+                      if (book.downloadStatus == DownloadStatus.downloading)
                         Stack(
                           children: [
                             if (!kIsWeb &&
@@ -115,24 +116,25 @@ class BookDetailsView extends HookConsumerWidget {
                             Center(
                               child: IconButton(
                                   onPressed: () {
-                                    downloadService?.cancelBookDownload(item);
+                                    downloadService?.cancelBookDownload(book);
                                   },
                                   icon: const Icon(Icons.cancel_rounded)),
                             ),
                           ],
                         ),
-                      if (!item.downloading && !item.cached)
+                      if (book.downloadStatus == DownloadStatus.none ||
+                          book.downloadStatus == DownloadStatus.none)
                         IconButton(
                           icon: const Icon(Icons.file_download_outlined),
                           onPressed: () async {
                             downloadService?.downloadBook(
-                              item,
-                              chapters!,
+                              book,
+                              tracks!,
                             );
                             // bookDetails.refreshForDownloads();
                           },
                         ),
-                      if (item.played)
+                      if (book.read)
                         IconButton(
                           color: Colors.deepPurple,
                           icon: const Icon(Icons.check),
@@ -168,9 +170,7 @@ class BookDetailsView extends HookConsumerWidget {
                             child: Stack(
                               children: [
                                 CachedNetworkImage(
-                                  imageUrl: item.largeThumbnail?.toString() ??
-                                      item.artUri?.toString() ??
-                                      '',
+                                  imageUrl: book.largeArtPath ?? book.artPath,
                                   fit: BoxFit.scaleDown,
                                   errorWidget: (context, string, stack) {
                                     return const Icon(Icons.book);
@@ -195,7 +195,7 @@ class BookDetailsView extends HookConsumerWidget {
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
                             onPressed: () {
-                              playbackController.playFromId(item.id);
+                              playbackController.playFromId(book.id);
                               // navigationService.pushNamed(
                               //   Routes.Player,
                               //   arguments: item,
@@ -225,21 +225,21 @@ class BookDetailsView extends HookConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              'By ${item.artist}',
+                              'By ${book.author}',
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          if (item.narrator != null)
+                          if (book.narrator != null)
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Narrated by ${item.narrator!}',
+                                'Narrated by ${book.narrator}',
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          Text((item.duration) != null
-                              ? Utils.friendlyDuration(item.duration!)
-                              : Utils.friendlyDurationFromItems(chapters!)),
+                          Text((book.duration) != Duration.zero
+                              ? Utils.friendlyDuration(book.duration)
+                              : Utils.friendlyDurationFromTracks(tracks!)),
                           const Divider(),
                           const ButtonBar(
                             alignment: MainAxisAlignment.start,
@@ -254,7 +254,7 @@ class BookDetailsView extends HookConsumerWidget {
                     ),
                   ),
                   // Divider(),
-                  if (item.displayDescription?.isNotEmpty ?? false)
+                  if (book.description.isNotEmpty)
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -268,7 +268,7 @@ class BookDetailsView extends HookConsumerWidget {
                                 collapsed: Column(
                                   children: [
                                     Text(
-                                      item.displayDescription ?? '',
+                                      book.description,
                                       softWrap: true,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -287,7 +287,7 @@ class BookDetailsView extends HookConsumerWidget {
                                 expanded: Column(
                                   children: [
                                     Text(
-                                      item.displayDescription ?? '',
+                                      book.description,
                                       softWrap: true,
                                     ),
                                     ExpandableButton(
@@ -311,40 +311,40 @@ class BookDetailsView extends HookConsumerWidget {
                     final trackState =
                         ref.watch(trackDetailsStateProvider(mediaId));
                     if (trackState is TrackDetailsStateLoaded &&
-                        (trackState.chapters?.isNotEmpty ?? false)) {
+                        (trackState.tracks?.isNotEmpty ?? false)) {
                       return SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            final chapter = trackState.chapters![index];
+                            final track = trackState.tracks![index];
                             return Stack(
                               children: [
                                 ListTile(
-                                  leading: chapter.cached
+                                  leading: track.isDownloaded
                                       ? const Icon(Icons.offline_pin)
                                       : null,
                                   onTap: () async {
                                     await playbackController
-                                        .playFromId(item.id);
+                                        .playFromId(book.id);
                                     await playbackController
                                         .skipToQueueItem(index);
                                   },
                                   title: AutoSizeText(
-                                    chapter.title,
+                                    track.title,
                                     group: group,
                                     maxLines: 2,
                                   ),
                                   subtitle: Text(
-                                    Utils.getTimeValue(chapter.duration),
+                                    Utils.getTimeValue(track.duration),
                                   ),
                                 ),
-                                if (chapter.downloadProgress != 0 &&
-                                    !chapter.cached)
+                                if (track.downloadProgress != 0 &&
+                                    !track.isDownloaded)
                                   Positioned.fill(
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
                                       child: LinearProgressIndicator(
                                         minHeight: 6.0,
-                                        value: chapter.downloadProgress,
+                                        value: track.downloadProgress,
                                         backgroundColor:
                                             Theme.of(context).cardColor,
                                       ),
@@ -353,7 +353,7 @@ class BookDetailsView extends HookConsumerWidget {
                               ],
                             );
                           },
-                          childCount: trackState.chapters!.length,
+                          childCount: trackState.tracks!.length,
                         ),
                       );
                     }

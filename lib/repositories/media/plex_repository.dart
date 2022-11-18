@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/plex_media_item.dart';
 import 'package:audiobookly/models/preferences.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:collection/collection.dart' show IterableExtension;
@@ -96,36 +98,65 @@ class PlexRepository extends MediaRepository {
     }
   }
 
+  Book bookFromPlexAlbum(PlexAlbum album, PlexServer server) => Book(
+        id: album.ratingKey!,
+        title: album.title!,
+        author: album.parentTitle ?? '',
+        narrator: '',
+        artPath: server.getThumbnailUrl(album.thumb ?? '').toString(),
+        description: album.summary ?? '',
+        duration: Duration.zero,
+        read: false,
+        lastPlayedPosition: album.viewOffset == null
+            ? Duration.zero
+            : Duration(milliseconds: album.viewOffset!),
+        largeArtPath: server.getThumbnailUrl(album.thumb ?? '', 600).toString(),
+      );
+
+  Track trackFromPlexTrack(PlexTrack track, PlexServer server) => Track(
+        id: track.key!,
+        title: track.title ?? '',
+        duration: track.duration == null
+            ? Duration.zero
+            : Duration(milliseconds: track.duration!),
+        downloadProgress: 0,
+        isDownloaded: false,
+        downloadPath: '',
+        bookId: track.parentRatingKey ?? '',
+        downloadTaskId: '',
+        downloadTaskStatus: 0,
+      );
+
   @override
-  Future<List<PlexMediaItem>> getRecentlyAdded() async {
+  Future<List<Book>> getRecentlyAdded() async {
     await refreshServer();
     return (await _server!.getRecentlyAdded(_libraryKey!))!
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+        .map((album) => bookFromPlexAlbum(album, _server!))
         .toList();
   }
 
   @override
-  Future<List<PlexMediaItem>> getRecentlyPlayed() async {
+  Future<List<Book>> getRecentlyPlayed() async {
     await refreshServer();
-    List<PlexMediaItem> items = (await _server!.getRecentlyViewed(_libraryKey!))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+    List<Book> items = (await _server!.getRecentlyViewed(_libraryKey!))
+        .map((album) => bookFromPlexAlbum(album, _server!))
         .toList();
     return (await Future.wait<PlexAlbum>(
-            items.map((item) => _server!.getAlbumFromKey(item.key!))))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+            items.map((item) => _server!.getAlbumFromKey(item.id))))
+        .map((album) => bookFromPlexAlbum(album, _server!))
         .toList();
   }
 
   @override
-  Future<List<PlexMediaItem>> getDownloads() async {
+  Future<List<Book>> getDownloads() async {
     return [];
   }
 
   @override
-  Future<List<PlexMediaItem>> getAllBooks() async {
+  Future<List<Book>> getAllBooks([int? page]) async {
     await refreshServer();
     return (await _server!.getAllAlbums(_libraryKey!))!
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+        .map((album) => bookFromPlexAlbum(album, _server!))
         .toList();
   }
 
@@ -138,10 +169,10 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<List<PlexMediaItem>> getBooksFromAuthor(String authorId) async {
+  Future<List<Book>> getBooksFromAuthor(String authorId) async {
     await refreshServer();
     return (await _server!.getAlbumsFromArtist(authorId))!
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+        .map((album) => bookFromPlexAlbum(album, _server!))
         .toList();
   }
 
@@ -155,11 +186,10 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<List<PlexMediaItem>> getBooksFromCollection(
-      String collectionId) async {
+  Future<List<Book>> getBooksFromCollection(String collectionId) async {
     await refreshServer();
     return (await _server!.getAlbumsFromCollection(_libraryKey!, collectionId))!
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+        .map((album) => bookFromPlexAlbum(album, _server!))
         .toList();
   }
 
@@ -172,10 +202,10 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<PlexMediaItem> getAlbumFromId(String? mediaId) async {
+  Future<Book> getAlbumFromId(String? mediaId) async {
     await refreshServer();
-    final item = PlexMediaItem.fromPlexAlbum(
-        await _server!.getAlbumFromKey(mediaId!), _server!);
+    final item =
+        bookFromPlexAlbum(await _server!.getAlbumFromKey(mediaId!), _server!);
 
     return item;
   }
@@ -231,10 +261,10 @@ class PlexRepository extends MediaRepository {
   ) async {}
 
   @override
-  Future<List<PlexMediaItem>> getTracksForBook(String bookId) async {
+  Future<List<Track>> getTracksForBook(String bookId) async {
     await refreshServer();
     return (await _server!.getTracks(bookId))!
-        .map((track) => PlexMediaItem.fromPlexTrack(track, _server!))
+        .map((track) => trackFromPlexTrack(track, _server!))
         .toList();
   }
 
@@ -277,7 +307,7 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getBooksFromSeries(String seriesId) {
+  Future<List<Book>> getBooksFromSeries(String seriesId) {
     // TODO: implement getBooksFromSeries
     throw UnimplementedError();
   }

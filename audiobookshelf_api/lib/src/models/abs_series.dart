@@ -17,7 +17,7 @@ abstract class AbsSeries with _$AbsSeries {
     required String nameIgnorePrefix,
     required String nameIgnorePrefixSort,
     required String type,
-    required List<AbsAudiobook> books,
+    required List<AbsAudiobookMinified> books,
     required int addedAt,
     required double totalDuration,
   }) = _AbsSeries;

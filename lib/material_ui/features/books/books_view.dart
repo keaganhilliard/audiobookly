@@ -5,6 +5,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/domain/books/books_notifier.dart';
 import 'package:audiobookly/domain/books/books_state.dart';
+import 'package:audiobookly/material_ui/widgets/ab_error_widget.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/foundation.dart';
@@ -45,7 +46,7 @@ class BooksView extends HookConsumerWidget {
             return state.maybeWhen(
               orElse: () => Container(),
               loading: () => const Center(child: CircularProgressIndicator()),
-              loaded: (books, currentParent) {
+              loaded: (books, currentParent, totalItems) {
                 return ResponsiveGridView<MediaItem>(
                   items: books,
                   itemBuilder: (book) {
@@ -71,19 +72,12 @@ class BooksView extends HookConsumerWidget {
                   },
                 );
               },
-              error: (message) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(message!),
-                      ElevatedButton(
-                        onPressed: booksProvider.refresh,
-                        child: const Text('Retry'),
-                      )
-                    ],
-                  ),
+              error: (message, error, stack) {
+                return ABErrorWidget(
+                  message: message,
+                  error: error,
+                  stack: stack,
+                  retry: booksProvider.refresh,
                 );
               },
             );

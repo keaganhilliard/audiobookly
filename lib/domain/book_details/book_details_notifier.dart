@@ -5,6 +5,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/download_status.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
@@ -54,47 +55,24 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
         Book? checkBook = await _databaseService!.getBookById(book.id);
         List<Chapter>? chapters =
             await _databaseService!.getChaptersForBook(book.id);
-        checkBook ??= book;
-        final item = MediaItem(
-          id: checkBook.id,
-          title: checkBook.title,
-          displayDescription: checkBook.description,
-          artist: checkBook.author,
-          album: checkBook.title,
-          duration: checkBook.duration,
-          artUri: Uri.parse(checkBook.artPath),
-          playable: true,
-          extras: <String, dynamic>{
-            'played': checkBook.read,
-            'narrator': checkBook.narrator,
-            'downloading':
-                checkBook.downloadStatus == DownloadStatus.downloading,
-            'cached': checkBook.downloadStatus == DownloadStatus.succeeded,
-            'viewOffset': checkBook.lastPlayedPosition.inMilliseconds,
-            'chapters': [for (final chapter in chapters) chapter.toJson()]
-          },
-        );
+        checkBook ??= book.copyWith(chapters: chapters);
         if (state is BookDetailsStateLoaded) {
           state = (state as BookDetailsStateLoaded).copyWith(
-            book: item,
+            book: book,
           );
         } else {
-          state = BookDetailsState.loaded(book: item);
+          state = BookDetailsState.loaded(book: book);
         }
       }
     });
 
-    MediaItem? book;
-    List<MediaItem>? chapters;
+    Book? book;
+    List<Track>? tracks;
     Book? dbBook;
     try {
       book = await _repository!.getAlbumFromId(_mediaId);
-      chapters = await _repository!.getTracksForBook(_mediaId);
+      tracks = await _repository!.getTracksForBook(_mediaId);
       dbBook = await _databaseService?.getBookById(_mediaId);
-      book = book.copyWith(extras: {
-        ...book.extras ?? {},
-        ...{'cached': dbBook?.downloadStatus == DownloadStatus.succeeded}
-      });
     } catch (e, stack) {
       log('No data from server $e, $stack');
       log('State $state');
@@ -103,7 +81,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
         final oldState = (state as BookDetailsStateLoaded);
         state = oldState.copyWith(
           book: oldState.book,
-          chapters: oldState.chapters,
+          tracks: oldState.tracks,
         );
       } else {
         log('State not loaded');
@@ -113,19 +91,14 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
 
     if (state is BookDetailsStateLoaded) {
       state = BookDetailsState.loaded(
-        book: book?.copyWith(
-          extras: {
-            ...(state as BookDetailsStateLoaded).book?.extras ?? {},
-            ...book.extras ?? {}
-          },
-        ),
-        chapters: chapters,
+        book: book,
+        tracks: tracks,
       );
     }
 
     state = BookDetailsState.loaded(
       book: book,
-      chapters: chapters,
+      tracks: tracks,
     );
   }
 

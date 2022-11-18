@@ -143,34 +143,15 @@ class IsarDatabaseService implements DatabaseService {
     String downloadTaskId = '',
   ]) =>
       Track(
-        chapter.id,
-        chapter.title,
-        chapter.duration ?? Duration.zero,
-        progress,
-        progress == 1,
-        path,
-        bookId,
-        downloadTaskId,
-        0,
-      );
-
-  @override
-  Book getBookFromMediaItem(
-    MediaItem book,
-    DownloadStatus status,
-  ) =>
-      Book(
-        book.id,
-        book.title,
-        book.artist ?? 'Unknown',
-        book.narrator ?? 'Unkown',
-        book.displayDescription ?? '',
-        book.artUri?.toString() ?? '',
-        book.duration ?? Duration.zero,
-        book.viewOffset,
-        book.played,
-        DateTime.now(),
-        status,
+        id: chapter.id,
+        title: chapter.title,
+        duration: chapter.duration ?? Duration.zero,
+        downloadProgress: progress,
+        isDownloaded: progress == 1,
+        downloadPath: path,
+        bookId: bookId,
+        downloadTaskId: downloadTaskId,
+        downloadTaskStatus: 0,
       );
 
   @override

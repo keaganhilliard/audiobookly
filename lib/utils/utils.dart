@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
@@ -10,7 +11,6 @@ import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:emby_api/emby_api.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
 
 class Utils {
   static String getTimeValue(Duration? time) {
@@ -31,18 +31,22 @@ class Utils {
 
   static MediaItem chapterToItem(Chapter chapter) {
     return MediaItem(
-        id: chapter.id,
-        title: chapter.title,
-        duration: Duration(
-              milliseconds: (chapter.end * 1000).round(),
-            ) -
-            Duration(
-              milliseconds: (chapter.start * 1000).round(),
-            ),
-        extras: {'start': chapter.start, 'end': chapter.end});
+      id: chapter.id,
+      title: chapter.title,
+      duration: Duration(
+            milliseconds: (chapter.end * 1000).round(),
+          ) -
+          Duration(
+            milliseconds: (chapter.start * 1000).round(),
+          ),
+      extras: {
+        'start': chapter.start,
+        'end': chapter.end,
+      },
+    );
   }
 
-  static String? _getNarrator(EmbyItem item) {
+  static String? getNarrator(EmbyItem item) {
     if (item.composers?.isNotEmpty ?? false) {
       return item.composers!.map((artist) => artist.name).join(', ');
     }
@@ -82,7 +86,7 @@ class Utils {
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
           'played': (item.userData?.played ?? false),
-          'narrator': _getNarrator(item),
+          'narrator': getNarrator(item),
           'viewOffset': item.userData!.playbackPositionTicks != null
               ? Duration(
                       microseconds: (item.userData!.playbackPositionTicks! / 10)
@@ -101,14 +105,17 @@ class Utils {
         });
   }
 
+//kw1eem1e
   static double getProgress({MediaItem? item, Book? book}) {
     if (book != null && book.duration != Duration.zero) {
       return book.lastPlayedPosition.inMilliseconds /
           book.duration.inMilliseconds;
     } else if (item != null) {
-      return item.duration != null
-          ? item.viewOffset.inMilliseconds / item.duration!.inMilliseconds
-          : 0;
+      if (item.duration != Duration.zero) {
+        return item.duration != null
+            ? item.viewOffset.inMilliseconds / item.duration!.inMilliseconds
+            : 0;
+      }
     }
     return 0;
   }
@@ -136,6 +143,12 @@ class Utils {
             previousValue + (element.duration ?? Duration.zero));
     return friendlyDuration(totalDuration);
   }
+
+  static String friendlyDurationFromTracks(List<Track> tracks) {
+    final totalDuration = tracks.fold<Duration>(Duration.zero,
+        (previousValue, element) => previousValue + (element.duration));
+    return friendlyDuration(totalDuration);
+  }
 }
 
 extension ListHelpers<T> on List<T> {
@@ -143,7 +156,14 @@ extension ListHelpers<T> on List<T> {
 }
 
 extension StringHelpers on String {
-  Uri? get uri => Uri.parse(this);
+  Uri? get uri {
+    try {
+      return Uri.parse(this);
+    } catch (e) {
+      return null;
+    }
+  }
+
   int get fastHash {
     var hash = 0xcbf29ce484222325;
 

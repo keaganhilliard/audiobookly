@@ -329,9 +329,9 @@ class PlayerView extends HookConsumerWidget {
                                                 playbackController
                                                     .setSpeed(val);
                                               },
-                                              max: 2.0,
                                               min: 1.0,
-                                              postfix: const Text('2.00'),
+                                              max: 3.0,
+                                              postfix: const Text('3.00'),
                                             )
                                           ],
                                         ),
@@ -419,7 +419,7 @@ class ValueSlider extends HookWidget {
             },
             min: min,
             max: max,
-            divisions: 20,
+            divisions: 40,
             activeColor: Theme.of(context).colorScheme.primary,
           ),
         ),

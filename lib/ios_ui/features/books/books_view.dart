@@ -34,7 +34,7 @@ class BooksView extends HookConsumerWidget {
         },
         child: state.when(
           initial: () => const SliverToBoxAdapter(),
-          loaded: (books, mediaId) => SliverGrid(
+          loaded: (books, mediaId, totalItems) => SliverGrid(
             delegate: SliverChildBuilderDelegate(
               childCount: books!.length,
               (context, index) {
@@ -67,7 +67,7 @@ class BooksView extends HookConsumerWidget {
               child: CupertinoActivityIndicator(radius: 30),
             ),
           ),
-          error: (message) => const SliverToBoxAdapter(),
+          error: (message, error, stack) => const SliverToBoxAdapter(),
         ),
       ),
     );

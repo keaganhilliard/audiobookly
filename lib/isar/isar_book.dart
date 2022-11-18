@@ -33,17 +33,17 @@ class IsarBook {
   final int? isarLastUpdate;
 
   Book toBook() => Book(
-        exId,
-        title,
-        author,
-        narrator,
-        description,
-        artPath,
-        duration,
-        lastPlayedPosition,
-        read,
-        lastUpdate,
-        downloadStatus,
+        id: exId,
+        title: title,
+        author: author,
+        narrator: narrator,
+        description: description,
+        artPath: artPath,
+        duration: duration,
+        lastPlayedPosition: lastPlayedPosition,
+        read: read,
+        lastUpdate: lastUpdate,
+        downloadStatus: downloadStatus,
       );
 
   IsarBook(

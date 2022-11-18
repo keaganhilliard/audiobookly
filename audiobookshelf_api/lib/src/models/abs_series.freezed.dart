@@ -25,7 +25,7 @@ mixin _$AbsSeries {
   String get nameIgnorePrefix => throw _privateConstructorUsedError;
   String get nameIgnorePrefixSort => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  List<AbsAudiobook> get books => throw _privateConstructorUsedError;
+  List<AbsAudiobookMinified> get books => throw _privateConstructorUsedError;
   int get addedAt => throw _privateConstructorUsedError;
   double get totalDuration => throw _privateConstructorUsedError;
 
@@ -46,7 +46,7 @@ abstract class $AbsSeriesCopyWith<$Res> {
       String nameIgnorePrefix,
       String nameIgnorePrefixSort,
       String type,
-      List<AbsAudiobook> books,
+      List<AbsAudiobookMinified> books,
       int addedAt,
       double totalDuration});
 }
@@ -97,7 +97,7 @@ class _$AbsSeriesCopyWithImpl<$Res, $Val extends AbsSeries>
       books: null == books
           ? _value.books
           : books // ignore: cast_nullable_to_non_nullable
-              as List<AbsAudiobook>,
+              as List<AbsAudiobookMinified>,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$_AbsSeriesCopyWith<$Res> implements $AbsSeriesCopyWith<$Res> {
       String nameIgnorePrefix,
       String nameIgnorePrefixSort,
       String type,
-      List<AbsAudiobook> books,
+      List<AbsAudiobookMinified> books,
       int addedAt,
       double totalDuration});
 }
@@ -172,7 +172,7 @@ class __$$_AbsSeriesCopyWithImpl<$Res>
       books: null == books
           ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
-              as List<AbsAudiobook>,
+              as List<AbsAudiobookMinified>,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -194,7 +194,7 @@ class _$_AbsSeries implements _AbsSeries {
       required this.nameIgnorePrefix,
       required this.nameIgnorePrefixSort,
       required this.type,
-      required final List<AbsAudiobook> books,
+      required final List<AbsAudiobookMinified> books,
       required this.addedAt,
       required this.totalDuration})
       : _books = books;
@@ -212,9 +212,9 @@ class _$_AbsSeries implements _AbsSeries {
   final String nameIgnorePrefixSort;
   @override
   final String type;
-  final List<AbsAudiobook> _books;
+  final List<AbsAudiobookMinified> _books;
   @override
-  List<AbsAudiobook> get books {
+  List<AbsAudiobookMinified> get books {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_books);
   }
@@ -281,7 +281,7 @@ abstract class _AbsSeries implements AbsSeries {
       required final String nameIgnorePrefix,
       required final String nameIgnorePrefixSort,
       required final String type,
-      required final List<AbsAudiobook> books,
+      required final List<AbsAudiobookMinified> books,
       required final int addedAt,
       required final double totalDuration}) = _$_AbsSeries;
 
@@ -299,7 +299,7 @@ abstract class _AbsSeries implements AbsSeries {
   @override
   String get type;
   @override
-  List<AbsAudiobook> get books;
+  List<AbsAudiobookMinified> get books;
   @override
   int get addedAt;
   @override

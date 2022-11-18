@@ -310,12 +310,11 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }
     try {
       final item = await _repository!.getAlbumFromId(_currentMedia);
-      final position = _findPostionDurationForAlbum(item);
-      if (position > currentPosition && !item.played) {
+      final position = _findPostionDurationForAlbum(item.toMediaItem());
+      if (position > currentPosition && !item.read) {
         await seek(position);
       }
     } catch (e) {
-      print(e);
       log(e.toString());
     }
 
@@ -439,7 +438,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future<MediaItem> getMediaItem(String mediaId) async {
     await completer.future;
-    return await _repository!.getAlbumFromId(mediaId);
+    return (await _repository!.getAlbumFromId(mediaId)).toMediaItem();
   }
 
   @override
@@ -483,8 +482,12 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       }
     } else {
       await _repository!.getServerAndLibrary();
-      _currentMediaItem = (await _repository!.getAlbumFromId(mediaId));
-      tracks = (await _repository!.getTracksForBook(mediaId)).cast<MediaItem>();
+      final currentBook = (await _repository!.getAlbumFromId(mediaId));
+      _currentMediaItem = currentBook.toMediaItem();
+      tracks = [
+        for (final track in (await _repository!.getTracksForBook(mediaId)))
+          MediaHelpers.fromTrack(track, currentBook)
+      ];
       if (_currentMediaItem?.chapters != null &&
           _currentMediaItem!.chapters.isNotEmpty) {
         chapterIndex = 0;

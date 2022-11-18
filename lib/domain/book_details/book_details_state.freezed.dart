@@ -19,8 +19,7 @@ mixin _$BookDetailsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
-        loaded,
+    required TResult Function(Book? book, List<Track>? tracks) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
@@ -28,7 +27,7 @@ mixin _$BookDetailsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function(Book? book, List<Track>? tracks)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) =>
@@ -36,7 +35,7 @@ mixin _$BookDetailsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function(Book? book, List<Track>? tracks)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -135,8 +134,7 @@ class _$BookDetailsStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
-        loaded,
+    required TResult Function(Book? book, List<Track>? tracks) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -147,7 +145,7 @@ class _$BookDetailsStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function(Book? book, List<Track>? tracks)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -158,7 +156,7 @@ class _$BookDetailsStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function(Book? book, List<Track>? tracks)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -217,7 +215,7 @@ abstract class _$$BookDetailsStateLoadedCopyWith<$Res> {
           $Res Function(_$BookDetailsStateLoaded) then) =
       __$$BookDetailsStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({MediaItem? book, List<MediaItem>? chapters});
+  $Res call({Book? book, List<Track>? tracks});
 }
 
 /// @nodoc
@@ -232,17 +230,17 @@ class __$$BookDetailsStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? book = freezed,
-    Object? chapters = freezed,
+    Object? tracks = freezed,
   }) {
     return _then(_$BookDetailsStateLoaded(
       book: freezed == book
           ? _value.book
           : book // ignore: cast_nullable_to_non_nullable
-              as MediaItem?,
-      chapters: freezed == chapters
-          ? _value._chapters
-          : chapters // ignore: cast_nullable_to_non_nullable
-              as List<MediaItem>?,
+              as Book?,
+      tracks: freezed == tracks
+          ? _value._tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
+              as List<Track>?,
     ));
   }
 }
@@ -252,15 +250,15 @@ class __$$BookDetailsStateLoadedCopyWithImpl<$Res>
 class _$BookDetailsStateLoaded
     with DiagnosticableTreeMixin
     implements BookDetailsStateLoaded {
-  const _$BookDetailsStateLoaded({this.book, final List<MediaItem>? chapters})
-      : _chapters = chapters;
+  const _$BookDetailsStateLoaded({this.book, final List<Track>? tracks})
+      : _tracks = tracks;
 
   @override
-  final MediaItem? book;
-  final List<MediaItem>? _chapters;
+  final Book? book;
+  final List<Track>? _tracks;
   @override
-  List<MediaItem>? get chapters {
-    final value = _chapters;
+  List<Track>? get tracks {
+    final value = _tracks;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
@@ -268,7 +266,7 @@ class _$BookDetailsStateLoaded
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookDetailsState.loaded(book: $book, chapters: $chapters)';
+    return 'BookDetailsState.loaded(book: $book, tracks: $tracks)';
   }
 
   @override
@@ -277,7 +275,7 @@ class _$BookDetailsStateLoaded
     properties
       ..add(DiagnosticsProperty('type', 'BookDetailsState.loaded'))
       ..add(DiagnosticsProperty('book', book))
-      ..add(DiagnosticsProperty('chapters', chapters));
+      ..add(DiagnosticsProperty('tracks', tracks));
   }
 
   @override
@@ -286,12 +284,12 @@ class _$BookDetailsStateLoaded
         (other.runtimeType == runtimeType &&
             other is _$BookDetailsStateLoaded &&
             (identical(other.book, book) || other.book == book) &&
-            const DeepCollectionEquality().equals(other._chapters, _chapters));
+            const DeepCollectionEquality().equals(other._tracks, _tracks));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, book, const DeepCollectionEquality().hash(_chapters));
+      runtimeType, book, const DeepCollectionEquality().hash(_tracks));
 
   @JsonKey(ignore: true)
   @override
@@ -304,36 +302,35 @@ class _$BookDetailsStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
-        loaded,
+    required TResult Function(Book? book, List<Track>? tracks) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return loaded(book, chapters);
+    return loaded(book, tracks);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function(Book? book, List<Track>? tracks)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
-    return loaded?.call(book, chapters);
+    return loaded?.call(book, tracks);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function(Book? book, List<Track>? tracks)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(book, chapters);
+      return loaded(book, tracks);
     }
     return orElse();
   }
@@ -378,11 +375,10 @@ class _$BookDetailsStateLoaded
 
 abstract class BookDetailsStateLoaded implements BookDetailsState {
   const factory BookDetailsStateLoaded(
-      {final MediaItem? book,
-      final List<MediaItem>? chapters}) = _$BookDetailsStateLoaded;
+      {final Book? book, final List<Track>? tracks}) = _$BookDetailsStateLoaded;
 
-  MediaItem? get book;
-  List<MediaItem>? get chapters;
+  Book? get book;
+  List<Track>? get tracks;
   @JsonKey(ignore: true)
   _$$BookDetailsStateLoadedCopyWith<_$BookDetailsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -436,8 +432,7 @@ class _$BookDetailsStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
-        loaded,
+    required TResult Function(Book? book, List<Track>? tracks) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -448,7 +443,7 @@ class _$BookDetailsStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function(Book? book, List<Track>? tracks)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -459,7 +454,7 @@ class _$BookDetailsStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function(Book? book, List<Track>? tracks)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -590,8 +585,7 @@ class _$BookDetailsStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MediaItem? book, List<MediaItem>? chapters)
-        loaded,
+    required TResult Function(Book? book, List<Track>? tracks) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -602,7 +596,7 @@ class _$BookDetailsStateErrorDetails
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult? Function(Book? book, List<Track>? tracks)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -613,7 +607,7 @@ class _$BookDetailsStateErrorDetails
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MediaItem? book, List<MediaItem>? chapters)? loaded,
+    TResult Function(Book? book, List<Track>? tracks)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),

@@ -32,15 +32,15 @@ class IsarTrack {
   final int downloadTaskStatus;
 
   Track toTrack() => Track(
-        id,
-        title,
-        duration,
-        downloadProgress,
-        isDownloaded,
-        downloadPath,
-        bookId,
-        downloadTaskId,
-        downloadTaskStatus,
+        id: id,
+        title: title,
+        duration: duration,
+        downloadProgress: downloadProgress,
+        isDownloaded: isDownloaded,
+        downloadPath: downloadPath,
+        bookId: bookId,
+        downloadTaskId: downloadTaskId,
+        downloadTaskStatus: downloadTaskStatus,
       );
 
   IsarTrack(

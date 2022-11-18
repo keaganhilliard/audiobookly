@@ -27,6 +27,8 @@ class AuthorsNotifier extends StateNotifier<AuthorsState> {
     }
   }
 
+  Future handleItemCreated(int index) async {}
+
   Future<void> getAuthors() async {
     try {
       state = const AuthorsState.loading();

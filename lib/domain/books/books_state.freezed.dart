@@ -19,26 +19,36 @@ mixin _$BooksState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books, String? currentParent)
+    required TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)
         loaded,
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(
+            String? message, String? errorDetails, String? stackTrace)
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult? Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult? Function()? loading,
-    TResult? Function(String? message)? error,
+    TResult? Function(
+            String? message, String? errorDetails, String? stackTrace)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(String? message, String? errorDetails, String? stackTrace)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -134,10 +144,13 @@ class _$BooksStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books, String? currentParent)
+    required TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)
         loaded,
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(
+            String? message, String? errorDetails, String? stackTrace)
+        error,
   }) {
     return initial();
   }
@@ -146,9 +159,13 @@ class _$BooksStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult? Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult? Function()? loading,
-    TResult? Function(String? message)? error,
+    TResult? Function(
+            String? message, String? errorDetails, String? stackTrace)?
+        error,
   }) {
     return initial?.call();
   }
@@ -157,9 +174,12 @@ class _$BooksStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(String? message, String? errorDetails, String? stackTrace)?
+        error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -216,7 +236,7 @@ abstract class _$$BooksStateLoadedCopyWith<$Res> {
           _$BooksStateLoaded value, $Res Function(_$BooksStateLoaded) then) =
       __$$BooksStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MediaItem>? books, String? currentParent});
+  $Res call({List<MediaItem>? books, String? currentParent, int totalItems});
 }
 
 /// @nodoc
@@ -232,6 +252,7 @@ class __$$BooksStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? books = freezed,
     Object? currentParent = freezed,
+    Object? totalItems = null,
   }) {
     return _then(_$BooksStateLoaded(
       books: freezed == books
@@ -242,6 +263,10 @@ class __$$BooksStateLoadedCopyWithImpl<$Res>
           ? _value.currentParent
           : currentParent // ignore: cast_nullable_to_non_nullable
               as String?,
+      totalItems: null == totalItems
+          ? _value.totalItems
+          : totalItems // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -251,7 +276,8 @@ class __$$BooksStateLoadedCopyWithImpl<$Res>
 class _$BooksStateLoaded
     with DiagnosticableTreeMixin
     implements BooksStateLoaded {
-  const _$BooksStateLoaded({final List<MediaItem>? books, this.currentParent})
+  const _$BooksStateLoaded(
+      {final List<MediaItem>? books, this.currentParent, this.totalItems = 0})
       : _books = books;
 
   final List<MediaItem>? _books;
@@ -265,10 +291,13 @@ class _$BooksStateLoaded
 
   @override
   final String? currentParent;
+  @override
+  @JsonKey()
+  final int totalItems;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BooksState.loaded(books: $books, currentParent: $currentParent)';
+    return 'BooksState.loaded(books: $books, currentParent: $currentParent, totalItems: $totalItems)';
   }
 
   @override
@@ -277,7 +306,8 @@ class _$BooksStateLoaded
     properties
       ..add(DiagnosticsProperty('type', 'BooksState.loaded'))
       ..add(DiagnosticsProperty('books', books))
-      ..add(DiagnosticsProperty('currentParent', currentParent));
+      ..add(DiagnosticsProperty('currentParent', currentParent))
+      ..add(DiagnosticsProperty('totalItems', totalItems));
   }
 
   @override
@@ -287,12 +317,14 @@ class _$BooksStateLoaded
             other is _$BooksStateLoaded &&
             const DeepCollectionEquality().equals(other._books, _books) &&
             (identical(other.currentParent, currentParent) ||
-                other.currentParent == currentParent));
+                other.currentParent == currentParent) &&
+            (identical(other.totalItems, totalItems) ||
+                other.totalItems == totalItems));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_books), currentParent);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_books), currentParent, totalItems);
 
   @JsonKey(ignore: true)
   @override
@@ -304,36 +336,46 @@ class _$BooksStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books, String? currentParent)
+    required TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)
         loaded,
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(
+            String? message, String? errorDetails, String? stackTrace)
+        error,
   }) {
-    return loaded(books, currentParent);
+    return loaded(books, currentParent, totalItems);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult? Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult? Function()? loading,
-    TResult? Function(String? message)? error,
+    TResult? Function(
+            String? message, String? errorDetails, String? stackTrace)?
+        error,
   }) {
-    return loaded?.call(books, currentParent);
+    return loaded?.call(books, currentParent, totalItems);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(String? message, String? errorDetails, String? stackTrace)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(books, currentParent);
+      return loaded(books, currentParent, totalItems);
     }
     return orElse();
   }
@@ -379,10 +421,12 @@ class _$BooksStateLoaded
 abstract class BooksStateLoaded implements BooksState {
   const factory BooksStateLoaded(
       {final List<MediaItem>? books,
-      final String? currentParent}) = _$BooksStateLoaded;
+      final String? currentParent,
+      final int totalItems}) = _$BooksStateLoaded;
 
   List<MediaItem>? get books;
   String? get currentParent;
+  int get totalItems;
   @JsonKey(ignore: true)
   _$$BooksStateLoadedCopyWith<_$BooksStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -435,10 +479,13 @@ class _$BooksStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books, String? currentParent)
+    required TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)
         loaded,
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(
+            String? message, String? errorDetails, String? stackTrace)
+        error,
   }) {
     return loading();
   }
@@ -447,9 +494,13 @@ class _$BooksStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult? Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult? Function()? loading,
-    TResult? Function(String? message)? error,
+    TResult? Function(
+            String? message, String? errorDetails, String? stackTrace)?
+        error,
   }) {
     return loading?.call();
   }
@@ -458,9 +509,12 @@ class _$BooksStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(String? message, String? errorDetails, String? stackTrace)?
+        error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -517,7 +571,7 @@ abstract class _$$BooksStateErrorDetailsCopyWith<$Res> {
           $Res Function(_$BooksStateErrorDetails) then) =
       __$$BooksStateErrorDetailsCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? message});
+  $Res call({String? message, String? errorDetails, String? stackTrace});
 }
 
 /// @nodoc
@@ -532,11 +586,21 @@ class __$$BooksStateErrorDetailsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? message = freezed,
+    Object? errorDetails = freezed,
+    Object? stackTrace = freezed,
   }) {
     return _then(_$BooksStateErrorDetails(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      freezed == errorDetails
+          ? _value.errorDetails
+          : errorDetails // ignore: cast_nullable_to_non_nullable
+              as String?,
+      freezed == stackTrace
+          ? _value.stackTrace
+          : stackTrace // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -547,14 +611,19 @@ class __$$BooksStateErrorDetailsCopyWithImpl<$Res>
 class _$BooksStateErrorDetails
     with DiagnosticableTreeMixin
     implements BooksStateErrorDetails {
-  const _$BooksStateErrorDetails([this.message]);
+  const _$BooksStateErrorDetails(
+      [this.message, this.errorDetails, this.stackTrace]);
 
   @override
   final String? message;
+  @override
+  final String? errorDetails;
+  @override
+  final String? stackTrace;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BooksState.error(message: $message)';
+    return 'BooksState.error(message: $message, errorDetails: $errorDetails, stackTrace: $stackTrace)';
   }
 
   @override
@@ -562,7 +631,9 @@ class _$BooksStateErrorDetails
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BooksState.error'))
-      ..add(DiagnosticsProperty('message', message));
+      ..add(DiagnosticsProperty('message', message))
+      ..add(DiagnosticsProperty('errorDetails', errorDetails))
+      ..add(DiagnosticsProperty('stackTrace', stackTrace));
   }
 
   @override
@@ -570,11 +641,16 @@ class _$BooksStateErrorDetails
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BooksStateErrorDetails &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.errorDetails, errorDetails) ||
+                other.errorDetails == errorDetails) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode =>
+      Object.hash(runtimeType, message, errorDetails, stackTrace);
 
   @JsonKey(ignore: true)
   @override
@@ -587,36 +663,46 @@ class _$BooksStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books, String? currentParent)
+    required TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)
         loaded,
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(
+            String? message, String? errorDetails, String? stackTrace)
+        error,
   }) {
-    return error(message);
+    return error(message, errorDetails, stackTrace);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult? Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult? Function()? loading,
-    TResult? Function(String? message)? error,
+    TResult? Function(
+            String? message, String? errorDetails, String? stackTrace)?
+        error,
   }) {
-    return error?.call(message);
+    return error?.call(message, errorDetails, stackTrace);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books, String? currentParent)? loaded,
+    TResult Function(
+            List<MediaItem>? books, String? currentParent, int totalItems)?
+        loaded,
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(String? message, String? errorDetails, String? stackTrace)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message);
+      return error(message, errorDetails, stackTrace);
     }
     return orElse();
   }
@@ -660,10 +746,14 @@ class _$BooksStateErrorDetails
 }
 
 abstract class BooksStateErrorDetails implements BooksState {
-  const factory BooksStateErrorDetails([final String? message]) =
-      _$BooksStateErrorDetails;
+  const factory BooksStateErrorDetails(
+      [final String? message,
+      final String? errorDetails,
+      final String? stackTrace]) = _$BooksStateErrorDetails;
 
   String? get message;
+  String? get errorDetails;
+  String? get stackTrace;
   @JsonKey(ignore: true)
   _$$BooksStateErrorDetailsCopyWith<_$BooksStateErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;

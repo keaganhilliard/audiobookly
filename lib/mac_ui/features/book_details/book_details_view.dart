@@ -2,6 +2,7 @@ import 'package:audiobookly/domain/track_details/track_details_notifier.dart';
 import 'package:audiobookly/domain/track_details/track_details_state.dart';
 import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
 import 'package:audiobookly/mac_ui/widgets/macos_icon_with_fontweight.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
 import 'package:audiobookly/providers.dart';
@@ -43,8 +44,8 @@ class BookDetailsView extends HookConsumerWidget {
       initial: _loadingIndicator,
       loading: _loadingIndicator,
       error: (message) => Center(child: Text('Something went wrong $message')),
-      loaded: (item, chapters) {
-        final progress = Utils.getProgress(item: item);
+      loaded: (book, tracks) {
+        final progress = Utils.getProgress(book: book);
 
         return MacosScaffold(
           toolBar: const ToolBar(
@@ -76,9 +77,7 @@ class BookDetailsView extends HookConsumerWidget {
                                 children: [
                                   CachedNetworkImage(
                                     imageUrl:
-                                        item!.largeThumbnail?.toString() ??
-                                            item.artUri?.toString() ??
-                                            '',
+                                        book!.largeArtPath ?? book.artPath,
                                     fit: BoxFit.scaleDown,
                                     errorWidget: (context, string, stack) {
                                       return const Icon(
@@ -106,14 +105,14 @@ class BookDetailsView extends HookConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item.title,
+                                    book.title,
                                     textAlign: TextAlign.left,
                                     style: MacosTheme.of(context)
                                         .typography
                                         .largeTitle,
                                   ),
                                   Text(
-                                    '${item.artist}',
+                                    book.author,
                                     textAlign: TextAlign.left,
                                     style: MacosTheme.of(context)
                                         .typography
@@ -126,7 +125,7 @@ class BookDetailsView extends HookConsumerWidget {
                                       top: 4.0,
                                     ),
                                     child: Text(
-                                      'Narrated by ${item.narrator}',
+                                      'Narrated by ${book.narrator}',
                                       textAlign: TextAlign.left,
                                       style: MacosTheme.of(context)
                                           .typography
@@ -142,11 +141,11 @@ class BookDetailsView extends HookConsumerWidget {
                                       top: 4.0,
                                     ),
                                     child: Text(
-                                      (item.duration) != null
+                                      (book.duration) != Duration.zero
                                           ? Utils.friendlyDuration(
-                                              item.duration!)
-                                          : Utils.friendlyDurationFromItems(
-                                              chapters!),
+                                              book.duration)
+                                          : Utils.friendlyDurationFromTracks(
+                                              tracks!),
                                       textAlign: TextAlign.left,
                                       style: MacosTheme.of(context)
                                           .typography
@@ -156,8 +155,7 @@ class BookDetailsView extends HookConsumerWidget {
                                                   MacosColors.systemGrayColor),
                                     ),
                                   ),
-                                  if (item.displayDescription?.isNotEmpty ??
-                                      false)
+                                  if (book.description.isNotEmpty)
                                     HookBuilder(builder: (context) {
                                       final backgroundColor =
                                           useState(MacosColors.transparent);
@@ -172,7 +170,7 @@ class BookDetailsView extends HookConsumerWidget {
                                               padding:
                                                   const EdgeInsets.all(24.0),
                                               child: Text(
-                                                item.displayDescription ?? '',
+                                                book.description,
                                                 softWrap: true,
                                                 textAlign: TextAlign.justify,
                                                 overflow: TextOverflow.visible,
@@ -205,7 +203,7 @@ class BookDetailsView extends HookConsumerWidget {
                                                 top: 4.0,
                                               ),
                                               child: Text(
-                                                item.displayDescription ?? '',
+                                                book.description,
                                                 softWrap: true,
                                                 maxLines: 9,
                                                 overflow: TextOverflow.ellipsis,
@@ -237,7 +235,7 @@ class BookDetailsView extends HookConsumerWidget {
                                                 buttonSize: ButtonSize.large,
                                                 onPressed: () {
                                                   playbackController
-                                                      .playFromId(item.id);
+                                                      .playFromId(book.id);
                                                 },
                                                 child: Row(
                                                   children: [
@@ -272,11 +270,11 @@ class BookDetailsView extends HookConsumerWidget {
                                                   ),
                                                   buttonSize: ButtonSize.large,
                                                   onPressed: () async {
-                                                    if (!item.played) {
+                                                    if (!book.read) {
                                                       await ref
                                                           .read(
                                                               mediaRepositoryProvider)
-                                                          ?.markPlayed(item.id);
+                                                          ?.markPlayed(book.id);
                                                       await bookDetails
                                                           .getDetails();
                                                     } else {
@@ -284,7 +282,7 @@ class BookDetailsView extends HookConsumerWidget {
                                                           .read(
                                                               mediaRepositoryProvider)
                                                           ?.markUnplayed(
-                                                              item.id);
+                                                              book.id);
                                                       await bookDetails
                                                           .getDetails();
                                                     }
@@ -303,7 +301,7 @@ class BookDetailsView extends HookConsumerWidget {
                                                                     .only(
                                                                 left: 6.0),
                                                         child: Text(
-                                                          item.played
+                                                          book.read
                                                               ? 'Mark as unread'
                                                               : 'Mark as read',
                                                           style: MacosTheme.of(
@@ -319,7 +317,10 @@ class BookDetailsView extends HookConsumerWidget {
                                             ],
                                           ),
                                         ),
-                                        if (!item.downloading && !item.cached)
+                                        if (book.downloadStatus ==
+                                                DownloadStatus.failed ||
+                                            book.downloadStatus ==
+                                                DownloadStatus.none)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 40.0),
@@ -330,8 +331,8 @@ class BookDetailsView extends HookConsumerWidget {
                                               shape: BoxShape.circle,
                                               onPressed: () {
                                                 downloadService?.downloadBook(
-                                                  item,
-                                                  chapters!,
+                                                  book,
+                                                  tracks!,
                                                 );
                                               },
                                               icon:
@@ -342,7 +343,8 @@ class BookDetailsView extends HookConsumerWidget {
                                               ),
                                             ),
                                           ),
-                                        if (item.downloading)
+                                        if (book.downloadStatus ==
+                                            DownloadStatus.downloading)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 40.0),
@@ -362,8 +364,8 @@ class BookDetailsView extends HookConsumerWidget {
                                                   onPressed: () {
                                                     downloadService
                                                         ?.downloadBook(
-                                                      item,
-                                                      chapters!,
+                                                      book,
+                                                      tracks!,
                                                     );
                                                   },
                                                   icon:
@@ -376,7 +378,8 @@ class BookDetailsView extends HookConsumerWidget {
                                               ],
                                             ),
                                           ),
-                                        if (item.cached)
+                                        if (book.downloadStatus ==
+                                            DownloadStatus.succeeded)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 40.0),
@@ -387,7 +390,7 @@ class BookDetailsView extends HookConsumerWidget {
                                               shape: BoxShape.circle,
                                               onPressed: () {
                                                 downloadService?.deleteDownload(
-                                                  item,
+                                                  book,
                                                 );
                                               },
                                               icon:
@@ -413,11 +416,11 @@ class BookDetailsView extends HookConsumerWidget {
                     final trackState =
                         ref.watch(trackDetailsStateProvider(mediaId));
                     if (trackState is TrackDetailsStateLoaded &&
-                        (trackState.chapters?.isNotEmpty ?? false)) {
+                        (trackState.tracks?.isNotEmpty ?? false)) {
                       return SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            final chapter = trackState.chapters![index];
+                            final track = trackState.tracks![index];
                             final backgroundColor = index % 2 == 0
                                 ? MacosColors.systemGrayColor.withOpacity(0.1)
                                 : MacosColors.transparent;
@@ -450,18 +453,18 @@ class BookDetailsView extends HookConsumerWidget {
                                               ? MacosColors.systemGrayColor
                                                   .withOpacity(0.3)
                                               : backgroundColor,
-                                          trailing: chapter.cached
+                                          trailing: track.isDownloaded
                                               ? const MacosIcon(CupertinoIcons
                                                   .download_circle_fill)
                                               : null,
                                           onTap: () async {
                                             await playbackController
-                                                .playFromId(item.id);
+                                                .playFromId(book.id);
                                             await playbackController
                                                 .skipToQueueItem(index);
                                           },
                                           title: Text(
-                                            chapter.title,
+                                            track.title,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: MacosTheme.of(context)
@@ -470,7 +473,7 @@ class BookDetailsView extends HookConsumerWidget {
                                           ),
                                           additionalInfo: Text(
                                               Utils.getTimeValue(
-                                                  chapter.duration),
+                                                  track.duration),
                                               style: MacosTheme.of(context)
                                                   .typography
                                                   .body
@@ -478,14 +481,14 @@ class BookDetailsView extends HookConsumerWidget {
                                                       color: MacosColors
                                                           .systemGrayColor)),
                                         ),
-                                        if (chapter.downloadProgress != 0 &&
-                                            !chapter.cached)
+                                        if (track.downloadProgress != 0 &&
+                                            !track.isDownloaded)
                                           Positioned.fill(
                                             child: Align(
                                               alignment: Alignment.bottomCenter,
                                               child: LinearProgressIndicator(
                                                 minHeight: 6.0,
-                                                value: chapter.downloadProgress,
+                                                value: track.downloadProgress,
                                                 color: Colors.deepPurple,
                                                 backgroundColor:
                                                     Colors.transparent,
@@ -499,7 +502,7 @@ class BookDetailsView extends HookConsumerWidget {
                               );
                             });
                           },
-                          childCount: trackState.chapters!.length,
+                          childCount: trackState.tracks!.length,
                         ),
                       );
                     }

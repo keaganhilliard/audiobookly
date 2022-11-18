@@ -26,7 +26,7 @@ class BooksView extends HookConsumerWidget {
     return AbScaffold(
       child: state.when(
         initial: () => const SliverToBoxAdapter(),
-        loaded: (books, mediaId) => AbGrid(
+        loaded: (books, mediaId, totalItems) => AbGrid(
           childCount: books!.length,
           childBuilder: (context, index) {
             final book = books[index];
@@ -55,7 +55,7 @@ class BooksView extends HookConsumerWidget {
             child: CupertinoActivityIndicator(radius: 30),
           ),
         ),
-        error: (message) => const SliverToBoxAdapter(),
+        error: (message, error, stack) => const SliverToBoxAdapter(),
       ),
     );
   }

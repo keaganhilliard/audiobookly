@@ -1,6 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/library.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 
 enum AudiobooklyPlaybackState {
@@ -17,7 +19,7 @@ abstract class MediaRepository {
   MediaRepository([this.enableSeries = false]);
   final bool enableSeries;
 
-  Future<List<MediaItem>> getChildren(String parentMediaId) async {
+  Future<List<MediaItem>> getChildren(String parentMediaId, [int? page]) async {
     var pieces = parentMediaId.split('/');
     print('Parent media id! $parentMediaId');
     switch (pieces[0]) {
@@ -66,52 +68,69 @@ abstract class MediaRepository {
         if (recents.isEmpty) {
           recents = (await getRecentlyAdded()).take(1).toList();
         }
-        return recents;
+        return [for (final recent in recents) recent.toMediaItem()];
       case MediaIds.AUTHORS_ID:
         if (pieces.length > 1) {
-          return await getBooksFromAuthor(pieces[1]);
+          return [
+            for (final book in await getBooksFromAuthor(pieces[1]))
+              book.toMediaItem()
+          ];
         } else {
           return getAuthors();
         }
       case MediaIds.BOOKS_ID:
-        return getAllBooks();
+        return [for (final book in await getAllBooks(page)) book.toMediaItem()];
       case MediaIds.DOWNLOADS:
-        return getDownloads();
+        return [for (final book in await getDownloads()) book.toMediaItem()];
       case MediaIds.COLLECTIONS_ID:
         if (pieces.length > 1) {
-          return await getBooksFromCollection(pieces[1]);
+          return [
+            for (final book in await getBooksFromCollection(pieces[1]))
+              book.toMediaItem()
+          ];
         } else {
           return await getCollections();
         }
       case MediaIds.SERIES_ID:
         if (pieces.length > 1) {
-          return await getBooksFromSeries(pieces[1]);
+          return [
+            for (final book in await getBooksFromSeries(pieces[1]))
+              book.toMediaItem()
+          ];
         } else {
           return await getSeries();
         }
       case MediaIds.RECENTLY_PLAYED:
-        return await getRecentlyPlayed();
+        return [
+          for (final book in await getRecentlyPlayed()) book.toMediaItem()
+        ];
       case MediaIds.RECENTLY_ADDED:
-        return await getRecentlyAdded();
+        return [
+          for (final book in await getRecentlyAdded()) book.toMediaItem()
+        ];
       default:
         return Future.value(<MediaItem>[]);
     }
   }
 
-  Future<List<MediaItem>> getRecentlyAdded();
-  Future<List<MediaItem>> getDownloads();
-  Future<List<MediaItem>> getRecentlyPlayed();
-  Future<List<MediaItem>> getAllBooks();
+  Future<List<Book>> getRecentlyAdded();
+  Future<List<Book>> getDownloads();
+  Future<List<Book>> getRecentlyPlayed();
+  Future<List<Book>> getAllBooks([int? page]);
+  // TODO: Create an Author model and use that
   Future<List<MediaItem>> getAuthors();
-  Future<List<MediaItem>> getBooksFromAuthor(String authorId);
+  Future<List<Book>> getBooksFromAuthor(String authorId);
+  // TODO: Create a collection model and use that
   Future<List<MediaItem>> getCollections();
-  Future<List<MediaItem>> getBooksFromCollection(String collectionId);
+  Future<List<Book>> getBooksFromCollection(String collectionId);
+  // TODO: Create a series model and use that
   Future<List<MediaItem>> getSeries();
-  Future<List<MediaItem>> getBooksFromSeries(String seriesId);
+  Future<List<Book>> getBooksFromSeries(String seriesId);
+  // TODO: Create a search results model of some sort
   Future<List<MediaItem>> search(String search);
   Future<List<Library>> getLibraries();
-  Future<List<MediaItem>> getTracksForBook(String bookId);
-  Future<MediaItem> getAlbumFromId(String? mediaId);
+  Future<List<Track>> getTracksForBook(String bookId);
+  Future<Book> getAlbumFromId(String? mediaId);
   Future<User> getUser();
   Future<String> getLoginUrl();
   Future savePosition(

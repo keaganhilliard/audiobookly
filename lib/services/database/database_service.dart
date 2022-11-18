@@ -45,9 +45,4 @@ abstract class DatabaseService {
     String path, [
     String downloadTaskId = '',
   ]);
-
-  Book getBookFromMediaItem(
-    MediaItem book,
-    DownloadStatus downloadStatus,
-  );
 }

@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/download_status.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/downloader.dart';
@@ -12,11 +15,11 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class DownloadRequest {
-  final MediaItem book;
-  final List<MediaItem> chapters;
+  final Book book;
+  final List<Track> tracks;
   bool processing = false;
 
-  DownloadRequest(this.book, this.chapters);
+  DownloadRequest(this.book, this.tracks);
 }
 
 class DownloadService {
@@ -32,8 +35,8 @@ class DownloadService {
     }
   }
 
-  Future deleteDownload(MediaItem item) async {
-    final tracks = await _db.getTracksForBookId(item.id).first;
+  Future deleteDownload(Book book) async {
+    final tracks = await _db.getTracksForBookId(book.id).first;
 
     for (final track in tracks) {
       if (track.downloadPath.isNotEmpty) {
@@ -45,11 +48,11 @@ class DownloadService {
         }
       }
     }
-    final book = await _db.getBookById(item.id);
+    final dbBook = await _db.getBookById(book.id);
     await _db.deleteTracks(tracks);
-    if (book != null) {
+    if (dbBook != null) {
       await _db.insertBook(
-        book.copyWith(
+        dbBook.copyWith(
           downloadStatus: DownloadStatus.none,
         ),
       );
@@ -58,19 +61,19 @@ class DownloadService {
 
   List<DownloadRequest> toDownload = [];
 
-  Future downloadBook(MediaItem book, List<MediaItem> tracks) async {
+  Future downloadBook(Book book, List<Track> tracks) async {
     if (toDownload.any((req) => req.book.id == book.id)) return;
-    await _db.insertBook(_db.getBookFromMediaItem(
-      book,
-      DownloadStatus.downloading,
-    ));
-    if (book.chapters.isNotEmpty) await _db.insertChapters(book.chapters);
+    await _db
+        .insertBook(book.copyWith(downloadStatus: DownloadStatus.downloading));
+    if (book.chapters?.isNotEmpty ?? false) {
+      await _db.insertChapters(book.chapters!);
+    }
     toDownload.add(DownloadRequest(book, tracks));
     // if (!_isDownloading)
     processNextBook();
   }
 
-  Future cancelBookDownload(MediaItem book) async {
+  Future cancelBookDownload(Book book) async {
     await GetIt.I.get<Downloader>().cancelDownloads(book.id);
     // req?.token.cancel('Requested');
     toDownload.removeWhere((req) => req.book.id == book.id);
@@ -87,11 +90,11 @@ class DownloadService {
       req.processing = true;
     }
     final book = req.book;
-    final chapters = req.chapters;
+    final tracks = req.tracks;
 
     Downloader downloader = GetIt.I();
-    for (MediaItem chapter in chapters) {
-      final track = await _db.getTrack(chapter.id);
+    for (Track theTrack in tracks) {
+      final track = await _db.getTrack(theTrack.id);
 
       final dir = await Utils.getBasePath();
 
@@ -102,25 +105,23 @@ class DownloadService {
 
       String path = p.join(
         'Audiobooks',
-        book.artist ?? 'Unknown',
+        book.author,
         book.title,
       );
 
       await createDirIfNotExists(p.join(dir!.path, path));
 
-      final pieces = chapter.id.split('/');
+      final pieces = theTrack.id.split('/');
       final fileName = pieces.length > 1 ? pieces[1] : null;
 
       await downloader.downloadFile(
-        _db.getTrackFromMediaItem(
-            chapter,
-            book.id,
-            0,
-            p.join(
-              path,
-              fileName ?? chapter.title,
-            )),
-        Uri.parse(_repo.getDownloadUrl(chapter.partKey ?? chapter.id)),
+        theTrack.copyWith(
+          downloadPath: p.join(
+            path,
+            fileName ?? theTrack.title,
+          ),
+        ),
+        Uri.parse(_repo.getDownloadUrl(theTrack.id)),
         path,
         fileName,
       );

@@ -1,6 +1,8 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/library.dart';
+import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
@@ -20,6 +22,81 @@ List<MediaItem> getItemsFromEmbyItems(
   );
 }
 
+Book embyItemToBook(EmbyItem item, EmbyRepository repo) {
+  return Book(
+    id: item.id!,
+    title: item.name!,
+    author: item.albumArtist!,
+    narrator: Utils.getNarrator(item) ?? '',
+    description: item.overview ?? '',
+    artPath: repo.getThumbnailUrl(item.id),
+    duration: item.runTimeTicks != null
+        ? Duration(
+            microseconds: (item.runTimeTicks! / 10).roundToDouble().toInt())
+        : Duration.zero,
+    lastPlayedPosition: item.userData!.playbackPositionTicks != null
+        ? Duration(
+            microseconds: (item.userData!.playbackPositionTicks! / 10)
+                .roundToDouble()
+                .toInt())
+        : Duration.zero,
+    read: (item.userData?.played ?? false),
+  );
+}
+
+// Track Track(
+//   String id,
+//   String title,
+//   Duration duration,
+//   double downloadProgress,
+//   bool isDownloaded,
+//   String downloadPath,
+//   String bookId,
+//   String downloadTaskId,
+//   int downloadTaskStatus,
+// )
+
+List<Book> getBooksFromEmbyItems(
+    List<EmbyItem> embyItems, EmbyRepository repo) {
+  return List<Book>.from(
+    embyItems.map<Book>(
+      (item) => embyItemToBook(
+        item,
+        repo,
+      ),
+    ),
+  );
+}
+
+List<Track> getTracksFromEmbyItems(
+    List<EmbyItem> embyItems, EmbyRepository repo) {
+  return List<Track>.from(
+    embyItems.map<Track>(
+      (item) => embyItemToTrack(
+        item,
+        repo,
+      ),
+    ),
+  );
+}
+
+Track embyItemToTrack(EmbyItem item, EmbyRepository repo) {
+  return Track(
+    id: item.id!,
+    title: item.name!,
+    duration: item.runTimeTicks != null
+        ? Duration(
+            microseconds: (item.runTimeTicks! / 10).roundToDouble().toInt())
+        : Duration.zero,
+    downloadProgress: 0,
+    isDownloaded: false,
+    downloadPath: '',
+    bookId: item.albumId!,
+    downloadTaskId: '',
+    downloadTaskStatus: 0,
+  );
+}
+
 class EmbyRepository extends MediaRepository {
   final EmbyApi _api;
   String _libraryId;
@@ -28,25 +105,25 @@ class EmbyRepository extends MediaRepository {
   EmbyRepository(this._api, this._libraryId);
 
   @override
-  Future<List<MediaItem>> getRecentlyAdded() async {
-    return getItemsFromEmbyItems(
+  Future<List<Book>> getRecentlyAdded() async {
+    return getBooksFromEmbyItems(
       (await _api.getRecentlyAdded(_libraryId)),
       this,
     );
   }
 
   @override
-  Future<List<MediaItem>> getRecentlyPlayed() async {
+  Future<List<Book>> getRecentlyPlayed() async {
     print('Calling get recently played');
-    return getItemsFromEmbyItems(
+    return getBooksFromEmbyItems(
       (await _api.getRecentlyPlayed(_libraryId)),
       this,
     );
   }
 
   @override
-  Future<List<MediaItem>> getAllBooks() async {
-    return getItemsFromEmbyItems(
+  Future<List<Book>> getAllBooks([int? page]) async {
+    return getBooksFromEmbyItems(
       (await _api.getAll(_libraryId)),
       this,
     );
@@ -61,15 +138,13 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getDownloads() async {
-    return (await _db.getBooks().first)
-        .map((book) => MediaHelpers.fromBook(book))
-        .toList();
+  Future<List<Book>> getDownloads() async {
+    return (await _db.getBooks().first).toList();
   }
 
   @override
-  Future<List<MediaItem>> getBooksFromAuthor(String authorId) async {
-    return getItemsFromEmbyItems(
+  Future<List<Book>> getBooksFromAuthor(String authorId) async {
+    return getBooksFromEmbyItems(
       (await _api.getItemsForAuthor(authorId)),
       this,
     );
@@ -84,8 +159,8 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getBooksFromCollection(String collectionId) async {
-    return getItemsFromEmbyItems(
+  Future<List<Book>> getBooksFromCollection(String collectionId) async {
+    return getBooksFromEmbyItems(
       (await _api.getItemsForCollection(collectionId)),
       this,
     );
@@ -109,16 +184,16 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getTracksForBook(String bookId) async {
-    return getItemsFromEmbyItems(
+  Future<List<Track>> getTracksForBook(String bookId) async {
+    return getTracksFromEmbyItems(
       (await _api.getItemsForAlbum(bookId)),
       this,
     );
   }
 
   @override
-  Future<MediaItem> getAlbumFromId(String? mediaId) async {
-    return Utils.mediaItemfromEmbyItem((await _api.getItem(mediaId!)), this);
+  Future<Book> getAlbumFromId(String? mediaId) async {
+    return embyItemToBook((await _api.getItem(mediaId!)), this);
   }
 
   @override
@@ -217,11 +292,10 @@ class EmbyRepository extends MediaRepository {
           book.copyWith(read: true, lastPlayedPosition: Duration.zero));
     } else {
       final album = await getAlbumFromId(itemId);
-      _db.insertBook(
-          _db.getBookFromMediaItem(album, DownloadStatus.none).copyWith(
-                read: true,
-                lastPlayedPosition: Duration.zero,
-              ));
+      _db.insertBook(album.copyWith(
+        read: true,
+        lastPlayedPosition: Duration.zero,
+      ));
     }
     return _api.markPlayed(itemId);
   }
@@ -233,15 +307,13 @@ class EmbyRepository extends MediaRepository {
       _db.insertBook(book.copyWith(read: false));
     } else {
       final album = await getAlbumFromId(itemId);
-      _db.insertBook(_db
-          .getBookFromMediaItem(album, DownloadStatus.none)
-          .copyWith(read: false));
+      _db.insertBook(album.copyWith(read: false));
     }
     return _api.markUnplayed(itemId);
   }
 
   @override
-  Future<List<MediaItem>> getBooksFromSeries(String seriesId) {
+  Future<List<Book>> getBooksFromSeries(String seriesId) {
     // TODO: implement getBooksFromSeries
     throw UnimplementedError();
   }

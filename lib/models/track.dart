@@ -9,17 +9,17 @@ class Track {
   final String downloadTaskId;
   final int downloadTaskStatus;
 
-  Track(
-    this.id,
-    this.title,
-    this.duration,
-    this.downloadProgress,
-    this.isDownloaded,
-    this.downloadPath,
-    this.bookId,
-    this.downloadTaskId,
-    this.downloadTaskStatus,
-  );
+  Track({
+    required this.id,
+    required this.title,
+    required this.duration,
+    required this.downloadProgress,
+    required this.isDownloaded,
+    required this.downloadPath,
+    required this.bookId,
+    required this.downloadTaskId,
+    required this.downloadTaskStatus,
+  });
 
   Track copyWith({
     String? id,
@@ -33,14 +33,19 @@ class Track {
     int? downloadTaskStatus,
   }) =>
       Track(
-        id ?? this.id,
-        title ?? this.title,
-        duration ?? this.duration,
-        downloadProgress ?? this.downloadProgress,
-        isDownloaded ?? this.isDownloaded,
-        downloadPath ?? this.downloadPath,
-        bookId ?? this.bookId,
-        downloadTaskId ?? this.downloadTaskId,
-        downloadTaskStatus ?? this.downloadTaskStatus,
+        id: id ?? this.id,
+        title: title ?? this.title,
+        duration: duration ?? this.duration,
+        downloadProgress: downloadProgress ?? this.downloadProgress,
+        isDownloaded: isDownloaded ?? this.isDownloaded,
+        downloadPath: downloadPath ?? this.downloadPath,
+        bookId: bookId ?? this.bookId,
+        downloadTaskId: downloadTaskId ?? this.downloadTaskId,
+        downloadTaskStatus: downloadTaskStatus ?? this.downloadTaskStatus,
       );
+
+  @override
+  String toString() {
+    return 'Track(id: $id, title: $title, duration: $duration, downloadProgress: $downloadProgress, isDownloaded: $isDownloaded, downloadPath: $downloadPath, bookId: $bookId, downloadTaskId: $downloadTaskId, downloadTaskStatus: $downloadTaskStatus)';
+  }
 }

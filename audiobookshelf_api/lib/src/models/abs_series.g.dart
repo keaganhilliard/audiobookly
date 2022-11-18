@@ -13,7 +13,7 @@ _$_AbsSeries _$$_AbsSeriesFromJson(Map<String, dynamic> json) => _$_AbsSeries(
       nameIgnorePrefixSort: json['nameIgnorePrefixSort'] as String,
       type: json['type'] as String,
       books: (json['books'] as List<dynamic>)
-          .map((e) => AbsAudiobook.fromJson(e as Map<String, dynamic>))
+          .map((e) => AbsAudiobookMinified.fromJson(e as Map<String, dynamic>))
           .toList(),
       addedAt: json['addedAt'] as int,
       totalDuration: (json['totalDuration'] as num).toDouble(),
