@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/download_status.dart';
-import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
@@ -17,9 +13,7 @@ import 'package:audiobookly/services/device_info/device_info_service.dart'
 import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookshelf/audiobookshelf.dart' hide Chapter, Author;
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
   String baseUrl =
@@ -36,23 +30,16 @@ final absApiProvider = Provider<AudiobookshelfApi>((ref) {
 class AbsRepository extends MediaRepository {
   final AudiobookshelfApi _api;
 
-  String _libraryId;
+  String get _libraryId => _db.getPreferencesSync().libraryId;
   final DatabaseService _db = getIt();
 
-  AbsRepository(this._api, this._libraryId) : super(true);
+  AbsRepository(this._api) : super(true);
 
   @override
   Future<Book> getAlbumFromId(String? mediaId) async {
     final book = await _api.getBookInfo(mediaId!);
     await getUser();
     return _absBookToBook(book);
-  }
-
-  Uri? _coverUrl(String? baseUrl, String? path, int? timestamp) {
-    if (baseUrl != null && path != null) {
-      return Uri.parse('$baseUrl$path?token=${_api.token}&ts=$timestamp');
-    }
-    return null;
   }
 
   Uri? _scaledCoverUrl(String? baseUrl, String? id, int? timestamp,
@@ -130,9 +117,7 @@ class AbsRepository extends MediaRepository {
 
   Book _absBookMinifiedToBook(AbsAudiobookMinified book) {
     final progress = userProgress[book.id];
-    int viewOffset = progress?.currentTime?.inMilliseconds ?? 0;
-    bool played = progress?.isFinished ?? false;
-    Duration? totalDuration = progress?.duration;
+
     return Book(
       id: book.id,
       title: book.media.metadata.title ?? 'Unknown',
@@ -141,11 +126,9 @@ class AbsRepository extends MediaRepository {
       description: book.media.metadata.description ?? '',
       artPath:
           _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt).toString(),
-      duration: book.media.duration == null
-          ? totalDuration ?? Duration.zero
-          : AbsUtils.parseDurationFromSeconds(book.media.duration)!,
+      duration: AbsUtils.parseDurationFromSeconds(book.media.duration)!,
       lastPlayedPosition: progress?.currentTime ?? Duration.zero,
-      read: played,
+      read: progress?.isFinished ?? false,
       lastUpdate: DateTime.now(),
       largeArtPath: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
           .toString(),
@@ -154,13 +137,13 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<Book>> getAllBooks([int? page]) async {
-    final books = await _api.getAll(_db.getPreferencesSync().libraryId, page);
+    final books = await _api.getAll(_libraryId, page);
     return [for (final book in books) _absBookMinifiedToBook(book)];
   }
 
   @override
   Future<List<MediaItem>> getAuthors() async {
-    return (await _api.getAuthors(_db.getPreferencesSync().libraryId))
+    return (await _api.getAuthors(_libraryId))
         .map(
           (author) => MediaItem(
             id: '@authors/${author.id}',
@@ -181,9 +164,7 @@ class AbsRepository extends MediaRepository {
   Future<List<Book>> getBooksFromAuthor(String authorId) async {
     return [
       for (final book
-          in (await _api.getBooksForAuthor(
-                  _db.getPreferencesSync().libraryId, authorId))
-              .toList()
+          in (await _api.getBooksForAuthor(_libraryId, authorId)).toList()
             ..sort(_sortBooks))
         _absBookToBook(book)
     ];
@@ -299,7 +280,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<MediaItem>> getSeries() async {
-    final series = await _api.getSeries(_db.getPreferencesSync().libraryId);
+    final series = await _api.getSeries(_libraryId);
 
     return [
       for (final serie in series)
@@ -363,8 +344,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<Book>> getRecentlyAdded() async {
-    final books =
-        await _api.getRecentlyAdded(_db.getPreferencesSync().libraryId);
+    final books = await _api.getRecentlyAdded(_libraryId);
     return [for (final book in books) _absBookToBook(book)];
   }
 

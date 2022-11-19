@@ -58,7 +58,7 @@ final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
     return PlexRepository(api: plexApi, prefs: prefs)..getServerAndLibrary();
   } else if (serverType == ServerType.audiobookshelf) {
     final absApi = ref.watch(absApiProvider);
-    return AbsRepository(absApi, prefs.libraryId);
+    return AbsRepository(absApi);
   } else {
     return null;
   }
