@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/default_audio_handler.dart';
-import 'package:audiobookly/services/audio/desktop_audio_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
 Future<AudioHandler> initAudioHandler() async {
@@ -85,6 +84,7 @@ class AudioHandlerPlaybackController extends PlaybackController {
   }
 
   @override
+  // ignore: avoid_renaming_method_parameters
   Future playFromId(String? id, [bool shouldPlay = true]) async {
     if (id == currentItemId) {
       if (shouldPlay && !_audioHandler.playbackState.value.playing) play();

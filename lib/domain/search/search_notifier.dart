@@ -23,12 +23,11 @@ class SearchNotifier extends StateNotifier<SearchState> {
       state = results.fold<SearchStateLoaded>(
         const SearchStateLoaded(),
         (value, item) {
-          print('${item.title} ${item.id}');
           late SearchStateLoaded newState;
-          if (item.id.startsWith(MediaIds.SERIES_ID)) {
+          if (item.id.startsWith(MediaIds.seriesId)) {
             newState = value
                 .copyWith(seriesResults: [...value.seriesResults ?? [], item]);
-          } else if (item.id.startsWith(MediaIds.AUTHORS_ID)) {
+          } else if (item.id.startsWith(MediaIds.authorsId)) {
             newState = value
                 .copyWith(authorResults: [...value.authorResults ?? [], item]);
           } else {

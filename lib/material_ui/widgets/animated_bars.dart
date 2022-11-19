@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AnimatedBars extends StatelessWidget {
+  const AnimatedBars({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [

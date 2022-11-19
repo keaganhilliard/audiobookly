@@ -3,7 +3,6 @@ import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/material_ui/features/emby_login/emby_login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class WelcomeView extends HookConsumerWidget {

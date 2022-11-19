@@ -4,7 +4,6 @@ import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:math' as math;
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});

@@ -1,8 +1,6 @@
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
-import 'package:audiobookly/domain/auth/auth_state.dart';
-import 'package:audiobookly/material_ui/features/offline/offline_view.dart';
-import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthWidget extends ConsumerWidget {
@@ -21,7 +19,6 @@ class AuthWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authNotifierProvider);
-    final navigation = ref.watch(navigationServiceProvider);
 
     return authState.when<Widget>(
         initial: () => unauthorizedBuilder(context),

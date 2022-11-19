@@ -229,7 +229,7 @@ class BookDetailsView extends HookConsumerWidget {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          if (book.narrator != null)
+                          if (book.narrator.isNotEmpty)
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(

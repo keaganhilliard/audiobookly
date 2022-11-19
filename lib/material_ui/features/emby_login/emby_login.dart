@@ -15,19 +15,11 @@ class EmbyLogin extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final _username =
-    //     useTextEditingController.fromValue(TextEditingValue.empty);
-    // final _password =
-    //     useTextEditingController.fromValue(TextEditingValue.empty);
-    // final _baseUrl = useTextEditingController.fromValue(TextEditingValue.empty);
-
-    // final auth = useProvider(authProvider);
-
-    final _formKey = GlobalKey<FormState>();
-    final _loading = useState(false);
-    final _login = useState(LoginState());
-    final _auth = ref.watch(authNotifierProvider.notifier);
-    final _navigationService = ref.watch(navigationServiceProvider);
+    final formKey = GlobalKey<FormState>();
+    final loading = useState(false);
+    final login = useState(LoginState());
+    final auth = ref.watch(authNotifierProvider.notifier);
+    final navigationService = ref.watch(navigationServiceProvider);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -35,7 +27,7 @@ class EmbyLogin extends HookConsumerWidget {
           padding: const EdgeInsets.only(
               left: 16.0, right: 16.0, top: 100.0, bottom: 32.0),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -48,7 +40,7 @@ class EmbyLogin extends HookConsumerWidget {
                   child: TextFormField(
                     key: const ValueKey('emby-url-field'),
                     onChanged: (val) {
-                      _login.value.baseUrl = val;
+                      login.value.baseUrl = val;
                     },
                     validator: (val) =>
                         val!.isEmpty ? "Please enter your server's url" : null,
@@ -65,7 +57,7 @@ class EmbyLogin extends HookConsumerWidget {
                     validator: (val) =>
                         val!.isEmpty ? 'Please enter a username' : null,
                     onChanged: (val) {
-                      _login.value.username = val;
+                      login.value.username = val;
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -80,7 +72,7 @@ class EmbyLogin extends HookConsumerWidget {
                     validator: (value) =>
                         value!.isEmpty ? 'Please enter a password' : null,
                     onChanged: (val) {
-                      _login.value.password = val;
+                      login.value.password = val;
                     },
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -96,11 +88,12 @@ class EmbyLogin extends HookConsumerWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: _loading.value
+                          child: loading.value
                               ? const CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                       Colors.white),
@@ -111,22 +104,22 @@ class EmbyLogin extends HookConsumerWidget {
                                 ),
                         ),
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            _loading.value = true;
-                            if (!await _auth.embyLogin(
-                              _login.value.baseUrl,
-                              _login.value.username,
-                              _login.value.password,
+                          if (formKey.currentState!.validate()) {
+                            loading.value = true;
+                            if (!await auth.embyLogin(
+                              login.value.baseUrl,
+                              login.value.username,
+                              login.value.password,
                             )) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text(
                                           'Username or password invalid')));
                             } else {
-                              await _auth.checkToken();
-                              _navigationService.pop();
+                              await auth.checkToken();
+                              navigationService.pop();
                             }
-                            _loading.value = false;
+                            loading.value = false;
                           }
                         },
                       ),

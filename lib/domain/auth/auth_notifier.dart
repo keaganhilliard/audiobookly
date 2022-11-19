@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:audiobookly/domain/server_select/server_select.dart';
@@ -76,7 +77,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           .read(embyAuthRepoProvider)
           .login(baseUrl, username, password);
     } catch (e) {
-      print(e);
+      log('$e');
     }
     return u?.token != null;
   }
@@ -92,7 +93,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           .read(absAuthRepoProvider)
           .login(baseUrl, username, password);
     } catch (e) {
-      print(e);
+      log('$e');
     }
     return u?.token != null;
   }
@@ -154,7 +155,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final prefsNotifier = _ref.read(preferencesProvider.notifier);
       Preferences prefs = prefsNotifier.state;
       final navigationService = _ref.read(navigationServiceProvider);
-      print('Checking token: ${prefs.userToken}');
+      log('Checking token: ${prefs.userToken}');
 
       User? user;
       if (prefs.serverType == ServerType.emby) {
@@ -224,8 +225,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // if (e.toString().startsWith('Failed host lookup')) {
       //   state = const AuthStateOffline();
       // } else {
-      print(e);
-      print(stack);
+      log('$e');
+      log('$stack');
       state = AuthStateErrorDetails(e.toString());
       // }
     }

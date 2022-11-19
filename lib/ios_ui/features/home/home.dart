@@ -5,7 +5,6 @@ import 'package:audiobookly/ios_ui/features/collections/collections.dart';
 import 'package:audiobookly/ios_ui/features/home/home_view.dart';
 import 'package:audiobookly/ios_ui/features/series/series_view.dart';
 import 'package:audiobookly/ios_ui/features/settings/settings_view.dart';
-import 'package:audiobookly/ios_ui/features/welcome/welcome_view.dart';
 import 'package:flutter/cupertino.dart';
 
 class Home extends StatelessWidget {

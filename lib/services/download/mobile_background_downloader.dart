@@ -29,7 +29,6 @@ class MobileBackgroundDownloader extends Downloader {
   @override
   Future downloadFile(Track track, Uri url, String path,
       [String? fileName]) async {
-    print('Token: ${url.queryParameters['token']}');
     final task = BackgroundDownloadTask(
       headers: {
         'Authorization': 'Bearer ${url.queryParameters['token'] ?? ''}'
@@ -41,7 +40,6 @@ class MobileBackgroundDownloader extends Downloader {
       progressUpdates:
           DownloadTaskProgressUpdates.statusChangeAndProgressUpdates,
     );
-    print(task);
 
     await FileDownloader.enqueue(task);
     await db.insertTrack(track.copyWith(downloadTaskId: task.taskId));

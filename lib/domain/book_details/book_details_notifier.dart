@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
-import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/book_details/book_details_state.dart';

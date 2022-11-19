@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class BookListElement extends StatelessWidget {
   const BookListElement({
+    super.key,
     this.progress,
     this.subtitle,
     this.title,
@@ -23,20 +24,12 @@ class BookListElement extends StatelessWidget {
   final Function? onTap;
   final bool played;
 
-  // Widget imageBuilder() {
-  //   return FadeInImage.memoryNetwork(image: thumbnailUrl, placeholder: ,);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
         aspectRatio: 1 / 1.4,
-        // width: MediaQuery.of(context).orientation == Orientation.portrait
-        //     ? MediaQuery.of(context).size.width * 0.4
-        //     : MediaQuery.of(context).size.width * 0.25,
         child: Card(
           elevation: 2.0,
-          // color: Colors.black,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: onTap as void Function()?,
@@ -49,7 +42,6 @@ class BookListElement extends StatelessWidget {
                         ? LinearProgressIndicator(
                             minHeight: 8,
                             value: progress,
-                            // color: Theme.of(context).accentColor,
                             backgroundColor: Colors.transparent,
                           )
                         : Container(),
@@ -103,11 +95,6 @@ class BookListElement extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // ListTile(
-                      //   contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 0, 1.0),
-                      //   subtitle: subTitle,
-                      //   title: title,
-                      // ),
                     ),
                   ],
                 ),

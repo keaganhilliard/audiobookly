@@ -4,13 +4,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ServerSelect extends HookWidget {
   final List<Library> _servers;
-  const ServerSelect(this._servers);
+  const ServerSelect(this._servers, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select a Plex server'),
+        title: const Text('Select a Plex server'),
         automaticallyImplyLeading: false,
       ),
       body: ListView.builder(

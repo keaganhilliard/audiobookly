@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
@@ -68,9 +67,9 @@ class Utils {
   static MediaItem mediaItemfromEmbyItem(EmbyItem item, MediaRepository repo) {
     return MediaItem(
         id: item.type == 'MusicArtist'
-            ? '${MediaIds.AUTHORS_ID}/${item.id}'
+            ? '${MediaIds.authorsId}/${item.id}'
             : item.type == 'BoxSet'
-                ? '${MediaIds.COLLECTIONS_ID}/${item.id}'
+                ? '${MediaIds.collectionsId}/${item.id}'
                 : item.id!,
         title: item.name!,
         artist: item.albumArtist,

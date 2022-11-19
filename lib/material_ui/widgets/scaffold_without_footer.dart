@@ -11,6 +11,7 @@ class ScaffoldWithoutFooter extends StatelessWidget {
   final VoidCallback? onRefresh;
 
   const ScaffoldWithoutFooter({
+    super.key,
     this.title,
     this.body,
     this.refresh = false,
@@ -37,7 +38,7 @@ class ScaffoldWithoutFooter extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => Downloads(),
+                    builder: (context) => const Downloads(),
                   ),
                 );
               },

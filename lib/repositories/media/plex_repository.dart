@@ -212,22 +212,22 @@ class PlexRepository extends MediaRepository {
 
   @override
   Future savePosition(
-    String mediaId,
+    String key,
     int position,
     int duration,
     AudiobooklyPlaybackState state,
   ) async {
     await refreshServer();
     return await _server!.savePosition(
-        mediaId,
+        key,
         position,
         duration,
         {
-          AudiobooklyPlaybackState.BUFFERING: PlexPlaybackState.BUFFERING,
-          AudiobooklyPlaybackState.COMPLETED: PlexPlaybackState.STOPPED,
-          AudiobooklyPlaybackState.PAUSED: PlexPlaybackState.PAUSED,
-          AudiobooklyPlaybackState.STOPPED: PlexPlaybackState.STOPPED,
-          AudiobooklyPlaybackState.PLAYING: PlexPlaybackState.PLAYING
+          AudiobooklyPlaybackState.buffering: PlexPlaybackState.BUFFERING,
+          AudiobooklyPlaybackState.completed: PlexPlaybackState.STOPPED,
+          AudiobooklyPlaybackState.paused: PlexPlaybackState.PAUSED,
+          AudiobooklyPlaybackState.stopped: PlexPlaybackState.STOPPED,
+          AudiobooklyPlaybackState.playing: PlexPlaybackState.PLAYING
         }[state]!);
   }
 
@@ -272,7 +272,6 @@ class PlexRepository extends MediaRepository {
   Future<User> getUser() async {
     await refreshServer();
     PlexUser? u = await (_server!.getUser());
-    print(u?.toJson());
     return User(name: u?.title, userName: u?.username, thumb: u?.thumb);
   }
 

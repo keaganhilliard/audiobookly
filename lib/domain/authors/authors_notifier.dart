@@ -3,7 +3,6 @@ import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/authors/authors_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:http/http.dart';
 
 final authorsStateProvider =
     StateNotifierProvider<AuthorsNotifier, AuthorsState>((ref) {
@@ -19,7 +18,7 @@ class AuthorsNotifier extends StateNotifier<AuthorsState> {
 
   Future refresh() async {
     try {
-      final authors = await _repository!.getChildren(MediaIds.AUTHORS_ID);
+      final authors = await _repository!.getChildren(MediaIds.authorsId);
       state = AuthorsState.loaded(authors: authors);
     } on Exception {
       state = const AuthorsState.error(
@@ -32,7 +31,7 @@ class AuthorsNotifier extends StateNotifier<AuthorsState> {
   Future<void> getAuthors() async {
     try {
       state = const AuthorsState.loading();
-      final authors = await _repository!.getChildren(MediaIds.AUTHORS_ID);
+      final authors = await _repository!.getChildren(MediaIds.authorsId);
       state = AuthorsState.loaded(authors: authors);
     } on Exception {
       state = const AuthorsState.error(

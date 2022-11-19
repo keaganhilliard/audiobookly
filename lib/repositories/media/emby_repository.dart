@@ -1,6 +1,5 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
-import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
@@ -43,18 +42,6 @@ Book embyItemToBook(EmbyItem item, EmbyRepository repo) {
     read: (item.userData?.played ?? false),
   );
 }
-
-// Track Track(
-//   String id,
-//   String title,
-//   Duration duration,
-//   double downloadProgress,
-//   bool isDownloaded,
-//   String downloadPath,
-//   String bookId,
-//   String downloadTaskId,
-//   int downloadTaskStatus,
-// )
 
 List<Book> getBooksFromEmbyItems(
     List<EmbyItem> embyItems, EmbyRepository repo) {
@@ -114,7 +101,6 @@ class EmbyRepository extends MediaRepository {
 
   @override
   Future<List<Book>> getRecentlyPlayed() async {
-    print('Calling get recently played');
     return getBooksFromEmbyItems(
       (await _api.getRecentlyPlayed(_libraryId)),
       this,
@@ -224,7 +210,6 @@ class EmbyRepository extends MediaRepository {
       double playbackRate, AudiobooklyEvent event, bool playing) async {
     final book = await _db.getBookById(key);
     if (book != null) {
-      print('Saving place :)');
       await _db.insertBook(book.copyWith(lastPlayedPosition: position));
     }
     await _api.playbackCheckin(
@@ -232,10 +217,10 @@ class EmbyRepository extends MediaRepository {
       position,
       duration,
       {
-        AudiobooklyEvent.TimeUpdate: EmbyEvent.TimeUpdate,
-        AudiobooklyEvent.Pause: EmbyEvent.Pause,
-        AudiobooklyEvent.Unpause: EmbyEvent.Unpause,
-        AudiobooklyEvent.PlaybackRateChange: EmbyEvent.PlaybackRateChange,
+        AudiobooklyEvent.timeUpdate: EmbyEvent.TimeUpdate,
+        AudiobooklyEvent.pause: EmbyEvent.Pause,
+        AudiobooklyEvent.unpause: EmbyEvent.Unpause,
+        AudiobooklyEvent.playbackRateChange: EmbyEvent.PlaybackRateChange,
       }[event]!,
       playbackRate,
       !playing,

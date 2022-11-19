@@ -1,6 +1,5 @@
 import 'package:audiobookly/domain/track_details/track_details_notifier.dart';
 import 'package:audiobookly/domain/track_details/track_details_state.dart';
-import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
 import 'package:audiobookly/mac_ui/widgets/macos_icon_with_fontweight.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
@@ -28,8 +27,6 @@ class BookDetailsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookDetails = ref.watch(bookDetailsStateProvider(mediaId).notifier);
-    final tracksDetails =
-        ref.watch(trackDetailsStateProvider(mediaId).notifier);
     final state = ref.watch(bookDetailsStateProvider(mediaId));
     final downloadService = ref.watch(downloadServiceProvider);
     final playbackController = GetIt.I<PlaybackController>();
@@ -38,6 +35,7 @@ class BookDetailsView extends HookConsumerWidget {
       if (mounted()) {
         bookDetails.getDetails();
       }
+      return null;
     }, [mounted()]);
 
     return state.when(

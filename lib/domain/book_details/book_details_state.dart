@@ -1,4 +1,3 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

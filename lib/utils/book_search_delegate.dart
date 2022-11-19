@@ -1,6 +1,5 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
-import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
@@ -51,11 +50,10 @@ class BookSearchDelegate extends SearchDelegate {
 
     return Consumer(
       builder: (context, ref, child) {
-        final _repo = ref.watch(mediaRepositoryProvider);
+        final repo = ref.watch(mediaRepositoryProvider);
         return FutureBuilder<List<MediaItem>>(
-          future: _repo?.search(query),
+          future: repo?.search(query),
           builder: (context, results) {
-            print(results);
             if (!results.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -69,7 +67,7 @@ class BookSearchDelegate extends SearchDelegate {
                         onTap: () async {
                           if (item.playable!) {
                             Navigator.of(context).pushNamed(
-                              Routes.Book,
+                              Routes.book,
                               arguments: item.id,
                             );
                           } else {

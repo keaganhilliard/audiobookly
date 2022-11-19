@@ -13,6 +13,7 @@ class SeekBar extends HookWidget {
   final Future<void> Function(Duration)? onChangeEnd;
 
   const SeekBar({
+    super.key,
     required this.duration,
     required this.position,
     this.onChanged,

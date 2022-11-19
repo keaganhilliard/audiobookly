@@ -57,19 +57,19 @@ Future<FlutterCarplay> initCarplay() async {
                 CPListItem(
                     text: 'Continue Listening',
                     onPress: (complete, self) {
-                      makeList(complete, MediaIds.RECENTLY_PLAYED,
+                      makeList(complete, MediaIds.recentlyPlayed,
                           'Continue Listening');
                     }),
                 CPListItem(
                     text: 'Recently Added',
                     onPress: (complete, self) {
                       makeList(
-                          complete, MediaIds.RECENTLY_ADDED, 'Recently Added');
+                          complete, MediaIds.recentlyAdded, 'Recently Added');
                     }),
                 CPListItem(
                     text: 'Downloaded',
                     onPress: (complete, self) {
-                      makeList(complete, MediaIds.DOWNLOADS, 'Downloaded');
+                      makeList(complete, MediaIds.downloads, 'Downloaded');
                     }),
               ],
             ),
@@ -85,23 +85,22 @@ Future<FlutterCarplay> initCarplay() async {
                 CPListItem(
                     text: 'Authors',
                     onPress: (complete, self) {
-                      makeList(complete, MediaIds.AUTHORS_ID, 'Authors');
+                      makeList(complete, MediaIds.authorsId, 'Authors');
                     }),
                 CPListItem(
                     text: 'All Books',
                     onPress: (complete, self) {
-                      makeList(complete, MediaIds.BOOKS_ID, 'All Books');
+                      makeList(complete, MediaIds.booksId, 'All Books');
                     }),
                 CPListItem(
                     text: 'Collections',
                     onPress: (complete, self) {
-                      makeList(
-                          complete, MediaIds.COLLECTIONS_ID, 'Collections');
+                      makeList(complete, MediaIds.collectionsId, 'Collections');
                     }),
                 CPListItem(
                     text: 'Series',
                     onPress: (complete, self) {
-                      makeList(complete, MediaIds.SERIES_ID, 'Series');
+                      makeList(complete, MediaIds.seriesId, 'Series');
                     }),
               ],
             ),

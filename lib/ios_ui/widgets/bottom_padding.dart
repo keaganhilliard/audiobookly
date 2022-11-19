@@ -3,7 +3,6 @@ import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BottomPadding extends HookWidget {
   const BottomPadding({super.key});

@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:audiobookshelf/audiobookshelf.dart';
-import 'package:audiobookshelf/src/abs_audiobook_search_result.dart';
-import 'package:audiobookshelf/src/abs_series_search_result.dart';
 
 _listEquals(List a, List b) => a.join(',') == b.join(',');
 
@@ -139,49 +137,4 @@ class Audiobook {
   @override
   int get hashCode =>
       audiobook.hashCode ^ matchKey.hashCode ^ matchText.hashCode;
-}
-
-class _Author {
-  final String author;
-  _Author({
-    required this.author,
-  });
-
-  _Author copyWith({
-    String? author,
-  }) {
-    return _Author(
-      author: author ?? this.author,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'author': author,
-    };
-  }
-
-  factory _Author.fromMap(Map<String, dynamic> map) {
-    return _Author(
-      author: map['author'],
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory _Author.fromJson(String source) =>
-      _Author.fromMap(json.decode(source));
-
-  @override
-  String toString() => '_Author(author: $author)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is _Author && other.author == author;
-  }
-
-  @override
-  int get hashCode => author.hashCode;
 }

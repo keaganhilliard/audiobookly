@@ -29,7 +29,7 @@ class AuthorView extends HookConsumerWidget {
     final booksProvider = ref.watch(booksStateProvider(mediaId).notifier);
     final state = ref.watch(booksStateProvider(mediaId));
     return CupertinoPageScaffold(
-      backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+      backgroundColor: const Color.fromRGBO(0, 0, 0, 0.5),
       resizeToAvoidBottomInset: false,
       child: AbGridView(
         title: title ?? 'Books',

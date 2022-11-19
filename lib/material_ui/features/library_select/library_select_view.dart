@@ -1,7 +1,6 @@
 import 'package:audiobookly/domain/library_select/library_select_notifier.dart';
 import 'package:audiobookly/domain/library_select/library_select_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LibrarySelectView extends HookConsumerWidget {
@@ -19,7 +18,7 @@ class LibrarySelectView extends HookConsumerWidget {
     } else if (state is LibrarySelectStateLoaded) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Select a library'),
+          title: const Text('Select a library'),
           automaticallyImplyLeading: false,
         ),
         body: ListView.builder(
@@ -29,9 +28,8 @@ class LibrarySelectView extends HookConsumerWidget {
             return ListTile(
               title: Text(lib.title!),
               onTap: () async {
-                await notifier.setLibrary(lib.id!);
+                notifier.setLibrary(lib.id!);
                 Navigator.pop(context, lib);
-                // Provider.of<RootViewModel>(context).init();
               },
             );
           },

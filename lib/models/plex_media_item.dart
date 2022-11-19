@@ -31,7 +31,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
       : key = artist.ratingKey,
         super(
           serverKey: artist.ratingKey,
-          id: '${MediaIds.AUTHORS_ID}/${artist.ratingKey}',
+          id: '${MediaIds.authorsId}/${artist.ratingKey}',
           title: artist.title,
           album: '',
           artUri: server.getThumbnailUrl(artist.thumb ?? ''),
@@ -62,7 +62,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
       : key = collection.key,
         super(
           serverKey: collection.key,
-          id: '${MediaIds.COLLECTIONS_ID}/${collection.key}',
+          id: '${MediaIds.collectionsId}/${collection.key}',
           title: collection.title,
           album: '',
           artist: '',

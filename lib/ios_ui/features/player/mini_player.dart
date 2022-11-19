@@ -1,7 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/ios_ui/features/player/player_view.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
-import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

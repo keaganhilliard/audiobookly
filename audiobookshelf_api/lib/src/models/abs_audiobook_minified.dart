@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'abs_audiobook_minified.freezed.dart';
 part 'abs_audiobook_minified.g.dart';

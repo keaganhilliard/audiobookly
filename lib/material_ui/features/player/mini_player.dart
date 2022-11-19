@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/features/player/player_view.dart';
@@ -26,20 +25,6 @@ class MiniPlayer extends HookConsumerWidget {
       final MediaItem item = mediaItem.data!;
       return Padding(
           padding: const EdgeInsets.only(left: 2.0, right: 2.0, bottom: 2.0),
-          // child: OpenContainer(
-          //   openBuilder: (_, closeContainer) {
-          //     return PlayerView(
-          //       book: item,
-          //     );
-          //   },
-          //   closedShape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(5),
-          //   ),
-          //   closedColor: Theme.of(context).colorScheme.primary,
-          //   closedElevation: 1.0,
-          //   closedBuilder: (context, openContainer) => ,
-          //   // borderOnForeground: true,
-          // ),
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,

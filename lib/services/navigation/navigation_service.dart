@@ -19,7 +19,7 @@ class NavigationService {
 
   Future pushNamedAndRemoveUntilHome(String routeName, {arguments}) {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
-        routeName, ModalRoute.withName(Routes.Home),
+        routeName, ModalRoute.withName(Routes.home),
         arguments: arguments);
   }
 

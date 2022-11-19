@@ -14,6 +14,7 @@ class SeekBar extends HookWidget {
   final Color secondaryColor;
 
   const SeekBar({
+    super.key,
     required this.duration,
     required this.position,
     this.primaryColor = Colors.deepPurple,

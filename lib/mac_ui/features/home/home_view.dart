@@ -17,7 +17,6 @@ class HomeView extends HookConsumerWidget {
     return CallbackShortcuts(
       bindings: {
         const SingleActivator(LogicalKeyboardKey.keyR, meta: true): () {
-          print('Refreshing');
           ref.read(homeStateProvider.notifier).refresh();
         }
       },

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
-import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -12,7 +11,6 @@ import 'package:audiobookly/services/download/downloader.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
 class DownloadRequest {
   final Book book;

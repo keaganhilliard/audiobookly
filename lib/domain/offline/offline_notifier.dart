@@ -12,13 +12,13 @@ final offlineStateProvider =
 class OfflineNotifier extends StateNotifier<OfflineState> {
   final DatabaseService _databaseService = getIt();
 
-  OfflineNotifier() : super(OfflineState.initial()) {
+  OfflineNotifier() : super(const OfflineState.initial()) {
     getBooks();
   }
 
   Future getBooks() async {
     try {
-      state = OfflineState.loading();
+      state = const OfflineState.loading();
       final books = (await _databaseService.getBooks().first)
           .map((book) => MediaHelpers.fromBook(book))
           .toList();
@@ -26,7 +26,7 @@ class OfflineNotifier extends StateNotifier<OfflineState> {
         books: books,
       );
     } on Exception {
-      state = OfflineState.error("Something went wrong... :(");
+      state = const OfflineState.error("Something went wrong... :(");
     }
   }
 }

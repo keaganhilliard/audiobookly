@@ -4,12 +4,10 @@ import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/domain/series/series_notifier.dart';
-import 'package:audiobookly/domain/series/series_state.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
 
@@ -18,7 +16,7 @@ class SeriesView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final seriesProvider = ref.watch(seriesStateProvider.notifier);
@@ -26,13 +24,12 @@ class SeriesView extends HookConsumerWidget {
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const Text('Series'),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
-          print('refreshing');
           return seriesProvider.refresh();
         },
         child: Consumer(
@@ -73,7 +70,7 @@ class SeriesView extends HookConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _refresher.currentState!.show();
+                      refresher.currentState!.show();
                     },
                     child: const Text('Retry'),
                   )

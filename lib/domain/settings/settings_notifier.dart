@@ -1,22 +1,18 @@
-import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/user.dart';
-import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/settings/settings_state.dart';
-import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final settingsStateProvider =
     StateNotifierProvider<SettingsNotifier, SettingsState>((ref) {
-  return SettingsNotifier(ref.watch(mediaRepositoryProvider));
+  return SettingsNotifier();
 });
 
 class SettingsNotifier extends StateNotifier<SettingsState> {
-  final MediaRepository? _repository;
   User? currentUser;
 
-  SettingsNotifier(this._repository) : super(const SettingsState.initial()) {
+  SettingsNotifier() : super(const SettingsState.initial()) {
     getUser();
   }
 

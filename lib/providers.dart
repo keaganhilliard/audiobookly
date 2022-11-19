@@ -17,14 +17,14 @@ final embyApiProvider = Provider<EmbyApi>((ref) {
   DeviceInfoService infoService = ref.watch(deviceInfoServiceProvider);
   Preferences prefs = ref.watch(preferencesProvider);
 
-  final _info = infoService.info;
+  final info = infoService.info;
   return EmbyApi(
     userId: prefs.userId,
     baseUrl: prefs.baseUrl,
     client: 'Audiobookly',
-    clientVersion: _info.version,
-    deviceId: _info.uniqueId,
-    deviceName: _info.model,
+    clientVersion: info.version,
+    deviceId: info.uniqueId,
+    deviceName: info.model,
     token: prefs.userToken,
   );
 });
@@ -83,7 +83,6 @@ class PreferencesNotifier extends StateNotifier<Preferences> {
       : super(GetIt.I<DatabaseService>().getPreferencesSync()) {
     _db = GetIt.I<DatabaseService>();
     sub = _db.watchPreferences().listen((prefs) {
-      print('Got preferences $prefs');
       if (prefs != null) state = prefs;
     });
   }

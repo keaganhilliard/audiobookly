@@ -19,7 +19,7 @@ class SeriesNotifier extends StateNotifier<SeriesState> {
   Future<void> refresh() async {
     try {
       final series = await _repository!.getChildren(
-        MediaIds.SERIES_ID,
+        MediaIds.seriesId,
       );
       state = SeriesState.loaded(series: series);
     } on Exception {
@@ -32,7 +32,7 @@ class SeriesNotifier extends StateNotifier<SeriesState> {
     try {
       state = const SeriesState.loading();
       final series = await _repository!.getChildren(
-        MediaIds.SERIES_ID,
+        MediaIds.seriesId,
       );
       state = SeriesState.loaded(series: series);
     } on Exception {

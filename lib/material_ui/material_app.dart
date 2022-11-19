@@ -16,11 +16,11 @@ import 'package:audiobookly/models/preferences.dart';
 class AbMaterialApp extends HookConsumerWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final routeMap = [
-    Routes.Home,
-    Routes.Authors,
-    Routes.Books,
-    Routes.Collections,
-    Routes.Series,
+    Routes.home,
+    Routes.authors,
+    Routes.books,
+    Routes.collections,
+    Routes.series,
   ];
 
   AbMaterialApp({super.key});
@@ -98,7 +98,7 @@ class AbMaterialApp extends HookConsumerWidget {
                       child: Navigator(
                         key: _navigatorKey,
                         onGenerateRoute: r.Router.generateRoute,
-                        initialRoute: Routes.Home,
+                        initialRoute: Routes.home,
                       ),
                     ),
                     const MiniPlayer(),

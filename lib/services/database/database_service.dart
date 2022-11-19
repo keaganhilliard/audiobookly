@@ -1,7 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
-import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:get_it/get_it.dart';

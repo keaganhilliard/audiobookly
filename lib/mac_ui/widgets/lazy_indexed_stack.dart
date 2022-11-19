@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class LazyIndexedStack extends StatefulWidget {
   const LazyIndexedStack({
@@ -18,6 +17,7 @@ class LazyIndexedStack extends StatefulWidget {
   final List<Widget> children;
 
   @override
+  // ignore: library_private_types_in_public_api
   _LazyIndexedStackState createState() => _LazyIndexedStackState();
 }
 

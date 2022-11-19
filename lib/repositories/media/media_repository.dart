@@ -6,14 +6,14 @@ import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 
 enum AudiobooklyPlaybackState {
-  PLAYING,
-  PAUSED,
-  STOPPED,
-  COMPLETED,
-  BUFFERING,
+  playing,
+  paused,
+  stopped,
+  completed,
+  buffering,
 }
 
-enum AudiobooklyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange, Stop }
+enum AudiobooklyEvent { timeUpdate, pause, unpause, playbackRateChange, stop }
 
 abstract class MediaRepository {
   MediaRepository([this.enableSeries = false]);
@@ -21,43 +21,42 @@ abstract class MediaRepository {
 
   Future<List<MediaItem>> getChildren(String parentMediaId, [int? page]) async {
     var pieces = parentMediaId.split('/');
-    print('Parent media id! $parentMediaId');
     switch (pieces[0]) {
       case AudioService.browsableRootId:
         var items = <MediaItem>[
           const MediaItem(
-            id: MediaIds.DOWNLOADS,
+            id: MediaIds.downloads,
             title: 'Downloads',
             playable: false,
           ),
           const MediaItem(
-            id: MediaIds.RECENTLY_PLAYED,
+            id: MediaIds.recentlyPlayed,
             title: 'In Progress',
             playable: false,
           ),
           const MediaItem(
-            id: MediaIds.RECENTLY_ADDED,
+            id: MediaIds.recentlyAdded,
             title: 'Recently Added',
             playable: false,
           ),
           const MediaItem(
-            id: MediaIds.AUTHORS_ID,
+            id: MediaIds.authorsId,
             title: 'Authors',
             playable: false,
           ),
           const MediaItem(
-            id: MediaIds.BOOKS_ID,
+            id: MediaIds.booksId,
             title: 'All Books',
             playable: false,
           ),
           if (enableSeries)
             const MediaItem(
-              id: MediaIds.SERIES_ID,
+              id: MediaIds.seriesId,
               title: 'Series',
               playable: false,
             ),
           const MediaItem(
-            id: MediaIds.COLLECTIONS_ID,
+            id: MediaIds.collectionsId,
             title: 'Collections',
             playable: false,
           ),
@@ -69,7 +68,7 @@ abstract class MediaRepository {
           recents = (await getRecentlyAdded()).take(1).toList();
         }
         return [for (final recent in recents) recent.toMediaItem()];
-      case MediaIds.AUTHORS_ID:
+      case MediaIds.authorsId:
         if (pieces.length > 1) {
           return [
             for (final book in await getBooksFromAuthor(pieces[1]))
@@ -78,11 +77,11 @@ abstract class MediaRepository {
         } else {
           return getAuthors();
         }
-      case MediaIds.BOOKS_ID:
+      case MediaIds.booksId:
         return [for (final book in await getAllBooks(page)) book.toMediaItem()];
-      case MediaIds.DOWNLOADS:
+      case MediaIds.downloads:
         return [for (final book in await getDownloads()) book.toMediaItem()];
-      case MediaIds.COLLECTIONS_ID:
+      case MediaIds.collectionsId:
         if (pieces.length > 1) {
           return [
             for (final book in await getBooksFromCollection(pieces[1]))
@@ -91,7 +90,7 @@ abstract class MediaRepository {
         } else {
           return await getCollections();
         }
-      case MediaIds.SERIES_ID:
+      case MediaIds.seriesId:
         if (pieces.length > 1) {
           return [
             for (final book in await getBooksFromSeries(pieces[1]))
@@ -100,11 +99,11 @@ abstract class MediaRepository {
         } else {
           return await getSeries();
         }
-      case MediaIds.RECENTLY_PLAYED:
+      case MediaIds.recentlyPlayed:
         return [
           for (final book in await getRecentlyPlayed()) book.toMediaItem()
         ];
-      case MediaIds.RECENTLY_ADDED:
+      case MediaIds.recentlyAdded:
         return [
           for (final book in await getRecentlyAdded()) book.toMediaItem()
         ];

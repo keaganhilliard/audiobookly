@@ -6,7 +6,6 @@ import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,13 +28,9 @@ class BookDetailsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookDetails = ref.watch(bookDetailsStateProvider(mediaId).notifier);
-    final tracksDetails =
-        ref.watch(trackDetailsStateProvider(mediaId).notifier);
     final state = ref.watch(bookDetailsStateProvider(mediaId));
     final downloadService = ref.watch(downloadServiceProvider);
     final playbackController = GetIt.I<PlaybackController>();
-    // final navigationService = ref.watch(navigationServiceProvider);
-    final group = AutoSizeGroup();
 
     return state.when(
       initial: _loadingIndicator,

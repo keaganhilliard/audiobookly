@@ -12,7 +12,6 @@ import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:audiobookly/utils/utils.dart';
 import 'package:path/path.dart' as p;
 
 enum DurationState { between, before, after }
@@ -87,7 +86,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
             currentPosition,
             totalDuration,
             _player.speed,
-            AudiobooklyEvent.TimeUpdate,
+            AudiobooklyEvent.timeUpdate,
             _player.playing,
           );
         } catch (e) {
@@ -98,7 +97,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           timer.cancel();
           _timer = null;
           pauseCount = 0;
-          await updateProgress(AudiobooklyPlaybackState.STOPPED);
+          await updateProgress(AudiobooklyPlaybackState.stopped);
         }
       });
     }
@@ -145,7 +144,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       [bool finished = false]) async {
     initTimer();
     try {
-      if (state == AudiobooklyPlaybackState.STOPPED) {
+      if (state == AudiobooklyPlaybackState.stopped) {
         _timer?.cancel();
         _timer = null;
         if (_currentMedia != null) {
@@ -154,7 +153,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
             currentPosition,
             totalDuration,
             _player.speed,
-            AudiobooklyEvent.Pause,
+            AudiobooklyEvent.pause,
             _player.playing,
           );
           await _repository!.playbackFinished(_currentMedia!);
@@ -165,7 +164,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           currentPosition,
           totalDuration,
           _player.speed,
-          _player.playing ? AudiobooklyEvent.Unpause : AudiobooklyEvent.Pause,
+          _player.playing ? AudiobooklyEvent.unpause : AudiobooklyEvent.pause,
           _player.playing,
         );
       }
@@ -189,7 +188,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         // await updateProgress(AudiobooklyPlaybackState.STOPPED, true);
 
         if (_player.playing) {
-          await updateProgress(AudiobooklyPlaybackState.PLAYING);
+          await updateProgress(AudiobooklyPlaybackState.playing);
         }
         setCurrentMediaItem();
       }
@@ -238,8 +237,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       _broadcastState();
     }
   }
-
-  Timer? _pauseTimer;
 
   @override
   Future customAction(String name, [Map<String, dynamic>? extras]) async {
@@ -320,7 +317,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
     _player.play();
     // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
-    await updateProgress(AudiobooklyPlaybackState.PLAYING);
+    await updateProgress(AudiobooklyPlaybackState.playing);
     // await super.play();
   }
 
@@ -330,7 +327,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     await _player.pause();
     await seek(currentPosition - const Duration(seconds: 2));
     await super.pause();
-    await updateProgress(AudiobooklyPlaybackState.PAUSED);
+    await updateProgress(AudiobooklyPlaybackState.paused);
   }
 
   @override
@@ -343,7 +340,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   Future<void> stop() async {
     await completer.future;
     if (_player.playing) {
-      await updateProgress(AudiobooklyPlaybackState.STOPPED);
+      await updateProgress(AudiobooklyPlaybackState.stopped);
     }
     await _player.stop();
     // await _player.dispose();
@@ -428,7 +425,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<List<MediaItem>> getChildren(String parentMediaId,
-      [Map<String, dynamic>? extras]) async {
+      [Map<String, dynamic>? options]) async {
     await completer.future;
     final items = await _repository!.getChildren(parentMediaId);
     doMe = items;
@@ -459,7 +456,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     final dbTracks = await db.getTracksForBookId(mediaId).first;
     _currentMedia = mediaId;
     if (_player.playing) {
-      updateProgress(AudiobooklyPlaybackState.STOPPED);
+      updateProgress(AudiobooklyPlaybackState.stopped);
       await _player.stop();
     }
 
@@ -585,7 +582,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future playFromMediaId(String? mediaId,
       [Map<String, dynamic>? extras]) async {
-    print('Playing $mediaId');
     await completer.future;
     await prepareFromMediaId(mediaId, extras);
     _player.play();
@@ -596,7 +592,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       totalDuration,
       _player.speed,
     );
-    await updateProgress(AudiobooklyPlaybackState.PLAYING);
+    await updateProgress(AudiobooklyPlaybackState.playing);
     // await seek(latestTrackPosition ?? Duration.zero, true);
   }
 

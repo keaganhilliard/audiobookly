@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:audiobookly/models/download_status.dart';
@@ -20,7 +21,6 @@ class DesktopDownloader extends Downloader {
   ]) async {
     late StreamSubscription sub;
     Completer completer = Completer();
-    print(url);
     try {
       HttpClient client = HttpClient();
       HttpClientRequest request = await client.getUrl(url);
@@ -36,7 +36,7 @@ class DesktopDownloader extends Downloader {
             .firstMatch(response.headers.value('content-disposition')!)!
             .group(0)!
             .replaceAll(RegExp(r'"'), '');
-      } catch (e, stack) {
+      } catch (e) {
         fileName ??= track.id;
       }
       final downloadPath = p.join(
@@ -77,8 +77,8 @@ class DesktopDownloader extends Downloader {
       });
     } catch (e, stack) {
       completer.completeError(e, stack);
-      print(e.toString());
-      print(stack.toString());
+      log(e.toString());
+      log(stack.toString());
     }
     return completer.future;
   }
@@ -95,7 +95,6 @@ class DesktopDownloader extends Downloader {
         .where((tracks) => tracks.every((track) => track.isDownloaded))
         .listen((tracks) async {
       trackSub?.cancel();
-      print('ALL DONE');
 
       final book = await db.getBookById(parentId);
       if (book != null) {

@@ -1,13 +1,10 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/domain/authors/authors_notifier.dart';
 import 'package:audiobookly/domain/books/books_notifier.dart';
 import 'package:audiobookly/domain/collections/collections_notifier.dart';
 import 'package:audiobookly/domain/home/home_notifier.dart';
 import 'package:audiobookly/domain/search/search_notifier.dart';
 import 'package:audiobookly/domain/series/series_notifier.dart';
-import 'package:audiobookly/mac_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/mac_ui/features/search/search_view.dart';
-import 'package:audiobookly/mac_ui/features/tracks/tracks_view.dart';
 import 'package:audiobookly/mac_ui/features/settings/settings_view.dart';
 import 'package:audiobookly/mac_ui/features/authors/authors_view.dart';
 import 'package:audiobookly/mac_ui/features/books/books_view.dart';

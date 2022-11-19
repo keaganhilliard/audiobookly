@@ -89,8 +89,6 @@ class AbsRepository extends MediaRepository {
 
   Book _absBookToBook(AbsAudiobook book) {
     final progress = userProgress[book.id];
-    int viewOffset = progress?.currentTime?.inMilliseconds ?? 0;
-    bool played = progress?.isFinished ?? false;
     Duration? totalDuration = progress?.duration;
     return Book(
       id: book.id,
@@ -105,7 +103,7 @@ class AbsRepository extends MediaRepository {
           ? totalDuration ?? Duration.zero
           : AbsUtils.parseDurationFromSeconds(book.media.duration)!,
       lastPlayedPosition: progress?.currentTime ?? Duration.zero,
-      read: played,
+      read: progress?.isFinished ?? false,
       lastUpdate: DateTime.now(),
       largeArtPath: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
           .toString(),
@@ -509,7 +507,6 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future playbackFinished(String key) async {
-    print('Playback finished');
     _sessionId = null;
     _lastCheckinTime = null;
   }
@@ -541,14 +538,6 @@ class AbsRepository extends MediaRepository {
             sdkVersion: '',
           ),
         ));
-    print(DeviceInfo(
-      manufacturer: di.info.manufacturer ?? '',
-      brand: '',
-      clientVersion: '0.0.1',
-      model: di.info.model ?? '',
-      sdkVersion: '',
-    ).toString());
-    print('LOOKEE HERE: $_sessionId');
   }
 
   @override
@@ -570,7 +559,6 @@ class AbsRepository extends MediaRepository {
     progress.currentTime = Duration(milliseconds: position);
 
     if (_sessionId != null && _lastCheckinTime != null) {
-      print('We are saving');
       await _api.playbackSessionCheckin(
           _sessionId!,
           Duration(milliseconds: duration),
@@ -614,12 +602,4 @@ class AbsRepository extends MediaRepository {
     // TODO: implement addToCollection
     throw UnimplementedError();
   }
-}
-
-class _SeriesHolder {
-  String id;
-  String name;
-  String sequence;
-  AbsAudiobook book;
-  _SeriesHolder(this.id, this.name, this.sequence, this.book);
 }
