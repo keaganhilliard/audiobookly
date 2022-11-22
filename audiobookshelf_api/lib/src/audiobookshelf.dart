@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/models/abs_media_progress.dart';
+import 'package:audiobookshelf/src/models/abs_personalized_response.dart';
 import 'package:audiobookshelf/src/models/abs_series.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -254,6 +255,22 @@ class AudiobookshelfApi {
       utf8.decode(response.bodyBytes),
     )['results']
         .map<AbsSeries>((x) => AbsSeries.fromJson(x))
+        .toList();
+  }
+
+  Future<List<AbsPersonalizedResponse>> getPersonalized(
+      String libraryId) async {
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/libraries/$libraryId/personalized'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(utf8.decode(response.bodyBytes))
+        .map<AbsPersonalizedResponse>(
+            (el) => AbsPersonalizedResponse.fromJson(el))
         .toList();
   }
 

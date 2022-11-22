@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/library.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -313,5 +314,17 @@ class EmbyRepository extends MediaRepository {
   Future addToCollection(String collectionId, String mediaId) {
     // TODO: implement addToCollection
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, List<ModelUnion>>> getHomeData() async {
+    return {
+      'Continue Listening': [
+        for (final book in (await getRecentlyPlayed())) ModelUnion.book(book),
+      ],
+      'Recently Added': [
+        for (final book in (await getRecentlyAdded())) ModelUnion.book(book),
+      ]
+    };
   }
 }

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/home/home_state.dart';
 import 'package:audiobookly/providers.dart';
@@ -25,20 +26,18 @@ class HomeNotifier extends StateNotifier<HomeState> {
   }
 
   Future refresh() async {
-    List<MediaItem>? recentlyPlayed;
-    List<MediaItem>? recentlyAdded;
+    Map<String, List<ModelUnion>>? rowsData;
 
     try {
-      recentlyPlayed = await _repository!.getChildren(MediaIds.recentlyPlayed);
-    } catch (e) {
+      rowsData = await _repository!.getHomeData();
+    } catch (e, stack) {
       log('$e');
+      log('$stack');
     }
-    try {
-      recentlyAdded = await _repository!.getChildren(MediaIds.recentlyAdded);
-    } catch (e) {
-      log('$e');
-    }
-    final downloaded = await _repository!.getChildren(MediaIds.downloads);
+    final downloaded = [
+      for (final value in await _repository!.getDownloads())
+        ModelUnion.book(value)
+    ];
     booksSub ??= GetIt.I<DatabaseService>()
         .getBooks()
         .debounceTime(const Duration(milliseconds: 200))
@@ -46,12 +45,15 @@ class HomeNotifier extends StateNotifier<HomeState> {
       if (state is HomeStateLoaded) {
         final stateAsLoaded = (state as HomeStateLoaded);
         state = stateAsLoaded.copyWith(
-            downloaded: await _repository!.getChildren(MediaIds.downloads));
+          downloaded: [
+            for (final value in await _repository!.getDownloads())
+              ModelUnion.book(value)
+          ],
+        );
       }
     });
     state = HomeState.loaded(
-      recentlyPlayed: recentlyPlayed,
-      recentlyAdded: recentlyAdded,
+      rowsData: rowsData,
       downloaded: downloaded,
     );
   }

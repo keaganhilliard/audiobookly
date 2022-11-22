@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
+import 'package:audiobookly/material_ui/features/books/books_view.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
@@ -13,7 +15,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class HomeRow extends HookConsumerWidget {
   // final List<MediaItem> books;
   final String? title;
-  final List<MediaItem>? items;
+  final List<ModelUnion>? items;
   final double? height;
   const HomeRow({Key? key, this.title, this.items, this.height})
       : super(key: key);
@@ -25,19 +27,37 @@ class HomeRow extends HookConsumerWidget {
       scrollDirection: Axis.horizontal,
       itemCount: items!.length,
       itemBuilder: (context, index) {
-        final MediaItem book = items![index];
-        return CoverItem(
-          onTap: () async {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return BookDetailsView(mediaId: book.id);
-            }));
-          },
-          height: height,
-          progress: Utils.getProgress(item: book),
-          thumbnailUrl: book.artUri?.toString(),
-          title: book.title,
-          subtitle: book.artist ?? '',
-          played: book.played,
+        final ModelUnion item = items![index];
+
+        return item.maybeMap(
+          orElse: () => const CoverItem(
+            title: 'Good God we have a problem',
+          ),
+          book: (book) => CoverItem(
+            onTap: () async {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return BookDetailsView(mediaId: book.value.id);
+              }));
+            },
+            height: height,
+            progress: Utils.getProgress(book: book.value),
+            thumbnailUrl: book.value.artPath,
+            title: book.value.title,
+            subtitle: book.value.author,
+            played: book.value.read,
+          ),
+          author: (author) => CoverItem(
+            onTap: () async {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return BooksView(mediaId: author.value.id);
+              }));
+            },
+            height: height,
+            thumbnailUrl: author.value.artPath,
+            title: author.value.name,
+            icon: Icons.person,
+            showTitle: true,
+          ),
         );
       },
     );

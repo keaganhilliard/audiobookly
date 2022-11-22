@@ -1,6 +1,7 @@
 import 'package:audiobookly/domain/home/home_notifier.dart';
 import 'package:audiobookly/ios_ui/features/home/home_row.dart';
 import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,20 +34,16 @@ class HomeView extends HookConsumerWidget {
           // CupertinoSearchTextField(),
           state.when(
             initial: () => const SliverToBoxAdapter(),
-            loaded: (recentlyPlayed, recentlyAdded, downloaded) => SliverList(
+            loaded: (rowsData, downloaded) => SliverList(
               delegate: SliverChildListDelegate([
-                if (!nullOrEmpty(recentlyPlayed))
-                  HomeRow(
-                    height: rowHeight,
-                    title: 'Continue Listening',
-                    items: recentlyPlayed,
-                  ),
-                if (!nullOrEmpty(recentlyAdded))
-                  HomeRow(
-                    height: rowHeight,
-                    title: 'Recently Added',
-                    items: recentlyAdded,
-                  ),
+                if (rowsData != null) ...[
+                  for (final entry in rowsData.entries)
+                    HomeRow(
+                      height: rowHeight,
+                      title: entry.key,
+                      items: entry.value,
+                    )
+                ],
                 if (!nullOrEmpty(downloaded))
                   HomeRow(
                     height: rowHeight,

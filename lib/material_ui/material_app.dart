@@ -8,6 +8,7 @@ import 'package:audiobookly/material_ui/features/welcome_view/welcome_view.dart'
 import 'package:audiobookly/material_ui/widgets/adaptive_scaffold.dart';
 import 'package:audiobookly/material_ui/widgets/auth_widget.dart';
 import 'package:audiobookly/material_ui/widgets/router.dart' as r;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -119,23 +120,26 @@ class AbMaterialApp extends HookConsumerWidget {
                 destinations: [
                   const Destination(
                     title: 'Home',
-                    icon: Icons.home,
+                    icon: CupertinoIcons.house_fill,
                   ),
                   const Destination(
                     title: 'Authors',
-                    icon: Icons.person,
+                    icon: CupertinoIcons.person_2_fill,
                   ),
                   const Destination(
                     title: 'Books',
-                    icon: Icons.book,
+                    icon: CupertinoIcons.book_solid,
                   ),
                   const Destination(
                     title: 'Collections',
-                    icon: Icons.collections_bookmark,
+                    icon: CupertinoIcons.collections_solid,
                   ),
                   if (db.getPreferencesSync().serverType ==
                       ServerType.audiobookshelf)
-                    const Destination(title: 'Series', icon: Icons.window),
+                    const Destination(
+                        title: 'Series',
+                        icon: CupertinoIcons
+                            .rectangle_fill_on_rectangle_angled_fill),
                 ]),
           );
         },

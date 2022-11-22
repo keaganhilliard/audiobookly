@@ -23,20 +23,16 @@ class HomeView extends HookConsumerWidget {
       child: AbScaffold(
         child: state.when(
           initial: () => const SliverToBoxAdapter(),
-          loaded: (recentlyPlayed, recentlyAdded, downloaded) => SliverList(
+          loaded: (rowsData, downloaded) => SliverList(
             delegate: SliverChildListDelegate([
-              if (!nullOrEmpty(recentlyPlayed))
-                HomeRow(
-                  height: rowHeight,
-                  title: 'Continue Listening',
-                  items: recentlyPlayed,
-                ),
-              if (!nullOrEmpty(recentlyAdded))
-                HomeRow(
-                  height: rowHeight,
-                  title: 'Recently Added',
-                  items: recentlyAdded,
-                ),
+              if (rowsData != null) ...[
+                for (final entry in rowsData.entries)
+                  HomeRow(
+                    height: rowHeight,
+                    title: entry.key,
+                    items: entry.value,
+                  )
+              ],
               if (!nullOrEmpty(downloaded))
                 HomeRow(
                   height: rowHeight,

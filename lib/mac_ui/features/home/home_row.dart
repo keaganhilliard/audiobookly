@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/mac_ui/features/book_details/book_details_view.dart';
+import 'package:audiobookly/mac_ui/features/books/books_view.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:clickup_fading_scroll/clickup_fading_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audiobookly/utils/utils.dart';
@@ -14,7 +15,7 @@ import 'package:macos_ui/macos_ui.dart';
 
 class HomeRow extends HookConsumerWidget {
   final String? title;
-  final List<MediaItem>? items;
+  final List<ModelUnion>? items;
   final double? height;
   HomeRow({super.key, this.title, this.items, this.height});
   final debouncer = Debouncer(milliseconds: 1);
@@ -85,26 +86,46 @@ class HomeRow extends HookConsumerWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: items!.length,
                                 itemBuilder: (context, index) {
-                                  final MediaItem book = items![index];
-                                  return CoverItem(
-                                    onTap: () async {
-                                      Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                          builder: (context) {
-                                            return BookDetailsView(
-                                                mediaId: book.id);
-                                          },
-                                        ),
-                                      );
-                                      // await playbackController
-                                      //     .playFromId(book.id);
-                                    },
-                                    height: height,
-                                    progress: Utils.getProgress(item: book),
-                                    thumbnailUrl: book.artUri?.toString(),
-                                    title: book.title,
-                                    subtitle: book.artist,
-                                    played: book.played,
+                                  final ModelUnion item = items![index];
+
+                                  return item.maybeMap(
+                                    orElse: () => const CoverItem(
+                                      title: 'Good God we have a problem',
+                                    ),
+                                    book: (book) => CoverItem(
+                                      onTap: () async {
+                                        Navigator.of(context).push(
+                                            CupertinoPageRoute(
+                                                builder: (context) {
+                                          return BookDetailsView(
+                                            mediaId: book.value.id,
+                                          );
+                                        }));
+                                      },
+                                      height: height,
+                                      progress:
+                                          Utils.getProgress(book: book.value),
+                                      thumbnailUrl: book.value.artPath,
+                                      title: book.value.title,
+                                      subtitle: book.value.author,
+                                      played: book.value.read,
+                                    ),
+                                    author: (author) => CoverItem(
+                                      onTap: () async {
+                                        Navigator.push(context,
+                                            CupertinoPageRoute(
+                                                builder: (context) {
+                                          return BooksView(
+                                            mediaId: author.value.id,
+                                            previousPageTitle: 'Home',
+                                          );
+                                        }));
+                                      },
+                                      height: height,
+                                      thumbnailUrl: author.value.artPath,
+                                      title: author.value.name,
+                                      progress: 0,
+                                    ),
                                   );
                                 },
                               );
@@ -204,45 +225,90 @@ class CoverItem extends StatelessWidget {
           child: Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              color: Colors.black,
             ),
             clipBehavior: Clip.antiAlias,
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: CachedNetworkImage(
-                    imageUrl: thumbnailUrl!,
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                    errorWidget: (context, error, child) => Container(
-                      color: Colors.black,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const MacosIcon(
-                                CupertinoIcons.book_solid,
-                                size: 50.0,
+                  child: thumbnailUrl == null
+                      ? Container(
+                          color: Colors.black,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const MacosIcon(
+                                    CupertinoIcons.book_solid,
+                                    size: 50.0,
+                                  ),
+                                  Text(
+                                    title ?? '',
+                                    style: MacosTheme.of(context)
+                                        .typography
+                                        .title2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                title ?? '',
-                                style: MacosTheme.of(context).typography.title2,
-                                textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: thumbnailUrl!,
+                          fit: BoxFit.contain,
+                          alignment: Alignment.center,
+                          errorWidget: (context, error, child) => Container(
+                            color: Colors.black,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const MacosIcon(
+                                      CupertinoIcons.book_solid,
+                                      size: 50.0,
+                                    ),
+                                    Text(
+                                      title ?? '',
+                                      style: MacosTheme.of(context)
+                                          .typography
+                                          .title2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
+                          ),
+                          placeholder: (context, url) => Container(
+                            color: Colors.black,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const MacosIcon(
+                                      CupertinoIcons.book_solid,
+                                      size: 50.0,
+                                    ),
+                                    Text(
+                                      title ?? '',
+                                      style: MacosTheme.of(context)
+                                          .typography
+                                          .title2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    placeholder: (context, url) => Container(
-                      color: Colors.black,
-                      child: const MacosIcon(
-                        CupertinoIcons.book_solid,
-                        size: 50.0,
-                      ),
-                    ),
-                  ),
                 ),
                 Positioned(
                   child: Align(

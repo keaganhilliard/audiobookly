@@ -45,8 +45,7 @@ class HomeView extends HookConsumerWidget {
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
                 ),
-                loaded: (recentlyPlayed, recentlyAdded, downloaded) =>
-                    SingleChildScrollView(
+                loaded: (rowsData, downloaded) => SingleChildScrollView(
                   // padding: EdgeInsets.only(bottom: 40),
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
@@ -54,19 +53,14 @@ class HomeView extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (!nullOrEmpty(recentlyPlayed))
-                        HomeRow(
-                          height: rowHeight,
-                          // math.min(((constraints.maxHeight - 120) / 2), 250),
-                          title: 'Continue Listening',
-                          items: recentlyPlayed,
-                        ),
-                      if (!nullOrEmpty(recentlyAdded))
-                        HomeRow(
-                          height: rowHeight,
-                          title: 'Recently Added',
-                          items: recentlyAdded,
-                        ),
+                      if (rowsData != null) ...[
+                        for (final entry in rowsData.entries)
+                          HomeRow(
+                            height: rowHeight,
+                            title: entry.key,
+                            items: entry.value,
+                          )
+                      ],
                       if (!nullOrEmpty(downloaded))
                         HomeRow(
                           height: rowHeight,

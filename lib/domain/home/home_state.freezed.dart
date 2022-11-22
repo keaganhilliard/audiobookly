@@ -19,8 +19,8 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)
+    required TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -29,8 +29,8 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult? Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
@@ -39,8 +39,8 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -138,8 +138,8 @@ class _$HomeStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)
+    required TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -151,8 +151,8 @@ class _$HomeStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult? Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
@@ -164,8 +164,8 @@ class _$HomeStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -226,9 +226,7 @@ abstract class _$$HomeStateLoadedCopyWith<$Res> {
       __$$HomeStateLoadedCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<MediaItem>? recentlyPlayed,
-      List<MediaItem>? recentlyAdded,
-      List<MediaItem>? downloaded});
+      {Map<String, List<ModelUnion>>? rowsData, List<ModelUnion>? downloaded});
 }
 
 /// @nodoc
@@ -242,23 +240,18 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? recentlyPlayed = freezed,
-    Object? recentlyAdded = freezed,
+    Object? rowsData = freezed,
     Object? downloaded = freezed,
   }) {
     return _then(_$HomeStateLoaded(
-      recentlyPlayed: freezed == recentlyPlayed
-          ? _value._recentlyPlayed
-          : recentlyPlayed // ignore: cast_nullable_to_non_nullable
-              as List<MediaItem>?,
-      recentlyAdded: freezed == recentlyAdded
-          ? _value._recentlyAdded
-          : recentlyAdded // ignore: cast_nullable_to_non_nullable
-              as List<MediaItem>?,
+      rowsData: freezed == rowsData
+          ? _value._rowsData
+          : rowsData // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<ModelUnion>>?,
       downloaded: freezed == downloaded
           ? _value._downloaded
           : downloaded // ignore: cast_nullable_to_non_nullable
-              as List<MediaItem>?,
+              as List<ModelUnion>?,
     ));
   }
 }
@@ -269,34 +262,23 @@ class _$HomeStateLoaded
     with DiagnosticableTreeMixin
     implements HomeStateLoaded {
   const _$HomeStateLoaded(
-      {final List<MediaItem>? recentlyPlayed,
-      final List<MediaItem>? recentlyAdded,
-      final List<MediaItem>? downloaded})
-      : _recentlyPlayed = recentlyPlayed,
-        _recentlyAdded = recentlyAdded,
+      {final Map<String, List<ModelUnion>>? rowsData,
+      final List<ModelUnion>? downloaded})
+      : _rowsData = rowsData,
         _downloaded = downloaded;
 
-  final List<MediaItem>? _recentlyPlayed;
+  final Map<String, List<ModelUnion>>? _rowsData;
   @override
-  List<MediaItem>? get recentlyPlayed {
-    final value = _recentlyPlayed;
+  Map<String, List<ModelUnion>>? get rowsData {
+    final value = _rowsData;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableMapView(value);
   }
 
-  final List<MediaItem>? _recentlyAdded;
+  final List<ModelUnion>? _downloaded;
   @override
-  List<MediaItem>? get recentlyAdded {
-    final value = _recentlyAdded;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<MediaItem>? _downloaded;
-  @override
-  List<MediaItem>? get downloaded {
+  List<ModelUnion>? get downloaded {
     final value = _downloaded;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -305,7 +287,7 @@ class _$HomeStateLoaded
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState.loaded(recentlyPlayed: $recentlyPlayed, recentlyAdded: $recentlyAdded, downloaded: $downloaded)';
+    return 'HomeState.loaded(rowsData: $rowsData, downloaded: $downloaded)';
   }
 
   @override
@@ -313,8 +295,7 @@ class _$HomeStateLoaded
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'HomeState.loaded'))
-      ..add(DiagnosticsProperty('recentlyPlayed', recentlyPlayed))
-      ..add(DiagnosticsProperty('recentlyAdded', recentlyAdded))
+      ..add(DiagnosticsProperty('rowsData', rowsData))
       ..add(DiagnosticsProperty('downloaded', downloaded));
   }
 
@@ -323,10 +304,7 @@ class _$HomeStateLoaded
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateLoaded &&
-            const DeepCollectionEquality()
-                .equals(other._recentlyPlayed, _recentlyPlayed) &&
-            const DeepCollectionEquality()
-                .equals(other._recentlyAdded, _recentlyAdded) &&
+            const DeepCollectionEquality().equals(other._rowsData, _rowsData) &&
             const DeepCollectionEquality()
                 .equals(other._downloaded, _downloaded));
   }
@@ -334,8 +312,7 @@ class _$HomeStateLoaded
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_recentlyPlayed),
-      const DeepCollectionEquality().hash(_recentlyAdded),
+      const DeepCollectionEquality().hash(_rowsData),
       const DeepCollectionEquality().hash(_downloaded));
 
   @JsonKey(ignore: true)
@@ -348,41 +325,41 @@ class _$HomeStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)
+    required TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return loaded(recentlyPlayed, recentlyAdded, downloaded);
+    return loaded(rowsData, downloaded);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult? Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
-    return loaded?.call(recentlyPlayed, recentlyAdded, downloaded);
+    return loaded?.call(rowsData, downloaded);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(recentlyPlayed, recentlyAdded, downloaded);
+      return loaded(rowsData, downloaded);
     }
     return orElse();
   }
@@ -427,13 +404,11 @@ class _$HomeStateLoaded
 
 abstract class HomeStateLoaded implements HomeState {
   const factory HomeStateLoaded(
-      {final List<MediaItem>? recentlyPlayed,
-      final List<MediaItem>? recentlyAdded,
-      final List<MediaItem>? downloaded}) = _$HomeStateLoaded;
+      {final Map<String, List<ModelUnion>>? rowsData,
+      final List<ModelUnion>? downloaded}) = _$HomeStateLoaded;
 
-  List<MediaItem>? get recentlyPlayed;
-  List<MediaItem>? get recentlyAdded;
-  List<MediaItem>? get downloaded;
+  Map<String, List<ModelUnion>>? get rowsData;
+  List<ModelUnion>? get downloaded;
   @JsonKey(ignore: true)
   _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -486,8 +461,8 @@ class _$HomeStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)
+    required TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -499,8 +474,8 @@ class _$HomeStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult? Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
@@ -512,8 +487,8 @@ class _$HomeStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -643,8 +618,8 @@ class _$HomeStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)
+    required TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)
         loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -656,8 +631,8 @@ class _$HomeStateErrorDetails
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult? Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
@@ -669,8 +644,8 @@ class _$HomeStateErrorDetails
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? recentlyPlayed,
-            List<MediaItem>? recentlyAdded, List<MediaItem>? downloaded)?
+    TResult Function(Map<String, List<ModelUnion>>? rowsData,
+            List<ModelUnion>? downloaded)?
         loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,

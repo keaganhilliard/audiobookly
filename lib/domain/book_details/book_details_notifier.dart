@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
+import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/book_details/book_details_state.dart';
@@ -66,11 +67,10 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
 
     Book? book;
     List<Track>? tracks;
-    Book? dbBook;
+    Book? dbBook = await _databaseService?.getBookById(_mediaId);
     try {
       book = await _repository!.getAlbumFromId(_mediaId);
       tracks = await _repository!.getTracksForBook(_mediaId);
-      dbBook = await _databaseService?.getBookById(_mediaId);
     } catch (e, stack) {
       log('No data from server $e, $stack');
       log('State $state');
@@ -89,13 +89,13 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
 
     if (state is BookDetailsStateLoaded) {
       state = BookDetailsState.loaded(
-        book: book,
+        book: book?.copyWith(downloadStatus: dbBook?.downloadStatus) ?? dbBook,
         tracks: tracks,
       );
     }
 
     state = BookDetailsState.loaded(
-      book: book,
+      book: book?.copyWith(downloadStatus: dbBook?.downloadStatus) ?? dbBook,
       tracks: tracks,
     );
   }

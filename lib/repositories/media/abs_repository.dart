@@ -1,6 +1,9 @@
+import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/download_status.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
@@ -578,7 +581,7 @@ class AbsRepository extends MediaRepository {
       for (final book in response.book) _bookToItem(book.libraryItem),
       for (final author in response.authors)
         MediaItem(
-          id: '@authors/${author.id}',
+          id: '${MediaIds.authorsId}/${author.id}',
           title: author.name,
           playable: false,
           artUri: author.imagePath == null
@@ -588,7 +591,7 @@ class AbsRepository extends MediaRepository {
         ),
       for (final series in response.series)
         MediaItem(
-          id: '@series/${series.series.id}',
+          id: '${MediaIds.seriesId}/${series.series.id}',
           title: series.series.name,
           playable: false,
           artUri: _scaledCoverUrl(_api.baseUrl, series.books.first.id,
@@ -601,5 +604,46 @@ class AbsRepository extends MediaRepository {
   Future addToCollection(String collectionId, String mediaId) {
     // TODO: implement addToCollection
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, List<ModelUnion>>> getHomeData() async {
+    final books = await _api.getRecentlyPlayed();
+    userProgress = books;
+    final personalized = await _api.getPersonalized(_libraryId);
+    Map<String, List<ModelUnion>> outMap = {};
+    for (final p in personalized) {
+      p.maybeMap(
+        orElse: () {},
+        book: (value) {
+          outMap.putIfAbsent(
+              p.label,
+              () => value.entities
+                  .map<ModelUnion>(
+                      (book) => ModelUnion.book(_absBookMinifiedToBook(book)))
+                  .toList());
+        },
+        authors: (value) {
+          outMap.putIfAbsent(
+              p.label,
+              () => value.entities
+                  .map<ModelUnion>(
+                    (author) => ModelUnion.author(
+                      Author(
+                        id: '${MediaIds.authorsId}/${author.id}',
+                        name: author.name,
+                        description: author.description ?? '',
+                        artPath: author.imagePath == null
+                            ? null
+                            : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+                        numBooks: author.numBooks ?? 0,
+                      ),
+                    ),
+                  )
+                  .toList());
+        },
+      );
+    }
+    return outMap;
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CoverItem extends StatelessWidget {
   const CoverItem({
     super.key,
-    this.progress,
+    this.progress = 0,
     this.subtitle,
     this.title,
     this.thumbnailUrl,
@@ -13,6 +13,8 @@ class CoverItem extends StatelessWidget {
     this.height,
     this.onTap,
     this.played = false,
+    this.icon = Icons.book,
+    this.showTitle = false,
   });
 
   final double? progress;
@@ -23,41 +25,67 @@ class CoverItem extends StatelessWidget {
   final double? height;
   final VoidCallback? onTap;
   final bool played;
-
-  // Widget imageBuilder() {
-  //   return FadeInImage.memoryNetwork(image: thumbnailUrl, placeholder: ,);
-  // }
+  final IconData icon;
+  final bool showTitle;
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
         aspectRatio: 1,
-        // width: MediaQuery.of(context).orientation == Orientation.portrait
-        //     ? MediaQuery.of(context).size.width * 0.4
-        //     : MediaQuery.of(context).size.width * 0.25,
         child: Card(
           elevation: 2.0,
-          // color: Colors.black,
+          color: Colors.black,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: onTap,
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: CachedNetworkImage(
-                    imageUrl: thumbnailUrl!,
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                    errorWidget: (context, error, child) => Text(title ?? ''),
-                    placeholder: (context, url) => Container(
-                      color: Theme.of(context).canvasColor,
-                      child: const Icon(
-                        Icons.book,
-                        size: 50.0,
+                  child: thumbnailUrl == null
+                      ? Container(
+                          color: Colors.black,
+                          child: Icon(
+                            icon,
+                            size: 50.0,
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: thumbnailUrl!,
+                          fit: BoxFit.contain,
+                          alignment: Alignment.center,
+                          errorWidget: (context, error, child) =>
+                              Text(title ?? ''),
+                          placeholder: (context, url) => Container(
+                            color: Colors.black,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  icon,
+                                  size: 50.0,
+                                ),
+                                Text(title ?? ''),
+                              ],
+                            ),
+                          ),
+                        ),
+                ),
+                if (showTitle || thumbnailUrl == null)
+                  Positioned(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: double.infinity,
+                        height: 45.0,
+                        color: Colors.black.withOpacity(0.8),
+                        child: Center(
+                          child: Text(
+                            title ?? '',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
                 Positioned(
                   child: Align(
                     alignment: Alignment.bottomCenter,

@@ -71,42 +71,28 @@ class BookDetailsView extends HookConsumerWidget {
                     if (book.downloadStatus == DownloadStatus.downloading)
                       Stack(
                         children: [
-                          if (!kIsWeb &&
-                              !Platform.isWindows &&
-                              !Platform.isLinux)
-                            const Positioned(
-                              left: 13.0,
-                              top: 13.0,
-                              child: Center(
-                                child: SizedBox(
-                                  height: 30.0,
-                                  width: 30.0,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.deepPurple,
-                                  ),
+                          const Positioned(
+                            left: 13.0,
+                            top: 13.0,
+                            child: Center(
+                              child: SizedBox(
+                                height: 30.0,
+                                width: 30.0,
+                                child: CircularProgressIndicator(
+                                  color: Colors.deepPurple,
                                 ),
                               ),
                             ),
-                          if (kIsWeb || Platform.isWindows || Platform.isLinux)
-                            const Positioned(
-                              left: 5.0,
-                              top: 13.0,
-                              child: Center(
-                                child: SizedBox(
-                                  height: 30.0,
-                                  width: 30.0,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.deepPurple,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          ),
                           Center(
                             child: CupertinoButton(
-                                onPressed: () {
-                                  downloadService?.cancelBookDownload(book);
-                                },
-                                child: const Icon(Icons.cancel_rounded)),
+                              onPressed: () {
+                                downloadService?.cancelBookDownload(book);
+                              },
+                              child: const Icon(
+                                Icons.cancel_rounded,
+                              ),
+                            ),
                           ),
                         ],
                       ),

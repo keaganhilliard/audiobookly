@@ -2,6 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/library.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 
@@ -150,6 +151,7 @@ abstract class MediaRepository {
     int? height,
     int? width,
   });
+  Future<Map<String, List<ModelUnion>>> getHomeData();
   Future playbackFinished(String key);
   String getDownloadUrl(String path);
   void setLibraryId(String libraryId) {}

@@ -34,10 +34,10 @@ class TrackDetailsNotifier extends StateNotifier<TrackDetailsState> {
           final oldState = (state as TrackDetailsStateLoaded);
           state = oldState.copyWith(
             tracks: [
-              for (final track in oldState.tracks ?? [])
+              for (final track in oldState.tracks ?? <Track>[])
                 track.copyWith(
                   isDownloaded: false,
-                  downloadProgress: 0,
+                  downloadProgress: 0.0,
                 )
             ],
           );
