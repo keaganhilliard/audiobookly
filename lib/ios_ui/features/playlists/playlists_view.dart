@@ -1,48 +1,49 @@
-import 'package:audiobookly/domain/collections/collections_notifier.dart';
+import 'package:audiobookly/domain/playlists/playlists_notifier.dart';
+import 'package:audiobookly/domain/series/series_notifier.dart';
 import 'package:audiobookly/ios_ui/features/books/books_view.dart';
 import 'package:audiobookly/ios_ui/widgets/ab_grid_view.dart';
 import 'package:audiobookly/ios_ui/widgets/grid_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CollectionsView extends HookConsumerWidget {
-  const CollectionsView({super.key});
-  final String title = 'Collections';
+class PlaylistsView extends HookConsumerWidget {
+  const PlaylistsView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final collectionsProvider = ref.watch(collectionsStateProvider.notifier);
-    final state = ref.watch(collectionsStateProvider);
+    final playlistsProvider = ref.watch(playlistsStateProvider.notifier);
+    final state = ref.watch(playlistsStateProvider);
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
       resizeToAvoidBottomInset: false,
       child: AbGridView(
-        title: title,
+        title: 'Playlists',
         onRefresh: () async {
-          await collectionsProvider.refresh();
+          await playlistsProvider.refresh();
         },
         child: state.when(
           initial: () => const SliverToBoxAdapter(),
-          loaded: (collections) => SliverGrid(
+          loaded: (playlists) => SliverGrid(
             delegate: SliverChildBuilderDelegate(
-              childCount: collections!.length,
+              childCount: playlists!.length,
               (context, index) {
-                final serie = collections[index];
+                final playlist = playlists[index];
                 return GridItem(
                   onTap: () {
                     Navigator.of(context).push(
                       CupertinoPageRoute(
                         builder: (context) => BooksView(
-                          mediaId: serie.id,
-                          title: serie.name,
-                          previousPageTitle: title,
+                          mediaId: playlist.id,
+                          title: playlist.name,
+                          previousPageTitle: 'Playlists',
                         ),
                       ),
                     );
                   },
-                  thumbnailUrl: serie.artPath?.toString(),
-                  title: serie.name,
-                  placeholder: CupertinoIcons.collections_solid,
+                  thumbnailUrl: playlist.artPath,
+                  title: playlist.name,
+                  placeholder:
+                      CupertinoIcons.rectangle_fill_on_rectangle_angled_fill,
                   showTitle: true,
                 );
               },

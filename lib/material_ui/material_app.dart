@@ -20,8 +20,8 @@ class AbMaterialApp extends HookConsumerWidget {
     Routes.home,
     Routes.authors,
     Routes.books,
-    Routes.collections,
     Routes.series,
+    Routes.playlists,
   ];
 
   AbMaterialApp({super.key});
@@ -130,16 +130,16 @@ class AbMaterialApp extends HookConsumerWidget {
                     title: 'Books',
                     icon: CupertinoIcons.book_solid,
                   ),
-                  const Destination(
-                    title: 'Collections',
-                    icon: CupertinoIcons.collections_solid,
-                  ),
                   if (db.getPreferencesSync().serverType ==
                       ServerType.audiobookshelf)
                     const Destination(
                         title: 'Series',
                         icon: CupertinoIcons
                             .rectangle_fill_on_rectangle_angled_fill),
+                  const Destination(
+                    title: 'Playlists',
+                    icon: CupertinoIcons.music_note_list,
+                  ),
                 ]),
           );
         },

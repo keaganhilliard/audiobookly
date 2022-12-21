@@ -67,6 +67,7 @@ class Book {
   MediaItem toMediaItem() => MediaItem(
         id: id,
         title: title,
+        album: title,
         artist: author,
         displayDescription: description,
         playable: true,

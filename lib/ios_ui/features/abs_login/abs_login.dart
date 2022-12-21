@@ -1,3 +1,4 @@
+import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,11 +20,13 @@ class AbsLogin extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final loading = useState(false);
     final invalidLogin = useState(false);
-    final login = useState(LoginState());
+    final login =
+        useState(LoginState()..baseUrl = ref.read(preferencesProvider).baseUrl);
     final auth = ref.watch(authNotifierProvider.notifier);
     final navigationService = ref.watch(navigationServiceProvider);
     final usernameController = useTextEditingController();
-    final baseUrlController = useTextEditingController();
+    final baseUrlController =
+        useTextEditingController(text: ref.read(preferencesProvider).baseUrl);
     final passwordController = useTextEditingController();
 
     return CupertinoPageScaffold(

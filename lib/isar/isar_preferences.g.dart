@@ -32,44 +32,49 @@ const IsarPreferencesSchema = CollectionSchema(
       name: r'libraryId',
       type: IsarType.string,
     ),
-    r'playbackSpeed': PropertySchema(
+    r'libraryLabel': PropertySchema(
       id: 3,
+      name: r'libraryLabel',
+      type: IsarType.string,
+    ),
+    r'playbackSpeed': PropertySchema(
+      id: 4,
       name: r'playbackSpeed',
       type: IsarType.double,
     ),
     r'rewindInterval': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'rewindInterval',
       type: IsarType.double,
     ),
     r'serverId': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'serverId',
       type: IsarType.string,
     ),
     r'serverType': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'serverType',
       type: IsarType.byte,
       enumMap: _IsarPreferencesserverTypeEnumValueMap,
     ),
     r'useChapterProgressBar': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'useChapterProgressBar',
       type: IsarType.bool,
     ),
     r'userId': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'userId',
       type: IsarType.string,
     ),
     r'userToken': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'userToken',
       type: IsarType.string,
     ),
     r'username': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'username',
       type: IsarType.string,
     )
@@ -96,6 +101,7 @@ int _isarPreferencesEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.baseUrl.length * 3;
   bytesCount += 3 + object.libraryId.length * 3;
+  bytesCount += 3 + object.libraryLabel.length * 3;
   bytesCount += 3 + object.serverId.length * 3;
   bytesCount += 3 + object.userId.length * 3;
   bytesCount += 3 + object.userToken.length * 3;
@@ -112,14 +118,15 @@ void _isarPreferencesSerialize(
   writer.writeString(offsets[0], object.baseUrl);
   writer.writeDouble(offsets[1], object.fastForwardInterval);
   writer.writeString(offsets[2], object.libraryId);
-  writer.writeDouble(offsets[3], object.playbackSpeed);
-  writer.writeDouble(offsets[4], object.rewindInterval);
-  writer.writeString(offsets[5], object.serverId);
-  writer.writeByte(offsets[6], object.serverType.index);
-  writer.writeBool(offsets[7], object.useChapterProgressBar);
-  writer.writeString(offsets[8], object.userId);
-  writer.writeString(offsets[9], object.userToken);
-  writer.writeString(offsets[10], object.username);
+  writer.writeString(offsets[3], object.libraryLabel);
+  writer.writeDouble(offsets[4], object.playbackSpeed);
+  writer.writeDouble(offsets[5], object.rewindInterval);
+  writer.writeString(offsets[6], object.serverId);
+  writer.writeByte(offsets[7], object.serverType.index);
+  writer.writeBool(offsets[8], object.useChapterProgressBar);
+  writer.writeString(offsets[9], object.userId);
+  writer.writeString(offsets[10], object.userToken);
+  writer.writeString(offsets[11], object.username);
 }
 
 IsarPreferences _isarPreferencesDeserialize(
@@ -133,16 +140,17 @@ IsarPreferences _isarPreferencesDeserialize(
     fastForwardInterval: reader.readDoubleOrNull(offsets[1]) ?? 30,
     id: id,
     libraryId: reader.readStringOrNull(offsets[2]) ?? '',
-    playbackSpeed: reader.readDoubleOrNull(offsets[3]) ?? 1,
-    rewindInterval: reader.readDoubleOrNull(offsets[4]) ?? 15,
-    serverId: reader.readStringOrNull(offsets[5]) ?? '',
+    libraryLabel: reader.readStringOrNull(offsets[3]) ?? '',
+    playbackSpeed: reader.readDoubleOrNull(offsets[4]) ?? 1,
+    rewindInterval: reader.readDoubleOrNull(offsets[5]) ?? 15,
+    serverId: reader.readStringOrNull(offsets[6]) ?? '',
     serverType: _IsarPreferencesserverTypeValueEnumMap[
-            reader.readByteOrNull(offsets[6])] ??
+            reader.readByteOrNull(offsets[7])] ??
         ServerType.unknown,
-    useChapterProgressBar: reader.readBoolOrNull(offsets[7]) ?? false,
-    userId: reader.readStringOrNull(offsets[8]) ?? '',
-    userToken: reader.readStringOrNull(offsets[9]) ?? '',
-    username: reader.readStringOrNull(offsets[10]) ?? '',
+    useChapterProgressBar: reader.readBoolOrNull(offsets[8]) ?? false,
+    userId: reader.readStringOrNull(offsets[9]) ?? '',
+    userToken: reader.readStringOrNull(offsets[10]) ?? '',
+    username: reader.readStringOrNull(offsets[11]) ?? '',
   );
   return object;
 }
@@ -161,22 +169,24 @@ P _isarPreferencesDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset) ?? '') as P;
     case 3:
-      return (reader.readDoubleOrNull(offset) ?? 1) as P;
-    case 4:
-      return (reader.readDoubleOrNull(offset) ?? 15) as P;
-    case 5:
       return (reader.readStringOrNull(offset) ?? '') as P;
+    case 4:
+      return (reader.readDoubleOrNull(offset) ?? 1) as P;
+    case 5:
+      return (reader.readDoubleOrNull(offset) ?? 15) as P;
     case 6:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 7:
       return (_IsarPreferencesserverTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           ServerType.unknown) as P;
-    case 7:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 8:
-      return (reader.readStringOrNull(offset) ?? '') as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 9:
       return (reader.readStringOrNull(offset) ?? '') as P;
     case 10:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 11:
       return (reader.readStringOrNull(offset) ?? '') as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -680,6 +690,142 @@ extension IsarPreferencesQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'libraryId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'libraryLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'libraryLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'libraryLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'libraryLabel',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'libraryLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'libraryLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'libraryLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'libraryLabel',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'libraryLabel',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
+      libraryLabelIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'libraryLabel',
         value: '',
       ));
     });
@@ -1478,6 +1624,20 @@ extension IsarPreferencesQuerySortBy
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
+      sortByLibraryLabel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'libraryLabel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
+      sortByLibraryLabelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'libraryLabel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
       sortByPlaybackSpeed() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'playbackSpeed', Sort.asc);
@@ -1645,6 +1805,20 @@ extension IsarPreferencesQuerySortThenBy
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
+      thenByLibraryLabel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'libraryLabel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
+      thenByLibraryLabelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'libraryLabel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
       thenByPlaybackSpeed() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'playbackSpeed', Sort.asc);
@@ -1780,6 +1954,13 @@ extension IsarPreferencesQueryWhereDistinct
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QDistinct>
+      distinctByLibraryLabel({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'libraryLabel', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IsarPreferences, IsarPreferences, QDistinct>
       distinctByPlaybackSpeed() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'playbackSpeed');
@@ -1860,6 +2041,13 @@ extension IsarPreferencesQueryProperty
   QueryBuilder<IsarPreferences, String, QQueryOperations> libraryIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'libraryId');
+    });
+  }
+
+  QueryBuilder<IsarPreferences, String, QQueryOperations>
+      libraryLabelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'libraryLabel');
     });
   }
 

@@ -19,7 +19,7 @@ mixin _$SettingsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(User? user) loaded,
+    required TResult Function(User? user, Library? lib) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$SettingsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(User? user)? loaded,
+    TResult? Function(User? user, Library? lib)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$SettingsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(User? user)? loaded,
+    TResult Function(User? user, Library? lib)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -133,7 +133,7 @@ class _$SettingsStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(User? user) loaded,
+    required TResult Function(User? user, Library? lib) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -144,7 +144,7 @@ class _$SettingsStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(User? user)? loaded,
+    TResult? Function(User? user, Library? lib)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -155,7 +155,7 @@ class _$SettingsStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(User? user)? loaded,
+    TResult Function(User? user, Library? lib)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -214,7 +214,7 @@ abstract class _$$SettingsStateLoadedCopyWith<$Res> {
           $Res Function(_$SettingsStateLoaded) then) =
       __$$SettingsStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({User? user});
+  $Res call({User? user, Library? lib});
 }
 
 /// @nodoc
@@ -229,12 +229,17 @@ class __$$SettingsStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = freezed,
+    Object? lib = freezed,
   }) {
     return _then(_$SettingsStateLoaded(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      lib: freezed == lib
+          ? _value.lib
+          : lib // ignore: cast_nullable_to_non_nullable
+              as Library?,
     ));
   }
 }
@@ -244,14 +249,16 @@ class __$$SettingsStateLoadedCopyWithImpl<$Res>
 class _$SettingsStateLoaded
     with DiagnosticableTreeMixin
     implements SettingsStateLoaded {
-  const _$SettingsStateLoaded({this.user});
+  const _$SettingsStateLoaded({this.user, this.lib});
 
   @override
   final User? user;
+  @override
+  final Library? lib;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SettingsState.loaded(user: $user)';
+    return 'SettingsState.loaded(user: $user, lib: $lib)';
   }
 
   @override
@@ -259,7 +266,8 @@ class _$SettingsStateLoaded
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SettingsState.loaded'))
-      ..add(DiagnosticsProperty('user', user));
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('lib', lib));
   }
 
   @override
@@ -267,11 +275,12 @@ class _$SettingsStateLoaded
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateLoaded &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.lib, lib) || other.lib == lib));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, user, lib);
 
   @JsonKey(ignore: true)
   @override
@@ -284,35 +293,35 @@ class _$SettingsStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(User? user) loaded,
+    required TResult Function(User? user, Library? lib) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return loaded(user);
+    return loaded(user, lib);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(User? user)? loaded,
+    TResult? Function(User? user, Library? lib)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
-    return loaded?.call(user);
+    return loaded?.call(user, lib);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(User? user)? loaded,
+    TResult Function(User? user, Library? lib)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(user);
+      return loaded(user, lib);
     }
     return orElse();
   }
@@ -356,9 +365,11 @@ class _$SettingsStateLoaded
 }
 
 abstract class SettingsStateLoaded implements SettingsState {
-  const factory SettingsStateLoaded({final User? user}) = _$SettingsStateLoaded;
+  const factory SettingsStateLoaded({final User? user, final Library? lib}) =
+      _$SettingsStateLoaded;
 
   User? get user;
+  Library? get lib;
   @JsonKey(ignore: true)
   _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -411,7 +422,7 @@ class _$SettingsStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(User? user) loaded,
+    required TResult Function(User? user, Library? lib) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -422,7 +433,7 @@ class _$SettingsStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(User? user)? loaded,
+    TResult? Function(User? user, Library? lib)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -433,7 +444,7 @@ class _$SettingsStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(User? user)? loaded,
+    TResult Function(User? user, Library? lib)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -563,7 +574,7 @@ class _$SettingsStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(User? user) loaded,
+    required TResult Function(User? user, Library? lib) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -574,7 +585,7 @@ class _$SettingsStateErrorDetails
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(User? user)? loaded,
+    TResult? Function(User? user, Library? lib)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -585,7 +596,7 @@ class _$SettingsStateErrorDetails
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(User? user)? loaded,
+    TResult Function(User? user, Library? lib)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),

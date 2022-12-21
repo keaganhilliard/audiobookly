@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/material_ui/features/playlists/playlists_view.dart';
 import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/material_ui/features/home/home_view.dart';
@@ -20,6 +21,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => const BooksView());
       case Routes.collections:
         return MaterialPageRoute(builder: (_) => const CollectionsView());
+      case Routes.playlists:
+        return MaterialPageRoute(builder: (_) => const PlaylistsView());
       case Routes.series:
         return MaterialPageRoute(builder: (_) => const SeriesView());
       case Routes.author:

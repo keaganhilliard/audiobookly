@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LibrarySelectView extends HookConsumerWidget {
-  const LibrarySelectView({Key? key}) : super(key: key);
+  const LibrarySelectView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

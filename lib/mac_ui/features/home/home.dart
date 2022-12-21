@@ -4,6 +4,7 @@ import 'package:audiobookly/domain/collections/collections_notifier.dart';
 import 'package:audiobookly/domain/home/home_notifier.dart';
 import 'package:audiobookly/domain/search/search_notifier.dart';
 import 'package:audiobookly/domain/series/series_notifier.dart';
+import 'package:audiobookly/mac_ui/features/playlists/playlists_view.dart';
 import 'package:audiobookly/mac_ui/features/search/search_view.dart';
 import 'package:audiobookly/mac_ui/features/settings/settings_view.dart';
 import 'package:audiobookly/mac_ui/features/authors/authors_view.dart';
@@ -101,7 +102,7 @@ class Home extends HookConsumerWidget {
             return MacosSearchField(
               placeholder: 'Search',
               onTap: () {
-                currentIndex.value = 5;
+                currentIndex.value = 6;
               },
               onChanged: (value) {
                 searchDebouncer.run(() {
@@ -160,6 +161,15 @@ class Home extends HookConsumerWidget {
                 ),
                 label: const Text('Series'),
               ),
+              SidebarItem(
+                leading: MacosIcon(
+                  CupertinoIcons.music_note_list,
+                  color: currentIndex.value == 5
+                      ? MacosColors.white
+                      : Colors.deepPurple,
+                ),
+                label: const Text('Playlists'),
+              ),
               // Hidden item for the search page
               SidebarItem(
                 label: Container(),
@@ -215,6 +225,9 @@ class Home extends HookConsumerWidget {
                     }),
                     CupertinoTabView(builder: (context) {
                       return SeriesView();
+                    }),
+                    CupertinoTabView(builder: (context) {
+                      return PlaylistsView();
                     }),
                     CupertinoTabView(builder: (context) {
                       return const SearchView();

@@ -11,6 +11,7 @@ class IsarPreferences {
   String userId;
   String username;
   String libraryId;
+  String libraryLabel;
   String serverId;
   double playbackSpeed;
   double rewindInterval;
@@ -28,6 +29,7 @@ class IsarPreferences {
     this.username = '',
     this.serverId = '',
     this.libraryId = '',
+    this.libraryLabel = '',
     this.playbackSpeed = 1,
     this.rewindInterval = 15,
     this.fastForwardInterval = 30,
@@ -42,6 +44,7 @@ class IsarPreferences {
         userId: prefs.userId,
         username: prefs.username,
         libraryId: prefs.libraryId,
+        libraryLabel: prefs.libraryLabel,
         serverId: prefs.serverId,
         playbackSpeed: prefs.playbackSpeed,
         rewindInterval: prefs.rewindInterval,
@@ -56,6 +59,7 @@ class IsarPreferences {
         userId: userId,
         username: username,
         libraryId: libraryId,
+        libraryLabel: libraryLabel,
         serverId: serverId,
         playbackSpeed: playbackSpeed,
         rewindInterval: rewindInterval,

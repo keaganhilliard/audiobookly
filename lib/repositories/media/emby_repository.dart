@@ -1,7 +1,9 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/model_union.dart';
+import 'package:audiobookly/models/playlist.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -138,11 +140,11 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getCollections() async {
+  Future<List<Collection>> getCollections() async {
     return getItemsFromEmbyItems(
       (await _api.getCollections(_libraryId)),
       this,
-    );
+    ).map(Collection.fromMediaItem).toList();
   }
 
   @override
@@ -326,5 +328,17 @@ class EmbyRepository extends MediaRepository {
         for (final book in (await getRecentlyAdded())) ModelUnion.book(book),
       ]
     };
+  }
+
+  @override
+  Future<List<Book>> getBooksFromPlaylist(String playlistId) {
+    // TODO: implement getBooksFromPlaylist
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Playlist>> getPlaylists() {
+    // TODO: implement getPlaylists
+    throw UnimplementedError();
   }
 }

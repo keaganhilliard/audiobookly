@@ -19,7 +19,7 @@ mixin _$CollectionsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function(List<Collection>? collections) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$CollectionsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function(List<Collection>? collections)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$CollectionsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function(List<Collection>? collections)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -134,7 +134,7 @@ class _$CollectionsStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function(List<Collection>? collections) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -145,7 +145,7 @@ class _$CollectionsStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function(List<Collection>? collections)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -156,7 +156,7 @@ class _$CollectionsStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function(List<Collection>? collections)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -215,7 +215,7 @@ abstract class _$$CollectionsStateLoadedCopyWith<$Res> {
           $Res Function(_$CollectionsStateLoaded) then) =
       __$$CollectionsStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MediaItem>? collections});
+  $Res call({List<Collection>? collections});
 }
 
 /// @nodoc
@@ -235,7 +235,7 @@ class __$$CollectionsStateLoadedCopyWithImpl<$Res>
       collections: freezed == collections
           ? _value._collections
           : collections // ignore: cast_nullable_to_non_nullable
-              as List<MediaItem>?,
+              as List<Collection>?,
     ));
   }
 }
@@ -245,12 +245,12 @@ class __$$CollectionsStateLoadedCopyWithImpl<$Res>
 class _$CollectionsStateLoaded
     with DiagnosticableTreeMixin
     implements CollectionsStateLoaded {
-  const _$CollectionsStateLoaded({final List<MediaItem>? collections})
+  const _$CollectionsStateLoaded({final List<Collection>? collections})
       : _collections = collections;
 
-  final List<MediaItem>? _collections;
+  final List<Collection>? _collections;
   @override
-  List<MediaItem>? get collections {
+  List<Collection>? get collections {
     final value = _collections;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -294,7 +294,7 @@ class _$CollectionsStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function(List<Collection>? collections) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -305,7 +305,7 @@ class _$CollectionsStateLoaded
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function(List<Collection>? collections)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -316,7 +316,7 @@ class _$CollectionsStateLoaded
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function(List<Collection>? collections)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -366,10 +366,10 @@ class _$CollectionsStateLoaded
 }
 
 abstract class CollectionsStateLoaded implements CollectionsState {
-  const factory CollectionsStateLoaded({final List<MediaItem>? collections}) =
+  const factory CollectionsStateLoaded({final List<Collection>? collections}) =
       _$CollectionsStateLoaded;
 
-  List<MediaItem>? get collections;
+  List<Collection>? get collections;
   @JsonKey(ignore: true)
   _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -423,7 +423,7 @@ class _$CollectionsStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function(List<Collection>? collections) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -434,7 +434,7 @@ class _$CollectionsStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function(List<Collection>? collections)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -445,7 +445,7 @@ class _$CollectionsStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function(List<Collection>? collections)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -576,7 +576,7 @@ class _$CollectionsStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? collections) loaded,
+    required TResult Function(List<Collection>? collections) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -587,7 +587,7 @@ class _$CollectionsStateErrorDetails
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? collections)? loaded,
+    TResult? Function(List<Collection>? collections)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -598,7 +598,7 @@ class _$CollectionsStateErrorDetails
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? collections)? loaded,
+    TResult Function(List<Collection>? collections)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),

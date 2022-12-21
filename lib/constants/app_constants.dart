@@ -11,6 +11,8 @@ class Routes {
   static const String book = '/book';
   static const String player = '/player';
   static const String series = '/series';
+  static const String playlists = '/playlists';
+  static const String playlist = '/playlist';
 }
 
 class MediaIds {
@@ -21,6 +23,7 @@ class MediaIds {
   static const String recentlyPlayed = '@recentlyPlayed';
   static const String recentlyAdded = '@recentlyAdded';
   static const String downloads = '@downloads';
+  static const String playlistsId = '@playlists';
 }
 
 class PlexSettings {

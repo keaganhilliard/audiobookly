@@ -1,3 +1,4 @@
+import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class AbsLogin extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final loading = useState(false);
-    final login = useState(LoginState());
+    final login =
+        useState(LoginState()..baseUrl = ref.read(preferencesProvider).baseUrl);
     final auth = ref.watch(authNotifierProvider.notifier);
     final navigationService = ref.watch(navigationServiceProvider);
 
@@ -39,6 +41,7 @@ class AbsLogin extends HookConsumerWidget {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextFormField(
                     key: const ValueKey('abs-url-field'),
+                    initialValue: ref.read(preferencesProvider).baseUrl,
                     onChanged: (val) {
                       login.value.baseUrl = val;
                     },

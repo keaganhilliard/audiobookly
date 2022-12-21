@@ -2,8 +2,10 @@ import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
+import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/model_union.dart';
+import 'package:audiobookly/models/playlist.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
@@ -138,27 +140,27 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<Book>> getAllBooks([int? page]) async {
-    final books = await _api.getAll(_libraryId, page);
-    return [for (final book in books) _absBookMinifiedToBook(book)];
+    return [
+      for (final book in await _api.getAll(_libraryId, page))
+        _absBookMinifiedToBook(book)
+    ];
   }
 
   @override
   Future<List<MediaItem>> getAuthors() async {
-    return (await _api.getAuthors(_libraryId))
-        .map(
-          (author) => MediaItem(
-            id: '@authors/${author.id}',
-            title: author.name,
-            artUri: author.imagePath == null
-                ? null
-                : Uri.parse(
-                    '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
-            playable: false,
-            displayDescription: author.description,
-          ),
-        )
-        .toList()
-      ..sort((a, b) => a.title.compareTo(b.title));
+    return [
+      for (final author in await _api.getAuthors(_libraryId))
+        MediaItem(
+          id: '@authors/${author.id}',
+          title: author.name,
+          artUri: author.imagePath == null
+              ? null
+              : Uri.parse(
+                  '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
+          playable: false,
+          displayDescription: author.description,
+        ),
+    ];
   }
 
   @override
@@ -220,71 +222,35 @@ class AbsRepository extends MediaRepository {
       input.replaceFirst(RegExp(r'^The |the |a |A |an |An '), '');
 
   @override
-  Future<List<MediaItem>> getCollections() async {
+  Future<List<Collection>> getCollections() async {
     final collections = await _api.getCollections();
 
     return [
       for (final collection in collections)
-        MediaItem(
+        if (collection.libraryId == _libraryId)
+          Collection(
             id: '@collections/${collection.id}',
-            title: collection.name,
-            playable: false,
-            artUri: _scaledCoverUrl(_api.baseUrl, collection.books[0].id,
-                collection.books[0].updatedAt))
+            name: collection.name,
+            description: collection.description,
+            artPath: _scaledCoverUrl(_api.baseUrl, collection.books[0].id,
+                    collection.books[0].updatedAt)
+                .toString(),
+          ),
     ];
   }
 
   @override
   Future<List<Book>> getBooksFromSeries(String seriesId) async {
-    final books = await _api.getBooksForSeries(_libraryId, seriesId);
     return [
-      for (final book in books
-          .where((book) =>
-              book.media.metadata.series
-                  ?.any((series) => series.id == seriesId) ??
-              false)
-          .toList()
-        ..sort((a, b) => double.parse(a.media.metadata.series
-                    ?.firstWhere((series) => series.id == seriesId)
-                    .sequence ??
-                '0')
-            .compareTo(double.parse(b.media.metadata.series
-                    ?.firstWhere((series) => series.id == seriesId)
-                    .sequence ??
-                '0'))))
+      for (final book in await _api.getBooksForSeries(_libraryId, seriesId))
         _absBookToBook(book)
     ];
   }
 
-  // @override
-  // Future<List<MediaItem>> getBooksFromSeries(String seriesId) async {
-  //   if (audiobooks.isEmpty) {
-  //     await getAllBooks();
-  //   }
-  //   return [
-  //     for (final book in audiobooks.values
-  //         .where((book) =>
-  //             book.media.metadata.series?.any((series) => series.id == seriesId) ??
-  //             false)
-  //         .toList()
-  //       ..sort((a, b) => double.parse(a.media.metadata.series
-  //                   ?.firstWhere((series) => series.id == seriesId)
-  //                   .sequence ??
-  //               '0')
-  //           .compareTo(double.parse(b.media.metadata.series
-  //                   ?.firstWhere((series) => series.id == seriesId)
-  //                   .sequence ??
-  //               '0'))))
-  //       _bookToItem(book)
-  //   ];
-  // }
-
   @override
   Future<List<MediaItem>> getSeries() async {
-    final series = await _api.getSeries(_libraryId);
-
     return [
-      for (final serie in series)
+      for (final serie in await _api.getSeries(_libraryId))
         MediaItem(
             id: '@series/${serie.id}',
             title: serie.name,
@@ -296,31 +262,6 @@ class AbsRepository extends MediaRepository {
             ))
     ];
   }
-
-  // @override
-  // Future<List<MediaItem>> getSeries() async {
-  //   if (audiobooks.isEmpty) {
-  //     await getAllBooks();
-  //   }
-  //   return {
-  //     for (final series in audiobooks.values
-  //         .where((book) =>
-  //             book.media.metadata.series != null &&
-  //             book.media.metadata.series!.isNotEmpty)
-  //         .expand((book) => book.media.metadata.series!
-  //             .map((e) => _SeriesHolder(e.id, e.name, e.sequence ?? '', book)))
-  //         .toList())
-  //       MediaItem(
-  //         id: '@series/${series.id}',
-  //         title: series.name,
-  //         playable: false,
-  //         artUri: _scaledCoverUrl(
-  //             _api.baseUrl, series.book.id, series.book.updatedAt),
-  //       )
-  //   }.toList()
-  //     ..sort((a, b) =>
-  //         _removeArticles(a.title).compareTo(_removeArticles(b.title)));
-  // }
 
   @override
   String getDownloadUrl(String path) {
@@ -645,5 +586,32 @@ class AbsRepository extends MediaRepository {
       );
     }
     return outMap;
+  }
+
+  @override
+  Future<List<Book>> getBooksFromPlaylist(String playlistId) async {
+    return [
+      for (final book in (await _api.getBooksForPlaylist(playlistId)).toList())
+        _absBookToBook(book)
+    ];
+  }
+
+  @override
+  Future<List<Playlist>> getPlaylists() async {
+    final playlists = await _api.getPlaylists(_libraryId);
+
+    return [
+      for (final playlist in playlists)
+        Playlist(
+          id: '@playlists/${playlist.id}',
+          name: playlist.name,
+          description: playlist.description,
+          artPath: _scaledCoverUrl(
+                  _api.baseUrl,
+                  playlist.items[0].libraryItem.id,
+                  playlist.items[0].libraryItem.updatedAt)
+              .toString(),
+        ),
+    ];
   }
 }

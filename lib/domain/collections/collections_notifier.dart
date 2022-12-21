@@ -20,9 +20,7 @@ class CollectionsNotifier extends StateNotifier<CollectionsState> {
   Future<void> getCollections() async {
     try {
       state = const CollectionsState.loading();
-      final collections = await _repository!.getChildren(
-        MediaIds.collectionsId,
-      );
+      final collections = await _repository!.getCollections();
       state = CollectionsState.loaded(collections: collections);
     } on Exception {
       state = const CollectionsState.error(
@@ -32,9 +30,7 @@ class CollectionsNotifier extends StateNotifier<CollectionsState> {
 
   Future<void> refresh() async {
     try {
-      final collections = await _repository!.getChildren(
-        MediaIds.collectionsId,
-      );
+      final collections = await _repository!.getCollections();
       state = CollectionsState.loaded(collections: collections);
     } on Exception {
       state = const CollectionsState.error(

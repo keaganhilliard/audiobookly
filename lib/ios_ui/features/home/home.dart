@@ -3,6 +3,7 @@ import 'package:audiobookly/ios_ui/features/authors/authors_view.dart';
 import 'package:audiobookly/ios_ui/features/books/books_view.dart';
 import 'package:audiobookly/ios_ui/features/collections/collections.dart';
 import 'package:audiobookly/ios_ui/features/home/home_view.dart';
+import 'package:audiobookly/ios_ui/features/playlists/playlists_view.dart';
 import 'package:audiobookly/ios_ui/features/series/series_view.dart';
 import 'package:audiobookly/ios_ui/features/settings/settings_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,12 +31,12 @@ class Home extends StatelessWidget {
             label: 'Books',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.collections_solid),
-            label: 'Collections',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.rectangle_fill_on_rectangle_angled_fill),
             label: 'Series',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.music_note_list),
+            label: 'Playlists',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.settings_solid),
@@ -69,9 +70,9 @@ Widget getTabView(index) {
     case 2:
       return CupertinoTabView(builder: (context) => const BooksView());
     case 3:
-      return CupertinoTabView(builder: (context) => const CollectionsView());
-    case 4:
       return CupertinoTabView(builder: (context) => const SeriesView());
+    case 4:
+      return CupertinoTabView(builder: (context) => const PlaylistsView());
     case 5:
       return CupertinoTabView(builder: (context) => const SettingsView());
     default:

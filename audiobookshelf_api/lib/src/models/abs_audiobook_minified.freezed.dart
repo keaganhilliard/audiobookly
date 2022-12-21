@@ -37,7 +37,7 @@ mixin _$AbsAudiobookMinified {
   String get mediaType => throw _privateConstructorUsedError;
   MinifiedMedia get media => throw _privateConstructorUsedError;
   int get numFiles => throw _privateConstructorUsedError;
-  int get size => throw _privateConstructorUsedError;
+  int? get size => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -69,7 +69,7 @@ abstract class $AbsAudiobookMinifiedCopyWith<$Res> {
       String mediaType,
       MinifiedMedia media,
       int numFiles,
-      int size});
+      int? size});
 
   $MinifiedMediaCopyWith<$Res> get media;
 }
@@ -105,7 +105,7 @@ class _$AbsAudiobookMinifiedCopyWithImpl<$Res,
     Object? mediaType = null,
     Object? media = null,
     Object? numFiles = null,
-    Object? size = null,
+    Object? size = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -176,10 +176,10 @@ class _$AbsAudiobookMinifiedCopyWithImpl<$Res,
           ? _value.numFiles
           : numFiles // ignore: cast_nullable_to_non_nullable
               as int,
-      size: null == size
+      size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 
@@ -218,7 +218,7 @@ abstract class _$$_AbsAudiobookMinifiedCopyWith<$Res>
       String mediaType,
       MinifiedMedia media,
       int numFiles,
-      int size});
+      int? size});
 
   @override
   $MinifiedMediaCopyWith<$Res> get media;
@@ -252,7 +252,7 @@ class __$$_AbsAudiobookMinifiedCopyWithImpl<$Res>
     Object? mediaType = null,
     Object? media = null,
     Object? numFiles = null,
-    Object? size = null,
+    Object? size = freezed,
   }) {
     return _then(_$_AbsAudiobookMinified(
       id: null == id
@@ -323,10 +323,10 @@ class __$$_AbsAudiobookMinifiedCopyWithImpl<$Res>
           ? _value.numFiles
           : numFiles // ignore: cast_nullable_to_non_nullable
               as int,
-      size: null == size
+      size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -352,7 +352,7 @@ class _$_AbsAudiobookMinified implements _AbsAudiobookMinified {
       required this.mediaType,
       required this.media,
       required this.numFiles,
-      required this.size});
+      this.size});
 
   factory _$_AbsAudiobookMinified.fromJson(Map<String, dynamic> json) =>
       _$$_AbsAudiobookMinifiedFromJson(json);
@@ -392,7 +392,7 @@ class _$_AbsAudiobookMinified implements _AbsAudiobookMinified {
   @override
   final int numFiles;
   @override
-  final int size;
+  final int? size;
 
   @override
   String toString() {
@@ -489,7 +489,7 @@ abstract class _AbsAudiobookMinified implements AbsAudiobookMinified {
       required final String mediaType,
       required final MinifiedMedia media,
       required final int numFiles,
-      required final int size}) = _$_AbsAudiobookMinified;
+      final int? size}) = _$_AbsAudiobookMinified;
 
   factory _AbsAudiobookMinified.fromJson(Map<String, dynamic> json) =
       _$_AbsAudiobookMinified.fromJson;
@@ -529,7 +529,7 @@ abstract class _AbsAudiobookMinified implements AbsAudiobookMinified {
   @override
   int get numFiles;
   @override
-  int get size;
+  int? get size;
   @override
   @JsonKey(ignore: true)
   _$$_AbsAudiobookMinifiedCopyWith<_$_AbsAudiobookMinified> get copyWith =>
@@ -551,7 +551,7 @@ mixin _$MinifiedMedia {
   int get numMissingParts => throw _privateConstructorUsedError;
   int get numInvalidAudioFiles => throw _privateConstructorUsedError;
   double get duration => throw _privateConstructorUsedError;
-  int get size => throw _privateConstructorUsedError;
+  int? get size => throw _privateConstructorUsedError;
   String? get ebookFormat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -576,7 +576,7 @@ abstract class $MinifiedMediaCopyWith<$Res> {
       int numMissingParts,
       int numInvalidAudioFiles,
       double duration,
-      int size,
+      int? size,
       String? ebookFormat});
 
   $MetadataCopyWith<$Res> get metadata;
@@ -604,7 +604,7 @@ class _$MinifiedMediaCopyWithImpl<$Res, $Val extends MinifiedMedia>
     Object? numMissingParts = null,
     Object? numInvalidAudioFiles = null,
     Object? duration = null,
-    Object? size = null,
+    Object? size = freezed,
     Object? ebookFormat = freezed,
   }) {
     return _then(_value.copyWith(
@@ -644,10 +644,10 @@ class _$MinifiedMediaCopyWithImpl<$Res, $Val extends MinifiedMedia>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double,
-      size: null == size
+      size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ebookFormat: freezed == ebookFormat
           ? _value.ebookFormat
           : ebookFormat // ignore: cast_nullable_to_non_nullable
@@ -680,7 +680,7 @@ abstract class _$$_MediaCopyWith<$Res> implements $MinifiedMediaCopyWith<$Res> {
       int numMissingParts,
       int numInvalidAudioFiles,
       double duration,
-      int size,
+      int? size,
       String? ebookFormat});
 
   @override
@@ -706,7 +706,7 @@ class __$$_MediaCopyWithImpl<$Res>
     Object? numMissingParts = null,
     Object? numInvalidAudioFiles = null,
     Object? duration = null,
-    Object? size = null,
+    Object? size = freezed,
     Object? ebookFormat = freezed,
   }) {
     return _then(_$_Media(
@@ -746,10 +746,10 @@ class __$$_MediaCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as double,
-      size: null == size
+      size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ebookFormat: freezed == ebookFormat
           ? _value.ebookFormat
           : ebookFormat // ignore: cast_nullable_to_non_nullable
@@ -771,7 +771,7 @@ class _$_Media implements _Media {
       required this.numMissingParts,
       required this.numInvalidAudioFiles,
       required this.duration,
-      required this.size,
+      this.size,
       this.ebookFormat})
       : _tags = tags;
 
@@ -802,7 +802,7 @@ class _$_Media implements _Media {
   @override
   final double duration;
   @override
-  final int size;
+  final int? size;
   @override
   final String? ebookFormat;
 
@@ -879,7 +879,7 @@ abstract class _Media implements MinifiedMedia {
       required final int numMissingParts,
       required final int numInvalidAudioFiles,
       required final double duration,
-      required final int size,
+      final int? size,
       final String? ebookFormat}) = _$_Media;
 
   factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
@@ -903,7 +903,7 @@ abstract class _Media implements MinifiedMedia {
   @override
   double get duration;
   @override
-  int get size;
+  int? get size;
   @override
   String? get ebookFormat;
   @override

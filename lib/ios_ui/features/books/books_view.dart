@@ -42,10 +42,11 @@ class BooksView extends HookConsumerWidget {
                 return GridItem(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) =>
-                                BookDetailsView(mediaId: book.id)));
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => BookDetailsView(mediaId: book.id),
+                      ),
+                    );
                   },
                   thumbnailUrl: book.artUri?.toString(),
                   title: book.title,

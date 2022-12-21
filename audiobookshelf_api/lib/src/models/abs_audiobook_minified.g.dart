@@ -26,7 +26,7 @@ _$_AbsAudiobookMinified _$$_AbsAudiobookMinifiedFromJson(
       mediaType: json['mediaType'] as String,
       media: MinifiedMedia.fromJson(json['media'] as Map<String, dynamic>),
       numFiles: json['numFiles'] as int,
-      size: json['size'] as int,
+      size: json['size'] as int?,
     );
 
 Map<String, dynamic> _$$_AbsAudiobookMinifiedToJson(
@@ -62,7 +62,7 @@ _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
       numMissingParts: json['numMissingParts'] as int,
       numInvalidAudioFiles: json['numInvalidAudioFiles'] as int,
       duration: (json['duration'] as num).toDouble(),
-      size: json['size'] as int,
+      size: json['size'] as int?,
       ebookFormat: json['ebookFormat'] as String?,
     );
 

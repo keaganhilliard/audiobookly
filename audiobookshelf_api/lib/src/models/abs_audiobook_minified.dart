@@ -23,7 +23,7 @@ class AbsAudiobookMinified with _$AbsAudiobookMinified {
     required String mediaType,
     required MinifiedMedia media,
     required int numFiles,
-    required int size,
+    int? size,
   }) = _AbsAudiobookMinified;
 
   factory AbsAudiobookMinified.fromJson(Map<String, dynamic> json) =>
@@ -42,7 +42,7 @@ class MinifiedMedia with _$MinifiedMedia {
     required int numMissingParts,
     required int numInvalidAudioFiles,
     required double duration,
-    required int size,
+    int? size,
     String? ebookFormat,
   }) = _Media;
 

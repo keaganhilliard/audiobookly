@@ -39,7 +39,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final prefsNotifier = _ref.read(preferencesProvider.notifier);
       Preferences prefs = prefsNotifier.state;
       prefs.userToken = '';
-      prefs.baseUrl = '';
+      // prefs.baseUrl = '';
       prefs.serverId = '';
       prefs.serverType = ServerType.unknown;
       prefs.userId = '';

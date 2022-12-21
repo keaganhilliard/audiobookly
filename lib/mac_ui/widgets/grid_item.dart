@@ -14,6 +14,7 @@ class GridItem extends StatelessWidget {
   final bool showTitle;
   final IconData placeholder;
   final List<String>? thumbnailUrls;
+  final int? index;
 
   const GridItem({
     Key? key,
@@ -26,6 +27,7 @@ class GridItem extends StatelessWidget {
     this.played = false,
     this.placeholder = CupertinoIcons.book_solid,
     this.showTitle = false,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -126,6 +128,11 @@ class GridItem extends StatelessWidget {
                 ),
               ),
             if (played) const PlayedIcon(),
+            if (this.index != null)
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text("$index"),
+              ),
           ],
         ),
       ),

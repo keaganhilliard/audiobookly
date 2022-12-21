@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/models/abs_media_progress.dart';
-import 'package:audiobookshelf/src/models/abs_personalized_response.dart';
 import 'package:audiobookshelf/src/models/abs_series.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -92,10 +91,7 @@ class AudiobookshelfApi {
       },
     );
 
-    // return _convertBody(response.bodyBytes);
     return (await compute(_convertBody, response.bodyBytes));
-    // .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
-    // .toList();
   }
 
   Future<List<AbsLibrary>> getLibraries() async {
@@ -107,7 +103,7 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))
+    return jsonDecode(utf8.decode(response.bodyBytes))['libraries']
         .map<AbsLibrary>((el) => AbsLibrary.fromJson(el))
         .toList();
   }
@@ -154,9 +150,44 @@ class AudiobookshelfApi {
         'authorization': 'Bearer $token',
       },
     );
-    return jsonDecode(utf8.decode(response.bodyBytes))
+    return jsonDecode(utf8.decode(response.bodyBytes))['authors']
         .map<Author>((el) => Author.fromJson(el))
         .toList();
+  }
+
+  Future<List<AbsPlaylist>> getPlaylists(String libraryId) async {
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/libraries/$libraryId/playlists'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+    return jsonDecode(utf8.decode(response.bodyBytes))['results']
+        .map<AbsPlaylist>((el) => AbsPlaylist.fromJson(el))
+        .toList();
+  }
+
+  Future<List<AbsAudiobook>> getBooksForPlaylist(String playlistId) async {
+    http.Response response = await client.get(
+      createUri(
+        baseUrl!,
+        '/api/playlists/$playlistId',
+      ),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return [
+      for (final item in AbsPlaylist.fromJson(
+        jsonDecode(
+          utf8.decode(response.bodyBytes),
+        ),
+      ).items)
+        item.libraryItem
+    ];
   }
 
   Future<List<AbsAudiobook>> getBooksForAuthor(
@@ -221,7 +252,9 @@ class AudiobookshelfApi {
 
     return jsonDecode(
       utf8.decode(response.bodyBytes),
-    ).map<AbsCollection>((x) => AbsCollection.fromMap(x)).toList();
+    )['collections']
+        .map<AbsCollection>((x) => AbsCollection.fromMap(x))
+        .toList();
   }
 
   Future<List<AbsAudiobook>> getBooksForCollection(String collectionId) async {
@@ -369,7 +402,16 @@ double durationToSeconds(Duration dur) {
 }
 
 List<AbsAudiobookMinified> _convertBody(List<int> bodyBytes) {
-  return jsonDecode(utf8.decode(bodyBytes))['results']
-      .map<AbsAudiobookMinified>((el) => AbsAudiobookMinified.fromJson(el))
-      .toList();
+  late List<AbsAudiobookMinified> results;
+  try {
+    results = [
+      for (final json in jsonDecode(utf8.decode(bodyBytes))['results'])
+        AbsAudiobookMinified.fromJson(json)
+    ];
+  } catch (e, stack) {
+    print(e);
+    print(stack);
+    results = [];
+  }
+  return results;
 }

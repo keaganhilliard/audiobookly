@@ -49,6 +49,11 @@ final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
   ServerType serverType = ref.watch(
     preferencesProvider.select((prefs) => prefs.serverType),
   );
+
+  // String libraryId = ref.watch(
+  //   preferencesProvider.select((prefs) => prefs.libraryId),
+  // );
+
   Preferences prefs = ref.read(preferencesProvider);
   if (serverType == ServerType.emby) {
     final embyApi = ref.watch(embyApiProvider);

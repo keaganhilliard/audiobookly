@@ -5,6 +5,7 @@ class Preferences {
   String userId;
   String username;
   String libraryId;
+  String libraryLabel;
   String serverId;
   double playbackSpeed;
   double rewindInterval;
@@ -18,6 +19,7 @@ class Preferences {
     this.userId = '',
     this.username = '',
     this.libraryId = '',
+    this.libraryLabel = '',
     this.serverId = '',
     this.playbackSpeed = 1,
     this.rewindInterval = 15,
@@ -29,6 +31,6 @@ class Preferences {
 
   @override
   String toString() {
-    return 'Preferences($userToken, $userId, $playbackSpeed)';
+    return 'Preferences($userToken, $userId, $playbackSpeed, $libraryId, $libraryLabel)';
   }
 }

@@ -1,8 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/model_union.dart';
+import 'package:audiobookly/models/playlist.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 
@@ -89,7 +91,21 @@ abstract class MediaRepository {
               book.toMediaItem()
           ];
         } else {
-          return await getCollections();
+          return [
+            for (final collection in await getCollections())
+              collection.toMediaItem()
+          ];
+        }
+      case MediaIds.playlistsId:
+        if (pieces.length > 1) {
+          return [
+            for (final book in await getBooksFromPlaylist(pieces[1]))
+              book.toMediaItem()
+          ];
+        } else {
+          return [
+            for (final playlist in await getPlaylists()) playlist.toMediaItem()
+          ];
         }
       case MediaIds.seriesId:
         if (pieces.length > 1) {
@@ -120,9 +136,10 @@ abstract class MediaRepository {
   // TODO: Create an Author model and use that
   Future<List<MediaItem>> getAuthors();
   Future<List<Book>> getBooksFromAuthor(String authorId);
-  // TODO: Create a collection model and use that
-  Future<List<MediaItem>> getCollections();
+  Future<List<Collection>> getCollections();
   Future<List<Book>> getBooksFromCollection(String collectionId);
+  Future<List<Playlist>> getPlaylists();
+  Future<List<Book>> getBooksFromPlaylist(String playlistId);
   // TODO: Create a series model and use that
   Future<List<MediaItem>> getSeries();
   Future<List<Book>> getBooksFromSeries(String seriesId);

@@ -1,5 +1,8 @@
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_notifier.dart';
+import 'package:audiobookly/ios_ui/features/library_select/library_select_view.dart';
+import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +16,7 @@ class SettingsView extends HookConsumerWidget {
   Widget build(context, ref) {
     final state = ref.watch(settingsStateProvider);
     final auth = ref.watch(authNotifierProvider.notifier);
+    final prefs = ref.watch(preferencesProvider);
     // if (state is SettingsStateInitial) Future.value(settings.getUser());
     return state.when(
         initial: () => const Center(
@@ -23,12 +27,13 @@ class SettingsView extends HookConsumerWidget {
                 child: CupertinoActivityIndicator(
               radius: 40,
             )),
-        loaded: (user) {
+        loaded: (user, library) {
           return ListView(
             children: [
               CupertinoListTile(
-                title: Text(user!.userName!),
-                leading: user.thumb != null
+                title: const Text('Account'),
+                subtitle: Text(user!.userName!),
+                trailing: user.thumb != null
                     ? Image.network(
                         user.thumb!,
                         fit: BoxFit.contain,
@@ -37,6 +42,21 @@ class SettingsView extends HookConsumerWidget {
                         },
                       )
                     : const Icon(CupertinoIcons.person_fill),
+              ),
+              CupertinoListTile(
+                title: const Text("Library"),
+                subtitle: Text(
+                  prefs.libraryLabel.isEmpty
+                      ? prefs.libraryId
+                      : prefs.libraryLabel,
+                ),
+                onTap: () {
+                  ref.read(navigationServiceProvider).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const IosLibrarySelectView(),
+                        ),
+                      );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),

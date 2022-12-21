@@ -25,7 +25,7 @@ class SettingsView extends HookConsumerWidget {
                 child: CupertinoActivityIndicator(
               radius: 40,
             )),
-        loaded: (user) {
+        loaded: (user, lib) {
           return ListView(
             children: [
               CupertinoListTile(

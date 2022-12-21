@@ -13,6 +13,7 @@ import 'package:better_cupertino_slider/better_cupertino_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -320,12 +321,18 @@ class PlayerView extends HookConsumerWidget {
                                           Icons.play_circle_filled,
                                           size: 60,
                                         ),
-                                  onPressed: state?.playing ??
-                                          false ||
-                                              state?.processingState ==
-                                                  AudioProcessingState.buffering
-                                      ? playbackController.pause
-                                      : playbackController.play,
+                                  onPressed: () async {
+                                    if (state?.playing ??
+                                        false ||
+                                            state?.processingState ==
+                                                AudioProcessingState
+                                                    .buffering) {
+                                      playbackController.pause();
+                                    } else {
+                                      playbackController.play();
+                                    }
+                                    HapticFeedback.mediumImpact();
+                                  },
                                   size: 60,
                                 ),
                               ],
@@ -451,6 +458,7 @@ class ValueSlider extends HookWidget {
         Expanded(
           child: BetterCupertinoSlider(
             configure: BetterCupertinoSliderConfigure(
+              useTapGesture: false,
               trackLeftColor: Colors.deepPurple,
               thumbPainter: (canvas, rect) {
                 final RRect rrect = RRect.fromRectAndRadius(

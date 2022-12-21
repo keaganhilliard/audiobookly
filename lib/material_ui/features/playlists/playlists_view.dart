@@ -1,33 +1,33 @@
 import 'dart:io';
 
 import 'package:animations/animations.dart';
-import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/domain/playlists/playlists_notifier.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
-import 'package:audiobookly/domain/collections/collections_notifier.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
-import 'package:audiobookly/models/collection.dart';
+import 'package:audiobookly/models/playlist.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
 
-class CollectionsView extends HookConsumerWidget {
-  const CollectionsView({super.key});
+class PlaylistsView extends HookConsumerWidget {
+  const PlaylistsView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final booksProvider = ref.watch(collectionsStateProvider.notifier);
+    final booksProvider = ref.watch(playlistsStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
         refresher.currentState!.show();
       },
-      title: const Text('Collections'),
+      title: const Text('Playlists'),
       body: RefreshIndicator(
         key: refresher,
         onRefresh: () async {
@@ -35,26 +35,26 @@ class CollectionsView extends HookConsumerWidget {
         },
         child: Consumer(
           builder: (context, ref, child) {
-            final state = ref.watch(collectionsStateProvider);
+            final state = ref.watch(playlistsStateProvider);
             return state.maybeWhen(
               orElse: () => Container(),
               loading: () => const Center(child: CircularProgressIndicator()),
-              loaded: (collections) {
-                return ResponsiveGridView<Collection>(
-                  items: collections,
-                  itemBuilder: (collection) {
+              loaded: (playlists) {
+                return ResponsiveGridView<Playlist>(
+                  items: playlists,
+                  itemBuilder: (playlist) {
                     return OpenContainer(
-                      key: Key(collection.name),
+                      key: Key(playlist.name),
                       closedElevation: 0.0,
                       closedColor: Theme.of(context).canvasColor,
                       openColor: Theme.of(context).canvasColor,
-                      openBuilder: (context, closeContainer) => BooksView(
-                          mediaId: collection.id, title: collection.name),
+                      openBuilder: (context, closeContainer) =>
+                          BooksView(mediaId: playlist.id, title: playlist.name),
                       closedBuilder: (context, openContainer) => BookGridItem(
                         onTap: openContainer,
-                        thumbnailUrl: collection.artPath,
-                        title: collection.name,
-                        placeholder: Icons.collections_bookmark,
+                        thumbnailUrl: playlist.artPath,
+                        title: playlist.name,
+                        placeholder: CupertinoIcons.music_note_list,
                         showTitle: true,
                       ),
                     );
@@ -68,7 +68,7 @@ class CollectionsView extends HookConsumerWidget {
                   children: [
                     const Center(
                       child: Text(
-                        'Could not fetch collections, is the device online?',
+                        'Could not fetch playlists, is the device online?',
                       ),
                     ),
                     ElevatedButton(

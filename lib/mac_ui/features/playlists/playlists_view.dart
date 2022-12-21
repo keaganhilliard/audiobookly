@@ -1,4 +1,5 @@
 import 'package:audiobookly/domain/collections/collections_notifier.dart';
+import 'package:audiobookly/domain/playlists/playlists_notifier.dart';
 import 'package:audiobookly/mac_ui/features/books/books_view.dart';
 import 'package:audiobookly/mac_ui/widgets/ab_grid.dart';
 import 'package:audiobookly/mac_ui/widgets/ab_scaffold.dart';
@@ -7,12 +8,12 @@ import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CollectionsView extends HookConsumerWidget {
+class PlaylistsView extends HookConsumerWidget {
   final String? title;
   final String? previousPageTitle;
   final Debouncer debouncer = Debouncer(milliseconds: 1);
 
-  CollectionsView({
+  PlaylistsView({
     super.key,
     this.title,
     this.previousPageTitle,
@@ -20,28 +21,28 @@ class CollectionsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(collectionsStateProvider);
+    final state = ref.watch(playlistsStateProvider);
     return AbScaffold(
         child: state.when(
       initial: () => const SliverToBoxAdapter(),
-      loaded: (collections) => AbGrid(
-        childCount: collections!.length,
+      loaded: (playlists) => AbGrid(
+        childCount: playlists!.length,
         childBuilder: (context, index) {
-          final collection = collections[index];
+          final playlist = playlists[index];
           return GridItem(
             onTap: () {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
                   builder: (context) => BooksView(
-                    mediaId: collection.id,
+                    mediaId: playlist.id,
                   ),
                 ),
               );
             },
-            thumbnailUrl: collection.artPath,
-            title: collection.name,
-            placeholder: CupertinoIcons.collections_solid,
+            thumbnailUrl: playlist.artPath,
+            title: playlist.name,
+            placeholder: CupertinoIcons.music_note_list,
             showTitle: true,
           );
         },
