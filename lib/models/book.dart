@@ -80,7 +80,9 @@ class Book {
           'viewOffset': lastPlayedPosition.inMilliseconds,
           'largeThumbnail': largeArtPath,
           if (chapters != null)
-            'chapters': [for (final chapter in chapters!) chapter.toJson()]
+            'chapters': [
+              for (final chapter in chapters!) chapter.toJson(),
+            ]
         },
       );
 

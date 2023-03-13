@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
@@ -19,6 +21,7 @@ import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookshelf/audiobookshelf.dart' hide Chapter, Author;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http/http.dart';
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
   String baseUrl =
@@ -43,15 +46,22 @@ class AbsRepository extends MediaRepository {
   @override
   Future<Book> getAlbumFromId(String? mediaId) async {
     final book = await _api.getBookInfo(mediaId!);
-    await getUser();
+    try {
+      final progress = await _api.getItemProgress(mediaId);
+      if (progress != null) {
+        userProgress[mediaId] = progress;
+      }
+    } catch (e) {
+      log('No progress: $e');
+    }
     return _absBookToBook(book);
   }
 
   Uri? _scaledCoverUrl(String? baseUrl, String? id, int? timestamp,
       [int width = 400]) {
     if (baseUrl != null && id != null) {
-      return Uri.parse(
-          '$baseUrl/api/items/$id/cover?token=${_api.token}&ts=$timestamp&width=$width&format=webp');
+      return '$baseUrl/api/items/$id/cover?token=${_api.token}&ts=$timestamp&width=$width&format=webp'
+          .uri;
     }
     return null;
   }
@@ -72,18 +82,18 @@ class AbsRepository extends MediaRepository {
       duration: book.media.duration == null
           ? totalDuration
           : AbsUtils.parseDurationFromSeconds(book.media.duration),
-      artUri:
-          // _coverUrl(_api.baseUrl, book.book?.cover,
-          //     book.lastUpdate?.millisecondsSinceEpoch),
-          _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt),
+      artUri: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt),
       playable: true,
       extras: <String, dynamic>{
         'played': played,
         'narrator': book.media.metadata.narrators?.join(', ') ?? 'Unknown',
         'viewOffset': viewOffset,
-        'largeThumbnail':
-            _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
-                .toString(),
+        'largeThumbnail': _scaledCoverUrl(
+          _api.baseUrl,
+          book.id,
+          book.updatedAt,
+          600,
+        ).toString(),
         if (book.media.chapters != null)
           'chapters': [
             for (final chapter in book.media.chapters!) chapter.toJson()
@@ -155,8 +165,8 @@ class AbsRepository extends MediaRepository {
           title: author.name,
           artUri: author.imagePath == null
               ? null
-              : Uri.parse(
-                  '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
+              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
+                  .uri,
           playable: false,
           displayDescription: author.description,
         ),
@@ -427,6 +437,9 @@ class AbsRepository extends MediaRepository {
     final book = await _db.getBookById(key);
     if (book != null) {
       await _db.insertBook(book.copyWith(lastPlayedPosition: position));
+    } else {
+      final book = await getAlbumFromId(key);
+      await _db.insertBook(book.copyWith(lastPlayedPosition: position));
     }
 
     if (_sessionId == null) {
@@ -527,8 +540,8 @@ class AbsRepository extends MediaRepository {
           playable: false,
           artUri: author.imagePath == null
               ? null
-              : Uri.parse(
-                  '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
+              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
+                  .uri,
         ),
       for (final series in response.series)
         MediaItem(
@@ -559,29 +572,29 @@ class AbsRepository extends MediaRepository {
         book: (value) {
           outMap.putIfAbsent(
               p.label,
-              () => value.entities
-                  .map<ModelUnion>(
-                      (book) => ModelUnion.book(_absBookMinifiedToBook(book)))
-                  .toList());
+              () => [
+                    for (final book in value.entities)
+                      ModelUnion.book(_absBookMinifiedToBook(book))
+                  ]);
         },
         authors: (value) {
           outMap.putIfAbsent(
               p.label,
-              () => value.entities
-                  .map<ModelUnion>(
-                    (author) => ModelUnion.author(
-                      Author(
-                        id: '${MediaIds.authorsId}/${author.id}',
-                        name: author.name,
-                        description: author.description ?? '',
-                        artPath: author.imagePath == null
-                            ? null
-                            : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
-                        numBooks: author.numBooks ?? 0,
-                      ),
-                    ),
-                  )
-                  .toList());
+              () => [
+                    for (final author in value.entities)
+                      ModelUnion.author(
+                        Author(
+                          id: '${MediaIds.authorsId}/${author.id}',
+                          name: author.name,
+                          description: author.description ?? '',
+                          artPath: author.imagePath == null ||
+                                  author.imagePath!.isEmpty
+                              ? null
+                              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+                          numBooks: author.numBooks ?? 0,
+                        ),
+                      )
+                  ]);
         },
       );
     }
@@ -607,10 +620,10 @@ class AbsRepository extends MediaRepository {
           name: playlist.name,
           description: playlist.description,
           artPath: _scaledCoverUrl(
-                  _api.baseUrl,
-                  playlist.items[0].libraryItem.id,
-                  playlist.items[0].libraryItem.updatedAt)
-              .toString(),
+            _api.baseUrl,
+            playlist.items[0].libraryItem.id,
+            playlist.items[0].libraryItem.updatedAt,
+          ).toString(),
         ),
     ];
   }

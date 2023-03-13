@@ -39,7 +39,7 @@ class AuthorsView extends HookConsumerWidget {
             return state.maybeWhen(
               orElse: () => Container(),
               loading: () => const Center(child: CircularProgressIndicator()),
-              loaded: (authors) => ResponsiveGridView<MediaItem>(
+              loaded: (authors, total, page) => ResponsiveGridView<MediaItem>(
                 items: authors,
                 itemBuilder: (author) {
                   return OpenContainer(

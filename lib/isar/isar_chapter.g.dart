@@ -81,7 +81,7 @@ const IsarChapterSchema = CollectionSchema(
   getId: _isarChapterGetId,
   getLinks: _isarChapterGetLinks,
   attach: _isarChapterAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _isarChapterEstimateSize(

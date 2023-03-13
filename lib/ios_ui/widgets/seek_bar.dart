@@ -1,5 +1,6 @@
+import 'package:audiobookly/ios_ui/widgets/new_slider.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:better_cupertino_slider/better_cupertino_slider.dart';
+// import 'package:better_cupertino_slider/better_cupertino_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Colors;
 import 'dart:math';
@@ -32,8 +33,9 @@ class SeekBar extends HookWidget {
           constraints: const BoxConstraints.expand(height: 60),
           child: BetterCupertinoSlider(
             configure: BetterCupertinoSliderConfigure(
+                useRelative: true,
                 thumbRadius: 5.0,
-                trackHeight: 10,
+                trackHeight: 10.0,
                 thumbPainter: (canvas, rect) {},
                 trackLeftColor: primaryColor,
                 trackRightColor: secondaryColor.withOpacity(0.15)),

@@ -1,7 +1,6 @@
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_notifier.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';

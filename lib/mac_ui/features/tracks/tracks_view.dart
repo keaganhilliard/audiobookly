@@ -1,7 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

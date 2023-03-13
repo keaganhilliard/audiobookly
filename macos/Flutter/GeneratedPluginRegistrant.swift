@@ -11,7 +11,7 @@ import device_info_plus
 import isar_flutter_libs
 import just_audio
 import macos_ui
-import path_provider_macos
+import path_provider_foundation
 import sqflite
 import url_launcher_macos
 

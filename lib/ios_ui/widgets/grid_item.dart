@@ -106,11 +106,20 @@ class GridItem extends StatelessWidget {
             if (progress > 0)
               Align(
                 alignment: Alignment.bottomLeft,
-                child: LinearProgressIndicator(
-                  minHeight: 6.0,
-                  value: progress,
-                  backgroundColor: Colors.transparent,
-                  color: Colors.deepPurple,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: LinearProgressIndicator(
+                      minHeight: 6,
+                      value: progress,
+                      color: Colors.deepPurple,
+                      backgroundColor: Colors.grey.withOpacity(0.5),
+                    ),
+                  ),
                 ),
               ),
             if (played) const PlayedIcon(),

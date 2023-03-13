@@ -20,10 +20,13 @@ class MobileBackgroundDownloader extends Downloader {
   }
 
   @override
-  Future cancelDownloads(String parentId) {
+  Future cancelDownloads(String parentId) async {
     trackSubs[parentId]?.cancel();
     trackSubs.remove(parentId);
-    return FileDownloader.reset();
+    final tracks = await db.getTracksForBookId(parentId).first;
+    return await FileDownloader.cancelTasksWithIds(
+      tracks.map((track) => track.downloadTaskId).toList(),
+    );
   }
 
   @override
@@ -74,10 +77,15 @@ class MobileBackgroundDownloader extends Downloader {
 Future downloadStatusCallback(
     BackgroundDownloadTask task, DownloadTaskStatus status) async {
   log('downloadStatusCallback for $task with status $status');
+  if (status == DownloadTaskStatus.failed) {
+    DatabaseService db = GetIt.I();
+    db.updateTrackDownloadProgress(task.taskId, 0, false);
+  }
 }
 
 Future downloadProgressCallback(
     BackgroundDownloadTask task, double progress) async {
   DatabaseService db = GetIt.I();
+  log('downloadProgressCallback for $task with progress $progress');
   db.updateTrackDownloadProgress(task.taskId, progress, progress == 1);
 }

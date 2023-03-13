@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+import 'dart:isolate';
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/models/abs_media_progress.dart';
 import 'package:audiobookshelf/src/models/abs_series.dart';
@@ -50,6 +53,7 @@ class AudiobookshelfApi {
         jsonEncode({'username': username, 'password': password}),
       ),
     );
+    log(response.body);
     var alr = AbsLoginResponse.fromJson(
       jsonDecode(utf8.decode(response.bodyBytes)),
     );
@@ -73,6 +77,22 @@ class AudiobookshelfApi {
     return user!;
   }
 
+  Future<AbsAudiobookProgress?> getItemProgress(String itemId) async {
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/me/progress/$itemId'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode != 200) {
+      return null;
+    }
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+    // print(decodedResponse);
+    return AbsAudiobookProgress.fromJson(decodedResponse);
+  }
+
   Future<List<AbsAudiobookMinified>> getAll(
     String library, [
     int? page,
@@ -83,15 +103,53 @@ class AudiobookshelfApi {
       queryParams.putIfAbsent('page', () => '$page');
       queryParams.putIfAbsent('limit', () => '100');
     }
-    http.Response response = await client.get(
-      createUri(baseUrl!, '/api/libraries/$library/items', queryParams),
-      headers: {
-        'content-type': 'application/json',
-        'authorization': 'Bearer $token',
-      },
+
+    return await compute(
+      _getAll,
+      GetAllParams(
+        createUri(baseUrl!, '/api/libraries/$library/items', queryParams),
+        {
+          'content-type': 'application/json',
+          'authorization': 'Bearer $token',
+        },
+      ),
     );
 
-    return (await compute(_convertBody, response.bodyBytes));
+    // return await Isolate.run(
+    //   () => _computeGetAll(
+    //     createUri(baseUrl!, '/api/libraries/$library/items', queryParams),
+    //     {
+    //       'content-type': 'application/json',
+    //       'authorization': 'Bearer $token',
+    //     },
+    //   ),
+    // );
+
+    // return await Isolate.run(
+    //   () async {
+    //     final client = http.Client();
+    //     http.Response response = await client.get(
+    //       createUri(baseUrl!, '/api/libraries/$library/items', queryParams),
+    //       headers: {
+    //         'content-type': 'application/json',
+    //         'authorization': 'Bearer $token',
+    //       },
+    //     );
+    //     late List<AbsAudiobookMinified> results;
+    //     try {
+    //       results = [
+    //         for (final json
+    //             in jsonDecode(utf8.decode(response.bodyBytes))['results'])
+    //           AbsAudiobookMinified.fromJson(json)
+    //       ];
+    //     } catch (e, stack) {
+    //       print(e);
+    //       print(stack);
+    //       results = [];
+    //     }
+    //     return results;
+    //   },
+    // );
   }
 
   Future<List<AbsLibrary>> getLibraries() async {
@@ -414,4 +472,23 @@ List<AbsAudiobookMinified> _convertBody(List<int> bodyBytes) {
     results = [];
   }
   return results;
+}
+
+class GetAllParams {
+  final Uri uri;
+  final Map<String, String> headers;
+
+  GetAllParams(this.uri, this.headers);
+}
+
+Future<List<AbsAudiobookMinified>> _getAll(GetAllParams params) async {
+  final response = await http.get(params.uri, headers: params.headers);
+  return _convertBody(response.bodyBytes);
+}
+
+Future<List<AbsAudiobookMinified>> _computeGetAll(
+    Uri uri, Map<String, String> headers) async {
+  final client = http.Client();
+  final response = await client.get(uri, headers: headers);
+  return _convertBody(response.bodyBytes);
 }

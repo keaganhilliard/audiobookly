@@ -3,7 +3,6 @@ import 'package:audiobookly/domain/settings/settings_notifier.dart';
 import 'package:audiobookly/ios_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

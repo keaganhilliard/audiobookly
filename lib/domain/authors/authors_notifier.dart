@@ -19,7 +19,8 @@ class AuthorsNotifier extends StateNotifier<AuthorsState> {
   Future refresh() async {
     try {
       final authors = await _repository!.getChildren(MediaIds.authorsId);
-      state = AuthorsState.loaded(authors: authors);
+      state =
+          AuthorsState.loaded(authors: authors, totalResults: authors.length);
     } on Exception {
       state = const AuthorsState.error(
           "Couldn't fetch authors. Is the device online?");

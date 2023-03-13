@@ -48,22 +48,20 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   }
 
   Future<void> getDetails() async {
-    _dbBookListener ??=
-        _databaseService!.watchBookById(_mediaId).listen((book) async {
-      if (book != null) {
-        Book? checkBook = await _databaseService!.getBookById(book.id);
-        List<Chapter>? chapters =
-            await _databaseService!.getChaptersForBook(book.id);
-        checkBook ??= book.copyWith(chapters: chapters);
-        if (state is BookDetailsStateLoaded) {
-          state = (state as BookDetailsStateLoaded).copyWith(
-            book: book,
+    _dbBookListener ??= _databaseService!.watchBookById(_mediaId).listen(
+      (book) async {
+        if (book != null) {
+          Book? checkBook = await _databaseService!.getBookById(book.id);
+          List<Chapter>? chapters =
+              await _databaseService!.getChaptersForBook(book.id);
+          checkBook ??= book.copyWith(chapters: chapters);
+          state = state.maybeMap(
+            orElse: () => BookDetailsState.loaded(book: book),
+            loaded: (loaded) => loaded.copyWith(book: book),
           );
-        } else {
-          state = BookDetailsState.loaded(book: book);
         }
-      }
-    });
+      },
+    );
 
     Book? book;
     List<Track>? tracks;

@@ -1,12 +1,9 @@
 import 'package:audiobookly/domain/track_details/track_details_notifier.dart';
 import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
-import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/download_status.dart';
-import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/services/download/download_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,27 +12,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:audiobookly/utils/utils.dart';
 
-String getListenText(double progress, Book book) {
-  if (book.read) {
-    return 'Listen Again';
-  } else if (progress > 0) {
-    return "Listen (${Utils.getTimeLeft(book)} left)";
-  } else {
-    return "Start Listening";
-  }
-}
-
 class BookDetailsView extends HookConsumerWidget {
   final String mediaId;
-  const BookDetailsView({required this.mediaId, super.key});
+  const BookDetailsView({required this.mediaId, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookDetails = ref.watch(bookDetailsStateProvider(mediaId).notifier);
+    final state = ref.watch(bookDetailsStateProvider(mediaId));
     final downloadService = ref.watch(downloadServiceProvider);
     final playbackController = GetIt.I<PlaybackController>();
 
-    return ref.watch(bookDetailsStateProvider(mediaId)).maybeWhen(
+    return PageView(
+      scrollDirection: Axis.vertical,
+      children: [
+        state.maybeWhen(
           orElse: () => const Center(
               child: CupertinoActivityIndicator(
             radius: 40,
@@ -44,18 +35,66 @@ class BookDetailsView extends HookConsumerWidget {
               Center(child: Text('Something went wrong $message')),
           loaded: (book, tracks) {
             final progress = Utils.getProgress(book: book);
+
             return CupertinoPageScaffold(
               child: CustomScrollView(
                 key: const PageStorageKey('book-details'),
                 physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [
-                  SliverPersistentHeader(
-                    pinned: true,
-                    floating: true,
-                    delegate: DifferentHeader(
-                      book: book!,
-                      tracks: tracks,
-                      downloadService: downloadService,
+                  CupertinoSliverNavigationBar(
+                    backgroundColor: const Color.fromRGBO(0, 0, 0, 0.5),
+                    largeTitle: Center(
+                      child: Text('${book!.title} Page View'),
+                    ),
+                    trailing: Builder(
+                      builder: (context) {
+                        switch (book.downloadStatus) {
+                          case DownloadStatus.succeeded:
+                            return CupertinoButton(
+                              onPressed: () async {
+                                downloadService?.deleteDownload(
+                                  book,
+                                );
+                              },
+                              child: const Icon(CupertinoIcons.delete_solid),
+                            );
+                          case DownloadStatus.downloading:
+                            return Stack(
+                              children: [
+                                const Positioned(
+                                  left: 13.0,
+                                  top: 13.0,
+                                  child: SizedBox(
+                                    height: 30.0,
+                                    width: 30.0,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.deepPurple,
+                                    ),
+                                  ),
+                                ),
+                                CupertinoButton(
+                                  onPressed: () {
+                                    downloadService?.cancelBookDownload(book);
+                                  },
+                                  child: const Icon(
+                                    Icons.cancel_rounded,
+                                  ),
+                                ),
+                              ],
+                            );
+                          default:
+                            return CupertinoButton(
+                              child: const Icon(
+                                  CupertinoIcons.arrow_down_circle_fill),
+                              onPressed: () async {
+                                downloadService?.downloadBook(
+                                  book,
+                                  tracks!,
+                                );
+                              },
+                            );
+                        }
+                      },
                     ),
                   ),
                   CupertinoSliverRefreshControl(
@@ -71,11 +110,8 @@ class BookDetailsView extends HookConsumerWidget {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            // height: 300,
-                            constraints: const BoxConstraints(
-                              maxWidth: 335,
-                              minHeight: 335,
-                            ),
+                            height: 250,
+                            constraints: const BoxConstraints(maxWidth: 250),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -85,53 +121,19 @@ class BookDetailsView extends HookConsumerWidget {
                                 CachedNetworkImage(
                                   imageUrl: book.largeArtPath ?? book.artPath,
                                   fit: BoxFit.scaleDown,
-                                  errorWidget: (context, value, stack) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        const Icon(
-                                          CupertinoIcons.book_fill,
-                                          size: 80.0,
-                                        ),
-                                        Text(book.title),
-                                      ],
-                                    );
-                                  },
-                                  placeholder: (context, value) {
-                                    return SizedBox(
-                                      height: 335,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          const Icon(CupertinoIcons.book_fill),
-                                          Text(book.title),
-                                        ],
-                                      ),
-                                    );
+                                  errorWidget: (context, string, stack) {
+                                    return const Icon(CupertinoIcons.book_fill);
                                   },
                                 ),
                                 if (progress > 0)
                                   Positioned.fill(
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          child: LinearProgressIndicator(
-                                            minHeight: 8,
-                                            value: progress,
-                                            color: Colors.deepPurple,
-                                            backgroundColor:
-                                                Colors.grey.withOpacity(0.2),
-                                          ),
-                                        ),
+                                      child: LinearProgressIndicator(
+                                        minHeight: 6,
+                                        value: progress,
+                                        color: Colors.deepPurple,
+                                        backgroundColor: Colors.transparent,
                                       ),
                                     ),
                                   )
@@ -188,7 +190,7 @@ class BookDetailsView extends HookConsumerWidget {
                         },
                         color: Colors.deepPurple,
                         child: Text(
-                          getListenText(progress, book),
+                          "Listen${progress > 0 ? ' (${Utils.getTimeLeft(book)} left)' : ''}",
                           style: const TextStyle(
                             color: CupertinoColors.white,
                             fontSize: 14.0,
@@ -357,96 +359,11 @@ class BookDetailsView extends HookConsumerWidget {
               ),
             );
           },
-        );
-  }
-}
-
-class DifferentHeader extends SliverPersistentHeaderDelegate {
-  final DownloadService? downloadService;
-  final Book book;
-  final List<Track>? tracks;
-
-  const DifferentHeader({
-    required this.book,
-    required this.tracks,
-    this.downloadService,
-  });
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return CupertinoNavigationBar(
-      backgroundColor: const Color.fromRGBO(0, 0, 0, 0.5),
-      trailing: Builder(
-        builder: (context) {
-          switch (book.downloadStatus) {
-            case DownloadStatus.succeeded:
-              return CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () async {
-                  downloadService?.cancelBookDownload(
-                    book,
-                  );
-                },
-                child: const Icon(
-                  CupertinoIcons.delete_solid,
-                ),
-              );
-            case DownloadStatus.downloading:
-              return Stack(
-                children: [
-                  const Positioned(
-                    left: 8.0,
-                    top: 8.0,
-                    child: SizedBox(
-                      height: 28.0,
-                      width: 28.0,
-                      child: CircularProgressIndicator(
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                  ),
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      downloadService?.cancelBookDownload(book);
-                    },
-                    child: const Icon(
-                      Icons.cancel_rounded,
-                    ),
-                  ),
-                ],
-              );
-            default:
-              return CupertinoButton(
-                padding: EdgeInsets.zero,
-                child: const Icon(
-                  CupertinoIcons.arrow_down_circle_fill,
-                ),
-                onPressed: () async {
-                  downloadService?.downloadBook(
-                    book,
-                    tracks!,
-                  );
-                },
-              );
-          }
-        },
-      ),
+        ),
+        Container(
+          child: Text('Second Page'),
+        )
+      ],
     );
-  }
-
-  @override
-  double get maxExtent => 110;
-
-  @override
-  double get minExtent => 110;
-
-  @override
-  bool shouldRebuild(DifferentHeader oldDelegate) {
-    return oldDelegate.book != book;
   }
 }

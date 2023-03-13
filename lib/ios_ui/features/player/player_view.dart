@@ -27,8 +27,8 @@ class PlayerView extends HookConsumerWidget {
     String text = '';
     if (currentPosition != null && duration != null) {
       int durationLeft = duration - currentPosition;
-      String durationLeftText = Utils.friendlyDuration(
-          Duration(milliseconds: (durationLeft / rate).round()));
+      String durationLeftText =
+          Duration(milliseconds: (durationLeft / rate).round()).timeLeft;
       text =
           '${(currentPosition / duration * 100).toStringAsFixed(0)}% ($durationLeftText left)';
     }
@@ -50,6 +50,8 @@ class PlayerView extends HookConsumerWidget {
     if (state?.processingState == AudioProcessingState.completed) {
       Navigator.of(context).pop();
     }
+
+    final primaryColor = CupertinoTheme.of(context).primaryColor;
 
     return CupertinoScaffold(
       body: Column(
@@ -176,8 +178,9 @@ class PlayerView extends HookConsumerWidget {
                               onPressed: () {
                                 playbackController.skipToPrevious();
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.skip_previous,
+                                color: primaryColor,
                               ),
                             ),
                             Expanded(
@@ -192,8 +195,9 @@ class PlayerView extends HookConsumerWidget {
                               onPressed: () {
                                 playbackController.skipToNext();
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.skip_next,
+                                color: primaryColor,
                               ),
                             ),
                           ],
@@ -227,20 +231,23 @@ class PlayerView extends HookConsumerWidget {
                           children: <Widget>[
                             HookBuilder(
                               builder: (context) {
-                                final timeLeft =
-                                    useStream(sleepService.getTimeLeftStream());
+                                final timeLeft = useStream(
+                                  sleepService.getTimeLeftStream(),
+                                );
                                 return getIconButton(
                                   icon:
                                       timeLeft.hasData && timeLeft.data != null
                                           ? Text(
                                               Utils.getTimeValue(timeLeft.data),
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 9.0,
+                                                color: primaryColor,
                                               ),
                                             )
-                                          : const Icon(
+                                          : Icon(
                                               Icons.snooze,
+                                              color: primaryColor,
                                             ),
                                   onPressed: () async {
                                     Duration? time;
@@ -286,6 +293,7 @@ class PlayerView extends HookConsumerWidget {
                               },
                             ),
                             RewindButton(
+                              color: primaryColor,
                               iconSize: 35,
                             ),
                             Stack(
@@ -313,13 +321,15 @@ class PlayerView extends HookConsumerWidget {
                                           false ||
                                               state?.processingState ==
                                                   AudioProcessingState.buffering
-                                      ? const Icon(
+                                      ? Icon(
                                           Icons.pause_circle_filled,
                                           size: 60,
+                                          color: primaryColor,
                                         )
-                                      : const Icon(
+                                      : Icon(
                                           Icons.play_circle_filled,
                                           size: 60,
+                                          color: primaryColor,
                                         ),
                                   onPressed: () async {
                                     if (state?.playing ??
@@ -339,6 +349,7 @@ class PlayerView extends HookConsumerWidget {
                             ),
                             ForwardButton(
                               iconSize: 35,
+                              color: primaryColor,
                             ),
                             CupertinoButton(
                               onPressed: () => {
@@ -364,7 +375,7 @@ class PlayerView extends HookConsumerWidget {
                                                 'Playback Speed: ${currentSliderValue.value.toStringAsFixed(2)}',
                                               ),
                                               ValueSlider(
-                                                prefix: const Text('1.00'),
+                                                prefix: const Text('0.50'),
                                                 value: state?.speed ?? 1.0,
                                                 onChanged: (val) =>
                                                     currentSliderValue.value =
@@ -373,9 +384,9 @@ class PlayerView extends HookConsumerWidget {
                                                   await playbackController
                                                       .setSpeed(val);
                                                 },
-                                                max: 2.0,
-                                                min: 1.0,
-                                                postfix: const Text('2.00'),
+                                                max: 3.0,
+                                                min: 0.5,
+                                                postfix: const Text('3.00'),
                                               )
                                             ],
                                           );
@@ -385,8 +396,9 @@ class PlayerView extends HookConsumerWidget {
                               },
                               child: Text(
                                 '${state?.speed.toStringAsFixed(2)}x',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.w600,
+                                  color: primaryColor,
                                   fontSize: 10.0,
                                 ),
                               ), //............
@@ -458,7 +470,6 @@ class ValueSlider extends HookWidget {
         Expanded(
           child: BetterCupertinoSlider(
             configure: BetterCupertinoSliderConfigure(
-              useTapGesture: false,
               trackLeftColor: Colors.deepPurple,
               thumbPainter: (canvas, rect) {
                 final RRect rrect = RRect.fromRectAndRadius(
@@ -468,24 +479,19 @@ class ValueSlider extends HookWidget {
                 canvas.drawRRect(rrect, Paint()..color = Colors.deepPurple);
               },
             ),
-            // thumbColor: Colors.deepPurple,
-            // label: currentProgress.value!.toStringAsFixed(2),
             value: currentProgress.value!,
             onChangeStart: (val) {
               seeking.value = true;
             },
             onChanged: (newVal) {
               currentProgress.value = stepper(newVal);
-              if (onChanged != null) onChanged!(stepper(newVal));
-            },
-            onChangeEnd: (val) {
-              seeking.value = false;
-              onChangeEnd!(stepper(val));
+              onChanged?.call(stepper(newVal));
+              Debouncer(milliseconds: 500).run(() {
+                onChangeEnd?.call(stepper(newVal));
+              });
             },
             min: min,
             max: max,
-            // divisions: 20,
-            // activeColor: Colors.deepPurple,
           ),
         ),
         postfix!,

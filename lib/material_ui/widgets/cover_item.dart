@@ -44,26 +44,40 @@ class CoverItem extends StatelessWidget {
                   child: thumbnailUrl == null
                       ? Container(
                           color: Colors.black,
-                          child: Icon(
-                            icon,
-                            size: 50.0,
+                          child: Center(
+                            child: Icon(
+                              icon,
+                              size: 50.0,
+                            ),
                           ),
                         )
                       : CachedNetworkImage(
                           imageUrl: thumbnailUrl!,
                           fit: BoxFit.contain,
                           alignment: Alignment.center,
-                          errorWidget: (context, error, child) =>
-                              Text(title ?? ''),
-                          placeholder: (context, url) => Container(
+                          errorWidget: (context, error, child) => Container(
                             color: Colors.black,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   icon,
                                   size: 50.0,
                                 ),
-                                Text(title ?? ''),
+                                if (!showTitle) Text(title ?? ''),
+                              ],
+                            ),
+                          ),
+                          placeholder: (context, url) => Container(
+                            color: Colors.black,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  icon,
+                                  size: 50.0,
+                                ),
+                                if (!showTitle) Text(title ?? ''),
                               ],
                             ),
                           ),

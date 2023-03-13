@@ -15,6 +15,7 @@ import 'package:audiobookly/repositories/authentication/emby_auth_repository.dar
 import 'package:audiobookly/domain/auth/auth_state.dart';
 import 'package:audiobookly/material_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plex_api/plex_api.dart';
@@ -92,8 +93,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       u = await _ref
           .read(absAuthRepoProvider)
           .login(baseUrl, username, password);
-    } catch (e) {
+    } catch (e, stack) {
       log('$e');
+      log('$stack');
     }
     return u?.token != null;
   }
@@ -105,7 +107,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     PlexPin pin = await plexApi.getPin();
     String oAuthUrl = plexApi.getOauthUrl(pin.code!);
     // Browser browser = await openUrl(oAuthUrl);
-    await launchUrl(Uri.parse(oAuthUrl));
+    await launchUrl(oAuthUrl.uri!);
     int count = 0;
     Completer waitForIt = Completer();
     Timer.periodic(const Duration(seconds: 5), (timer) async {
@@ -150,10 +152,20 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future checkToken() async {
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    Preferences prefs = prefsNotifier.state;
+    if (prefs.userToken.isNotEmpty && prefs.libraryId.isNotEmpty) {
+      state = AuthStateLoaded(
+        user: User(
+          name: prefs.username,
+          userName: prefs.username,
+          token: prefs.userToken,
+        ),
+      );
+      return;
+    }
     try {
       state = const AuthStateLoading();
-      final prefsNotifier = _ref.read(preferencesProvider.notifier);
-      Preferences prefs = prefsNotifier.state;
       final navigationService = _ref.read(navigationServiceProvider);
       log('Checking token: ${prefs.userToken}');
 
@@ -212,22 +224,36 @@ class AuthNotifier extends StateNotifier<AuthState> {
             );
           }
         }
-      } else {}
+      }
 
       if (user != null) {
         state = AuthStateLoaded(user: user);
       } else {
-        prefs.userToken = '';
-        prefsNotifier.savePreferences(prefs);
-        state = const AuthStateInitial();
+        // prefs.userToken = '';
+        // prefsNotifier.savePreferences(prefs);
+        // state = const AuthStateInitial();
+        state = AuthStateLoaded(
+          user: User(
+            name: prefs.username,
+            userName: prefs.username,
+            token: prefs.userToken,
+          ),
+        );
       }
     } catch (e, stack) {
       // if (e.toString().startsWith('Failed host lookup')) {
       //   state = const AuthStateOffline();
       // } else {
+      state = AuthStateLoaded(
+        user: User(
+          name: prefs.username,
+          userName: prefs.username,
+          token: prefs.userToken,
+        ),
+      );
       log('$e');
       log('$stack');
-      state = AuthStateErrorDetails(e.toString());
+      // state = AuthStateErrorDetails(e.toString());
       // }
     }
   }

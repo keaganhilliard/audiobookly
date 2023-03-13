@@ -99,7 +99,7 @@ const IsarBookSchema = CollectionSchema(
   getId: _isarBookGetId,
   getLinks: _isarBookGetLinks,
   attach: _isarBookAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _isarBookEstimateSize(

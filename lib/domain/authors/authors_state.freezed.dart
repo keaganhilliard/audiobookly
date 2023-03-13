@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'authors_state.dart';
 
@@ -19,7 +19,9 @@ mixin _$AuthorsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function(
+            List<MediaItem>? authors, int totalResults, int page)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
@@ -27,7 +29,8 @@ mixin _$AuthorsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) =>
@@ -35,7 +38,8 @@ mixin _$AuthorsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -133,7 +137,9 @@ class _$AuthorsStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function(
+            List<MediaItem>? authors, int totalResults, int page)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -144,7 +150,8 @@ class _$AuthorsStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -155,7 +162,8 @@ class _$AuthorsStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -214,7 +222,7 @@ abstract class _$$AuthorsStateLoadedCopyWith<$Res> {
           $Res Function(_$AuthorsStateLoaded) then) =
       __$$AuthorsStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MediaItem>? authors});
+  $Res call({List<MediaItem>? authors, int totalResults, int page});
 }
 
 /// @nodoc
@@ -229,12 +237,22 @@ class __$$AuthorsStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? authors = freezed,
+    Object? totalResults = null,
+    Object? page = null,
   }) {
     return _then(_$AuthorsStateLoaded(
       authors: freezed == authors
           ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>?,
+      totalResults: null == totalResults
+          ? _value.totalResults
+          : totalResults // ignore: cast_nullable_to_non_nullable
+              as int,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -244,7 +262,8 @@ class __$$AuthorsStateLoadedCopyWithImpl<$Res>
 class _$AuthorsStateLoaded
     with DiagnosticableTreeMixin
     implements AuthorsStateLoaded {
-  const _$AuthorsStateLoaded({final List<MediaItem>? authors})
+  const _$AuthorsStateLoaded(
+      {final List<MediaItem>? authors, this.totalResults = 0, this.page = 0})
       : _authors = authors;
 
   final List<MediaItem>? _authors;
@@ -252,13 +271,21 @@ class _$AuthorsStateLoaded
   List<MediaItem>? get authors {
     final value = _authors;
     if (value == null) return null;
+    if (_authors is EqualUnmodifiableListView) return _authors;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
+  @JsonKey()
+  final int totalResults;
+  @override
+  @JsonKey()
+  final int page;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthorsState.loaded(authors: $authors)';
+    return 'AuthorsState.loaded(authors: $authors, totalResults: $totalResults, page: $page)';
   }
 
   @override
@@ -266,7 +293,9 @@ class _$AuthorsStateLoaded
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AuthorsState.loaded'))
-      ..add(DiagnosticsProperty('authors', authors));
+      ..add(DiagnosticsProperty('authors', authors))
+      ..add(DiagnosticsProperty('totalResults', totalResults))
+      ..add(DiagnosticsProperty('page', page));
   }
 
   @override
@@ -274,12 +303,15 @@ class _$AuthorsStateLoaded
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthorsStateLoaded &&
-            const DeepCollectionEquality().equals(other._authors, _authors));
+            const DeepCollectionEquality().equals(other._authors, _authors) &&
+            (identical(other.totalResults, totalResults) ||
+                other.totalResults == totalResults) &&
+            (identical(other.page, page) || other.page == page));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_authors));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_authors), totalResults, page);
 
   @JsonKey(ignore: true)
   @override
@@ -292,35 +324,39 @@ class _$AuthorsStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function(
+            List<MediaItem>? authors, int totalResults, int page)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return loaded(authors);
+    return loaded(authors, totalResults, page);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
-    return loaded?.call(authors);
+    return loaded?.call(authors, totalResults, page);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(authors);
+      return loaded(authors, totalResults, page);
     }
     return orElse();
   }
@@ -364,10 +400,14 @@ class _$AuthorsStateLoaded
 }
 
 abstract class AuthorsStateLoaded implements AuthorsState {
-  const factory AuthorsStateLoaded({final List<MediaItem>? authors}) =
-      _$AuthorsStateLoaded;
+  const factory AuthorsStateLoaded(
+      {final List<MediaItem>? authors,
+      final int totalResults,
+      final int page}) = _$AuthorsStateLoaded;
 
   List<MediaItem>? get authors;
+  int get totalResults;
+  int get page;
   @JsonKey(ignore: true)
   _$$AuthorsStateLoadedCopyWith<_$AuthorsStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -420,7 +460,9 @@ class _$AuthorsStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function(
+            List<MediaItem>? authors, int totalResults, int page)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -431,7 +473,8 @@ class _$AuthorsStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -442,7 +485,8 @@ class _$AuthorsStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -572,7 +616,9 @@ class _$AuthorsStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? authors) loaded,
+    required TResult Function(
+            List<MediaItem>? authors, int totalResults, int page)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -583,7 +629,8 @@ class _$AuthorsStateErrorDetails
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? authors)? loaded,
+    TResult? Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -594,7 +641,8 @@ class _$AuthorsStateErrorDetails
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? authors)? loaded,
+    TResult Function(List<MediaItem>? authors, int totalResults, int page)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),

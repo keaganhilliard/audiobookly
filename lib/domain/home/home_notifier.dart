@@ -28,16 +28,19 @@ class HomeNotifier extends StateNotifier<HomeState> {
   Future refresh() async {
     Map<String, List<ModelUnion>>? rowsData;
 
+    final downloaded = [
+      for (final value in await _repository!.getDownloads())
+        ModelUnion.book(value)
+    ];
+    state = HomeState.loaded(downloaded: downloaded);
+
     try {
       rowsData = await _repository!.getHomeData();
     } catch (e, stack) {
       log('$e');
       log('$stack');
     }
-    final downloaded = [
-      for (final value in await _repository!.getDownloads())
-        ModelUnion.book(value)
-    ];
+
     booksSub ??= GetIt.I<DatabaseService>()
         .getBooks()
         .debounceTime(const Duration(milliseconds: 200))

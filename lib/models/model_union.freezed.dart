@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'model_union.dart';
 
@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ModelUnion {
+  Object get value => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Book value) book,
@@ -225,6 +226,7 @@ class _$BookValue implements BookValue {
 abstract class BookValue implements ModelUnion {
   const factory BookValue(final Book value) = _$BookValue;
 
+  @override
   Book get value;
   @JsonKey(ignore: true)
   _$$BookValueCopyWith<_$BookValue> get copyWith =>
@@ -370,6 +372,7 @@ class _$AuthorValue implements AuthorValue {
 abstract class AuthorValue implements ModelUnion {
   const factory AuthorValue(final Author value) = _$AuthorValue;
 
+  @override
   Author get value;
   @JsonKey(ignore: true)
   _$$AuthorValueCopyWith<_$AuthorValue> get copyWith =>
@@ -515,6 +518,7 @@ class _$SeriesValue implements SeriesValue {
 abstract class SeriesValue implements ModelUnion {
   const factory SeriesValue(final Series value) = _$SeriesValue;
 
+  @override
   Series get value;
   @JsonKey(ignore: true)
   _$$SeriesValueCopyWith<_$SeriesValue> get copyWith =>
@@ -660,6 +664,7 @@ class _$CollectionValue implements CollectionValue {
 abstract class CollectionValue implements ModelUnion {
   const factory CollectionValue(final Collection value) = _$CollectionValue;
 
+  @override
   Collection get value;
   @JsonKey(ignore: true)
   _$$CollectionValueCopyWith<_$CollectionValue> get copyWith =>

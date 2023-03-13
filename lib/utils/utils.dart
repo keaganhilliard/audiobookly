@@ -79,9 +79,9 @@ class Utils {
             : Duration.zero,
         album: item.album ?? item.name!,
         displayDescription: item.overview ?? '',
-        artUri: Uri.parse(item.type == 'BoxSet'
-            ? repo.getThumbnailUrl(item.id)
-            : repo.getThumbnailUrl(item.id)),
+        artUri: item.type == 'BoxSet'
+            ? repo.getThumbnailUrl(item.id).uri
+            : repo.getThumbnailUrl(item.id).uri,
         playable: item.type == 'Audio' || item.type == 'MusicAlbum',
         extras: <String, dynamic>{
           'played': (item.userData?.played ?? false),
@@ -123,30 +123,48 @@ class Utils {
     return MediaQuery.of(context).size.width > 640.0;
   }
 
-  static String friendlyDuration(Duration duration) {
-    int hours = duration.inHours;
-    int minutes = duration.inMinutes.remainder(60);
-    final hoursText = hours > 0 ? '$hours hour${hours != 1 ? "s" : ""}' : '';
-    final minutesText =
-        minutes > 0 ? '$minutes minute${minutes != 1 ? "s" : ""}' : '';
-    List<String> pieces = [];
-    if (hoursText.isNotEmpty) pieces.add(hoursText);
-    if (minutesText.isNotEmpty) pieces.add(minutesText);
-    return pieces.join(' and ');
-  }
-
   static String friendlyDurationFromItems(List<MediaItem> items) {
     final totalDuration = items.fold<Duration>(
         Duration.zero,
         (previousValue, element) =>
             previousValue + (element.duration ?? Duration.zero));
-    return friendlyDuration(totalDuration);
+    return totalDuration.timeLeft;
   }
 
   static String friendlyDurationFromTracks(List<Track> tracks) {
     final totalDuration = tracks.fold<Duration>(Duration.zero,
         (previousValue, element) => previousValue + (element.duration));
-    return friendlyDuration(totalDuration);
+    return totalDuration.timeLeft;
+  }
+
+  static String getTimeLeft(Book book) {
+    return (book.duration - book.lastPlayedPosition).timeLeft;
+  }
+}
+
+extension DurationHelpers on Duration {
+  String get timeLeft {
+    String pluralString(int value, String label, String pluralSuffix) {
+      if (value == 0) {
+        return '';
+      } else if (value == 1) {
+        return '$value $label';
+      } else {
+        return '$value $label$pluralSuffix';
+      }
+    }
+
+    int hours = inHours;
+    int minutes = inMinutes.remainder(60);
+    int seconds = inSeconds.remainder(60);
+    final hoursText = pluralString(hours, 'hour', 's');
+    final minutesText = pluralString(minutes, 'minute', 's');
+    final secondsText = pluralString(seconds, 'second', 's');
+    List<String> pieces = [];
+    if (hoursText.isNotEmpty) pieces.add(hoursText);
+    if (minutesText.isNotEmpty) pieces.add(minutesText);
+    if (hoursText.isEmpty && secondsText.isNotEmpty) pieces.add(secondsText);
+    return pieces.join(' and ');
   }
 }
 
@@ -226,7 +244,7 @@ extension MediaHelpers on MediaItem {
         title: book.title,
         artist: book.author,
         album: book.title,
-        artUri: Uri.parse(book.artPath),
+        artUri: book.artPath.uri,
         displayDescription: book.description,
         playable: true,
         duration: book.duration,
@@ -245,7 +263,7 @@ extension MediaHelpers on MediaItem {
         album: book.title,
         artist: book.author,
         displayDescription: book.description,
-        artUri: Uri.parse(book.artPath),
+        artUri: book.artPath.uri,
         playable: true,
         extras: <String, dynamic>{
           'narrator': book.narrator,

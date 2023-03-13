@@ -2,6 +2,8 @@ import 'abs_utils.dart';
 
 class AbsAudiobookProgress {
   String id;
+  String? libraryItemId;
+  String? episodeId;
   Duration? duration;
   double? progress;
   Duration? currentTime;
@@ -13,6 +15,8 @@ class AbsAudiobookProgress {
 
   AbsAudiobookProgress({
     required this.id,
+    this.libraryItemId,
+    this.episodeId,
     this.duration,
     this.progress,
     this.currentTime,
@@ -26,6 +30,8 @@ class AbsAudiobookProgress {
   factory AbsAudiobookProgress.fromJson(Map<String, dynamic> json) =>
       AbsAudiobookProgress(
         id: json['id'],
+        libraryItemId: json['libraryItemId'],
+        episodeId: json['episodeId'],
         duration: AbsUtils.parseDurationFromSeconds(json['duration']),
         isFinished: json['isFinished'],
         progress: json['progress']?.toDouble(),
@@ -39,6 +45,8 @@ class AbsAudiobookProgress {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['id'] = id;
+    data['libraryItemId'] = libraryItemId;
+    data['episodeId'] = episodeId;
     data['duration'] = (duration?.inMilliseconds ?? 0) / 1000;
     data['progress'] = progress;
     data['currentTime'] = (currentTime?.inMilliseconds ?? 0) / 1000;

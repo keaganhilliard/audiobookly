@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'search_state.dart';
 
@@ -282,6 +282,7 @@ class _$SearchStateLoaded
   List<MediaItem>? get authorResults {
     final value = _authorResults;
     if (value == null) return null;
+    if (_authorResults is EqualUnmodifiableListView) return _authorResults;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -291,6 +292,7 @@ class _$SearchStateLoaded
   List<MediaItem>? get bookResults {
     final value = _bookResults;
     if (value == null) return null;
+    if (_bookResults is EqualUnmodifiableListView) return _bookResults;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -300,6 +302,7 @@ class _$SearchStateLoaded
   List<MediaItem>? get seriesResults {
     final value = _seriesResults;
     if (value == null) return null;
+    if (_seriesResults is EqualUnmodifiableListView) return _seriesResults;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }

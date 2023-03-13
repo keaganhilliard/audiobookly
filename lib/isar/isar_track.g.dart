@@ -114,7 +114,7 @@ const IsarTrackSchema = CollectionSchema(
   getId: _isarTrackGetId,
   getLinks: _isarTrackGetLinks,
   attach: _isarTrackAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _isarTrackEstimateSize(

@@ -25,7 +25,7 @@ class AuthorsView extends HookConsumerWidget {
     return AbScaffold(
         child: state.when(
       initial: () => const SliverToBoxAdapter(),
-      loaded: (authors) => AbGrid(
+      loaded: (authors, total, page) => AbGrid(
         childCount: authors!.length,
         childBuilder: (context, index) {
           final author = authors[index];

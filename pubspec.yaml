@@ -11,7 +11,7 @@ description: An audiobook player for Plex built using Flutter.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.0+6
+version: 0.1.0+9
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -45,7 +45,6 @@ dependencies:
   scrollable_positioned_list: ^0.3.2
   # audio_cast:
   # cast:
-  collection: ^1.15.0-nullsafety.4
   auto_size_text: ^3.0.0-nullsafety.0
   device_info_plus: ^8.0.0
   get_it: ^7.1.4
@@ -60,7 +59,7 @@ dependencies:
     git:
       url: https://github.com/clickup/clickup_fading_scroll
   better_cupertino_slider: ^1.0.0
-  background_downloader: ^1.2.0
+  background_downloader: ^2.0.1
   declarative_refresh_indicator: ^0.1.0
   adaptive_navigation: ^0.0.7
   scroll_to_index: ^3.0.1
@@ -72,6 +71,8 @@ dependencies:
   palette_generator: ^0.3.3+2
   flutter_riverpod: ^2.1.1
   flutter_adaptive_scaffold: ^0.0.8
+  audiobookshelf_api:
+  infinite_widgets: ^2.0.2
 
   # dart_chromecast:
   #   git:
@@ -79,6 +80,10 @@ dependencies:
   #     ref: playbackRate
 
 dependency_overrides:
+  modal_bottom_sheet:
+    git:
+      url: https://github.com/danReynolds/modal_bottom_sheet.git
+      path: modal_bottom_sheet
   # bonsoir:
   #   git:
   #     url: git://github.com/Skyost/Bonsoir.git
@@ -95,7 +100,7 @@ dev_dependencies:
   # objectbox_generator:
   # floor_generator:
   flutter_lints: ^2.0.1
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
 
 flutter_icons:
   android: "launcher_icon"

@@ -223,11 +223,20 @@ class CoverItem extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: progress! > 0 && !played
-                        ? LinearProgressIndicator(
-                            minHeight: 6,
-                            value: progress,
-                            color: Colors.deepPurple,
-                            backgroundColor: Colors.transparent,
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: LinearProgressIndicator(
+                                minHeight: 8,
+                                value: progress,
+                                color: Colors.deepPurple,
+                                backgroundColor: Colors.grey.withOpacity(0.2),
+                              ),
+                            ),
                           )
                         : Container(),
                   ),

@@ -119,7 +119,7 @@ class DownloadService {
             fileName ?? theTrack.title,
           ),
         ),
-        Uri.parse(_repo.getDownloadUrl(theTrack.id)),
+        _repo.getDownloadUrl(theTrack.id).uri!,
         path,
         fileName,
       );

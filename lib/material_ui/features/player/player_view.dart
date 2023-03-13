@@ -17,19 +17,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class PlayerView extends HookConsumerWidget {
   final MediaItem? book;
 
-  String genDurationString(List<MediaItem> tracks) {
-    Duration total =
-        tracks.fold(Duration.zero, (total, track) => total + track.duration!);
-    return Utils.friendlyDuration(total);
-  }
-
   String getDurationLeftText(int? currentPosition, int? duration,
       [double rate = 1.0]) {
     String text = '';
     if (currentPosition != null && duration != null) {
       int durationLeft = duration - currentPosition;
-      String durationLeftText = Utils.friendlyDuration(
-          Duration(milliseconds: (durationLeft / rate).round()));
+      String durationLeftText =
+          Duration(milliseconds: (durationLeft / rate).round()).timeLeft;
       text =
           '${(currentPosition / duration * 100).toStringAsFixed(0)}% ($durationLeftText left)';
     }

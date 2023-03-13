@@ -10,54 +10,56 @@ class AuthorsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authorsProvider = ref.watch(authorsStateProvider.notifier);
-    final state = ref.watch(authorsStateProvider);
-    return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.black,
-      resizeToAvoidBottomInset: false,
-      child: AbGridView(
-        title: 'Authors',
-        onRefresh: () async {
-          await authorsProvider.refresh();
-        },
-        child: state.when(
-          initial: () => const SliverToBoxAdapter(),
-          loaded: (authors) => SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              childCount: authors!.length,
-              (context, index) {
-                final author = authors[index];
-                return GridItem(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (context) => BooksView(
-                          mediaId: author.id,
-                          title: author.title,
-                          previousPageTitle: 'Authors',
-                        ),
-                      ),
-                    );
-                  },
-                  thumbnailUrl: author.artUri?.toString(),
-                  title: author.title,
-                  placeholder: CupertinoIcons.person_2_fill,
-                  showTitle: true,
-                );
-              },
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-            ),
-          ),
-          loading: () => const SliverFillRemaining(
-            child: Center(
-              child: CupertinoActivityIndicator(radius: 30),
-            ),
-          ),
-          error: (message) => const SliverToBoxAdapter(),
+    return LayoutBuilder(builder: (context, constraints) {
+      return CupertinoPageScaffold(
+        backgroundColor: CupertinoColors.black,
+        resizeToAvoidBottomInset: false,
+        child: AbGridView(
+          title: 'Authors',
+          onRefresh: ref.read(authorsStateProvider.notifier).refresh,
+          child: ref.watch(authorsStateProvider).when(
+                initial: () => const SliverToBoxAdapter(),
+                loaded: (authors, total, page) => SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: authors!.length,
+                    (context, index) {
+                      final author = authors[index];
+                      return GridItem(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => BooksView(
+                                mediaId: author.id,
+                                title: author.title,
+                                previousPageTitle: 'Authors',
+                              ),
+                            ),
+                          );
+                        },
+                        thumbnailUrl: author.artUri?.toString(),
+                        title: author.title,
+                        placeholder: CupertinoIcons.person_2_fill,
+                        showTitle: true,
+                      );
+                    },
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: (constraints.maxWidth / 250).ceil(),
+                  ),
+                ),
+                loading: () => const SliverFillRemaining(
+                  child: Center(
+                    child: CupertinoActivityIndicator(radius: 30),
+                  ),
+                ),
+                error: (message) => SliverFillRemaining(
+                  child: Center(
+                    child: Text('$message'),
+                  ),
+                ),
+              ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

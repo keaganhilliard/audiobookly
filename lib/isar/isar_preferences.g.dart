@@ -90,7 +90,7 @@ const IsarPreferencesSchema = CollectionSchema(
   getId: _isarPreferencesGetId,
   getLinks: _isarPreferencesGetLinks,
   attach: _isarPreferencesAttach,
-  version: '3.0.2',
+  version: '3.0.5',
 );
 
 int _isarPreferencesEstimateSize(

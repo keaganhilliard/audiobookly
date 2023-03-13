@@ -238,7 +238,7 @@ class BookDetailsView extends HookConsumerWidget {
                               ),
                             ),
                           Text((book.duration) != Duration.zero
-                              ? Utils.friendlyDuration(book.duration)
+                              ? book.duration.timeLeft
                               : Utils.friendlyDurationFromTracks(tracks!)),
                           const Divider(),
                           const ButtonBar(

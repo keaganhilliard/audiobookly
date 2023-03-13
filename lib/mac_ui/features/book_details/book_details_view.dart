@@ -1,12 +1,12 @@
 import 'package:audiobookly/domain/track_details/track_details_notifier.dart';
 import 'package:audiobookly/domain/track_details/track_details_state.dart';
 import 'package:audiobookly/mac_ui/widgets/macos_icon_with_fontweight.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cupertino_lists/cupertino_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,6 +14,16 @@ import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:macos_ui/macos_ui.dart';
+
+String getListenText(double progress, Book book) {
+  if (book.read) {
+    return 'Listen Again';
+  } else if (progress > 0) {
+    return "Listen (${Utils.getTimeLeft(book)} left)";
+  } else {
+    return "Start Listening";
+  }
+}
 
 class BookDetailsView extends HookConsumerWidget {
   final String mediaId;
@@ -140,8 +150,7 @@ class BookDetailsView extends HookConsumerWidget {
                                     ),
                                     child: Text(
                                       (book.duration) != Duration.zero
-                                          ? Utils.friendlyDuration(
-                                              book.duration)
+                                          ? book.duration.timeLeft
                                           : Utils.friendlyDurationFromTracks(
                                               tracks!),
                                       textAlign: TextAlign.left,
@@ -247,7 +256,8 @@ class BookDetailsView extends HookConsumerWidget {
                                                           const EdgeInsets.only(
                                                               left: 6.0),
                                                       child: Text(
-                                                        'Play',
+                                                        getListenText(
+                                                            progress, book),
                                                         style: MacosTheme.of(
                                                                 context)
                                                             .typography

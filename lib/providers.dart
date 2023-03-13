@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/repositories/media/abs_repository.dart';
+import 'package:audiobookly/repositories/media/audiobookshelf_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -64,6 +65,9 @@ final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
   } else if (serverType == ServerType.audiobookshelf) {
     final absApi = ref.watch(absApiProvider);
     return AbsRepository(absApi);
+    // } else if (serverType == ServerType.audiobookshelf) {
+    //   final absApi = ref.watch(audiobookshelfApiProvider);
+    //   return AudiobookshelfRepository(absApi);
   } else {
     return null;
   }
