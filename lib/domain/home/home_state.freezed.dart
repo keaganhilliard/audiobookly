@@ -52,7 +52,7 @@ mixin _$HomeState {
     required TResult Function(HomeStateInitial value) initial,
     required TResult Function(HomeStateLoaded value) loaded,
     required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateErrorDetails value) error,
+    required TResult Function(HomeStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,7 +60,7 @@ mixin _$HomeState {
     TResult? Function(HomeStateInitial value)? initial,
     TResult? Function(HomeStateLoaded value)? loaded,
     TResult? Function(HomeStateLoading value)? loading,
-    TResult? Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,7 +68,7 @@ mixin _$HomeState {
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
     TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult Function(HomeStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -183,7 +183,7 @@ class _$HomeStateInitial
     required TResult Function(HomeStateInitial value) initial,
     required TResult Function(HomeStateLoaded value) loaded,
     required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateErrorDetails value) error,
+    required TResult Function(HomeStateError value) error,
   }) {
     return initial(this);
   }
@@ -194,7 +194,7 @@ class _$HomeStateInitial
     TResult? Function(HomeStateInitial value)? initial,
     TResult? Function(HomeStateLoaded value)? loaded,
     TResult? Function(HomeStateLoading value)? loading,
-    TResult? Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -205,7 +205,7 @@ class _$HomeStateInitial
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
     TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult Function(HomeStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -372,7 +372,7 @@ class _$HomeStateLoaded
     required TResult Function(HomeStateInitial value) initial,
     required TResult Function(HomeStateLoaded value) loaded,
     required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateErrorDetails value) error,
+    required TResult Function(HomeStateError value) error,
   }) {
     return loaded(this);
   }
@@ -383,7 +383,7 @@ class _$HomeStateLoaded
     TResult? Function(HomeStateInitial value)? initial,
     TResult? Function(HomeStateLoaded value)? loaded,
     TResult? Function(HomeStateLoading value)? loading,
-    TResult? Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -394,7 +394,7 @@ class _$HomeStateLoaded
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
     TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult Function(HomeStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -508,7 +508,7 @@ class _$HomeStateLoading
     required TResult Function(HomeStateInitial value) initial,
     required TResult Function(HomeStateLoaded value) loaded,
     required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateErrorDetails value) error,
+    required TResult Function(HomeStateError value) error,
   }) {
     return loading(this);
   }
@@ -519,7 +519,7 @@ class _$HomeStateLoading
     TResult? Function(HomeStateInitial value)? initial,
     TResult? Function(HomeStateLoaded value)? loaded,
     TResult? Function(HomeStateLoading value)? loading,
-    TResult? Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -530,7 +530,7 @@ class _$HomeStateLoading
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
     TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult Function(HomeStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -545,20 +545,20 @@ abstract class HomeStateLoading implements HomeState {
 }
 
 /// @nodoc
-abstract class _$$HomeStateErrorDetailsCopyWith<$Res> {
-  factory _$$HomeStateErrorDetailsCopyWith(_$HomeStateErrorDetails value,
-          $Res Function(_$HomeStateErrorDetails) then) =
-      __$$HomeStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$HomeStateErrorCopyWith<$Res> {
+  factory _$$HomeStateErrorCopyWith(
+          _$HomeStateError value, $Res Function(_$HomeStateError) then) =
+      __$$HomeStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateErrorDetails>
-    implements _$$HomeStateErrorDetailsCopyWith<$Res> {
-  __$$HomeStateErrorDetailsCopyWithImpl(_$HomeStateErrorDetails _value,
-      $Res Function(_$HomeStateErrorDetails) _then)
+class __$$HomeStateErrorCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateError>
+    implements _$$HomeStateErrorCopyWith<$Res> {
+  __$$HomeStateErrorCopyWithImpl(
+      _$HomeStateError _value, $Res Function(_$HomeStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -566,7 +566,7 @@ class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$HomeStateErrorDetails(
+    return _then(_$HomeStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -577,10 +577,8 @@ class __$$HomeStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements HomeStateErrorDetails {
-  const _$HomeStateErrorDetails([this.message]);
+class _$HomeStateError with DiagnosticableTreeMixin implements HomeStateError {
+  const _$HomeStateError([this.message]);
 
   @override
   final String? message;
@@ -602,7 +600,7 @@ class _$HomeStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HomeStateErrorDetails &&
+            other is _$HomeStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -612,9 +610,8 @@ class _$HomeStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$HomeStateErrorDetailsCopyWith<_$HomeStateErrorDetails> get copyWith =>
-      __$$HomeStateErrorDetailsCopyWithImpl<_$HomeStateErrorDetails>(
-          this, _$identity);
+  _$$HomeStateErrorCopyWith<_$HomeStateError> get copyWith =>
+      __$$HomeStateErrorCopyWithImpl<_$HomeStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -665,7 +662,7 @@ class _$HomeStateErrorDetails
     required TResult Function(HomeStateInitial value) initial,
     required TResult Function(HomeStateLoaded value) loaded,
     required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateErrorDetails value) error,
+    required TResult Function(HomeStateError value) error,
   }) {
     return error(this);
   }
@@ -676,7 +673,7 @@ class _$HomeStateErrorDetails
     TResult? Function(HomeStateInitial value)? initial,
     TResult? Function(HomeStateLoaded value)? loaded,
     TResult? Function(HomeStateLoading value)? loading,
-    TResult? Function(HomeStateErrorDetails value)? error,
+    TResult? Function(HomeStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -687,7 +684,7 @@ class _$HomeStateErrorDetails
     TResult Function(HomeStateInitial value)? initial,
     TResult Function(HomeStateLoaded value)? loaded,
     TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateErrorDetails value)? error,
+    TResult Function(HomeStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -697,12 +694,11 @@ class _$HomeStateErrorDetails
   }
 }
 
-abstract class HomeStateErrorDetails implements HomeState {
-  const factory HomeStateErrorDetails([final String? message]) =
-      _$HomeStateErrorDetails;
+abstract class HomeStateError implements HomeState {
+  const factory HomeStateError([final String? message]) = _$HomeStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$HomeStateErrorDetailsCopyWith<_$HomeStateErrorDetails> get copyWith =>
+  _$$HomeStateErrorCopyWith<_$HomeStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -46,7 +46,7 @@ mixin _$LibrarySelectState {
     required TResult Function(LibrarySelectStateInitial value) initial,
     required TResult Function(LibrarySelectStateLoaded value) loaded,
     required TResult Function(LibrarySelectStateLoading value) loading,
-    required TResult Function(LibrarySelectStateErrorDetails value) error,
+    required TResult Function(LibrarySelectStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$LibrarySelectState {
     TResult? Function(LibrarySelectStateInitial value)? initial,
     TResult? Function(LibrarySelectStateLoaded value)? loaded,
     TResult? Function(LibrarySelectStateLoading value)? loading,
-    TResult? Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$LibrarySelectState {
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
     TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult Function(LibrarySelectStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -174,7 +174,7 @@ class _$LibrarySelectStateInitial
     required TResult Function(LibrarySelectStateInitial value) initial,
     required TResult Function(LibrarySelectStateLoaded value) loaded,
     required TResult Function(LibrarySelectStateLoading value) loading,
-    required TResult Function(LibrarySelectStateErrorDetails value) error,
+    required TResult Function(LibrarySelectStateError value) error,
   }) {
     return initial(this);
   }
@@ -185,7 +185,7 @@ class _$LibrarySelectStateInitial
     TResult? Function(LibrarySelectStateInitial value)? initial,
     TResult? Function(LibrarySelectStateLoaded value)? loaded,
     TResult? Function(LibrarySelectStateLoading value)? loading,
-    TResult? Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -196,7 +196,7 @@ class _$LibrarySelectStateInitial
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
     TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult Function(LibrarySelectStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -336,7 +336,7 @@ class _$LibrarySelectStateLoaded
     required TResult Function(LibrarySelectStateInitial value) initial,
     required TResult Function(LibrarySelectStateLoaded value) loaded,
     required TResult Function(LibrarySelectStateLoading value) loading,
-    required TResult Function(LibrarySelectStateErrorDetails value) error,
+    required TResult Function(LibrarySelectStateError value) error,
   }) {
     return loaded(this);
   }
@@ -347,7 +347,7 @@ class _$LibrarySelectStateLoaded
     TResult? Function(LibrarySelectStateInitial value)? initial,
     TResult? Function(LibrarySelectStateLoaded value)? loaded,
     TResult? Function(LibrarySelectStateLoading value)? loading,
-    TResult? Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -358,7 +358,7 @@ class _$LibrarySelectStateLoaded
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
     TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult Function(LibrarySelectStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -466,7 +466,7 @@ class _$LibrarySelectStateLoading
     required TResult Function(LibrarySelectStateInitial value) initial,
     required TResult Function(LibrarySelectStateLoaded value) loaded,
     required TResult Function(LibrarySelectStateLoading value) loading,
-    required TResult Function(LibrarySelectStateErrorDetails value) error,
+    required TResult Function(LibrarySelectStateError value) error,
   }) {
     return loading(this);
   }
@@ -477,7 +477,7 @@ class _$LibrarySelectStateLoading
     TResult? Function(LibrarySelectStateInitial value)? initial,
     TResult? Function(LibrarySelectStateLoaded value)? loaded,
     TResult? Function(LibrarySelectStateLoading value)? loading,
-    TResult? Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -488,7 +488,7 @@ class _$LibrarySelectStateLoading
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
     TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult Function(LibrarySelectStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -503,23 +503,20 @@ abstract class LibrarySelectStateLoading implements LibrarySelectState {
 }
 
 /// @nodoc
-abstract class _$$LibrarySelectStateErrorDetailsCopyWith<$Res> {
-  factory _$$LibrarySelectStateErrorDetailsCopyWith(
-          _$LibrarySelectStateErrorDetails value,
-          $Res Function(_$LibrarySelectStateErrorDetails) then) =
-      __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateErrorCopyWith<$Res> {
+  factory _$$LibrarySelectStateErrorCopyWith(_$LibrarySelectStateError value,
+          $Res Function(_$LibrarySelectStateError) then) =
+      __$$LibrarySelectStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res,
-        _$LibrarySelectStateErrorDetails>
-    implements _$$LibrarySelectStateErrorDetailsCopyWith<$Res> {
-  __$$LibrarySelectStateErrorDetailsCopyWithImpl(
-      _$LibrarySelectStateErrorDetails _value,
-      $Res Function(_$LibrarySelectStateErrorDetails) _then)
+class __$$LibrarySelectStateErrorCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateError>
+    implements _$$LibrarySelectStateErrorCopyWith<$Res> {
+  __$$LibrarySelectStateErrorCopyWithImpl(_$LibrarySelectStateError _value,
+      $Res Function(_$LibrarySelectStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -527,7 +524,7 @@ class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$LibrarySelectStateErrorDetails(
+    return _then(_$LibrarySelectStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -538,10 +535,10 @@ class __$$LibrarySelectStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateErrorDetails
+class _$LibrarySelectStateError
     with DiagnosticableTreeMixin
-    implements LibrarySelectStateErrorDetails {
-  const _$LibrarySelectStateErrorDetails([this.message]);
+    implements LibrarySelectStateError {
+  const _$LibrarySelectStateError([this.message]);
 
   @override
   final String? message;
@@ -563,7 +560,7 @@ class _$LibrarySelectStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LibrarySelectStateErrorDetails &&
+            other is _$LibrarySelectStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -573,9 +570,9 @@ class _$LibrarySelectStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LibrarySelectStateErrorDetailsCopyWith<_$LibrarySelectStateErrorDetails>
-      get copyWith => __$$LibrarySelectStateErrorDetailsCopyWithImpl<
-          _$LibrarySelectStateErrorDetails>(this, _$identity);
+  _$$LibrarySelectStateErrorCopyWith<_$LibrarySelectStateError> get copyWith =>
+      __$$LibrarySelectStateErrorCopyWithImpl<_$LibrarySelectStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -620,7 +617,7 @@ class _$LibrarySelectStateErrorDetails
     required TResult Function(LibrarySelectStateInitial value) initial,
     required TResult Function(LibrarySelectStateLoaded value) loaded,
     required TResult Function(LibrarySelectStateLoading value) loading,
-    required TResult Function(LibrarySelectStateErrorDetails value) error,
+    required TResult Function(LibrarySelectStateError value) error,
   }) {
     return error(this);
   }
@@ -631,7 +628,7 @@ class _$LibrarySelectStateErrorDetails
     TResult? Function(LibrarySelectStateInitial value)? initial,
     TResult? Function(LibrarySelectStateLoaded value)? loaded,
     TResult? Function(LibrarySelectStateLoading value)? loading,
-    TResult? Function(LibrarySelectStateErrorDetails value)? error,
+    TResult? Function(LibrarySelectStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -642,7 +639,7 @@ class _$LibrarySelectStateErrorDetails
     TResult Function(LibrarySelectStateInitial value)? initial,
     TResult Function(LibrarySelectStateLoaded value)? loaded,
     TResult Function(LibrarySelectStateLoading value)? loading,
-    TResult Function(LibrarySelectStateErrorDetails value)? error,
+    TResult Function(LibrarySelectStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -652,12 +649,12 @@ class _$LibrarySelectStateErrorDetails
   }
 }
 
-abstract class LibrarySelectStateErrorDetails implements LibrarySelectState {
-  const factory LibrarySelectStateErrorDetails([final String? message]) =
-      _$LibrarySelectStateErrorDetails;
+abstract class LibrarySelectStateError implements LibrarySelectState {
+  const factory LibrarySelectStateError([final String? message]) =
+      _$LibrarySelectStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$LibrarySelectStateErrorDetailsCopyWith<_$LibrarySelectStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$LibrarySelectStateErrorCopyWith<_$LibrarySelectStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -183,7 +183,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
 
   Future<void> setPlaybackRate(double speed) async {
     DatabaseService db = GetIt.I();
-    await db.insertPreferences(db.getPreferencesSync()..playbackSpeed = speed);
+    await db.insertPreferences(
+      db.getPreferencesSync().copyWith(playbackSpeed: speed),
+    );
     await _player.setSpeed(speed);
   }
 

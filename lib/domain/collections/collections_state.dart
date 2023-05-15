@@ -11,5 +11,5 @@ class CollectionsState with _$CollectionsState {
       CollectionsStateLoaded;
   const factory CollectionsState.loading() = CollectionsStateLoading;
   const factory CollectionsState.error([String? message]) =
-      CollectionsStateErrorDetails;
+      CollectionsStateError;
 }

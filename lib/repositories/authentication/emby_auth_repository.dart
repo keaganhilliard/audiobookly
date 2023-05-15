@@ -33,13 +33,14 @@ class EmbyAuthRepository extends AuthenticationRepository {
   Future<bool> logout() async {
     final prefs = _ref.read(preferencesProvider.notifier);
     prefs.savePreferences(
-      prefs.state
-        ..baseUrl = ''
-        ..userToken = ''
-        ..userId = ''
-        ..serverId = ''
-        ..libraryId = ''
-        ..serverType = ServerType.unknown,
+      prefs.state.copyWith(
+        baseUrl: '',
+        userToken: '',
+        userId: '',
+        serverId: '',
+        libraryId: '',
+        serverType: ServerType.unknown,
+      ),
     );
 
     return true;
@@ -50,14 +51,13 @@ class EmbyAuthRepository extends AuthenticationRepository {
     final embyApi = _ref.read(embyApiProvider);
     embyApi.baseUrl = baseUrl;
     final res = await embyApi.login(username, password);
-    prefs.savePreferences(
-      prefs.state
-        ..userId = res.user!.id!
-        ..baseUrl = baseUrl
-        ..userToken = res.accessToken!
-        ..serverId = res.serverId!
-        ..serverType = ServerType.emby,
-    );
+    prefs.savePreferences(prefs.state.copyWith(
+      userId: res.user!.id!,
+      baseUrl: baseUrl,
+      userToken: res.accessToken!,
+      serverId: res.serverId!,
+      serverType: ServerType.emby,
+    ));
     return User(
       name: res.user!.name,
       userName: res.user!.name,

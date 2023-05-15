@@ -46,7 +46,7 @@ mixin _$BookDetailsState {
     required TResult Function(BookDetailsStateInitial value) initial,
     required TResult Function(BookDetailsStateLoaded value) loaded,
     required TResult Function(BookDetailsStateLoading value) loading,
-    required TResult Function(BookDetailsStateErrorDetails value) error,
+    required TResult Function(BookDetailsStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$BookDetailsState {
     TResult? Function(BookDetailsStateInitial value)? initial,
     TResult? Function(BookDetailsStateLoaded value)? loaded,
     TResult? Function(BookDetailsStateLoading value)? loading,
-    TResult? Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$BookDetailsState {
     TResult Function(BookDetailsStateInitial value)? initial,
     TResult Function(BookDetailsStateLoaded value)? loaded,
     TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult Function(BookDetailsStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -173,7 +173,7 @@ class _$BookDetailsStateInitial
     required TResult Function(BookDetailsStateInitial value) initial,
     required TResult Function(BookDetailsStateLoaded value) loaded,
     required TResult Function(BookDetailsStateLoading value) loading,
-    required TResult Function(BookDetailsStateErrorDetails value) error,
+    required TResult Function(BookDetailsStateError value) error,
   }) {
     return initial(this);
   }
@@ -184,7 +184,7 @@ class _$BookDetailsStateInitial
     TResult? Function(BookDetailsStateInitial value)? initial,
     TResult? Function(BookDetailsStateLoaded value)? loaded,
     TResult? Function(BookDetailsStateLoading value)? loading,
-    TResult? Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -195,7 +195,7 @@ class _$BookDetailsStateInitial
     TResult Function(BookDetailsStateInitial value)? initial,
     TResult Function(BookDetailsStateLoaded value)? loaded,
     TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult Function(BookDetailsStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -342,7 +342,7 @@ class _$BookDetailsStateLoaded
     required TResult Function(BookDetailsStateInitial value) initial,
     required TResult Function(BookDetailsStateLoaded value) loaded,
     required TResult Function(BookDetailsStateLoading value) loading,
-    required TResult Function(BookDetailsStateErrorDetails value) error,
+    required TResult Function(BookDetailsStateError value) error,
   }) {
     return loaded(this);
   }
@@ -353,7 +353,7 @@ class _$BookDetailsStateLoaded
     TResult? Function(BookDetailsStateInitial value)? initial,
     TResult? Function(BookDetailsStateLoaded value)? loaded,
     TResult? Function(BookDetailsStateLoading value)? loading,
-    TResult? Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -364,7 +364,7 @@ class _$BookDetailsStateLoaded
     TResult Function(BookDetailsStateInitial value)? initial,
     TResult Function(BookDetailsStateLoaded value)? loaded,
     TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult Function(BookDetailsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -472,7 +472,7 @@ class _$BookDetailsStateLoading
     required TResult Function(BookDetailsStateInitial value) initial,
     required TResult Function(BookDetailsStateLoaded value) loaded,
     required TResult Function(BookDetailsStateLoading value) loading,
-    required TResult Function(BookDetailsStateErrorDetails value) error,
+    required TResult Function(BookDetailsStateError value) error,
   }) {
     return loading(this);
   }
@@ -483,7 +483,7 @@ class _$BookDetailsStateLoading
     TResult? Function(BookDetailsStateInitial value)? initial,
     TResult? Function(BookDetailsStateLoaded value)? loaded,
     TResult? Function(BookDetailsStateLoading value)? loading,
-    TResult? Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -494,7 +494,7 @@ class _$BookDetailsStateLoading
     TResult Function(BookDetailsStateInitial value)? initial,
     TResult Function(BookDetailsStateLoaded value)? loaded,
     TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult Function(BookDetailsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -509,22 +509,20 @@ abstract class BookDetailsStateLoading implements BookDetailsState {
 }
 
 /// @nodoc
-abstract class _$$BookDetailsStateErrorDetailsCopyWith<$Res> {
-  factory _$$BookDetailsStateErrorDetailsCopyWith(
-          _$BookDetailsStateErrorDetails value,
-          $Res Function(_$BookDetailsStateErrorDetails) then) =
-      __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$BookDetailsStateErrorCopyWith<$Res> {
+  factory _$$BookDetailsStateErrorCopyWith(_$BookDetailsStateError value,
+          $Res Function(_$BookDetailsStateError) then) =
+      __$$BookDetailsStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$BookDetailsStateCopyWithImpl<$Res, _$BookDetailsStateErrorDetails>
-    implements _$$BookDetailsStateErrorDetailsCopyWith<$Res> {
-  __$$BookDetailsStateErrorDetailsCopyWithImpl(
-      _$BookDetailsStateErrorDetails _value,
-      $Res Function(_$BookDetailsStateErrorDetails) _then)
+class __$$BookDetailsStateErrorCopyWithImpl<$Res>
+    extends _$BookDetailsStateCopyWithImpl<$Res, _$BookDetailsStateError>
+    implements _$$BookDetailsStateErrorCopyWith<$Res> {
+  __$$BookDetailsStateErrorCopyWithImpl(_$BookDetailsStateError _value,
+      $Res Function(_$BookDetailsStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -532,7 +530,7 @@ class __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$BookDetailsStateErrorDetails(
+    return _then(_$BookDetailsStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -543,10 +541,10 @@ class __$$BookDetailsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookDetailsStateErrorDetails
+class _$BookDetailsStateError
     with DiagnosticableTreeMixin
-    implements BookDetailsStateErrorDetails {
-  const _$BookDetailsStateErrorDetails([this.message]);
+    implements BookDetailsStateError {
+  const _$BookDetailsStateError([this.message]);
 
   @override
   final String? message;
@@ -568,7 +566,7 @@ class _$BookDetailsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BookDetailsStateErrorDetails &&
+            other is _$BookDetailsStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -578,9 +576,9 @@ class _$BookDetailsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BookDetailsStateErrorDetailsCopyWith<_$BookDetailsStateErrorDetails>
-      get copyWith => __$$BookDetailsStateErrorDetailsCopyWithImpl<
-          _$BookDetailsStateErrorDetails>(this, _$identity);
+  _$$BookDetailsStateErrorCopyWith<_$BookDetailsStateError> get copyWith =>
+      __$$BookDetailsStateErrorCopyWithImpl<_$BookDetailsStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -625,7 +623,7 @@ class _$BookDetailsStateErrorDetails
     required TResult Function(BookDetailsStateInitial value) initial,
     required TResult Function(BookDetailsStateLoaded value) loaded,
     required TResult Function(BookDetailsStateLoading value) loading,
-    required TResult Function(BookDetailsStateErrorDetails value) error,
+    required TResult Function(BookDetailsStateError value) error,
   }) {
     return error(this);
   }
@@ -636,7 +634,7 @@ class _$BookDetailsStateErrorDetails
     TResult? Function(BookDetailsStateInitial value)? initial,
     TResult? Function(BookDetailsStateLoaded value)? loaded,
     TResult? Function(BookDetailsStateLoading value)? loading,
-    TResult? Function(BookDetailsStateErrorDetails value)? error,
+    TResult? Function(BookDetailsStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -647,7 +645,7 @@ class _$BookDetailsStateErrorDetails
     TResult Function(BookDetailsStateInitial value)? initial,
     TResult Function(BookDetailsStateLoaded value)? loaded,
     TResult Function(BookDetailsStateLoading value)? loading,
-    TResult Function(BookDetailsStateErrorDetails value)? error,
+    TResult Function(BookDetailsStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -657,12 +655,12 @@ class _$BookDetailsStateErrorDetails
   }
 }
 
-abstract class BookDetailsStateErrorDetails implements BookDetailsState {
-  const factory BookDetailsStateErrorDetails([final String? message]) =
-      _$BookDetailsStateErrorDetails;
+abstract class BookDetailsStateError implements BookDetailsState {
+  const factory BookDetailsStateError([final String? message]) =
+      _$BookDetailsStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$BookDetailsStateErrorDetailsCopyWith<_$BookDetailsStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$BookDetailsStateErrorCopyWith<_$BookDetailsStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

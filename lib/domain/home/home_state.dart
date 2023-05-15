@@ -12,5 +12,5 @@ sealed class HomeState with _$HomeState {
     List<ModelUnion>? downloaded,
   }) = HomeStateLoaded;
   const factory HomeState.loading() = HomeStateLoading;
-  const factory HomeState.error([String? message]) = HomeStateErrorDetails;
+  const factory HomeState.error([String? message]) = HomeStateError;
 }

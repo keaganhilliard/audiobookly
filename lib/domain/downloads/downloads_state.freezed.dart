@@ -46,7 +46,7 @@ mixin _$DownloadsState {
     required TResult Function(DownloadsStateInitial value) initial,
     required TResult Function(DownloadsStateLoaded value) loaded,
     required TResult Function(DownloadsStateLoading value) loading,
-    required TResult Function(DownloadsStateErrorDetails value) error,
+    required TResult Function(DownloadsStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$DownloadsState {
     TResult? Function(DownloadsStateInitial value)? initial,
     TResult? Function(DownloadsStateLoaded value)? loaded,
     TResult? Function(DownloadsStateLoading value)? loading,
-    TResult? Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$DownloadsState {
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
     TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult Function(DownloadsStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -172,7 +172,7 @@ class _$DownloadsStateInitial
     required TResult Function(DownloadsStateInitial value) initial,
     required TResult Function(DownloadsStateLoaded value) loaded,
     required TResult Function(DownloadsStateLoading value) loading,
-    required TResult Function(DownloadsStateErrorDetails value) error,
+    required TResult Function(DownloadsStateError value) error,
   }) {
     return initial(this);
   }
@@ -183,7 +183,7 @@ class _$DownloadsStateInitial
     TResult? Function(DownloadsStateInitial value)? initial,
     TResult? Function(DownloadsStateLoaded value)? loaded,
     TResult? Function(DownloadsStateLoading value)? loading,
-    TResult? Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -194,7 +194,7 @@ class _$DownloadsStateInitial
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
     TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult Function(DownloadsStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -331,7 +331,7 @@ class _$DownloadsStateLoaded
     required TResult Function(DownloadsStateInitial value) initial,
     required TResult Function(DownloadsStateLoaded value) loaded,
     required TResult Function(DownloadsStateLoading value) loading,
-    required TResult Function(DownloadsStateErrorDetails value) error,
+    required TResult Function(DownloadsStateError value) error,
   }) {
     return loaded(this);
   }
@@ -342,7 +342,7 @@ class _$DownloadsStateLoaded
     TResult? Function(DownloadsStateInitial value)? initial,
     TResult? Function(DownloadsStateLoaded value)? loaded,
     TResult? Function(DownloadsStateLoading value)? loading,
-    TResult? Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -353,7 +353,7 @@ class _$DownloadsStateLoaded
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
     TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult Function(DownloadsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -459,7 +459,7 @@ class _$DownloadsStateLoading
     required TResult Function(DownloadsStateInitial value) initial,
     required TResult Function(DownloadsStateLoaded value) loaded,
     required TResult Function(DownloadsStateLoading value) loading,
-    required TResult Function(DownloadsStateErrorDetails value) error,
+    required TResult Function(DownloadsStateError value) error,
   }) {
     return loading(this);
   }
@@ -470,7 +470,7 @@ class _$DownloadsStateLoading
     TResult? Function(DownloadsStateInitial value)? initial,
     TResult? Function(DownloadsStateLoaded value)? loaded,
     TResult? Function(DownloadsStateLoading value)? loading,
-    TResult? Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -481,7 +481,7 @@ class _$DownloadsStateLoading
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
     TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult Function(DownloadsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -496,22 +496,20 @@ abstract class DownloadsStateLoading implements DownloadsState {
 }
 
 /// @nodoc
-abstract class _$$DownloadsStateErrorDetailsCopyWith<$Res> {
-  factory _$$DownloadsStateErrorDetailsCopyWith(
-          _$DownloadsStateErrorDetails value,
-          $Res Function(_$DownloadsStateErrorDetails) then) =
-      __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$DownloadsStateErrorCopyWith<$Res> {
+  factory _$$DownloadsStateErrorCopyWith(_$DownloadsStateError value,
+          $Res Function(_$DownloadsStateError) then) =
+      __$$DownloadsStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$DownloadsStateCopyWithImpl<$Res, _$DownloadsStateErrorDetails>
-    implements _$$DownloadsStateErrorDetailsCopyWith<$Res> {
-  __$$DownloadsStateErrorDetailsCopyWithImpl(
-      _$DownloadsStateErrorDetails _value,
-      $Res Function(_$DownloadsStateErrorDetails) _then)
+class __$$DownloadsStateErrorCopyWithImpl<$Res>
+    extends _$DownloadsStateCopyWithImpl<$Res, _$DownloadsStateError>
+    implements _$$DownloadsStateErrorCopyWith<$Res> {
+  __$$DownloadsStateErrorCopyWithImpl(
+      _$DownloadsStateError _value, $Res Function(_$DownloadsStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -519,7 +517,7 @@ class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$DownloadsStateErrorDetails(
+    return _then(_$DownloadsStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -530,10 +528,10 @@ class __$$DownloadsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DownloadsStateErrorDetails
+class _$DownloadsStateError
     with DiagnosticableTreeMixin
-    implements DownloadsStateErrorDetails {
-  const _$DownloadsStateErrorDetails([this.message]);
+    implements DownloadsStateError {
+  const _$DownloadsStateError([this.message]);
 
   @override
   final String? message;
@@ -555,7 +553,7 @@ class _$DownloadsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DownloadsStateErrorDetails &&
+            other is _$DownloadsStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -565,9 +563,9 @@ class _$DownloadsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DownloadsStateErrorDetailsCopyWith<_$DownloadsStateErrorDetails>
-      get copyWith => __$$DownloadsStateErrorDetailsCopyWithImpl<
-          _$DownloadsStateErrorDetails>(this, _$identity);
+  _$$DownloadsStateErrorCopyWith<_$DownloadsStateError> get copyWith =>
+      __$$DownloadsStateErrorCopyWithImpl<_$DownloadsStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -612,7 +610,7 @@ class _$DownloadsStateErrorDetails
     required TResult Function(DownloadsStateInitial value) initial,
     required TResult Function(DownloadsStateLoaded value) loaded,
     required TResult Function(DownloadsStateLoading value) loading,
-    required TResult Function(DownloadsStateErrorDetails value) error,
+    required TResult Function(DownloadsStateError value) error,
   }) {
     return error(this);
   }
@@ -623,7 +621,7 @@ class _$DownloadsStateErrorDetails
     TResult? Function(DownloadsStateInitial value)? initial,
     TResult? Function(DownloadsStateLoaded value)? loaded,
     TResult? Function(DownloadsStateLoading value)? loading,
-    TResult? Function(DownloadsStateErrorDetails value)? error,
+    TResult? Function(DownloadsStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -634,7 +632,7 @@ class _$DownloadsStateErrorDetails
     TResult Function(DownloadsStateInitial value)? initial,
     TResult Function(DownloadsStateLoaded value)? loaded,
     TResult Function(DownloadsStateLoading value)? loading,
-    TResult Function(DownloadsStateErrorDetails value)? error,
+    TResult Function(DownloadsStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -644,12 +642,12 @@ class _$DownloadsStateErrorDetails
   }
 }
 
-abstract class DownloadsStateErrorDetails implements DownloadsState {
-  const factory DownloadsStateErrorDetails([final String? message]) =
-      _$DownloadsStateErrorDetails;
+abstract class DownloadsStateError implements DownloadsState {
+  const factory DownloadsStateError([final String? message]) =
+      _$DownloadsStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$DownloadsStateErrorDetailsCopyWith<_$DownloadsStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$DownloadsStateErrorCopyWith<_$DownloadsStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

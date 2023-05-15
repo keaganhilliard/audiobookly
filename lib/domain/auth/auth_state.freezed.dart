@@ -50,7 +50,7 @@ mixin _$AuthState {
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateOffline value) offline,
-    required TResult Function(AuthStateErrorDetails value) error,
+    required TResult Function(AuthStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,7 +59,7 @@ mixin _$AuthState {
     TResult? Function(AuthStateLoaded value)? loaded,
     TResult? Function(AuthStateLoading value)? loading,
     TResult? Function(AuthStateOffline value)? offline,
-    TResult? Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,7 +68,7 @@ mixin _$AuthState {
     TResult Function(AuthStateLoaded value)? loaded,
     TResult Function(AuthStateLoading value)? loading,
     TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult Function(AuthStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -181,7 +181,7 @@ class _$AuthStateInitial
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateOffline value) offline,
-    required TResult Function(AuthStateErrorDetails value) error,
+    required TResult Function(AuthStateError value) error,
   }) {
     return initial(this);
   }
@@ -193,7 +193,7 @@ class _$AuthStateInitial
     TResult? Function(AuthStateLoaded value)? loaded,
     TResult? Function(AuthStateLoading value)? loading,
     TResult? Function(AuthStateOffline value)? offline,
-    TResult? Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -205,7 +205,7 @@ class _$AuthStateInitial
     TResult Function(AuthStateLoaded value)? loaded,
     TResult Function(AuthStateLoading value)? loading,
     TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult Function(AuthStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -337,7 +337,7 @@ class _$AuthStateLoaded
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateOffline value) offline,
-    required TResult Function(AuthStateErrorDetails value) error,
+    required TResult Function(AuthStateError value) error,
   }) {
     return loaded(this);
   }
@@ -349,7 +349,7 @@ class _$AuthStateLoaded
     TResult? Function(AuthStateLoaded value)? loaded,
     TResult? Function(AuthStateLoading value)? loading,
     TResult? Function(AuthStateOffline value)? offline,
-    TResult? Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -361,7 +361,7 @@ class _$AuthStateLoaded
     TResult Function(AuthStateLoaded value)? loaded,
     TResult Function(AuthStateLoading value)? loading,
     TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult Function(AuthStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -470,7 +470,7 @@ class _$AuthStateLoading
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateOffline value) offline,
-    required TResult Function(AuthStateErrorDetails value) error,
+    required TResult Function(AuthStateError value) error,
   }) {
     return loading(this);
   }
@@ -482,7 +482,7 @@ class _$AuthStateLoading
     TResult? Function(AuthStateLoaded value)? loaded,
     TResult? Function(AuthStateLoading value)? loading,
     TResult? Function(AuthStateOffline value)? offline,
-    TResult? Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -494,7 +494,7 @@ class _$AuthStateLoading
     TResult Function(AuthStateLoaded value)? loaded,
     TResult Function(AuthStateLoading value)? loading,
     TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult Function(AuthStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -598,7 +598,7 @@ class _$AuthStateOffline
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateOffline value) offline,
-    required TResult Function(AuthStateErrorDetails value) error,
+    required TResult Function(AuthStateError value) error,
   }) {
     return offline(this);
   }
@@ -610,7 +610,7 @@ class _$AuthStateOffline
     TResult? Function(AuthStateLoaded value)? loaded,
     TResult? Function(AuthStateLoading value)? loading,
     TResult? Function(AuthStateOffline value)? offline,
-    TResult? Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateError value)? error,
   }) {
     return offline?.call(this);
   }
@@ -622,7 +622,7 @@ class _$AuthStateOffline
     TResult Function(AuthStateLoaded value)? loaded,
     TResult Function(AuthStateLoading value)? loading,
     TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult Function(AuthStateError value)? error,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -637,20 +637,20 @@ abstract class AuthStateOffline implements AuthState {
 }
 
 /// @nodoc
-abstract class _$$AuthStateErrorDetailsCopyWith<$Res> {
-  factory _$$AuthStateErrorDetailsCopyWith(_$AuthStateErrorDetails value,
-          $Res Function(_$AuthStateErrorDetails) then) =
-      __$$AuthStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$AuthStateErrorCopyWith<$Res> {
+  factory _$$AuthStateErrorCopyWith(
+          _$AuthStateError value, $Res Function(_$AuthStateError) then) =
+      __$$AuthStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateErrorDetails>
-    implements _$$AuthStateErrorDetailsCopyWith<$Res> {
-  __$$AuthStateErrorDetailsCopyWithImpl(_$AuthStateErrorDetails _value,
-      $Res Function(_$AuthStateErrorDetails) _then)
+class __$$AuthStateErrorCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateError>
+    implements _$$AuthStateErrorCopyWith<$Res> {
+  __$$AuthStateErrorCopyWithImpl(
+      _$AuthStateError _value, $Res Function(_$AuthStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -658,7 +658,7 @@ class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$AuthStateErrorDetails(
+    return _then(_$AuthStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -669,10 +669,8 @@ class __$$AuthStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateErrorDetails
-    with DiagnosticableTreeMixin
-    implements AuthStateErrorDetails {
-  const _$AuthStateErrorDetails([this.message]);
+class _$AuthStateError with DiagnosticableTreeMixin implements AuthStateError {
+  const _$AuthStateError([this.message]);
 
   @override
   final String? message;
@@ -694,7 +692,7 @@ class _$AuthStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthStateErrorDetails &&
+            other is _$AuthStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -704,9 +702,8 @@ class _$AuthStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthStateErrorDetailsCopyWith<_$AuthStateErrorDetails> get copyWith =>
-      __$$AuthStateErrorDetailsCopyWithImpl<_$AuthStateErrorDetails>(
-          this, _$identity);
+  _$$AuthStateErrorCopyWith<_$AuthStateError> get copyWith =>
+      __$$AuthStateErrorCopyWithImpl<_$AuthStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -755,7 +752,7 @@ class _$AuthStateErrorDetails
     required TResult Function(AuthStateLoaded value) loaded,
     required TResult Function(AuthStateLoading value) loading,
     required TResult Function(AuthStateOffline value) offline,
-    required TResult Function(AuthStateErrorDetails value) error,
+    required TResult Function(AuthStateError value) error,
   }) {
     return error(this);
   }
@@ -767,7 +764,7 @@ class _$AuthStateErrorDetails
     TResult? Function(AuthStateLoaded value)? loaded,
     TResult? Function(AuthStateLoading value)? loading,
     TResult? Function(AuthStateOffline value)? offline,
-    TResult? Function(AuthStateErrorDetails value)? error,
+    TResult? Function(AuthStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -779,7 +776,7 @@ class _$AuthStateErrorDetails
     TResult Function(AuthStateLoaded value)? loaded,
     TResult Function(AuthStateLoading value)? loading,
     TResult Function(AuthStateOffline value)? offline,
-    TResult Function(AuthStateErrorDetails value)? error,
+    TResult Function(AuthStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -789,12 +786,11 @@ class _$AuthStateErrorDetails
   }
 }
 
-abstract class AuthStateErrorDetails implements AuthState {
-  const factory AuthStateErrorDetails([final String? message]) =
-      _$AuthStateErrorDetails;
+abstract class AuthStateError implements AuthState {
+  const factory AuthStateError([final String? message]) = _$AuthStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$AuthStateErrorDetailsCopyWith<_$AuthStateErrorDetails> get copyWith =>
+  _$$AuthStateErrorCopyWith<_$AuthStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }

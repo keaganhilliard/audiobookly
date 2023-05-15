@@ -46,7 +46,7 @@ mixin _$OfflineState {
     required TResult Function(OfflineStateInitial value) initial,
     required TResult Function(OfflineStateLoaded value) loaded,
     required TResult Function(OfflineStateLoading value) loading,
-    required TResult Function(OfflineStateErrorDetails value) error,
+    required TResult Function(OfflineStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$OfflineState {
     TResult? Function(OfflineStateInitial value)? initial,
     TResult? Function(OfflineStateLoaded value)? loaded,
     TResult? Function(OfflineStateLoading value)? loading,
-    TResult? Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$OfflineState {
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
     TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult Function(OfflineStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -172,7 +172,7 @@ class _$OfflineStateInitial
     required TResult Function(OfflineStateInitial value) initial,
     required TResult Function(OfflineStateLoaded value) loaded,
     required TResult Function(OfflineStateLoading value) loading,
-    required TResult Function(OfflineStateErrorDetails value) error,
+    required TResult Function(OfflineStateError value) error,
   }) {
     return initial(this);
   }
@@ -183,7 +183,7 @@ class _$OfflineStateInitial
     TResult? Function(OfflineStateInitial value)? initial,
     TResult? Function(OfflineStateLoaded value)? loaded,
     TResult? Function(OfflineStateLoading value)? loading,
-    TResult? Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -194,7 +194,7 @@ class _$OfflineStateInitial
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
     TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult Function(OfflineStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -331,7 +331,7 @@ class _$OfflineStateLoaded
     required TResult Function(OfflineStateInitial value) initial,
     required TResult Function(OfflineStateLoaded value) loaded,
     required TResult Function(OfflineStateLoading value) loading,
-    required TResult Function(OfflineStateErrorDetails value) error,
+    required TResult Function(OfflineStateError value) error,
   }) {
     return loaded(this);
   }
@@ -342,7 +342,7 @@ class _$OfflineStateLoaded
     TResult? Function(OfflineStateInitial value)? initial,
     TResult? Function(OfflineStateLoaded value)? loaded,
     TResult? Function(OfflineStateLoading value)? loading,
-    TResult? Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -353,7 +353,7 @@ class _$OfflineStateLoaded
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
     TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult Function(OfflineStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -459,7 +459,7 @@ class _$OfflineStateLoading
     required TResult Function(OfflineStateInitial value) initial,
     required TResult Function(OfflineStateLoaded value) loaded,
     required TResult Function(OfflineStateLoading value) loading,
-    required TResult Function(OfflineStateErrorDetails value) error,
+    required TResult Function(OfflineStateError value) error,
   }) {
     return loading(this);
   }
@@ -470,7 +470,7 @@ class _$OfflineStateLoading
     TResult? Function(OfflineStateInitial value)? initial,
     TResult? Function(OfflineStateLoaded value)? loaded,
     TResult? Function(OfflineStateLoading value)? loading,
-    TResult? Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -481,7 +481,7 @@ class _$OfflineStateLoading
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
     TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult Function(OfflineStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -496,20 +496,20 @@ abstract class OfflineStateLoading implements OfflineState {
 }
 
 /// @nodoc
-abstract class _$$OfflineStateErrorDetailsCopyWith<$Res> {
-  factory _$$OfflineStateErrorDetailsCopyWith(_$OfflineStateErrorDetails value,
-          $Res Function(_$OfflineStateErrorDetails) then) =
-      __$$OfflineStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$OfflineStateErrorCopyWith<$Res> {
+  factory _$$OfflineStateErrorCopyWith(
+          _$OfflineStateError value, $Res Function(_$OfflineStateError) then) =
+      __$$OfflineStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
-    extends _$OfflineStateCopyWithImpl<$Res, _$OfflineStateErrorDetails>
-    implements _$$OfflineStateErrorDetailsCopyWith<$Res> {
-  __$$OfflineStateErrorDetailsCopyWithImpl(_$OfflineStateErrorDetails _value,
-      $Res Function(_$OfflineStateErrorDetails) _then)
+class __$$OfflineStateErrorCopyWithImpl<$Res>
+    extends _$OfflineStateCopyWithImpl<$Res, _$OfflineStateError>
+    implements _$$OfflineStateErrorCopyWith<$Res> {
+  __$$OfflineStateErrorCopyWithImpl(
+      _$OfflineStateError _value, $Res Function(_$OfflineStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -517,7 +517,7 @@ class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$OfflineStateErrorDetails(
+    return _then(_$OfflineStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -528,10 +528,10 @@ class __$$OfflineStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfflineStateErrorDetails
+class _$OfflineStateError
     with DiagnosticableTreeMixin
-    implements OfflineStateErrorDetails {
-  const _$OfflineStateErrorDetails([this.message]);
+    implements OfflineStateError {
+  const _$OfflineStateError([this.message]);
 
   @override
   final String? message;
@@ -553,7 +553,7 @@ class _$OfflineStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OfflineStateErrorDetails &&
+            other is _$OfflineStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -563,10 +563,8 @@ class _$OfflineStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OfflineStateErrorDetailsCopyWith<_$OfflineStateErrorDetails>
-      get copyWith =>
-          __$$OfflineStateErrorDetailsCopyWithImpl<_$OfflineStateErrorDetails>(
-              this, _$identity);
+  _$$OfflineStateErrorCopyWith<_$OfflineStateError> get copyWith =>
+      __$$OfflineStateErrorCopyWithImpl<_$OfflineStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -611,7 +609,7 @@ class _$OfflineStateErrorDetails
     required TResult Function(OfflineStateInitial value) initial,
     required TResult Function(OfflineStateLoaded value) loaded,
     required TResult Function(OfflineStateLoading value) loading,
-    required TResult Function(OfflineStateErrorDetails value) error,
+    required TResult Function(OfflineStateError value) error,
   }) {
     return error(this);
   }
@@ -622,7 +620,7 @@ class _$OfflineStateErrorDetails
     TResult? Function(OfflineStateInitial value)? initial,
     TResult? Function(OfflineStateLoaded value)? loaded,
     TResult? Function(OfflineStateLoading value)? loading,
-    TResult? Function(OfflineStateErrorDetails value)? error,
+    TResult? Function(OfflineStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -633,7 +631,7 @@ class _$OfflineStateErrorDetails
     TResult Function(OfflineStateInitial value)? initial,
     TResult Function(OfflineStateLoaded value)? loaded,
     TResult Function(OfflineStateLoading value)? loading,
-    TResult Function(OfflineStateErrorDetails value)? error,
+    TResult Function(OfflineStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -643,12 +641,12 @@ class _$OfflineStateErrorDetails
   }
 }
 
-abstract class OfflineStateErrorDetails implements OfflineState {
-  const factory OfflineStateErrorDetails([final String? message]) =
-      _$OfflineStateErrorDetails;
+abstract class OfflineStateError implements OfflineState {
+  const factory OfflineStateError([final String? message]) =
+      _$OfflineStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$OfflineStateErrorDetailsCopyWith<_$OfflineStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$OfflineStateErrorCopyWith<_$OfflineStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

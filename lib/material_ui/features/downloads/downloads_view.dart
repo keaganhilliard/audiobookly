@@ -41,44 +41,42 @@ class Downloads extends HookConsumerWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  final state = ref.watch(downloadsStateProvider);
-                  if (state is DownloadsStateInitial) {
-                    refresher.currentState!.show();
+                  switch (ref.watch(downloadsStateProvider)) {
+                    case DownloadsStateInitial():
+                      refresher.currentState!.show();
+                    case DownloadsStateError(:final message):
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(message ?? 'Unknown'),
+                            ElevatedButton(
+                              onPressed: refresher.currentState!.show,
+                              child: const Text('Retry'),
+                            )
+                          ],
+                        ),
+                      );
+                    case DownloadsStateLoaded(:final books):
+                      return ResponsiveGridView<MediaItem>(
+                        items: books,
+                        itemBuilder: (book) {
+                          return BookGridItem(
+                            onTap: () async {
+                              Navigator.of(context)
+                                  .pushNamed(Routes.book, arguments: book.id);
+                            },
+                            thumbnailUrl: book.artUri?.toString(),
+                            title: book.title,
+                            subtitle: book.artist,
+                            progress: Utils.getProgress(item: book),
+                            played: book.played,
+                          );
+                        },
+                      );
                   }
-                  if (state is DownloadsStateLoaded) {
-                    return ResponsiveGridView<MediaItem>(
-                      items: state.books,
-                      itemBuilder: (book) {
-                        return BookGridItem(
-                          onTap: () async {
-                            Navigator.of(context)
-                                .pushNamed(Routes.book, arguments: book.id);
-                          },
-                          thumbnailUrl: book.artUri?.toString(),
-                          title: book.title,
-                          subtitle: book.artist,
-                          progress: Utils.getProgress(item: book),
-                          played: book.played,
-                        );
-                      },
-                    );
-                  } else if (state is DownloadsStateErrorDetails) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(state.message!),
-                          ElevatedButton(
-                            onPressed: refresher.currentState!.show,
-                            child: const Text('Retry'),
-                          )
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
+                  return Container();
                 },
               ),
             ),

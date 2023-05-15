@@ -33,13 +33,14 @@ class PlexAuthRepository extends AuthenticationRepository {
   Future<bool> logout() async {
     final prefs = _ref.read(preferencesProvider.notifier);
     prefs.savePreferences(
-      prefs.state
-        ..baseUrl = ''
-        ..userToken = ''
-        ..userId = ''
-        ..serverId = ''
-        ..libraryId = ''
-        ..serverType = ServerType.unknown,
+      prefs.state.copyWith(
+        baseUrl: '',
+        userToken: '',
+        userId: '',
+        serverId: '',
+        libraryId: '',
+        serverType: ServerType.unknown,
+      ),
     );
     return true;
   }

@@ -33,7 +33,11 @@ class AbsLogin extends HookConsumerWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 16.0, right: 16.0, top: 100.0, bottom: 32.0),
+            left: 16.0,
+            right: 16.0,
+            top: 100.0,
+            bottom: 32.0,
+          ),
           child: Form(
             key: formKey,
             child: Column(
@@ -124,10 +128,6 @@ class AbsLogin extends HookConsumerWidget {
                               login.value.password,
                             )) {
                               invalidLogin.value = true;
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //         content: Text(
-                              //             'Username or password invalid')));
                             } else {
                               await auth.checkToken();
                               navigationService.pop();

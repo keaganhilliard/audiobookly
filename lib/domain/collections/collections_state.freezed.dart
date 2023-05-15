@@ -46,7 +46,7 @@ mixin _$CollectionsState {
     required TResult Function(CollectionsStateInitial value) initial,
     required TResult Function(CollectionsStateLoaded value) loaded,
     required TResult Function(CollectionsStateLoading value) loading,
-    required TResult Function(CollectionsStateErrorDetails value) error,
+    required TResult Function(CollectionsStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$CollectionsState {
     TResult? Function(CollectionsStateInitial value)? initial,
     TResult? Function(CollectionsStateLoaded value)? loaded,
     TResult? Function(CollectionsStateLoading value)? loading,
-    TResult? Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$CollectionsState {
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
     TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult Function(CollectionsStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -173,7 +173,7 @@ class _$CollectionsStateInitial
     required TResult Function(CollectionsStateInitial value) initial,
     required TResult Function(CollectionsStateLoaded value) loaded,
     required TResult Function(CollectionsStateLoading value) loading,
-    required TResult Function(CollectionsStateErrorDetails value) error,
+    required TResult Function(CollectionsStateError value) error,
   }) {
     return initial(this);
   }
@@ -184,7 +184,7 @@ class _$CollectionsStateInitial
     TResult? Function(CollectionsStateInitial value)? initial,
     TResult? Function(CollectionsStateLoaded value)? loaded,
     TResult? Function(CollectionsStateLoading value)? loading,
-    TResult? Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -195,7 +195,7 @@ class _$CollectionsStateInitial
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
     TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult Function(CollectionsStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -334,7 +334,7 @@ class _$CollectionsStateLoaded
     required TResult Function(CollectionsStateInitial value) initial,
     required TResult Function(CollectionsStateLoaded value) loaded,
     required TResult Function(CollectionsStateLoading value) loading,
-    required TResult Function(CollectionsStateErrorDetails value) error,
+    required TResult Function(CollectionsStateError value) error,
   }) {
     return loaded(this);
   }
@@ -345,7 +345,7 @@ class _$CollectionsStateLoaded
     TResult? Function(CollectionsStateInitial value)? initial,
     TResult? Function(CollectionsStateLoaded value)? loaded,
     TResult? Function(CollectionsStateLoading value)? loading,
-    TResult? Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -356,7 +356,7 @@ class _$CollectionsStateLoaded
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
     TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult Function(CollectionsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -463,7 +463,7 @@ class _$CollectionsStateLoading
     required TResult Function(CollectionsStateInitial value) initial,
     required TResult Function(CollectionsStateLoaded value) loaded,
     required TResult Function(CollectionsStateLoading value) loading,
-    required TResult Function(CollectionsStateErrorDetails value) error,
+    required TResult Function(CollectionsStateError value) error,
   }) {
     return loading(this);
   }
@@ -474,7 +474,7 @@ class _$CollectionsStateLoading
     TResult? Function(CollectionsStateInitial value)? initial,
     TResult? Function(CollectionsStateLoaded value)? loaded,
     TResult? Function(CollectionsStateLoading value)? loading,
-    TResult? Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -485,7 +485,7 @@ class _$CollectionsStateLoading
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
     TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult Function(CollectionsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -500,22 +500,20 @@ abstract class CollectionsStateLoading implements CollectionsState {
 }
 
 /// @nodoc
-abstract class _$$CollectionsStateErrorDetailsCopyWith<$Res> {
-  factory _$$CollectionsStateErrorDetailsCopyWith(
-          _$CollectionsStateErrorDetails value,
-          $Res Function(_$CollectionsStateErrorDetails) then) =
-      __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateErrorCopyWith<$Res> {
+  factory _$$CollectionsStateErrorCopyWith(_$CollectionsStateError value,
+          $Res Function(_$CollectionsStateError) then) =
+      __$$CollectionsStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateErrorDetails>
-    implements _$$CollectionsStateErrorDetailsCopyWith<$Res> {
-  __$$CollectionsStateErrorDetailsCopyWithImpl(
-      _$CollectionsStateErrorDetails _value,
-      $Res Function(_$CollectionsStateErrorDetails) _then)
+class __$$CollectionsStateErrorCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateError>
+    implements _$$CollectionsStateErrorCopyWith<$Res> {
+  __$$CollectionsStateErrorCopyWithImpl(_$CollectionsStateError _value,
+      $Res Function(_$CollectionsStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -523,7 +521,7 @@ class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$CollectionsStateErrorDetails(
+    return _then(_$CollectionsStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -534,10 +532,10 @@ class __$$CollectionsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateErrorDetails
+class _$CollectionsStateError
     with DiagnosticableTreeMixin
-    implements CollectionsStateErrorDetails {
-  const _$CollectionsStateErrorDetails([this.message]);
+    implements CollectionsStateError {
+  const _$CollectionsStateError([this.message]);
 
   @override
   final String? message;
@@ -559,7 +557,7 @@ class _$CollectionsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionsStateErrorDetails &&
+            other is _$CollectionsStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -569,9 +567,9 @@ class _$CollectionsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CollectionsStateErrorDetailsCopyWith<_$CollectionsStateErrorDetails>
-      get copyWith => __$$CollectionsStateErrorDetailsCopyWithImpl<
-          _$CollectionsStateErrorDetails>(this, _$identity);
+  _$$CollectionsStateErrorCopyWith<_$CollectionsStateError> get copyWith =>
+      __$$CollectionsStateErrorCopyWithImpl<_$CollectionsStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -616,7 +614,7 @@ class _$CollectionsStateErrorDetails
     required TResult Function(CollectionsStateInitial value) initial,
     required TResult Function(CollectionsStateLoaded value) loaded,
     required TResult Function(CollectionsStateLoading value) loading,
-    required TResult Function(CollectionsStateErrorDetails value) error,
+    required TResult Function(CollectionsStateError value) error,
   }) {
     return error(this);
   }
@@ -627,7 +625,7 @@ class _$CollectionsStateErrorDetails
     TResult? Function(CollectionsStateInitial value)? initial,
     TResult? Function(CollectionsStateLoaded value)? loaded,
     TResult? Function(CollectionsStateLoading value)? loading,
-    TResult? Function(CollectionsStateErrorDetails value)? error,
+    TResult? Function(CollectionsStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -638,7 +636,7 @@ class _$CollectionsStateErrorDetails
     TResult Function(CollectionsStateInitial value)? initial,
     TResult Function(CollectionsStateLoaded value)? loaded,
     TResult Function(CollectionsStateLoading value)? loading,
-    TResult Function(CollectionsStateErrorDetails value)? error,
+    TResult Function(CollectionsStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -648,12 +646,12 @@ class _$CollectionsStateErrorDetails
   }
 }
 
-abstract class CollectionsStateErrorDetails implements CollectionsState {
-  const factory CollectionsStateErrorDetails([final String? message]) =
-      _$CollectionsStateErrorDetails;
+abstract class CollectionsStateError implements CollectionsState {
+  const factory CollectionsStateError([final String? message]) =
+      _$CollectionsStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$CollectionsStateErrorDetailsCopyWith<_$CollectionsStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$CollectionsStateErrorCopyWith<_$CollectionsStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

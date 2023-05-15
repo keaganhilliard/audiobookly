@@ -33,42 +33,45 @@ class HomeView extends HookConsumerWidget {
           ),
           // CupertinoSearchTextField(),
           switch (state) {
-            HomeStateInitial() => const SliverToBoxAdapter(),
+            HomeStateInitial() => const SliverFillRemaining(),
             HomeStateLoading() => const SliverFillRemaining(
                 child: Center(
                   child: CupertinoActivityIndicator(radius: 30),
                 ),
               ),
             HomeStateLoaded(:final rowsData, :final downloaded) => SliverList(
-                delegate: SliverChildListDelegate([
-                  if (rowsData != null) ...[
-                    for (final entry in rowsData.entries)
+                delegate: SliverChildListDelegate(
+                  [
+                    if (rowsData != null) ...[
+                      for (final MapEntry(:key, :value) in rowsData.entries)
+                        HomeRow(
+                          height: rowHeight,
+                          title: key,
+                          items: value,
+                        )
+                    ],
+                    if (!nullOrEmpty(downloaded))
                       HomeRow(
                         height: rowHeight,
-                        title: entry.key,
-                        items: entry.value,
-                      )
+                        title: 'Downloaded',
+                        items: downloaded!,
+                      ),
+                    const BottomPadding(),
                   ],
-                  if (!nullOrEmpty(downloaded))
-                    HomeRow(
-                      height: rowHeight,
-                      title: 'Downloaded',
-                      items: downloaded!,
-                    ),
-                  const BottomPadding(),
-                ]),
+                ),
               ),
-            HomeStateErrorDetails(:final message) => SliverFillRemaining(
+            HomeStateError(:final message) => SliverFillRemaining(
                 child: Center(
                   child: Column(
                     children: [
                       const Text("There was an issue"),
                       Text(message ?? 'Unknown error'),
                       CupertinoButton.filled(
-                          child: const Text('Retry'),
-                          onPressed: () async {
-                            await homeProvider.refresh();
-                          }),
+                        child: const Text('Retry'),
+                        onPressed: () async {
+                          await homeProvider.refresh();
+                        },
+                      ),
                     ],
                   ),
                 ),

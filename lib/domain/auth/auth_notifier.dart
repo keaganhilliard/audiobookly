@@ -38,14 +38,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       state = const AuthStateLoading();
       final prefsNotifier = _ref.read(preferencesProvider.notifier);
-      Preferences prefs = prefsNotifier.state;
-      prefs.userToken = '';
-      // prefs.baseUrl = '';
-      prefs.serverId = '';
-      prefs.serverType = ServerType.unknown;
-      prefs.userId = '';
-      prefs.libraryId = '';
-      prefsNotifier.savePreferences(prefs);
+      prefsNotifier.savePreferences(prefsNotifier.state.copyWith(
+        userId: '',
+        userToken: '',
+        serverId: '',
+        libraryId: '',
+        serverType: ServerType.unknown,
+      ));
       state = const AuthStateInitial();
       return true;
     } catch (e) {
@@ -78,7 +77,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           .read(embyAuthRepoProvider)
           .login(baseUrl, username, password);
     } catch (e) {
-      log('$e');
+      debugPrint('$e');
     }
     return u?.token != null;
   }
@@ -116,9 +115,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (authToken.authToken != null) {
         plexApi.headers.token = authToken.authToken;
         plexApi.authToken = authToken.authToken;
-        prefs.userToken = authToken.authToken!;
-        prefs.serverType = ServerType.plex;
-        prefsNotifier.savePreferences(prefs);
+        prefsNotifier.savePreferences(prefs.copyWith(
+          userToken: authToken.authToken!,
+          serverType: ServerType.plex,
+        ));
         // urlLauncher.closeWebView();
         // await browser.close();
         timer.cancel();
@@ -139,8 +139,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
         builder: (context) => ServerSelect(servers),
       ),
     );
-    prefs.serverId = server.id;
-    prefsNotifier.savePreferences(prefs);
+    prefsNotifier.savePreferences(
+      prefs.copyWith(
+        serverId: server.id,
+      ),
+    );
 
     await (navigationService.push(
       MaterialPageRoute(

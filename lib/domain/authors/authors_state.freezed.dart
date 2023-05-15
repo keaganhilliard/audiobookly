@@ -50,7 +50,7 @@ mixin _$AuthorsState {
     required TResult Function(AuthorsStateInitial value) initial,
     required TResult Function(AuthorsStateLoaded value) loaded,
     required TResult Function(AuthorsStateLoading value) loading,
-    required TResult Function(AuthorsStateErrorDetails value) error,
+    required TResult Function(AuthorsStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,7 +58,7 @@ mixin _$AuthorsState {
     TResult? Function(AuthorsStateInitial value)? initial,
     TResult? Function(AuthorsStateLoaded value)? loaded,
     TResult? Function(AuthorsStateLoading value)? loading,
-    TResult? Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,7 +66,7 @@ mixin _$AuthorsState {
     TResult Function(AuthorsStateInitial value)? initial,
     TResult Function(AuthorsStateLoaded value)? loaded,
     TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult Function(AuthorsStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -180,7 +180,7 @@ class _$AuthorsStateInitial
     required TResult Function(AuthorsStateInitial value) initial,
     required TResult Function(AuthorsStateLoaded value) loaded,
     required TResult Function(AuthorsStateLoading value) loading,
-    required TResult Function(AuthorsStateErrorDetails value) error,
+    required TResult Function(AuthorsStateError value) error,
   }) {
     return initial(this);
   }
@@ -191,7 +191,7 @@ class _$AuthorsStateInitial
     TResult? Function(AuthorsStateInitial value)? initial,
     TResult? Function(AuthorsStateLoaded value)? loaded,
     TResult? Function(AuthorsStateLoading value)? loading,
-    TResult? Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -202,7 +202,7 @@ class _$AuthorsStateInitial
     TResult Function(AuthorsStateInitial value)? initial,
     TResult Function(AuthorsStateLoaded value)? loaded,
     TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult Function(AuthorsStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -367,7 +367,7 @@ class _$AuthorsStateLoaded
     required TResult Function(AuthorsStateInitial value) initial,
     required TResult Function(AuthorsStateLoaded value) loaded,
     required TResult Function(AuthorsStateLoading value) loading,
-    required TResult Function(AuthorsStateErrorDetails value) error,
+    required TResult Function(AuthorsStateError value) error,
   }) {
     return loaded(this);
   }
@@ -378,7 +378,7 @@ class _$AuthorsStateLoaded
     TResult? Function(AuthorsStateInitial value)? initial,
     TResult? Function(AuthorsStateLoaded value)? loaded,
     TResult? Function(AuthorsStateLoading value)? loading,
-    TResult? Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -389,7 +389,7 @@ class _$AuthorsStateLoaded
     TResult Function(AuthorsStateInitial value)? initial,
     TResult Function(AuthorsStateLoaded value)? loaded,
     TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult Function(AuthorsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -503,7 +503,7 @@ class _$AuthorsStateLoading
     required TResult Function(AuthorsStateInitial value) initial,
     required TResult Function(AuthorsStateLoaded value) loaded,
     required TResult Function(AuthorsStateLoading value) loading,
-    required TResult Function(AuthorsStateErrorDetails value) error,
+    required TResult Function(AuthorsStateError value) error,
   }) {
     return loading(this);
   }
@@ -514,7 +514,7 @@ class _$AuthorsStateLoading
     TResult? Function(AuthorsStateInitial value)? initial,
     TResult? Function(AuthorsStateLoaded value)? loaded,
     TResult? Function(AuthorsStateLoading value)? loading,
-    TResult? Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -525,7 +525,7 @@ class _$AuthorsStateLoading
     TResult Function(AuthorsStateInitial value)? initial,
     TResult Function(AuthorsStateLoaded value)? loaded,
     TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult Function(AuthorsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -540,20 +540,20 @@ abstract class AuthorsStateLoading implements AuthorsState {
 }
 
 /// @nodoc
-abstract class _$$AuthorsStateErrorDetailsCopyWith<$Res> {
-  factory _$$AuthorsStateErrorDetailsCopyWith(_$AuthorsStateErrorDetails value,
-          $Res Function(_$AuthorsStateErrorDetails) then) =
-      __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$AuthorsStateErrorCopyWith<$Res> {
+  factory _$$AuthorsStateErrorCopyWith(
+          _$AuthorsStateError value, $Res Function(_$AuthorsStateError) then) =
+      __$$AuthorsStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$AuthorsStateCopyWithImpl<$Res, _$AuthorsStateErrorDetails>
-    implements _$$AuthorsStateErrorDetailsCopyWith<$Res> {
-  __$$AuthorsStateErrorDetailsCopyWithImpl(_$AuthorsStateErrorDetails _value,
-      $Res Function(_$AuthorsStateErrorDetails) _then)
+class __$$AuthorsStateErrorCopyWithImpl<$Res>
+    extends _$AuthorsStateCopyWithImpl<$Res, _$AuthorsStateError>
+    implements _$$AuthorsStateErrorCopyWith<$Res> {
+  __$$AuthorsStateErrorCopyWithImpl(
+      _$AuthorsStateError _value, $Res Function(_$AuthorsStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -561,7 +561,7 @@ class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$AuthorsStateErrorDetails(
+    return _then(_$AuthorsStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -572,10 +572,10 @@ class __$$AuthorsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorsStateErrorDetails
+class _$AuthorsStateError
     with DiagnosticableTreeMixin
-    implements AuthorsStateErrorDetails {
-  const _$AuthorsStateErrorDetails([this.message]);
+    implements AuthorsStateError {
+  const _$AuthorsStateError([this.message]);
 
   @override
   final String? message;
@@ -597,7 +597,7 @@ class _$AuthorsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthorsStateErrorDetails &&
+            other is _$AuthorsStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -607,10 +607,8 @@ class _$AuthorsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthorsStateErrorDetailsCopyWith<_$AuthorsStateErrorDetails>
-      get copyWith =>
-          __$$AuthorsStateErrorDetailsCopyWithImpl<_$AuthorsStateErrorDetails>(
-              this, _$identity);
+  _$$AuthorsStateErrorCopyWith<_$AuthorsStateError> get copyWith =>
+      __$$AuthorsStateErrorCopyWithImpl<_$AuthorsStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -659,7 +657,7 @@ class _$AuthorsStateErrorDetails
     required TResult Function(AuthorsStateInitial value) initial,
     required TResult Function(AuthorsStateLoaded value) loaded,
     required TResult Function(AuthorsStateLoading value) loading,
-    required TResult Function(AuthorsStateErrorDetails value) error,
+    required TResult Function(AuthorsStateError value) error,
   }) {
     return error(this);
   }
@@ -670,7 +668,7 @@ class _$AuthorsStateErrorDetails
     TResult? Function(AuthorsStateInitial value)? initial,
     TResult? Function(AuthorsStateLoaded value)? loaded,
     TResult? Function(AuthorsStateLoading value)? loading,
-    TResult? Function(AuthorsStateErrorDetails value)? error,
+    TResult? Function(AuthorsStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -681,7 +679,7 @@ class _$AuthorsStateErrorDetails
     TResult Function(AuthorsStateInitial value)? initial,
     TResult Function(AuthorsStateLoaded value)? loaded,
     TResult Function(AuthorsStateLoading value)? loading,
-    TResult Function(AuthorsStateErrorDetails value)? error,
+    TResult Function(AuthorsStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -691,12 +689,12 @@ class _$AuthorsStateErrorDetails
   }
 }
 
-abstract class AuthorsStateErrorDetails implements AuthorsState {
-  const factory AuthorsStateErrorDetails([final String? message]) =
-      _$AuthorsStateErrorDetails;
+abstract class AuthorsStateError implements AuthorsState {
+  const factory AuthorsStateError([final String? message]) =
+      _$AuthorsStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$AuthorsStateErrorDetailsCopyWith<_$AuthorsStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$AuthorsStateErrorCopyWith<_$AuthorsStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -46,7 +46,7 @@ mixin _$PlaylistsState {
     required TResult Function(PlaylistsStateInitial value) initial,
     required TResult Function(PlaylistsStateLoaded value) loaded,
     required TResult Function(PlaylistsStateLoading value) loading,
-    required TResult Function(PlaylistsStateErrorDetails value) error,
+    required TResult Function(PlaylistsStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$PlaylistsState {
     TResult? Function(PlaylistsStateInitial value)? initial,
     TResult? Function(PlaylistsStateLoaded value)? loaded,
     TResult? Function(PlaylistsStateLoading value)? loading,
-    TResult? Function(PlaylistsStateErrorDetails value)? error,
+    TResult? Function(PlaylistsStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$PlaylistsState {
     TResult Function(PlaylistsStateInitial value)? initial,
     TResult Function(PlaylistsStateLoaded value)? loaded,
     TResult Function(PlaylistsStateLoading value)? loading,
-    TResult Function(PlaylistsStateErrorDetails value)? error,
+    TResult Function(PlaylistsStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -172,7 +172,7 @@ class _$PlaylistsStateInitial
     required TResult Function(PlaylistsStateInitial value) initial,
     required TResult Function(PlaylistsStateLoaded value) loaded,
     required TResult Function(PlaylistsStateLoading value) loading,
-    required TResult Function(PlaylistsStateErrorDetails value) error,
+    required TResult Function(PlaylistsStateError value) error,
   }) {
     return initial(this);
   }
@@ -183,7 +183,7 @@ class _$PlaylistsStateInitial
     TResult? Function(PlaylistsStateInitial value)? initial,
     TResult? Function(PlaylistsStateLoaded value)? loaded,
     TResult? Function(PlaylistsStateLoading value)? loading,
-    TResult? Function(PlaylistsStateErrorDetails value)? error,
+    TResult? Function(PlaylistsStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -194,7 +194,7 @@ class _$PlaylistsStateInitial
     TResult Function(PlaylistsStateInitial value)? initial,
     TResult Function(PlaylistsStateLoaded value)? loaded,
     TResult Function(PlaylistsStateLoading value)? loading,
-    TResult Function(PlaylistsStateErrorDetails value)? error,
+    TResult Function(PlaylistsStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -333,7 +333,7 @@ class _$PlaylistsStateLoaded
     required TResult Function(PlaylistsStateInitial value) initial,
     required TResult Function(PlaylistsStateLoaded value) loaded,
     required TResult Function(PlaylistsStateLoading value) loading,
-    required TResult Function(PlaylistsStateErrorDetails value) error,
+    required TResult Function(PlaylistsStateError value) error,
   }) {
     return loaded(this);
   }
@@ -344,7 +344,7 @@ class _$PlaylistsStateLoaded
     TResult? Function(PlaylistsStateInitial value)? initial,
     TResult? Function(PlaylistsStateLoaded value)? loaded,
     TResult? Function(PlaylistsStateLoading value)? loading,
-    TResult? Function(PlaylistsStateErrorDetails value)? error,
+    TResult? Function(PlaylistsStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -355,7 +355,7 @@ class _$PlaylistsStateLoaded
     TResult Function(PlaylistsStateInitial value)? initial,
     TResult Function(PlaylistsStateLoaded value)? loaded,
     TResult Function(PlaylistsStateLoading value)? loading,
-    TResult Function(PlaylistsStateErrorDetails value)? error,
+    TResult Function(PlaylistsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -461,7 +461,7 @@ class _$PlaylistsStateLoading
     required TResult Function(PlaylistsStateInitial value) initial,
     required TResult Function(PlaylistsStateLoaded value) loaded,
     required TResult Function(PlaylistsStateLoading value) loading,
-    required TResult Function(PlaylistsStateErrorDetails value) error,
+    required TResult Function(PlaylistsStateError value) error,
   }) {
     return loading(this);
   }
@@ -472,7 +472,7 @@ class _$PlaylistsStateLoading
     TResult? Function(PlaylistsStateInitial value)? initial,
     TResult? Function(PlaylistsStateLoaded value)? loaded,
     TResult? Function(PlaylistsStateLoading value)? loading,
-    TResult? Function(PlaylistsStateErrorDetails value)? error,
+    TResult? Function(PlaylistsStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -483,7 +483,7 @@ class _$PlaylistsStateLoading
     TResult Function(PlaylistsStateInitial value)? initial,
     TResult Function(PlaylistsStateLoaded value)? loaded,
     TResult Function(PlaylistsStateLoading value)? loading,
-    TResult Function(PlaylistsStateErrorDetails value)? error,
+    TResult Function(PlaylistsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -498,22 +498,20 @@ abstract class PlaylistsStateLoading implements PlaylistsState {
 }
 
 /// @nodoc
-abstract class _$$PlaylistsStateErrorDetailsCopyWith<$Res> {
-  factory _$$PlaylistsStateErrorDetailsCopyWith(
-          _$PlaylistsStateErrorDetails value,
-          $Res Function(_$PlaylistsStateErrorDetails) then) =
-      __$$PlaylistsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$PlaylistsStateErrorCopyWith<$Res> {
+  factory _$$PlaylistsStateErrorCopyWith(_$PlaylistsStateError value,
+          $Res Function(_$PlaylistsStateError) then) =
+      __$$PlaylistsStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$PlaylistsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateErrorDetails>
-    implements _$$PlaylistsStateErrorDetailsCopyWith<$Res> {
-  __$$PlaylistsStateErrorDetailsCopyWithImpl(
-      _$PlaylistsStateErrorDetails _value,
-      $Res Function(_$PlaylistsStateErrorDetails) _then)
+class __$$PlaylistsStateErrorCopyWithImpl<$Res>
+    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateError>
+    implements _$$PlaylistsStateErrorCopyWith<$Res> {
+  __$$PlaylistsStateErrorCopyWithImpl(
+      _$PlaylistsStateError _value, $Res Function(_$PlaylistsStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -521,7 +519,7 @@ class __$$PlaylistsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$PlaylistsStateErrorDetails(
+    return _then(_$PlaylistsStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -532,10 +530,10 @@ class __$$PlaylistsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PlaylistsStateErrorDetails
+class _$PlaylistsStateError
     with DiagnosticableTreeMixin
-    implements PlaylistsStateErrorDetails {
-  const _$PlaylistsStateErrorDetails([this.message]);
+    implements PlaylistsStateError {
+  const _$PlaylistsStateError([this.message]);
 
   @override
   final String? message;
@@ -557,7 +555,7 @@ class _$PlaylistsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlaylistsStateErrorDetails &&
+            other is _$PlaylistsStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -567,9 +565,9 @@ class _$PlaylistsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PlaylistsStateErrorDetailsCopyWith<_$PlaylistsStateErrorDetails>
-      get copyWith => __$$PlaylistsStateErrorDetailsCopyWithImpl<
-          _$PlaylistsStateErrorDetails>(this, _$identity);
+  _$$PlaylistsStateErrorCopyWith<_$PlaylistsStateError> get copyWith =>
+      __$$PlaylistsStateErrorCopyWithImpl<_$PlaylistsStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -614,7 +612,7 @@ class _$PlaylistsStateErrorDetails
     required TResult Function(PlaylistsStateInitial value) initial,
     required TResult Function(PlaylistsStateLoaded value) loaded,
     required TResult Function(PlaylistsStateLoading value) loading,
-    required TResult Function(PlaylistsStateErrorDetails value) error,
+    required TResult Function(PlaylistsStateError value) error,
   }) {
     return error(this);
   }
@@ -625,7 +623,7 @@ class _$PlaylistsStateErrorDetails
     TResult? Function(PlaylistsStateInitial value)? initial,
     TResult? Function(PlaylistsStateLoaded value)? loaded,
     TResult? Function(PlaylistsStateLoading value)? loading,
-    TResult? Function(PlaylistsStateErrorDetails value)? error,
+    TResult? Function(PlaylistsStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -636,7 +634,7 @@ class _$PlaylistsStateErrorDetails
     TResult Function(PlaylistsStateInitial value)? initial,
     TResult Function(PlaylistsStateLoaded value)? loaded,
     TResult Function(PlaylistsStateLoading value)? loading,
-    TResult Function(PlaylistsStateErrorDetails value)? error,
+    TResult Function(PlaylistsStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -646,12 +644,12 @@ class _$PlaylistsStateErrorDetails
   }
 }
 
-abstract class PlaylistsStateErrorDetails implements PlaylistsState {
-  const factory PlaylistsStateErrorDetails([final String? message]) =
-      _$PlaylistsStateErrorDetails;
+abstract class PlaylistsStateError implements PlaylistsState {
+  const factory PlaylistsStateError([final String? message]) =
+      _$PlaylistsStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$PlaylistsStateErrorDetailsCopyWith<_$PlaylistsStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$PlaylistsStateErrorCopyWith<_$PlaylistsStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -13,8 +13,9 @@ class BooksState with _$BooksState {
     @Default(0) int totalItems,
   }) = BooksStateLoaded;
   const factory BooksState.loading() = BooksStateLoading;
-  const factory BooksState.error(
-      [String? message,
-      String? errorDetails,
-      String? stackTrace]) = BooksStateErrorDetails;
+  const factory BooksState.error([
+    String? message,
+    String? errorDetails,
+    String? stackTrace,
+  ]) = BooksStateError;
 }

@@ -10,5 +10,5 @@ class AuthState with _$AuthState {
   const factory AuthState.loaded({User? user}) = AuthStateLoaded;
   const factory AuthState.loading() = AuthStateLoading;
   const factory AuthState.offline() = AuthStateOffline;
-  const factory AuthState.error([String? message]) = AuthStateErrorDetails;
+  const factory AuthState.error([String? message]) = AuthStateError;
 }

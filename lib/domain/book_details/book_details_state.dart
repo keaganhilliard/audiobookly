@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 part 'book_details_state.freezed.dart';
 
 @freezed
-class BookDetailsState with _$BookDetailsState {
+sealed class BookDetailsState with _$BookDetailsState {
   const factory BookDetailsState.initial() = BookDetailsStateInitial;
   const factory BookDetailsState.loaded({
     Book? book,
@@ -14,5 +14,5 @@ class BookDetailsState with _$BookDetailsState {
   }) = BookDetailsStateLoaded;
   const factory BookDetailsState.loading() = BookDetailsStateLoading;
   const factory BookDetailsState.error([String? message]) =
-      BookDetailsStateErrorDetails;
+      BookDetailsStateError;
 }

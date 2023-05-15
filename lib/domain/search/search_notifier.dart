@@ -1,5 +1,5 @@
-import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/domain/search/search_state.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,18 +23,30 @@ class SearchNotifier extends StateNotifier<SearchState> {
       state = results.fold<SearchStateLoaded>(
         const SearchStateLoaded(),
         (value, item) {
-          late SearchStateLoaded newState;
-          if (item.id.startsWith(MediaIds.seriesId)) {
-            newState = value
-                .copyWith(seriesResults: [...value.seriesResults ?? [], item]);
-          } else if (item.id.startsWith(MediaIds.authorsId)) {
-            newState = value
-                .copyWith(authorResults: [...value.authorResults ?? [], item]);
-          } else {
-            newState =
-                value.copyWith(bookResults: [...value.bookResults ?? [], item]);
-          }
-          return newState;
+          return switch (item) {
+            // ignore: unused_result
+            BookValue(value: var book) => value.copyWith(
+                bookResults: [
+                  ...value.bookResults ?? [],
+                  book.toMediaItem(),
+                ],
+              ),
+            // ignore: unused_result
+            AuthorValue(value: var author) => value.copyWith(
+                authorResults: [
+                  ...value.bookResults ?? [],
+                  author.toMediaItem()
+                ],
+              ),
+            // ignore: unused_result
+            SeriesValue(value: var series) => value.copyWith(
+                seriesResults: [
+                  ...value.seriesResults ?? [],
+                  series.toMediaItem()
+                ],
+              ),
+            _ => value
+          };
         },
       );
     } on Exception {

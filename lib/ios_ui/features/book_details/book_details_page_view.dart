@@ -24,7 +24,7 @@ class BookDetailsView extends HookConsumerWidget {
     final playbackController = GetIt.I<PlaybackController>();
 
     return PageView(
-      scrollDirection: Axis.vertical,
+      scrollDirection: Axis.horizontal,
       children: [
         state.maybeWhen(
           orElse: () => const Center(
@@ -360,8 +360,8 @@ class BookDetailsView extends HookConsumerWidget {
             );
           },
         ),
-        Container(
-          child: const Text('Second Page'),
+        const Center(
+          child: Text('Second Page'),
         )
       ],
     );

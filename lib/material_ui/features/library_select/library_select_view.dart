@@ -35,7 +35,7 @@ class LibrarySelectView extends HookConsumerWidget {
           },
         ),
       );
-    } else if (state is LibrarySelectStateErrorDetails) {
+    } else if (state is LibrarySelectStateError) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

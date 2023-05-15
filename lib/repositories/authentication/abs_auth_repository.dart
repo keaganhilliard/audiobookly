@@ -34,15 +34,14 @@ class AbsAuthRepository extends AuthenticationRepository {
   Future<bool> logout() async {
     final prefs = _ref.read(preferencesProvider.notifier);
 
-    prefs.savePreferences(
-      prefs.state
-        ..baseUrl = ''
-        ..userToken = ''
-        ..userId = ''
-        ..serverId = ''
-        ..libraryId = ''
-        ..serverType = ServerType.unknown,
-    );
+    prefs.savePreferences(prefs.state.copyWith(
+      baseUrl: '',
+      userToken: '',
+      userId: '',
+      serverId: '',
+      libraryId: '',
+      serverType: ServerType.unknown,
+    ));
 
     return true;
   }
@@ -54,12 +53,13 @@ class AbsAuthRepository extends AuthenticationRepository {
     final res = await absApi.login(username, password);
 
     prefs.savePreferences(
-      prefs.state
-        ..username = res.user.username
-        ..userId = res.user.id
-        ..baseUrl = baseUrl
-        ..userToken = res.user.token
-        ..serverType = ServerType.audiobookshelf,
+      prefs.state.copyWith(
+        username: res.user.username,
+        userId: res.user.id,
+        baseUrl: baseUrl,
+        userToken: res.user.token,
+        serverType: ServerType.audiobookshelf,
+      ),
     );
 
     // print(res.toJson());

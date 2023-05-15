@@ -62,7 +62,7 @@ class Offline extends HookConsumerWidget {
                         );
                       },
                     );
-                  } else if (state is OfflineStateErrorDetails) {
+                  } else if (state is OfflineStateError) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

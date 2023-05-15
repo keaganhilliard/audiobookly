@@ -1,6 +1,7 @@
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/library_select/library_select_state.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final libraryStateProvider =
@@ -22,11 +23,12 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
     state.whenOrNull(loaded: (libraries) {
       final lib = libraries?.firstWhere((lib) => lib.id == id);
       if (lib != null) {
-        print('Library chosen: ${lib.title}');
+        debugPrint('Library chosen: ${lib.title}');
         _preferencesNotifier.savePreferences(
-          _preferencesNotifier.state
-            ..libraryId = id
-            ..libraryLabel = (lib.title ?? ''),
+          _preferencesNotifier.state.copyWith(
+            libraryId: id,
+            libraryLabel: (lib.title ?? ''),
+          ),
         );
         _repository!.setLibraryId(id);
         _repository!.getServerAndLibrary();
