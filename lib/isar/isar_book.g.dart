@@ -7,7 +7,7 @@ part of 'isar_book.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
 extension GetIsarBookCollection on Isar {
   IsarCollection<IsarBook> get isarBooks => this.collection();
@@ -38,38 +38,43 @@ const IsarBookSchema = CollectionSchema(
       type: IsarType.byte,
       enumMap: _IsarBookdownloadStatusEnumValueMap,
     ),
-    r'exId': PropertySchema(
+    r'downloadedAt': PropertySchema(
       id: 4,
+      name: r'downloadedAt',
+      type: IsarType.dateTime,
+    ),
+    r'exId': PropertySchema(
+      id: 5,
       name: r'exId',
       type: IsarType.string,
     ),
     r'isarDuration': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'isarDuration',
       type: IsarType.long,
     ),
     r'isarLastPlayedPosition': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'isarLastPlayedPosition',
       type: IsarType.long,
     ),
     r'isarLastUpdate': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isarLastUpdate',
       type: IsarType.long,
     ),
     r'narrator': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'narrator',
       type: IsarType.string,
     ),
     r'read': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'read',
       type: IsarType.bool,
     ),
     r'title': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'title',
       type: IsarType.string,
     )
@@ -99,7 +104,7 @@ const IsarBookSchema = CollectionSchema(
   getId: _isarBookGetId,
   getLinks: _isarBookGetLinks,
   attach: _isarBookAttach,
-  version: '3.0.5',
+  version: '3.1.0+1',
 );
 
 int _isarBookEstimateSize(
@@ -127,13 +132,14 @@ void _isarBookSerialize(
   writer.writeString(offsets[1], object.author);
   writer.writeString(offsets[2], object.description);
   writer.writeByte(offsets[3], object.downloadStatus.index);
-  writer.writeString(offsets[4], object.exId);
-  writer.writeLong(offsets[5], object.isarDuration);
-  writer.writeLong(offsets[6], object.isarLastPlayedPosition);
-  writer.writeLong(offsets[7], object.isarLastUpdate);
-  writer.writeString(offsets[8], object.narrator);
-  writer.writeBool(offsets[9], object.read);
-  writer.writeString(offsets[10], object.title);
+  writer.writeDateTime(offsets[4], object.downloadedAt);
+  writer.writeString(offsets[5], object.exId);
+  writer.writeLong(offsets[6], object.isarDuration);
+  writer.writeLong(offsets[7], object.isarLastPlayedPosition);
+  writer.writeLong(offsets[8], object.isarLastUpdate);
+  writer.writeString(offsets[9], object.narrator);
+  writer.writeBool(offsets[10], object.read);
+  writer.writeString(offsets[11], object.title);
 }
 
 IsarBook _isarBookDeserialize(
@@ -143,16 +149,17 @@ IsarBook _isarBookDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = IsarBook(
-    reader.readString(offsets[4]),
-    reader.readString(offsets[10]),
+    reader.readString(offsets[5]),
+    reader.readString(offsets[11]),
     reader.readString(offsets[1]),
-    reader.readString(offsets[8]),
+    reader.readString(offsets[9]),
     reader.readString(offsets[2]),
     reader.readString(offsets[0]),
-    reader.readLong(offsets[5]),
     reader.readLong(offsets[6]),
-    reader.readBool(offsets[9]),
-    reader.readLongOrNull(offsets[7]),
+    reader.readLong(offsets[7]),
+    reader.readBool(offsets[10]),
+    reader.readLongOrNull(offsets[8]),
+    reader.readDateTimeOrNull(offsets[4]),
     _IsarBookdownloadStatusValueEnumMap[reader.readByteOrNull(offsets[3])] ??
         DownloadStatus.none,
   );
@@ -177,18 +184,20 @@ P _isarBookDeserializeProp<P>(
               reader.readByteOrNull(offset)] ??
           DownloadStatus.none) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
       return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 8:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 9:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 10:
+      return (reader.readBool(offset)) as P;
+    case 11:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -832,6 +841,77 @@ extension IsarBookQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'downloadStatus',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> downloadedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'downloadedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition>
+      downloadedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'downloadedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> downloadedAtEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'downloadedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition>
+      downloadedAtGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'downloadedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> downloadedAtLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'downloadedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterFilterCondition> downloadedAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'downloadedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1531,6 +1611,18 @@ extension IsarBookQuerySortBy on QueryBuilder<IsarBook, IsarBook, QSortBy> {
     });
   }
 
+  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByDownloadedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarBook, IsarBook, QAfterSortBy> sortByExId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'exId', Sort.asc);
@@ -1668,6 +1760,18 @@ extension IsarBookQuerySortThenBy
     });
   }
 
+  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByDownloadedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarBook, IsarBook, QAfterSortBy> thenByExId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'exId', Sort.asc);
@@ -1796,6 +1900,12 @@ extension IsarBookQueryWhereDistinct
     });
   }
 
+  QueryBuilder<IsarBook, IsarBook, QDistinct> distinctByDownloadedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'downloadedAt');
+    });
+  }
+
   QueryBuilder<IsarBook, IsarBook, QDistinct> distinctByExId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1873,6 +1983,12 @@ extension IsarBookQueryProperty
       downloadStatusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'downloadStatus');
+    });
+  }
+
+  QueryBuilder<IsarBook, DateTime?, QQueryOperations> downloadedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'downloadedAt');
     });
   }
 

@@ -25,16 +25,17 @@ class DownloadService {
   final DatabaseService _db;
   DownloadService(this._repo, this._db);
 
-  Future createDirIfNotExists(String path) async {
+  void createDirIfNotExists(String path) async {
     final dir = Directory(path);
-    bool dirExists = await dir.exists();
+    bool dirExists = dir.existsSync();
     if (!dirExists) {
-      await dir.create(recursive: true);
+      dir.createSync(recursive: true);
     }
   }
 
   Future deleteDownload(Book book) async {
     final tracks = await _db.getTracksForBookId(book.id).first;
+    final chapters = await _db.getChaptersForBook(book.id);
 
     for (final track in tracks) {
       if (track.downloadPath.isNotEmpty) {
@@ -48,6 +49,7 @@ class DownloadService {
     }
     final dbBook = await _db.getBookById(book.id);
     await _db.deleteTracks(tracks);
+    await _db.deleteChapters(chapters);
     if (dbBook != null) {
       await _db.insertBook(
         dbBook.copyWith(
@@ -72,7 +74,9 @@ class DownloadService {
   }
 
   Future cancelBookDownload(Book book) async {
+    print('CANCELLED');
     await GetIt.I.get<Downloader>().cancelDownloads(book.id);
+    print('CANCELLED');
     // req?.token.cancel('Requested');
     toDownload.removeWhere((req) => req.book.id == book.id);
     await deleteDownload(book);
@@ -80,6 +84,7 @@ class DownloadService {
 
   Future processNextBook() async {
     if (toDownload.isEmpty) return;
+    print('Downloading');
     // _isDownloading = true;
     final req = toDownload[0];
     if (req.processing) {
@@ -107,7 +112,7 @@ class DownloadService {
         book.title,
       );
 
-      await createDirIfNotExists(p.join(dir!.path, path));
+      createDirIfNotExists(p.join(dir!.path, path));
 
       final pieces = theTrack.id.split('/');
       final fileName = pieces.length > 1 ? pieces[1] : null;

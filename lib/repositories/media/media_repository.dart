@@ -1,10 +1,12 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/playlist.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 
@@ -78,7 +80,9 @@ abstract class MediaRepository {
               book.toMediaItem()
           ];
         } else {
-          return getAuthors();
+          return [
+            for (final author in await getAuthors()) author.toMediaItem()
+          ];
         }
       case MediaIds.booksId:
         return [for (final book in await getAllBooks(page)) book.toMediaItem()];
@@ -114,7 +118,7 @@ abstract class MediaRepository {
               book.toMediaItem()
           ];
         } else {
-          return await getSeries();
+          return [for (final series in await getSeries()) series.toMediaItem()];
         }
       case MediaIds.recentlyPlayed:
         return [
@@ -133,18 +137,15 @@ abstract class MediaRepository {
   Future<List<Book>> getDownloads();
   Future<List<Book>> getRecentlyPlayed();
   Future<List<Book>> getAllBooks([int? page]);
-  // TODO: Create an Author model and use that
-  Future<List<MediaItem>> getAuthors();
+  Future<List<Author>> getAuthors();
   Future<List<Book>> getBooksFromAuthor(String authorId);
   Future<List<Collection>> getCollections();
   Future<List<Book>> getBooksFromCollection(String collectionId);
   Future<List<Playlist>> getPlaylists();
   Future<List<Book>> getBooksFromPlaylist(String playlistId);
-  // TODO: Create a series model and use that
-  Future<List<MediaItem>> getSeries();
+  Future<List<Series>> getSeries();
   Future<List<Book>> getBooksFromSeries(String seriesId);
-  // TODO: Create a search results model of some sort
-  Future<List<MediaItem>> search(String search);
+  Future<List<ModelUnion>> search(String search);
   Future<List<Library>> getLibraries();
   Future<List<Track>> getTracksForBook(String bookId);
   Future<Book> getAlbumFromId(String? mediaId);

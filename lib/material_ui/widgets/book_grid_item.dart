@@ -125,10 +125,19 @@ class BookGridItem extends StatelessWidget {
             if (progress > 0)
               Align(
                 alignment: Alignment.bottomLeft,
-                child: LinearProgressIndicator(
-                  minHeight: 6.0,
-                  value: progress,
-                  backgroundColor: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: LinearProgressIndicator(
+                      minHeight: 6.0,
+                      value: progress,
+                      backgroundColor: Colors.grey.withOpacity(0.2),
+                    ),
+                  ),
                 ),
               ),
             if (played) const PlayedIcon(),

@@ -32,6 +32,8 @@ class IsarBook {
       : DateTime.fromMillisecondsSinceEpoch(isarLastUpdate!);
   final int? isarLastUpdate;
 
+  final DateTime? downloadedAt;
+
   Book toBook() => Book(
         id: exId,
         title: title,
@@ -44,6 +46,7 @@ class IsarBook {
         read: read,
         lastUpdate: lastUpdate,
         downloadStatus: downloadStatus,
+        downloadedAt: downloadedAt,
       );
 
   IsarBook(
@@ -56,7 +59,8 @@ class IsarBook {
     this.isarDuration,
     this.isarLastPlayedPosition,
     this.read,
-    this.isarLastUpdate, [
+    this.isarLastUpdate,
+    this.downloadedAt, [
     this.downloadStatus = DownloadStatus.none,
   ]);
 
@@ -72,6 +76,7 @@ class IsarBook {
     Duration? lastPlayedPosition,
     bool? read,
     DateTime? lastUpdate,
+    DateTime? downloadedAt,
     DownloadStatus? downloadStatus,
   }) =>
       IsarBook(
@@ -85,6 +90,7 @@ class IsarBook {
         lastPlayedPosition?.inMicroseconds ?? isarLastPlayedPosition,
         read ?? this.read,
         lastUpdate?.millisecondsSinceEpoch ?? isarLastUpdate,
+        downloadedAt ?? this.downloadedAt,
         downloadStatus ?? this.downloadStatus,
       );
 
@@ -99,6 +105,7 @@ class IsarBook {
         book.lastPlayedPosition.inMicroseconds,
         book.read,
         book.lastUpdate?.millisecondsSinceEpoch,
+        book.downloadedAt,
         book.downloadStatus,
       );
 }

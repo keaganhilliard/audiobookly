@@ -1,4 +1,3 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/models/playlist.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';

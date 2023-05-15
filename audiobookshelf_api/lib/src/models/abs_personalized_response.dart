@@ -1,5 +1,4 @@
 import 'package:audiobookshelf/audiobookshelf.dart';
-import 'package:audiobookshelf/src/models/abs_series.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'abs_personalized_response.freezed.dart';

@@ -33,6 +33,7 @@ class IsarDatabaseService implements DatabaseService {
   Stream<List<Book>> getBooks() {
     return _db.isarBooks
         .where()
+        .sortByDownloadedAtDesc()
         .watch(fireImmediately: true)
         .map((isarBooks) => isarBooks.map((book) => book.toBook()).toList());
   }
@@ -90,7 +91,11 @@ class IsarDatabaseService implements DatabaseService {
     if (track != null) {
       await _db.writeTxn(() async {
         await _db.isarTracks.put(
-          track.copyWith(downloadProgress: progress, isDownloaded: completed),
+          track.copyWith(
+            downloadProgress: progress,
+            isDownloaded: completed,
+            downloadedAt: completed ? DateTime.now() : null,
+          ),
         );
       });
     }

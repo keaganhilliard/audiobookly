@@ -50,13 +50,13 @@ class SeekBar extends HookWidget {
           right: 16.0,
           bottom: 0.0,
           child: Text(Utils.getTimeValue(duration),
-              style: Theme.of(context).textTheme.caption),
+              style: Theme.of(context).textTheme.bodySmall),
         ),
         Positioned(
           left: 16.0,
           bottom: 0.0,
           child: Text(Utils.getTimeValue(dragPosition),
-              style: Theme.of(context).textTheme.caption),
+              style: Theme.of(context).textTheme.bodySmall),
         ),
       ],
     );

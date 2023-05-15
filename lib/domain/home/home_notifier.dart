@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';

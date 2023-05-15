@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/models/model_union.dart';
@@ -76,7 +75,7 @@ class HomeRow extends HookConsumerWidget {
             padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
             child: Text(
               title!,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             )),
         Padding(
           padding: const EdgeInsets.only(left: 5.0),

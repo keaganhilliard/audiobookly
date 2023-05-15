@@ -1,5 +1,4 @@
 import 'package:audiobookly/domain/playlists/playlists_notifier.dart';
-import 'package:audiobookly/domain/series/series_notifier.dart';
 import 'package:audiobookly/ios_ui/features/books/books_view.dart';
 import 'package:audiobookly/ios_ui/widgets/ab_grid_view.dart';
 import 'package:audiobookly/ios_ui/widgets/grid_item.dart';

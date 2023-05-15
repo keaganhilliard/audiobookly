@@ -4,6 +4,7 @@ class Track {
   final Duration duration;
   final double downloadProgress;
   final bool isDownloaded;
+  final DateTime? downloadedAt;
   final String downloadPath;
   final String bookId;
   final String downloadTaskId;
@@ -15,6 +16,7 @@ class Track {
     required this.duration,
     required this.downloadProgress,
     required this.isDownloaded,
+    this.downloadedAt,
     required this.downloadPath,
     required this.bookId,
     required this.downloadTaskId,
@@ -27,6 +29,7 @@ class Track {
     Duration? duration,
     double? downloadProgress,
     bool? isDownloaded,
+    DateTime? downloadedAt,
     String? downloadPath,
     String? bookId,
     String? downloadTaskId,
@@ -38,6 +41,7 @@ class Track {
         duration: duration ?? this.duration,
         downloadProgress: downloadProgress ?? this.downloadProgress,
         isDownloaded: isDownloaded ?? this.isDownloaded,
+        downloadedAt: downloadedAt ?? this.downloadedAt,
         downloadPath: downloadPath ?? this.downloadPath,
         bookId: bookId ?? this.bookId,
         downloadTaskId: downloadTaskId ?? this.downloadTaskId,

@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/library.dart';
@@ -7,6 +8,7 @@ import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/playlist.dart';
 import 'package:audiobookly/models/plex_media_item.dart';
 import 'package:audiobookly/models/preferences.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -164,11 +166,18 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<List<PlexMediaItem>> getAuthors() async {
+  Future<List<Author>> getAuthors() async {
     await refreshServer();
-    return (await _server!.getArtists(_libraryKey!))!
-        .map((artist) => PlexMediaItem.fromPlexArtist(artist, _server!))
-        .toList();
+    final artists = await _server!.getArtists(_libraryKey!);
+    return [
+      for (final artist in artists ?? <PlexArtist>[])
+        Author(
+          id: '${MediaIds.authorsId}/${artist.ratingKey}',
+          name: artist.title ?? '',
+          description: artist.summary ?? '',
+          artPath: _server!.getThumbnailUrl(artist.thumb ?? '').toString(),
+        )
+    ];
   }
 
   @override
@@ -198,11 +207,12 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<List<PlexMediaItem>> search(String search) async {
-    await refreshServer();
-    return (await _server!.searchAlbums(_libraryKey!, search))
-        .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
-        .toList();
+  Future<List<ModelUnion>> search(String search) async {
+    throw UnimplementedError();
+    // await refreshServer();
+    // return (await _server!.searchAlbums(_libraryKey!, search))
+    //     .map((album) => PlexMediaItem.fromPlexAlbum(album, _server!))
+    //     .toList();
   }
 
   @override
@@ -316,7 +326,7 @@ class PlexRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getSeries() {
+  Future<List<Series>> getSeries() {
     // TODO: implement getSeries
     throw UnimplementedError();
   }

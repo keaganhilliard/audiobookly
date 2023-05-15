@@ -128,7 +128,7 @@ class GridItem extends StatelessWidget {
                 ),
               ),
             if (played) const PlayedIcon(),
-            if (this.index != null)
+            if (index != null)
               Align(
                 alignment: Alignment.topLeft,
                 child: Text("$index"),

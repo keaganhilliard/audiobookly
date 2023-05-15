@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/track.dart';
@@ -13,9 +12,9 @@ final download = BehaviorSubject();
 
 class MobileBackgroundDownloader extends Downloader {
   MobileBackgroundDownloader(super.db) {
-    FileDownloader.initialize(
-      downloadStatusCallback: downloadStatusCallback,
-      downloadProgressCallback: downloadProgressCallback,
+    FileDownloader().registerCallbacks(
+      taskStatusCallback: downloadStatusCallback,
+      taskProgressCallback: downloadProgressCallback,
     );
   }
 
@@ -24,7 +23,7 @@ class MobileBackgroundDownloader extends Downloader {
     trackSubs[parentId]?.cancel();
     trackSubs.remove(parentId);
     final tracks = await db.getTracksForBookId(parentId).first;
-    return await FileDownloader.cancelTasksWithIds(
+    return await FileDownloader().cancelTasksWithIds(
       tracks.map((track) => track.downloadTaskId).toList(),
     );
   }
@@ -32,19 +31,20 @@ class MobileBackgroundDownloader extends Downloader {
   @override
   Future downloadFile(Track track, Uri url, String path,
       [String? fileName]) async {
-    final task = BackgroundDownloadTask(
+    final task = await DownloadTask(
       headers: {
         'Authorization': 'Bearer ${url.queryParameters['token'] ?? ''}'
       },
       url: url.toString(),
-      filename: fileName ?? track.title,
+      // filename: fileName ?? track.title,
       baseDirectory: BaseDirectory.applicationDocuments,
       directory: path,
-      progressUpdates:
-          DownloadTaskProgressUpdates.statusChangeAndProgressUpdates,
-    );
+      updates: Updates.statusAndProgress,
+    ).withSuggestedFilename();
 
-    await FileDownloader.enqueue(task);
+    final enqueued = await FileDownloader().enqueue(task);
+    print('Filename: ${task.filename}');
+    print('Enqueued?: $enqueued');
     await db.insertTrack(track.copyWith(downloadTaskId: task.taskId));
   }
 
@@ -69,23 +69,32 @@ class MobileBackgroundDownloader extends Downloader {
     await waitForIt.future;
     final book = await db.getBookById(parentId);
     if (book != null) {
-      db.insertBook(book.copyWith(downloadStatus: DownloadStatus.succeeded));
+      db.insertBook(book.copyWith(
+        downloadStatus: DownloadStatus.succeeded,
+        downloadedAt: DateTime.now(),
+      ));
     }
   }
 }
 
-Future downloadStatusCallback(
-    BackgroundDownloadTask task, DownloadTaskStatus status) async {
-  log('downloadStatusCallback for $task with status $status');
-  if (status == DownloadTaskStatus.failed) {
+void downloadStatusCallback(TaskStatusUpdate statusUpdate) {
+  final task = statusUpdate.task;
+  final status = statusUpdate.status;
+  print('downloadStatusCallback for $task with status $status');
+  if (status == TaskStatus.failed) {
     DatabaseService db = GetIt.I();
     db.updateTrackDownloadProgress(task.taskId, 0, false);
   }
+  if (status == TaskStatus.complete) {
+    GetIt.I<DatabaseService>()
+        .updateTrackDownloadProgress(task.taskId, 1, true);
+  }
 }
 
-Future downloadProgressCallback(
-    BackgroundDownloadTask task, double progress) async {
+void downloadProgressCallback(TaskProgressUpdate progressUpdate) {
+  final task = progressUpdate.task;
+  final progress = progressUpdate.progress;
   DatabaseService db = GetIt.I();
-  log('downloadProgressCallback for $task with progress $progress');
+  print('downloadProgressCallback for $task with progress $progress');
   db.updateTrackDownloadProgress(task.taskId, progress, progress == 1);
 }

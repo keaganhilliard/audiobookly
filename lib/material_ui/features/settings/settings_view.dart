@@ -1,6 +1,5 @@
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_notifier.dart';
-import 'package:audiobookly/domain/settings/settings_state.dart';
 import 'package:audiobookly/material_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';

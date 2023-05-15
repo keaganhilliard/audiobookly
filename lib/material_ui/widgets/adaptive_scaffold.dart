@@ -97,7 +97,7 @@ class AdaptiveScaffold extends HookWidget {
       body: state.body,
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
-        unselectedItemColor: Theme.of(context).textTheme.headline6!.color,
+        unselectedItemColor: Theme.of(context).textTheme.titleLarge!.color,
         selectedItemColor: Colors.deepPurpleAccent,
         elevation: 40.0,
         items: [

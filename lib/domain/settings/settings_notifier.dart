@@ -5,8 +5,6 @@ import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/domain/settings/settings_state.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/services/database/database_service.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final settingsStateProvider =

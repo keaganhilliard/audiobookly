@@ -1,9 +1,11 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/playlist.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
@@ -119,11 +121,17 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getAuthors() async {
-    return getItemsFromEmbyItems(
-      (await _api.getAuthors(_libraryId)),
-      this,
-    );
+  Future<List<Author>> getAuthors() async {
+    return [
+      for (final item in getItemsFromEmbyItems(
+        (await _api.getAuthors(_libraryId)),
+        this,
+      ))
+        Author(
+            id: item.id,
+            name: item.title,
+            description: item.displayDescription ?? '')
+    ];
   }
 
   @override
@@ -156,11 +164,11 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> search(String search) async {
-    return getItemsFromEmbyItems(
-      (await _api.search(_libraryId, search)),
-      this,
-    );
+  Future<List<ModelUnion>> search(String search) async {
+    throw UnimplementedError(); // return getItemsFromEmbyItems(
+    //   (await _api.search(_libraryId, search)),
+    //   this,
+    // );
   }
 
   @override
@@ -307,7 +315,7 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getSeries() {
+  Future<List<Series>> getSeries() {
     // TODO: implement getSeries
     throw UnimplementedError();
   }

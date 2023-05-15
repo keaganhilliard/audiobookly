@@ -8,11 +8,11 @@ class AbsUser {
   String? stream;
   String token;
   Map<String, AbsAudiobookProgress> mediaProgress;
+  List<String> seriesHideFromContinueListening;
   bool isActive;
   bool isLocked;
   DateTime? lastSeen;
   DateTime createdAt;
-  Settings settings;
   Permissions permissions;
   List<String> librariesAccessible;
 
@@ -23,11 +23,11 @@ class AbsUser {
       this.stream,
       required this.token,
       required this.mediaProgress,
+      required this.seriesHideFromContinueListening,
       required this.isActive,
       required this.isLocked,
       this.lastSeen,
       required this.createdAt,
-      required this.settings,
       required this.permissions,
       required this.librariesAccessible});
 
@@ -39,13 +39,15 @@ class AbsUser {
         token: json['token'],
         mediaProgress: {
           for (final prog in json['mediaProgress'])
-            prog['id']: AbsAudiobookProgress.fromJson(prog)
+            prog['episodeId'] ?? prog['libraryItemId']:
+                AbsAudiobookProgress.fromJson(prog)
         },
+        seriesHideFromContinueListening:
+            json['seriesHideFromContinueListening'].cast<String>(),
         isActive: json['isActive'],
         isLocked: json['isLocked'],
         lastSeen: AbsUtils.parseDateTime(json['lastSeen']),
         createdAt: AbsUtils.parseDateTime(json['createdAt'])!,
-        settings: Settings.fromJson(json['settings']),
         permissions: Permissions.fromJson(json['permissions']),
         librariesAccessible: json['librariesAccessible'].cast<String>(),
       );
@@ -59,11 +61,11 @@ class AbsUser {
         'mediaProgress': {
           for (final e in mediaProgress.entries) e.key: e.value.toJson()
         },
+        'seriesHideFromContinueListening': seriesHideFromContinueListening,
         'isActive': isActive,
         'isLocked': isLocked,
         'lastSeen': lastSeen?.millisecondsSinceEpoch,
         'createdAt': createdAt.millisecondsSinceEpoch,
-        'settings': settings.toJson(),
         'permissions': permissions.toJson(),
         'librariesAccessible': librariesAccessible
       };

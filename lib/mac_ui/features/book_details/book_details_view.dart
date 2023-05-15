@@ -371,10 +371,8 @@ class BookDetailsView extends HookConsumerWidget {
                                                   shape: BoxShape.circle,
                                                   onPressed: () {
                                                     downloadService
-                                                        ?.downloadBook(
-                                                      book,
-                                                      tracks!,
-                                                    );
+                                                        ?.cancelBookDownload(
+                                                            book);
                                                   },
                                                   icon:
                                                       const MacosIconWithFontweight(

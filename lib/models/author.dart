@@ -7,14 +7,14 @@ class Author {
   final String description;
   final String? artPath;
   final String? largeArtPath;
-  final int numBooks;
+  final int? numBooks;
 
   Author({
     required this.id,
     required this.name,
     required this.description,
     this.artPath,
-    required this.numBooks,
+    this.numBooks,
     this.largeArtPath,
   });
 

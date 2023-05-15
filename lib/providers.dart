@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/repositories/media/abs_repository.dart';
-import 'package:audiobookly/repositories/media/audiobookshelf_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';

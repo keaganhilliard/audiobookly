@@ -33,7 +33,7 @@ class EmbyLogin extends HookConsumerWidget {
               children: [
                 Text(
                   'Sign In',
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),

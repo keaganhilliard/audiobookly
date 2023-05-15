@@ -119,6 +119,16 @@ class Utils {
     return 0;
   }
 
+  static double getProgressFromDuration({
+    Duration? duration,
+    Duration? offset,
+  }) {
+    if (duration == null || offset == null) {
+      return 0;
+    }
+    return offset.inMilliseconds / duration.inMilliseconds;
+  }
+
   static bool isLargeScreen(BuildContext context) {
     return MediaQuery.of(context).size.width > 640.0;
   }
@@ -144,7 +154,7 @@ class Utils {
 
 extension DurationHelpers on Duration {
   String get timeLeft {
-    String pluralString(int value, String label, String pluralSuffix) {
+    String pluralString(int value, String label, [String pluralSuffix = 's']) {
       if (value == 0) {
         return '';
       } else if (value == 1) {
@@ -157,14 +167,14 @@ extension DurationHelpers on Duration {
     int hours = inHours;
     int minutes = inMinutes.remainder(60);
     int seconds = inSeconds.remainder(60);
-    final hoursText = pluralString(hours, 'hour', 's');
-    final minutesText = pluralString(minutes, 'minute', 's');
-    final secondsText = pluralString(seconds, 'second', 's');
-    List<String> pieces = [];
+    final hoursText = pluralString(hours, 'hour');
+    final minutesText = pluralString(minutes, 'minute');
+    final secondsText = pluralString(seconds, 'second');
+    final pieces = <String>[];
     if (hoursText.isNotEmpty) pieces.add(hoursText);
     if (minutesText.isNotEmpty) pieces.add(minutesText);
     if (hoursText.isEmpty && secondsText.isNotEmpty) pieces.add(secondsText);
-    return pieces.join(' and ');
+    return pieces.join(' ');
   }
 }
 

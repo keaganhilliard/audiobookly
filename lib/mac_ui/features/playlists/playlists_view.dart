@@ -1,4 +1,3 @@
-import 'package:audiobookly/domain/collections/collections_notifier.dart';
 import 'package:audiobookly/domain/playlists/playlists_notifier.dart';
 import 'package:audiobookly/mac_ui/features/books/books_view.dart';
 import 'package:audiobookly/mac_ui/widgets/ab_grid.dart';

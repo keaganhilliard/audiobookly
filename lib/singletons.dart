@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/database/database_service.dart';
@@ -33,16 +31,8 @@ Future<void> registerSingletons() async {
     downloader = DesktopDownloader(getIt());
     final handler = await initAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
-  } else if ((!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS)) {
-    downloader = MobileBackgroundDownloader(getIt());
-    final handler = await initAudioHandler();
-    controller = AudioHandlerPlaybackController(handler);
-  } else if (Platform.isMacOS) {
-    downloader = DesktopDownloader(getIt());
-    final handler = await initAudioHandler();
-    controller = AudioHandlerPlaybackController(handler);
   } else {
-    downloader = DesktopDownloader(getIt());
+    downloader = MobileBackgroundDownloader(getIt());
     final handler = await initAudioHandler();
     controller = AudioHandlerPlaybackController(handler);
   }

@@ -1,6 +1,5 @@
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'abs_playlist.freezed.dart';
 part 'abs_playlist.g.dart';

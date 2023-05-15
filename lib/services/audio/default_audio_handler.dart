@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:audio_session/audio_session.dart';
+import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
@@ -275,7 +276,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       if (items.isNotEmpty) await prepareFromMediaId(items[0].id);
     }
     try {
-      final item = await _repository!.getAlbumFromId(_currentMedia);
+      final item = await _repository!.getAlbumFromId(_currentMedia).timeout(
+            const Duration(milliseconds: 500),
+          );
       final position = _findPostionDurationForAlbum(item.toMediaItem());
       if (position > currentPosition && !item.read) {
         await seek(position);
@@ -519,7 +522,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     playbackState.add(playbackState.value
         .copyWith(processingState: AudioProcessingState.loading));
     await completer.future;
-    List<MediaItem> items = await _repository!.search(query);
+    List<MediaItem> items = [
+      for (final union in await _repository!.search(query)) union.toMediaItem()
+    ];
     if (items.isNotEmpty) {
       await prepareFromMediaId(items[0].id);
     }
@@ -538,7 +543,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       preparedFromSearch = false;
       await play();
     } else {
-      List<MediaItem> items = await _repository!.search(query);
+      List<MediaItem> items = [
+        for (final union in await _repository!.search(query))
+          union.toMediaItem()
+      ];
       if (items.isNotEmpty) await playFromMediaId(items[0].id);
     }
     _broadcastState();
@@ -549,7 +557,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   Future<List<MediaItem>> search(String query,
       [Map<String, dynamic>? extras]) async {
     await completer.future;
-    return await _repository!.search(query);
+    return [
+      for (final union in await _repository!.search(query)) union.toMediaItem()
+    ];
   }
 
   @override

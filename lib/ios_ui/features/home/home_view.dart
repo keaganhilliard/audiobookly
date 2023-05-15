@@ -1,7 +1,7 @@
 import 'package:audiobookly/domain/home/home_notifier.dart';
+import 'package:audiobookly/domain/home/home_state.dart';
 import 'package:audiobookly/ios_ui/features/home/home_row.dart';
 import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
-import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,34 +32,48 @@ class HomeView extends HookConsumerWidget {
             },
           ),
           // CupertinoSearchTextField(),
-          state.when(
-            initial: () => const SliverToBoxAdapter(),
-            loaded: (rowsData, downloaded) => SliverList(
-              delegate: SliverChildListDelegate([
-                if (rowsData != null) ...[
-                  for (final entry in rowsData.entries)
+          switch (state) {
+            HomeStateInitial() => const SliverToBoxAdapter(),
+            HomeStateLoading() => const SliverFillRemaining(
+                child: Center(
+                  child: CupertinoActivityIndicator(radius: 30),
+                ),
+              ),
+            HomeStateLoaded(:final rowsData, :final downloaded) => SliverList(
+                delegate: SliverChildListDelegate([
+                  if (rowsData != null) ...[
+                    for (final entry in rowsData.entries)
+                      HomeRow(
+                        height: rowHeight,
+                        title: entry.key,
+                        items: entry.value,
+                      )
+                  ],
+                  if (!nullOrEmpty(downloaded))
                     HomeRow(
                       height: rowHeight,
-                      title: entry.key,
-                      items: entry.value,
-                    )
-                ],
-                if (!nullOrEmpty(downloaded))
-                  HomeRow(
-                    height: rowHeight,
-                    title: 'Downloaded',
-                    items: downloaded,
-                  ),
-                const BottomPadding(),
-              ]),
-            ),
-            loading: () => const SliverFillRemaining(
-              child: Center(
-                child: CupertinoActivityIndicator(radius: 30),
+                      title: 'Downloaded',
+                      items: downloaded!,
+                    ),
+                  const BottomPadding(),
+                ]),
               ),
-            ),
-            error: (message) => const SliverToBoxAdapter(),
-          ),
+            HomeStateErrorDetails(:final message) => SliverFillRemaining(
+                child: Center(
+                  child: Column(
+                    children: [
+                      const Text("There was an issue"),
+                      Text(message ?? 'Unknown error'),
+                      CupertinoButton.filled(
+                          child: const Text('Retry'),
+                          onPressed: () async {
+                            await homeProvider.refresh();
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+          },
         ],
       ),
     );

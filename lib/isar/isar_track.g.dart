@@ -7,7 +7,7 @@ part of 'isar_track.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
 extension GetIsarTrackCollection on Isar {
   IsarCollection<IsarTrack> get isarTracks => this.collection();
@@ -42,23 +42,28 @@ const IsarTrackSchema = CollectionSchema(
       name: r'downloadTaskStatus',
       type: IsarType.long,
     ),
-    r'id': PropertySchema(
+    r'downloadedAt': PropertySchema(
       id: 5,
+      name: r'downloadedAt',
+      type: IsarType.dateTime,
+    ),
+    r'id': PropertySchema(
+      id: 6,
       name: r'id',
       type: IsarType.string,
     ),
     r'isDownloaded': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'isDownloaded',
       type: IsarType.bool,
     ),
     r'isarDuration': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isarDuration',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'title',
       type: IsarType.string,
     )
@@ -114,7 +119,7 @@ const IsarTrackSchema = CollectionSchema(
   getId: _isarTrackGetId,
   getLinks: _isarTrackGetLinks,
   attach: _isarTrackAttach,
-  version: '3.0.5',
+  version: '3.1.0+1',
 );
 
 int _isarTrackEstimateSize(
@@ -142,10 +147,11 @@ void _isarTrackSerialize(
   writer.writeDouble(offsets[2], object.downloadProgress);
   writer.writeString(offsets[3], object.downloadTaskId);
   writer.writeLong(offsets[4], object.downloadTaskStatus);
-  writer.writeString(offsets[5], object.id);
-  writer.writeBool(offsets[6], object.isDownloaded);
-  writer.writeLong(offsets[7], object.isarDuration);
-  writer.writeString(offsets[8], object.title);
+  writer.writeDateTime(offsets[5], object.downloadedAt);
+  writer.writeString(offsets[6], object.id);
+  writer.writeBool(offsets[7], object.isDownloaded);
+  writer.writeLong(offsets[8], object.isarDuration);
+  writer.writeString(offsets[9], object.title);
 }
 
 IsarTrack _isarTrackDeserialize(
@@ -155,11 +161,12 @@ IsarTrack _isarTrackDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = IsarTrack(
-    reader.readString(offsets[5]),
-    reader.readString(offsets[8]),
-    reader.readLong(offsets[7]),
+    reader.readString(offsets[6]),
+    reader.readString(offsets[9]),
+    reader.readLong(offsets[8]),
     reader.readDouble(offsets[2]),
-    reader.readBool(offsets[6]),
+    reader.readBool(offsets[7]),
+    reader.readDateTimeOrNull(offsets[5]),
     reader.readString(offsets[1]),
     reader.readString(offsets[0]),
     reader.readString(offsets[3]),
@@ -187,12 +194,14 @@ P _isarTrackDeserializeProp<P>(
     case 4:
       return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 8:
+      return (reader.readLong(offset)) as P;
+    case 9:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1060,6 +1069,79 @@ extension IsarTrackQueryFilter
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      downloadedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'downloadedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      downloadedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'downloadedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> downloadedAtEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'downloadedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      downloadedAtGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'downloadedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      downloadedAtLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'downloadedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> downloadedAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'downloadedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> idEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1524,6 +1606,18 @@ extension IsarTrackQuerySortBy on QueryBuilder<IsarTrack, IsarTrack, QSortBy> {
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByDownloadedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1637,6 +1731,18 @@ extension IsarTrackQuerySortThenBy
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByDownloadedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'downloadedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1734,6 +1840,12 @@ extension IsarTrackQueryWhereDistinct
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByDownloadedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'downloadedAt');
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctById(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1796,6 +1908,12 @@ extension IsarTrackQueryProperty
   QueryBuilder<IsarTrack, int, QQueryOperations> downloadTaskStatusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'downloadTaskStatus');
+    });
+  }
+
+  QueryBuilder<IsarTrack, DateTime?, QQueryOperations> downloadedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'downloadedAt');
     });
   }
 

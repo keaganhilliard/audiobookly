@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 part 'home_state.freezed.dart';
 
 @freezed
-class HomeState with _$HomeState {
+sealed class HomeState with _$HomeState {
   const factory HomeState.initial() = HomeStateInitial;
   const factory HomeState.loaded({
     Map<String, List<ModelUnion>>? rowsData,

@@ -304,7 +304,7 @@ class BookDetailsView extends HookConsumerWidget {
                         return SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
-                              final track = tracks![index];
+                              final track = tracks[index];
                               return Stack(
                                 children: [
                                   CupertinoListTile(
@@ -361,7 +361,7 @@ class BookDetailsView extends HookConsumerWidget {
           },
         ),
         Container(
-          child: Text('Second Page'),
+          child: const Text('Second Page'),
         )
       ],
     );

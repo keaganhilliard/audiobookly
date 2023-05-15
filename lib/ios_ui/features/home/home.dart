@@ -1,7 +1,6 @@
 import 'package:audiobookly/ios_ui/features/player/mini_player.dart';
 import 'package:audiobookly/ios_ui/features/authors/authors_view.dart';
 import 'package:audiobookly/ios_ui/features/books/books_view.dart';
-import 'package:audiobookly/ios_ui/features/collections/collections.dart';
 import 'package:audiobookly/ios_ui/features/home/home_view.dart';
 import 'package:audiobookly/ios_ui/features/playlists/playlists_view.dart';
 import 'package:audiobookly/ios_ui/features/series/series_view.dart';

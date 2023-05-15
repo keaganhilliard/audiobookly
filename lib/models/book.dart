@@ -16,7 +16,14 @@ class Book {
   final bool read;
   final DownloadStatus downloadStatus;
   final DateTime? lastUpdate;
+  final DateTime? downloadedAt;
   final List<Chapter>? chapters;
+  double get progress {
+    if (duration == Duration.zero) {
+      return 0;
+    }
+    return lastPlayedPosition.inMilliseconds / duration.inMilliseconds;
+  }
 
   Book({
     required this.id,
@@ -29,6 +36,7 @@ class Book {
     required this.lastPlayedPosition,
     required this.read,
     this.lastUpdate,
+    this.downloadedAt,
     this.largeArtPath,
     this.chapters,
     this.downloadStatus = DownloadStatus.none,
@@ -46,6 +54,7 @@ class Book {
     Duration? lastPlayedPosition,
     bool? read,
     DateTime? lastUpdate,
+    DateTime? downloadedAt,
     List<Chapter>? chapters,
     DownloadStatus? downloadStatus,
   }) =>
@@ -60,6 +69,7 @@ class Book {
         lastPlayedPosition: lastPlayedPosition ?? this.lastPlayedPosition,
         read: read ?? this.read,
         lastUpdate: lastUpdate ?? this.lastUpdate,
+        downloadedAt: downloadedAt ?? this.downloadedAt,
         largeArtPath: largeArtPath ?? this.largeArtPath,
         chapters: chapters ?? this.chapters,
         downloadStatus: downloadStatus ?? this.downloadStatus,

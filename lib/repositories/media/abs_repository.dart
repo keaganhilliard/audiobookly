@@ -9,6 +9,7 @@ import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/playlist.dart';
 import 'package:audiobookly/models/track.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audio_service/audio_service.dart';
@@ -19,9 +20,9 @@ import 'package:audiobookly/services/device_info/device_info_service.dart'
     hide DeviceInfo;
 import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:audiobookshelf/audiobookshelf.dart' hide Chapter, Author;
+import 'package:audiobookshelf/audiobookshelf.dart'
+    hide Chapter, Author, Series;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:http/http.dart';
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
   String baseUrl =
@@ -157,18 +158,17 @@ class AbsRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getAuthors() async {
+  Future<List<Author>> getAuthors() async {
     return [
       for (final author in await _api.getAuthors(_libraryId))
-        MediaItem(
+        Author(
           id: '@authors/${author.id}',
-          title: author.name,
-          artUri: author.imagePath == null
+          name: author.name,
+          description: author.description ?? '',
+          numBooks: author.numBooks,
+          artPath: author.imagePath == null
               ? null
-              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
-                  .uri,
-          playable: false,
-          displayDescription: author.description,
+              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
         ),
     ];
   }
@@ -258,18 +258,19 @@ class AbsRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getSeries() async {
+  Future<List<Series>> getSeries() async {
     return [
       for (final serie in await _api.getSeries(_libraryId))
-        MediaItem(
-            id: '@series/${serie.id}',
-            title: serie.name,
-            playable: false,
-            artUri: _scaledCoverUrl(
-              _api.baseUrl,
-              serie.books[0].id,
-              serie.books[0].updatedAt,
-            ))
+        Series(
+          id: '@series/${serie.id}',
+          name: serie.name,
+          artPath: _scaledCoverUrl(
+            _api.baseUrl,
+            serie.books[0].id,
+            serie.books[0].updatedAt,
+          ).toString(),
+          numBooks: serie.books.length,
+        )
     ];
   }
 
@@ -529,28 +530,35 @@ class AbsRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> search(String search) async {
+  Future<List<ModelUnion>> search(String search) async {
     final response = await _api.search(_libraryId, search);
     return [
-      for (final book in response.book) _bookToItem(book.libraryItem),
+      for (final book in response.book)
+        ModelUnion.book(
+          _absBookToBook(book.libraryItem),
+        ),
       for (final author in response.authors)
-        MediaItem(
-          id: '${MediaIds.authorsId}/${author.id}',
-          title: author.name,
-          playable: false,
-          artUri: author.imagePath == null
-              ? null
-              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
-                  .uri,
+        ModelUnion.author(
+          Author(
+            id: '${MediaIds.authorsId}/${author.id}',
+            name: author.name,
+            artPath: author.imagePath == null
+                ? null
+                : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+            description: author.description ?? '',
+          ),
         ),
       for (final series in response.series)
-        MediaItem(
-          id: '${MediaIds.seriesId}/${series.series.id}',
-          title: series.series.name,
-          playable: false,
-          artUri: _scaledCoverUrl(_api.baseUrl, series.books.first.id,
-              series.books.first.updatedAt),
-        )
+        ModelUnion.series(
+          Series(
+              id: '${MediaIds.seriesId}/${series.series.id}',
+              name: series.series.name,
+              numBooks: series.books.length,
+              artPath: _scaledCoverUrl(_api.baseUrl, series.books.first.id,
+                      series.books.first.updatedAt)
+                  .toString(),
+              description: ''),
+        ),
     ];
   }
 

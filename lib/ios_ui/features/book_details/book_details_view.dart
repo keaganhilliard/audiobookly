@@ -302,7 +302,7 @@ class BookDetailsView extends HookConsumerWidget {
                         return SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
-                              final track = tracks![index];
+                              final track = tracks[index];
                               return Stack(
                                 children: [
                                   CupertinoListTile(

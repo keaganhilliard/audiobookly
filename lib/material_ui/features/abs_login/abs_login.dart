@@ -35,7 +35,7 @@ class AbsLogin extends HookConsumerWidget {
               children: [
                 Text(
                   'Sign In',
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
@@ -108,6 +108,7 @@ class AbsLogin extends HookConsumerWidget {
                                 ),
                         ),
                         onPressed: () async {
+                          final messenger = ScaffoldMessenger.of(context);
                           if (formKey.currentState!.validate()) {
                             loading.value = true;
                             if (!await auth.absLogin(
@@ -115,10 +116,9 @@ class AbsLogin extends HookConsumerWidget {
                               login.value.username,
                               login.value.password,
                             )) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Username or password invalid')));
+                              messenger.showSnackBar(const SnackBar(
+                                  content:
+                                      Text('Username or password invalid')));
                             } else {
                               await auth.checkToken();
                               navigationService.pop();

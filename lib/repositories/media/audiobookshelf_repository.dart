@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
-import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/collection.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/playlist.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
@@ -337,35 +337,32 @@ class AudiobookshelfRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getAuthors() async {
+  Future<List<Author>> getAuthors() async {
     return [
       for (final author
           in (await _api.libraries.getAuthors(libraryId: _libraryId))!)
         author.map(
-          (author) => MediaItem(
+          (author) => Author(
             id: '@authors/${author.id}',
-            title: author.name,
-            artUri: author.imagePath == null
+            name: author.name,
+            artPath: author.imagePath == null
                 ? null
-                : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
-                    .uri,
-            playable: false,
-            displayDescription: author.description,
+                : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+            description: author.description ?? '',
           ),
-          expanded: (author) => MediaItem(
+          expanded: (author) => Author(
             id: '@authors/${author.id}',
-            title: author.name,
-            artUri: author.imagePath == null
+            name: author.name,
+            artPath: author.imagePath == null
                 ? null
-                : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
-                    .uri,
-            playable: false,
-            displayDescription: author.description,
+                : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+            description: author.description ?? '',
+            numBooks: author.numBooks,
           ),
-          minified: (author) => MediaItem(
+          minified: (author) => Author(
             id: '@authors/${author.id}',
-            title: author.name,
-            playable: false,
+            name: author.name,
+            description: '',
           ),
         ),
     ];
@@ -431,22 +428,23 @@ class AudiobookshelfRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> getSeries() async {
+  Future<List<Series>> getSeries() async {
     return [
       for (final serie
           in (await _api.libraries.getSeries(libraryId: _libraryId))!
               .results
               .where((result) => result.variant == abs.SeriesVariant.books)
               .map((serie) => serie as abs.SeriesBooks))
-        MediaItem(
-            id: '@series/${serie.id}',
-            title: serie.name,
-            playable: false,
-            artUri: _scaledCoverUrl(
-              _api.baseUrl.toString(),
-              serie.books[0].id,
-              serie.books[0].updatedAt.millisecondsSinceEpoch,
-            ))
+        Series(
+          id: '@series/${serie.id}',
+          name: serie.name,
+          artPath: _scaledCoverUrl(
+            _api.baseUrl.toString(),
+            serie.books[0].id,
+            serie.books[0].updatedAt.millisecondsSinceEpoch,
+          ).toString(),
+          numBooks: serie.books.length,
+        )
     ];
   }
 
@@ -541,8 +539,8 @@ class AudiobookshelfRepository extends MediaRepository {
   Future<User> getUser() async {
     final responseUser = (await _api.misc.authorize(
       responseErrorHandler: (response, [error]) {
-        log("${response.body}");
-        log("${error}");
+        log(response.body);
+        log("$error");
       },
     ));
     log("$responseUser");
@@ -579,7 +577,7 @@ class AudiobookshelfRepository extends MediaRepository {
   Future markPlayed(String itemId) async {
     await _api.me.createUpdateMediaProgress(
         libraryItemId: itemId,
-        parameters: abs.CreateUpdateProgressReqParams(isFinished: true));
+        parameters: const abs.CreateUpdateProgressReqParams(isFinished: true));
     final book = await _db.getBookById(itemId);
     if (book != null) {
       await _db.insertBook(
@@ -593,7 +591,7 @@ class AudiobookshelfRepository extends MediaRepository {
   Future markUnplayed(String itemId) async {
     await _api.me.createUpdateMediaProgress(
         libraryItemId: itemId,
-        parameters: abs.CreateUpdateProgressReqParams(isFinished: false));
+        parameters: const abs.CreateUpdateProgressReqParams(isFinished: false));
     final book = await _db.getBookById(itemId);
     if (book != null) {
       await _db.insertBook(
@@ -627,11 +625,13 @@ class AudiobookshelfRepository extends MediaRepository {
       _lastCheckinTime = DateTime.now();
     } else {
       await _api.me.createUpdateMediaProgress(
-          libraryItemId: key,
-          parameters: abs.CreateUpdateProgressReqParams(
-              currentTime: position,
-              duration: duration,
-              progress: position.inMilliseconds / duration.inMilliseconds));
+        libraryItemId: key,
+        parameters: abs.CreateUpdateProgressReqParams(
+          currentTime: position,
+          duration: duration,
+          progress: position.inMilliseconds / duration.inMilliseconds,
+        ),
+      );
     }
   }
 
@@ -703,7 +703,7 @@ class AudiobookshelfRepository extends MediaRepository {
   }
 
   @override
-  Future<List<MediaItem>> search(String search) async {
+  Future<List<ModelUnion>> search(String search) async {
     final response =
         (await _api.libraries.search(libraryId: _libraryId, query: search))
             ?.mapOrNull(
@@ -715,26 +715,28 @@ class AudiobookshelfRepository extends MediaRepository {
       for (final author in response.authors
           .map((e) => e.mapOrNull((value) => null, expanded: (val) => val))
           .where((element) => element != null))
-        MediaItem(
+        ModelUnion.author(Author(
           id: '${MediaIds.authorsId}/${author!.id}',
-          title: author.name,
-          playable: false,
-          artUri: author.imagePath == null
+          name: author.name,
+          description: author.description ?? '',
+          artPath: author.imagePath == null
               ? null
-              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'
-                  .uri,
-        ),
+              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+        )),
       for (final series in response.series
           .map((e) => e.mapOrNull((value) => null, books: (val) => val))
           .where((element) => element != null))
-        MediaItem(
-          id: '${MediaIds.seriesId}/${series!.id}',
-          title: series.name,
-          playable: false,
-          artUri: _scaledCoverUrl(
-              _api.baseUrl.toString(),
-              series.books.first.id,
-              series.books.first.updatedAt.microsecondsSinceEpoch),
+        ModelUnion.series(
+          Series(
+            id: '${MediaIds.seriesId}/${series!.id}',
+            name: series.name,
+            numBooks: series.books.length,
+            artPath: _scaledCoverUrl(
+                    _api.baseUrl.toString(),
+                    series.books.first.id,
+                    series.books.first.updatedAt.microsecondsSinceEpoch)
+                .toString(),
+          ),
         )
     ];
   }
@@ -751,16 +753,20 @@ class AudiobookshelfRepository extends MediaRepository {
     final personalized =
         await _api.libraries.getPersonalized(libraryId: _libraryId);
     Map<String, List<ModelUnion>> outMap = {};
-    for (final p in personalized!) {
+    if (personalized == null) {
+      return outMap;
+    }
+    for (final p in personalized) {
       p.maybeMap(
         orElse: () {},
         libraryItem: (value) {
           outMap.putIfAbsent(
-              p.label,
-              () => value.entities
-                  .map<ModelUnion>(
-                      (book) => ModelUnion.book(_absItemToBook(book)!))
-                  .toList());
+            p.label,
+            () => [
+              for (final book in value.entities)
+                ModelUnion.book(_absItemToBook(book)!)
+            ],
+          );
         },
         author: (value) {
           final authors = value.entities
@@ -770,22 +776,22 @@ class AudiobookshelfRepository extends MediaRepository {
                   ))
               .where((element) => element != null);
           outMap.putIfAbsent(
-              p.label,
-              () => authors
-                  .map<ModelUnion>(
-                    (author) => ModelUnion.author(
-                      Author(
-                        id: '${MediaIds.authorsId}/${author!.id}',
-                        name: author.name,
-                        description: author.description ?? '',
-                        artPath: author.imagePath == null
-                            ? null
-                            : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
-                        numBooks: author.numBooks,
-                      ),
-                    ),
-                  )
-                  .toList());
+            p.label,
+            () => [
+              for (final author in authors)
+                ModelUnion.author(
+                  Author(
+                    id: '${MediaIds.authorsId}/${author!.id}',
+                    name: author.name,
+                    description: author.description ?? '',
+                    artPath: author.imagePath == null
+                        ? null
+                        : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+                    numBooks: author.numBooks,
+                  ),
+                )
+            ],
+          );
         },
       );
     }

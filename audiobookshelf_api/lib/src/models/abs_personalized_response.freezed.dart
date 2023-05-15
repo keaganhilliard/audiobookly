@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'abs_personalized_response.dart';
 
@@ -33,6 +33,7 @@ mixin _$AbsPersonalizedResponse {
   String get label => throw _privateConstructorUsedError;
   String get labelStringKey => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  List<Object> get entities => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -254,6 +255,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   final List<AbsAudiobookMinified> _entities;
   @override
   List<AbsAudiobookMinified> get entities {
+    if (_entities is EqualUnmodifiableListView) return _entities;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_entities);
   }
@@ -407,6 +409,7 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
   String get labelStringKey;
   @override
   String get type;
+  @override
   List<AbsAudiobookMinified> get entities;
   @override
   String get category;
@@ -509,6 +512,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   final List<Author> _entities;
   @override
   List<Author> get entities {
+    if (_entities is EqualUnmodifiableListView) return _entities;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_entities);
   }
@@ -663,6 +667,7 @@ abstract class AbsPersonalizedResponseAuthor
   String get labelStringKey;
   @override
   String get type;
+  @override
   List<Author> get entities;
   @override
   String get category;
@@ -767,6 +772,7 @@ class _$AbsPersonalizedResponseUnknown
   final List<Map<String, dynamic>> _entities;
   @override
   List<Map<String, dynamic>> get entities {
+    if (_entities is EqualUnmodifiableListView) return _entities;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_entities);
   }
@@ -921,6 +927,7 @@ abstract class AbsPersonalizedResponseUnknown
   String get labelStringKey;
   @override
   String get type;
+  @override
   List<Map<String, dynamic>> get entities;
   @override
   String get category;

@@ -4,7 +4,7 @@ import 'package:audiobookly/utils/utils.dart';
 class Series {
   final String id;
   final String name;
-  final String description;
+  final String? description;
   final String artPath;
   final String? largeArtPath;
   final int numBooks;
@@ -12,7 +12,7 @@ class Series {
   Series({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
     required this.artPath,
     required this.numBooks,
     this.largeArtPath,

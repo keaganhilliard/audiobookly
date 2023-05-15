@@ -1,6 +1,7 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/ios_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/ios_ui/features/books/books_view.dart';
+import 'package:audiobookly/models/author.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audiobookly/utils/utils.dart';
@@ -12,9 +13,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeRow extends HookConsumerWidget {
   final String? title;
-  final List<ModelUnion>? items;
+  final List<ModelUnion> items;
   final double? height;
-  HomeRow({super.key, this.title, this.items, this.height});
+  HomeRow({super.key, this.title, required this.items, this.height});
   final debouncer = Debouncer(milliseconds: 1);
 
   @override
@@ -49,45 +50,60 @@ class HomeRow extends HookConsumerWidget {
                   pageSnapping: false,
                   padEnds: false,
                   scrollDirection: Axis.horizontal,
-                  itemCount: items!.length,
-                  itemBuilder: (context, index) {
-                    final ModelUnion item = items![index];
-
-                    return item.maybeMap(
-                      orElse: () => const CoverItem(
-                        title: 'Good God we have a problem',
-                      ),
-                      book: (book) => CoverItem(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) => switch (items[index]) {
+                    BookValue(
+                      value: Book(
+                        :final id,
+                        :final progress,
+                        :final artPath,
+                        :final read,
+                        :final author,
+                      )
+                    ) =>
+                      CoverItem(
                         onTap: () async {
-                          Navigator.of(context)
-                              .push(CupertinoPageRoute(builder: (context) {
-                            return BookDetailsView(mediaId: book.value.id);
-                          }));
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) {
+                                return BookDetailsView(mediaId: id);
+                              },
+                            ),
+                          );
                         },
                         height: height,
-                        progress: Utils.getProgress(book: book.value),
-                        thumbnailUrl: book.value.artPath,
-                        title: book.value.title,
-                        subtitle: book.value.author,
-                        played: book.value.read,
+                        progress: progress,
+                        thumbnailUrl: artPath,
+                        title: title,
+                        subtitle: author,
+                        played: read,
                       ),
-                      author: (author) => CoverItem(
+                    AuthorValue(
+                      value: Author(
+                        :final id,
+                        :final name,
+                        :final artPath,
+                      )
+                    ) =>
+                      CoverItem(
                         onTap: () async {
                           Navigator.of(context)
                               .push(CupertinoPageRoute(builder: (context) {
                             return BooksView(
-                              mediaId: author.value.id,
-                              title: author.value.name,
+                              mediaId: id,
+                              title: name,
                             );
                           }));
                         },
                         height: height,
-                        thumbnailUrl: author.value.artPath,
-                        title: author.value.name,
+                        thumbnailUrl: artPath,
+                        title: name,
                         icon: CupertinoIcons.person_2_fill,
                         showTitle: true,
                       ),
-                    );
+                    _ => const CoverItem(
+                        title: 'Good God we have a problem',
+                      ),
                   },
                 ),
               ),

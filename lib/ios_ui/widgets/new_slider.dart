@@ -462,13 +462,15 @@ class _BetterRenderCupertinoSlider extends RenderConstrainedBox {
   double get _semanticActionUnit => _kAdjustmentUnit;
 
   void _increaseAction() {
-    if (isInteractive)
+    if (isInteractive) {
       onChanged!((value + _semanticActionUnit).clamp(0.0, 1.0));
+    }
   }
 
   void _decreaseAction() {
-    if (isInteractive)
+    if (isInteractive) {
       onChanged!((value - _semanticActionUnit).clamp(0.0, 1.0));
+    }
   }
 }
 
@@ -482,8 +484,9 @@ void defaultThumbPainter(Canvas canvas, Rect rect) {
   const Color borderColor = Color(0x08000000);
 
   // draw shadow
-  for (final BoxShadow shadow in kBetterSliderBoxShadows)
+  for (final BoxShadow shadow in kBetterSliderBoxShadows) {
     canvas.drawRRect(rrect.shift(shadow.offset), shadow.toPaint());
+  }
 
   // draw border
   canvas.drawRRect(

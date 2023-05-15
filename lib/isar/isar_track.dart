@@ -21,6 +21,8 @@ class IsarTrack {
 
   final bool isDownloaded;
 
+  final DateTime? downloadedAt;
+
   final String downloadPath;
 
   @Index()
@@ -37,6 +39,7 @@ class IsarTrack {
         duration: duration,
         downloadProgress: downloadProgress,
         isDownloaded: isDownloaded,
+        downloadedAt: downloadedAt,
         downloadPath: downloadPath,
         bookId: bookId,
         downloadTaskId: downloadTaskId,
@@ -49,6 +52,7 @@ class IsarTrack {
     this.isarDuration,
     this.downloadProgress,
     this.isDownloaded,
+    this.downloadedAt,
     this.downloadPath,
     this.bookId,
     this.downloadTaskId,
@@ -62,6 +66,7 @@ class IsarTrack {
     Duration? duration,
     double? downloadProgress,
     bool? isDownloaded,
+    DateTime? downloadedAt,
     String? downloadPath,
     String? bookId,
     String? downloadTaskId,
@@ -74,6 +79,7 @@ class IsarTrack {
         duration?.inMicroseconds ?? isarDuration,
         downloadProgress ?? this.downloadProgress,
         isDownloaded ?? this.isDownloaded,
+        downloadedAt ?? this.downloadedAt,
         downloadPath ?? this.downloadPath,
         bookId ?? this.bookId,
         downloadTaskId ?? this.downloadTaskId,
@@ -87,6 +93,7 @@ class IsarTrack {
         track.duration.inMicroseconds,
         track.downloadProgress,
         track.isDownloaded,
+        track.downloadedAt,
         track.downloadPath,
         track.bookId,
         track.downloadTaskId,

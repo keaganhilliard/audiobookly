@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:animations/animations.dart';
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/domain/collections/collections_notifier.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
