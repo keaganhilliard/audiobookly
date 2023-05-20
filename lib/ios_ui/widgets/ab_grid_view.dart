@@ -1,8 +1,10 @@
+import 'package:audiobookly/ios_ui/features/home/home.dart';
 import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
+import 'package:audiobookly/ios_ui/widgets/sidebar_button.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AbGridView extends HookWidget {
+class AbGridView extends HookConsumerWidget {
   const AbGridView({
     super.key,
     required this.title,
@@ -18,7 +20,7 @@ class AbGridView extends HookWidget {
   final Function(String)? onSearchChanged;
 
   @override
-  Widget build(context) {
+  Widget build(context, ref) {
     return CustomScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: <Widget>[
@@ -27,6 +29,9 @@ class AbGridView extends HookWidget {
           largeTitle: Text(title),
           brightness: Brightness.dark,
           previousPageTitle: previousPageTitle,
+          leading: !ref.watch(showSidebarProvider) && previousPageTitle == null
+              ? const SidebarButton()
+              : null,
         ),
         CupertinoSliverRefreshControl(
           onRefresh: onRefresh,

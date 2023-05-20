@@ -8,11 +8,10 @@ part 'settings_state.freezed.dart';
 // part of 'books_cubit.dart';
 
 @freezed
-class SettingsState with _$SettingsState {
+sealed class SettingsState with _$SettingsState {
   const factory SettingsState.initial() = SettingsStateInitial;
   const factory SettingsState.loaded({User? user, Library? lib}) =
       SettingsStateLoaded;
   const factory SettingsState.loading() = SettingsStateLoading;
-  const factory SettingsState.error([String? message]) =
-      SettingsStateErrorDetails;
+  const factory SettingsState.error([String? message]) = SettingsStateError;
 }

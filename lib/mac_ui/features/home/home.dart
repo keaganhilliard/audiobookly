@@ -13,7 +13,7 @@ import 'package:audiobookly/mac_ui/features/collections/collections_view.dart';
 import 'package:audiobookly/mac_ui/features/home/home_toolbar.dart';
 import 'package:audiobookly/mac_ui/features/home/home_view.dart';
 import 'package:audiobookly/mac_ui/features/series/series_view.dart';
-import 'package:audiobookly/mac_ui/widgets/lazy_indexed_stack.dart';
+import 'package:audiobookly/utils/lazy_indexed_stack.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/utils/utils.dart';

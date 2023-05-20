@@ -106,15 +106,19 @@ class EmbyLogin extends HookConsumerWidget {
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             loading.value = true;
+                            final messenger = ScaffoldMessenger.of(context);
                             if (!await auth.embyLogin(
                               login.value.baseUrl,
                               login.value.username,
                               login.value.password,
                             )) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Username or password invalid')));
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Username or password invalid',
+                                  ),
+                                ),
+                              );
                             } else {
                               await auth.checkToken();
                               navigationService.pop();

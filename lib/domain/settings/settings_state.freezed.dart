@@ -46,7 +46,7 @@ mixin _$SettingsState {
     required TResult Function(SettingsStateInitial value) initial,
     required TResult Function(SettingsStateLoaded value) loaded,
     required TResult Function(SettingsStateLoading value) loading,
-    required TResult Function(SettingsStateErrorDetails value) error,
+    required TResult Function(SettingsStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$SettingsState {
     TResult? Function(SettingsStateInitial value)? initial,
     TResult? Function(SettingsStateLoaded value)? loaded,
     TResult? Function(SettingsStateLoading value)? loading,
-    TResult? Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$SettingsState {
     TResult Function(SettingsStateInitial value)? initial,
     TResult Function(SettingsStateLoaded value)? loaded,
     TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult Function(SettingsStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -172,7 +172,7 @@ class _$SettingsStateInitial
     required TResult Function(SettingsStateInitial value) initial,
     required TResult Function(SettingsStateLoaded value) loaded,
     required TResult Function(SettingsStateLoading value) loading,
-    required TResult Function(SettingsStateErrorDetails value) error,
+    required TResult Function(SettingsStateError value) error,
   }) {
     return initial(this);
   }
@@ -183,7 +183,7 @@ class _$SettingsStateInitial
     TResult? Function(SettingsStateInitial value)? initial,
     TResult? Function(SettingsStateLoaded value)? loaded,
     TResult? Function(SettingsStateLoading value)? loading,
-    TResult? Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -194,7 +194,7 @@ class _$SettingsStateInitial
     TResult Function(SettingsStateInitial value)? initial,
     TResult Function(SettingsStateLoaded value)? loaded,
     TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult Function(SettingsStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -332,7 +332,7 @@ class _$SettingsStateLoaded
     required TResult Function(SettingsStateInitial value) initial,
     required TResult Function(SettingsStateLoaded value) loaded,
     required TResult Function(SettingsStateLoading value) loading,
-    required TResult Function(SettingsStateErrorDetails value) error,
+    required TResult Function(SettingsStateError value) error,
   }) {
     return loaded(this);
   }
@@ -343,7 +343,7 @@ class _$SettingsStateLoaded
     TResult? Function(SettingsStateInitial value)? initial,
     TResult? Function(SettingsStateLoaded value)? loaded,
     TResult? Function(SettingsStateLoading value)? loading,
-    TResult? Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -354,7 +354,7 @@ class _$SettingsStateLoaded
     TResult Function(SettingsStateInitial value)? initial,
     TResult Function(SettingsStateLoaded value)? loaded,
     TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult Function(SettingsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -461,7 +461,7 @@ class _$SettingsStateLoading
     required TResult Function(SettingsStateInitial value) initial,
     required TResult Function(SettingsStateLoaded value) loaded,
     required TResult Function(SettingsStateLoading value) loading,
-    required TResult Function(SettingsStateErrorDetails value) error,
+    required TResult Function(SettingsStateError value) error,
   }) {
     return loading(this);
   }
@@ -472,7 +472,7 @@ class _$SettingsStateLoading
     TResult? Function(SettingsStateInitial value)? initial,
     TResult? Function(SettingsStateLoaded value)? loaded,
     TResult? Function(SettingsStateLoading value)? loading,
-    TResult? Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -483,7 +483,7 @@ class _$SettingsStateLoading
     TResult Function(SettingsStateInitial value)? initial,
     TResult Function(SettingsStateLoaded value)? loaded,
     TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult Function(SettingsStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -498,21 +498,20 @@ abstract class SettingsStateLoading implements SettingsState {
 }
 
 /// @nodoc
-abstract class _$$SettingsStateErrorDetailsCopyWith<$Res> {
-  factory _$$SettingsStateErrorDetailsCopyWith(
-          _$SettingsStateErrorDetails value,
-          $Res Function(_$SettingsStateErrorDetails) then) =
-      __$$SettingsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$SettingsStateErrorCopyWith<$Res> {
+  factory _$$SettingsStateErrorCopyWith(_$SettingsStateError value,
+          $Res Function(_$SettingsStateError) then) =
+      __$$SettingsStateErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateErrorDetails>
-    implements _$$SettingsStateErrorDetailsCopyWith<$Res> {
-  __$$SettingsStateErrorDetailsCopyWithImpl(_$SettingsStateErrorDetails _value,
-      $Res Function(_$SettingsStateErrorDetails) _then)
+class __$$SettingsStateErrorCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateError>
+    implements _$$SettingsStateErrorCopyWith<$Res> {
+  __$$SettingsStateErrorCopyWithImpl(
+      _$SettingsStateError _value, $Res Function(_$SettingsStateError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -520,7 +519,7 @@ class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$SettingsStateErrorDetails(
+    return _then(_$SettingsStateError(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -531,10 +530,10 @@ class __$$SettingsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateErrorDetails
+class _$SettingsStateError
     with DiagnosticableTreeMixin
-    implements SettingsStateErrorDetails {
-  const _$SettingsStateErrorDetails([this.message]);
+    implements SettingsStateError {
+  const _$SettingsStateError([this.message]);
 
   @override
   final String? message;
@@ -556,7 +555,7 @@ class _$SettingsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SettingsStateErrorDetails &&
+            other is _$SettingsStateError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -566,9 +565,9 @@ class _$SettingsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SettingsStateErrorDetailsCopyWith<_$SettingsStateErrorDetails>
-      get copyWith => __$$SettingsStateErrorDetailsCopyWithImpl<
-          _$SettingsStateErrorDetails>(this, _$identity);
+  _$$SettingsStateErrorCopyWith<_$SettingsStateError> get copyWith =>
+      __$$SettingsStateErrorCopyWithImpl<_$SettingsStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -613,7 +612,7 @@ class _$SettingsStateErrorDetails
     required TResult Function(SettingsStateInitial value) initial,
     required TResult Function(SettingsStateLoaded value) loaded,
     required TResult Function(SettingsStateLoading value) loading,
-    required TResult Function(SettingsStateErrorDetails value) error,
+    required TResult Function(SettingsStateError value) error,
   }) {
     return error(this);
   }
@@ -624,7 +623,7 @@ class _$SettingsStateErrorDetails
     TResult? Function(SettingsStateInitial value)? initial,
     TResult? Function(SettingsStateLoaded value)? loaded,
     TResult? Function(SettingsStateLoading value)? loading,
-    TResult? Function(SettingsStateErrorDetails value)? error,
+    TResult? Function(SettingsStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -635,7 +634,7 @@ class _$SettingsStateErrorDetails
     TResult Function(SettingsStateInitial value)? initial,
     TResult Function(SettingsStateLoaded value)? loaded,
     TResult Function(SettingsStateLoading value)? loading,
-    TResult Function(SettingsStateErrorDetails value)? error,
+    TResult Function(SettingsStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -645,12 +644,12 @@ class _$SettingsStateErrorDetails
   }
 }
 
-abstract class SettingsStateErrorDetails implements SettingsState {
-  const factory SettingsStateErrorDetails([final String? message]) =
-      _$SettingsStateErrorDetails;
+abstract class SettingsStateError implements SettingsState {
+  const factory SettingsStateError([final String? message]) =
+      _$SettingsStateError;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$SettingsStateErrorDetailsCopyWith<_$SettingsStateErrorDetails>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$SettingsStateErrorCopyWith<_$SettingsStateError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

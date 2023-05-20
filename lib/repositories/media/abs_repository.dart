@@ -12,7 +12,6 @@ import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/services/database/database_service.dart';
@@ -65,42 +64,6 @@ class AbsRepository extends MediaRepository {
           .uri;
     }
     return null;
-  }
-
-  MediaItem _bookToItem(AbsAudiobook book) {
-    final progress = userProgress[book.id];
-
-    int viewOffset = progress?.currentTime?.inMilliseconds ?? 0;
-    bool played = progress?.isFinished ?? false;
-    Duration? totalDuration = progress?.duration;
-    return MediaItem(
-      id: book.id,
-      title: book.media.metadata.title ?? 'Unknown',
-      displayDescription: book.media.metadata.description,
-      artist: book.media.metadata.authors?.map((e) => e.name).join(', ') ??
-          'Unknown',
-      album: book.media.metadata.title,
-      duration: book.media.duration == null
-          ? totalDuration
-          : AbsUtils.parseDurationFromSeconds(book.media.duration),
-      artUri: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt),
-      playable: true,
-      extras: <String, dynamic>{
-        'played': played,
-        'narrator': book.media.metadata.narrators?.join(', ') ?? 'Unknown',
-        'viewOffset': viewOffset,
-        'largeThumbnail': _scaledCoverUrl(
-          _api.baseUrl,
-          book.id,
-          book.updatedAt,
-          600,
-        ).toString(),
-        if (book.media.chapters != null)
-          'chapters': [
-            for (final chapter in book.media.chapters!) chapter.toJson()
-          ]
-      },
-    );
   }
 
   Book _absBookToBook(AbsAudiobook book) {

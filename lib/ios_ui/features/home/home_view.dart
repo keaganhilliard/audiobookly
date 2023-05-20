@@ -1,13 +1,16 @@
 import 'package:audiobookly/domain/home/home_notifier.dart';
 import 'package:audiobookly/domain/home/home_state.dart';
+import 'package:audiobookly/ios_ui/features/home/home.dart';
 import 'package:audiobookly/ios_ui/features/home/home_row.dart';
 import 'package:audiobookly/ios_ui/widgets/bottom_padding.dart';
+import 'package:audiobookly/ios_ui/widgets/sidebar_button.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeView extends HookConsumerWidget {
-  const HomeView({super.key});
+  const HomeView({super.key, required this.showOpenSidebar});
+  final bool showOpenSidebar;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,9 +24,11 @@ class HomeView extends HookConsumerWidget {
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: <Widget>[
-          const CupertinoSliverNavigationBar(
-            backgroundColor: Color.fromRGBO(0, 0, 0, 0.8),
-            largeTitle: Text('Audiobookly'),
+          CupertinoSliverNavigationBar(
+            backgroundColor: const Color.fromRGBO(0, 0, 0, 0.8),
+            largeTitle: const Text('Audiobookly'),
+            leading:
+                !ref.watch(showSidebarProvider) ? const SidebarButton() : null,
             brightness: Brightness.dark,
           ),
           CupertinoSliverRefreshControl(

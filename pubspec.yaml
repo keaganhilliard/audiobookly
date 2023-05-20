@@ -75,6 +75,8 @@ dependencies:
   flutter_adaptive_scaffold: ^0.1.3
   audiobookshelf_api:
   infinite_widgets: ^2.0.2
+  flutter_adaptive_ui: ^0.8.0+1
+  collection: ^1.17.1
 
   # dart_chromecast:
   #   git:

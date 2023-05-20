@@ -296,7 +296,6 @@ class _BetterRenderCupertinoSlider extends RenderConstrainedBox {
   void _handleDragEnd(DragEndDetails details) => _endInteraction();
 
   void _handleTapDown(TapDownDetails details) {
-    print('Tapdown $onTapDown');
     onTapDown?.call();
     _startInteraction(details.globalPosition);
   }

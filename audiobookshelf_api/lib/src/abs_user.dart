@@ -39,7 +39,7 @@ class AbsUser {
         token: json['token'],
         mediaProgress: {
           for (final prog in json['mediaProgress'])
-            prog['episodeId'] ?? prog['libraryItemId']:
+            prog['episodeId'] ?? prog['libraryItemId'] ?? prog['id']:
                 AbsAudiobookProgress.fromJson(prog)
         },
         seriesHideFromContinueListening:
