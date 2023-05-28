@@ -20,7 +20,7 @@ class Utils {
         '$time';
   }
 
-  static Future<Directory?> getBasePath() async {
+  static Future<Directory> getBasePath() async {
     try {
       return await getApplicationDocumentsDirectory();
     } catch (e) {

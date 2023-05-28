@@ -239,10 +239,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     playbackState.add(playbackState.value.copyWith(
       controls: [
         MediaControl.rewind,
-        // Controls.rewindControl,
         if (_player.playing) MediaControl.pause else MediaControl.play,
         MediaControl.fastForward,
-        // Controls.fastForwardControl,
         MediaControl.stop,
       ],
       systemActions: {
@@ -289,9 +287,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     }
 
     _player.play();
-    // await setSpeed(_prefs.getDouble(SharedPrefStrings.PLAYBACK_SPEED));
     await updateProgress(AudiobooklyPlaybackState.playing);
-    // await super.play();
   }
 
   @override
@@ -316,8 +312,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       await updateProgress(AudiobooklyPlaybackState.stopped);
     }
     await _player.stop();
-    // await _player.dispose();
-    // _player = ;
     _currentMedia = null;
     _currentMediaItem = null;
     tracks = [];
@@ -396,8 +390,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   List<MediaItem>? doMe;
 
   @override
-  Future<List<MediaItem>> getChildren(String parentMediaId,
-      [Map<String, dynamic>? options]) async {
+  Future<List<MediaItem>> getChildren(
+    String parentMediaId, [
+    Map<String, dynamic>? options,
+  ]) async {
     await completer.future;
     final items = await _repository!.getChildren(parentMediaId);
     doMe = items;
@@ -485,7 +481,6 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           children: tracks.map((item) {
             log(item.cachePath);
             if (item.cached &&
-                basePath != null &&
                 File(p.join(basePath.path, item.cachePath)).existsSync()) {
               log('Tis cached ${p.join(basePath.path, item.cachePath)}');
               // LockCachingAudioSource( uri)
@@ -517,8 +512,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   bool preparedFromSearch = false;
 
   @override
-  Future<void> prepareFromSearch(String query,
-      [Map<String, dynamic>? extras]) async {
+  Future<void> prepareFromSearch(
+    String query, [
+    Map<String, dynamic>? extras,
+  ]) async {
     playbackState.add(playbackState.value
         .copyWith(processingState: AudioProcessingState.loading));
     await completer.future;
@@ -534,8 +531,10 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future<void> playFromSearch(String query,
-      [Map<String, dynamic>? extras]) async {
+  Future<void> playFromSearch(
+    String query, [
+    Map<String, dynamic>? extras,
+  ]) async {
     playbackState.add(playbackState.value
         .copyWith(processingState: AudioProcessingState.loading));
     await completer.future;

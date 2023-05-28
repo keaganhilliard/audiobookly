@@ -81,13 +81,13 @@ void downloadStatusCallback(TaskStatusUpdate statusUpdate) {
   final task = statusUpdate.task;
   final status = statusUpdate.status;
   print('downloadStatusCallback for $task with status $status');
-  if (status == TaskStatus.failed) {
-    DatabaseService db = GetIt.I();
-    db.updateTrackDownloadProgress(task.taskId, 0, false);
-  }
-  if (status == TaskStatus.complete) {
-    GetIt.I<DatabaseService>()
-        .updateTrackDownloadProgress(task.taskId, 1, true);
+  DatabaseService db = GetIt.I();
+  switch (status) {
+    case TaskStatus.failed:
+      db.updateTrackDownloadProgress(task.taskId, 0, false);
+    case TaskStatus.complete:
+      db.updateTrackDownloadProgress(task.taskId, 1, true);
+    default:
   }
 }
 

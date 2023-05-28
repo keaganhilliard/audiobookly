@@ -16,7 +16,7 @@ _$AbsPersonalizedResponseBook _$$AbsPersonalizedResponseBookFromJson(
       entities: (json['entities'] as List<dynamic>)
           .map((e) => AbsAudiobookMinified.fromJson(e as Map<String, dynamic>))
           .toList(),
-      category: json['category'] as String,
+      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$AbsPersonalizedResponseBookToJson(
@@ -40,7 +40,7 @@ _$AbsPersonalizedResponseAuthor _$$AbsPersonalizedResponseAuthorFromJson(
       entities: (json['entities'] as List<dynamic>)
           .map((e) => Author.fromJson(e as Map<String, dynamic>))
           .toList(),
-      category: json['category'] as String,
+      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$AbsPersonalizedResponseAuthorToJson(
@@ -64,7 +64,7 @@ _$AbsPersonalizedResponseUnknown _$$AbsPersonalizedResponseUnknownFromJson(
       entities: (json['entities'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
-      category: json['category'] as String,
+      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$AbsPersonalizedResponseUnknownToJson(

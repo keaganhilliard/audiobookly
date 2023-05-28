@@ -40,7 +40,7 @@ class DesktopDownloader extends Downloader {
         fileName ??= track.id;
       }
       final downloadPath = p.join(
-        (await Utils.getBasePath())!.path,
+        (await Utils.getBasePath()).path,
         path,
         fileName,
       );

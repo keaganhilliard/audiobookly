@@ -34,43 +34,43 @@ mixin _$AbsPersonalizedResponse {
   String get labelStringKey => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   List<Object> get entities => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)
+            String type, List<AbsAudiobookMinified> entities, String? category)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)
+            String type, List<Author> entities, String? category)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)
+            String type, List<Map<String, dynamic>> entities, String? category)
         unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
     required TResult orElse(),
   }) =>
@@ -114,7 +114,7 @@ abstract class $AbsPersonalizedResponseCopyWith<$Res> {
       String label,
       String labelStringKey,
       String type,
-      String category});
+      String? category});
 }
 
 /// @nodoc
@@ -135,7 +135,7 @@ class _$AbsPersonalizedResponseCopyWithImpl<$Res,
     Object? label = null,
     Object? labelStringKey = null,
     Object? type = null,
-    Object? category = null,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -154,10 +154,10 @@ class _$AbsPersonalizedResponseCopyWithImpl<$Res,
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -177,7 +177,7 @@ abstract class _$$AbsPersonalizedResponseBookCopyWith<$Res>
       String labelStringKey,
       String type,
       List<AbsAudiobookMinified> entities,
-      String category});
+      String? category});
 }
 
 /// @nodoc
@@ -198,7 +198,7 @@ class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
     Object? labelStringKey = null,
     Object? type = null,
     Object? entities = null,
-    Object? category = null,
+    Object? category = freezed,
   }) {
     return _then(_$AbsPersonalizedResponseBook(
       id: null == id
@@ -221,10 +221,10 @@ class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<AbsAudiobookMinified>,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -238,7 +238,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
       required this.labelStringKey,
       required this.type,
       required final List<AbsAudiobookMinified> entities,
-      required this.category})
+      this.category})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseBook.fromJson(Map<String, dynamic> json) =>
@@ -261,7 +261,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   }
 
   @override
-  final String category;
+  final String? category;
 
   @override
   String toString() {
@@ -299,13 +299,13 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)
+            String type, List<AbsAudiobookMinified> entities, String? category)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)
+            String type, List<Author> entities, String? category)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)
+            String type, List<Map<String, dynamic>> entities, String? category)
         unknown,
   }) {
     return book(id, label, labelStringKey, type, entities, category);
@@ -315,13 +315,13 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
   }) {
     return book?.call(id, label, labelStringKey, type, entities, category);
@@ -331,13 +331,13 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
     required TResult orElse(),
   }) {
@@ -396,7 +396,7 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
       required final String labelStringKey,
       required final String type,
       required final List<AbsAudiobookMinified> entities,
-      required final String category}) = _$AbsPersonalizedResponseBook;
+      final String? category}) = _$AbsPersonalizedResponseBook;
 
   factory AbsPersonalizedResponseBook.fromJson(Map<String, dynamic> json) =
       _$AbsPersonalizedResponseBook.fromJson;
@@ -412,7 +412,7 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
   @override
   List<AbsAudiobookMinified> get entities;
   @override
-  String get category;
+  String? get category;
   @override
   @JsonKey(ignore: true)
   _$$AbsPersonalizedResponseBookCopyWith<_$AbsPersonalizedResponseBook>
@@ -434,7 +434,7 @@ abstract class _$$AbsPersonalizedResponseAuthorCopyWith<$Res>
       String labelStringKey,
       String type,
       List<Author> entities,
-      String category});
+      String? category});
 }
 
 /// @nodoc
@@ -455,7 +455,7 @@ class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
     Object? labelStringKey = null,
     Object? type = null,
     Object? entities = null,
-    Object? category = null,
+    Object? category = freezed,
   }) {
     return _then(_$AbsPersonalizedResponseAuthor(
       id: null == id
@@ -478,10 +478,10 @@ class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<Author>,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -495,7 +495,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
       required this.labelStringKey,
       required this.type,
       required final List<Author> entities,
-      required this.category})
+      this.category})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =>
@@ -518,7 +518,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   }
 
   @override
-  final String category;
+  final String? category;
 
   @override
   String toString() {
@@ -556,13 +556,13 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)
+            String type, List<AbsAudiobookMinified> entities, String? category)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)
+            String type, List<Author> entities, String? category)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)
+            String type, List<Map<String, dynamic>> entities, String? category)
         unknown,
   }) {
     return authors(id, label, labelStringKey, type, entities, category);
@@ -572,13 +572,13 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
   }) {
     return authors?.call(id, label, labelStringKey, type, entities, category);
@@ -588,13 +588,13 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
     required TResult orElse(),
   }) {
@@ -654,7 +654,7 @@ abstract class AbsPersonalizedResponseAuthor
       required final String labelStringKey,
       required final String type,
       required final List<Author> entities,
-      required final String category}) = _$AbsPersonalizedResponseAuthor;
+      final String? category}) = _$AbsPersonalizedResponseAuthor;
 
   factory AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =
       _$AbsPersonalizedResponseAuthor.fromJson;
@@ -670,7 +670,7 @@ abstract class AbsPersonalizedResponseAuthor
   @override
   List<Author> get entities;
   @override
-  String get category;
+  String? get category;
   @override
   @JsonKey(ignore: true)
   _$$AbsPersonalizedResponseAuthorCopyWith<_$AbsPersonalizedResponseAuthor>
@@ -692,7 +692,7 @@ abstract class _$$AbsPersonalizedResponseUnknownCopyWith<$Res>
       String labelStringKey,
       String type,
       List<Map<String, dynamic>> entities,
-      String category});
+      String? category});
 }
 
 /// @nodoc
@@ -713,7 +713,7 @@ class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
     Object? labelStringKey = null,
     Object? type = null,
     Object? entities = null,
-    Object? category = null,
+    Object? category = freezed,
   }) {
     return _then(_$AbsPersonalizedResponseUnknown(
       id: null == id
@@ -736,10 +736,10 @@ class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -754,7 +754,7 @@ class _$AbsPersonalizedResponseUnknown
       required this.labelStringKey,
       required this.type,
       required final List<Map<String, dynamic>> entities,
-      required this.category})
+      this.category})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseUnknown.fromJson(
@@ -778,7 +778,7 @@ class _$AbsPersonalizedResponseUnknown
   }
 
   @override
-  final String category;
+  final String? category;
 
   @override
   String toString() {
@@ -816,13 +816,13 @@ class _$AbsPersonalizedResponseUnknown
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)
+            String type, List<AbsAudiobookMinified> entities, String? category)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)
+            String type, List<Author> entities, String? category)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)
+            String type, List<Map<String, dynamic>> entities, String? category)
         unknown,
   }) {
     return unknown(id, label, labelStringKey, type, entities, category);
@@ -832,13 +832,13 @@ class _$AbsPersonalizedResponseUnknown
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
   }) {
     return unknown?.call(id, label, labelStringKey, type, entities, category);
@@ -848,13 +848,13 @@ class _$AbsPersonalizedResponseUnknown
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String category)?
+            String type, List<AbsAudiobookMinified> entities, String? category)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String category)?
+            String type, List<Author> entities, String? category)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String category)?
+            String type, List<Map<String, dynamic>> entities, String? category)?
         unknown,
     required TResult orElse(),
   }) {
@@ -914,7 +914,7 @@ abstract class AbsPersonalizedResponseUnknown
       required final String labelStringKey,
       required final String type,
       required final List<Map<String, dynamic>> entities,
-      required final String category}) = _$AbsPersonalizedResponseUnknown;
+      final String? category}) = _$AbsPersonalizedResponseUnknown;
 
   factory AbsPersonalizedResponseUnknown.fromJson(Map<String, dynamic> json) =
       _$AbsPersonalizedResponseUnknown.fromJson;
@@ -930,7 +930,7 @@ abstract class AbsPersonalizedResponseUnknown
   @override
   List<Map<String, dynamic>> get entities;
   @override
-  String get category;
+  String? get category;
   @override
   @JsonKey(ignore: true)
   _$$AbsPersonalizedResponseUnknownCopyWith<_$AbsPersonalizedResponseUnknown>

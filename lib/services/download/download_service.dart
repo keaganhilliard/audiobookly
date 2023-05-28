@@ -40,7 +40,7 @@ class DownloadService {
     for (final track in tracks) {
       if (track.downloadPath.isNotEmpty) {
         final fullPath =
-            p.join((await Utils.getBasePath())!.path, track.downloadPath);
+            p.join((await Utils.getBasePath()).path, track.downloadPath);
         final file = File(fullPath);
         if (await file.exists()) {
           await file.delete();
@@ -74,35 +74,29 @@ class DownloadService {
   }
 
   Future cancelBookDownload(Book book) async {
-    print('CANCELLED');
     await GetIt.I.get<Downloader>().cancelDownloads(book.id);
-    print('CANCELLED');
-    // req?.token.cancel('Requested');
     toDownload.removeWhere((req) => req.book.id == book.id);
     await deleteDownload(book);
   }
 
   Future processNextBook() async {
     if (toDownload.isEmpty) return;
-    print('Downloading');
-    // _isDownloading = true;
-    final req = toDownload[0];
+    final req = toDownload.first;
     if (req.processing) {
       return;
     } else {
       req.processing = true;
     }
-    final book = req.book;
-    final tracks = req.tracks;
+    final DownloadRequest(:book, :tracks) = req;
+    final Downloader(:downloadFile, :whenAllDone) = GetIt.I();
 
-    Downloader downloader = GetIt.I();
     for (Track theTrack in tracks) {
       final track = await _db.getTrack(theTrack.id);
 
       final dir = await Utils.getBasePath();
 
       if (track != null) {
-        final trackFile = File(p.join(dir!.path, track.downloadPath));
+        final trackFile = File(p.join(dir.path, track.downloadPath));
         if (trackFile.existsSync()) continue;
       }
 
@@ -112,12 +106,12 @@ class DownloadService {
         book.title,
       );
 
-      createDirIfNotExists(p.join(dir!.path, path));
+      createDirIfNotExists(p.join(dir.path, path));
 
       final pieces = theTrack.id.split('/');
       final fileName = pieces.length > 1 ? pieces[1] : null;
 
-      await downloader.downloadFile(
+      await downloadFile(
         theTrack.copyWith(
           downloadPath: p.join(
             path,
@@ -130,7 +124,7 @@ class DownloadService {
       );
     }
 
-    await downloader.whenAllDone(book.id);
+    await whenAllDone(book.id);
     if (toDownload.isNotEmpty) toDownload.remove(req);
     await processNextBook();
   }

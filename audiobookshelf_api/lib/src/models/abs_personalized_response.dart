@@ -12,7 +12,7 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String labelStringKey,
     required String type,
     required List<AbsAudiobookMinified> entities,
-    required String category,
+    String? category,
   }) = AbsPersonalizedResponseBook;
 
   const factory AbsPersonalizedResponse.authors({
@@ -21,7 +21,7 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String labelStringKey,
     required String type,
     required List<Author> entities,
-    required String category,
+    String? category,
   }) = AbsPersonalizedResponseAuthor;
 
   // const factory AbsPersonalizedResponse.series({
@@ -39,7 +39,7 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String labelStringKey,
     required String type,
     required List<Map<String, dynamic>> entities,
-    required String category,
+    String? category,
   }) = AbsPersonalizedResponseUnknown;
 
   factory AbsPersonalizedResponse.fromJson(Map<String, dynamic> json) =>
