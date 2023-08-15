@@ -16,7 +16,6 @@ _$AbsPersonalizedResponseBook _$$AbsPersonalizedResponseBookFromJson(
       entities: (json['entities'] as List<dynamic>)
           .map((e) => AbsAudiobookMinified.fromJson(e as Map<String, dynamic>))
           .toList(),
-      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$AbsPersonalizedResponseBookToJson(
@@ -27,7 +26,6 @@ Map<String, dynamic> _$$AbsPersonalizedResponseBookToJson(
       'labelStringKey': instance.labelStringKey,
       'type': instance.type,
       'entities': instance.entities,
-      'category': instance.category,
     };
 
 _$AbsPersonalizedResponseAuthor _$$AbsPersonalizedResponseAuthorFromJson(
@@ -40,7 +38,6 @@ _$AbsPersonalizedResponseAuthor _$$AbsPersonalizedResponseAuthorFromJson(
       entities: (json['entities'] as List<dynamic>)
           .map((e) => Author.fromJson(e as Map<String, dynamic>))
           .toList(),
-      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$AbsPersonalizedResponseAuthorToJson(
@@ -51,7 +48,28 @@ Map<String, dynamic> _$$AbsPersonalizedResponseAuthorToJson(
       'labelStringKey': instance.labelStringKey,
       'type': instance.type,
       'entities': instance.entities,
-      'category': instance.category,
+    };
+
+_$AbsPersonalizedResponseSeries _$$AbsPersonalizedResponseSeriesFromJson(
+        Map<String, dynamic> json) =>
+    _$AbsPersonalizedResponseSeries(
+      id: json['id'] as String,
+      label: json['label'] as String,
+      labelStringKey: json['labelStringKey'] as String,
+      type: json['type'] as String,
+      entities: (json['entities'] as List<dynamic>)
+          .map((e) => AbsSeries.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$AbsPersonalizedResponseSeriesToJson(
+        _$AbsPersonalizedResponseSeries instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'label': instance.label,
+      'labelStringKey': instance.labelStringKey,
+      'type': instance.type,
+      'entities': instance.entities,
     };
 
 _$AbsPersonalizedResponseUnknown _$$AbsPersonalizedResponseUnknownFromJson(
@@ -64,7 +82,6 @@ _$AbsPersonalizedResponseUnknown _$$AbsPersonalizedResponseUnknownFromJson(
       entities: (json['entities'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
-      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$$AbsPersonalizedResponseUnknownToJson(
@@ -75,5 +92,4 @@ Map<String, dynamic> _$$AbsPersonalizedResponseUnknownToJson(
       'labelStringKey': instance.labelStringKey,
       'type': instance.type,
       'entities': instance.entities,
-      'category': instance.category,
     };

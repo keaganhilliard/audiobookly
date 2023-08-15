@@ -1,4 +1,5 @@
 import 'package:audiobookshelf/audiobookshelf.dart';
+import 'package:audiobookshelf/src/models/abs_series.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'abs_personalized_response.freezed.dart';
@@ -12,7 +13,6 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String labelStringKey,
     required String type,
     required List<AbsAudiobookMinified> entities,
-    String? category,
   }) = AbsPersonalizedResponseBook;
 
   const factory AbsPersonalizedResponse.authors({
@@ -21,17 +21,15 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String labelStringKey,
     required String type,
     required List<Author> entities,
-    String? category,
   }) = AbsPersonalizedResponseAuthor;
 
-  // const factory AbsPersonalizedResponse.series({
-  //   required String id,
-  //   required String label,
-  //   required String labelStringKey,
-  //   required String type,
-  //   required List<AbsSeries> entities,
-  //   required String category,
-  // }) = AbsPersonalizedResponseSeries;
+  const factory AbsPersonalizedResponse.series({
+    required String id,
+    required String label,
+    required String labelStringKey,
+    required String type,
+    required List<AbsSeries> entities,
+  }) = AbsPersonalizedResponseSeries;
 
   const factory AbsPersonalizedResponse.unknown({
     required String id,
@@ -39,7 +37,6 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String labelStringKey,
     required String type,
     required List<Map<String, dynamic>> entities,
-    String? category,
   }) = AbsPersonalizedResponseUnknown;
 
   factory AbsPersonalizedResponse.fromJson(Map<String, dynamic> json) =>

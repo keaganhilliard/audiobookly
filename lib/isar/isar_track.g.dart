@@ -62,8 +62,13 @@ const IsarTrackSchema = CollectionSchema(
       name: r'isarDuration',
       type: IsarType.long,
     ),
-    r'title': PropertySchema(
+    r'serverPath': PropertySchema(
       id: 9,
+      name: r'serverPath',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 10,
       name: r'title',
       type: IsarType.string,
     )
@@ -132,6 +137,7 @@ int _isarTrackEstimateSize(
   bytesCount += 3 + object.downloadPath.length * 3;
   bytesCount += 3 + object.downloadTaskId.length * 3;
   bytesCount += 3 + object.id.length * 3;
+  bytesCount += 3 + object.serverPath.length * 3;
   bytesCount += 3 + object.title.length * 3;
   return bytesCount;
 }
@@ -151,7 +157,8 @@ void _isarTrackSerialize(
   writer.writeString(offsets[6], object.id);
   writer.writeBool(offsets[7], object.isDownloaded);
   writer.writeLong(offsets[8], object.isarDuration);
-  writer.writeString(offsets[9], object.title);
+  writer.writeString(offsets[9], object.serverPath);
+  writer.writeString(offsets[10], object.title);
 }
 
 IsarTrack _isarTrackDeserialize(
@@ -162,12 +169,13 @@ IsarTrack _isarTrackDeserialize(
 ) {
   final object = IsarTrack(
     reader.readString(offsets[6]),
-    reader.readString(offsets[9]),
+    reader.readString(offsets[10]),
     reader.readLong(offsets[8]),
     reader.readDouble(offsets[2]),
     reader.readBool(offsets[7]),
     reader.readDateTimeOrNull(offsets[5]),
     reader.readString(offsets[1]),
+    reader.readString(offsets[9]),
     reader.readString(offsets[0]),
     reader.readString(offsets[3]),
     reader.readLong(offsets[4]),
@@ -202,6 +210,8 @@ P _isarTrackDeserializeProp<P>(
     case 8:
       return (reader.readLong(offset)) as P;
     case 9:
+      return (reader.readString(offset)) as P;
+    case 10:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1406,6 +1416,140 @@ extension IsarTrackQueryFilter
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> serverPathEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'serverPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      serverPathGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'serverPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> serverPathLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'serverPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> serverPathBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'serverPath',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      serverPathStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'serverPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> serverPathEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'serverPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> serverPathContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'serverPath',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> serverPathMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'serverPath',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      serverPathIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'serverPath',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition>
+      serverPathIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'serverPath',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1654,6 +1798,18 @@ extension IsarTrackQuerySortBy on QueryBuilder<IsarTrack, IsarTrack, QSortBy> {
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByServerPath() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'serverPath', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByServerPathDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'serverPath', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1791,6 +1947,18 @@ extension IsarTrackQuerySortThenBy
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByServerPath() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'serverPath', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByServerPathDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'serverPath', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1865,6 +2033,13 @@ extension IsarTrackQueryWhereDistinct
     });
   }
 
+  QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByServerPath(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'serverPath', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<IsarTrack, IsarTrack, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1932,6 +2107,12 @@ extension IsarTrackQueryProperty
   QueryBuilder<IsarTrack, int, QQueryOperations> isarDurationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarDuration');
+    });
+  }
+
+  QueryBuilder<IsarTrack, String, QQueryOperations> serverPathProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'serverPath');
     });
   }
 

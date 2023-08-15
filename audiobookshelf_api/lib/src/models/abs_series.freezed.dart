@@ -22,12 +22,12 @@ AbsSeries _$AbsSeriesFromJson(Map<String, dynamic> json) {
 mixin _$AbsSeries {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get nameIgnorePrefix => throw _privateConstructorUsedError;
-  String get nameIgnorePrefixSort => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  String? get nameIgnorePrefix => throw _privateConstructorUsedError;
+  String? get nameIgnorePrefixSort => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   List<AbsAudiobookMinified> get books => throw _privateConstructorUsedError;
   int get addedAt => throw _privateConstructorUsedError;
-  double get totalDuration => throw _privateConstructorUsedError;
+  double? get totalDuration => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,12 +43,12 @@ abstract class $AbsSeriesCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String nameIgnorePrefix,
-      String nameIgnorePrefixSort,
-      String type,
+      String? nameIgnorePrefix,
+      String? nameIgnorePrefixSort,
+      String? type,
       List<AbsAudiobookMinified> books,
       int addedAt,
-      double totalDuration});
+      double? totalDuration});
 }
 
 /// @nodoc
@@ -66,12 +66,12 @@ class _$AbsSeriesCopyWithImpl<$Res, $Val extends AbsSeries>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? nameIgnorePrefix = null,
-    Object? nameIgnorePrefixSort = null,
-    Object? type = null,
+    Object? nameIgnorePrefix = freezed,
+    Object? nameIgnorePrefixSort = freezed,
+    Object? type = freezed,
     Object? books = null,
     Object? addedAt = null,
-    Object? totalDuration = null,
+    Object? totalDuration = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -82,18 +82,18 @@ class _$AbsSeriesCopyWithImpl<$Res, $Val extends AbsSeries>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      nameIgnorePrefix: null == nameIgnorePrefix
+      nameIgnorePrefix: freezed == nameIgnorePrefix
           ? _value.nameIgnorePrefix
           : nameIgnorePrefix // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameIgnorePrefixSort: null == nameIgnorePrefixSort
+              as String?,
+      nameIgnorePrefixSort: freezed == nameIgnorePrefixSort
           ? _value.nameIgnorePrefixSort
           : nameIgnorePrefixSort // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       books: null == books
           ? _value.books
           : books // ignore: cast_nullable_to_non_nullable
@@ -102,10 +102,10 @@ class _$AbsSeriesCopyWithImpl<$Res, $Val extends AbsSeries>
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int,
-      totalDuration: null == totalDuration
+      totalDuration: freezed == totalDuration
           ? _value.totalDuration
           : totalDuration // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -120,12 +120,12 @@ abstract class _$$_AbsSeriesCopyWith<$Res> implements $AbsSeriesCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String nameIgnorePrefix,
-      String nameIgnorePrefixSort,
-      String type,
+      String? nameIgnorePrefix,
+      String? nameIgnorePrefixSort,
+      String? type,
       List<AbsAudiobookMinified> books,
       int addedAt,
-      double totalDuration});
+      double? totalDuration});
 }
 
 /// @nodoc
@@ -141,12 +141,12 @@ class __$$_AbsSeriesCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? nameIgnorePrefix = null,
-    Object? nameIgnorePrefixSort = null,
-    Object? type = null,
+    Object? nameIgnorePrefix = freezed,
+    Object? nameIgnorePrefixSort = freezed,
+    Object? type = freezed,
     Object? books = null,
     Object? addedAt = null,
-    Object? totalDuration = null,
+    Object? totalDuration = freezed,
   }) {
     return _then(_$_AbsSeries(
       id: null == id
@@ -157,18 +157,18 @@ class __$$_AbsSeriesCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      nameIgnorePrefix: null == nameIgnorePrefix
+      nameIgnorePrefix: freezed == nameIgnorePrefix
           ? _value.nameIgnorePrefix
           : nameIgnorePrefix // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameIgnorePrefixSort: null == nameIgnorePrefixSort
+              as String?,
+      nameIgnorePrefixSort: freezed == nameIgnorePrefixSort
           ? _value.nameIgnorePrefixSort
           : nameIgnorePrefixSort // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       books: null == books
           ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
@@ -177,10 +177,10 @@ class __$$_AbsSeriesCopyWithImpl<$Res>
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as int,
-      totalDuration: null == totalDuration
+      totalDuration: freezed == totalDuration
           ? _value.totalDuration
           : totalDuration // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
@@ -191,12 +191,12 @@ class _$_AbsSeries implements _AbsSeries {
   const _$_AbsSeries(
       {required this.id,
       required this.name,
-      required this.nameIgnorePrefix,
-      required this.nameIgnorePrefixSort,
-      required this.type,
+      this.nameIgnorePrefix,
+      this.nameIgnorePrefixSort,
+      this.type,
       required final List<AbsAudiobookMinified> books,
       required this.addedAt,
-      required this.totalDuration})
+      this.totalDuration})
       : _books = books;
 
   factory _$_AbsSeries.fromJson(Map<String, dynamic> json) =>
@@ -207,11 +207,11 @@ class _$_AbsSeries implements _AbsSeries {
   @override
   final String name;
   @override
-  final String nameIgnorePrefix;
+  final String? nameIgnorePrefix;
   @override
-  final String nameIgnorePrefixSort;
+  final String? nameIgnorePrefixSort;
   @override
-  final String type;
+  final String? type;
   final List<AbsAudiobookMinified> _books;
   @override
   List<AbsAudiobookMinified> get books {
@@ -223,7 +223,7 @@ class _$_AbsSeries implements _AbsSeries {
   @override
   final int addedAt;
   @override
-  final double totalDuration;
+  final double? totalDuration;
 
   @override
   String toString() {
@@ -279,12 +279,12 @@ abstract class _AbsSeries implements AbsSeries {
   const factory _AbsSeries(
       {required final String id,
       required final String name,
-      required final String nameIgnorePrefix,
-      required final String nameIgnorePrefixSort,
-      required final String type,
+      final String? nameIgnorePrefix,
+      final String? nameIgnorePrefixSort,
+      final String? type,
       required final List<AbsAudiobookMinified> books,
       required final int addedAt,
-      required final double totalDuration}) = _$_AbsSeries;
+      final double? totalDuration}) = _$_AbsSeries;
 
   factory _AbsSeries.fromJson(Map<String, dynamic> json) =
       _$_AbsSeries.fromJson;
@@ -294,17 +294,17 @@ abstract class _AbsSeries implements AbsSeries {
   @override
   String get name;
   @override
-  String get nameIgnorePrefix;
+  String? get nameIgnorePrefix;
   @override
-  String get nameIgnorePrefixSort;
+  String? get nameIgnorePrefixSort;
   @override
-  String get type;
+  String? get type;
   @override
   List<AbsAudiobookMinified> get books;
   @override
   int get addedAt;
   @override
-  double get totalDuration;
+  double? get totalDuration;
   @override
   @JsonKey(ignore: true)
   _$$_AbsSeriesCopyWith<_$_AbsSeries> get copyWith =>

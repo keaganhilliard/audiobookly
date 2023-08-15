@@ -18,6 +18,7 @@ class IosApp extends HookConsumerWidget {
 
     final navigationService = ref.watch(navigationServiceProvider);
     return CupertinoApp(
+    
       // showPerformanceOverlay: true,
       navigatorKey: navigationService.navigatorKey,
       debugShowCheckedModeBanner: false,

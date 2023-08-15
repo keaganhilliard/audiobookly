@@ -3,6 +3,7 @@ import 'package:audiobookly/ios_ui/features/books/books_view.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/material.dart' show LinearProgressIndicator, Colors;
@@ -80,6 +81,29 @@ class HomeRow extends HookConsumerWidget {
                       ),
                     AuthorValue(
                       value: Author(
+                        :final id,
+                        :final name,
+                        :final artPath,
+                      )
+                    ) =>
+                      CoverItem(
+                        onTap: () async {
+                          Navigator.of(context)
+                              .push(CupertinoPageRoute(builder: (context) {
+                            return BooksView(
+                              mediaId: id,
+                              title: name,
+                            );
+                          }));
+                        },
+                        height: height,
+                        thumbnailUrl: artPath,
+                        title: name,
+                        icon: CupertinoIcons.person_2_fill,
+                        showTitle: true,
+                      ),
+                    SeriesValue(
+                      value: Series(
                         :final id,
                         :final name,
                         :final artPath,

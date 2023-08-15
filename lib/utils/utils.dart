@@ -217,6 +217,7 @@ extension MediaHelpers on MediaItem {
   String get asin => extras?['asin'] ?? '';
 
   String? get partKey => extras?['partKey'];
+  String get serverPath => extras?['serverPath'] ?? partKey ?? id;
 
   Duration get viewOffset => extras?['viewOffset'] == null
       ? Duration.zero
@@ -280,6 +281,7 @@ extension MediaHelpers on MediaItem {
           'largeThumbnail': book.artPath,
           'cached': true,
           'cachePath': track.downloadPath,
+          'serverPath': track.serverPath.isEmpty ? track.id : track.serverPath,
         },
         duration: track.duration,
       );

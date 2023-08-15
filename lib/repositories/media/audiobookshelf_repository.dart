@@ -526,6 +526,7 @@ class AudiobookshelfRepository extends MediaRepository {
               trackMap['$bookId/${file.metadata.filename}']?.isDownloaded ??
                   false,
           downloadPath: '',
+          serverPath: '',
           bookId: bookId,
           downloadTaskId: '',
           downloadTaskStatus: 0,

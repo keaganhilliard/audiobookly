@@ -239,7 +239,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   String getDownloadUrl(String path) {
-    return getServerUrl(path);
+    return '${_api.baseUrl}/$path?token=${_api.token}';
   }
 
   @override
@@ -322,6 +322,7 @@ class AbsRepository extends MediaRepository {
               trackMap['$bookId/${file.metadata.filename}']?.isDownloaded ??
                   false,
           downloadPath: '',
+          serverPath: 'api/items/$bookId/file/${file.ino}/download',
           bookId: bookId,
           downloadTaskId: '',
           downloadTaskStatus: 0,
@@ -540,6 +541,23 @@ class AbsRepository extends MediaRepository {
     for (final p in personalized) {
       p.maybeMap(
         orElse: () {},
+        series: (value) {
+          outMap.putIfAbsent(
+              value.label,
+              () => [
+                    for (final serie in value.entities)
+                      ModelUnion.series(Series(
+                        id: '@series/${serie.id}',
+                        name: serie.name,
+                        artPath: _scaledCoverUrl(
+                          _api.baseUrl,
+                          serie.books[0].id,
+                          serie.books[0].updatedAt,
+                        ).toString(),
+                        numBooks: serie.books.length,
+                      ))
+                  ]);
+        },
         book: (value) {
           outMap.putIfAbsent(
               p.label,

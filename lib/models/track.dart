@@ -6,6 +6,7 @@ class Track {
   final bool isDownloaded;
   final DateTime? downloadedAt;
   final String downloadPath;
+  final String serverPath;
   final String bookId;
   final String downloadTaskId;
   final int downloadTaskStatus;
@@ -18,6 +19,7 @@ class Track {
     required this.isDownloaded,
     this.downloadedAt,
     required this.downloadPath,
+    required this.serverPath,
     required this.bookId,
     required this.downloadTaskId,
     required this.downloadTaskStatus,
@@ -31,6 +33,7 @@ class Track {
     bool? isDownloaded,
     DateTime? downloadedAt,
     String? downloadPath,
+    String? serverPath,
     String? bookId,
     String? downloadTaskId,
     int? downloadTaskStatus,
@@ -43,6 +46,7 @@ class Track {
         isDownloaded: isDownloaded ?? this.isDownloaded,
         downloadedAt: downloadedAt ?? this.downloadedAt,
         downloadPath: downloadPath ?? this.downloadPath,
+        serverPath: serverPath ?? this.serverPath,
         bookId: bookId ?? this.bookId,
         downloadTaskId: downloadTaskId ?? this.downloadTaskId,
         downloadTaskStatus: downloadTaskStatus ?? this.downloadTaskStatus,

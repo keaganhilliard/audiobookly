@@ -6,6 +6,7 @@ import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:background_downloader/background_downloader.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path/path.dart' as p;
 import 'package:rxdart/rxdart.dart';
 
 final download = BehaviorSubject();
@@ -45,7 +46,12 @@ class MobileBackgroundDownloader extends Downloader {
     final enqueued = await FileDownloader().enqueue(task);
     print('Filename: ${task.filename}');
     print('Enqueued?: $enqueued');
-    await db.insertTrack(track.copyWith(downloadTaskId: task.taskId));
+    await db.insertTrack(
+      track.copyWith(
+        downloadTaskId: task.taskId,
+        downloadPath: p.join(path, task.filename),
+      ),
+    );
   }
 
   Map<String, StreamSubscription> trackSubs = {};

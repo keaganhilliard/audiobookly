@@ -21,6 +21,8 @@ AbsPersonalizedResponse _$AbsPersonalizedResponseFromJson(
       return AbsPersonalizedResponseBook.fromJson(json);
     case 'authors':
       return AbsPersonalizedResponseAuthor.fromJson(json);
+    case 'series':
+      return AbsPersonalizedResponseSeries.fromJson(json);
 
     default:
       return AbsPersonalizedResponseUnknown.fromJson(json);
@@ -34,43 +36,51 @@ mixin _$AbsPersonalizedResponse {
   String get labelStringKey => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   List<Object> get entities => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)
+            String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)
+            String type, List<Author> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)
+            String type, List<AbsSeries> entities)
+        series,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)
         unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
     required TResult orElse(),
   }) =>
@@ -79,6 +89,7 @@ mixin _$AbsPersonalizedResponse {
   TResult map<TResult extends Object?>({
     required TResult Function(AbsPersonalizedResponseBook value) book,
     required TResult Function(AbsPersonalizedResponseAuthor value) authors,
+    required TResult Function(AbsPersonalizedResponseSeries value) series,
     required TResult Function(AbsPersonalizedResponseUnknown value) unknown,
   }) =>
       throw _privateConstructorUsedError;
@@ -86,6 +97,7 @@ mixin _$AbsPersonalizedResponse {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AbsPersonalizedResponseBook value)? book,
     TResult? Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult? Function(AbsPersonalizedResponseSeries value)? series,
     TResult? Function(AbsPersonalizedResponseUnknown value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
@@ -93,6 +105,7 @@ mixin _$AbsPersonalizedResponse {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AbsPersonalizedResponseBook value)? book,
     TResult Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult Function(AbsPersonalizedResponseSeries value)? series,
     TResult Function(AbsPersonalizedResponseUnknown value)? unknown,
     required TResult orElse(),
   }) =>
@@ -109,12 +122,7 @@ abstract class $AbsPersonalizedResponseCopyWith<$Res> {
           $Res Function(AbsPersonalizedResponse) then) =
       _$AbsPersonalizedResponseCopyWithImpl<$Res, AbsPersonalizedResponse>;
   @useResult
-  $Res call(
-      {String id,
-      String label,
-      String labelStringKey,
-      String type,
-      String? category});
+  $Res call({String id, String label, String labelStringKey, String type});
 }
 
 /// @nodoc
@@ -135,7 +143,6 @@ class _$AbsPersonalizedResponseCopyWithImpl<$Res,
     Object? label = null,
     Object? labelStringKey = null,
     Object? type = null,
-    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -154,10 +161,6 @@ class _$AbsPersonalizedResponseCopyWithImpl<$Res,
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -176,8 +179,7 @@ abstract class _$$AbsPersonalizedResponseBookCopyWith<$Res>
       String label,
       String labelStringKey,
       String type,
-      List<AbsAudiobookMinified> entities,
-      String? category});
+      List<AbsAudiobookMinified> entities});
 }
 
 /// @nodoc
@@ -198,7 +200,6 @@ class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
     Object? labelStringKey = null,
     Object? type = null,
     Object? entities = null,
-    Object? category = freezed,
   }) {
     return _then(_$AbsPersonalizedResponseBook(
       id: null == id
@@ -221,10 +222,6 @@ class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<AbsAudiobookMinified>,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -237,8 +234,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
       required this.label,
       required this.labelStringKey,
       required this.type,
-      required final List<AbsAudiobookMinified> entities,
-      this.category})
+      required final List<AbsAudiobookMinified> entities})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseBook.fromJson(Map<String, dynamic> json) =>
@@ -261,11 +257,8 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   }
 
   @override
-  final String? category;
-
-  @override
   String toString() {
-    return 'AbsPersonalizedResponse.book(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, category: $category)';
+    return 'AbsPersonalizedResponse.book(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities)';
   }
 
   @override
@@ -278,15 +271,13 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
             (identical(other.labelStringKey, labelStringKey) ||
                 other.labelStringKey == labelStringKey) &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other._entities, _entities) &&
-            (identical(other.category, category) ||
-                other.category == category));
+            const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
-      const DeepCollectionEquality().hash(_entities), category);
+      const DeepCollectionEquality().hash(_entities));
 
   @JsonKey(ignore: true)
   @override
@@ -299,50 +290,59 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)
+            String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)
+            String type, List<Author> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)
+            String type, List<AbsSeries> entities)
+        series,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)
         unknown,
   }) {
-    return book(id, label, labelStringKey, type, entities, category);
+    return book(id, label, labelStringKey, type, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
   }) {
-    return book?.call(id, label, labelStringKey, type, entities, category);
+    return book?.call(id, label, labelStringKey, type, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
     required TResult orElse(),
   }) {
     if (book != null) {
-      return book(id, label, labelStringKey, type, entities, category);
+      return book(id, label, labelStringKey, type, entities);
     }
     return orElse();
   }
@@ -352,6 +352,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   TResult map<TResult extends Object?>({
     required TResult Function(AbsPersonalizedResponseBook value) book,
     required TResult Function(AbsPersonalizedResponseAuthor value) authors,
+    required TResult Function(AbsPersonalizedResponseSeries value) series,
     required TResult Function(AbsPersonalizedResponseUnknown value) unknown,
   }) {
     return book(this);
@@ -362,6 +363,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AbsPersonalizedResponseBook value)? book,
     TResult? Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult? Function(AbsPersonalizedResponseSeries value)? series,
     TResult? Function(AbsPersonalizedResponseUnknown value)? unknown,
   }) {
     return book?.call(this);
@@ -372,6 +374,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AbsPersonalizedResponseBook value)? book,
     TResult Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult Function(AbsPersonalizedResponseSeries value)? series,
     TResult Function(AbsPersonalizedResponseUnknown value)? unknown,
     required TResult orElse(),
   }) {
@@ -391,12 +394,12 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
 
 abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
   const factory AbsPersonalizedResponseBook(
-      {required final String id,
-      required final String label,
-      required final String labelStringKey,
-      required final String type,
-      required final List<AbsAudiobookMinified> entities,
-      final String? category}) = _$AbsPersonalizedResponseBook;
+          {required final String id,
+          required final String label,
+          required final String labelStringKey,
+          required final String type,
+          required final List<AbsAudiobookMinified> entities}) =
+      _$AbsPersonalizedResponseBook;
 
   factory AbsPersonalizedResponseBook.fromJson(Map<String, dynamic> json) =
       _$AbsPersonalizedResponseBook.fromJson;
@@ -411,8 +414,6 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
   String get type;
   @override
   List<AbsAudiobookMinified> get entities;
-  @override
-  String? get category;
   @override
   @JsonKey(ignore: true)
   _$$AbsPersonalizedResponseBookCopyWith<_$AbsPersonalizedResponseBook>
@@ -433,8 +434,7 @@ abstract class _$$AbsPersonalizedResponseAuthorCopyWith<$Res>
       String label,
       String labelStringKey,
       String type,
-      List<Author> entities,
-      String? category});
+      List<Author> entities});
 }
 
 /// @nodoc
@@ -455,7 +455,6 @@ class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
     Object? labelStringKey = null,
     Object? type = null,
     Object? entities = null,
-    Object? category = freezed,
   }) {
     return _then(_$AbsPersonalizedResponseAuthor(
       id: null == id
@@ -478,10 +477,6 @@ class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<Author>,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -494,8 +489,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
       required this.label,
       required this.labelStringKey,
       required this.type,
-      required final List<Author> entities,
-      this.category})
+      required final List<Author> entities})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =>
@@ -518,11 +512,8 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   }
 
   @override
-  final String? category;
-
-  @override
   String toString() {
-    return 'AbsPersonalizedResponse.authors(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, category: $category)';
+    return 'AbsPersonalizedResponse.authors(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities)';
   }
 
   @override
@@ -535,15 +526,13 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
             (identical(other.labelStringKey, labelStringKey) ||
                 other.labelStringKey == labelStringKey) &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other._entities, _entities) &&
-            (identical(other.category, category) ||
-                other.category == category));
+            const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
-      const DeepCollectionEquality().hash(_entities), category);
+      const DeepCollectionEquality().hash(_entities));
 
   @JsonKey(ignore: true)
   @override
@@ -556,50 +545,59 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)
+            String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)
+            String type, List<Author> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)
+            String type, List<AbsSeries> entities)
+        series,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)
         unknown,
   }) {
-    return authors(id, label, labelStringKey, type, entities, category);
+    return authors(id, label, labelStringKey, type, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
   }) {
-    return authors?.call(id, label, labelStringKey, type, entities, category);
+    return authors?.call(id, label, labelStringKey, type, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
     required TResult orElse(),
   }) {
     if (authors != null) {
-      return authors(id, label, labelStringKey, type, entities, category);
+      return authors(id, label, labelStringKey, type, entities);
     }
     return orElse();
   }
@@ -609,6 +607,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   TResult map<TResult extends Object?>({
     required TResult Function(AbsPersonalizedResponseBook value) book,
     required TResult Function(AbsPersonalizedResponseAuthor value) authors,
+    required TResult Function(AbsPersonalizedResponseSeries value) series,
     required TResult Function(AbsPersonalizedResponseUnknown value) unknown,
   }) {
     return authors(this);
@@ -619,6 +618,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AbsPersonalizedResponseBook value)? book,
     TResult? Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult? Function(AbsPersonalizedResponseSeries value)? series,
     TResult? Function(AbsPersonalizedResponseUnknown value)? unknown,
   }) {
     return authors?.call(this);
@@ -629,6 +629,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AbsPersonalizedResponseBook value)? book,
     TResult Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult Function(AbsPersonalizedResponseSeries value)? series,
     TResult Function(AbsPersonalizedResponseUnknown value)? unknown,
     required TResult orElse(),
   }) {
@@ -653,8 +654,7 @@ abstract class AbsPersonalizedResponseAuthor
       required final String label,
       required final String labelStringKey,
       required final String type,
-      required final List<Author> entities,
-      final String? category}) = _$AbsPersonalizedResponseAuthor;
+      required final List<Author> entities}) = _$AbsPersonalizedResponseAuthor;
 
   factory AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =
       _$AbsPersonalizedResponseAuthor.fromJson;
@@ -670,10 +670,264 @@ abstract class AbsPersonalizedResponseAuthor
   @override
   List<Author> get entities;
   @override
-  String? get category;
-  @override
   @JsonKey(ignore: true)
   _$$AbsPersonalizedResponseAuthorCopyWith<_$AbsPersonalizedResponseAuthor>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AbsPersonalizedResponseSeriesCopyWith<$Res>
+    implements $AbsPersonalizedResponseCopyWith<$Res> {
+  factory _$$AbsPersonalizedResponseSeriesCopyWith(
+          _$AbsPersonalizedResponseSeries value,
+          $Res Function(_$AbsPersonalizedResponseSeries) then) =
+      __$$AbsPersonalizedResponseSeriesCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String label,
+      String labelStringKey,
+      String type,
+      List<AbsSeries> entities});
+}
+
+/// @nodoc
+class __$$AbsPersonalizedResponseSeriesCopyWithImpl<$Res>
+    extends _$AbsPersonalizedResponseCopyWithImpl<$Res,
+        _$AbsPersonalizedResponseSeries>
+    implements _$$AbsPersonalizedResponseSeriesCopyWith<$Res> {
+  __$$AbsPersonalizedResponseSeriesCopyWithImpl(
+      _$AbsPersonalizedResponseSeries _value,
+      $Res Function(_$AbsPersonalizedResponseSeries) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? label = null,
+    Object? labelStringKey = null,
+    Object? type = null,
+    Object? entities = null,
+  }) {
+    return _then(_$AbsPersonalizedResponseSeries(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      labelStringKey: null == labelStringKey
+          ? _value.labelStringKey
+          : labelStringKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      entities: null == entities
+          ? _value._entities
+          : entities // ignore: cast_nullable_to_non_nullable
+              as List<AbsSeries>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AbsPersonalizedResponseSeries implements AbsPersonalizedResponseSeries {
+  const _$AbsPersonalizedResponseSeries(
+      {required this.id,
+      required this.label,
+      required this.labelStringKey,
+      required this.type,
+      required final List<AbsSeries> entities})
+      : _entities = entities;
+
+  factory _$AbsPersonalizedResponseSeries.fromJson(Map<String, dynamic> json) =>
+      _$$AbsPersonalizedResponseSeriesFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String label;
+  @override
+  final String labelStringKey;
+  @override
+  final String type;
+  final List<AbsSeries> _entities;
+  @override
+  List<AbsSeries> get entities {
+    if (_entities is EqualUnmodifiableListView) return _entities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_entities);
+  }
+
+  @override
+  String toString() {
+    return 'AbsPersonalizedResponse.series(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AbsPersonalizedResponseSeries &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.labelStringKey, labelStringKey) ||
+                other.labelStringKey == labelStringKey) &&
+            (identical(other.type, type) || other.type == type) &&
+            const DeepCollectionEquality().equals(other._entities, _entities));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
+      const DeepCollectionEquality().hash(_entities));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AbsPersonalizedResponseSeriesCopyWith<_$AbsPersonalizedResponseSeries>
+      get copyWith => __$$AbsPersonalizedResponseSeriesCopyWithImpl<
+          _$AbsPersonalizedResponseSeries>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<AbsAudiobookMinified> entities)
+        book,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<Author> entities)
+        authors,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<AbsSeries> entities)
+        series,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)
+        unknown,
+  }) {
+    return series(id, label, labelStringKey, type, entities);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<AbsAudiobookMinified> entities)?
+        book,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<Author> entities)?
+        authors,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
+        unknown,
+  }) {
+    return series?.call(id, label, labelStringKey, type, entities);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<AbsAudiobookMinified> entities)?
+        book,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<Author> entities)?
+        authors,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
+        unknown,
+    required TResult orElse(),
+  }) {
+    if (series != null) {
+      return series(id, label, labelStringKey, type, entities);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AbsPersonalizedResponseBook value) book,
+    required TResult Function(AbsPersonalizedResponseAuthor value) authors,
+    required TResult Function(AbsPersonalizedResponseSeries value) series,
+    required TResult Function(AbsPersonalizedResponseUnknown value) unknown,
+  }) {
+    return series(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AbsPersonalizedResponseBook value)? book,
+    TResult? Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult? Function(AbsPersonalizedResponseSeries value)? series,
+    TResult? Function(AbsPersonalizedResponseUnknown value)? unknown,
+  }) {
+    return series?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AbsPersonalizedResponseBook value)? book,
+    TResult Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult Function(AbsPersonalizedResponseSeries value)? series,
+    TResult Function(AbsPersonalizedResponseUnknown value)? unknown,
+    required TResult orElse(),
+  }) {
+    if (series != null) {
+      return series(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AbsPersonalizedResponseSeriesToJson(
+      this,
+    );
+  }
+}
+
+abstract class AbsPersonalizedResponseSeries
+    implements AbsPersonalizedResponse {
+  const factory AbsPersonalizedResponseSeries(
+          {required final String id,
+          required final String label,
+          required final String labelStringKey,
+          required final String type,
+          required final List<AbsSeries> entities}) =
+      _$AbsPersonalizedResponseSeries;
+
+  factory AbsPersonalizedResponseSeries.fromJson(Map<String, dynamic> json) =
+      _$AbsPersonalizedResponseSeries.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get label;
+  @override
+  String get labelStringKey;
+  @override
+  String get type;
+  @override
+  List<AbsSeries> get entities;
+  @override
+  @JsonKey(ignore: true)
+  _$$AbsPersonalizedResponseSeriesCopyWith<_$AbsPersonalizedResponseSeries>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -691,8 +945,7 @@ abstract class _$$AbsPersonalizedResponseUnknownCopyWith<$Res>
       String label,
       String labelStringKey,
       String type,
-      List<Map<String, dynamic>> entities,
-      String? category});
+      List<Map<String, dynamic>> entities});
 }
 
 /// @nodoc
@@ -713,7 +966,6 @@ class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
     Object? labelStringKey = null,
     Object? type = null,
     Object? entities = null,
-    Object? category = freezed,
   }) {
     return _then(_$AbsPersonalizedResponseUnknown(
       id: null == id
@@ -736,10 +988,6 @@ class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -753,8 +1001,7 @@ class _$AbsPersonalizedResponseUnknown
       required this.label,
       required this.labelStringKey,
       required this.type,
-      required final List<Map<String, dynamic>> entities,
-      this.category})
+      required final List<Map<String, dynamic>> entities})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseUnknown.fromJson(
@@ -778,11 +1025,8 @@ class _$AbsPersonalizedResponseUnknown
   }
 
   @override
-  final String? category;
-
-  @override
   String toString() {
-    return 'AbsPersonalizedResponse.unknown(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, category: $category)';
+    return 'AbsPersonalizedResponse.unknown(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities)';
   }
 
   @override
@@ -795,15 +1039,13 @@ class _$AbsPersonalizedResponseUnknown
             (identical(other.labelStringKey, labelStringKey) ||
                 other.labelStringKey == labelStringKey) &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other._entities, _entities) &&
-            (identical(other.category, category) ||
-                other.category == category));
+            const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
-      const DeepCollectionEquality().hash(_entities), category);
+      const DeepCollectionEquality().hash(_entities));
 
   @JsonKey(ignore: true)
   @override
@@ -816,50 +1058,59 @@ class _$AbsPersonalizedResponseUnknown
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)
+            String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)
+            String type, List<Author> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)
+            String type, List<AbsSeries> entities)
+        series,
+    required TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)
         unknown,
   }) {
-    return unknown(id, label, labelStringKey, type, entities, category);
+    return unknown(id, label, labelStringKey, type, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult? Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
   }) {
-    return unknown?.call(id, label, labelStringKey, type, entities, category);
+    return unknown?.call(id, label, labelStringKey, type, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<AbsAudiobookMinified> entities, String? category)?
+            String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities, String? category)?
+            String type, List<Author> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Map<String, dynamic>> entities, String? category)?
+            String type, List<AbsSeries> entities)?
+        series,
+    TResult Function(String id, String label, String labelStringKey,
+            String type, List<Map<String, dynamic>> entities)?
         unknown,
     required TResult orElse(),
   }) {
     if (unknown != null) {
-      return unknown(id, label, labelStringKey, type, entities, category);
+      return unknown(id, label, labelStringKey, type, entities);
     }
     return orElse();
   }
@@ -869,6 +1120,7 @@ class _$AbsPersonalizedResponseUnknown
   TResult map<TResult extends Object?>({
     required TResult Function(AbsPersonalizedResponseBook value) book,
     required TResult Function(AbsPersonalizedResponseAuthor value) authors,
+    required TResult Function(AbsPersonalizedResponseSeries value) series,
     required TResult Function(AbsPersonalizedResponseUnknown value) unknown,
   }) {
     return unknown(this);
@@ -879,6 +1131,7 @@ class _$AbsPersonalizedResponseUnknown
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AbsPersonalizedResponseBook value)? book,
     TResult? Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult? Function(AbsPersonalizedResponseSeries value)? series,
     TResult? Function(AbsPersonalizedResponseUnknown value)? unknown,
   }) {
     return unknown?.call(this);
@@ -889,6 +1142,7 @@ class _$AbsPersonalizedResponseUnknown
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AbsPersonalizedResponseBook value)? book,
     TResult Function(AbsPersonalizedResponseAuthor value)? authors,
+    TResult Function(AbsPersonalizedResponseSeries value)? series,
     TResult Function(AbsPersonalizedResponseUnknown value)? unknown,
     required TResult orElse(),
   }) {
@@ -909,12 +1163,12 @@ class _$AbsPersonalizedResponseUnknown
 abstract class AbsPersonalizedResponseUnknown
     implements AbsPersonalizedResponse {
   const factory AbsPersonalizedResponseUnknown(
-      {required final String id,
-      required final String label,
-      required final String labelStringKey,
-      required final String type,
-      required final List<Map<String, dynamic>> entities,
-      final String? category}) = _$AbsPersonalizedResponseUnknown;
+          {required final String id,
+          required final String label,
+          required final String labelStringKey,
+          required final String type,
+          required final List<Map<String, dynamic>> entities}) =
+      _$AbsPersonalizedResponseUnknown;
 
   factory AbsPersonalizedResponseUnknown.fromJson(Map<String, dynamic> json) =
       _$AbsPersonalizedResponseUnknown.fromJson;
@@ -929,8 +1183,6 @@ abstract class AbsPersonalizedResponseUnknown
   String get type;
   @override
   List<Map<String, dynamic>> get entities;
-  @override
-  String? get category;
   @override
   @JsonKey(ignore: true)
   _$$AbsPersonalizedResponseUnknownCopyWith<_$AbsPersonalizedResponseUnknown>

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 part 'books_state.freezed.dart';
 
 @freezed
-class BooksState with _$BooksState {
+sealed class BooksState with _$BooksState {
   const factory BooksState.initial() = BooksStateInitial;
   const factory BooksState.loaded({
     List<MediaItem>? books,

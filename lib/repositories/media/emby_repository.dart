@@ -83,6 +83,7 @@ Track embyItemToTrack(EmbyItem item, EmbyRepository repo) {
     downloadProgress: 0,
     isDownloaded: false,
     downloadPath: '',
+    serverPath: '',
     bookId: item.albumId!,
     downloadTaskId: '',
     downloadTaskStatus: 0,

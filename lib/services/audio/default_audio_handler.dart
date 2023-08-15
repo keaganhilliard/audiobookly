@@ -450,8 +450,9 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       await _repository!.getServerAndLibrary();
       final currentBook = (await _repository!.getAlbumFromId(mediaId));
       _currentMediaItem = currentBook.toMediaItem();
+      final serverTracks = await _repository!.getTracksForBook(mediaId);
       tracks = [
-        for (final track in (await _repository!.getTracksForBook(mediaId)))
+        for (final track in serverTracks)
           MediaHelpers.fromTrack(track, currentBook)
       ];
       if (_currentMediaItem?.chapters != null &&
@@ -484,12 +485,12 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
                 File(p.join(basePath.path, item.cachePath)).existsSync()) {
               log('Tis cached ${p.join(basePath.path, item.cachePath)}');
               // LockCachingAudioSource( uri)
-              return AudioSource.uri(
-                'file://${p.join(basePath.path, item.cachePath)}'.uri!,
+              return AudioSource.file(
+                p.join(basePath.path, item.cachePath),
               );
             }
             return AudioSource.uri(
-              _repository!.getServerUrl(item.partKey ?? item.id).uri!,
+              _repository!.getDownloadUrl(item.serverPath).uri!,
             );
           }).toList(),
         ),

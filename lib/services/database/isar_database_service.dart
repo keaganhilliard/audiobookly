@@ -152,6 +152,7 @@ class IsarDatabaseService implements DatabaseService {
         downloadProgress: progress,
         isDownloaded: progress == 1,
         downloadPath: path,
+        serverPath: '',
         bookId: bookId,
         downloadTaskId: downloadTaskId,
         downloadTaskStatus: 0,

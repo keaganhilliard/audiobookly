@@ -118,7 +118,10 @@ class DownloadService {
             fileName ?? theTrack.title,
           ),
         ),
-        _repo.getDownloadUrl(theTrack.id).uri!,
+        _repo
+            .getDownloadUrl(
+                theTrack.serverPath.isEmpty ? theTrack.id : theTrack.serverPath)
+            .uri!,
         path,
         fileName,
       );

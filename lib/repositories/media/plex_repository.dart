@@ -127,6 +127,7 @@ class PlexRepository extends MediaRepository {
         downloadProgress: 0,
         isDownloaded: false,
         downloadPath: '',
+        serverPath: '',
         bookId: track.parentRatingKey ?? '',
         downloadTaskId: '',
         downloadTaskStatus: 0,

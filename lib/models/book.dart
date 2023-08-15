@@ -7,6 +7,7 @@ class Book {
   final String id;
   final String title;
   final String author;
+  final List<String>? authorIds;
   final String narrator;
   final String description;
   final String artPath;
@@ -29,6 +30,7 @@ class Book {
     required this.id,
     required this.title,
     required this.author,
+    this.authorIds,
     required this.narrator,
     required this.description,
     required this.artPath,
@@ -46,6 +48,7 @@ class Book {
     String? id,
     String? title,
     String? author,
+    List<String>? authorIds,
     String? narrator,
     String? description,
     String? artPath,
@@ -62,6 +65,7 @@ class Book {
         id: id ?? this.id,
         title: title ?? this.title,
         author: author ?? this.author,
+        authorIds: authorIds ?? this.authorIds,
         narrator: narrator ?? this.narrator,
         description: description ?? this.description,
         artPath: artPath ?? this.artPath,

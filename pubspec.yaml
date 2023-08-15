@@ -27,7 +27,7 @@ dependencies:
     path: ./emby_api
   audiobookshelf:
     path: ./audiobookshelf_api
-  flutter_hooks: ^0.18.2+1
+  flutter_hooks: ^0.20.0
   hooks_riverpod: ^2.0.2
   expandable: ^5.0.1
   cached_network_image: ^3.0.0
@@ -77,6 +77,14 @@ dependencies:
   infinite_widgets: ^2.0.2
   flutter_adaptive_ui: ^0.8.0+1
   collection: ^1.17.1
+  # media_kit: ^1.1.0
+  # media_kit_native_event_loop: ^1.0.6 # Support for higher number of concurrent instances & better performance.
+
+  # media_kit_libs_android_audio: ^1.2.0 # Android package for audio native libraries.
+  # media_kit_libs_ios_audio: ^1.0.5 # iOS package for audio native libraries.
+  # media_kit_libs_macos_audio: ^1.0.6 # macOS package for audio native libraries.
+  # media_kit_libs_windows_audio: ^1.0.4 # Windows package for audio native libraries.
+  # media_kit_libs_linux: ^1.0.2
 
   # dart_chromecast:
   #   git:

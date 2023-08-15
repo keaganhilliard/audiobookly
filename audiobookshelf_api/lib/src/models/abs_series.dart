@@ -14,12 +14,12 @@ abstract class AbsSeries with _$AbsSeries {
   const factory AbsSeries({
     required String id,
     required String name,
-    required String nameIgnorePrefix,
-    required String nameIgnorePrefixSort,
-    required String type,
+    String? nameIgnorePrefix,
+    String? nameIgnorePrefixSort,
+    String? type,
     required List<AbsAudiobookMinified> books,
     required int addedAt,
-    required double totalDuration,
+    double? totalDuration,
   }) = _AbsSeries;
 
   factory AbsSeries.fromJson(Map<String, dynamic> json) =>
