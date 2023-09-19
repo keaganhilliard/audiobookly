@@ -8,6 +8,7 @@ import 'package:audiobookly/services/download/downloader.dart';
 import 'package:audiobookly/services/download/mobile_background_downloader.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:media_kit/media_kit.dart';
 
 final getIt = GetIt.I;
 
@@ -15,6 +16,7 @@ bool registered = false;
 Future<void> registerSingletons() async {
   if (registered) return;
   registered = true;
+  MediaKit.ensureInitialized();
 
   final isar = await initIsar();
   getIt.registerLazySingleton<DatabaseService>(

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/services/audio/default_audio_handler.dart';
-// import 'package:audiobookly/services/audio/media_kit_audio_handler.dart';
+// import 'package:audiobookly/services/audio/default_audio_handler.dart';
+import 'package:audiobookly/services/audio/media_kit_audio_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
 Future<AudioHandler> initAudioHandler() async {

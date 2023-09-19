@@ -77,6 +77,9 @@ dependencies:
   infinite_widgets: ^2.0.2
   flutter_adaptive_ui: ^0.8.0+1
   collection: ^1.17.1
+  just_audio_mpv: ^0.1.7
+  media_kit: ^1.1.7
+  media_kit_libs_audio: ^1.0.1
   # media_kit: ^1.1.0
   # media_kit_native_event_loop: ^1.0.6 # Support for higher number of concurrent instances & better performance.
 

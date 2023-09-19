@@ -33,8 +33,9 @@ class AbsAuthRepository extends AuthenticationRepository {
   @override
   Future<bool> logout() async {
     final prefs = _ref.read(preferencesProvider.notifier);
+    final preferences = await prefs.stream.first;
 
-    prefs.savePreferences(prefs.state.copyWith(
+    prefs.savePreferences(preferences.copyWith(
       baseUrl: '',
       userToken: '',
       userId: '',
@@ -50,10 +51,11 @@ class AbsAuthRepository extends AuthenticationRepository {
     final prefs = _ref.read(preferencesProvider.notifier);
     final absApi = _ref.read(absApiProvider);
     absApi.baseUrl = baseUrl;
+    final preferences = await prefs.stream.first;
     final res = await absApi.login(username, password);
 
     prefs.savePreferences(
-      prefs.state.copyWith(
+      preferences.copyWith(
         username: res.user.username,
         userId: res.user.id,
         baseUrl: baseUrl,
