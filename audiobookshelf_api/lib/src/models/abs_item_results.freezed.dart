@@ -62,22 +62,22 @@ class _$AbsItemResultsCopyWithImpl<$Res, $Val extends AbsItemResults>
 }
 
 /// @nodoc
-abstract class _$$_AbsItemResultsCopyWith<$Res>
+abstract class _$$AbsItemResultsImplCopyWith<$Res>
     implements $AbsItemResultsCopyWith<$Res> {
-  factory _$$_AbsItemResultsCopyWith(
-          _$_AbsItemResults value, $Res Function(_$_AbsItemResults) then) =
-      __$$_AbsItemResultsCopyWithImpl<$Res>;
+  factory _$$AbsItemResultsImplCopyWith(_$AbsItemResultsImpl value,
+          $Res Function(_$AbsItemResultsImpl) then) =
+      __$$AbsItemResultsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<AbsAudiobook> results});
 }
 
 /// @nodoc
-class __$$_AbsItemResultsCopyWithImpl<$Res>
-    extends _$AbsItemResultsCopyWithImpl<$Res, _$_AbsItemResults>
-    implements _$$_AbsItemResultsCopyWith<$Res> {
-  __$$_AbsItemResultsCopyWithImpl(
-      _$_AbsItemResults _value, $Res Function(_$_AbsItemResults) _then)
+class __$$AbsItemResultsImplCopyWithImpl<$Res>
+    extends _$AbsItemResultsCopyWithImpl<$Res, _$AbsItemResultsImpl>
+    implements _$$AbsItemResultsImplCopyWith<$Res> {
+  __$$AbsItemResultsImplCopyWithImpl(
+      _$AbsItemResultsImpl _value, $Res Function(_$AbsItemResultsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +85,7 @@ class __$$_AbsItemResultsCopyWithImpl<$Res>
   $Res call({
     Object? results = null,
   }) {
-    return _then(_$_AbsItemResults(
+    return _then(_$AbsItemResultsImpl(
       results: null == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
@@ -96,12 +96,12 @@ class __$$_AbsItemResultsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsItemResults implements _AbsItemResults {
-  const _$_AbsItemResults({required final List<AbsAudiobook> results})
+class _$AbsItemResultsImpl implements _AbsItemResults {
+  const _$AbsItemResultsImpl({required final List<AbsAudiobook> results})
       : _results = results;
 
-  factory _$_AbsItemResults.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsItemResultsFromJson(json);
+  factory _$AbsItemResultsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsItemResultsImplFromJson(json);
 
   final List<AbsAudiobook> _results;
   @override
@@ -120,7 +120,7 @@ class _$_AbsItemResults implements _AbsItemResults {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsItemResults &&
+            other is _$AbsItemResultsImpl &&
             const DeepCollectionEquality().equals(other._results, _results));
   }
 
@@ -132,12 +132,13 @@ class _$_AbsItemResults implements _AbsItemResults {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsItemResultsCopyWith<_$_AbsItemResults> get copyWith =>
-      __$$_AbsItemResultsCopyWithImpl<_$_AbsItemResults>(this, _$identity);
+  _$$AbsItemResultsImplCopyWith<_$AbsItemResultsImpl> get copyWith =>
+      __$$AbsItemResultsImplCopyWithImpl<_$AbsItemResultsImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsItemResultsToJson(
+    return _$$AbsItemResultsImplToJson(
       this,
     );
   }
@@ -145,15 +146,15 @@ class _$_AbsItemResults implements _AbsItemResults {
 
 abstract class _AbsItemResults implements AbsItemResults {
   const factory _AbsItemResults({required final List<AbsAudiobook> results}) =
-      _$_AbsItemResults;
+      _$AbsItemResultsImpl;
 
   factory _AbsItemResults.fromJson(Map<String, dynamic> json) =
-      _$_AbsItemResults.fromJson;
+      _$AbsItemResultsImpl.fromJson;
 
   @override
   List<AbsAudiobook> get results;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsItemResultsCopyWith<_$_AbsItemResults> get copyWith =>
+  _$$AbsItemResultsImplCopyWith<_$AbsItemResultsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
