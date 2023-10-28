@@ -1093,7 +1093,7 @@ Media _$MediaFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Media {
-  String get libraryItemId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   MediaMetadata get metadata => throw _privateConstructorUsedError;
   String? get coverPath => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
@@ -1114,7 +1114,7 @@ abstract class $MediaCopyWith<$Res> {
       _$MediaCopyWithImpl<$Res, Media>;
   @useResult
   $Res call(
-      {String libraryItemId,
+      {String id,
       MediaMetadata metadata,
       String? coverPath,
       List<String>? tags,
@@ -1140,7 +1140,7 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? libraryItemId = null,
+    Object? id = null,
     Object? metadata = null,
     Object? coverPath = freezed,
     Object? tags = freezed,
@@ -1151,9 +1151,9 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
     Object? duration = freezed,
   }) {
     return _then(_value.copyWith(
-      libraryItemId: null == libraryItemId
-          ? _value.libraryItemId
-          : libraryItemId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       metadata: null == metadata
           ? _value.metadata
@@ -1207,7 +1207,7 @@ abstract class _$$MediaImplCopyWith<$Res> implements $MediaCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String libraryItemId,
+      {String id,
       MediaMetadata metadata,
       String? coverPath,
       List<String>? tags,
@@ -1232,7 +1232,7 @@ class __$$MediaImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? libraryItemId = null,
+    Object? id = null,
     Object? metadata = null,
     Object? coverPath = freezed,
     Object? tags = freezed,
@@ -1243,9 +1243,9 @@ class __$$MediaImplCopyWithImpl<$Res>
     Object? duration = freezed,
   }) {
     return _then(_$MediaImpl(
-      libraryItemId: null == libraryItemId
-          ? _value.libraryItemId
-          : libraryItemId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       metadata: null == metadata
           ? _value.metadata
@@ -1287,7 +1287,7 @@ class __$$MediaImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MediaImpl implements _Media {
   const _$MediaImpl(
-      {required this.libraryItemId,
+      {required this.id,
       required this.metadata,
       this.coverPath,
       final List<String>? tags,
@@ -1305,7 +1305,7 @@ class _$MediaImpl implements _Media {
       _$$MediaImplFromJson(json);
 
   @override
-  final String libraryItemId;
+  final String id;
   @override
   final MediaMetadata metadata;
   @override
@@ -1357,7 +1357,7 @@ class _$MediaImpl implements _Media {
 
   @override
   String toString() {
-    return 'Media(libraryItemId: $libraryItemId, metadata: $metadata, coverPath: $coverPath, tags: $tags, audioFiles: $audioFiles, chapters: $chapters, missingParts: $missingParts, ebookFile: $ebookFile, duration: $duration)';
+    return 'Media(id: $id, metadata: $metadata, coverPath: $coverPath, tags: $tags, audioFiles: $audioFiles, chapters: $chapters, missingParts: $missingParts, ebookFile: $ebookFile, duration: $duration)';
   }
 
   @override
@@ -1365,8 +1365,7 @@ class _$MediaImpl implements _Media {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MediaImpl &&
-            (identical(other.libraryItemId, libraryItemId) ||
-                other.libraryItemId == libraryItemId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.metadata, metadata) ||
                 other.metadata == metadata) &&
             (identical(other.coverPath, coverPath) ||
@@ -1386,7 +1385,7 @@ class _$MediaImpl implements _Media {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      libraryItemId,
+      id,
       metadata,
       coverPath,
       const DeepCollectionEquality().hash(_tags),
@@ -1412,7 +1411,7 @@ class _$MediaImpl implements _Media {
 
 abstract class _Media implements Media {
   const factory _Media(
-      {required final String libraryItemId,
+      {required final String id,
       required final MediaMetadata metadata,
       final String? coverPath,
       final List<String>? tags,
@@ -1425,7 +1424,7 @@ abstract class _Media implements Media {
   factory _Media.fromJson(Map<String, dynamic> json) = _$MediaImpl.fromJson;
 
   @override
-  String get libraryItemId;
+  String get id;
   @override
   MediaMetadata get metadata;
   @override

@@ -8,6 +8,7 @@ import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/utils/utils.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,10 +21,12 @@ class HomeRow extends HookConsumerWidget {
       : super(key: key);
 
   Widget getListView(PlaybackController playbackController,
-      NavigationService navigationService) {
+      NavigationService navigationService,
+      [ScrollController? scrollController]) {
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
+      controller: scrollController,
       itemCount: items!.length,
       itemBuilder: (context, index) {
         final ModelUnion item = items![index];
@@ -66,7 +69,7 @@ class HomeRow extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackController = GetIt.I<PlaybackController>();
     final navigationService = ref.watch(navigationServiceProvider);
-
+    final scrollController = useScrollController(initialScrollOffset: 0.0);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +86,10 @@ class HomeRow extends HookConsumerWidget {
             height: height,
             child: Platform.isLinux || Platform.isWindows
                 ? Scrollbar(
-                    child: getListView(playbackController, navigationService))
+                    controller: scrollController,
+                    child: getListView(playbackController, navigationService,
+                        scrollController),
+                  )
                 : getListView(playbackController, navigationService),
           ),
         ),

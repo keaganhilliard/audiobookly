@@ -159,12 +159,7 @@ class AbsRepository extends MediaRepository {
       retValue = aAuthor.name.compareTo(bAuthor.name);
     }
     if (aSeries != null && bSeries != null && retValue == 0) {
-      // if (aSeries.id == bSeries.id) {
-      //   retValue = double.parse(aSeries.sequence ?? '0')
-      //       .compareTo(double.parse(bSeries.sequence ?? '0'));
-      // } else {
       retValue = compareStringsWithoutArticles(aSeries, bSeries);
-      // }
     } else if (aSeries != null && retValue == 0) {
       retValue =
           compareStringsWithoutArticles(aSeries, b.media.metadata.title!);

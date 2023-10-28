@@ -100,7 +100,7 @@ Map<String, dynamic> _$$LibraryFileMetadataImplToJson(
     };
 
 _$MediaImpl _$$MediaImplFromJson(Map<String, dynamic> json) => _$MediaImpl(
-      libraryItemId: json['libraryItemId'] as String,
+      id: json['id'] as String,
       metadata:
           MediaMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
       coverPath: json['coverPath'] as String?,
@@ -118,7 +118,7 @@ _$MediaImpl _$$MediaImplFromJson(Map<String, dynamic> json) => _$MediaImpl(
 
 Map<String, dynamic> _$$MediaImplToJson(_$MediaImpl instance) =>
     <String, dynamic>{
-      'libraryItemId': instance.libraryItemId,
+      'id': instance.id,
       'metadata': instance.metadata,
       'coverPath': instance.coverPath,
       'tags': instance.tags,

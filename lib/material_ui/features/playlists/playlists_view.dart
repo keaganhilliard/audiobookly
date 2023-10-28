@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:audiobookly/domain/playlists/playlists_notifier.dart';
+import 'package:audiobookly/domain/playlists/playlists_state.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
@@ -40,7 +41,7 @@ class PlaylistsView extends HookConsumerWidget {
               orElse: () => Container(),
               loading: () => const Center(child: CircularProgressIndicator()),
               loaded: (playlists) {
-                return ResponsiveGridView<Playlist>(
+                return ResponsiveGridView(
                   items: playlists,
                   itemBuilder: (playlist) {
                     return OpenContainer(
@@ -48,8 +49,10 @@ class PlaylistsView extends HookConsumerWidget {
                       closedElevation: 0.0,
                       closedColor: Theme.of(context).canvasColor,
                       openColor: Theme.of(context).canvasColor,
-                      openBuilder: (context, closeContainer) =>
-                          BooksView(mediaId: playlist.id, title: playlist.name),
+                      openBuilder: (context, closeContainer) => BooksView(
+                        mediaId: playlist.id,
+                        title: playlist.name,
+                      ),
                       closedBuilder: (context, openContainer) => BookGridItem(
                         onTap: openContainer,
                         thumbnailUrl: playlist.artPath,

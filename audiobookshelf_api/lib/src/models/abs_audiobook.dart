@@ -67,7 +67,7 @@ class LibraryFileMetadata with _$LibraryFileMetadata {
 @freezed
 class Media with _$Media {
   const factory Media({
-    required String libraryItemId,
+    required String id,
     required MediaMetadata metadata,
     String? coverPath,
     List<String>? tags,
