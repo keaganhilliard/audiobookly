@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:http/http.dart';
+
 class AbsUtils {
   static Duration? parseDurationFromMilliseconds(Object? time) {
     double? theDouble = getDoubleFromAmbiguousAttribute(time);
@@ -29,4 +33,26 @@ class AbsUtils {
     if (dateInMillis is! num) return null;
     return DateTime.fromMillisecondsSinceEpoch(dateInMillis.toInt());
   }
+}
+
+List<T> getResults<T>(
+  Uint8List jsonBytes,
+  T Function(Map<String, dynamic>) fromJson, [
+  String jsonKey = 'results',
+]) {
+  return (jsonDecode(utf8.decode(jsonBytes))[jsonKey] as List<dynamic>)
+      .map<T>((e) => fromJson(e as Map<String, dynamic>))
+      .toList();
+}
+
+extension RessponseUtils on Response {
+  T parseResult<T>(T Function(Map<String, dynamic>) fromJson) =>
+      fromJson(jsonDecode(utf8.decode(bodyBytes)));
+  List<T> parseResultsList<T>(T Function(Map<String, dynamic>) fromJson,
+          {String jsonKey = 'results', bool useKey = true}) =>
+      ((useKey
+              ? jsonDecode(utf8.decode(bodyBytes))[jsonKey]
+              : jsonDecode(utf8.decode(bodyBytes))) as List<dynamic>)
+          .map<T>((e) => fromJson(e as Map<String, dynamic>))
+          .toList();
 }

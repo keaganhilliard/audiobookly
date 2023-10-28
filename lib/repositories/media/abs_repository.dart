@@ -152,25 +152,20 @@ class AbsRepository extends MediaRepository {
     final aAuthor = a.media.metadata.authors?.firstOrNull;
     final bAuthor = b.media.metadata.authors?.firstOrNull;
 
-    final aSeries = a.media.metadata.series?.firstOrNull;
-    final bSeries = b.media.metadata.series?.firstOrNull;
+    final aSeries = a.media.metadata.seriesName;
+    final bSeries = b.media.metadata.seriesName;
 
     if (aAuthor != null && bAuthor != null) {
       retValue = aAuthor.name.compareTo(bAuthor.name);
     }
     if (aSeries != null && bSeries != null && retValue == 0) {
-      if (aSeries.id == bSeries.id) {
-        retValue = double.parse(aSeries.sequence ?? '0')
-            .compareTo(double.parse(bSeries.sequence ?? '0'));
-      } else {
-        retValue = compareStringsWithoutArticles(aSeries.name, bSeries.name);
-      }
+      retValue = compareStringsWithoutArticles(aSeries, bSeries);
     } else if (aSeries != null && retValue == 0) {
       retValue =
-          compareStringsWithoutArticles(aSeries.name, b.media.metadata.title!);
+          compareStringsWithoutArticles(aSeries, b.media.metadata.title!);
     } else if (bSeries != null && retValue == 0) {
       retValue =
-          compareStringsWithoutArticles(a.media.metadata.title!, bSeries.name);
+          compareStringsWithoutArticles(a.media.metadata.title!, bSeries);
     }
     if (retValue == 0) {
       retValue = compareStringsWithoutArticles(

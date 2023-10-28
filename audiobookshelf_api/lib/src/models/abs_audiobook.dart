@@ -26,7 +26,7 @@ class AbsAudiobook with _$AbsAudiobook {
     required bool isInvalid,
     required String mediaType,
     required Media media,
-    required List<LibraryFile> libraryFiles,
+    List<LibraryFile>? libraryFiles,
   }) = _AbsAudiobook;
 
   factory AbsAudiobook.fromJson(Map<String, dynamic> json) =>
@@ -67,7 +67,7 @@ class LibraryFileMetadata with _$LibraryFileMetadata {
 @freezed
 class Media with _$Media {
   const factory Media({
-    required String libraryItemId,
+    required String id,
     required MediaMetadata metadata,
     String? coverPath,
     List<String>? tags,
@@ -133,9 +133,9 @@ double _coerceStringToDouble(dynamic shouldBeADouble) =>
         ? double.parse(shouldBeADouble)
         : shouldBeADouble.toDouble();
 
-List<Series> _coerceToList(dynamic series) => series is Map
-    ? [Series.fromJson(series as Map<String, dynamic>)]
-    : [for (final serie in series) Series.fromJson(serie)];
+// List<Series> _coerceToList(dynamic series) => series is Map
+//     ? [Series.fromJson(series as Map<String, dynamic>)]
+//     : [for (final serie in series) Series.fromJson(serie)];
 
 @freezed
 class MetaTags with _$MetaTags {
@@ -163,7 +163,7 @@ class MediaMetadata with _$MediaMetadata {
     String? subtitle,
     List<Author>? authors,
     List<String>? narrators,
-    @JsonKey(fromJson: _coerceToList) List<Series>? series,
+    String? seriesName,
     List<String>? genres,
     String? publishedYear,
     int? publishedDate,

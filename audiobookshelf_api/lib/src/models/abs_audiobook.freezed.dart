@@ -38,7 +38,7 @@ mixin _$AbsAudiobook {
   bool get isInvalid => throw _privateConstructorUsedError;
   String get mediaType => throw _privateConstructorUsedError;
   Media get media => throw _privateConstructorUsedError;
-  List<LibraryFile> get libraryFiles => throw _privateConstructorUsedError;
+  List<LibraryFile>? get libraryFiles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -71,7 +71,7 @@ abstract class $AbsAudiobookCopyWith<$Res> {
       bool isInvalid,
       String mediaType,
       Media media,
-      List<LibraryFile> libraryFiles});
+      List<LibraryFile>? libraryFiles});
 
   $MediaCopyWith<$Res> get media;
 }
@@ -107,7 +107,7 @@ class _$AbsAudiobookCopyWithImpl<$Res, $Val extends AbsAudiobook>
     Object? isInvalid = null,
     Object? mediaType = null,
     Object? media = null,
-    Object? libraryFiles = null,
+    Object? libraryFiles = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -182,10 +182,10 @@ class _$AbsAudiobookCopyWithImpl<$Res, $Val extends AbsAudiobook>
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as Media,
-      libraryFiles: null == libraryFiles
+      libraryFiles: freezed == libraryFiles
           ? _value.libraryFiles
           : libraryFiles // ignore: cast_nullable_to_non_nullable
-              as List<LibraryFile>,
+              as List<LibraryFile>?,
     ) as $Val);
   }
 
@@ -225,7 +225,7 @@ abstract class _$$_AbsAudiobookCopyWith<$Res>
       bool isInvalid,
       String mediaType,
       Media media,
-      List<LibraryFile> libraryFiles});
+      List<LibraryFile>? libraryFiles});
 
   @override
   $MediaCopyWith<$Res> get media;
@@ -260,7 +260,7 @@ class __$$_AbsAudiobookCopyWithImpl<$Res>
     Object? isInvalid = null,
     Object? mediaType = null,
     Object? media = null,
-    Object? libraryFiles = null,
+    Object? libraryFiles = freezed,
   }) {
     return _then(_$_AbsAudiobook(
       id: null == id
@@ -335,10 +335,10 @@ class __$$_AbsAudiobookCopyWithImpl<$Res>
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as Media,
-      libraryFiles: null == libraryFiles
+      libraryFiles: freezed == libraryFiles
           ? _value._libraryFiles
           : libraryFiles // ignore: cast_nullable_to_non_nullable
-              as List<LibraryFile>,
+              as List<LibraryFile>?,
     ));
   }
 }
@@ -365,7 +365,7 @@ class _$_AbsAudiobook implements _AbsAudiobook {
       required this.isInvalid,
       required this.mediaType,
       required this.media,
-      required final List<LibraryFile> libraryFiles})
+      final List<LibraryFile>? libraryFiles})
       : _libraryFiles = libraryFiles;
 
   factory _$_AbsAudiobook.fromJson(Map<String, dynamic> json) =>
@@ -407,12 +407,14 @@ class _$_AbsAudiobook implements _AbsAudiobook {
   final String mediaType;
   @override
   final Media media;
-  final List<LibraryFile> _libraryFiles;
+  final List<LibraryFile>? _libraryFiles;
   @override
-  List<LibraryFile> get libraryFiles {
+  List<LibraryFile>? get libraryFiles {
+    final value = _libraryFiles;
+    if (value == null) return null;
     if (_libraryFiles is EqualUnmodifiableListView) return _libraryFiles;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_libraryFiles);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -515,7 +517,7 @@ abstract class _AbsAudiobook implements AbsAudiobook {
       required final bool isInvalid,
       required final String mediaType,
       required final Media media,
-      required final List<LibraryFile> libraryFiles}) = _$_AbsAudiobook;
+      final List<LibraryFile>? libraryFiles}) = _$_AbsAudiobook;
 
   factory _AbsAudiobook.fromJson(Map<String, dynamic> json) =
       _$_AbsAudiobook.fromJson;
@@ -557,7 +559,7 @@ abstract class _AbsAudiobook implements AbsAudiobook {
   @override
   Media get media;
   @override
-  List<LibraryFile> get libraryFiles;
+  List<LibraryFile>? get libraryFiles;
   @override
   @JsonKey(ignore: true)
   _$$_AbsAudiobookCopyWith<_$_AbsAudiobook> get copyWith =>
@@ -1091,7 +1093,7 @@ Media _$MediaFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Media {
-  String get libraryItemId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   MediaMetadata get metadata => throw _privateConstructorUsedError;
   String? get coverPath => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
@@ -1112,7 +1114,7 @@ abstract class $MediaCopyWith<$Res> {
       _$MediaCopyWithImpl<$Res, Media>;
   @useResult
   $Res call(
-      {String libraryItemId,
+      {String id,
       MediaMetadata metadata,
       String? coverPath,
       List<String>? tags,
@@ -1138,7 +1140,7 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? libraryItemId = null,
+    Object? id = null,
     Object? metadata = null,
     Object? coverPath = freezed,
     Object? tags = freezed,
@@ -1149,9 +1151,9 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
     Object? duration = freezed,
   }) {
     return _then(_value.copyWith(
-      libraryItemId: null == libraryItemId
-          ? _value.libraryItemId
-          : libraryItemId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       metadata: null == metadata
           ? _value.metadata
@@ -1204,7 +1206,7 @@ abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String libraryItemId,
+      {String id,
       MediaMetadata metadata,
       String? coverPath,
       List<String>? tags,
@@ -1227,7 +1229,7 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? libraryItemId = null,
+    Object? id = null,
     Object? metadata = null,
     Object? coverPath = freezed,
     Object? tags = freezed,
@@ -1238,9 +1240,9 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
     Object? duration = freezed,
   }) {
     return _then(_$_Media(
-      libraryItemId: null == libraryItemId
-          ? _value.libraryItemId
-          : libraryItemId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       metadata: null == metadata
           ? _value.metadata
@@ -1282,7 +1284,7 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
 @JsonSerializable()
 class _$_Media implements _Media {
   const _$_Media(
-      {required this.libraryItemId,
+      {required this.id,
       required this.metadata,
       this.coverPath,
       final List<String>? tags,
@@ -1300,7 +1302,7 @@ class _$_Media implements _Media {
       _$$_MediaFromJson(json);
 
   @override
-  final String libraryItemId;
+  final String id;
   @override
   final MediaMetadata metadata;
   @override
@@ -1352,7 +1354,7 @@ class _$_Media implements _Media {
 
   @override
   String toString() {
-    return 'Media(libraryItemId: $libraryItemId, metadata: $metadata, coverPath: $coverPath, tags: $tags, audioFiles: $audioFiles, chapters: $chapters, missingParts: $missingParts, ebookFile: $ebookFile, duration: $duration)';
+    return 'Media(id: $id, metadata: $metadata, coverPath: $coverPath, tags: $tags, audioFiles: $audioFiles, chapters: $chapters, missingParts: $missingParts, ebookFile: $ebookFile, duration: $duration)';
   }
 
   @override
@@ -1360,8 +1362,7 @@ class _$_Media implements _Media {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Media &&
-            (identical(other.libraryItemId, libraryItemId) ||
-                other.libraryItemId == libraryItemId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.metadata, metadata) ||
                 other.metadata == metadata) &&
             (identical(other.coverPath, coverPath) ||
@@ -1381,7 +1382,7 @@ class _$_Media implements _Media {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      libraryItemId,
+      id,
       metadata,
       coverPath,
       const DeepCollectionEquality().hash(_tags),
@@ -1407,7 +1408,7 @@ class _$_Media implements _Media {
 
 abstract class _Media implements Media {
   const factory _Media(
-      {required final String libraryItemId,
+      {required final String id,
       required final MediaMetadata metadata,
       final String? coverPath,
       final List<String>? tags,
@@ -1420,7 +1421,7 @@ abstract class _Media implements Media {
   factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
 
   @override
-  String get libraryItemId;
+  String get id;
   @override
   MediaMetadata get metadata;
   @override
@@ -2684,8 +2685,7 @@ mixin _$MediaMetadata {
   String? get subtitle => throw _privateConstructorUsedError;
   List<Author>? get authors => throw _privateConstructorUsedError;
   List<String>? get narrators => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: _coerceToList)
-  List<Series>? get series => throw _privateConstructorUsedError;
+  String? get seriesName => throw _privateConstructorUsedError;
   List<String>? get genres => throw _privateConstructorUsedError;
   String? get publishedYear => throw _privateConstructorUsedError;
   int? get publishedDate => throw _privateConstructorUsedError;
@@ -2713,7 +2713,7 @@ abstract class $MediaMetadataCopyWith<$Res> {
       String? subtitle,
       List<Author>? authors,
       List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) List<Series>? series,
+      String? seriesName,
       List<String>? genres,
       String? publishedYear,
       int? publishedDate,
@@ -2742,7 +2742,7 @@ class _$MediaMetadataCopyWithImpl<$Res, $Val extends MediaMetadata>
     Object? subtitle = freezed,
     Object? authors = freezed,
     Object? narrators = freezed,
-    Object? series = freezed,
+    Object? seriesName = freezed,
     Object? genres = freezed,
     Object? publishedYear = freezed,
     Object? publishedDate = freezed,
@@ -2770,10 +2770,10 @@ class _$MediaMetadataCopyWithImpl<$Res, $Val extends MediaMetadata>
           ? _value.narrators
           : narrators // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      series: freezed == series
-          ? _value.series
-          : series // ignore: cast_nullable_to_non_nullable
-              as List<Series>?,
+      seriesName: freezed == seriesName
+          ? _value.seriesName
+          : seriesName // ignore: cast_nullable_to_non_nullable
+              as String?,
       genres: freezed == genres
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
@@ -2827,7 +2827,7 @@ abstract class _$$_MediaMetadataCopyWith<$Res>
       String? subtitle,
       List<Author>? authors,
       List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) List<Series>? series,
+      String? seriesName,
       List<String>? genres,
       String? publishedYear,
       int? publishedDate,
@@ -2854,7 +2854,7 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
     Object? subtitle = freezed,
     Object? authors = freezed,
     Object? narrators = freezed,
-    Object? series = freezed,
+    Object? seriesName = freezed,
     Object? genres = freezed,
     Object? publishedYear = freezed,
     Object? publishedDate = freezed,
@@ -2882,10 +2882,10 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
           ? _value._narrators
           : narrators // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      series: freezed == series
-          ? _value._series
-          : series // ignore: cast_nullable_to_non_nullable
-              as List<Series>?,
+      seriesName: freezed == seriesName
+          ? _value.seriesName
+          : seriesName // ignore: cast_nullable_to_non_nullable
+              as String?,
       genres: freezed == genres
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
@@ -2934,7 +2934,7 @@ class _$_MediaMetadata implements _MediaMetadata {
       this.subtitle,
       final List<Author>? authors,
       final List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) final List<Series>? series,
+      this.seriesName,
       final List<String>? genres,
       this.publishedYear,
       this.publishedDate,
@@ -2946,7 +2946,6 @@ class _$_MediaMetadata implements _MediaMetadata {
       this.explicit})
       : _authors = authors,
         _narrators = narrators,
-        _series = series,
         _genres = genres;
 
   factory _$_MediaMetadata.fromJson(Map<String, dynamic> json) =>
@@ -2976,17 +2975,8 @@ class _$_MediaMetadata implements _MediaMetadata {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<Series>? _series;
   @override
-  @JsonKey(fromJson: _coerceToList)
-  List<Series>? get series {
-    final value = _series;
-    if (value == null) return null;
-    if (_series is EqualUnmodifiableListView) return _series;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final String? seriesName;
   final List<String>? _genres;
   @override
   List<String>? get genres {
@@ -3016,7 +3006,7 @@ class _$_MediaMetadata implements _MediaMetadata {
 
   @override
   String toString() {
-    return 'MediaMetadata(title: $title, subtitle: $subtitle, authors: $authors, narrators: $narrators, series: $series, genres: $genres, publishedYear: $publishedYear, publishedDate: $publishedDate, publisher: $publisher, description: $description, isbn: $isbn, asin: $asin, language: $language, explicit: $explicit)';
+    return 'MediaMetadata(title: $title, subtitle: $subtitle, authors: $authors, narrators: $narrators, seriesName: $seriesName, genres: $genres, publishedYear: $publishedYear, publishedDate: $publishedDate, publisher: $publisher, description: $description, isbn: $isbn, asin: $asin, language: $language, explicit: $explicit)';
   }
 
   @override
@@ -3030,7 +3020,8 @@ class _$_MediaMetadata implements _MediaMetadata {
             const DeepCollectionEquality().equals(other._authors, _authors) &&
             const DeepCollectionEquality()
                 .equals(other._narrators, _narrators) &&
-            const DeepCollectionEquality().equals(other._series, _series) &&
+            (identical(other.seriesName, seriesName) ||
+                other.seriesName == seriesName) &&
             const DeepCollectionEquality().equals(other._genres, _genres) &&
             (identical(other.publishedYear, publishedYear) ||
                 other.publishedYear == publishedYear) &&
@@ -3056,7 +3047,7 @@ class _$_MediaMetadata implements _MediaMetadata {
       subtitle,
       const DeepCollectionEquality().hash(_authors),
       const DeepCollectionEquality().hash(_narrators),
-      const DeepCollectionEquality().hash(_series),
+      seriesName,
       const DeepCollectionEquality().hash(_genres),
       publishedYear,
       publishedDate,
@@ -3087,7 +3078,7 @@ abstract class _MediaMetadata implements MediaMetadata {
       final String? subtitle,
       final List<Author>? authors,
       final List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) final List<Series>? series,
+      final String? seriesName,
       final List<String>? genres,
       final String? publishedYear,
       final int? publishedDate,
@@ -3110,8 +3101,7 @@ abstract class _MediaMetadata implements MediaMetadata {
   @override
   List<String>? get narrators;
   @override
-  @JsonKey(fromJson: _coerceToList)
-  List<Series>? get series;
+  String? get seriesName;
   @override
   List<String>? get genres;
   @override

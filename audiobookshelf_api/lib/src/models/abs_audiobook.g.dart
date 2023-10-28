@@ -26,8 +26,8 @@ _$_AbsAudiobook _$$_AbsAudiobookFromJson(Map<String, dynamic> json) =>
       isInvalid: json['isInvalid'] as bool,
       mediaType: json['mediaType'] as String,
       media: Media.fromJson(json['media'] as Map<String, dynamic>),
-      libraryFiles: (json['libraryFiles'] as List<dynamic>)
-          .map((e) => LibraryFile.fromJson(e as Map<String, dynamic>))
+      libraryFiles: (json['libraryFiles'] as List<dynamic>?)
+          ?.map((e) => LibraryFile.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -100,7 +100,7 @@ Map<String, dynamic> _$$_LibraryFileMetadataToJson(
     };
 
 _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
-      libraryItemId: json['libraryItemId'] as String,
+      id: json['id'] as String,
       metadata:
           MediaMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
       coverPath: json['coverPath'] as String?,
@@ -117,7 +117,7 @@ _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
     );
 
 Map<String, dynamic> _$$_MediaToJson(_$_Media instance) => <String, dynamic>{
-      'libraryItemId': instance.libraryItemId,
+      'id': instance.id,
       'metadata': instance.metadata,
       'coverPath': instance.coverPath,
       'tags': instance.tags,
@@ -240,7 +240,7 @@ _$_MediaMetadata _$$_MediaMetadataFromJson(Map<String, dynamic> json) =>
       narrators: (json['narrators'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      series: _coerceToList(json['series']),
+      seriesName: json['seriesName'] as String?,
       genres:
           (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList(),
       publishedYear: json['publishedYear'] as String?,
@@ -259,7 +259,7 @@ Map<String, dynamic> _$$_MediaMetadataToJson(_$_MediaMetadata instance) =>
       'subtitle': instance.subtitle,
       'authors': instance.authors,
       'narrators': instance.narrators,
-      'series': instance.series,
+      'seriesName': instance.seriesName,
       'genres': instance.genres,
       'publishedYear': instance.publishedYear,
       'publishedDate': instance.publishedDate,

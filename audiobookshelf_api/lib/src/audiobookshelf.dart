@@ -52,11 +52,7 @@ class AudiobookshelfApi {
       ),
     );
     log(response.body);
-    var alr = AbsLoginResponse.fromJson(
-      jsonDecode(
-        utf8.decode(response.bodyBytes),
-      ),
-    );
+    var alr = response.parseResult(AbsLoginResponse.fromJson);
     token = alr.user.token;
     userId = alr.user.id;
     user = alr.user;
@@ -87,8 +83,7 @@ class AudiobookshelfApi {
     if (response.statusCode != 200) {
       return null;
     }
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-    return AbsAudiobookProgress.fromJson(decodedResponse);
+    return response.parseResult(AbsAudiobookProgress.fromJson);
   }
 
   Future<List<AbsAudiobookMinified>> getAll(
@@ -123,9 +118,7 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))['libraries']
-        .map<AbsLibrary>((el) => AbsLibrary.fromJson(el))
-        .toList();
+    return response.parseResultsList(AbsLibrary.fromJson, jsonKey: 'libraries');
   }
 
   Future<Map<String, AbsAudiobookProgress>> getRecentlyPlayed() async {
@@ -157,9 +150,7 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))['results']
-        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
-        .toList();
+    return response.parseResultsList(AbsAudiobook.fromJson);
   }
 
   Future<List<Author>> getAuthors(String libraryId) async {
@@ -170,9 +161,8 @@ class AudiobookshelfApi {
         'authorization': 'Bearer $token',
       },
     );
-    return jsonDecode(utf8.decode(response.bodyBytes))['authors']
-        .map<Author>((el) => Author.fromJson(el))
-        .toList();
+
+    return response.parseResultsList(Author.fromJson, jsonKey: 'authors');
   }
 
   Future<List<AbsPlaylist>> getPlaylists(String libraryId) async {
@@ -183,9 +173,7 @@ class AudiobookshelfApi {
         'authorization': 'Bearer $token',
       },
     );
-    return jsonDecode(utf8.decode(response.bodyBytes))['results']
-        .map<AbsPlaylist>((el) => AbsPlaylist.fromJson(el))
-        .toList();
+    return response.parseResultsList(AbsPlaylist.fromJson);
   }
 
   Future<List<AbsAudiobook>> getBooksForPlaylist(String playlistId) async {
@@ -201,11 +189,7 @@ class AudiobookshelfApi {
     );
 
     return [
-      for (final item in AbsPlaylist.fromJson(
-        jsonDecode(
-          utf8.decode(response.bodyBytes),
-        ),
-      ).items)
+      for (final item in response.parseResult(AbsPlaylist.fromJson).items)
         item.libraryItem
     ];
   }
@@ -228,25 +212,25 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))['results']
-        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
-        .toList();
+    return response.parseResultsList(AbsAudiobook.fromJson);
   }
 
   Future<AbsSearchResponse> search(String libraryId, String searchTerm) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/libraries/$libraryId/search',
-          {'q': searchTerm, 'max': '10'}),
+      createUri(
+        baseUrl!,
+        '/api/libraries/$libraryId/search',
+        {
+          'q': searchTerm,
+          'max': '10',
+        },
+      ),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
       },
     );
-    return AbsSearchResponse.fromMap(
-      jsonDecode(
-        utf8.decode(response.bodyBytes),
-      ),
-    );
+    return response.parseResult(AbsSearchResponse.fromMap);
   }
 
   Future<AbsAudiobook> getBookInfo(String bookId) async {
@@ -258,7 +242,7 @@ class AudiobookshelfApi {
       },
     );
 
-    return AbsAudiobook.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    return response.parseResult(AbsAudiobook.fromJson);
   }
 
   Future<List<AbsCollection>> getCollections() async {
@@ -270,11 +254,10 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(
-      utf8.decode(response.bodyBytes),
-    )['collections']
-        .map<AbsCollection>((x) => AbsCollection.fromMap(x))
-        .toList();
+    return response.parseResultsList(
+      AbsCollection.fromMap,
+      jsonKey: 'collections',
+    );
   }
 
   Future<List<AbsAudiobook>> getBooksForCollection(String collectionId) async {
@@ -289,26 +272,24 @@ class AudiobookshelfApi {
       },
     );
 
-    return AbsCollection.fromMap(jsonDecode(
-      utf8.decode(response.bodyBytes),
-    )).books;
+    return response.parseResult(AbsCollection.fromMap).books;
   }
 
   Future<List<AbsSeries>> getSeries(String libraryId) async {
     http.Response response = await client.get(
-      createUri(
-          baseUrl!, '/api/libraries/$libraryId/series', {'minified': '1'}),
+      createUri(baseUrl!, '/api/libraries/$libraryId/series', {
+        'minified': '1',
+        'filter': 'all',
+        'sort': 'name',
+        'limit': '5000',
+      }),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
       },
     );
 
-    return jsonDecode(
-      utf8.decode(response.bodyBytes),
-    )['results']
-        .map<AbsSeries>((x) => AbsSeries.fromJson(x))
-        .toList();
+    return response.parseResultsList(AbsSeries.fromJson);
   }
 
   Future<List<AbsPersonalizedResponse>> getPersonalized(
@@ -321,10 +302,10 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))
-        .map<AbsPersonalizedResponse>(
-            (el) => AbsPersonalizedResponse.fromJson(el))
-        .toList();
+    return response.parseResultsList(
+      AbsPersonalizedResponse.fromJson,
+      useKey: false,
+    );
   }
 
   Future<List<AbsAudiobook>> getBooksForSeries(
@@ -345,9 +326,9 @@ class AudiobookshelfApi {
       },
     );
 
-    return jsonDecode(utf8.decode(response.bodyBytes))['results']
-        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
-        .toList();
+    return response.parseResultsList(
+      AbsAudiobook.fromJson,
+    );
   }
 
   Future<String> startPlaybackSession(
@@ -421,25 +402,18 @@ double durationToSeconds(Duration dur) {
   return dur.inMicroseconds / microToSeconds;
 }
 
-List<AbsAudiobookMinified> _convertBody(List<int> bodyBytes) {
+Future<List<AbsAudiobookMinified>> _getAll(
+  (Uri, Map<String, String>) params,
+) async {
+  final (uri, headers) = params;
+  final response = await http.get(uri, headers: headers);
   late List<AbsAudiobookMinified> results;
   try {
-    results = [
-      for (final json in jsonDecode(utf8.decode(bodyBytes))['results'])
-        AbsAudiobookMinified.fromJson(json)
-    ];
+    results = response.parseResultsList(AbsAudiobookMinified.fromJson);
   } catch (e, stack) {
     log('$e');
     log('$stack');
     results = [];
   }
   return results;
-}
-
-Future<List<AbsAudiobookMinified>> _getAll(
-  (Uri, Map<String, String>) params,
-) async {
-  final (uri, headers) = params;
-  final response = await http.get(uri, headers: headers);
-  return _convertBody(response.bodyBytes);
 }
