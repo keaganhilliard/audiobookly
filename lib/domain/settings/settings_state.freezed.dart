@@ -87,27 +87,27 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
 }
 
 /// @nodoc
-abstract class _$$SettingsStateInitialCopyWith<$Res> {
-  factory _$$SettingsStateInitialCopyWith(_$SettingsStateInitial value,
-          $Res Function(_$SettingsStateInitial) then) =
-      __$$SettingsStateInitialCopyWithImpl<$Res>;
+abstract class _$$SettingsStateInitialImplCopyWith<$Res> {
+  factory _$$SettingsStateInitialImplCopyWith(_$SettingsStateInitialImpl value,
+          $Res Function(_$SettingsStateInitialImpl) then) =
+      __$$SettingsStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SettingsStateInitialCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateInitial>
-    implements _$$SettingsStateInitialCopyWith<$Res> {
-  __$$SettingsStateInitialCopyWithImpl(_$SettingsStateInitial _value,
-      $Res Function(_$SettingsStateInitial) _then)
+class __$$SettingsStateInitialImplCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateInitialImpl>
+    implements _$$SettingsStateInitialImplCopyWith<$Res> {
+  __$$SettingsStateInitialImplCopyWithImpl(_$SettingsStateInitialImpl _value,
+      $Res Function(_$SettingsStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SettingsStateInitial
+class _$SettingsStateInitialImpl
     with DiagnosticableTreeMixin
     implements SettingsStateInitial {
-  const _$SettingsStateInitial();
+  const _$SettingsStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -123,7 +123,8 @@ class _$SettingsStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SettingsStateInitial);
+        (other.runtimeType == runtimeType &&
+            other is _$SettingsStateInitialImpl);
   }
 
   @override
@@ -205,24 +206,24 @@ class _$SettingsStateInitial
 }
 
 abstract class SettingsStateInitial implements SettingsState {
-  const factory SettingsStateInitial() = _$SettingsStateInitial;
+  const factory SettingsStateInitial() = _$SettingsStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$SettingsStateLoadedCopyWith<$Res> {
-  factory _$$SettingsStateLoadedCopyWith(_$SettingsStateLoaded value,
-          $Res Function(_$SettingsStateLoaded) then) =
-      __$$SettingsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$SettingsStateLoadedImplCopyWith<$Res> {
+  factory _$$SettingsStateLoadedImplCopyWith(_$SettingsStateLoadedImpl value,
+          $Res Function(_$SettingsStateLoadedImpl) then) =
+      __$$SettingsStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User? user, Library? lib});
 }
 
 /// @nodoc
-class __$$SettingsStateLoadedCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateLoaded>
-    implements _$$SettingsStateLoadedCopyWith<$Res> {
-  __$$SettingsStateLoadedCopyWithImpl(
-      _$SettingsStateLoaded _value, $Res Function(_$SettingsStateLoaded) _then)
+class __$$SettingsStateLoadedImplCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateLoadedImpl>
+    implements _$$SettingsStateLoadedImplCopyWith<$Res> {
+  __$$SettingsStateLoadedImplCopyWithImpl(_$SettingsStateLoadedImpl _value,
+      $Res Function(_$SettingsStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -231,7 +232,7 @@ class __$$SettingsStateLoadedCopyWithImpl<$Res>
     Object? user = freezed,
     Object? lib = freezed,
   }) {
-    return _then(_$SettingsStateLoaded(
+    return _then(_$SettingsStateLoadedImpl(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -246,10 +247,10 @@ class __$$SettingsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateLoaded
+class _$SettingsStateLoadedImpl
     with DiagnosticableTreeMixin
     implements SettingsStateLoaded {
-  const _$SettingsStateLoaded({this.user, this.lib});
+  const _$SettingsStateLoadedImpl({this.user, this.lib});
 
   @override
   final User? user;
@@ -274,7 +275,7 @@ class _$SettingsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SettingsStateLoaded &&
+            other is _$SettingsStateLoadedImpl &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.lib, lib) || other.lib == lib));
   }
@@ -285,8 +286,8 @@ class _$SettingsStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
-      __$$SettingsStateLoadedCopyWithImpl<_$SettingsStateLoaded>(
+  _$$SettingsStateLoadedImplCopyWith<_$SettingsStateLoadedImpl> get copyWith =>
+      __$$SettingsStateLoadedImplCopyWithImpl<_$SettingsStateLoadedImpl>(
           this, _$identity);
 
   @override
@@ -366,37 +367,37 @@ class _$SettingsStateLoaded
 
 abstract class SettingsStateLoaded implements SettingsState {
   const factory SettingsStateLoaded({final User? user, final Library? lib}) =
-      _$SettingsStateLoaded;
+      _$SettingsStateLoadedImpl;
 
   User? get user;
   Library? get lib;
   @JsonKey(ignore: true)
-  _$$SettingsStateLoadedCopyWith<_$SettingsStateLoaded> get copyWith =>
+  _$$SettingsStateLoadedImplCopyWith<_$SettingsStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SettingsStateLoadingCopyWith<$Res> {
-  factory _$$SettingsStateLoadingCopyWith(_$SettingsStateLoading value,
-          $Res Function(_$SettingsStateLoading) then) =
-      __$$SettingsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$SettingsStateLoadingImplCopyWith<$Res> {
+  factory _$$SettingsStateLoadingImplCopyWith(_$SettingsStateLoadingImpl value,
+          $Res Function(_$SettingsStateLoadingImpl) then) =
+      __$$SettingsStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SettingsStateLoadingCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateLoading>
-    implements _$$SettingsStateLoadingCopyWith<$Res> {
-  __$$SettingsStateLoadingCopyWithImpl(_$SettingsStateLoading _value,
-      $Res Function(_$SettingsStateLoading) _then)
+class __$$SettingsStateLoadingImplCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateLoadingImpl>
+    implements _$$SettingsStateLoadingImplCopyWith<$Res> {
+  __$$SettingsStateLoadingImplCopyWithImpl(_$SettingsStateLoadingImpl _value,
+      $Res Function(_$SettingsStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SettingsStateLoading
+class _$SettingsStateLoadingImpl
     with DiagnosticableTreeMixin
     implements SettingsStateLoading {
-  const _$SettingsStateLoading();
+  const _$SettingsStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -412,7 +413,8 @@ class _$SettingsStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SettingsStateLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$SettingsStateLoadingImpl);
   }
 
   @override
@@ -494,24 +496,24 @@ class _$SettingsStateLoading
 }
 
 abstract class SettingsStateLoading implements SettingsState {
-  const factory SettingsStateLoading() = _$SettingsStateLoading;
+  const factory SettingsStateLoading() = _$SettingsStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SettingsStateErrorCopyWith<$Res> {
-  factory _$$SettingsStateErrorCopyWith(_$SettingsStateError value,
-          $Res Function(_$SettingsStateError) then) =
-      __$$SettingsStateErrorCopyWithImpl<$Res>;
+abstract class _$$SettingsStateErrorImplCopyWith<$Res> {
+  factory _$$SettingsStateErrorImplCopyWith(_$SettingsStateErrorImpl value,
+          $Res Function(_$SettingsStateErrorImpl) then) =
+      __$$SettingsStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$SettingsStateErrorCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateError>
-    implements _$$SettingsStateErrorCopyWith<$Res> {
-  __$$SettingsStateErrorCopyWithImpl(
-      _$SettingsStateError _value, $Res Function(_$SettingsStateError) _then)
+class __$$SettingsStateErrorImplCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateErrorImpl>
+    implements _$$SettingsStateErrorImplCopyWith<$Res> {
+  __$$SettingsStateErrorImplCopyWithImpl(_$SettingsStateErrorImpl _value,
+      $Res Function(_$SettingsStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -519,7 +521,7 @@ class __$$SettingsStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$SettingsStateError(
+    return _then(_$SettingsStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -530,10 +532,10 @@ class __$$SettingsStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateError
+class _$SettingsStateErrorImpl
     with DiagnosticableTreeMixin
     implements SettingsStateError {
-  const _$SettingsStateError([this.message]);
+  const _$SettingsStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -555,7 +557,7 @@ class _$SettingsStateError
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SettingsStateError &&
+            other is _$SettingsStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -565,8 +567,8 @@ class _$SettingsStateError
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SettingsStateErrorCopyWith<_$SettingsStateError> get copyWith =>
-      __$$SettingsStateErrorCopyWithImpl<_$SettingsStateError>(
+  _$$SettingsStateErrorImplCopyWith<_$SettingsStateErrorImpl> get copyWith =>
+      __$$SettingsStateErrorImplCopyWithImpl<_$SettingsStateErrorImpl>(
           this, _$identity);
 
   @override
@@ -646,10 +648,10 @@ class _$SettingsStateError
 
 abstract class SettingsStateError implements SettingsState {
   const factory SettingsStateError([final String? message]) =
-      _$SettingsStateError;
+      _$SettingsStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$SettingsStateErrorCopyWith<_$SettingsStateError> get copyWith =>
+  _$$SettingsStateErrorImplCopyWith<_$SettingsStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -111,10 +111,11 @@ class _$AbsSeriesCopyWithImpl<$Res, $Val extends AbsSeries>
 }
 
 /// @nodoc
-abstract class _$$_AbsSeriesCopyWith<$Res> implements $AbsSeriesCopyWith<$Res> {
-  factory _$$_AbsSeriesCopyWith(
-          _$_AbsSeries value, $Res Function(_$_AbsSeries) then) =
-      __$$_AbsSeriesCopyWithImpl<$Res>;
+abstract class _$$AbsSeriesImplCopyWith<$Res>
+    implements $AbsSeriesCopyWith<$Res> {
+  factory _$$AbsSeriesImplCopyWith(
+          _$AbsSeriesImpl value, $Res Function(_$AbsSeriesImpl) then) =
+      __$$AbsSeriesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -129,11 +130,11 @@ abstract class _$$_AbsSeriesCopyWith<$Res> implements $AbsSeriesCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AbsSeriesCopyWithImpl<$Res>
-    extends _$AbsSeriesCopyWithImpl<$Res, _$_AbsSeries>
-    implements _$$_AbsSeriesCopyWith<$Res> {
-  __$$_AbsSeriesCopyWithImpl(
-      _$_AbsSeries _value, $Res Function(_$_AbsSeries) _then)
+class __$$AbsSeriesImplCopyWithImpl<$Res>
+    extends _$AbsSeriesCopyWithImpl<$Res, _$AbsSeriesImpl>
+    implements _$$AbsSeriesImplCopyWith<$Res> {
+  __$$AbsSeriesImplCopyWithImpl(
+      _$AbsSeriesImpl _value, $Res Function(_$AbsSeriesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -148,7 +149,7 @@ class __$$_AbsSeriesCopyWithImpl<$Res>
     Object? addedAt = null,
     Object? totalDuration = freezed,
   }) {
-    return _then(_$_AbsSeries(
+    return _then(_$AbsSeriesImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -187,8 +188,8 @@ class __$$_AbsSeriesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsSeries implements _AbsSeries {
-  const _$_AbsSeries(
+class _$AbsSeriesImpl implements _AbsSeries {
+  const _$AbsSeriesImpl(
       {required this.id,
       required this.name,
       this.nameIgnorePrefix,
@@ -199,8 +200,8 @@ class _$_AbsSeries implements _AbsSeries {
       this.totalDuration})
       : _books = books;
 
-  factory _$_AbsSeries.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsSeriesFromJson(json);
+  factory _$AbsSeriesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsSeriesImplFromJson(json);
 
   @override
   final String id;
@@ -234,7 +235,7 @@ class _$_AbsSeries implements _AbsSeries {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsSeries &&
+            other is _$AbsSeriesImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.nameIgnorePrefix, nameIgnorePrefix) ||
@@ -264,12 +265,12 @@ class _$_AbsSeries implements _AbsSeries {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsSeriesCopyWith<_$_AbsSeries> get copyWith =>
-      __$$_AbsSeriesCopyWithImpl<_$_AbsSeries>(this, _$identity);
+  _$$AbsSeriesImplCopyWith<_$AbsSeriesImpl> get copyWith =>
+      __$$AbsSeriesImplCopyWithImpl<_$AbsSeriesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsSeriesToJson(
+    return _$$AbsSeriesImplToJson(
       this,
     );
   }
@@ -284,10 +285,10 @@ abstract class _AbsSeries implements AbsSeries {
       final String? type,
       required final List<AbsAudiobookMinified> books,
       required final int addedAt,
-      final double? totalDuration}) = _$_AbsSeries;
+      final double? totalDuration}) = _$AbsSeriesImpl;
 
   factory _AbsSeries.fromJson(Map<String, dynamic> json) =
-      _$_AbsSeries.fromJson;
+      _$AbsSeriesImpl.fromJson;
 
   @override
   String get id;
@@ -307,6 +308,6 @@ abstract class _AbsSeries implements AbsSeries {
   double? get totalDuration;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsSeriesCopyWith<_$_AbsSeries> get copyWith =>
+  _$$AbsSeriesImplCopyWith<_$AbsSeriesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

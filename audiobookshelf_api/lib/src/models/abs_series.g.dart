@@ -6,7 +6,8 @@ part of 'abs_series.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AbsSeries _$$_AbsSeriesFromJson(Map<String, dynamic> json) => _$_AbsSeries(
+_$AbsSeriesImpl _$$AbsSeriesImplFromJson(Map<String, dynamic> json) =>
+    _$AbsSeriesImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       nameIgnorePrefix: json['nameIgnorePrefix'] as String?,
@@ -19,7 +20,7 @@ _$_AbsSeries _$$_AbsSeriesFromJson(Map<String, dynamic> json) => _$_AbsSeries(
       totalDuration: (json['totalDuration'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_AbsSeriesToJson(_$_AbsSeries instance) =>
+Map<String, dynamic> _$$AbsSeriesImplToJson(_$AbsSeriesImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

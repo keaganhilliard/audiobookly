@@ -135,11 +135,11 @@ class _$PreferencesCopyWithImpl<$Res, $Val extends Preferences>
 }
 
 /// @nodoc
-abstract class _$$_PreferencesCopyWith<$Res>
+abstract class _$$PreferencesImplCopyWith<$Res>
     implements $PreferencesCopyWith<$Res> {
-  factory _$$_PreferencesCopyWith(
-          _$_Preferences value, $Res Function(_$_Preferences) then) =
-      __$$_PreferencesCopyWithImpl<$Res>;
+  factory _$$PreferencesImplCopyWith(
+          _$PreferencesImpl value, $Res Function(_$PreferencesImpl) then) =
+      __$$PreferencesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -158,11 +158,11 @@ abstract class _$$_PreferencesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PreferencesCopyWithImpl<$Res>
-    extends _$PreferencesCopyWithImpl<$Res, _$_Preferences>
-    implements _$$_PreferencesCopyWith<$Res> {
-  __$$_PreferencesCopyWithImpl(
-      _$_Preferences _value, $Res Function(_$_Preferences) _then)
+class __$$PreferencesImplCopyWithImpl<$Res>
+    extends _$PreferencesCopyWithImpl<$Res, _$PreferencesImpl>
+    implements _$$PreferencesImplCopyWith<$Res> {
+  __$$PreferencesImplCopyWithImpl(
+      _$PreferencesImpl _value, $Res Function(_$PreferencesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -181,7 +181,7 @@ class __$$_PreferencesCopyWithImpl<$Res>
     Object? serverType = null,
     Object? useChapterProgressBar = null,
   }) {
-    return _then(_$_Preferences(
+    return _then(_$PreferencesImpl(
       userToken: null == userToken
           ? _value.userToken
           : userToken // ignore: cast_nullable_to_non_nullable
@@ -236,8 +236,8 @@ class __$$_PreferencesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Preferences implements _Preferences {
-  const _$_Preferences(
+class _$PreferencesImpl implements _Preferences {
+  const _$PreferencesImpl(
       {required this.userToken,
       required this.userId,
       required this.username,
@@ -285,7 +285,7 @@ class _$_Preferences implements _Preferences {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Preferences &&
+            other is _$PreferencesImpl &&
             (identical(other.userToken, userToken) ||
                 other.userToken == userToken) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -329,8 +329,8 @@ class _$_Preferences implements _Preferences {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
-      __$$_PreferencesCopyWithImpl<_$_Preferences>(this, _$identity);
+  _$$PreferencesImplCopyWith<_$PreferencesImpl> get copyWith =>
+      __$$PreferencesImplCopyWithImpl<_$PreferencesImpl>(this, _$identity);
 }
 
 abstract class _Preferences implements Preferences {
@@ -346,7 +346,7 @@ abstract class _Preferences implements Preferences {
       required final double fastForwardInterval,
       required final String baseUrl,
       required final ServerType serverType,
-      required final bool useChapterProgressBar}) = _$_Preferences;
+      required final bool useChapterProgressBar}) = _$PreferencesImpl;
 
   @override
   String get userToken;
@@ -374,6 +374,6 @@ abstract class _Preferences implements Preferences {
   bool get useChapterProgressBar;
   @override
   @JsonKey(ignore: true)
-  _$$_PreferencesCopyWith<_$_Preferences> get copyWith =>
+  _$$PreferencesImplCopyWith<_$PreferencesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

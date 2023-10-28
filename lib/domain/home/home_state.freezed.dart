@@ -92,27 +92,27 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
 }
 
 /// @nodoc
-abstract class _$$HomeStateInitialCopyWith<$Res> {
-  factory _$$HomeStateInitialCopyWith(
-          _$HomeStateInitial value, $Res Function(_$HomeStateInitial) then) =
-      __$$HomeStateInitialCopyWithImpl<$Res>;
+abstract class _$$HomeStateInitialImplCopyWith<$Res> {
+  factory _$$HomeStateInitialImplCopyWith(_$HomeStateInitialImpl value,
+          $Res Function(_$HomeStateInitialImpl) then) =
+      __$$HomeStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$HomeStateInitialCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateInitial>
-    implements _$$HomeStateInitialCopyWith<$Res> {
-  __$$HomeStateInitialCopyWithImpl(
-      _$HomeStateInitial _value, $Res Function(_$HomeStateInitial) _then)
+class __$$HomeStateInitialImplCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateInitialImpl>
+    implements _$$HomeStateInitialImplCopyWith<$Res> {
+  __$$HomeStateInitialImplCopyWithImpl(_$HomeStateInitialImpl _value,
+      $Res Function(_$HomeStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$HomeStateInitial
+class _$HomeStateInitialImpl
     with DiagnosticableTreeMixin
     implements HomeStateInitial {
-  const _$HomeStateInitial();
+  const _$HomeStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -128,7 +128,7 @@ class _$HomeStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HomeStateInitial);
+        (other.runtimeType == runtimeType && other is _$HomeStateInitialImpl);
   }
 
   @override
@@ -216,25 +216,25 @@ class _$HomeStateInitial
 }
 
 abstract class HomeStateInitial implements HomeState {
-  const factory HomeStateInitial() = _$HomeStateInitial;
+  const factory HomeStateInitial() = _$HomeStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$HomeStateLoadedCopyWith<$Res> {
-  factory _$$HomeStateLoadedCopyWith(
-          _$HomeStateLoaded value, $Res Function(_$HomeStateLoaded) then) =
-      __$$HomeStateLoadedCopyWithImpl<$Res>;
+abstract class _$$HomeStateLoadedImplCopyWith<$Res> {
+  factory _$$HomeStateLoadedImplCopyWith(_$HomeStateLoadedImpl value,
+          $Res Function(_$HomeStateLoadedImpl) then) =
+      __$$HomeStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {Map<String, List<ModelUnion>>? rowsData, List<ModelUnion>? downloaded});
 }
 
 /// @nodoc
-class __$$HomeStateLoadedCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateLoaded>
-    implements _$$HomeStateLoadedCopyWith<$Res> {
-  __$$HomeStateLoadedCopyWithImpl(
-      _$HomeStateLoaded _value, $Res Function(_$HomeStateLoaded) _then)
+class __$$HomeStateLoadedImplCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateLoadedImpl>
+    implements _$$HomeStateLoadedImplCopyWith<$Res> {
+  __$$HomeStateLoadedImplCopyWithImpl(
+      _$HomeStateLoadedImpl _value, $Res Function(_$HomeStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -243,7 +243,7 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
     Object? rowsData = freezed,
     Object? downloaded = freezed,
   }) {
-    return _then(_$HomeStateLoaded(
+    return _then(_$HomeStateLoadedImpl(
       rowsData: freezed == rowsData
           ? _value._rowsData
           : rowsData // ignore: cast_nullable_to_non_nullable
@@ -258,10 +258,10 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateLoaded
+class _$HomeStateLoadedImpl
     with DiagnosticableTreeMixin
     implements HomeStateLoaded {
-  const _$HomeStateLoaded(
+  const _$HomeStateLoadedImpl(
       {final Map<String, List<ModelUnion>>? rowsData,
       final List<ModelUnion>? downloaded})
       : _rowsData = rowsData,
@@ -305,7 +305,7 @@ class _$HomeStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HomeStateLoaded &&
+            other is _$HomeStateLoadedImpl &&
             const DeepCollectionEquality().equals(other._rowsData, _rowsData) &&
             const DeepCollectionEquality()
                 .equals(other._downloaded, _downloaded));
@@ -320,8 +320,9 @@ class _$HomeStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
-      __$$HomeStateLoadedCopyWithImpl<_$HomeStateLoaded>(this, _$identity);
+  _$$HomeStateLoadedImplCopyWith<_$HomeStateLoadedImpl> get copyWith =>
+      __$$HomeStateLoadedImplCopyWithImpl<_$HomeStateLoadedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -407,37 +408,37 @@ class _$HomeStateLoaded
 abstract class HomeStateLoaded implements HomeState {
   const factory HomeStateLoaded(
       {final Map<String, List<ModelUnion>>? rowsData,
-      final List<ModelUnion>? downloaded}) = _$HomeStateLoaded;
+      final List<ModelUnion>? downloaded}) = _$HomeStateLoadedImpl;
 
   Map<String, List<ModelUnion>>? get rowsData;
   List<ModelUnion>? get downloaded;
   @JsonKey(ignore: true)
-  _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
+  _$$HomeStateLoadedImplCopyWith<_$HomeStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$HomeStateLoadingCopyWith<$Res> {
-  factory _$$HomeStateLoadingCopyWith(
-          _$HomeStateLoading value, $Res Function(_$HomeStateLoading) then) =
-      __$$HomeStateLoadingCopyWithImpl<$Res>;
+abstract class _$$HomeStateLoadingImplCopyWith<$Res> {
+  factory _$$HomeStateLoadingImplCopyWith(_$HomeStateLoadingImpl value,
+          $Res Function(_$HomeStateLoadingImpl) then) =
+      __$$HomeStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$HomeStateLoadingCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateLoading>
-    implements _$$HomeStateLoadingCopyWith<$Res> {
-  __$$HomeStateLoadingCopyWithImpl(
-      _$HomeStateLoading _value, $Res Function(_$HomeStateLoading) _then)
+class __$$HomeStateLoadingImplCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateLoadingImpl>
+    implements _$$HomeStateLoadingImplCopyWith<$Res> {
+  __$$HomeStateLoadingImplCopyWithImpl(_$HomeStateLoadingImpl _value,
+      $Res Function(_$HomeStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$HomeStateLoading
+class _$HomeStateLoadingImpl
     with DiagnosticableTreeMixin
     implements HomeStateLoading {
-  const _$HomeStateLoading();
+  const _$HomeStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -453,7 +454,7 @@ class _$HomeStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HomeStateLoading);
+        (other.runtimeType == runtimeType && other is _$HomeStateLoadingImpl);
   }
 
   @override
@@ -541,24 +542,24 @@ class _$HomeStateLoading
 }
 
 abstract class HomeStateLoading implements HomeState {
-  const factory HomeStateLoading() = _$HomeStateLoading;
+  const factory HomeStateLoading() = _$HomeStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$HomeStateErrorCopyWith<$Res> {
-  factory _$$HomeStateErrorCopyWith(
-          _$HomeStateError value, $Res Function(_$HomeStateError) then) =
-      __$$HomeStateErrorCopyWithImpl<$Res>;
+abstract class _$$HomeStateErrorImplCopyWith<$Res> {
+  factory _$$HomeStateErrorImplCopyWith(_$HomeStateErrorImpl value,
+          $Res Function(_$HomeStateErrorImpl) then) =
+      __$$HomeStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$HomeStateErrorCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateError>
-    implements _$$HomeStateErrorCopyWith<$Res> {
-  __$$HomeStateErrorCopyWithImpl(
-      _$HomeStateError _value, $Res Function(_$HomeStateError) _then)
+class __$$HomeStateErrorImplCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateErrorImpl>
+    implements _$$HomeStateErrorImplCopyWith<$Res> {
+  __$$HomeStateErrorImplCopyWithImpl(
+      _$HomeStateErrorImpl _value, $Res Function(_$HomeStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -566,7 +567,7 @@ class __$$HomeStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$HomeStateError(
+    return _then(_$HomeStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -577,8 +578,10 @@ class __$$HomeStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateError with DiagnosticableTreeMixin implements HomeStateError {
-  const _$HomeStateError([this.message]);
+class _$HomeStateErrorImpl
+    with DiagnosticableTreeMixin
+    implements HomeStateError {
+  const _$HomeStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -600,7 +603,7 @@ class _$HomeStateError with DiagnosticableTreeMixin implements HomeStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HomeStateError &&
+            other is _$HomeStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -610,8 +613,9 @@ class _$HomeStateError with DiagnosticableTreeMixin implements HomeStateError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$HomeStateErrorCopyWith<_$HomeStateError> get copyWith =>
-      __$$HomeStateErrorCopyWithImpl<_$HomeStateError>(this, _$identity);
+  _$$HomeStateErrorImplCopyWith<_$HomeStateErrorImpl> get copyWith =>
+      __$$HomeStateErrorImplCopyWithImpl<_$HomeStateErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -695,10 +699,10 @@ class _$HomeStateError with DiagnosticableTreeMixin implements HomeStateError {
 }
 
 abstract class HomeStateError implements HomeState {
-  const factory HomeStateError([final String? message]) = _$HomeStateError;
+  const factory HomeStateError([final String? message]) = _$HomeStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$HomeStateErrorCopyWith<_$HomeStateError> get copyWith =>
+  _$$HomeStateErrorImplCopyWith<_$HomeStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

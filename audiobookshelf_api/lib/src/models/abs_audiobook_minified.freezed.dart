@@ -193,11 +193,11 @@ class _$AbsAudiobookMinifiedCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AbsAudiobookMinifiedCopyWith<$Res>
+abstract class _$$AbsAudiobookMinifiedImplCopyWith<$Res>
     implements $AbsAudiobookMinifiedCopyWith<$Res> {
-  factory _$$_AbsAudiobookMinifiedCopyWith(_$_AbsAudiobookMinified value,
-          $Res Function(_$_AbsAudiobookMinified) then) =
-      __$$_AbsAudiobookMinifiedCopyWithImpl<$Res>;
+  factory _$$AbsAudiobookMinifiedImplCopyWith(_$AbsAudiobookMinifiedImpl value,
+          $Res Function(_$AbsAudiobookMinifiedImpl) then) =
+      __$$AbsAudiobookMinifiedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -225,11 +225,11 @@ abstract class _$$_AbsAudiobookMinifiedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AbsAudiobookMinifiedCopyWithImpl<$Res>
-    extends _$AbsAudiobookMinifiedCopyWithImpl<$Res, _$_AbsAudiobookMinified>
-    implements _$$_AbsAudiobookMinifiedCopyWith<$Res> {
-  __$$_AbsAudiobookMinifiedCopyWithImpl(_$_AbsAudiobookMinified _value,
-      $Res Function(_$_AbsAudiobookMinified) _then)
+class __$$AbsAudiobookMinifiedImplCopyWithImpl<$Res>
+    extends _$AbsAudiobookMinifiedCopyWithImpl<$Res, _$AbsAudiobookMinifiedImpl>
+    implements _$$AbsAudiobookMinifiedImplCopyWith<$Res> {
+  __$$AbsAudiobookMinifiedImplCopyWithImpl(_$AbsAudiobookMinifiedImpl _value,
+      $Res Function(_$AbsAudiobookMinifiedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -254,7 +254,7 @@ class __$$_AbsAudiobookMinifiedCopyWithImpl<$Res>
     Object? numFiles = null,
     Object? size = freezed,
   }) {
-    return _then(_$_AbsAudiobookMinified(
+    return _then(_$AbsAudiobookMinifiedImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -333,8 +333,8 @@ class __$$_AbsAudiobookMinifiedCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsAudiobookMinified implements _AbsAudiobookMinified {
-  const _$_AbsAudiobookMinified(
+class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
+  const _$AbsAudiobookMinifiedImpl(
       {required this.id,
       required this.ino,
       required this.libraryId,
@@ -354,8 +354,8 @@ class _$_AbsAudiobookMinified implements _AbsAudiobookMinified {
       required this.numFiles,
       this.size});
 
-  factory _$_AbsAudiobookMinified.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsAudiobookMinifiedFromJson(json);
+  factory _$AbsAudiobookMinifiedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsAudiobookMinifiedImplFromJson(json);
 
   @override
   final String id;
@@ -403,7 +403,7 @@ class _$_AbsAudiobookMinified implements _AbsAudiobookMinified {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsAudiobookMinified &&
+            other is _$AbsAudiobookMinifiedImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.ino, ino) || other.ino == ino) &&
             (identical(other.libraryId, libraryId) ||
@@ -458,13 +458,14 @@ class _$_AbsAudiobookMinified implements _AbsAudiobookMinified {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsAudiobookMinifiedCopyWith<_$_AbsAudiobookMinified> get copyWith =>
-      __$$_AbsAudiobookMinifiedCopyWithImpl<_$_AbsAudiobookMinified>(
-          this, _$identity);
+  _$$AbsAudiobookMinifiedImplCopyWith<_$AbsAudiobookMinifiedImpl>
+      get copyWith =>
+          __$$AbsAudiobookMinifiedImplCopyWithImpl<_$AbsAudiobookMinifiedImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsAudiobookMinifiedToJson(
+    return _$$AbsAudiobookMinifiedImplToJson(
       this,
     );
   }
@@ -489,10 +490,10 @@ abstract class _AbsAudiobookMinified implements AbsAudiobookMinified {
       required final String mediaType,
       required final MinifiedMedia media,
       required final int numFiles,
-      final int? size}) = _$_AbsAudiobookMinified;
+      final int? size}) = _$AbsAudiobookMinifiedImpl;
 
   factory _AbsAudiobookMinified.fromJson(Map<String, dynamic> json) =
-      _$_AbsAudiobookMinified.fromJson;
+      _$AbsAudiobookMinifiedImpl.fromJson;
 
   @override
   String get id;
@@ -532,8 +533,8 @@ abstract class _AbsAudiobookMinified implements AbsAudiobookMinified {
   int? get size;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsAudiobookMinifiedCopyWith<_$_AbsAudiobookMinified> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AbsAudiobookMinifiedImplCopyWith<_$AbsAudiobookMinifiedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 MinifiedMedia _$MinifiedMediaFromJson(Map<String, dynamic> json) {
@@ -665,9 +666,11 @@ class _$MinifiedMediaCopyWithImpl<$Res, $Val extends MinifiedMedia>
 }
 
 /// @nodoc
-abstract class _$$_MediaCopyWith<$Res> implements $MinifiedMediaCopyWith<$Res> {
-  factory _$$_MediaCopyWith(_$_Media value, $Res Function(_$_Media) then) =
-      __$$_MediaCopyWithImpl<$Res>;
+abstract class _$$MediaImplCopyWith<$Res>
+    implements $MinifiedMediaCopyWith<$Res> {
+  factory _$$MediaImplCopyWith(
+          _$MediaImpl value, $Res Function(_$MediaImpl) then) =
+      __$$MediaImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -688,10 +691,11 @@ abstract class _$$_MediaCopyWith<$Res> implements $MinifiedMediaCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MediaCopyWithImpl<$Res>
-    extends _$MinifiedMediaCopyWithImpl<$Res, _$_Media>
-    implements _$$_MediaCopyWith<$Res> {
-  __$$_MediaCopyWithImpl(_$_Media _value, $Res Function(_$_Media) _then)
+class __$$MediaImplCopyWithImpl<$Res>
+    extends _$MinifiedMediaCopyWithImpl<$Res, _$MediaImpl>
+    implements _$$MediaImplCopyWith<$Res> {
+  __$$MediaImplCopyWithImpl(
+      _$MediaImpl _value, $Res Function(_$MediaImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -709,7 +713,7 @@ class __$$_MediaCopyWithImpl<$Res>
     Object? size = freezed,
     Object? ebookFormat = freezed,
   }) {
-    return _then(_$_Media(
+    return _then(_$MediaImpl(
       metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -760,8 +764,8 @@ class __$$_MediaCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Media implements _Media {
-  const _$_Media(
+class _$MediaImpl implements _Media {
+  const _$MediaImpl(
       {required this.metadata,
       this.coverPath,
       required final List<String> tags,
@@ -775,8 +779,8 @@ class _$_Media implements _Media {
       this.ebookFormat})
       : _tags = tags;
 
-  factory _$_Media.fromJson(Map<String, dynamic> json) =>
-      _$$_MediaFromJson(json);
+  factory _$MediaImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MediaImplFromJson(json);
 
   @override
   final Metadata metadata;
@@ -816,7 +820,7 @@ class _$_Media implements _Media {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Media &&
+            other is _$MediaImpl &&
             (identical(other.metadata, metadata) ||
                 other.metadata == metadata) &&
             (identical(other.coverPath, coverPath) ||
@@ -858,12 +862,12 @@ class _$_Media implements _Media {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MediaCopyWith<_$_Media> get copyWith =>
-      __$$_MediaCopyWithImpl<_$_Media>(this, _$identity);
+  _$$MediaImplCopyWith<_$MediaImpl> get copyWith =>
+      __$$MediaImplCopyWithImpl<_$MediaImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaToJson(
+    return _$$MediaImplToJson(
       this,
     );
   }
@@ -881,9 +885,9 @@ abstract class _Media implements MinifiedMedia {
       required final int numInvalidAudioFiles,
       required final double duration,
       final int? size,
-      final String? ebookFormat}) = _$_Media;
+      final String? ebookFormat}) = _$MediaImpl;
 
-  factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
+  factory _Media.fromJson(Map<String, dynamic> json) = _$MediaImpl.fromJson;
 
   @override
   Metadata get metadata;
@@ -909,7 +913,7 @@ abstract class _Media implements MinifiedMedia {
   String? get ebookFormat;
   @override
   @JsonKey(ignore: true)
-  _$$_MediaCopyWith<_$_Media> get copyWith =>
+  _$$MediaImplCopyWith<_$MediaImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1066,10 +1070,11 @@ class _$MetadataCopyWithImpl<$Res, $Val extends Metadata>
 }
 
 /// @nodoc
-abstract class _$$_MetadataCopyWith<$Res> implements $MetadataCopyWith<$Res> {
-  factory _$$_MetadataCopyWith(
-          _$_Metadata value, $Res Function(_$_Metadata) then) =
-      __$$_MetadataCopyWithImpl<$Res>;
+abstract class _$$MetadataImplCopyWith<$Res>
+    implements $MetadataCopyWith<$Res> {
+  factory _$$MetadataImplCopyWith(
+          _$MetadataImpl value, $Res Function(_$MetadataImpl) then) =
+      __$$MetadataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1092,11 +1097,11 @@ abstract class _$$_MetadataCopyWith<$Res> implements $MetadataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MetadataCopyWithImpl<$Res>
-    extends _$MetadataCopyWithImpl<$Res, _$_Metadata>
-    implements _$$_MetadataCopyWith<$Res> {
-  __$$_MetadataCopyWithImpl(
-      _$_Metadata _value, $Res Function(_$_Metadata) _then)
+class __$$MetadataImplCopyWithImpl<$Res>
+    extends _$MetadataCopyWithImpl<$Res, _$MetadataImpl>
+    implements _$$MetadataImplCopyWith<$Res> {
+  __$$MetadataImplCopyWithImpl(
+      _$MetadataImpl _value, $Res Function(_$MetadataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1119,7 +1124,7 @@ class __$$_MetadataCopyWithImpl<$Res>
     Object? language = freezed,
     Object? explicit = freezed,
   }) {
-    return _then(_$_Metadata(
+    return _then(_$MetadataImpl(
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -1190,8 +1195,8 @@ class __$$_MetadataCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Metadata implements _Metadata {
-  const _$_Metadata(
+class _$MetadataImpl implements _Metadata {
+  const _$MetadataImpl(
       {this.title,
       this.titleIgnorePrefix,
       this.subtitle,
@@ -1210,8 +1215,8 @@ class _$_Metadata implements _Metadata {
       this.explicit})
       : _genres = genres;
 
-  factory _$_Metadata.fromJson(Map<String, dynamic> json) =>
-      _$$_MetadataFromJson(json);
+  factory _$MetadataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MetadataImplFromJson(json);
 
   @override
   final String? title;
@@ -1263,7 +1268,7 @@ class _$_Metadata implements _Metadata {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Metadata &&
+            other is _$MetadataImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.titleIgnorePrefix, titleIgnorePrefix) ||
                 other.titleIgnorePrefix == titleIgnorePrefix) &&
@@ -1318,12 +1323,12 @@ class _$_Metadata implements _Metadata {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MetadataCopyWith<_$_Metadata> get copyWith =>
-      __$$_MetadataCopyWithImpl<_$_Metadata>(this, _$identity);
+  _$$MetadataImplCopyWith<_$MetadataImpl> get copyWith =>
+      __$$MetadataImplCopyWithImpl<_$MetadataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MetadataToJson(
+    return _$$MetadataImplToJson(
       this,
     );
   }
@@ -1346,9 +1351,10 @@ abstract class _Metadata implements Metadata {
       final String? isbn,
       final String? asin,
       final String? language,
-      final bool? explicit}) = _$_Metadata;
+      final bool? explicit}) = _$MetadataImpl;
 
-  factory _Metadata.fromJson(Map<String, dynamic> json) = _$_Metadata.fromJson;
+  factory _Metadata.fromJson(Map<String, dynamic> json) =
+      _$MetadataImpl.fromJson;
 
   @override
   String? get title;
@@ -1384,6 +1390,6 @@ abstract class _Metadata implements Metadata {
   bool? get explicit;
   @override
   @JsonKey(ignore: true)
-  _$$_MetadataCopyWith<_$_Metadata> get copyWith =>
+  _$$MetadataImplCopyWith<_$MetadataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

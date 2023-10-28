@@ -166,12 +166,12 @@ class _$AbsPersonalizedResponseCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$AbsPersonalizedResponseBookCopyWith<$Res>
+abstract class _$$AbsPersonalizedResponseBookImplCopyWith<$Res>
     implements $AbsPersonalizedResponseCopyWith<$Res> {
-  factory _$$AbsPersonalizedResponseBookCopyWith(
-          _$AbsPersonalizedResponseBook value,
-          $Res Function(_$AbsPersonalizedResponseBook) then) =
-      __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>;
+  factory _$$AbsPersonalizedResponseBookImplCopyWith(
+          _$AbsPersonalizedResponseBookImpl value,
+          $Res Function(_$AbsPersonalizedResponseBookImpl) then) =
+      __$$AbsPersonalizedResponseBookImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -183,13 +183,13 @@ abstract class _$$AbsPersonalizedResponseBookCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
+class __$$AbsPersonalizedResponseBookImplCopyWithImpl<$Res>
     extends _$AbsPersonalizedResponseCopyWithImpl<$Res,
-        _$AbsPersonalizedResponseBook>
-    implements _$$AbsPersonalizedResponseBookCopyWith<$Res> {
-  __$$AbsPersonalizedResponseBookCopyWithImpl(
-      _$AbsPersonalizedResponseBook _value,
-      $Res Function(_$AbsPersonalizedResponseBook) _then)
+        _$AbsPersonalizedResponseBookImpl>
+    implements _$$AbsPersonalizedResponseBookImplCopyWith<$Res> {
+  __$$AbsPersonalizedResponseBookImplCopyWithImpl(
+      _$AbsPersonalizedResponseBookImpl _value,
+      $Res Function(_$AbsPersonalizedResponseBookImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -201,7 +201,7 @@ class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
     Object? type = null,
     Object? entities = null,
   }) {
-    return _then(_$AbsPersonalizedResponseBook(
+    return _then(_$AbsPersonalizedResponseBookImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -228,8 +228,8 @@ class __$$AbsPersonalizedResponseBookCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
-  const _$AbsPersonalizedResponseBook(
+class _$AbsPersonalizedResponseBookImpl implements AbsPersonalizedResponseBook {
+  const _$AbsPersonalizedResponseBookImpl(
       {required this.id,
       required this.label,
       required this.labelStringKey,
@@ -237,8 +237,9 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
       required final List<AbsAudiobookMinified> entities})
       : _entities = entities;
 
-  factory _$AbsPersonalizedResponseBook.fromJson(Map<String, dynamic> json) =>
-      _$$AbsPersonalizedResponseBookFromJson(json);
+  factory _$AbsPersonalizedResponseBookImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$AbsPersonalizedResponseBookImplFromJson(json);
 
   @override
   final String id;
@@ -265,7 +266,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AbsPersonalizedResponseBook &&
+            other is _$AbsPersonalizedResponseBookImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.labelStringKey, labelStringKey) ||
@@ -282,9 +283,9 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AbsPersonalizedResponseBookCopyWith<_$AbsPersonalizedResponseBook>
-      get copyWith => __$$AbsPersonalizedResponseBookCopyWithImpl<
-          _$AbsPersonalizedResponseBook>(this, _$identity);
+  _$$AbsPersonalizedResponseBookImplCopyWith<_$AbsPersonalizedResponseBookImpl>
+      get copyWith => __$$AbsPersonalizedResponseBookImplCopyWithImpl<
+          _$AbsPersonalizedResponseBookImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -386,7 +387,7 @@ class _$AbsPersonalizedResponseBook implements AbsPersonalizedResponseBook {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AbsPersonalizedResponseBookToJson(
+    return _$$AbsPersonalizedResponseBookImplToJson(
       this,
     );
   }
@@ -399,10 +400,10 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
           required final String labelStringKey,
           required final String type,
           required final List<AbsAudiobookMinified> entities}) =
-      _$AbsPersonalizedResponseBook;
+      _$AbsPersonalizedResponseBookImpl;
 
   factory AbsPersonalizedResponseBook.fromJson(Map<String, dynamic> json) =
-      _$AbsPersonalizedResponseBook.fromJson;
+      _$AbsPersonalizedResponseBookImpl.fromJson;
 
   @override
   String get id;
@@ -416,17 +417,17 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
   List<AbsAudiobookMinified> get entities;
   @override
   @JsonKey(ignore: true)
-  _$$AbsPersonalizedResponseBookCopyWith<_$AbsPersonalizedResponseBook>
+  _$$AbsPersonalizedResponseBookImplCopyWith<_$AbsPersonalizedResponseBookImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AbsPersonalizedResponseAuthorCopyWith<$Res>
+abstract class _$$AbsPersonalizedResponseAuthorImplCopyWith<$Res>
     implements $AbsPersonalizedResponseCopyWith<$Res> {
-  factory _$$AbsPersonalizedResponseAuthorCopyWith(
-          _$AbsPersonalizedResponseAuthor value,
-          $Res Function(_$AbsPersonalizedResponseAuthor) then) =
-      __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>;
+  factory _$$AbsPersonalizedResponseAuthorImplCopyWith(
+          _$AbsPersonalizedResponseAuthorImpl value,
+          $Res Function(_$AbsPersonalizedResponseAuthorImpl) then) =
+      __$$AbsPersonalizedResponseAuthorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -438,13 +439,13 @@ abstract class _$$AbsPersonalizedResponseAuthorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
+class __$$AbsPersonalizedResponseAuthorImplCopyWithImpl<$Res>
     extends _$AbsPersonalizedResponseCopyWithImpl<$Res,
-        _$AbsPersonalizedResponseAuthor>
-    implements _$$AbsPersonalizedResponseAuthorCopyWith<$Res> {
-  __$$AbsPersonalizedResponseAuthorCopyWithImpl(
-      _$AbsPersonalizedResponseAuthor _value,
-      $Res Function(_$AbsPersonalizedResponseAuthor) _then)
+        _$AbsPersonalizedResponseAuthorImpl>
+    implements _$$AbsPersonalizedResponseAuthorImplCopyWith<$Res> {
+  __$$AbsPersonalizedResponseAuthorImplCopyWithImpl(
+      _$AbsPersonalizedResponseAuthorImpl _value,
+      $Res Function(_$AbsPersonalizedResponseAuthorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -456,7 +457,7 @@ class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
     Object? type = null,
     Object? entities = null,
   }) {
-    return _then(_$AbsPersonalizedResponseAuthor(
+    return _then(_$AbsPersonalizedResponseAuthorImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -483,8 +484,9 @@ class __$$AbsPersonalizedResponseAuthorCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
-  const _$AbsPersonalizedResponseAuthor(
+class _$AbsPersonalizedResponseAuthorImpl
+    implements AbsPersonalizedResponseAuthor {
+  const _$AbsPersonalizedResponseAuthorImpl(
       {required this.id,
       required this.label,
       required this.labelStringKey,
@@ -492,8 +494,9 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
       required final List<Author> entities})
       : _entities = entities;
 
-  factory _$AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =>
-      _$$AbsPersonalizedResponseAuthorFromJson(json);
+  factory _$AbsPersonalizedResponseAuthorImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$AbsPersonalizedResponseAuthorImplFromJson(json);
 
   @override
   final String id;
@@ -520,7 +523,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AbsPersonalizedResponseAuthor &&
+            other is _$AbsPersonalizedResponseAuthorImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.labelStringKey, labelStringKey) ||
@@ -537,9 +540,10 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AbsPersonalizedResponseAuthorCopyWith<_$AbsPersonalizedResponseAuthor>
-      get copyWith => __$$AbsPersonalizedResponseAuthorCopyWithImpl<
-          _$AbsPersonalizedResponseAuthor>(this, _$identity);
+  _$$AbsPersonalizedResponseAuthorImplCopyWith<
+          _$AbsPersonalizedResponseAuthorImpl>
+      get copyWith => __$$AbsPersonalizedResponseAuthorImplCopyWithImpl<
+          _$AbsPersonalizedResponseAuthorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -641,7 +645,7 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AbsPersonalizedResponseAuthorToJson(
+    return _$$AbsPersonalizedResponseAuthorImplToJson(
       this,
     );
   }
@@ -650,14 +654,15 @@ class _$AbsPersonalizedResponseAuthor implements AbsPersonalizedResponseAuthor {
 abstract class AbsPersonalizedResponseAuthor
     implements AbsPersonalizedResponse {
   const factory AbsPersonalizedResponseAuthor(
-      {required final String id,
-      required final String label,
-      required final String labelStringKey,
-      required final String type,
-      required final List<Author> entities}) = _$AbsPersonalizedResponseAuthor;
+          {required final String id,
+          required final String label,
+          required final String labelStringKey,
+          required final String type,
+          required final List<Author> entities}) =
+      _$AbsPersonalizedResponseAuthorImpl;
 
   factory AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =
-      _$AbsPersonalizedResponseAuthor.fromJson;
+      _$AbsPersonalizedResponseAuthorImpl.fromJson;
 
   @override
   String get id;
@@ -671,17 +676,18 @@ abstract class AbsPersonalizedResponseAuthor
   List<Author> get entities;
   @override
   @JsonKey(ignore: true)
-  _$$AbsPersonalizedResponseAuthorCopyWith<_$AbsPersonalizedResponseAuthor>
+  _$$AbsPersonalizedResponseAuthorImplCopyWith<
+          _$AbsPersonalizedResponseAuthorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AbsPersonalizedResponseSeriesCopyWith<$Res>
+abstract class _$$AbsPersonalizedResponseSeriesImplCopyWith<$Res>
     implements $AbsPersonalizedResponseCopyWith<$Res> {
-  factory _$$AbsPersonalizedResponseSeriesCopyWith(
-          _$AbsPersonalizedResponseSeries value,
-          $Res Function(_$AbsPersonalizedResponseSeries) then) =
-      __$$AbsPersonalizedResponseSeriesCopyWithImpl<$Res>;
+  factory _$$AbsPersonalizedResponseSeriesImplCopyWith(
+          _$AbsPersonalizedResponseSeriesImpl value,
+          $Res Function(_$AbsPersonalizedResponseSeriesImpl) then) =
+      __$$AbsPersonalizedResponseSeriesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -693,13 +699,13 @@ abstract class _$$AbsPersonalizedResponseSeriesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AbsPersonalizedResponseSeriesCopyWithImpl<$Res>
+class __$$AbsPersonalizedResponseSeriesImplCopyWithImpl<$Res>
     extends _$AbsPersonalizedResponseCopyWithImpl<$Res,
-        _$AbsPersonalizedResponseSeries>
-    implements _$$AbsPersonalizedResponseSeriesCopyWith<$Res> {
-  __$$AbsPersonalizedResponseSeriesCopyWithImpl(
-      _$AbsPersonalizedResponseSeries _value,
-      $Res Function(_$AbsPersonalizedResponseSeries) _then)
+        _$AbsPersonalizedResponseSeriesImpl>
+    implements _$$AbsPersonalizedResponseSeriesImplCopyWith<$Res> {
+  __$$AbsPersonalizedResponseSeriesImplCopyWithImpl(
+      _$AbsPersonalizedResponseSeriesImpl _value,
+      $Res Function(_$AbsPersonalizedResponseSeriesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -711,7 +717,7 @@ class __$$AbsPersonalizedResponseSeriesCopyWithImpl<$Res>
     Object? type = null,
     Object? entities = null,
   }) {
-    return _then(_$AbsPersonalizedResponseSeries(
+    return _then(_$AbsPersonalizedResponseSeriesImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -738,8 +744,9 @@ class __$$AbsPersonalizedResponseSeriesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AbsPersonalizedResponseSeries implements AbsPersonalizedResponseSeries {
-  const _$AbsPersonalizedResponseSeries(
+class _$AbsPersonalizedResponseSeriesImpl
+    implements AbsPersonalizedResponseSeries {
+  const _$AbsPersonalizedResponseSeriesImpl(
       {required this.id,
       required this.label,
       required this.labelStringKey,
@@ -747,8 +754,9 @@ class _$AbsPersonalizedResponseSeries implements AbsPersonalizedResponseSeries {
       required final List<AbsSeries> entities})
       : _entities = entities;
 
-  factory _$AbsPersonalizedResponseSeries.fromJson(Map<String, dynamic> json) =>
-      _$$AbsPersonalizedResponseSeriesFromJson(json);
+  factory _$AbsPersonalizedResponseSeriesImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$AbsPersonalizedResponseSeriesImplFromJson(json);
 
   @override
   final String id;
@@ -775,7 +783,7 @@ class _$AbsPersonalizedResponseSeries implements AbsPersonalizedResponseSeries {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AbsPersonalizedResponseSeries &&
+            other is _$AbsPersonalizedResponseSeriesImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.labelStringKey, labelStringKey) ||
@@ -792,9 +800,10 @@ class _$AbsPersonalizedResponseSeries implements AbsPersonalizedResponseSeries {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AbsPersonalizedResponseSeriesCopyWith<_$AbsPersonalizedResponseSeries>
-      get copyWith => __$$AbsPersonalizedResponseSeriesCopyWithImpl<
-          _$AbsPersonalizedResponseSeries>(this, _$identity);
+  _$$AbsPersonalizedResponseSeriesImplCopyWith<
+          _$AbsPersonalizedResponseSeriesImpl>
+      get copyWith => __$$AbsPersonalizedResponseSeriesImplCopyWithImpl<
+          _$AbsPersonalizedResponseSeriesImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -896,7 +905,7 @@ class _$AbsPersonalizedResponseSeries implements AbsPersonalizedResponseSeries {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AbsPersonalizedResponseSeriesToJson(
+    return _$$AbsPersonalizedResponseSeriesImplToJson(
       this,
     );
   }
@@ -910,10 +919,10 @@ abstract class AbsPersonalizedResponseSeries
           required final String labelStringKey,
           required final String type,
           required final List<AbsSeries> entities}) =
-      _$AbsPersonalizedResponseSeries;
+      _$AbsPersonalizedResponseSeriesImpl;
 
   factory AbsPersonalizedResponseSeries.fromJson(Map<String, dynamic> json) =
-      _$AbsPersonalizedResponseSeries.fromJson;
+      _$AbsPersonalizedResponseSeriesImpl.fromJson;
 
   @override
   String get id;
@@ -927,17 +936,18 @@ abstract class AbsPersonalizedResponseSeries
   List<AbsSeries> get entities;
   @override
   @JsonKey(ignore: true)
-  _$$AbsPersonalizedResponseSeriesCopyWith<_$AbsPersonalizedResponseSeries>
+  _$$AbsPersonalizedResponseSeriesImplCopyWith<
+          _$AbsPersonalizedResponseSeriesImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AbsPersonalizedResponseUnknownCopyWith<$Res>
+abstract class _$$AbsPersonalizedResponseUnknownImplCopyWith<$Res>
     implements $AbsPersonalizedResponseCopyWith<$Res> {
-  factory _$$AbsPersonalizedResponseUnknownCopyWith(
-          _$AbsPersonalizedResponseUnknown value,
-          $Res Function(_$AbsPersonalizedResponseUnknown) then) =
-      __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>;
+  factory _$$AbsPersonalizedResponseUnknownImplCopyWith(
+          _$AbsPersonalizedResponseUnknownImpl value,
+          $Res Function(_$AbsPersonalizedResponseUnknownImpl) then) =
+      __$$AbsPersonalizedResponseUnknownImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -949,13 +959,13 @@ abstract class _$$AbsPersonalizedResponseUnknownCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
+class __$$AbsPersonalizedResponseUnknownImplCopyWithImpl<$Res>
     extends _$AbsPersonalizedResponseCopyWithImpl<$Res,
-        _$AbsPersonalizedResponseUnknown>
-    implements _$$AbsPersonalizedResponseUnknownCopyWith<$Res> {
-  __$$AbsPersonalizedResponseUnknownCopyWithImpl(
-      _$AbsPersonalizedResponseUnknown _value,
-      $Res Function(_$AbsPersonalizedResponseUnknown) _then)
+        _$AbsPersonalizedResponseUnknownImpl>
+    implements _$$AbsPersonalizedResponseUnknownImplCopyWith<$Res> {
+  __$$AbsPersonalizedResponseUnknownImplCopyWithImpl(
+      _$AbsPersonalizedResponseUnknownImpl _value,
+      $Res Function(_$AbsPersonalizedResponseUnknownImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -967,7 +977,7 @@ class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
     Object? type = null,
     Object? entities = null,
   }) {
-    return _then(_$AbsPersonalizedResponseUnknown(
+    return _then(_$AbsPersonalizedResponseUnknownImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -994,9 +1004,9 @@ class __$$AbsPersonalizedResponseUnknownCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AbsPersonalizedResponseUnknown
+class _$AbsPersonalizedResponseUnknownImpl
     implements AbsPersonalizedResponseUnknown {
-  const _$AbsPersonalizedResponseUnknown(
+  const _$AbsPersonalizedResponseUnknownImpl(
       {required this.id,
       required this.label,
       required this.labelStringKey,
@@ -1004,9 +1014,9 @@ class _$AbsPersonalizedResponseUnknown
       required final List<Map<String, dynamic>> entities})
       : _entities = entities;
 
-  factory _$AbsPersonalizedResponseUnknown.fromJson(
+  factory _$AbsPersonalizedResponseUnknownImpl.fromJson(
           Map<String, dynamic> json) =>
-      _$$AbsPersonalizedResponseUnknownFromJson(json);
+      _$$AbsPersonalizedResponseUnknownImplFromJson(json);
 
   @override
   final String id;
@@ -1033,7 +1043,7 @@ class _$AbsPersonalizedResponseUnknown
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AbsPersonalizedResponseUnknown &&
+            other is _$AbsPersonalizedResponseUnknownImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.labelStringKey, labelStringKey) ||
@@ -1050,9 +1060,10 @@ class _$AbsPersonalizedResponseUnknown
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AbsPersonalizedResponseUnknownCopyWith<_$AbsPersonalizedResponseUnknown>
-      get copyWith => __$$AbsPersonalizedResponseUnknownCopyWithImpl<
-          _$AbsPersonalizedResponseUnknown>(this, _$identity);
+  _$$AbsPersonalizedResponseUnknownImplCopyWith<
+          _$AbsPersonalizedResponseUnknownImpl>
+      get copyWith => __$$AbsPersonalizedResponseUnknownImplCopyWithImpl<
+          _$AbsPersonalizedResponseUnknownImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1154,7 +1165,7 @@ class _$AbsPersonalizedResponseUnknown
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AbsPersonalizedResponseUnknownToJson(
+    return _$$AbsPersonalizedResponseUnknownImplToJson(
       this,
     );
   }
@@ -1168,10 +1179,10 @@ abstract class AbsPersonalizedResponseUnknown
           required final String labelStringKey,
           required final String type,
           required final List<Map<String, dynamic>> entities}) =
-      _$AbsPersonalizedResponseUnknown;
+      _$AbsPersonalizedResponseUnknownImpl;
 
   factory AbsPersonalizedResponseUnknown.fromJson(Map<String, dynamic> json) =
-      _$AbsPersonalizedResponseUnknown.fromJson;
+      _$AbsPersonalizedResponseUnknownImpl.fromJson;
 
   @override
   String get id;
@@ -1185,6 +1196,7 @@ abstract class AbsPersonalizedResponseUnknown
   List<Map<String, dynamic>> get entities;
   @override
   @JsonKey(ignore: true)
-  _$$AbsPersonalizedResponseUnknownCopyWith<_$AbsPersonalizedResponseUnknown>
+  _$$AbsPersonalizedResponseUnknownImplCopyWith<
+          _$AbsPersonalizedResponseUnknownImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,9 +6,9 @@ part of 'abs_audiobook_minified.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AbsAudiobookMinified _$$_AbsAudiobookMinifiedFromJson(
+_$AbsAudiobookMinifiedImpl _$$AbsAudiobookMinifiedImplFromJson(
         Map<String, dynamic> json) =>
-    _$_AbsAudiobookMinified(
+    _$AbsAudiobookMinifiedImpl(
       id: json['id'] as String,
       ino: json['ino'] as String,
       libraryId: json['libraryId'] as String,
@@ -29,8 +29,8 @@ _$_AbsAudiobookMinified _$$_AbsAudiobookMinifiedFromJson(
       size: json['size'] as int?,
     );
 
-Map<String, dynamic> _$$_AbsAudiobookMinifiedToJson(
-        _$_AbsAudiobookMinified instance) =>
+Map<String, dynamic> _$$AbsAudiobookMinifiedImplToJson(
+        _$AbsAudiobookMinifiedImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'ino': instance.ino,
@@ -52,7 +52,7 @@ Map<String, dynamic> _$$_AbsAudiobookMinifiedToJson(
       'size': instance.size,
     };
 
-_$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
+_$MediaImpl _$$MediaImplFromJson(Map<String, dynamic> json) => _$MediaImpl(
       metadata: Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
       coverPath: json['coverPath'] as String?,
       tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
@@ -66,7 +66,8 @@ _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
       ebookFormat: json['ebookFormat'] as String?,
     );
 
-Map<String, dynamic> _$$_MediaToJson(_$_Media instance) => <String, dynamic>{
+Map<String, dynamic> _$$MediaImplToJson(_$MediaImpl instance) =>
+    <String, dynamic>{
       'metadata': instance.metadata,
       'coverPath': instance.coverPath,
       'tags': instance.tags,
@@ -80,7 +81,8 @@ Map<String, dynamic> _$$_MediaToJson(_$_Media instance) => <String, dynamic>{
       'ebookFormat': instance.ebookFormat,
     };
 
-_$_Metadata _$$_MetadataFromJson(Map<String, dynamic> json) => _$_Metadata(
+_$MetadataImpl _$$MetadataImplFromJson(Map<String, dynamic> json) =>
+    _$MetadataImpl(
       title: json['title'] as String?,
       titleIgnorePrefix: json['titleIgnorePrefix'] as String?,
       subtitle: json['subtitle'] as String?,
@@ -100,7 +102,7 @@ _$_Metadata _$$_MetadataFromJson(Map<String, dynamic> json) => _$_Metadata(
       explicit: json['explicit'] as bool?,
     );
 
-Map<String, dynamic> _$$_MetadataToJson(_$_Metadata instance) =>
+Map<String, dynamic> _$$MetadataImplToJson(_$MetadataImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'titleIgnorePrefix': instance.titleIgnorePrefix,

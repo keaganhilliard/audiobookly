@@ -87,27 +87,29 @@ class _$CollectionsStateCopyWithImpl<$Res, $Val extends CollectionsState>
 }
 
 /// @nodoc
-abstract class _$$CollectionsStateInitialCopyWith<$Res> {
-  factory _$$CollectionsStateInitialCopyWith(_$CollectionsStateInitial value,
-          $Res Function(_$CollectionsStateInitial) then) =
-      __$$CollectionsStateInitialCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateInitialImplCopyWith<$Res> {
+  factory _$$CollectionsStateInitialImplCopyWith(
+          _$CollectionsStateInitialImpl value,
+          $Res Function(_$CollectionsStateInitialImpl) then) =
+      __$$CollectionsStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$CollectionsStateInitialCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateInitial>
-    implements _$$CollectionsStateInitialCopyWith<$Res> {
-  __$$CollectionsStateInitialCopyWithImpl(_$CollectionsStateInitial _value,
-      $Res Function(_$CollectionsStateInitial) _then)
+class __$$CollectionsStateInitialImplCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateInitialImpl>
+    implements _$$CollectionsStateInitialImplCopyWith<$Res> {
+  __$$CollectionsStateInitialImplCopyWithImpl(
+      _$CollectionsStateInitialImpl _value,
+      $Res Function(_$CollectionsStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$CollectionsStateInitial
+class _$CollectionsStateInitialImpl
     with DiagnosticableTreeMixin
     implements CollectionsStateInitial {
-  const _$CollectionsStateInitial();
+  const _$CollectionsStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -124,7 +126,7 @@ class _$CollectionsStateInitial
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionsStateInitial);
+            other is _$CollectionsStateInitialImpl);
   }
 
   @override
@@ -206,24 +208,26 @@ class _$CollectionsStateInitial
 }
 
 abstract class CollectionsStateInitial implements CollectionsState {
-  const factory CollectionsStateInitial() = _$CollectionsStateInitial;
+  const factory CollectionsStateInitial() = _$CollectionsStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$CollectionsStateLoadedCopyWith<$Res> {
-  factory _$$CollectionsStateLoadedCopyWith(_$CollectionsStateLoaded value,
-          $Res Function(_$CollectionsStateLoaded) then) =
-      __$$CollectionsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateLoadedImplCopyWith<$Res> {
+  factory _$$CollectionsStateLoadedImplCopyWith(
+          _$CollectionsStateLoadedImpl value,
+          $Res Function(_$CollectionsStateLoadedImpl) then) =
+      __$$CollectionsStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Collection>? collections});
 }
 
 /// @nodoc
-class __$$CollectionsStateLoadedCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateLoaded>
-    implements _$$CollectionsStateLoadedCopyWith<$Res> {
-  __$$CollectionsStateLoadedCopyWithImpl(_$CollectionsStateLoaded _value,
-      $Res Function(_$CollectionsStateLoaded) _then)
+class __$$CollectionsStateLoadedImplCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateLoadedImpl>
+    implements _$$CollectionsStateLoadedImplCopyWith<$Res> {
+  __$$CollectionsStateLoadedImplCopyWithImpl(
+      _$CollectionsStateLoadedImpl _value,
+      $Res Function(_$CollectionsStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -231,7 +235,7 @@ class __$$CollectionsStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? collections = freezed,
   }) {
-    return _then(_$CollectionsStateLoaded(
+    return _then(_$CollectionsStateLoadedImpl(
       collections: freezed == collections
           ? _value._collections
           : collections // ignore: cast_nullable_to_non_nullable
@@ -242,10 +246,10 @@ class __$$CollectionsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateLoaded
+class _$CollectionsStateLoadedImpl
     with DiagnosticableTreeMixin
     implements CollectionsStateLoaded {
-  const _$CollectionsStateLoaded({final List<Collection>? collections})
+  const _$CollectionsStateLoadedImpl({final List<Collection>? collections})
       : _collections = collections;
 
   final List<Collection>? _collections;
@@ -275,7 +279,7 @@ class _$CollectionsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionsStateLoaded &&
+            other is _$CollectionsStateLoadedImpl &&
             const DeepCollectionEquality()
                 .equals(other._collections, _collections));
   }
@@ -287,9 +291,9 @@ class _$CollectionsStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
-      __$$CollectionsStateLoadedCopyWithImpl<_$CollectionsStateLoaded>(
-          this, _$identity);
+  _$$CollectionsStateLoadedImplCopyWith<_$CollectionsStateLoadedImpl>
+      get copyWith => __$$CollectionsStateLoadedImplCopyWithImpl<
+          _$CollectionsStateLoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -368,36 +372,38 @@ class _$CollectionsStateLoaded
 
 abstract class CollectionsStateLoaded implements CollectionsState {
   const factory CollectionsStateLoaded({final List<Collection>? collections}) =
-      _$CollectionsStateLoaded;
+      _$CollectionsStateLoadedImpl;
 
   List<Collection>? get collections;
   @JsonKey(ignore: true)
-  _$$CollectionsStateLoadedCopyWith<_$CollectionsStateLoaded> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CollectionsStateLoadedImplCopyWith<_$CollectionsStateLoadedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CollectionsStateLoadingCopyWith<$Res> {
-  factory _$$CollectionsStateLoadingCopyWith(_$CollectionsStateLoading value,
-          $Res Function(_$CollectionsStateLoading) then) =
-      __$$CollectionsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateLoadingImplCopyWith<$Res> {
+  factory _$$CollectionsStateLoadingImplCopyWith(
+          _$CollectionsStateLoadingImpl value,
+          $Res Function(_$CollectionsStateLoadingImpl) then) =
+      __$$CollectionsStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$CollectionsStateLoadingCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateLoading>
-    implements _$$CollectionsStateLoadingCopyWith<$Res> {
-  __$$CollectionsStateLoadingCopyWithImpl(_$CollectionsStateLoading _value,
-      $Res Function(_$CollectionsStateLoading) _then)
+class __$$CollectionsStateLoadingImplCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateLoadingImpl>
+    implements _$$CollectionsStateLoadingImplCopyWith<$Res> {
+  __$$CollectionsStateLoadingImplCopyWithImpl(
+      _$CollectionsStateLoadingImpl _value,
+      $Res Function(_$CollectionsStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$CollectionsStateLoading
+class _$CollectionsStateLoadingImpl
     with DiagnosticableTreeMixin
     implements CollectionsStateLoading {
-  const _$CollectionsStateLoading();
+  const _$CollectionsStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -414,7 +420,7 @@ class _$CollectionsStateLoading
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionsStateLoading);
+            other is _$CollectionsStateLoadingImpl);
   }
 
   @override
@@ -496,24 +502,25 @@ class _$CollectionsStateLoading
 }
 
 abstract class CollectionsStateLoading implements CollectionsState {
-  const factory CollectionsStateLoading() = _$CollectionsStateLoading;
+  const factory CollectionsStateLoading() = _$CollectionsStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$CollectionsStateErrorCopyWith<$Res> {
-  factory _$$CollectionsStateErrorCopyWith(_$CollectionsStateError value,
-          $Res Function(_$CollectionsStateError) then) =
-      __$$CollectionsStateErrorCopyWithImpl<$Res>;
+abstract class _$$CollectionsStateErrorImplCopyWith<$Res> {
+  factory _$$CollectionsStateErrorImplCopyWith(
+          _$CollectionsStateErrorImpl value,
+          $Res Function(_$CollectionsStateErrorImpl) then) =
+      __$$CollectionsStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$CollectionsStateErrorCopyWithImpl<$Res>
-    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateError>
-    implements _$$CollectionsStateErrorCopyWith<$Res> {
-  __$$CollectionsStateErrorCopyWithImpl(_$CollectionsStateError _value,
-      $Res Function(_$CollectionsStateError) _then)
+class __$$CollectionsStateErrorImplCopyWithImpl<$Res>
+    extends _$CollectionsStateCopyWithImpl<$Res, _$CollectionsStateErrorImpl>
+    implements _$$CollectionsStateErrorImplCopyWith<$Res> {
+  __$$CollectionsStateErrorImplCopyWithImpl(_$CollectionsStateErrorImpl _value,
+      $Res Function(_$CollectionsStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -521,7 +528,7 @@ class __$$CollectionsStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$CollectionsStateError(
+    return _then(_$CollectionsStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -532,10 +539,10 @@ class __$$CollectionsStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionsStateError
+class _$CollectionsStateErrorImpl
     with DiagnosticableTreeMixin
     implements CollectionsStateError {
-  const _$CollectionsStateError([this.message]);
+  const _$CollectionsStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -557,7 +564,7 @@ class _$CollectionsStateError
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionsStateError &&
+            other is _$CollectionsStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -567,9 +574,9 @@ class _$CollectionsStateError
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CollectionsStateErrorCopyWith<_$CollectionsStateError> get copyWith =>
-      __$$CollectionsStateErrorCopyWithImpl<_$CollectionsStateError>(
-          this, _$identity);
+  _$$CollectionsStateErrorImplCopyWith<_$CollectionsStateErrorImpl>
+      get copyWith => __$$CollectionsStateErrorImplCopyWithImpl<
+          _$CollectionsStateErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -648,10 +655,10 @@ class _$CollectionsStateError
 
 abstract class CollectionsStateError implements CollectionsState {
   const factory CollectionsStateError([final String? message]) =
-      _$CollectionsStateError;
+      _$CollectionsStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$CollectionsStateErrorCopyWith<_$CollectionsStateError> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CollectionsStateErrorImplCopyWith<_$CollectionsStateErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

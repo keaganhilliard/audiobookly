@@ -87,27 +87,27 @@ class _$SeriesStateCopyWithImpl<$Res, $Val extends SeriesState>
 }
 
 /// @nodoc
-abstract class _$$SeriesStateInitialCopyWith<$Res> {
-  factory _$$SeriesStateInitialCopyWith(_$SeriesStateInitial value,
-          $Res Function(_$SeriesStateInitial) then) =
-      __$$SeriesStateInitialCopyWithImpl<$Res>;
+abstract class _$$SeriesStateInitialImplCopyWith<$Res> {
+  factory _$$SeriesStateInitialImplCopyWith(_$SeriesStateInitialImpl value,
+          $Res Function(_$SeriesStateInitialImpl) then) =
+      __$$SeriesStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SeriesStateInitialCopyWithImpl<$Res>
-    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateInitial>
-    implements _$$SeriesStateInitialCopyWith<$Res> {
-  __$$SeriesStateInitialCopyWithImpl(
-      _$SeriesStateInitial _value, $Res Function(_$SeriesStateInitial) _then)
+class __$$SeriesStateInitialImplCopyWithImpl<$Res>
+    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateInitialImpl>
+    implements _$$SeriesStateInitialImplCopyWith<$Res> {
+  __$$SeriesStateInitialImplCopyWithImpl(_$SeriesStateInitialImpl _value,
+      $Res Function(_$SeriesStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SeriesStateInitial
+class _$SeriesStateInitialImpl
     with DiagnosticableTreeMixin
     implements SeriesStateInitial {
-  const _$SeriesStateInitial();
+  const _$SeriesStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -123,7 +123,7 @@ class _$SeriesStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SeriesStateInitial);
+        (other.runtimeType == runtimeType && other is _$SeriesStateInitialImpl);
   }
 
   @override
@@ -205,24 +205,24 @@ class _$SeriesStateInitial
 }
 
 abstract class SeriesStateInitial implements SeriesState {
-  const factory SeriesStateInitial() = _$SeriesStateInitial;
+  const factory SeriesStateInitial() = _$SeriesStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$SeriesStateLoadedCopyWith<$Res> {
-  factory _$$SeriesStateLoadedCopyWith(
-          _$SeriesStateLoaded value, $Res Function(_$SeriesStateLoaded) then) =
-      __$$SeriesStateLoadedCopyWithImpl<$Res>;
+abstract class _$$SeriesStateLoadedImplCopyWith<$Res> {
+  factory _$$SeriesStateLoadedImplCopyWith(_$SeriesStateLoadedImpl value,
+          $Res Function(_$SeriesStateLoadedImpl) then) =
+      __$$SeriesStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<MediaItem>? series});
 }
 
 /// @nodoc
-class __$$SeriesStateLoadedCopyWithImpl<$Res>
-    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateLoaded>
-    implements _$$SeriesStateLoadedCopyWith<$Res> {
-  __$$SeriesStateLoadedCopyWithImpl(
-      _$SeriesStateLoaded _value, $Res Function(_$SeriesStateLoaded) _then)
+class __$$SeriesStateLoadedImplCopyWithImpl<$Res>
+    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateLoadedImpl>
+    implements _$$SeriesStateLoadedImplCopyWith<$Res> {
+  __$$SeriesStateLoadedImplCopyWithImpl(_$SeriesStateLoadedImpl _value,
+      $Res Function(_$SeriesStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -230,7 +230,7 @@ class __$$SeriesStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? series = freezed,
   }) {
-    return _then(_$SeriesStateLoaded(
+    return _then(_$SeriesStateLoadedImpl(
       series: freezed == series
           ? _value._series
           : series // ignore: cast_nullable_to_non_nullable
@@ -241,10 +241,11 @@ class __$$SeriesStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SeriesStateLoaded
+class _$SeriesStateLoadedImpl
     with DiagnosticableTreeMixin
     implements SeriesStateLoaded {
-  const _$SeriesStateLoaded({final List<MediaItem>? series}) : _series = series;
+  const _$SeriesStateLoadedImpl({final List<MediaItem>? series})
+      : _series = series;
 
   final List<MediaItem>? _series;
   @override
@@ -273,7 +274,7 @@ class _$SeriesStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SeriesStateLoaded &&
+            other is _$SeriesStateLoadedImpl &&
             const DeepCollectionEquality().equals(other._series, _series));
   }
 
@@ -284,8 +285,9 @@ class _$SeriesStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SeriesStateLoadedCopyWith<_$SeriesStateLoaded> get copyWith =>
-      __$$SeriesStateLoadedCopyWithImpl<_$SeriesStateLoaded>(this, _$identity);
+  _$$SeriesStateLoadedImplCopyWith<_$SeriesStateLoadedImpl> get copyWith =>
+      __$$SeriesStateLoadedImplCopyWithImpl<_$SeriesStateLoadedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -364,36 +366,36 @@ class _$SeriesStateLoaded
 
 abstract class SeriesStateLoaded implements SeriesState {
   const factory SeriesStateLoaded({final List<MediaItem>? series}) =
-      _$SeriesStateLoaded;
+      _$SeriesStateLoadedImpl;
 
   List<MediaItem>? get series;
   @JsonKey(ignore: true)
-  _$$SeriesStateLoadedCopyWith<_$SeriesStateLoaded> get copyWith =>
+  _$$SeriesStateLoadedImplCopyWith<_$SeriesStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SeriesStateLoadingCopyWith<$Res> {
-  factory _$$SeriesStateLoadingCopyWith(_$SeriesStateLoading value,
-          $Res Function(_$SeriesStateLoading) then) =
-      __$$SeriesStateLoadingCopyWithImpl<$Res>;
+abstract class _$$SeriesStateLoadingImplCopyWith<$Res> {
+  factory _$$SeriesStateLoadingImplCopyWith(_$SeriesStateLoadingImpl value,
+          $Res Function(_$SeriesStateLoadingImpl) then) =
+      __$$SeriesStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SeriesStateLoadingCopyWithImpl<$Res>
-    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateLoading>
-    implements _$$SeriesStateLoadingCopyWith<$Res> {
-  __$$SeriesStateLoadingCopyWithImpl(
-      _$SeriesStateLoading _value, $Res Function(_$SeriesStateLoading) _then)
+class __$$SeriesStateLoadingImplCopyWithImpl<$Res>
+    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateLoadingImpl>
+    implements _$$SeriesStateLoadingImplCopyWith<$Res> {
+  __$$SeriesStateLoadingImplCopyWithImpl(_$SeriesStateLoadingImpl _value,
+      $Res Function(_$SeriesStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SeriesStateLoading
+class _$SeriesStateLoadingImpl
     with DiagnosticableTreeMixin
     implements SeriesStateLoading {
-  const _$SeriesStateLoading();
+  const _$SeriesStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -409,7 +411,7 @@ class _$SeriesStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SeriesStateLoading);
+        (other.runtimeType == runtimeType && other is _$SeriesStateLoadingImpl);
   }
 
   @override
@@ -491,24 +493,26 @@ class _$SeriesStateLoading
 }
 
 abstract class SeriesStateLoading implements SeriesState {
-  const factory SeriesStateLoading() = _$SeriesStateLoading;
+  const factory SeriesStateLoading() = _$SeriesStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SeriesStateErrorDetailsCopyWith<$Res> {
-  factory _$$SeriesStateErrorDetailsCopyWith(_$SeriesStateErrorDetails value,
-          $Res Function(_$SeriesStateErrorDetails) then) =
-      __$$SeriesStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$SeriesStateErrorDetailsImplCopyWith<$Res> {
+  factory _$$SeriesStateErrorDetailsImplCopyWith(
+          _$SeriesStateErrorDetailsImpl value,
+          $Res Function(_$SeriesStateErrorDetailsImpl) then) =
+      __$$SeriesStateErrorDetailsImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$SeriesStateErrorDetailsCopyWithImpl<$Res>
-    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateErrorDetails>
-    implements _$$SeriesStateErrorDetailsCopyWith<$Res> {
-  __$$SeriesStateErrorDetailsCopyWithImpl(_$SeriesStateErrorDetails _value,
-      $Res Function(_$SeriesStateErrorDetails) _then)
+class __$$SeriesStateErrorDetailsImplCopyWithImpl<$Res>
+    extends _$SeriesStateCopyWithImpl<$Res, _$SeriesStateErrorDetailsImpl>
+    implements _$$SeriesStateErrorDetailsImplCopyWith<$Res> {
+  __$$SeriesStateErrorDetailsImplCopyWithImpl(
+      _$SeriesStateErrorDetailsImpl _value,
+      $Res Function(_$SeriesStateErrorDetailsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -516,7 +520,7 @@ class __$$SeriesStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$SeriesStateErrorDetails(
+    return _then(_$SeriesStateErrorDetailsImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -527,10 +531,10 @@ class __$$SeriesStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SeriesStateErrorDetails
+class _$SeriesStateErrorDetailsImpl
     with DiagnosticableTreeMixin
     implements SeriesStateErrorDetails {
-  const _$SeriesStateErrorDetails([this.message]);
+  const _$SeriesStateErrorDetailsImpl([this.message]);
 
   @override
   final String? message;
@@ -552,7 +556,7 @@ class _$SeriesStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SeriesStateErrorDetails &&
+            other is _$SeriesStateErrorDetailsImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -562,9 +566,9 @@ class _$SeriesStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SeriesStateErrorDetailsCopyWith<_$SeriesStateErrorDetails> get copyWith =>
-      __$$SeriesStateErrorDetailsCopyWithImpl<_$SeriesStateErrorDetails>(
-          this, _$identity);
+  _$$SeriesStateErrorDetailsImplCopyWith<_$SeriesStateErrorDetailsImpl>
+      get copyWith => __$$SeriesStateErrorDetailsImplCopyWithImpl<
+          _$SeriesStateErrorDetailsImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -643,10 +647,10 @@ class _$SeriesStateErrorDetails
 
 abstract class SeriesStateErrorDetails implements SeriesState {
   const factory SeriesStateErrorDetails([final String? message]) =
-      _$SeriesStateErrorDetails;
+      _$SeriesStateErrorDetailsImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$SeriesStateErrorDetailsCopyWith<_$SeriesStateErrorDetails> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SeriesStateErrorDetailsImplCopyWith<_$SeriesStateErrorDetailsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

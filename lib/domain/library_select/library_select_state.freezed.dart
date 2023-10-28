@@ -87,28 +87,30 @@ class _$LibrarySelectStateCopyWithImpl<$Res, $Val extends LibrarySelectState>
 }
 
 /// @nodoc
-abstract class _$$LibrarySelectStateInitialCopyWith<$Res> {
-  factory _$$LibrarySelectStateInitialCopyWith(
-          _$LibrarySelectStateInitial value,
-          $Res Function(_$LibrarySelectStateInitial) then) =
-      __$$LibrarySelectStateInitialCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateInitialImplCopyWith<$Res> {
+  factory _$$LibrarySelectStateInitialImplCopyWith(
+          _$LibrarySelectStateInitialImpl value,
+          $Res Function(_$LibrarySelectStateInitialImpl) then) =
+      __$$LibrarySelectStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LibrarySelectStateInitialCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateInitial>
-    implements _$$LibrarySelectStateInitialCopyWith<$Res> {
-  __$$LibrarySelectStateInitialCopyWithImpl(_$LibrarySelectStateInitial _value,
-      $Res Function(_$LibrarySelectStateInitial) _then)
+class __$$LibrarySelectStateInitialImplCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res,
+        _$LibrarySelectStateInitialImpl>
+    implements _$$LibrarySelectStateInitialImplCopyWith<$Res> {
+  __$$LibrarySelectStateInitialImplCopyWithImpl(
+      _$LibrarySelectStateInitialImpl _value,
+      $Res Function(_$LibrarySelectStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LibrarySelectStateInitial
+class _$LibrarySelectStateInitialImpl
     with DiagnosticableTreeMixin
     implements LibrarySelectStateInitial {
-  const _$LibrarySelectStateInitial();
+  const _$LibrarySelectStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -125,7 +127,7 @@ class _$LibrarySelectStateInitial
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LibrarySelectStateInitial);
+            other is _$LibrarySelectStateInitialImpl);
   }
 
   @override
@@ -207,24 +209,27 @@ class _$LibrarySelectStateInitial
 }
 
 abstract class LibrarySelectStateInitial implements LibrarySelectState {
-  const factory LibrarySelectStateInitial() = _$LibrarySelectStateInitial;
+  const factory LibrarySelectStateInitial() = _$LibrarySelectStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$LibrarySelectStateLoadedCopyWith<$Res> {
-  factory _$$LibrarySelectStateLoadedCopyWith(_$LibrarySelectStateLoaded value,
-          $Res Function(_$LibrarySelectStateLoaded) then) =
-      __$$LibrarySelectStateLoadedCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateLoadedImplCopyWith<$Res> {
+  factory _$$LibrarySelectStateLoadedImplCopyWith(
+          _$LibrarySelectStateLoadedImpl value,
+          $Res Function(_$LibrarySelectStateLoadedImpl) then) =
+      __$$LibrarySelectStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Library>? libraries});
 }
 
 /// @nodoc
-class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateLoaded>
-    implements _$$LibrarySelectStateLoadedCopyWith<$Res> {
-  __$$LibrarySelectStateLoadedCopyWithImpl(_$LibrarySelectStateLoaded _value,
-      $Res Function(_$LibrarySelectStateLoaded) _then)
+class __$$LibrarySelectStateLoadedImplCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res,
+        _$LibrarySelectStateLoadedImpl>
+    implements _$$LibrarySelectStateLoadedImplCopyWith<$Res> {
+  __$$LibrarySelectStateLoadedImplCopyWithImpl(
+      _$LibrarySelectStateLoadedImpl _value,
+      $Res Function(_$LibrarySelectStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -232,7 +237,7 @@ class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? libraries = freezed,
   }) {
-    return _then(_$LibrarySelectStateLoaded(
+    return _then(_$LibrarySelectStateLoadedImpl(
       libraries: freezed == libraries
           ? _value._libraries
           : libraries // ignore: cast_nullable_to_non_nullable
@@ -243,10 +248,10 @@ class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateLoaded
+class _$LibrarySelectStateLoadedImpl
     with DiagnosticableTreeMixin
     implements LibrarySelectStateLoaded {
-  const _$LibrarySelectStateLoaded({final List<Library>? libraries})
+  const _$LibrarySelectStateLoadedImpl({final List<Library>? libraries})
       : _libraries = libraries;
 
   final List<Library>? _libraries;
@@ -276,7 +281,7 @@ class _$LibrarySelectStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LibrarySelectStateLoaded &&
+            other is _$LibrarySelectStateLoadedImpl &&
             const DeepCollectionEquality()
                 .equals(other._libraries, _libraries));
   }
@@ -288,10 +293,9 @@ class _$LibrarySelectStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
-      get copyWith =>
-          __$$LibrarySelectStateLoadedCopyWithImpl<_$LibrarySelectStateLoaded>(
-              this, _$identity);
+  _$$LibrarySelectStateLoadedImplCopyWith<_$LibrarySelectStateLoadedImpl>
+      get copyWith => __$$LibrarySelectStateLoadedImplCopyWithImpl<
+          _$LibrarySelectStateLoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -370,37 +374,39 @@ class _$LibrarySelectStateLoaded
 
 abstract class LibrarySelectStateLoaded implements LibrarySelectState {
   const factory LibrarySelectStateLoaded({final List<Library>? libraries}) =
-      _$LibrarySelectStateLoaded;
+      _$LibrarySelectStateLoadedImpl;
 
   List<Library>? get libraries;
   @JsonKey(ignore: true)
-  _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
+  _$$LibrarySelectStateLoadedImplCopyWith<_$LibrarySelectStateLoadedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LibrarySelectStateLoadingCopyWith<$Res> {
-  factory _$$LibrarySelectStateLoadingCopyWith(
-          _$LibrarySelectStateLoading value,
-          $Res Function(_$LibrarySelectStateLoading) then) =
-      __$$LibrarySelectStateLoadingCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateLoadingImplCopyWith<$Res> {
+  factory _$$LibrarySelectStateLoadingImplCopyWith(
+          _$LibrarySelectStateLoadingImpl value,
+          $Res Function(_$LibrarySelectStateLoadingImpl) then) =
+      __$$LibrarySelectStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LibrarySelectStateLoadingCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateLoading>
-    implements _$$LibrarySelectStateLoadingCopyWith<$Res> {
-  __$$LibrarySelectStateLoadingCopyWithImpl(_$LibrarySelectStateLoading _value,
-      $Res Function(_$LibrarySelectStateLoading) _then)
+class __$$LibrarySelectStateLoadingImplCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res,
+        _$LibrarySelectStateLoadingImpl>
+    implements _$$LibrarySelectStateLoadingImplCopyWith<$Res> {
+  __$$LibrarySelectStateLoadingImplCopyWithImpl(
+      _$LibrarySelectStateLoadingImpl _value,
+      $Res Function(_$LibrarySelectStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LibrarySelectStateLoading
+class _$LibrarySelectStateLoadingImpl
     with DiagnosticableTreeMixin
     implements LibrarySelectStateLoading {
-  const _$LibrarySelectStateLoading();
+  const _$LibrarySelectStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -417,7 +423,7 @@ class _$LibrarySelectStateLoading
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LibrarySelectStateLoading);
+            other is _$LibrarySelectStateLoadingImpl);
   }
 
   @override
@@ -499,24 +505,27 @@ class _$LibrarySelectStateLoading
 }
 
 abstract class LibrarySelectStateLoading implements LibrarySelectState {
-  const factory LibrarySelectStateLoading() = _$LibrarySelectStateLoading;
+  const factory LibrarySelectStateLoading() = _$LibrarySelectStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$LibrarySelectStateErrorCopyWith<$Res> {
-  factory _$$LibrarySelectStateErrorCopyWith(_$LibrarySelectStateError value,
-          $Res Function(_$LibrarySelectStateError) then) =
-      __$$LibrarySelectStateErrorCopyWithImpl<$Res>;
+abstract class _$$LibrarySelectStateErrorImplCopyWith<$Res> {
+  factory _$$LibrarySelectStateErrorImplCopyWith(
+          _$LibrarySelectStateErrorImpl value,
+          $Res Function(_$LibrarySelectStateErrorImpl) then) =
+      __$$LibrarySelectStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$LibrarySelectStateErrorCopyWithImpl<$Res>
-    extends _$LibrarySelectStateCopyWithImpl<$Res, _$LibrarySelectStateError>
-    implements _$$LibrarySelectStateErrorCopyWith<$Res> {
-  __$$LibrarySelectStateErrorCopyWithImpl(_$LibrarySelectStateError _value,
-      $Res Function(_$LibrarySelectStateError) _then)
+class __$$LibrarySelectStateErrorImplCopyWithImpl<$Res>
+    extends _$LibrarySelectStateCopyWithImpl<$Res,
+        _$LibrarySelectStateErrorImpl>
+    implements _$$LibrarySelectStateErrorImplCopyWith<$Res> {
+  __$$LibrarySelectStateErrorImplCopyWithImpl(
+      _$LibrarySelectStateErrorImpl _value,
+      $Res Function(_$LibrarySelectStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -524,7 +533,7 @@ class __$$LibrarySelectStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$LibrarySelectStateError(
+    return _then(_$LibrarySelectStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -535,10 +544,10 @@ class __$$LibrarySelectStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LibrarySelectStateError
+class _$LibrarySelectStateErrorImpl
     with DiagnosticableTreeMixin
     implements LibrarySelectStateError {
-  const _$LibrarySelectStateError([this.message]);
+  const _$LibrarySelectStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -560,7 +569,7 @@ class _$LibrarySelectStateError
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LibrarySelectStateError &&
+            other is _$LibrarySelectStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -570,9 +579,9 @@ class _$LibrarySelectStateError
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LibrarySelectStateErrorCopyWith<_$LibrarySelectStateError> get copyWith =>
-      __$$LibrarySelectStateErrorCopyWithImpl<_$LibrarySelectStateError>(
-          this, _$identity);
+  _$$LibrarySelectStateErrorImplCopyWith<_$LibrarySelectStateErrorImpl>
+      get copyWith => __$$LibrarySelectStateErrorImplCopyWithImpl<
+          _$LibrarySelectStateErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -651,10 +660,10 @@ class _$LibrarySelectStateError
 
 abstract class LibrarySelectStateError implements LibrarySelectState {
   const factory LibrarySelectStateError([final String? message]) =
-      _$LibrarySelectStateError;
+      _$LibrarySelectStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$LibrarySelectStateErrorCopyWith<_$LibrarySelectStateError> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$LibrarySelectStateErrorImplCopyWith<_$LibrarySelectStateErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

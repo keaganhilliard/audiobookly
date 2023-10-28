@@ -98,27 +98,27 @@ class _$BooksStateCopyWithImpl<$Res, $Val extends BooksState>
 }
 
 /// @nodoc
-abstract class _$$BooksStateInitialCopyWith<$Res> {
-  factory _$$BooksStateInitialCopyWith(
-          _$BooksStateInitial value, $Res Function(_$BooksStateInitial) then) =
-      __$$BooksStateInitialCopyWithImpl<$Res>;
+abstract class _$$BooksStateInitialImplCopyWith<$Res> {
+  factory _$$BooksStateInitialImplCopyWith(_$BooksStateInitialImpl value,
+          $Res Function(_$BooksStateInitialImpl) then) =
+      __$$BooksStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$BooksStateInitialCopyWithImpl<$Res>
-    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateInitial>
-    implements _$$BooksStateInitialCopyWith<$Res> {
-  __$$BooksStateInitialCopyWithImpl(
-      _$BooksStateInitial _value, $Res Function(_$BooksStateInitial) _then)
+class __$$BooksStateInitialImplCopyWithImpl<$Res>
+    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateInitialImpl>
+    implements _$$BooksStateInitialImplCopyWith<$Res> {
+  __$$BooksStateInitialImplCopyWithImpl(_$BooksStateInitialImpl _value,
+      $Res Function(_$BooksStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$BooksStateInitial
+class _$BooksStateInitialImpl
     with DiagnosticableTreeMixin
     implements BooksStateInitial {
-  const _$BooksStateInitial();
+  const _$BooksStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -134,7 +134,7 @@ class _$BooksStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$BooksStateInitial);
+        (other.runtimeType == runtimeType && other is _$BooksStateInitialImpl);
   }
 
   @override
@@ -227,24 +227,24 @@ class _$BooksStateInitial
 }
 
 abstract class BooksStateInitial implements BooksState {
-  const factory BooksStateInitial() = _$BooksStateInitial;
+  const factory BooksStateInitial() = _$BooksStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$BooksStateLoadedCopyWith<$Res> {
-  factory _$$BooksStateLoadedCopyWith(
-          _$BooksStateLoaded value, $Res Function(_$BooksStateLoaded) then) =
-      __$$BooksStateLoadedCopyWithImpl<$Res>;
+abstract class _$$BooksStateLoadedImplCopyWith<$Res> {
+  factory _$$BooksStateLoadedImplCopyWith(_$BooksStateLoadedImpl value,
+          $Res Function(_$BooksStateLoadedImpl) then) =
+      __$$BooksStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<MediaItem>? books, String? currentParent, int totalItems});
 }
 
 /// @nodoc
-class __$$BooksStateLoadedCopyWithImpl<$Res>
-    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateLoaded>
-    implements _$$BooksStateLoadedCopyWith<$Res> {
-  __$$BooksStateLoadedCopyWithImpl(
-      _$BooksStateLoaded _value, $Res Function(_$BooksStateLoaded) _then)
+class __$$BooksStateLoadedImplCopyWithImpl<$Res>
+    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateLoadedImpl>
+    implements _$$BooksStateLoadedImplCopyWith<$Res> {
+  __$$BooksStateLoadedImplCopyWithImpl(_$BooksStateLoadedImpl _value,
+      $Res Function(_$BooksStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -254,7 +254,7 @@ class __$$BooksStateLoadedCopyWithImpl<$Res>
     Object? currentParent = freezed,
     Object? totalItems = null,
   }) {
-    return _then(_$BooksStateLoaded(
+    return _then(_$BooksStateLoadedImpl(
       books: freezed == books
           ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
@@ -273,10 +273,10 @@ class __$$BooksStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BooksStateLoaded
+class _$BooksStateLoadedImpl
     with DiagnosticableTreeMixin
     implements BooksStateLoaded {
-  const _$BooksStateLoaded(
+  const _$BooksStateLoadedImpl(
       {final List<MediaItem>? books, this.currentParent, this.totalItems = 0})
       : _books = books;
 
@@ -315,7 +315,7 @@ class _$BooksStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BooksStateLoaded &&
+            other is _$BooksStateLoadedImpl &&
             const DeepCollectionEquality().equals(other._books, _books) &&
             (identical(other.currentParent, currentParent) ||
                 other.currentParent == currentParent) &&
@@ -330,8 +330,9 @@ class _$BooksStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BooksStateLoadedCopyWith<_$BooksStateLoaded> get copyWith =>
-      __$$BooksStateLoadedCopyWithImpl<_$BooksStateLoaded>(this, _$identity);
+  _$$BooksStateLoadedImplCopyWith<_$BooksStateLoadedImpl> get copyWith =>
+      __$$BooksStateLoadedImplCopyWithImpl<_$BooksStateLoadedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -423,38 +424,38 @@ abstract class BooksStateLoaded implements BooksState {
   const factory BooksStateLoaded(
       {final List<MediaItem>? books,
       final String? currentParent,
-      final int totalItems}) = _$BooksStateLoaded;
+      final int totalItems}) = _$BooksStateLoadedImpl;
 
   List<MediaItem>? get books;
   String? get currentParent;
   int get totalItems;
   @JsonKey(ignore: true)
-  _$$BooksStateLoadedCopyWith<_$BooksStateLoaded> get copyWith =>
+  _$$BooksStateLoadedImplCopyWith<_$BooksStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$BooksStateLoadingCopyWith<$Res> {
-  factory _$$BooksStateLoadingCopyWith(
-          _$BooksStateLoading value, $Res Function(_$BooksStateLoading) then) =
-      __$$BooksStateLoadingCopyWithImpl<$Res>;
+abstract class _$$BooksStateLoadingImplCopyWith<$Res> {
+  factory _$$BooksStateLoadingImplCopyWith(_$BooksStateLoadingImpl value,
+          $Res Function(_$BooksStateLoadingImpl) then) =
+      __$$BooksStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$BooksStateLoadingCopyWithImpl<$Res>
-    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateLoading>
-    implements _$$BooksStateLoadingCopyWith<$Res> {
-  __$$BooksStateLoadingCopyWithImpl(
-      _$BooksStateLoading _value, $Res Function(_$BooksStateLoading) _then)
+class __$$BooksStateLoadingImplCopyWithImpl<$Res>
+    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateLoadingImpl>
+    implements _$$BooksStateLoadingImplCopyWith<$Res> {
+  __$$BooksStateLoadingImplCopyWithImpl(_$BooksStateLoadingImpl _value,
+      $Res Function(_$BooksStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$BooksStateLoading
+class _$BooksStateLoadingImpl
     with DiagnosticableTreeMixin
     implements BooksStateLoading {
-  const _$BooksStateLoading();
+  const _$BooksStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -470,7 +471,7 @@ class _$BooksStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$BooksStateLoading);
+        (other.runtimeType == runtimeType && other is _$BooksStateLoadingImpl);
   }
 
   @override
@@ -563,24 +564,24 @@ class _$BooksStateLoading
 }
 
 abstract class BooksStateLoading implements BooksState {
-  const factory BooksStateLoading() = _$BooksStateLoading;
+  const factory BooksStateLoading() = _$BooksStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$BooksStateErrorCopyWith<$Res> {
-  factory _$$BooksStateErrorCopyWith(
-          _$BooksStateError value, $Res Function(_$BooksStateError) then) =
-      __$$BooksStateErrorCopyWithImpl<$Res>;
+abstract class _$$BooksStateErrorImplCopyWith<$Res> {
+  factory _$$BooksStateErrorImplCopyWith(_$BooksStateErrorImpl value,
+          $Res Function(_$BooksStateErrorImpl) then) =
+      __$$BooksStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message, String? errorDetails, String? stackTrace});
 }
 
 /// @nodoc
-class __$$BooksStateErrorCopyWithImpl<$Res>
-    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateError>
-    implements _$$BooksStateErrorCopyWith<$Res> {
-  __$$BooksStateErrorCopyWithImpl(
-      _$BooksStateError _value, $Res Function(_$BooksStateError) _then)
+class __$$BooksStateErrorImplCopyWithImpl<$Res>
+    extends _$BooksStateCopyWithImpl<$Res, _$BooksStateErrorImpl>
+    implements _$$BooksStateErrorImplCopyWith<$Res> {
+  __$$BooksStateErrorImplCopyWithImpl(
+      _$BooksStateErrorImpl _value, $Res Function(_$BooksStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -590,7 +591,7 @@ class __$$BooksStateErrorCopyWithImpl<$Res>
     Object? errorDetails = freezed,
     Object? stackTrace = freezed,
   }) {
-    return _then(_$BooksStateError(
+    return _then(_$BooksStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -609,10 +610,11 @@ class __$$BooksStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BooksStateError
+class _$BooksStateErrorImpl
     with DiagnosticableTreeMixin
     implements BooksStateError {
-  const _$BooksStateError([this.message, this.errorDetails, this.stackTrace]);
+  const _$BooksStateErrorImpl(
+      [this.message, this.errorDetails, this.stackTrace]);
 
   @override
   final String? message;
@@ -640,7 +642,7 @@ class _$BooksStateError
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BooksStateError &&
+            other is _$BooksStateErrorImpl &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.errorDetails, errorDetails) ||
                 other.errorDetails == errorDetails) &&
@@ -655,8 +657,9 @@ class _$BooksStateError
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BooksStateErrorCopyWith<_$BooksStateError> get copyWith =>
-      __$$BooksStateErrorCopyWithImpl<_$BooksStateError>(this, _$identity);
+  _$$BooksStateErrorImplCopyWith<_$BooksStateErrorImpl> get copyWith =>
+      __$$BooksStateErrorImplCopyWithImpl<_$BooksStateErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -748,12 +751,12 @@ abstract class BooksStateError implements BooksState {
   const factory BooksStateError(
       [final String? message,
       final String? errorDetails,
-      final String? stackTrace]) = _$BooksStateError;
+      final String? stackTrace]) = _$BooksStateErrorImpl;
 
   String? get message;
   String? get errorDetails;
   String? get stackTrace;
   @JsonKey(ignore: true)
-  _$$BooksStateErrorCopyWith<_$BooksStateError> get copyWith =>
+  _$$BooksStateErrorImplCopyWith<_$BooksStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

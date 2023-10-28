@@ -105,11 +105,11 @@ class _$AbsPlaylistCopyWithImpl<$Res, $Val extends AbsPlaylist>
 }
 
 /// @nodoc
-abstract class _$$_AbsPlaylistCopyWith<$Res>
+abstract class _$$AbsPlaylistImplCopyWith<$Res>
     implements $AbsPlaylistCopyWith<$Res> {
-  factory _$$_AbsPlaylistCopyWith(
-          _$_AbsPlaylist value, $Res Function(_$_AbsPlaylist) then) =
-      __$$_AbsPlaylistCopyWithImpl<$Res>;
+  factory _$$AbsPlaylistImplCopyWith(
+          _$AbsPlaylistImpl value, $Res Function(_$AbsPlaylistImpl) then) =
+      __$$AbsPlaylistImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -123,11 +123,11 @@ abstract class _$$_AbsPlaylistCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AbsPlaylistCopyWithImpl<$Res>
-    extends _$AbsPlaylistCopyWithImpl<$Res, _$_AbsPlaylist>
-    implements _$$_AbsPlaylistCopyWith<$Res> {
-  __$$_AbsPlaylistCopyWithImpl(
-      _$_AbsPlaylist _value, $Res Function(_$_AbsPlaylist) _then)
+class __$$AbsPlaylistImplCopyWithImpl<$Res>
+    extends _$AbsPlaylistCopyWithImpl<$Res, _$AbsPlaylistImpl>
+    implements _$$AbsPlaylistImplCopyWith<$Res> {
+  __$$AbsPlaylistImplCopyWithImpl(
+      _$AbsPlaylistImpl _value, $Res Function(_$AbsPlaylistImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -141,7 +141,7 @@ class __$$_AbsPlaylistCopyWithImpl<$Res>
     Object? coverPath = freezed,
     Object? items = null,
   }) {
-    return _then(_$_AbsPlaylist(
+    return _then(_$AbsPlaylistImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -176,8 +176,8 @@ class __$$_AbsPlaylistCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsPlaylist implements _AbsPlaylist {
-  const _$_AbsPlaylist(
+class _$AbsPlaylistImpl implements _AbsPlaylist {
+  const _$AbsPlaylistImpl(
       {required this.id,
       required this.libraryId,
       required this.userId,
@@ -187,8 +187,8 @@ class _$_AbsPlaylist implements _AbsPlaylist {
       required final List<Item> items})
       : _items = items;
 
-  factory _$_AbsPlaylist.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsPlaylistFromJson(json);
+  factory _$AbsPlaylistImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsPlaylistImplFromJson(json);
 
   @override
   final String id;
@@ -219,7 +219,7 @@ class _$_AbsPlaylist implements _AbsPlaylist {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsPlaylist &&
+            other is _$AbsPlaylistImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.libraryId, libraryId) ||
                 other.libraryId == libraryId) &&
@@ -240,12 +240,12 @@ class _$_AbsPlaylist implements _AbsPlaylist {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsPlaylistCopyWith<_$_AbsPlaylist> get copyWith =>
-      __$$_AbsPlaylistCopyWithImpl<_$_AbsPlaylist>(this, _$identity);
+  _$$AbsPlaylistImplCopyWith<_$AbsPlaylistImpl> get copyWith =>
+      __$$AbsPlaylistImplCopyWithImpl<_$AbsPlaylistImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsPlaylistToJson(
+    return _$$AbsPlaylistImplToJson(
       this,
     );
   }
@@ -259,10 +259,10 @@ abstract class _AbsPlaylist implements AbsPlaylist {
       required final String name,
       final String? description,
       final String? coverPath,
-      required final List<Item> items}) = _$_AbsPlaylist;
+      required final List<Item> items}) = _$AbsPlaylistImpl;
 
   factory _AbsPlaylist.fromJson(Map<String, dynamic> json) =
-      _$_AbsPlaylist.fromJson;
+      _$AbsPlaylistImpl.fromJson;
 
   @override
   String get id;
@@ -280,7 +280,7 @@ abstract class _AbsPlaylist implements AbsPlaylist {
   List<Item> get items;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsPlaylistCopyWith<_$_AbsPlaylist> get copyWith =>
+  _$$AbsPlaylistImplCopyWith<_$AbsPlaylistImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -353,9 +353,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
 }
 
 /// @nodoc
-abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
-  factory _$$_ItemCopyWith(_$_Item value, $Res Function(_$_Item) then) =
-      __$$_ItemCopyWithImpl<$Res>;
+abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
+  factory _$$ItemImplCopyWith(
+          _$ItemImpl value, $Res Function(_$ItemImpl) then) =
+      __$$ItemImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -366,9 +367,10 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
-    implements _$$_ItemCopyWith<$Res> {
-  __$$_ItemCopyWithImpl(_$_Item _value, $Res Function(_$_Item) _then)
+class __$$ItemImplCopyWithImpl<$Res>
+    extends _$ItemCopyWithImpl<$Res, _$ItemImpl>
+    implements _$$ItemImplCopyWith<$Res> {
+  __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -378,7 +380,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
     Object? episodeId = freezed,
     Object? libraryItem = null,
   }) {
-    return _then(_$_Item(
+    return _then(_$ItemImpl(
       libraryItemId: freezed == libraryItemId
           ? _value.libraryItemId
           : libraryItemId // ignore: cast_nullable_to_non_nullable
@@ -397,11 +399,12 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Item implements _Item {
-  const _$_Item(
+class _$ItemImpl implements _Item {
+  const _$ItemImpl(
       {this.libraryItemId, this.episodeId, required this.libraryItem});
 
-  factory _$_Item.fromJson(Map<String, dynamic> json) => _$$_ItemFromJson(json);
+  factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemImplFromJson(json);
 
   @override
   final String? libraryItemId;
@@ -419,7 +422,7 @@ class _$_Item implements _Item {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Item &&
+            other is _$ItemImpl &&
             (identical(other.libraryItemId, libraryItemId) ||
                 other.libraryItemId == libraryItemId) &&
             (identical(other.episodeId, episodeId) ||
@@ -436,12 +439,12 @@ class _$_Item implements _Item {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemCopyWith<_$_Item> get copyWith =>
-      __$$_ItemCopyWithImpl<_$_Item>(this, _$identity);
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      __$$ItemImplCopyWithImpl<_$ItemImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemToJson(
+    return _$$ItemImplToJson(
       this,
     );
   }
@@ -451,9 +454,9 @@ abstract class _Item implements Item {
   const factory _Item(
       {final String? libraryItemId,
       final String? episodeId,
-      required final AbsAudiobook libraryItem}) = _$_Item;
+      required final AbsAudiobook libraryItem}) = _$ItemImpl;
 
-  factory _Item.fromJson(Map<String, dynamic> json) = _$_Item.fromJson;
+  factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
   @override
   String? get libraryItemId;
@@ -463,5 +466,6 @@ abstract class _Item implements Item {
   AbsAudiobook get libraryItem;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemCopyWith<_$_Item> get copyWith => throw _privateConstructorUsedError;
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

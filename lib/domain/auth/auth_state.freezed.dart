@@ -92,27 +92,27 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
 }
 
 /// @nodoc
-abstract class _$$AuthStateInitialCopyWith<$Res> {
-  factory _$$AuthStateInitialCopyWith(
-          _$AuthStateInitial value, $Res Function(_$AuthStateInitial) then) =
-      __$$AuthStateInitialCopyWithImpl<$Res>;
+abstract class _$$AuthStateInitialImplCopyWith<$Res> {
+  factory _$$AuthStateInitialImplCopyWith(_$AuthStateInitialImpl value,
+          $Res Function(_$AuthStateInitialImpl) then) =
+      __$$AuthStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$AuthStateInitialCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateInitial>
-    implements _$$AuthStateInitialCopyWith<$Res> {
-  __$$AuthStateInitialCopyWithImpl(
-      _$AuthStateInitial _value, $Res Function(_$AuthStateInitial) _then)
+class __$$AuthStateInitialImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateInitialImpl>
+    implements _$$AuthStateInitialImplCopyWith<$Res> {
+  __$$AuthStateInitialImplCopyWithImpl(_$AuthStateInitialImpl _value,
+      $Res Function(_$AuthStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthStateInitial
+class _$AuthStateInitialImpl
     with DiagnosticableTreeMixin
     implements AuthStateInitial {
-  const _$AuthStateInitial();
+  const _$AuthStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -128,7 +128,7 @@ class _$AuthStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthStateInitial);
+        (other.runtimeType == runtimeType && other is _$AuthStateInitialImpl);
   }
 
   @override
@@ -216,24 +216,24 @@ class _$AuthStateInitial
 }
 
 abstract class AuthStateInitial implements AuthState {
-  const factory AuthStateInitial() = _$AuthStateInitial;
+  const factory AuthStateInitial() = _$AuthStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$AuthStateLoadedCopyWith<$Res> {
-  factory _$$AuthStateLoadedCopyWith(
-          _$AuthStateLoaded value, $Res Function(_$AuthStateLoaded) then) =
-      __$$AuthStateLoadedCopyWithImpl<$Res>;
+abstract class _$$AuthStateLoadedImplCopyWith<$Res> {
+  factory _$$AuthStateLoadedImplCopyWith(_$AuthStateLoadedImpl value,
+          $Res Function(_$AuthStateLoadedImpl) then) =
+      __$$AuthStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User? user});
 }
 
 /// @nodoc
-class __$$AuthStateLoadedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateLoaded>
-    implements _$$AuthStateLoadedCopyWith<$Res> {
-  __$$AuthStateLoadedCopyWithImpl(
-      _$AuthStateLoaded _value, $Res Function(_$AuthStateLoaded) _then)
+class __$$AuthStateLoadedImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateLoadedImpl>
+    implements _$$AuthStateLoadedImplCopyWith<$Res> {
+  __$$AuthStateLoadedImplCopyWithImpl(
+      _$AuthStateLoadedImpl _value, $Res Function(_$AuthStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -241,7 +241,7 @@ class __$$AuthStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? user = freezed,
   }) {
-    return _then(_$AuthStateLoaded(
+    return _then(_$AuthStateLoadedImpl(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -252,10 +252,10 @@ class __$$AuthStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateLoaded
+class _$AuthStateLoadedImpl
     with DiagnosticableTreeMixin
     implements AuthStateLoaded {
-  const _$AuthStateLoaded({this.user});
+  const _$AuthStateLoadedImpl({this.user});
 
   @override
   final User? user;
@@ -277,7 +277,7 @@ class _$AuthStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthStateLoaded &&
+            other is _$AuthStateLoadedImpl &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -287,8 +287,9 @@ class _$AuthStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthStateLoadedCopyWith<_$AuthStateLoaded> get copyWith =>
-      __$$AuthStateLoadedCopyWithImpl<_$AuthStateLoaded>(this, _$identity);
+  _$$AuthStateLoadedImplCopyWith<_$AuthStateLoadedImpl> get copyWith =>
+      __$$AuthStateLoadedImplCopyWithImpl<_$AuthStateLoadedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -372,36 +373,36 @@ class _$AuthStateLoaded
 }
 
 abstract class AuthStateLoaded implements AuthState {
-  const factory AuthStateLoaded({final User? user}) = _$AuthStateLoaded;
+  const factory AuthStateLoaded({final User? user}) = _$AuthStateLoadedImpl;
 
   User? get user;
   @JsonKey(ignore: true)
-  _$$AuthStateLoadedCopyWith<_$AuthStateLoaded> get copyWith =>
+  _$$AuthStateLoadedImplCopyWith<_$AuthStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AuthStateLoadingCopyWith<$Res> {
-  factory _$$AuthStateLoadingCopyWith(
-          _$AuthStateLoading value, $Res Function(_$AuthStateLoading) then) =
-      __$$AuthStateLoadingCopyWithImpl<$Res>;
+abstract class _$$AuthStateLoadingImplCopyWith<$Res> {
+  factory _$$AuthStateLoadingImplCopyWith(_$AuthStateLoadingImpl value,
+          $Res Function(_$AuthStateLoadingImpl) then) =
+      __$$AuthStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$AuthStateLoadingCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateLoading>
-    implements _$$AuthStateLoadingCopyWith<$Res> {
-  __$$AuthStateLoadingCopyWithImpl(
-      _$AuthStateLoading _value, $Res Function(_$AuthStateLoading) _then)
+class __$$AuthStateLoadingImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateLoadingImpl>
+    implements _$$AuthStateLoadingImplCopyWith<$Res> {
+  __$$AuthStateLoadingImplCopyWithImpl(_$AuthStateLoadingImpl _value,
+      $Res Function(_$AuthStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthStateLoading
+class _$AuthStateLoadingImpl
     with DiagnosticableTreeMixin
     implements AuthStateLoading {
-  const _$AuthStateLoading();
+  const _$AuthStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -417,7 +418,7 @@ class _$AuthStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthStateLoading);
+        (other.runtimeType == runtimeType && other is _$AuthStateLoadingImpl);
   }
 
   @override
@@ -505,31 +506,31 @@ class _$AuthStateLoading
 }
 
 abstract class AuthStateLoading implements AuthState {
-  const factory AuthStateLoading() = _$AuthStateLoading;
+  const factory AuthStateLoading() = _$AuthStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$AuthStateOfflineCopyWith<$Res> {
-  factory _$$AuthStateOfflineCopyWith(
-          _$AuthStateOffline value, $Res Function(_$AuthStateOffline) then) =
-      __$$AuthStateOfflineCopyWithImpl<$Res>;
+abstract class _$$AuthStateOfflineImplCopyWith<$Res> {
+  factory _$$AuthStateOfflineImplCopyWith(_$AuthStateOfflineImpl value,
+          $Res Function(_$AuthStateOfflineImpl) then) =
+      __$$AuthStateOfflineImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$AuthStateOfflineCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateOffline>
-    implements _$$AuthStateOfflineCopyWith<$Res> {
-  __$$AuthStateOfflineCopyWithImpl(
-      _$AuthStateOffline _value, $Res Function(_$AuthStateOffline) _then)
+class __$$AuthStateOfflineImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateOfflineImpl>
+    implements _$$AuthStateOfflineImplCopyWith<$Res> {
+  __$$AuthStateOfflineImplCopyWithImpl(_$AuthStateOfflineImpl _value,
+      $Res Function(_$AuthStateOfflineImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AuthStateOffline
+class _$AuthStateOfflineImpl
     with DiagnosticableTreeMixin
     implements AuthStateOffline {
-  const _$AuthStateOffline();
+  const _$AuthStateOfflineImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -545,7 +546,7 @@ class _$AuthStateOffline
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthStateOffline);
+        (other.runtimeType == runtimeType && other is _$AuthStateOfflineImpl);
   }
 
   @override
@@ -633,24 +634,24 @@ class _$AuthStateOffline
 }
 
 abstract class AuthStateOffline implements AuthState {
-  const factory AuthStateOffline() = _$AuthStateOffline;
+  const factory AuthStateOffline() = _$AuthStateOfflineImpl;
 }
 
 /// @nodoc
-abstract class _$$AuthStateErrorCopyWith<$Res> {
-  factory _$$AuthStateErrorCopyWith(
-          _$AuthStateError value, $Res Function(_$AuthStateError) then) =
-      __$$AuthStateErrorCopyWithImpl<$Res>;
+abstract class _$$AuthStateErrorImplCopyWith<$Res> {
+  factory _$$AuthStateErrorImplCopyWith(_$AuthStateErrorImpl value,
+          $Res Function(_$AuthStateErrorImpl) then) =
+      __$$AuthStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$AuthStateErrorCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateError>
-    implements _$$AuthStateErrorCopyWith<$Res> {
-  __$$AuthStateErrorCopyWithImpl(
-      _$AuthStateError _value, $Res Function(_$AuthStateError) _then)
+class __$$AuthStateErrorImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthStateErrorImpl>
+    implements _$$AuthStateErrorImplCopyWith<$Res> {
+  __$$AuthStateErrorImplCopyWithImpl(
+      _$AuthStateErrorImpl _value, $Res Function(_$AuthStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -658,7 +659,7 @@ class __$$AuthStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$AuthStateError(
+    return _then(_$AuthStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -669,8 +670,10 @@ class __$$AuthStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthStateError with DiagnosticableTreeMixin implements AuthStateError {
-  const _$AuthStateError([this.message]);
+class _$AuthStateErrorImpl
+    with DiagnosticableTreeMixin
+    implements AuthStateError {
+  const _$AuthStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -692,7 +695,7 @@ class _$AuthStateError with DiagnosticableTreeMixin implements AuthStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthStateError &&
+            other is _$AuthStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -702,8 +705,9 @@ class _$AuthStateError with DiagnosticableTreeMixin implements AuthStateError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthStateErrorCopyWith<_$AuthStateError> get copyWith =>
-      __$$AuthStateErrorCopyWithImpl<_$AuthStateError>(this, _$identity);
+  _$$AuthStateErrorImplCopyWith<_$AuthStateErrorImpl> get copyWith =>
+      __$$AuthStateErrorImplCopyWithImpl<_$AuthStateErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -787,10 +791,10 @@ class _$AuthStateError with DiagnosticableTreeMixin implements AuthStateError {
 }
 
 abstract class AuthStateError implements AuthState {
-  const factory AuthStateError([final String? message]) = _$AuthStateError;
+  const factory AuthStateError([final String? message]) = _$AuthStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$AuthStateErrorCopyWith<_$AuthStateError> get copyWith =>
+  _$$AuthStateErrorImplCopyWith<_$AuthStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

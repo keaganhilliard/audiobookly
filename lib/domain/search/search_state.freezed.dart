@@ -93,27 +93,27 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
 }
 
 /// @nodoc
-abstract class _$$SearchStateInitialCopyWith<$Res> {
-  factory _$$SearchStateInitialCopyWith(_$SearchStateInitial value,
-          $Res Function(_$SearchStateInitial) then) =
-      __$$SearchStateInitialCopyWithImpl<$Res>;
+abstract class _$$SearchStateInitialImplCopyWith<$Res> {
+  factory _$$SearchStateInitialImplCopyWith(_$SearchStateInitialImpl value,
+          $Res Function(_$SearchStateInitialImpl) then) =
+      __$$SearchStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SearchStateInitialCopyWithImpl<$Res>
-    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateInitial>
-    implements _$$SearchStateInitialCopyWith<$Res> {
-  __$$SearchStateInitialCopyWithImpl(
-      _$SearchStateInitial _value, $Res Function(_$SearchStateInitial) _then)
+class __$$SearchStateInitialImplCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateInitialImpl>
+    implements _$$SearchStateInitialImplCopyWith<$Res> {
+  __$$SearchStateInitialImplCopyWithImpl(_$SearchStateInitialImpl _value,
+      $Res Function(_$SearchStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SearchStateInitial
+class _$SearchStateInitialImpl
     with DiagnosticableTreeMixin
     implements SearchStateInitial {
-  const _$SearchStateInitial();
+  const _$SearchStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -129,7 +129,7 @@ class _$SearchStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SearchStateInitial);
+        (other.runtimeType == runtimeType && other is _$SearchStateInitialImpl);
   }
 
   @override
@@ -217,14 +217,14 @@ class _$SearchStateInitial
 }
 
 abstract class SearchStateInitial implements SearchState {
-  const factory SearchStateInitial() = _$SearchStateInitial;
+  const factory SearchStateInitial() = _$SearchStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$SearchStateLoadedCopyWith<$Res> {
-  factory _$$SearchStateLoadedCopyWith(
-          _$SearchStateLoaded value, $Res Function(_$SearchStateLoaded) then) =
-      __$$SearchStateLoadedCopyWithImpl<$Res>;
+abstract class _$$SearchStateLoadedImplCopyWith<$Res> {
+  factory _$$SearchStateLoadedImplCopyWith(_$SearchStateLoadedImpl value,
+          $Res Function(_$SearchStateLoadedImpl) then) =
+      __$$SearchStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {List<MediaItem>? authorResults,
@@ -233,11 +233,11 @@ abstract class _$$SearchStateLoadedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$SearchStateLoadedCopyWithImpl<$Res>
-    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateLoaded>
-    implements _$$SearchStateLoadedCopyWith<$Res> {
-  __$$SearchStateLoadedCopyWithImpl(
-      _$SearchStateLoaded _value, $Res Function(_$SearchStateLoaded) _then)
+class __$$SearchStateLoadedImplCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateLoadedImpl>
+    implements _$$SearchStateLoadedImplCopyWith<$Res> {
+  __$$SearchStateLoadedImplCopyWithImpl(_$SearchStateLoadedImpl _value,
+      $Res Function(_$SearchStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -247,7 +247,7 @@ class __$$SearchStateLoadedCopyWithImpl<$Res>
     Object? bookResults = freezed,
     Object? seriesResults = freezed,
   }) {
-    return _then(_$SearchStateLoaded(
+    return _then(_$SearchStateLoadedImpl(
       authorResults: freezed == authorResults
           ? _value._authorResults
           : authorResults // ignore: cast_nullable_to_non_nullable
@@ -266,10 +266,10 @@ class __$$SearchStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SearchStateLoaded
+class _$SearchStateLoadedImpl
     with DiagnosticableTreeMixin
     implements SearchStateLoaded {
-  const _$SearchStateLoaded(
+  const _$SearchStateLoadedImpl(
       {final List<MediaItem>? authorResults,
       final List<MediaItem>? bookResults,
       final List<MediaItem>? seriesResults})
@@ -326,7 +326,7 @@ class _$SearchStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SearchStateLoaded &&
+            other is _$SearchStateLoadedImpl &&
             const DeepCollectionEquality()
                 .equals(other._authorResults, _authorResults) &&
             const DeepCollectionEquality()
@@ -345,8 +345,9 @@ class _$SearchStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SearchStateLoadedCopyWith<_$SearchStateLoaded> get copyWith =>
-      __$$SearchStateLoadedCopyWithImpl<_$SearchStateLoaded>(this, _$identity);
+  _$$SearchStateLoadedImplCopyWith<_$SearchStateLoadedImpl> get copyWith =>
+      __$$SearchStateLoadedImplCopyWithImpl<_$SearchStateLoadedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -433,38 +434,38 @@ abstract class SearchStateLoaded implements SearchState {
   const factory SearchStateLoaded(
       {final List<MediaItem>? authorResults,
       final List<MediaItem>? bookResults,
-      final List<MediaItem>? seriesResults}) = _$SearchStateLoaded;
+      final List<MediaItem>? seriesResults}) = _$SearchStateLoadedImpl;
 
   List<MediaItem>? get authorResults;
   List<MediaItem>? get bookResults;
   List<MediaItem>? get seriesResults;
   @JsonKey(ignore: true)
-  _$$SearchStateLoadedCopyWith<_$SearchStateLoaded> get copyWith =>
+  _$$SearchStateLoadedImplCopyWith<_$SearchStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SearchStateLoadingCopyWith<$Res> {
-  factory _$$SearchStateLoadingCopyWith(_$SearchStateLoading value,
-          $Res Function(_$SearchStateLoading) then) =
-      __$$SearchStateLoadingCopyWithImpl<$Res>;
+abstract class _$$SearchStateLoadingImplCopyWith<$Res> {
+  factory _$$SearchStateLoadingImplCopyWith(_$SearchStateLoadingImpl value,
+          $Res Function(_$SearchStateLoadingImpl) then) =
+      __$$SearchStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SearchStateLoadingCopyWithImpl<$Res>
-    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateLoading>
-    implements _$$SearchStateLoadingCopyWith<$Res> {
-  __$$SearchStateLoadingCopyWithImpl(
-      _$SearchStateLoading _value, $Res Function(_$SearchStateLoading) _then)
+class __$$SearchStateLoadingImplCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateLoadingImpl>
+    implements _$$SearchStateLoadingImplCopyWith<$Res> {
+  __$$SearchStateLoadingImplCopyWithImpl(_$SearchStateLoadingImpl _value,
+      $Res Function(_$SearchStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SearchStateLoading
+class _$SearchStateLoadingImpl
     with DiagnosticableTreeMixin
     implements SearchStateLoading {
-  const _$SearchStateLoading();
+  const _$SearchStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -480,7 +481,7 @@ class _$SearchStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SearchStateLoading);
+        (other.runtimeType == runtimeType && other is _$SearchStateLoadingImpl);
   }
 
   @override
@@ -568,24 +569,26 @@ class _$SearchStateLoading
 }
 
 abstract class SearchStateLoading implements SearchState {
-  const factory SearchStateLoading() = _$SearchStateLoading;
+  const factory SearchStateLoading() = _$SearchStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SearchStateErrorDetailsCopyWith<$Res> {
-  factory _$$SearchStateErrorDetailsCopyWith(_$SearchStateErrorDetails value,
-          $Res Function(_$SearchStateErrorDetails) then) =
-      __$$SearchStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$SearchStateErrorDetailsImplCopyWith<$Res> {
+  factory _$$SearchStateErrorDetailsImplCopyWith(
+          _$SearchStateErrorDetailsImpl value,
+          $Res Function(_$SearchStateErrorDetailsImpl) then) =
+      __$$SearchStateErrorDetailsImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$SearchStateErrorDetailsCopyWithImpl<$Res>
-    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateErrorDetails>
-    implements _$$SearchStateErrorDetailsCopyWith<$Res> {
-  __$$SearchStateErrorDetailsCopyWithImpl(_$SearchStateErrorDetails _value,
-      $Res Function(_$SearchStateErrorDetails) _then)
+class __$$SearchStateErrorDetailsImplCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateErrorDetailsImpl>
+    implements _$$SearchStateErrorDetailsImplCopyWith<$Res> {
+  __$$SearchStateErrorDetailsImplCopyWithImpl(
+      _$SearchStateErrorDetailsImpl _value,
+      $Res Function(_$SearchStateErrorDetailsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -593,7 +596,7 @@ class __$$SearchStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$SearchStateErrorDetails(
+    return _then(_$SearchStateErrorDetailsImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -604,10 +607,10 @@ class __$$SearchStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SearchStateErrorDetails
+class _$SearchStateErrorDetailsImpl
     with DiagnosticableTreeMixin
     implements SearchStateErrorDetails {
-  const _$SearchStateErrorDetails([this.message]);
+  const _$SearchStateErrorDetailsImpl([this.message]);
 
   @override
   final String? message;
@@ -629,7 +632,7 @@ class _$SearchStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SearchStateErrorDetails &&
+            other is _$SearchStateErrorDetailsImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -639,9 +642,9 @@ class _$SearchStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SearchStateErrorDetailsCopyWith<_$SearchStateErrorDetails> get copyWith =>
-      __$$SearchStateErrorDetailsCopyWithImpl<_$SearchStateErrorDetails>(
-          this, _$identity);
+  _$$SearchStateErrorDetailsImplCopyWith<_$SearchStateErrorDetailsImpl>
+      get copyWith => __$$SearchStateErrorDetailsImplCopyWithImpl<
+          _$SearchStateErrorDetailsImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -726,10 +729,10 @@ class _$SearchStateErrorDetails
 
 abstract class SearchStateErrorDetails implements SearchState {
   const factory SearchStateErrorDetails([final String? message]) =
-      _$SearchStateErrorDetails;
+      _$SearchStateErrorDetailsImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$SearchStateErrorDetailsCopyWith<_$SearchStateErrorDetails> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SearchStateErrorDetailsImplCopyWith<_$SearchStateErrorDetailsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

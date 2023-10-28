@@ -94,11 +94,11 @@ class _$AbsPlayItemRequestCopyWithImpl<$Res, $Val extends AbsPlayItemRequest>
 }
 
 /// @nodoc
-abstract class _$$_AbsPlayItemRequestCopyWith<$Res>
+abstract class _$$AbsPlayItemRequestImplCopyWith<$Res>
     implements $AbsPlayItemRequestCopyWith<$Res> {
-  factory _$$_AbsPlayItemRequestCopyWith(_$_AbsPlayItemRequest value,
-          $Res Function(_$_AbsPlayItemRequest) then) =
-      __$$_AbsPlayItemRequestCopyWithImpl<$Res>;
+  factory _$$AbsPlayItemRequestImplCopyWith(_$AbsPlayItemRequestImpl value,
+          $Res Function(_$AbsPlayItemRequestImpl) then) =
+      __$$AbsPlayItemRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -112,11 +112,11 @@ abstract class _$$_AbsPlayItemRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AbsPlayItemRequestCopyWithImpl<$Res>
-    extends _$AbsPlayItemRequestCopyWithImpl<$Res, _$_AbsPlayItemRequest>
-    implements _$$_AbsPlayItemRequestCopyWith<$Res> {
-  __$$_AbsPlayItemRequestCopyWithImpl(
-      _$_AbsPlayItemRequest _value, $Res Function(_$_AbsPlayItemRequest) _then)
+class __$$AbsPlayItemRequestImplCopyWithImpl<$Res>
+    extends _$AbsPlayItemRequestCopyWithImpl<$Res, _$AbsPlayItemRequestImpl>
+    implements _$$AbsPlayItemRequestImplCopyWith<$Res> {
+  __$$AbsPlayItemRequestImplCopyWithImpl(_$AbsPlayItemRequestImpl _value,
+      $Res Function(_$AbsPlayItemRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +127,7 @@ class __$$_AbsPlayItemRequestCopyWithImpl<$Res>
     Object? forceTranscode = null,
     Object? deviceInfo = null,
   }) {
-    return _then(_$_AbsPlayItemRequest(
+    return _then(_$AbsPlayItemRequestImpl(
       mediaPlayer: null == mediaPlayer
           ? _value.mediaPlayer
           : mediaPlayer // ignore: cast_nullable_to_non_nullable
@@ -150,15 +150,15 @@ class __$$_AbsPlayItemRequestCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsPlayItemRequest implements _AbsPlayItemRequest {
-  const _$_AbsPlayItemRequest(
+class _$AbsPlayItemRequestImpl implements _AbsPlayItemRequest {
+  const _$AbsPlayItemRequestImpl(
       {required this.mediaPlayer,
       required this.forceDirectPlay,
       required this.forceTranscode,
       required this.deviceInfo});
 
-  factory _$_AbsPlayItemRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsPlayItemRequestFromJson(json);
+  factory _$AbsPlayItemRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsPlayItemRequestImplFromJson(json);
 
   @override
   final String mediaPlayer;
@@ -178,7 +178,7 @@ class _$_AbsPlayItemRequest implements _AbsPlayItemRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsPlayItemRequest &&
+            other is _$AbsPlayItemRequestImpl &&
             (identical(other.mediaPlayer, mediaPlayer) ||
                 other.mediaPlayer == mediaPlayer) &&
             (identical(other.forceDirectPlay, forceDirectPlay) ||
@@ -197,13 +197,13 @@ class _$_AbsPlayItemRequest implements _AbsPlayItemRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsPlayItemRequestCopyWith<_$_AbsPlayItemRequest> get copyWith =>
-      __$$_AbsPlayItemRequestCopyWithImpl<_$_AbsPlayItemRequest>(
+  _$$AbsPlayItemRequestImplCopyWith<_$AbsPlayItemRequestImpl> get copyWith =>
+      __$$AbsPlayItemRequestImplCopyWithImpl<_$AbsPlayItemRequestImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsPlayItemRequestToJson(
+    return _$$AbsPlayItemRequestImplToJson(
       this,
     );
   }
@@ -214,10 +214,10 @@ abstract class _AbsPlayItemRequest implements AbsPlayItemRequest {
       {required final String mediaPlayer,
       required final bool forceDirectPlay,
       required final bool forceTranscode,
-      required final DeviceInfo deviceInfo}) = _$_AbsPlayItemRequest;
+      required final DeviceInfo deviceInfo}) = _$AbsPlayItemRequestImpl;
 
   factory _AbsPlayItemRequest.fromJson(Map<String, dynamic> json) =
-      _$_AbsPlayItemRequest.fromJson;
+      _$AbsPlayItemRequestImpl.fromJson;
 
   @override
   String get mediaPlayer;
@@ -229,7 +229,7 @@ abstract class _AbsPlayItemRequest implements AbsPlayItemRequest {
   DeviceInfo get deviceInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsPlayItemRequestCopyWith<_$_AbsPlayItemRequest> get copyWith =>
+  _$$AbsPlayItemRequestImplCopyWith<_$AbsPlayItemRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -310,11 +310,11 @@ class _$DeviceInfoCopyWithImpl<$Res, $Val extends DeviceInfo>
 }
 
 /// @nodoc
-abstract class _$$_DeviceInfoCopyWith<$Res>
+abstract class _$$DeviceInfoImplCopyWith<$Res>
     implements $DeviceInfoCopyWith<$Res> {
-  factory _$$_DeviceInfoCopyWith(
-          _$_DeviceInfo value, $Res Function(_$_DeviceInfo) then) =
-      __$$_DeviceInfoCopyWithImpl<$Res>;
+  factory _$$DeviceInfoImplCopyWith(
+          _$DeviceInfoImpl value, $Res Function(_$DeviceInfoImpl) then) =
+      __$$DeviceInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -326,11 +326,11 @@ abstract class _$$_DeviceInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DeviceInfoCopyWithImpl<$Res>
-    extends _$DeviceInfoCopyWithImpl<$Res, _$_DeviceInfo>
-    implements _$$_DeviceInfoCopyWith<$Res> {
-  __$$_DeviceInfoCopyWithImpl(
-      _$_DeviceInfo _value, $Res Function(_$_DeviceInfo) _then)
+class __$$DeviceInfoImplCopyWithImpl<$Res>
+    extends _$DeviceInfoCopyWithImpl<$Res, _$DeviceInfoImpl>
+    implements _$$DeviceInfoImplCopyWith<$Res> {
+  __$$DeviceInfoImplCopyWithImpl(
+      _$DeviceInfoImpl _value, $Res Function(_$DeviceInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -342,7 +342,7 @@ class __$$_DeviceInfoCopyWithImpl<$Res>
     Object? sdkVersion = null,
     Object? clientVersion = null,
   }) {
-    return _then(_$_DeviceInfo(
+    return _then(_$DeviceInfoImpl(
       manufacturer: null == manufacturer
           ? _value.manufacturer
           : manufacturer // ignore: cast_nullable_to_non_nullable
@@ -369,16 +369,16 @@ class __$$_DeviceInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_DeviceInfo implements _DeviceInfo {
-  const _$_DeviceInfo(
+class _$DeviceInfoImpl implements _DeviceInfo {
+  const _$DeviceInfoImpl(
       {required this.manufacturer,
       required this.model,
       required this.brand,
       required this.sdkVersion,
       required this.clientVersion});
 
-  factory _$_DeviceInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_DeviceInfoFromJson(json);
+  factory _$DeviceInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DeviceInfoImplFromJson(json);
 
   @override
   final String manufacturer;
@@ -400,7 +400,7 @@ class _$_DeviceInfo implements _DeviceInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DeviceInfo &&
+            other is _$DeviceInfoImpl &&
             (identical(other.manufacturer, manufacturer) ||
                 other.manufacturer == manufacturer) &&
             (identical(other.model, model) || other.model == model) &&
@@ -419,12 +419,12 @@ class _$_DeviceInfo implements _DeviceInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DeviceInfoCopyWith<_$_DeviceInfo> get copyWith =>
-      __$$_DeviceInfoCopyWithImpl<_$_DeviceInfo>(this, _$identity);
+  _$$DeviceInfoImplCopyWith<_$DeviceInfoImpl> get copyWith =>
+      __$$DeviceInfoImplCopyWithImpl<_$DeviceInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeviceInfoToJson(
+    return _$$DeviceInfoImplToJson(
       this,
     );
   }
@@ -436,10 +436,10 @@ abstract class _DeviceInfo implements DeviceInfo {
       required final String model,
       required final String brand,
       required final String sdkVersion,
-      required final String clientVersion}) = _$_DeviceInfo;
+      required final String clientVersion}) = _$DeviceInfoImpl;
 
   factory _DeviceInfo.fromJson(Map<String, dynamic> json) =
-      _$_DeviceInfo.fromJson;
+      _$DeviceInfoImpl.fromJson;
 
   @override
   String get manufacturer;
@@ -453,6 +453,6 @@ abstract class _DeviceInfo implements DeviceInfo {
   String get clientVersion;
   @override
   @JsonKey(ignore: true)
-  _$$_DeviceInfoCopyWith<_$_DeviceInfo> get copyWith =>
+  _$$DeviceInfoImplCopyWith<_$DeviceInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

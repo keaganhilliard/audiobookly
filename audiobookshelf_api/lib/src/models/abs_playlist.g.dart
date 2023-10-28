@@ -6,8 +6,8 @@ part of 'abs_playlist.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AbsPlaylist _$$_AbsPlaylistFromJson(Map<String, dynamic> json) =>
-    _$_AbsPlaylist(
+_$AbsPlaylistImpl _$$AbsPlaylistImplFromJson(Map<String, dynamic> json) =>
+    _$AbsPlaylistImpl(
       id: json['id'] as String,
       libraryId: json['libraryId'] as String,
       userId: json['userId'] as String,
@@ -19,7 +19,7 @@ _$_AbsPlaylist _$$_AbsPlaylistFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_AbsPlaylistToJson(_$_AbsPlaylist instance) =>
+Map<String, dynamic> _$$AbsPlaylistImplToJson(_$AbsPlaylistImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'libraryId': instance.libraryId,
@@ -30,14 +30,15 @@ Map<String, dynamic> _$$_AbsPlaylistToJson(_$_AbsPlaylist instance) =>
       'items': instance.items,
     };
 
-_$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
+_$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
       libraryItemId: json['libraryItemId'] as String?,
       episodeId: json['episodeId'] as String?,
       libraryItem:
           AbsAudiobook.fromJson(json['libraryItem'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
+Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
+    <String, dynamic>{
       'libraryItemId': instance.libraryItemId,
       'episodeId': instance.episodeId,
       'libraryItem': instance.libraryItem,

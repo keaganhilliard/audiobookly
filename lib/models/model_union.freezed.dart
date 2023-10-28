@@ -88,20 +88,20 @@ class _$ModelUnionCopyWithImpl<$Res, $Val extends ModelUnion>
 }
 
 /// @nodoc
-abstract class _$$BookValueCopyWith<$Res> {
-  factory _$$BookValueCopyWith(
-          _$BookValue value, $Res Function(_$BookValue) then) =
-      __$$BookValueCopyWithImpl<$Res>;
+abstract class _$$BookValueImplCopyWith<$Res> {
+  factory _$$BookValueImplCopyWith(
+          _$BookValueImpl value, $Res Function(_$BookValueImpl) then) =
+      __$$BookValueImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Book value});
 }
 
 /// @nodoc
-class __$$BookValueCopyWithImpl<$Res>
-    extends _$ModelUnionCopyWithImpl<$Res, _$BookValue>
-    implements _$$BookValueCopyWith<$Res> {
-  __$$BookValueCopyWithImpl(
-      _$BookValue _value, $Res Function(_$BookValue) _then)
+class __$$BookValueImplCopyWithImpl<$Res>
+    extends _$ModelUnionCopyWithImpl<$Res, _$BookValueImpl>
+    implements _$$BookValueImplCopyWith<$Res> {
+  __$$BookValueImplCopyWithImpl(
+      _$BookValueImpl _value, $Res Function(_$BookValueImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$BookValueCopyWithImpl<$Res>
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$BookValue(
+    return _then(_$BookValueImpl(
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -120,8 +120,8 @@ class __$$BookValueCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookValue implements BookValue {
-  const _$BookValue(this.value);
+class _$BookValueImpl implements BookValue {
+  const _$BookValueImpl(this.value);
 
   @override
   final Book value;
@@ -135,7 +135,7 @@ class _$BookValue implements BookValue {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BookValue &&
+            other is _$BookValueImpl &&
             (identical(other.value, value) || other.value == value));
   }
 
@@ -145,8 +145,8 @@ class _$BookValue implements BookValue {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BookValueCopyWith<_$BookValue> get copyWith =>
-      __$$BookValueCopyWithImpl<_$BookValue>(this, _$identity);
+  _$$BookValueImplCopyWith<_$BookValueImpl> get copyWith =>
+      __$$BookValueImplCopyWithImpl<_$BookValueImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -224,30 +224,30 @@ class _$BookValue implements BookValue {
 }
 
 abstract class BookValue implements ModelUnion {
-  const factory BookValue(final Book value) = _$BookValue;
+  const factory BookValue(final Book value) = _$BookValueImpl;
 
   @override
   Book get value;
   @JsonKey(ignore: true)
-  _$$BookValueCopyWith<_$BookValue> get copyWith =>
+  _$$BookValueImplCopyWith<_$BookValueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AuthorValueCopyWith<$Res> {
-  factory _$$AuthorValueCopyWith(
-          _$AuthorValue value, $Res Function(_$AuthorValue) then) =
-      __$$AuthorValueCopyWithImpl<$Res>;
+abstract class _$$AuthorValueImplCopyWith<$Res> {
+  factory _$$AuthorValueImplCopyWith(
+          _$AuthorValueImpl value, $Res Function(_$AuthorValueImpl) then) =
+      __$$AuthorValueImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Author value});
 }
 
 /// @nodoc
-class __$$AuthorValueCopyWithImpl<$Res>
-    extends _$ModelUnionCopyWithImpl<$Res, _$AuthorValue>
-    implements _$$AuthorValueCopyWith<$Res> {
-  __$$AuthorValueCopyWithImpl(
-      _$AuthorValue _value, $Res Function(_$AuthorValue) _then)
+class __$$AuthorValueImplCopyWithImpl<$Res>
+    extends _$ModelUnionCopyWithImpl<$Res, _$AuthorValueImpl>
+    implements _$$AuthorValueImplCopyWith<$Res> {
+  __$$AuthorValueImplCopyWithImpl(
+      _$AuthorValueImpl _value, $Res Function(_$AuthorValueImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -255,7 +255,7 @@ class __$$AuthorValueCopyWithImpl<$Res>
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$AuthorValue(
+    return _then(_$AuthorValueImpl(
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -266,8 +266,8 @@ class __$$AuthorValueCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthorValue implements AuthorValue {
-  const _$AuthorValue(this.value);
+class _$AuthorValueImpl implements AuthorValue {
+  const _$AuthorValueImpl(this.value);
 
   @override
   final Author value;
@@ -281,7 +281,7 @@ class _$AuthorValue implements AuthorValue {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthorValue &&
+            other is _$AuthorValueImpl &&
             (identical(other.value, value) || other.value == value));
   }
 
@@ -291,8 +291,8 @@ class _$AuthorValue implements AuthorValue {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthorValueCopyWith<_$AuthorValue> get copyWith =>
-      __$$AuthorValueCopyWithImpl<_$AuthorValue>(this, _$identity);
+  _$$AuthorValueImplCopyWith<_$AuthorValueImpl> get copyWith =>
+      __$$AuthorValueImplCopyWithImpl<_$AuthorValueImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -370,30 +370,30 @@ class _$AuthorValue implements AuthorValue {
 }
 
 abstract class AuthorValue implements ModelUnion {
-  const factory AuthorValue(final Author value) = _$AuthorValue;
+  const factory AuthorValue(final Author value) = _$AuthorValueImpl;
 
   @override
   Author get value;
   @JsonKey(ignore: true)
-  _$$AuthorValueCopyWith<_$AuthorValue> get copyWith =>
+  _$$AuthorValueImplCopyWith<_$AuthorValueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SeriesValueCopyWith<$Res> {
-  factory _$$SeriesValueCopyWith(
-          _$SeriesValue value, $Res Function(_$SeriesValue) then) =
-      __$$SeriesValueCopyWithImpl<$Res>;
+abstract class _$$SeriesValueImplCopyWith<$Res> {
+  factory _$$SeriesValueImplCopyWith(
+          _$SeriesValueImpl value, $Res Function(_$SeriesValueImpl) then) =
+      __$$SeriesValueImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Series value});
 }
 
 /// @nodoc
-class __$$SeriesValueCopyWithImpl<$Res>
-    extends _$ModelUnionCopyWithImpl<$Res, _$SeriesValue>
-    implements _$$SeriesValueCopyWith<$Res> {
-  __$$SeriesValueCopyWithImpl(
-      _$SeriesValue _value, $Res Function(_$SeriesValue) _then)
+class __$$SeriesValueImplCopyWithImpl<$Res>
+    extends _$ModelUnionCopyWithImpl<$Res, _$SeriesValueImpl>
+    implements _$$SeriesValueImplCopyWith<$Res> {
+  __$$SeriesValueImplCopyWithImpl(
+      _$SeriesValueImpl _value, $Res Function(_$SeriesValueImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -401,7 +401,7 @@ class __$$SeriesValueCopyWithImpl<$Res>
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$SeriesValue(
+    return _then(_$SeriesValueImpl(
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -412,8 +412,8 @@ class __$$SeriesValueCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SeriesValue implements SeriesValue {
-  const _$SeriesValue(this.value);
+class _$SeriesValueImpl implements SeriesValue {
+  const _$SeriesValueImpl(this.value);
 
   @override
   final Series value;
@@ -427,7 +427,7 @@ class _$SeriesValue implements SeriesValue {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SeriesValue &&
+            other is _$SeriesValueImpl &&
             (identical(other.value, value) || other.value == value));
   }
 
@@ -437,8 +437,8 @@ class _$SeriesValue implements SeriesValue {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SeriesValueCopyWith<_$SeriesValue> get copyWith =>
-      __$$SeriesValueCopyWithImpl<_$SeriesValue>(this, _$identity);
+  _$$SeriesValueImplCopyWith<_$SeriesValueImpl> get copyWith =>
+      __$$SeriesValueImplCopyWithImpl<_$SeriesValueImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -516,30 +516,30 @@ class _$SeriesValue implements SeriesValue {
 }
 
 abstract class SeriesValue implements ModelUnion {
-  const factory SeriesValue(final Series value) = _$SeriesValue;
+  const factory SeriesValue(final Series value) = _$SeriesValueImpl;
 
   @override
   Series get value;
   @JsonKey(ignore: true)
-  _$$SeriesValueCopyWith<_$SeriesValue> get copyWith =>
+  _$$SeriesValueImplCopyWith<_$SeriesValueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CollectionValueCopyWith<$Res> {
-  factory _$$CollectionValueCopyWith(
-          _$CollectionValue value, $Res Function(_$CollectionValue) then) =
-      __$$CollectionValueCopyWithImpl<$Res>;
+abstract class _$$CollectionValueImplCopyWith<$Res> {
+  factory _$$CollectionValueImplCopyWith(_$CollectionValueImpl value,
+          $Res Function(_$CollectionValueImpl) then) =
+      __$$CollectionValueImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Collection value});
 }
 
 /// @nodoc
-class __$$CollectionValueCopyWithImpl<$Res>
-    extends _$ModelUnionCopyWithImpl<$Res, _$CollectionValue>
-    implements _$$CollectionValueCopyWith<$Res> {
-  __$$CollectionValueCopyWithImpl(
-      _$CollectionValue _value, $Res Function(_$CollectionValue) _then)
+class __$$CollectionValueImplCopyWithImpl<$Res>
+    extends _$ModelUnionCopyWithImpl<$Res, _$CollectionValueImpl>
+    implements _$$CollectionValueImplCopyWith<$Res> {
+  __$$CollectionValueImplCopyWithImpl(
+      _$CollectionValueImpl _value, $Res Function(_$CollectionValueImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -547,7 +547,7 @@ class __$$CollectionValueCopyWithImpl<$Res>
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$CollectionValue(
+    return _then(_$CollectionValueImpl(
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -558,8 +558,8 @@ class __$$CollectionValueCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionValue implements CollectionValue {
-  const _$CollectionValue(this.value);
+class _$CollectionValueImpl implements CollectionValue {
+  const _$CollectionValueImpl(this.value);
 
   @override
   final Collection value;
@@ -573,7 +573,7 @@ class _$CollectionValue implements CollectionValue {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionValue &&
+            other is _$CollectionValueImpl &&
             (identical(other.value, value) || other.value == value));
   }
 
@@ -583,8 +583,9 @@ class _$CollectionValue implements CollectionValue {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CollectionValueCopyWith<_$CollectionValue> get copyWith =>
-      __$$CollectionValueCopyWithImpl<_$CollectionValue>(this, _$identity);
+  _$$CollectionValueImplCopyWith<_$CollectionValueImpl> get copyWith =>
+      __$$CollectionValueImplCopyWithImpl<_$CollectionValueImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -662,11 +663,11 @@ class _$CollectionValue implements CollectionValue {
 }
 
 abstract class CollectionValue implements ModelUnion {
-  const factory CollectionValue(final Collection value) = _$CollectionValue;
+  const factory CollectionValue(final Collection value) = _$CollectionValueImpl;
 
   @override
   Collection get value;
   @JsonKey(ignore: true)
-  _$$CollectionValueCopyWith<_$CollectionValue> get copyWith =>
+  _$$CollectionValueImplCopyWith<_$CollectionValueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

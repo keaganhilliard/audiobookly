@@ -6,9 +6,9 @@ part of 'abs_play_item_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AbsPlayItemRequest _$$_AbsPlayItemRequestFromJson(
+_$AbsPlayItemRequestImpl _$$AbsPlayItemRequestImplFromJson(
         Map<String, dynamic> json) =>
-    _$_AbsPlayItemRequest(
+    _$AbsPlayItemRequestImpl(
       mediaPlayer: json['mediaPlayer'] as String,
       forceDirectPlay: json['forceDirectPlay'] as bool,
       forceTranscode: json['forceTranscode'] as bool,
@@ -16,8 +16,8 @@ _$_AbsPlayItemRequest _$$_AbsPlayItemRequestFromJson(
           DeviceInfo.fromJson(json['deviceInfo'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_AbsPlayItemRequestToJson(
-        _$_AbsPlayItemRequest instance) =>
+Map<String, dynamic> _$$AbsPlayItemRequestImplToJson(
+        _$AbsPlayItemRequestImpl instance) =>
     <String, dynamic>{
       'mediaPlayer': instance.mediaPlayer,
       'forceDirectPlay': instance.forceDirectPlay,
@@ -25,8 +25,8 @@ Map<String, dynamic> _$$_AbsPlayItemRequestToJson(
       'deviceInfo': instance.deviceInfo,
     };
 
-_$_DeviceInfo _$$_DeviceInfoFromJson(Map<String, dynamic> json) =>
-    _$_DeviceInfo(
+_$DeviceInfoImpl _$$DeviceInfoImplFromJson(Map<String, dynamic> json) =>
+    _$DeviceInfoImpl(
       manufacturer: json['manufacturer'] as String,
       model: json['model'] as String,
       brand: json['brand'] as String,
@@ -34,7 +34,7 @@ _$_DeviceInfo _$$_DeviceInfoFromJson(Map<String, dynamic> json) =>
       clientVersion: json['clientVersion'] as String,
     );
 
-Map<String, dynamic> _$$_DeviceInfoToJson(_$_DeviceInfo instance) =>
+Map<String, dynamic> _$$DeviceInfoImplToJson(_$DeviceInfoImpl instance) =>
     <String, dynamic>{
       'manufacturer': instance.manufacturer,
       'model': instance.model,

@@ -6,9 +6,9 @@ part of 'abs_personalized_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AbsPersonalizedResponseBook _$$AbsPersonalizedResponseBookFromJson(
+_$AbsPersonalizedResponseBookImpl _$$AbsPersonalizedResponseBookImplFromJson(
         Map<String, dynamic> json) =>
-    _$AbsPersonalizedResponseBook(
+    _$AbsPersonalizedResponseBookImpl(
       id: json['id'] as String,
       label: json['label'] as String,
       labelStringKey: json['labelStringKey'] as String,
@@ -18,8 +18,8 @@ _$AbsPersonalizedResponseBook _$$AbsPersonalizedResponseBookFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$AbsPersonalizedResponseBookToJson(
-        _$AbsPersonalizedResponseBook instance) =>
+Map<String, dynamic> _$$AbsPersonalizedResponseBookImplToJson(
+        _$AbsPersonalizedResponseBookImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'label': instance.label,
@@ -28,20 +28,20 @@ Map<String, dynamic> _$$AbsPersonalizedResponseBookToJson(
       'entities': instance.entities,
     };
 
-_$AbsPersonalizedResponseAuthor _$$AbsPersonalizedResponseAuthorFromJson(
-        Map<String, dynamic> json) =>
-    _$AbsPersonalizedResponseAuthor(
-      id: json['id'] as String,
-      label: json['label'] as String,
-      labelStringKey: json['labelStringKey'] as String,
-      type: json['type'] as String,
-      entities: (json['entities'] as List<dynamic>)
-          .map((e) => Author.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+_$AbsPersonalizedResponseAuthorImpl
+    _$$AbsPersonalizedResponseAuthorImplFromJson(Map<String, dynamic> json) =>
+        _$AbsPersonalizedResponseAuthorImpl(
+          id: json['id'] as String,
+          label: json['label'] as String,
+          labelStringKey: json['labelStringKey'] as String,
+          type: json['type'] as String,
+          entities: (json['entities'] as List<dynamic>)
+              .map((e) => Author.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
 
-Map<String, dynamic> _$$AbsPersonalizedResponseAuthorToJson(
-        _$AbsPersonalizedResponseAuthor instance) =>
+Map<String, dynamic> _$$AbsPersonalizedResponseAuthorImplToJson(
+        _$AbsPersonalizedResponseAuthorImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'label': instance.label,
@@ -50,20 +50,20 @@ Map<String, dynamic> _$$AbsPersonalizedResponseAuthorToJson(
       'entities': instance.entities,
     };
 
-_$AbsPersonalizedResponseSeries _$$AbsPersonalizedResponseSeriesFromJson(
-        Map<String, dynamic> json) =>
-    _$AbsPersonalizedResponseSeries(
-      id: json['id'] as String,
-      label: json['label'] as String,
-      labelStringKey: json['labelStringKey'] as String,
-      type: json['type'] as String,
-      entities: (json['entities'] as List<dynamic>)
-          .map((e) => AbsSeries.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+_$AbsPersonalizedResponseSeriesImpl
+    _$$AbsPersonalizedResponseSeriesImplFromJson(Map<String, dynamic> json) =>
+        _$AbsPersonalizedResponseSeriesImpl(
+          id: json['id'] as String,
+          label: json['label'] as String,
+          labelStringKey: json['labelStringKey'] as String,
+          type: json['type'] as String,
+          entities: (json['entities'] as List<dynamic>)
+              .map((e) => AbsSeries.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
 
-Map<String, dynamic> _$$AbsPersonalizedResponseSeriesToJson(
-        _$AbsPersonalizedResponseSeries instance) =>
+Map<String, dynamic> _$$AbsPersonalizedResponseSeriesImplToJson(
+        _$AbsPersonalizedResponseSeriesImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'label': instance.label,
@@ -72,20 +72,20 @@ Map<String, dynamic> _$$AbsPersonalizedResponseSeriesToJson(
       'entities': instance.entities,
     };
 
-_$AbsPersonalizedResponseUnknown _$$AbsPersonalizedResponseUnknownFromJson(
-        Map<String, dynamic> json) =>
-    _$AbsPersonalizedResponseUnknown(
-      id: json['id'] as String,
-      label: json['label'] as String,
-      labelStringKey: json['labelStringKey'] as String,
-      type: json['type'] as String,
-      entities: (json['entities'] as List<dynamic>)
-          .map((e) => e as Map<String, dynamic>)
-          .toList(),
-    );
+_$AbsPersonalizedResponseUnknownImpl
+    _$$AbsPersonalizedResponseUnknownImplFromJson(Map<String, dynamic> json) =>
+        _$AbsPersonalizedResponseUnknownImpl(
+          id: json['id'] as String,
+          label: json['label'] as String,
+          labelStringKey: json['labelStringKey'] as String,
+          type: json['type'] as String,
+          entities: (json['entities'] as List<dynamic>)
+              .map((e) => e as Map<String, dynamic>)
+              .toList(),
+        );
 
-Map<String, dynamic> _$$AbsPersonalizedResponseUnknownToJson(
-        _$AbsPersonalizedResponseUnknown instance) =>
+Map<String, dynamic> _$$AbsPersonalizedResponseUnknownImplToJson(
+        _$AbsPersonalizedResponseUnknownImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'label': instance.label,

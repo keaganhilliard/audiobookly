@@ -87,27 +87,28 @@ class _$PlaylistsStateCopyWithImpl<$Res, $Val extends PlaylistsState>
 }
 
 /// @nodoc
-abstract class _$$PlaylistsStateInitialCopyWith<$Res> {
-  factory _$$PlaylistsStateInitialCopyWith(_$PlaylistsStateInitial value,
-          $Res Function(_$PlaylistsStateInitial) then) =
-      __$$PlaylistsStateInitialCopyWithImpl<$Res>;
+abstract class _$$PlaylistsStateInitialImplCopyWith<$Res> {
+  factory _$$PlaylistsStateInitialImplCopyWith(
+          _$PlaylistsStateInitialImpl value,
+          $Res Function(_$PlaylistsStateInitialImpl) then) =
+      __$$PlaylistsStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PlaylistsStateInitialCopyWithImpl<$Res>
-    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateInitial>
-    implements _$$PlaylistsStateInitialCopyWith<$Res> {
-  __$$PlaylistsStateInitialCopyWithImpl(_$PlaylistsStateInitial _value,
-      $Res Function(_$PlaylistsStateInitial) _then)
+class __$$PlaylistsStateInitialImplCopyWithImpl<$Res>
+    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateInitialImpl>
+    implements _$$PlaylistsStateInitialImplCopyWith<$Res> {
+  __$$PlaylistsStateInitialImplCopyWithImpl(_$PlaylistsStateInitialImpl _value,
+      $Res Function(_$PlaylistsStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$PlaylistsStateInitial
+class _$PlaylistsStateInitialImpl
     with DiagnosticableTreeMixin
     implements PlaylistsStateInitial {
-  const _$PlaylistsStateInitial();
+  const _$PlaylistsStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -123,7 +124,8 @@ class _$PlaylistsStateInitial
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PlaylistsStateInitial);
+        (other.runtimeType == runtimeType &&
+            other is _$PlaylistsStateInitialImpl);
   }
 
   @override
@@ -205,24 +207,24 @@ class _$PlaylistsStateInitial
 }
 
 abstract class PlaylistsStateInitial implements PlaylistsState {
-  const factory PlaylistsStateInitial() = _$PlaylistsStateInitial;
+  const factory PlaylistsStateInitial() = _$PlaylistsStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$PlaylistsStateLoadedCopyWith<$Res> {
-  factory _$$PlaylistsStateLoadedCopyWith(_$PlaylistsStateLoaded value,
-          $Res Function(_$PlaylistsStateLoaded) then) =
-      __$$PlaylistsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$PlaylistsStateLoadedImplCopyWith<$Res> {
+  factory _$$PlaylistsStateLoadedImplCopyWith(_$PlaylistsStateLoadedImpl value,
+          $Res Function(_$PlaylistsStateLoadedImpl) then) =
+      __$$PlaylistsStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Playlist>? playlists});
 }
 
 /// @nodoc
-class __$$PlaylistsStateLoadedCopyWithImpl<$Res>
-    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateLoaded>
-    implements _$$PlaylistsStateLoadedCopyWith<$Res> {
-  __$$PlaylistsStateLoadedCopyWithImpl(_$PlaylistsStateLoaded _value,
-      $Res Function(_$PlaylistsStateLoaded) _then)
+class __$$PlaylistsStateLoadedImplCopyWithImpl<$Res>
+    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateLoadedImpl>
+    implements _$$PlaylistsStateLoadedImplCopyWith<$Res> {
+  __$$PlaylistsStateLoadedImplCopyWithImpl(_$PlaylistsStateLoadedImpl _value,
+      $Res Function(_$PlaylistsStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -230,7 +232,7 @@ class __$$PlaylistsStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? playlists = freezed,
   }) {
-    return _then(_$PlaylistsStateLoaded(
+    return _then(_$PlaylistsStateLoadedImpl(
       playlists: freezed == playlists
           ? _value._playlists
           : playlists // ignore: cast_nullable_to_non_nullable
@@ -241,10 +243,10 @@ class __$$PlaylistsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PlaylistsStateLoaded
+class _$PlaylistsStateLoadedImpl
     with DiagnosticableTreeMixin
     implements PlaylistsStateLoaded {
-  const _$PlaylistsStateLoaded({final List<Playlist>? playlists})
+  const _$PlaylistsStateLoadedImpl({final List<Playlist>? playlists})
       : _playlists = playlists;
 
   final List<Playlist>? _playlists;
@@ -274,7 +276,7 @@ class _$PlaylistsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlaylistsStateLoaded &&
+            other is _$PlaylistsStateLoadedImpl &&
             const DeepCollectionEquality()
                 .equals(other._playlists, _playlists));
   }
@@ -286,9 +288,10 @@ class _$PlaylistsStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PlaylistsStateLoadedCopyWith<_$PlaylistsStateLoaded> get copyWith =>
-      __$$PlaylistsStateLoadedCopyWithImpl<_$PlaylistsStateLoaded>(
-          this, _$identity);
+  _$$PlaylistsStateLoadedImplCopyWith<_$PlaylistsStateLoadedImpl>
+      get copyWith =>
+          __$$PlaylistsStateLoadedImplCopyWithImpl<_$PlaylistsStateLoadedImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -367,36 +370,37 @@ class _$PlaylistsStateLoaded
 
 abstract class PlaylistsStateLoaded implements PlaylistsState {
   const factory PlaylistsStateLoaded({final List<Playlist>? playlists}) =
-      _$PlaylistsStateLoaded;
+      _$PlaylistsStateLoadedImpl;
 
   List<Playlist>? get playlists;
   @JsonKey(ignore: true)
-  _$$PlaylistsStateLoadedCopyWith<_$PlaylistsStateLoaded> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PlaylistsStateLoadedImplCopyWith<_$PlaylistsStateLoadedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PlaylistsStateLoadingCopyWith<$Res> {
-  factory _$$PlaylistsStateLoadingCopyWith(_$PlaylistsStateLoading value,
-          $Res Function(_$PlaylistsStateLoading) then) =
-      __$$PlaylistsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$PlaylistsStateLoadingImplCopyWith<$Res> {
+  factory _$$PlaylistsStateLoadingImplCopyWith(
+          _$PlaylistsStateLoadingImpl value,
+          $Res Function(_$PlaylistsStateLoadingImpl) then) =
+      __$$PlaylistsStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PlaylistsStateLoadingCopyWithImpl<$Res>
-    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateLoading>
-    implements _$$PlaylistsStateLoadingCopyWith<$Res> {
-  __$$PlaylistsStateLoadingCopyWithImpl(_$PlaylistsStateLoading _value,
-      $Res Function(_$PlaylistsStateLoading) _then)
+class __$$PlaylistsStateLoadingImplCopyWithImpl<$Res>
+    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateLoadingImpl>
+    implements _$$PlaylistsStateLoadingImplCopyWith<$Res> {
+  __$$PlaylistsStateLoadingImplCopyWithImpl(_$PlaylistsStateLoadingImpl _value,
+      $Res Function(_$PlaylistsStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$PlaylistsStateLoading
+class _$PlaylistsStateLoadingImpl
     with DiagnosticableTreeMixin
     implements PlaylistsStateLoading {
-  const _$PlaylistsStateLoading();
+  const _$PlaylistsStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -412,7 +416,8 @@ class _$PlaylistsStateLoading
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PlaylistsStateLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$PlaylistsStateLoadingImpl);
   }
 
   @override
@@ -494,24 +499,24 @@ class _$PlaylistsStateLoading
 }
 
 abstract class PlaylistsStateLoading implements PlaylistsState {
-  const factory PlaylistsStateLoading() = _$PlaylistsStateLoading;
+  const factory PlaylistsStateLoading() = _$PlaylistsStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$PlaylistsStateErrorCopyWith<$Res> {
-  factory _$$PlaylistsStateErrorCopyWith(_$PlaylistsStateError value,
-          $Res Function(_$PlaylistsStateError) then) =
-      __$$PlaylistsStateErrorCopyWithImpl<$Res>;
+abstract class _$$PlaylistsStateErrorImplCopyWith<$Res> {
+  factory _$$PlaylistsStateErrorImplCopyWith(_$PlaylistsStateErrorImpl value,
+          $Res Function(_$PlaylistsStateErrorImpl) then) =
+      __$$PlaylistsStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$PlaylistsStateErrorCopyWithImpl<$Res>
-    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateError>
-    implements _$$PlaylistsStateErrorCopyWith<$Res> {
-  __$$PlaylistsStateErrorCopyWithImpl(
-      _$PlaylistsStateError _value, $Res Function(_$PlaylistsStateError) _then)
+class __$$PlaylistsStateErrorImplCopyWithImpl<$Res>
+    extends _$PlaylistsStateCopyWithImpl<$Res, _$PlaylistsStateErrorImpl>
+    implements _$$PlaylistsStateErrorImplCopyWith<$Res> {
+  __$$PlaylistsStateErrorImplCopyWithImpl(_$PlaylistsStateErrorImpl _value,
+      $Res Function(_$PlaylistsStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -519,7 +524,7 @@ class __$$PlaylistsStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$PlaylistsStateError(
+    return _then(_$PlaylistsStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -530,10 +535,10 @@ class __$$PlaylistsStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PlaylistsStateError
+class _$PlaylistsStateErrorImpl
     with DiagnosticableTreeMixin
     implements PlaylistsStateError {
-  const _$PlaylistsStateError([this.message]);
+  const _$PlaylistsStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -555,7 +560,7 @@ class _$PlaylistsStateError
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlaylistsStateError &&
+            other is _$PlaylistsStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -565,8 +570,8 @@ class _$PlaylistsStateError
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PlaylistsStateErrorCopyWith<_$PlaylistsStateError> get copyWith =>
-      __$$PlaylistsStateErrorCopyWithImpl<_$PlaylistsStateError>(
+  _$$PlaylistsStateErrorImplCopyWith<_$PlaylistsStateErrorImpl> get copyWith =>
+      __$$PlaylistsStateErrorImplCopyWithImpl<_$PlaylistsStateErrorImpl>(
           this, _$identity);
 
   @override
@@ -646,10 +651,10 @@ class _$PlaylistsStateError
 
 abstract class PlaylistsStateError implements PlaylistsState {
   const factory PlaylistsStateError([final String? message]) =
-      _$PlaylistsStateError;
+      _$PlaylistsStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$PlaylistsStateErrorCopyWith<_$PlaylistsStateError> get copyWith =>
+  _$$PlaylistsStateErrorImplCopyWith<_$PlaylistsStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

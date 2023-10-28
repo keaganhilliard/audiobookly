@@ -83,7 +83,7 @@ SPEC CHECKSUMS:
   background_downloader: 6f55e5548875be2ad4bb91b542558b5be22f339a
   better_cupertino_slider: 60c77e62d1b1aca409e682542518bdceda9af33f
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
-  device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
+  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_carplay: fe777eed6b4b159fcc4be4eada9e6465641202a2
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -91,8 +91,8 @@ SPEC CHECKSUMS:
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
 
 PODFILE CHECKSUM: 7d64c5673349f8dc0a2eb116469d2c68e5e27a3e
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

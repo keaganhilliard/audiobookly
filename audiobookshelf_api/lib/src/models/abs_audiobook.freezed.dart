@@ -38,7 +38,7 @@ mixin _$AbsAudiobook {
   bool get isInvalid => throw _privateConstructorUsedError;
   String get mediaType => throw _privateConstructorUsedError;
   Media get media => throw _privateConstructorUsedError;
-  List<LibraryFile> get libraryFiles => throw _privateConstructorUsedError;
+  List<LibraryFile>? get libraryFiles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -71,7 +71,7 @@ abstract class $AbsAudiobookCopyWith<$Res> {
       bool isInvalid,
       String mediaType,
       Media media,
-      List<LibraryFile> libraryFiles});
+      List<LibraryFile>? libraryFiles});
 
   $MediaCopyWith<$Res> get media;
 }
@@ -107,7 +107,7 @@ class _$AbsAudiobookCopyWithImpl<$Res, $Val extends AbsAudiobook>
     Object? isInvalid = null,
     Object? mediaType = null,
     Object? media = null,
-    Object? libraryFiles = null,
+    Object? libraryFiles = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -182,10 +182,10 @@ class _$AbsAudiobookCopyWithImpl<$Res, $Val extends AbsAudiobook>
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as Media,
-      libraryFiles: null == libraryFiles
+      libraryFiles: freezed == libraryFiles
           ? _value.libraryFiles
           : libraryFiles // ignore: cast_nullable_to_non_nullable
-              as List<LibraryFile>,
+              as List<LibraryFile>?,
     ) as $Val);
   }
 
@@ -199,11 +199,11 @@ class _$AbsAudiobookCopyWithImpl<$Res, $Val extends AbsAudiobook>
 }
 
 /// @nodoc
-abstract class _$$_AbsAudiobookCopyWith<$Res>
+abstract class _$$AbsAudiobookImplCopyWith<$Res>
     implements $AbsAudiobookCopyWith<$Res> {
-  factory _$$_AbsAudiobookCopyWith(
-          _$_AbsAudiobook value, $Res Function(_$_AbsAudiobook) then) =
-      __$$_AbsAudiobookCopyWithImpl<$Res>;
+  factory _$$AbsAudiobookImplCopyWith(
+          _$AbsAudiobookImpl value, $Res Function(_$AbsAudiobookImpl) then) =
+      __$$AbsAudiobookImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -225,18 +225,18 @@ abstract class _$$_AbsAudiobookCopyWith<$Res>
       bool isInvalid,
       String mediaType,
       Media media,
-      List<LibraryFile> libraryFiles});
+      List<LibraryFile>? libraryFiles});
 
   @override
   $MediaCopyWith<$Res> get media;
 }
 
 /// @nodoc
-class __$$_AbsAudiobookCopyWithImpl<$Res>
-    extends _$AbsAudiobookCopyWithImpl<$Res, _$_AbsAudiobook>
-    implements _$$_AbsAudiobookCopyWith<$Res> {
-  __$$_AbsAudiobookCopyWithImpl(
-      _$_AbsAudiobook _value, $Res Function(_$_AbsAudiobook) _then)
+class __$$AbsAudiobookImplCopyWithImpl<$Res>
+    extends _$AbsAudiobookCopyWithImpl<$Res, _$AbsAudiobookImpl>
+    implements _$$AbsAudiobookImplCopyWith<$Res> {
+  __$$AbsAudiobookImplCopyWithImpl(
+      _$AbsAudiobookImpl _value, $Res Function(_$AbsAudiobookImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -260,9 +260,9 @@ class __$$_AbsAudiobookCopyWithImpl<$Res>
     Object? isInvalid = null,
     Object? mediaType = null,
     Object? media = null,
-    Object? libraryFiles = null,
+    Object? libraryFiles = freezed,
   }) {
-    return _then(_$_AbsAudiobook(
+    return _then(_$AbsAudiobookImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -335,18 +335,18 @@ class __$$_AbsAudiobookCopyWithImpl<$Res>
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as Media,
-      libraryFiles: null == libraryFiles
+      libraryFiles: freezed == libraryFiles
           ? _value._libraryFiles
           : libraryFiles // ignore: cast_nullable_to_non_nullable
-              as List<LibraryFile>,
+              as List<LibraryFile>?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsAudiobook implements _AbsAudiobook {
-  const _$_AbsAudiobook(
+class _$AbsAudiobookImpl implements _AbsAudiobook {
+  const _$AbsAudiobookImpl(
       {required this.id,
       required this.ino,
       required this.libraryId,
@@ -365,11 +365,11 @@ class _$_AbsAudiobook implements _AbsAudiobook {
       required this.isInvalid,
       required this.mediaType,
       required this.media,
-      required final List<LibraryFile> libraryFiles})
+      final List<LibraryFile>? libraryFiles})
       : _libraryFiles = libraryFiles;
 
-  factory _$_AbsAudiobook.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsAudiobookFromJson(json);
+  factory _$AbsAudiobookImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsAudiobookImplFromJson(json);
 
   @override
   final String id;
@@ -407,12 +407,14 @@ class _$_AbsAudiobook implements _AbsAudiobook {
   final String mediaType;
   @override
   final Media media;
-  final List<LibraryFile> _libraryFiles;
+  final List<LibraryFile>? _libraryFiles;
   @override
-  List<LibraryFile> get libraryFiles {
+  List<LibraryFile>? get libraryFiles {
+    final value = _libraryFiles;
+    if (value == null) return null;
     if (_libraryFiles is EqualUnmodifiableListView) return _libraryFiles;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_libraryFiles);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -424,7 +426,7 @@ class _$_AbsAudiobook implements _AbsAudiobook {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsAudiobook &&
+            other is _$AbsAudiobookImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.ino, ino) || other.ino == ino) &&
             (identical(other.libraryId, libraryId) ||
@@ -484,12 +486,12 @@ class _$_AbsAudiobook implements _AbsAudiobook {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsAudiobookCopyWith<_$_AbsAudiobook> get copyWith =>
-      __$$_AbsAudiobookCopyWithImpl<_$_AbsAudiobook>(this, _$identity);
+  _$$AbsAudiobookImplCopyWith<_$AbsAudiobookImpl> get copyWith =>
+      __$$AbsAudiobookImplCopyWithImpl<_$AbsAudiobookImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsAudiobookToJson(
+    return _$$AbsAudiobookImplToJson(
       this,
     );
   }
@@ -515,10 +517,10 @@ abstract class _AbsAudiobook implements AbsAudiobook {
       required final bool isInvalid,
       required final String mediaType,
       required final Media media,
-      required final List<LibraryFile> libraryFiles}) = _$_AbsAudiobook;
+      final List<LibraryFile>? libraryFiles}) = _$AbsAudiobookImpl;
 
   factory _AbsAudiobook.fromJson(Map<String, dynamic> json) =
-      _$_AbsAudiobook.fromJson;
+      _$AbsAudiobookImpl.fromJson;
 
   @override
   String get id;
@@ -557,10 +559,10 @@ abstract class _AbsAudiobook implements AbsAudiobook {
   @override
   Media get media;
   @override
-  List<LibraryFile> get libraryFiles;
+  List<LibraryFile>? get libraryFiles;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsAudiobookCopyWith<_$_AbsAudiobook> get copyWith =>
+  _$$AbsAudiobookImplCopyWith<_$AbsAudiobookImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -651,11 +653,11 @@ class _$LibraryFileCopyWithImpl<$Res, $Val extends LibraryFile>
 }
 
 /// @nodoc
-abstract class _$$_LibraryFileCopyWith<$Res>
+abstract class _$$LibraryFileImplCopyWith<$Res>
     implements $LibraryFileCopyWith<$Res> {
-  factory _$$_LibraryFileCopyWith(
-          _$_LibraryFile value, $Res Function(_$_LibraryFile) then) =
-      __$$_LibraryFileCopyWithImpl<$Res>;
+  factory _$$LibraryFileImplCopyWith(
+          _$LibraryFileImpl value, $Res Function(_$LibraryFileImpl) then) =
+      __$$LibraryFileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -670,11 +672,11 @@ abstract class _$$_LibraryFileCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LibraryFileCopyWithImpl<$Res>
-    extends _$LibraryFileCopyWithImpl<$Res, _$_LibraryFile>
-    implements _$$_LibraryFileCopyWith<$Res> {
-  __$$_LibraryFileCopyWithImpl(
-      _$_LibraryFile _value, $Res Function(_$_LibraryFile) _then)
+class __$$LibraryFileImplCopyWithImpl<$Res>
+    extends _$LibraryFileCopyWithImpl<$Res, _$LibraryFileImpl>
+    implements _$$LibraryFileImplCopyWith<$Res> {
+  __$$LibraryFileImplCopyWithImpl(
+      _$LibraryFileImpl _value, $Res Function(_$LibraryFileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -686,7 +688,7 @@ class __$$_LibraryFileCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? fileType = null,
   }) {
-    return _then(_$_LibraryFile(
+    return _then(_$LibraryFileImpl(
       ino: null == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
@@ -713,16 +715,16 @@ class __$$_LibraryFileCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LibraryFile implements _LibraryFile {
-  const _$_LibraryFile(
+class _$LibraryFileImpl implements _LibraryFile {
+  const _$LibraryFileImpl(
       {required this.ino,
       required this.metadata,
       required this.addedAt,
       required this.updatedAt,
       required this.fileType});
 
-  factory _$_LibraryFile.fromJson(Map<String, dynamic> json) =>
-      _$$_LibraryFileFromJson(json);
+  factory _$LibraryFileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LibraryFileImplFromJson(json);
 
   @override
   final String ino;
@@ -744,7 +746,7 @@ class _$_LibraryFile implements _LibraryFile {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LibraryFile &&
+            other is _$LibraryFileImpl &&
             (identical(other.ino, ino) || other.ino == ino) &&
             (identical(other.metadata, metadata) ||
                 other.metadata == metadata) &&
@@ -763,12 +765,12 @@ class _$_LibraryFile implements _LibraryFile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LibraryFileCopyWith<_$_LibraryFile> get copyWith =>
-      __$$_LibraryFileCopyWithImpl<_$_LibraryFile>(this, _$identity);
+  _$$LibraryFileImplCopyWith<_$LibraryFileImpl> get copyWith =>
+      __$$LibraryFileImplCopyWithImpl<_$LibraryFileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LibraryFileToJson(
+    return _$$LibraryFileImplToJson(
       this,
     );
   }
@@ -780,10 +782,10 @@ abstract class _LibraryFile implements LibraryFile {
       required final LibraryFileMetadata metadata,
       required final int addedAt,
       required final int updatedAt,
-      required final String fileType}) = _$_LibraryFile;
+      required final String fileType}) = _$LibraryFileImpl;
 
   factory _LibraryFile.fromJson(Map<String, dynamic> json) =
-      _$_LibraryFile.fromJson;
+      _$LibraryFileImpl.fromJson;
 
   @override
   String get ino;
@@ -797,7 +799,7 @@ abstract class _LibraryFile implements LibraryFile {
   String get fileType;
   @override
   @JsonKey(ignore: true)
-  _$$_LibraryFileCopyWith<_$_LibraryFile> get copyWith =>
+  _$$LibraryFileImplCopyWith<_$LibraryFileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -899,11 +901,11 @@ class _$LibraryFileMetadataCopyWithImpl<$Res, $Val extends LibraryFileMetadata>
 }
 
 /// @nodoc
-abstract class _$$_LibraryFileMetadataCopyWith<$Res>
+abstract class _$$LibraryFileMetadataImplCopyWith<$Res>
     implements $LibraryFileMetadataCopyWith<$Res> {
-  factory _$$_LibraryFileMetadataCopyWith(_$_LibraryFileMetadata value,
-          $Res Function(_$_LibraryFileMetadata) then) =
-      __$$_LibraryFileMetadataCopyWithImpl<$Res>;
+  factory _$$LibraryFileMetadataImplCopyWith(_$LibraryFileMetadataImpl value,
+          $Res Function(_$LibraryFileMetadataImpl) then) =
+      __$$LibraryFileMetadataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -918,11 +920,11 @@ abstract class _$$_LibraryFileMetadataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LibraryFileMetadataCopyWithImpl<$Res>
-    extends _$LibraryFileMetadataCopyWithImpl<$Res, _$_LibraryFileMetadata>
-    implements _$$_LibraryFileMetadataCopyWith<$Res> {
-  __$$_LibraryFileMetadataCopyWithImpl(_$_LibraryFileMetadata _value,
-      $Res Function(_$_LibraryFileMetadata) _then)
+class __$$LibraryFileMetadataImplCopyWithImpl<$Res>
+    extends _$LibraryFileMetadataCopyWithImpl<$Res, _$LibraryFileMetadataImpl>
+    implements _$$LibraryFileMetadataImplCopyWith<$Res> {
+  __$$LibraryFileMetadataImplCopyWithImpl(_$LibraryFileMetadataImpl _value,
+      $Res Function(_$LibraryFileMetadataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -937,7 +939,7 @@ class __$$_LibraryFileMetadataCopyWithImpl<$Res>
     Object? ctimeMs = freezed,
     Object? birthtimeMs = freezed,
   }) {
-    return _then(_$_LibraryFileMetadata(
+    return _then(_$LibraryFileMetadataImpl(
       filename: null == filename
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
@@ -976,8 +978,8 @@ class __$$_LibraryFileMetadataCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LibraryFileMetadata implements _LibraryFileMetadata {
-  const _$_LibraryFileMetadata(
+class _$LibraryFileMetadataImpl implements _LibraryFileMetadata {
+  const _$LibraryFileMetadataImpl(
       {required this.filename,
       required this.ext,
       required this.path,
@@ -987,8 +989,8 @@ class _$_LibraryFileMetadata implements _LibraryFileMetadata {
       this.ctimeMs,
       this.birthtimeMs});
 
-  factory _$_LibraryFileMetadata.fromJson(Map<String, dynamic> json) =>
-      _$$_LibraryFileMetadataFromJson(json);
+  factory _$LibraryFileMetadataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LibraryFileMetadataImplFromJson(json);
 
   @override
   final String filename;
@@ -1016,7 +1018,7 @@ class _$_LibraryFileMetadata implements _LibraryFileMetadata {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LibraryFileMetadata &&
+            other is _$LibraryFileMetadataImpl &&
             (identical(other.filename, filename) ||
                 other.filename == filename) &&
             (identical(other.ext, ext) || other.ext == ext) &&
@@ -1037,13 +1039,13 @@ class _$_LibraryFileMetadata implements _LibraryFileMetadata {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LibraryFileMetadataCopyWith<_$_LibraryFileMetadata> get copyWith =>
-      __$$_LibraryFileMetadataCopyWithImpl<_$_LibraryFileMetadata>(
+  _$$LibraryFileMetadataImplCopyWith<_$LibraryFileMetadataImpl> get copyWith =>
+      __$$LibraryFileMetadataImplCopyWithImpl<_$LibraryFileMetadataImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LibraryFileMetadataToJson(
+    return _$$LibraryFileMetadataImplToJson(
       this,
     );
   }
@@ -1058,10 +1060,10 @@ abstract class _LibraryFileMetadata implements LibraryFileMetadata {
       required final int size,
       final int? mtimeMs,
       final int? ctimeMs,
-      final int? birthtimeMs}) = _$_LibraryFileMetadata;
+      final int? birthtimeMs}) = _$LibraryFileMetadataImpl;
 
   factory _LibraryFileMetadata.fromJson(Map<String, dynamic> json) =
-      _$_LibraryFileMetadata.fromJson;
+      _$LibraryFileMetadataImpl.fromJson;
 
   @override
   String get filename;
@@ -1081,7 +1083,7 @@ abstract class _LibraryFileMetadata implements LibraryFileMetadata {
   int? get birthtimeMs;
   @override
   @JsonKey(ignore: true)
-  _$$_LibraryFileMetadataCopyWith<_$_LibraryFileMetadata> get copyWith =>
+  _$$LibraryFileMetadataImplCopyWith<_$LibraryFileMetadataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1198,9 +1200,10 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
 }
 
 /// @nodoc
-abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
-  factory _$$_MediaCopyWith(_$_Media value, $Res Function(_$_Media) then) =
-      __$$_MediaCopyWithImpl<$Res>;
+abstract class _$$MediaImplCopyWith<$Res> implements $MediaCopyWith<$Res> {
+  factory _$$MediaImplCopyWith(
+          _$MediaImpl value, $Res Function(_$MediaImpl) then) =
+      __$$MediaImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1219,9 +1222,11 @@ abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
-    implements _$$_MediaCopyWith<$Res> {
-  __$$_MediaCopyWithImpl(_$_Media _value, $Res Function(_$_Media) _then)
+class __$$MediaImplCopyWithImpl<$Res>
+    extends _$MediaCopyWithImpl<$Res, _$MediaImpl>
+    implements _$$MediaImplCopyWith<$Res> {
+  __$$MediaImplCopyWithImpl(
+      _$MediaImpl _value, $Res Function(_$MediaImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1237,7 +1242,7 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
     Object? ebookFile = freezed,
     Object? duration = freezed,
   }) {
-    return _then(_$_Media(
+    return _then(_$MediaImpl(
       libraryItemId: null == libraryItemId
           ? _value.libraryItemId
           : libraryItemId // ignore: cast_nullable_to_non_nullable
@@ -1280,8 +1285,8 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Media implements _Media {
-  const _$_Media(
+class _$MediaImpl implements _Media {
+  const _$MediaImpl(
       {required this.libraryItemId,
       required this.metadata,
       this.coverPath,
@@ -1296,8 +1301,8 @@ class _$_Media implements _Media {
         _chapters = chapters,
         _missingParts = missingParts;
 
-  factory _$_Media.fromJson(Map<String, dynamic> json) =>
-      _$$_MediaFromJson(json);
+  factory _$MediaImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MediaImplFromJson(json);
 
   @override
   final String libraryItemId;
@@ -1359,7 +1364,7 @@ class _$_Media implements _Media {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Media &&
+            other is _$MediaImpl &&
             (identical(other.libraryItemId, libraryItemId) ||
                 other.libraryItemId == libraryItemId) &&
             (identical(other.metadata, metadata) ||
@@ -1394,12 +1399,12 @@ class _$_Media implements _Media {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MediaCopyWith<_$_Media> get copyWith =>
-      __$$_MediaCopyWithImpl<_$_Media>(this, _$identity);
+  _$$MediaImplCopyWith<_$MediaImpl> get copyWith =>
+      __$$MediaImplCopyWithImpl<_$MediaImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaToJson(
+    return _$$MediaImplToJson(
       this,
     );
   }
@@ -1415,9 +1420,9 @@ abstract class _Media implements Media {
       final List<Chapter>? chapters,
       final List<dynamic>? missingParts,
       final dynamic ebookFile,
-      final double? duration}) = _$_Media;
+      final double? duration}) = _$MediaImpl;
 
-  factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
+  factory _Media.fromJson(Map<String, dynamic> json) = _$MediaImpl.fromJson;
 
   @override
   String get libraryItemId;
@@ -1439,7 +1444,7 @@ abstract class _Media implements Media {
   double? get duration;
   @override
   @JsonKey(ignore: true)
-  _$$_MediaCopyWith<_$_Media> get copyWith =>
+  _$$MediaImplCopyWith<_$MediaImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1678,10 +1683,11 @@ class _$AudioFileCopyWithImpl<$Res, $Val extends AudioFile>
 }
 
 /// @nodoc
-abstract class _$$_AudioFileCopyWith<$Res> implements $AudioFileCopyWith<$Res> {
-  factory _$$_AudioFileCopyWith(
-          _$_AudioFile value, $Res Function(_$_AudioFile) then) =
-      __$$_AudioFileCopyWithImpl<$Res>;
+abstract class _$$AudioFileImplCopyWith<$Res>
+    implements $AudioFileCopyWith<$Res> {
+  factory _$$AudioFileImplCopyWith(
+          _$AudioFileImpl value, $Res Function(_$AudioFileImpl) then) =
+      __$$AudioFileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1718,11 +1724,11 @@ abstract class _$$_AudioFileCopyWith<$Res> implements $AudioFileCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AudioFileCopyWithImpl<$Res>
-    extends _$AudioFileCopyWithImpl<$Res, _$_AudioFile>
-    implements _$$_AudioFileCopyWith<$Res> {
-  __$$_AudioFileCopyWithImpl(
-      _$_AudioFile _value, $Res Function(_$_AudioFile) _then)
+class __$$AudioFileImplCopyWithImpl<$Res>
+    extends _$AudioFileCopyWithImpl<$Res, _$AudioFileImpl>
+    implements _$$AudioFileImplCopyWith<$Res> {
+  __$$AudioFileImplCopyWithImpl(
+      _$AudioFileImpl _value, $Res Function(_$AudioFileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1754,7 +1760,7 @@ class __$$_AudioFileCopyWithImpl<$Res>
     Object? metaTags = null,
     Object? mimeType = freezed,
   }) {
-    return _then(_$_AudioFile(
+    return _then(_$AudioFileImpl(
       index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -1861,8 +1867,8 @@ class __$$_AudioFileCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AudioFile implements _AudioFile {
-  const _$_AudioFile(
+class _$AudioFileImpl implements _AudioFile {
+  const _$AudioFileImpl(
       {required this.index,
       required this.ino,
       required this.metadata,
@@ -1890,8 +1896,8 @@ class _$_AudioFile implements _AudioFile {
       this.mimeType})
       : _chapters = chapters;
 
-  factory _$_AudioFile.fromJson(Map<String, dynamic> json) =>
-      _$$_AudioFileFromJson(json);
+  factory _$AudioFileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AudioFileImplFromJson(json);
 
   @override
   final int index;
@@ -1961,7 +1967,7 @@ class _$_AudioFile implements _AudioFile {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AudioFile &&
+            other is _$AudioFileImpl &&
             (identical(other.index, index) || other.index == index) &&
             (identical(other.ino, ino) || other.ino == ino) &&
             (identical(other.metadata, metadata) ||
@@ -2038,12 +2044,12 @@ class _$_AudioFile implements _AudioFile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AudioFileCopyWith<_$_AudioFile> get copyWith =>
-      __$$_AudioFileCopyWithImpl<_$_AudioFile>(this, _$identity);
+  _$$AudioFileImplCopyWith<_$AudioFileImpl> get copyWith =>
+      __$$AudioFileImplCopyWithImpl<_$AudioFileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AudioFileToJson(
+    return _$$AudioFileImplToJson(
       this,
     );
   }
@@ -2075,10 +2081,10 @@ abstract class _AudioFile implements AudioFile {
       final List<Chapter>? chapters,
       final dynamic embeddedCoverArt,
       required final MetaTags metaTags,
-      final String? mimeType}) = _$_AudioFile;
+      final String? mimeType}) = _$AudioFileImpl;
 
   factory _AudioFile.fromJson(Map<String, dynamic> json) =
-      _$_AudioFile.fromJson;
+      _$AudioFileImpl.fromJson;
 
   @override
   int get index;
@@ -2132,7 +2138,7 @@ abstract class _AudioFile implements AudioFile {
   String? get mimeType;
   @override
   @JsonKey(ignore: true)
-  _$$_AudioFileCopyWith<_$_AudioFile> get copyWith =>
+  _$$AudioFileImplCopyWith<_$AudioFileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2206,10 +2212,10 @@ class _$ChapterCopyWithImpl<$Res, $Val extends Chapter>
 }
 
 /// @nodoc
-abstract class _$$_ChapterCopyWith<$Res> implements $ChapterCopyWith<$Res> {
-  factory _$$_ChapterCopyWith(
-          _$_Chapter value, $Res Function(_$_Chapter) then) =
-      __$$_ChapterCopyWithImpl<$Res>;
+abstract class _$$ChapterImplCopyWith<$Res> implements $ChapterCopyWith<$Res> {
+  factory _$$ChapterImplCopyWith(
+          _$ChapterImpl value, $Res Function(_$ChapterImpl) then) =
+      __$$ChapterImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -2220,10 +2226,11 @@ abstract class _$$_ChapterCopyWith<$Res> implements $ChapterCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChapterCopyWithImpl<$Res>
-    extends _$ChapterCopyWithImpl<$Res, _$_Chapter>
-    implements _$$_ChapterCopyWith<$Res> {
-  __$$_ChapterCopyWithImpl(_$_Chapter _value, $Res Function(_$_Chapter) _then)
+class __$$ChapterImplCopyWithImpl<$Res>
+    extends _$ChapterCopyWithImpl<$Res, _$ChapterImpl>
+    implements _$$ChapterImplCopyWith<$Res> {
+  __$$ChapterImplCopyWithImpl(
+      _$ChapterImpl _value, $Res Function(_$ChapterImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2234,7 +2241,7 @@ class __$$_ChapterCopyWithImpl<$Res>
     Object? end = null,
     Object? title = null,
   }) {
-    return _then(_$_Chapter(
+    return _then(_$ChapterImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2257,15 +2264,15 @@ class __$$_ChapterCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Chapter implements _Chapter {
-  const _$_Chapter(
+class _$ChapterImpl implements _Chapter {
+  const _$ChapterImpl(
       {required this.id,
       @JsonKey(fromJson: _coerceStringToDouble) required this.start,
       @JsonKey(fromJson: _coerceStringToDouble) required this.end,
       required this.title});
 
-  factory _$_Chapter.fromJson(Map<String, dynamic> json) =>
-      _$$_ChapterFromJson(json);
+  factory _$ChapterImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ChapterImplFromJson(json);
 
   @override
   final int id;
@@ -2287,7 +2294,7 @@ class _$_Chapter implements _Chapter {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Chapter &&
+            other is _$ChapterImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.start, start) || other.start == start) &&
             (identical(other.end, end) || other.end == end) &&
@@ -2301,12 +2308,12 @@ class _$_Chapter implements _Chapter {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChapterCopyWith<_$_Chapter> get copyWith =>
-      __$$_ChapterCopyWithImpl<_$_Chapter>(this, _$identity);
+  _$$ChapterImplCopyWith<_$ChapterImpl> get copyWith =>
+      __$$ChapterImplCopyWithImpl<_$ChapterImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChapterToJson(
+    return _$$ChapterImplToJson(
       this,
     );
   }
@@ -2317,9 +2324,9 @@ abstract class _Chapter implements Chapter {
       {required final int id,
       @JsonKey(fromJson: _coerceStringToDouble) required final double start,
       @JsonKey(fromJson: _coerceStringToDouble) required final double end,
-      required final String title}) = _$_Chapter;
+      required final String title}) = _$ChapterImpl;
 
-  factory _Chapter.fromJson(Map<String, dynamic> json) = _$_Chapter.fromJson;
+  factory _Chapter.fromJson(Map<String, dynamic> json) = _$ChapterImpl.fromJson;
 
   @override
   int get id;
@@ -2333,7 +2340,7 @@ abstract class _Chapter implements Chapter {
   String get title;
   @override
   @JsonKey(ignore: true)
-  _$$_ChapterCopyWith<_$_Chapter> get copyWith =>
+  _$$ChapterImplCopyWith<_$ChapterImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2448,10 +2455,11 @@ class _$MetaTagsCopyWithImpl<$Res, $Val extends MetaTags>
 }
 
 /// @nodoc
-abstract class _$$_MetaTagsCopyWith<$Res> implements $MetaTagsCopyWith<$Res> {
-  factory _$$_MetaTagsCopyWith(
-          _$_MetaTags value, $Res Function(_$_MetaTags) then) =
-      __$$_MetaTagsCopyWithImpl<$Res>;
+abstract class _$$MetaTagsImplCopyWith<$Res>
+    implements $MetaTagsCopyWith<$Res> {
+  factory _$$MetaTagsImplCopyWith(
+          _$MetaTagsImpl value, $Res Function(_$MetaTagsImpl) then) =
+      __$$MetaTagsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -2468,11 +2476,11 @@ abstract class _$$_MetaTagsCopyWith<$Res> implements $MetaTagsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MetaTagsCopyWithImpl<$Res>
-    extends _$MetaTagsCopyWithImpl<$Res, _$_MetaTags>
-    implements _$$_MetaTagsCopyWith<$Res> {
-  __$$_MetaTagsCopyWithImpl(
-      _$_MetaTags _value, $Res Function(_$_MetaTags) _then)
+class __$$MetaTagsImplCopyWithImpl<$Res>
+    extends _$MetaTagsCopyWithImpl<$Res, _$MetaTagsImpl>
+    implements _$$MetaTagsImplCopyWith<$Res> {
+  __$$MetaTagsImplCopyWithImpl(
+      _$MetaTagsImpl _value, $Res Function(_$MetaTagsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2489,7 +2497,7 @@ class __$$_MetaTagsCopyWithImpl<$Res>
     Object? tagDescription = freezed,
     Object? tagEncoder = freezed,
   }) {
-    return _then(_$_MetaTags(
+    return _then(_$MetaTagsImpl(
       tagAlbum: freezed == tagAlbum
           ? _value.tagAlbum
           : tagAlbum // ignore: cast_nullable_to_non_nullable
@@ -2536,8 +2544,8 @@ class __$$_MetaTagsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MetaTags implements _MetaTags {
-  const _$_MetaTags(
+class _$MetaTagsImpl implements _MetaTags {
+  const _$MetaTagsImpl(
       {this.tagAlbum,
       this.tagArtist,
       this.tagGenre,
@@ -2549,8 +2557,8 @@ class _$_MetaTags implements _MetaTags {
       this.tagDescription,
       this.tagEncoder});
 
-  factory _$_MetaTags.fromJson(Map<String, dynamic> json) =>
-      _$$_MetaTagsFromJson(json);
+  factory _$MetaTagsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MetaTagsImplFromJson(json);
 
   @override
   final String? tagAlbum;
@@ -2582,7 +2590,7 @@ class _$_MetaTags implements _MetaTags {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MetaTags &&
+            other is _$MetaTagsImpl &&
             (identical(other.tagAlbum, tagAlbum) ||
                 other.tagAlbum == tagAlbum) &&
             (identical(other.tagArtist, tagArtist) ||
@@ -2622,12 +2630,12 @@ class _$_MetaTags implements _MetaTags {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MetaTagsCopyWith<_$_MetaTags> get copyWith =>
-      __$$_MetaTagsCopyWithImpl<_$_MetaTags>(this, _$identity);
+  _$$MetaTagsImplCopyWith<_$MetaTagsImpl> get copyWith =>
+      __$$MetaTagsImplCopyWithImpl<_$MetaTagsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MetaTagsToJson(
+    return _$$MetaTagsImplToJson(
       this,
     );
   }
@@ -2644,9 +2652,10 @@ abstract class _MetaTags implements MetaTags {
       final String? tagDate,
       final String? tagComposer,
       final String? tagDescription,
-      final String? tagEncoder}) = _$_MetaTags;
+      final String? tagEncoder}) = _$MetaTagsImpl;
 
-  factory _MetaTags.fromJson(Map<String, dynamic> json) = _$_MetaTags.fromJson;
+  factory _MetaTags.fromJson(Map<String, dynamic> json) =
+      _$MetaTagsImpl.fromJson;
 
   @override
   String? get tagAlbum;
@@ -2670,7 +2679,7 @@ abstract class _MetaTags implements MetaTags {
   String? get tagEncoder;
   @override
   @JsonKey(ignore: true)
-  _$$_MetaTagsCopyWith<_$_MetaTags> get copyWith =>
+  _$$MetaTagsImplCopyWith<_$MetaTagsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2683,9 +2692,9 @@ mixin _$MediaMetadata {
   String? get title => throw _privateConstructorUsedError;
   String? get subtitle => throw _privateConstructorUsedError;
   List<Author>? get authors => throw _privateConstructorUsedError;
-  List<String>? get narrators => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: _coerceToList)
-  List<Series>? get series => throw _privateConstructorUsedError;
+  List<String>? get narrators =>
+      throw _privateConstructorUsedError; // @JsonKey(fromJson: _coerceToList) List<Series>? series,
+  String? get seriesName => throw _privateConstructorUsedError;
   List<String>? get genres => throw _privateConstructorUsedError;
   String? get publishedYear => throw _privateConstructorUsedError;
   int? get publishedDate => throw _privateConstructorUsedError;
@@ -2713,7 +2722,7 @@ abstract class $MediaMetadataCopyWith<$Res> {
       String? subtitle,
       List<Author>? authors,
       List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) List<Series>? series,
+      String? seriesName,
       List<String>? genres,
       String? publishedYear,
       int? publishedDate,
@@ -2742,7 +2751,7 @@ class _$MediaMetadataCopyWithImpl<$Res, $Val extends MediaMetadata>
     Object? subtitle = freezed,
     Object? authors = freezed,
     Object? narrators = freezed,
-    Object? series = freezed,
+    Object? seriesName = freezed,
     Object? genres = freezed,
     Object? publishedYear = freezed,
     Object? publishedDate = freezed,
@@ -2770,10 +2779,10 @@ class _$MediaMetadataCopyWithImpl<$Res, $Val extends MediaMetadata>
           ? _value.narrators
           : narrators // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      series: freezed == series
-          ? _value.series
-          : series // ignore: cast_nullable_to_non_nullable
-              as List<Series>?,
+      seriesName: freezed == seriesName
+          ? _value.seriesName
+          : seriesName // ignore: cast_nullable_to_non_nullable
+              as String?,
       genres: freezed == genres
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
@@ -2815,11 +2824,11 @@ class _$MediaMetadataCopyWithImpl<$Res, $Val extends MediaMetadata>
 }
 
 /// @nodoc
-abstract class _$$_MediaMetadataCopyWith<$Res>
+abstract class _$$MediaMetadataImplCopyWith<$Res>
     implements $MediaMetadataCopyWith<$Res> {
-  factory _$$_MediaMetadataCopyWith(
-          _$_MediaMetadata value, $Res Function(_$_MediaMetadata) then) =
-      __$$_MediaMetadataCopyWithImpl<$Res>;
+  factory _$$MediaMetadataImplCopyWith(
+          _$MediaMetadataImpl value, $Res Function(_$MediaMetadataImpl) then) =
+      __$$MediaMetadataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -2827,7 +2836,7 @@ abstract class _$$_MediaMetadataCopyWith<$Res>
       String? subtitle,
       List<Author>? authors,
       List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) List<Series>? series,
+      String? seriesName,
       List<String>? genres,
       String? publishedYear,
       int? publishedDate,
@@ -2840,11 +2849,11 @@ abstract class _$$_MediaMetadataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MediaMetadataCopyWithImpl<$Res>
-    extends _$MediaMetadataCopyWithImpl<$Res, _$_MediaMetadata>
-    implements _$$_MediaMetadataCopyWith<$Res> {
-  __$$_MediaMetadataCopyWithImpl(
-      _$_MediaMetadata _value, $Res Function(_$_MediaMetadata) _then)
+class __$$MediaMetadataImplCopyWithImpl<$Res>
+    extends _$MediaMetadataCopyWithImpl<$Res, _$MediaMetadataImpl>
+    implements _$$MediaMetadataImplCopyWith<$Res> {
+  __$$MediaMetadataImplCopyWithImpl(
+      _$MediaMetadataImpl _value, $Res Function(_$MediaMetadataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2854,7 +2863,7 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
     Object? subtitle = freezed,
     Object? authors = freezed,
     Object? narrators = freezed,
-    Object? series = freezed,
+    Object? seriesName = freezed,
     Object? genres = freezed,
     Object? publishedYear = freezed,
     Object? publishedDate = freezed,
@@ -2865,7 +2874,7 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
     Object? language = freezed,
     Object? explicit = freezed,
   }) {
-    return _then(_$_MediaMetadata(
+    return _then(_$MediaMetadataImpl(
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -2882,10 +2891,10 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
           ? _value._narrators
           : narrators // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      series: freezed == series
-          ? _value._series
-          : series // ignore: cast_nullable_to_non_nullable
-              as List<Series>?,
+      seriesName: freezed == seriesName
+          ? _value.seriesName
+          : seriesName // ignore: cast_nullable_to_non_nullable
+              as String?,
       genres: freezed == genres
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
@@ -2928,13 +2937,13 @@ class __$$_MediaMetadataCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MediaMetadata implements _MediaMetadata {
-  const _$_MediaMetadata(
+class _$MediaMetadataImpl implements _MediaMetadata {
+  const _$MediaMetadataImpl(
       {this.title,
       this.subtitle,
       final List<Author>? authors,
       final List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) final List<Series>? series,
+      this.seriesName,
       final List<String>? genres,
       this.publishedYear,
       this.publishedDate,
@@ -2946,11 +2955,10 @@ class _$_MediaMetadata implements _MediaMetadata {
       this.explicit})
       : _authors = authors,
         _narrators = narrators,
-        _series = series,
         _genres = genres;
 
-  factory _$_MediaMetadata.fromJson(Map<String, dynamic> json) =>
-      _$$_MediaMetadataFromJson(json);
+  factory _$MediaMetadataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MediaMetadataImplFromJson(json);
 
   @override
   final String? title;
@@ -2976,17 +2984,9 @@ class _$_MediaMetadata implements _MediaMetadata {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<Series>? _series;
+// @JsonKey(fromJson: _coerceToList) List<Series>? series,
   @override
-  @JsonKey(fromJson: _coerceToList)
-  List<Series>? get series {
-    final value = _series;
-    if (value == null) return null;
-    if (_series is EqualUnmodifiableListView) return _series;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final String? seriesName;
   final List<String>? _genres;
   @override
   List<String>? get genres {
@@ -3016,21 +3016,22 @@ class _$_MediaMetadata implements _MediaMetadata {
 
   @override
   String toString() {
-    return 'MediaMetadata(title: $title, subtitle: $subtitle, authors: $authors, narrators: $narrators, series: $series, genres: $genres, publishedYear: $publishedYear, publishedDate: $publishedDate, publisher: $publisher, description: $description, isbn: $isbn, asin: $asin, language: $language, explicit: $explicit)';
+    return 'MediaMetadata(title: $title, subtitle: $subtitle, authors: $authors, narrators: $narrators, seriesName: $seriesName, genres: $genres, publishedYear: $publishedYear, publishedDate: $publishedDate, publisher: $publisher, description: $description, isbn: $isbn, asin: $asin, language: $language, explicit: $explicit)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MediaMetadata &&
+            other is _$MediaMetadataImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
             const DeepCollectionEquality().equals(other._authors, _authors) &&
             const DeepCollectionEquality()
                 .equals(other._narrators, _narrators) &&
-            const DeepCollectionEquality().equals(other._series, _series) &&
+            (identical(other.seriesName, seriesName) ||
+                other.seriesName == seriesName) &&
             const DeepCollectionEquality().equals(other._genres, _genres) &&
             (identical(other.publishedYear, publishedYear) ||
                 other.publishedYear == publishedYear) &&
@@ -3056,7 +3057,7 @@ class _$_MediaMetadata implements _MediaMetadata {
       subtitle,
       const DeepCollectionEquality().hash(_authors),
       const DeepCollectionEquality().hash(_narrators),
-      const DeepCollectionEquality().hash(_series),
+      seriesName,
       const DeepCollectionEquality().hash(_genres),
       publishedYear,
       publishedDate,
@@ -3070,12 +3071,12 @@ class _$_MediaMetadata implements _MediaMetadata {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MediaMetadataCopyWith<_$_MediaMetadata> get copyWith =>
-      __$$_MediaMetadataCopyWithImpl<_$_MediaMetadata>(this, _$identity);
+  _$$MediaMetadataImplCopyWith<_$MediaMetadataImpl> get copyWith =>
+      __$$MediaMetadataImplCopyWithImpl<_$MediaMetadataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaMetadataToJson(
+    return _$$MediaMetadataImplToJson(
       this,
     );
   }
@@ -3087,7 +3088,7 @@ abstract class _MediaMetadata implements MediaMetadata {
       final String? subtitle,
       final List<Author>? authors,
       final List<String>? narrators,
-      @JsonKey(fromJson: _coerceToList) final List<Series>? series,
+      final String? seriesName,
       final List<String>? genres,
       final String? publishedYear,
       final int? publishedDate,
@@ -3096,10 +3097,10 @@ abstract class _MediaMetadata implements MediaMetadata {
       final String? isbn,
       final String? asin,
       final String? language,
-      final bool? explicit}) = _$_MediaMetadata;
+      final bool? explicit}) = _$MediaMetadataImpl;
 
   factory _MediaMetadata.fromJson(Map<String, dynamic> json) =
-      _$_MediaMetadata.fromJson;
+      _$MediaMetadataImpl.fromJson;
 
   @override
   String? get title;
@@ -3109,9 +3110,8 @@ abstract class _MediaMetadata implements MediaMetadata {
   List<Author>? get authors;
   @override
   List<String>? get narrators;
-  @override
-  @JsonKey(fromJson: _coerceToList)
-  List<Series>? get series;
+  @override // @JsonKey(fromJson: _coerceToList) List<Series>? series,
+  String? get seriesName;
   @override
   List<String>? get genres;
   @override
@@ -3132,7 +3132,7 @@ abstract class _MediaMetadata implements MediaMetadata {
   bool? get explicit;
   @override
   @JsonKey(ignore: true)
-  _$$_MediaMetadataCopyWith<_$_MediaMetadata> get copyWith =>
+  _$$MediaMetadataImplCopyWith<_$MediaMetadataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3232,9 +3232,10 @@ class _$AuthorCopyWithImpl<$Res, $Val extends Author>
 }
 
 /// @nodoc
-abstract class _$$_AuthorCopyWith<$Res> implements $AuthorCopyWith<$Res> {
-  factory _$$_AuthorCopyWith(_$_Author value, $Res Function(_$_Author) then) =
-      __$$_AuthorCopyWithImpl<$Res>;
+abstract class _$$AuthorImplCopyWith<$Res> implements $AuthorCopyWith<$Res> {
+  factory _$$AuthorImplCopyWith(
+          _$AuthorImpl value, $Res Function(_$AuthorImpl) then) =
+      __$$AuthorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -3249,10 +3250,11 @@ abstract class _$$_AuthorCopyWith<$Res> implements $AuthorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AuthorCopyWithImpl<$Res>
-    extends _$AuthorCopyWithImpl<$Res, _$_Author>
-    implements _$$_AuthorCopyWith<$Res> {
-  __$$_AuthorCopyWithImpl(_$_Author _value, $Res Function(_$_Author) _then)
+class __$$AuthorImplCopyWithImpl<$Res>
+    extends _$AuthorCopyWithImpl<$Res, _$AuthorImpl>
+    implements _$$AuthorImplCopyWith<$Res> {
+  __$$AuthorImplCopyWithImpl(
+      _$AuthorImpl _value, $Res Function(_$AuthorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3267,7 +3269,7 @@ class __$$_AuthorCopyWithImpl<$Res>
     Object? numBooks = freezed,
     Object? addedAt = freezed,
   }) {
-    return _then(_$_Author(
+    return _then(_$AuthorImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -3306,8 +3308,8 @@ class __$$_AuthorCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Author implements _Author {
-  const _$_Author(
+class _$AuthorImpl implements _Author {
+  const _$AuthorImpl(
       {required this.id,
       required this.name,
       this.updatedAt,
@@ -3317,8 +3319,8 @@ class _$_Author implements _Author {
       this.numBooks,
       this.addedAt});
 
-  factory _$_Author.fromJson(Map<String, dynamic> json) =>
-      _$$_AuthorFromJson(json);
+  factory _$AuthorImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AuthorImplFromJson(json);
 
   @override
   final String id;
@@ -3346,7 +3348,7 @@ class _$_Author implements _Author {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Author &&
+            other is _$AuthorImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -3369,12 +3371,12 @@ class _$_Author implements _Author {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AuthorCopyWith<_$_Author> get copyWith =>
-      __$$_AuthorCopyWithImpl<_$_Author>(this, _$identity);
+  _$$AuthorImplCopyWith<_$AuthorImpl> get copyWith =>
+      __$$AuthorImplCopyWithImpl<_$AuthorImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthorToJson(
+    return _$$AuthorImplToJson(
       this,
     );
   }
@@ -3389,9 +3391,9 @@ abstract class _Author implements Author {
       final String? description,
       final String? asin,
       final int? numBooks,
-      final int? addedAt}) = _$_Author;
+      final int? addedAt}) = _$AuthorImpl;
 
-  factory _Author.fromJson(Map<String, dynamic> json) = _$_Author.fromJson;
+  factory _Author.fromJson(Map<String, dynamic> json) = _$AuthorImpl.fromJson;
 
   @override
   String get id;
@@ -3411,7 +3413,7 @@ abstract class _Author implements Author {
   int? get addedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_AuthorCopyWith<_$_Author> get copyWith =>
+  _$$AuthorImplCopyWith<_$AuthorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3473,19 +3475,21 @@ class _$SeriesCopyWithImpl<$Res, $Val extends Series>
 }
 
 /// @nodoc
-abstract class _$$_SeriesCopyWith<$Res> implements $SeriesCopyWith<$Res> {
-  factory _$$_SeriesCopyWith(_$_Series value, $Res Function(_$_Series) then) =
-      __$$_SeriesCopyWithImpl<$Res>;
+abstract class _$$SeriesImplCopyWith<$Res> implements $SeriesCopyWith<$Res> {
+  factory _$$SeriesImplCopyWith(
+          _$SeriesImpl value, $Res Function(_$SeriesImpl) then) =
+      __$$SeriesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, String? sequence});
 }
 
 /// @nodoc
-class __$$_SeriesCopyWithImpl<$Res>
-    extends _$SeriesCopyWithImpl<$Res, _$_Series>
-    implements _$$_SeriesCopyWith<$Res> {
-  __$$_SeriesCopyWithImpl(_$_Series _value, $Res Function(_$_Series) _then)
+class __$$SeriesImplCopyWithImpl<$Res>
+    extends _$SeriesCopyWithImpl<$Res, _$SeriesImpl>
+    implements _$$SeriesImplCopyWith<$Res> {
+  __$$SeriesImplCopyWithImpl(
+      _$SeriesImpl _value, $Res Function(_$SeriesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3495,7 +3499,7 @@ class __$$_SeriesCopyWithImpl<$Res>
     Object? name = null,
     Object? sequence = freezed,
   }) {
-    return _then(_$_Series(
+    return _then(_$SeriesImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -3514,11 +3518,11 @@ class __$$_SeriesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Series implements _Series {
-  const _$_Series({required this.id, required this.name, this.sequence});
+class _$SeriesImpl implements _Series {
+  const _$SeriesImpl({required this.id, required this.name, this.sequence});
 
-  factory _$_Series.fromJson(Map<String, dynamic> json) =>
-      _$$_SeriesFromJson(json);
+  factory _$SeriesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SeriesImplFromJson(json);
 
   @override
   final String id;
@@ -3536,7 +3540,7 @@ class _$_Series implements _Series {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Series &&
+            other is _$SeriesImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.sequence, sequence) ||
@@ -3550,12 +3554,12 @@ class _$_Series implements _Series {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SeriesCopyWith<_$_Series> get copyWith =>
-      __$$_SeriesCopyWithImpl<_$_Series>(this, _$identity);
+  _$$SeriesImplCopyWith<_$SeriesImpl> get copyWith =>
+      __$$SeriesImplCopyWithImpl<_$SeriesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SeriesToJson(
+    return _$$SeriesImplToJson(
       this,
     );
   }
@@ -3565,9 +3569,9 @@ abstract class _Series implements Series {
   const factory _Series(
       {required final String id,
       required final String name,
-      final String? sequence}) = _$_Series;
+      final String? sequence}) = _$SeriesImpl;
 
-  factory _Series.fromJson(Map<String, dynamic> json) = _$_Series.fromJson;
+  factory _Series.fromJson(Map<String, dynamic> json) = _$SeriesImpl.fromJson;
 
   @override
   String get id;
@@ -3577,6 +3581,6 @@ abstract class _Series implements Series {
   String? get sequence;
   @override
   @JsonKey(ignore: true)
-  _$$_SeriesCopyWith<_$_Series> get copyWith =>
+  _$$SeriesImplCopyWith<_$SeriesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

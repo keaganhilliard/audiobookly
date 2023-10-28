@@ -88,27 +88,30 @@ class _$TrackDetailsStateCopyWithImpl<$Res, $Val extends TrackDetailsState>
 }
 
 /// @nodoc
-abstract class _$$TrackDetailsStateInitialCopyWith<$Res> {
-  factory _$$TrackDetailsStateInitialCopyWith(_$TrackDetailsStateInitial value,
-          $Res Function(_$TrackDetailsStateInitial) then) =
-      __$$TrackDetailsStateInitialCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateInitialImplCopyWith<$Res> {
+  factory _$$TrackDetailsStateInitialImplCopyWith(
+          _$TrackDetailsStateInitialImpl value,
+          $Res Function(_$TrackDetailsStateInitialImpl) then) =
+      __$$TrackDetailsStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$TrackDetailsStateInitialCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateInitial>
-    implements _$$TrackDetailsStateInitialCopyWith<$Res> {
-  __$$TrackDetailsStateInitialCopyWithImpl(_$TrackDetailsStateInitial _value,
-      $Res Function(_$TrackDetailsStateInitial) _then)
+class __$$TrackDetailsStateInitialImplCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res,
+        _$TrackDetailsStateInitialImpl>
+    implements _$$TrackDetailsStateInitialImplCopyWith<$Res> {
+  __$$TrackDetailsStateInitialImplCopyWithImpl(
+      _$TrackDetailsStateInitialImpl _value,
+      $Res Function(_$TrackDetailsStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$TrackDetailsStateInitial
+class _$TrackDetailsStateInitialImpl
     with DiagnosticableTreeMixin
     implements TrackDetailsStateInitial {
-  const _$TrackDetailsStateInitial();
+  const _$TrackDetailsStateInitialImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -125,7 +128,7 @@ class _$TrackDetailsStateInitial
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TrackDetailsStateInitial);
+            other is _$TrackDetailsStateInitialImpl);
   }
 
   @override
@@ -208,24 +211,26 @@ class _$TrackDetailsStateInitial
 }
 
 abstract class TrackDetailsStateInitial implements TrackDetailsState {
-  const factory TrackDetailsStateInitial() = _$TrackDetailsStateInitial;
+  const factory TrackDetailsStateInitial() = _$TrackDetailsStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$TrackDetailsStateLoadedCopyWith<$Res> {
-  factory _$$TrackDetailsStateLoadedCopyWith(_$TrackDetailsStateLoaded value,
-          $Res Function(_$TrackDetailsStateLoaded) then) =
-      __$$TrackDetailsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateLoadedImplCopyWith<$Res> {
+  factory _$$TrackDetailsStateLoadedImplCopyWith(
+          _$TrackDetailsStateLoadedImpl value,
+          $Res Function(_$TrackDetailsStateLoadedImpl) then) =
+      __$$TrackDetailsStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Track>? tracks, List<Chapter>? chapters});
 }
 
 /// @nodoc
-class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateLoaded>
-    implements _$$TrackDetailsStateLoadedCopyWith<$Res> {
-  __$$TrackDetailsStateLoadedCopyWithImpl(_$TrackDetailsStateLoaded _value,
-      $Res Function(_$TrackDetailsStateLoaded) _then)
+class __$$TrackDetailsStateLoadedImplCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateLoadedImpl>
+    implements _$$TrackDetailsStateLoadedImplCopyWith<$Res> {
+  __$$TrackDetailsStateLoadedImplCopyWithImpl(
+      _$TrackDetailsStateLoadedImpl _value,
+      $Res Function(_$TrackDetailsStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -234,7 +239,7 @@ class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
     Object? tracks = freezed,
     Object? chapters = freezed,
   }) {
-    return _then(_$TrackDetailsStateLoaded(
+    return _then(_$TrackDetailsStateLoadedImpl(
       tracks: freezed == tracks
           ? _value._tracks
           : tracks // ignore: cast_nullable_to_non_nullable
@@ -249,10 +254,10 @@ class __$$TrackDetailsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateLoaded
+class _$TrackDetailsStateLoadedImpl
     with DiagnosticableTreeMixin
     implements TrackDetailsStateLoaded {
-  const _$TrackDetailsStateLoaded(
+  const _$TrackDetailsStateLoadedImpl(
       {final List<Track>? tracks, final List<Chapter>? chapters})
       : _tracks = tracks,
         _chapters = chapters;
@@ -295,7 +300,7 @@ class _$TrackDetailsStateLoaded
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TrackDetailsStateLoaded &&
+            other is _$TrackDetailsStateLoadedImpl &&
             const DeepCollectionEquality().equals(other._tracks, _tracks) &&
             const DeepCollectionEquality().equals(other._chapters, _chapters));
   }
@@ -309,9 +314,9 @@ class _$TrackDetailsStateLoaded
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TrackDetailsStateLoadedCopyWith<_$TrackDetailsStateLoaded> get copyWith =>
-      __$$TrackDetailsStateLoadedCopyWithImpl<_$TrackDetailsStateLoaded>(
-          this, _$identity);
+  _$$TrackDetailsStateLoadedImplCopyWith<_$TrackDetailsStateLoadedImpl>
+      get copyWith => __$$TrackDetailsStateLoadedImplCopyWithImpl<
+          _$TrackDetailsStateLoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -392,37 +397,40 @@ class _$TrackDetailsStateLoaded
 abstract class TrackDetailsStateLoaded implements TrackDetailsState {
   const factory TrackDetailsStateLoaded(
       {final List<Track>? tracks,
-      final List<Chapter>? chapters}) = _$TrackDetailsStateLoaded;
+      final List<Chapter>? chapters}) = _$TrackDetailsStateLoadedImpl;
 
   List<Track>? get tracks;
   List<Chapter>? get chapters;
   @JsonKey(ignore: true)
-  _$$TrackDetailsStateLoadedCopyWith<_$TrackDetailsStateLoaded> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TrackDetailsStateLoadedImplCopyWith<_$TrackDetailsStateLoadedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TrackDetailsStateLoadingCopyWith<$Res> {
-  factory _$$TrackDetailsStateLoadingCopyWith(_$TrackDetailsStateLoading value,
-          $Res Function(_$TrackDetailsStateLoading) then) =
-      __$$TrackDetailsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateLoadingImplCopyWith<$Res> {
+  factory _$$TrackDetailsStateLoadingImplCopyWith(
+          _$TrackDetailsStateLoadingImpl value,
+          $Res Function(_$TrackDetailsStateLoadingImpl) then) =
+      __$$TrackDetailsStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$TrackDetailsStateLoadingCopyWithImpl<$Res>
-    extends _$TrackDetailsStateCopyWithImpl<$Res, _$TrackDetailsStateLoading>
-    implements _$$TrackDetailsStateLoadingCopyWith<$Res> {
-  __$$TrackDetailsStateLoadingCopyWithImpl(_$TrackDetailsStateLoading _value,
-      $Res Function(_$TrackDetailsStateLoading) _then)
+class __$$TrackDetailsStateLoadingImplCopyWithImpl<$Res>
+    extends _$TrackDetailsStateCopyWithImpl<$Res,
+        _$TrackDetailsStateLoadingImpl>
+    implements _$$TrackDetailsStateLoadingImplCopyWith<$Res> {
+  __$$TrackDetailsStateLoadingImplCopyWithImpl(
+      _$TrackDetailsStateLoadingImpl _value,
+      $Res Function(_$TrackDetailsStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$TrackDetailsStateLoading
+class _$TrackDetailsStateLoadingImpl
     with DiagnosticableTreeMixin
     implements TrackDetailsStateLoading {
-  const _$TrackDetailsStateLoading();
+  const _$TrackDetailsStateLoadingImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -439,7 +447,7 @@ class _$TrackDetailsStateLoading
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TrackDetailsStateLoading);
+            other is _$TrackDetailsStateLoadingImpl);
   }
 
   @override
@@ -522,27 +530,27 @@ class _$TrackDetailsStateLoading
 }
 
 abstract class TrackDetailsStateLoading implements TrackDetailsState {
-  const factory TrackDetailsStateLoading() = _$TrackDetailsStateLoading;
+  const factory TrackDetailsStateLoading() = _$TrackDetailsStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$TrackDetailsStateErrorDetailsCopyWith<$Res> {
-  factory _$$TrackDetailsStateErrorDetailsCopyWith(
-          _$TrackDetailsStateErrorDetails value,
-          $Res Function(_$TrackDetailsStateErrorDetails) then) =
-      __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$TrackDetailsStateErrorDetailsImplCopyWith<$Res> {
+  factory _$$TrackDetailsStateErrorDetailsImplCopyWith(
+          _$TrackDetailsStateErrorDetailsImpl value,
+          $Res Function(_$TrackDetailsStateErrorDetailsImpl) then) =
+      __$$TrackDetailsStateErrorDetailsImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
+class __$$TrackDetailsStateErrorDetailsImplCopyWithImpl<$Res>
     extends _$TrackDetailsStateCopyWithImpl<$Res,
-        _$TrackDetailsStateErrorDetails>
-    implements _$$TrackDetailsStateErrorDetailsCopyWith<$Res> {
-  __$$TrackDetailsStateErrorDetailsCopyWithImpl(
-      _$TrackDetailsStateErrorDetails _value,
-      $Res Function(_$TrackDetailsStateErrorDetails) _then)
+        _$TrackDetailsStateErrorDetailsImpl>
+    implements _$$TrackDetailsStateErrorDetailsImplCopyWith<$Res> {
+  __$$TrackDetailsStateErrorDetailsImplCopyWithImpl(
+      _$TrackDetailsStateErrorDetailsImpl _value,
+      $Res Function(_$TrackDetailsStateErrorDetailsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -550,7 +558,7 @@ class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$TrackDetailsStateErrorDetails(
+    return _then(_$TrackDetailsStateErrorDetailsImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -561,10 +569,10 @@ class __$$TrackDetailsStateErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TrackDetailsStateErrorDetails
+class _$TrackDetailsStateErrorDetailsImpl
     with DiagnosticableTreeMixin
     implements TrackDetailsStateErrorDetails {
-  const _$TrackDetailsStateErrorDetails([this.message]);
+  const _$TrackDetailsStateErrorDetailsImpl([this.message]);
 
   @override
   final String? message;
@@ -586,7 +594,7 @@ class _$TrackDetailsStateErrorDetails
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TrackDetailsStateErrorDetails &&
+            other is _$TrackDetailsStateErrorDetailsImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -596,9 +604,10 @@ class _$TrackDetailsStateErrorDetails
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TrackDetailsStateErrorDetailsCopyWith<_$TrackDetailsStateErrorDetails>
-      get copyWith => __$$TrackDetailsStateErrorDetailsCopyWithImpl<
-          _$TrackDetailsStateErrorDetails>(this, _$identity);
+  _$$TrackDetailsStateErrorDetailsImplCopyWith<
+          _$TrackDetailsStateErrorDetailsImpl>
+      get copyWith => __$$TrackDetailsStateErrorDetailsImplCopyWithImpl<
+          _$TrackDetailsStateErrorDetailsImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -678,10 +687,11 @@ class _$TrackDetailsStateErrorDetails
 
 abstract class TrackDetailsStateErrorDetails implements TrackDetailsState {
   const factory TrackDetailsStateErrorDetails([final String? message]) =
-      _$TrackDetailsStateErrorDetails;
+      _$TrackDetailsStateErrorDetailsImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$TrackDetailsStateErrorDetailsCopyWith<_$TrackDetailsStateErrorDetails>
+  _$$TrackDetailsStateErrorDetailsImplCopyWith<
+          _$TrackDetailsStateErrorDetailsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

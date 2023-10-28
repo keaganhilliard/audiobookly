@@ -6,8 +6,8 @@ part of 'abs_audiobook.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AbsAudiobook _$$_AbsAudiobookFromJson(Map<String, dynamic> json) =>
-    _$_AbsAudiobook(
+_$AbsAudiobookImpl _$$AbsAudiobookImplFromJson(Map<String, dynamic> json) =>
+    _$AbsAudiobookImpl(
       id: json['id'] as String,
       ino: json['ino'] as String,
       libraryId: json['libraryId'] as String,
@@ -26,12 +26,12 @@ _$_AbsAudiobook _$$_AbsAudiobookFromJson(Map<String, dynamic> json) =>
       isInvalid: json['isInvalid'] as bool,
       mediaType: json['mediaType'] as String,
       media: Media.fromJson(json['media'] as Map<String, dynamic>),
-      libraryFiles: (json['libraryFiles'] as List<dynamic>)
-          .map((e) => LibraryFile.fromJson(e as Map<String, dynamic>))
+      libraryFiles: (json['libraryFiles'] as List<dynamic>?)
+          ?.map((e) => LibraryFile.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_AbsAudiobookToJson(_$_AbsAudiobook instance) =>
+Map<String, dynamic> _$$AbsAudiobookImplToJson(_$AbsAudiobookImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'ino': instance.ino,
@@ -54,8 +54,8 @@ Map<String, dynamic> _$$_AbsAudiobookToJson(_$_AbsAudiobook instance) =>
       'libraryFiles': instance.libraryFiles,
     };
 
-_$_LibraryFile _$$_LibraryFileFromJson(Map<String, dynamic> json) =>
-    _$_LibraryFile(
+_$LibraryFileImpl _$$LibraryFileImplFromJson(Map<String, dynamic> json) =>
+    _$LibraryFileImpl(
       ino: json['ino'] as String,
       metadata: LibraryFileMetadata.fromJson(
           json['metadata'] as Map<String, dynamic>),
@@ -64,7 +64,7 @@ _$_LibraryFile _$$_LibraryFileFromJson(Map<String, dynamic> json) =>
       fileType: json['fileType'] as String,
     );
 
-Map<String, dynamic> _$$_LibraryFileToJson(_$_LibraryFile instance) =>
+Map<String, dynamic> _$$LibraryFileImplToJson(_$LibraryFileImpl instance) =>
     <String, dynamic>{
       'ino': instance.ino,
       'metadata': instance.metadata,
@@ -73,9 +73,9 @@ Map<String, dynamic> _$$_LibraryFileToJson(_$_LibraryFile instance) =>
       'fileType': instance.fileType,
     };
 
-_$_LibraryFileMetadata _$$_LibraryFileMetadataFromJson(
+_$LibraryFileMetadataImpl _$$LibraryFileMetadataImplFromJson(
         Map<String, dynamic> json) =>
-    _$_LibraryFileMetadata(
+    _$LibraryFileMetadataImpl(
       filename: json['filename'] as String,
       ext: json['ext'] as String,
       path: json['path'] as String,
@@ -86,8 +86,8 @@ _$_LibraryFileMetadata _$$_LibraryFileMetadataFromJson(
       birthtimeMs: json['birthtimeMs'] as int?,
     );
 
-Map<String, dynamic> _$$_LibraryFileMetadataToJson(
-        _$_LibraryFileMetadata instance) =>
+Map<String, dynamic> _$$LibraryFileMetadataImplToJson(
+        _$LibraryFileMetadataImpl instance) =>
     <String, dynamic>{
       'filename': instance.filename,
       'ext': instance.ext,
@@ -99,7 +99,7 @@ Map<String, dynamic> _$$_LibraryFileMetadataToJson(
       'birthtimeMs': instance.birthtimeMs,
     };
 
-_$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
+_$MediaImpl _$$MediaImplFromJson(Map<String, dynamic> json) => _$MediaImpl(
       libraryItemId: json['libraryItemId'] as String,
       metadata:
           MediaMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
@@ -116,7 +116,8 @@ _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
       duration: (json['duration'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_MediaToJson(_$_Media instance) => <String, dynamic>{
+Map<String, dynamic> _$$MediaImplToJson(_$MediaImpl instance) =>
+    <String, dynamic>{
       'libraryItemId': instance.libraryItemId,
       'metadata': instance.metadata,
       'coverPath': instance.coverPath,
@@ -128,7 +129,8 @@ Map<String, dynamic> _$$_MediaToJson(_$_Media instance) => <String, dynamic>{
       'duration': instance.duration,
     };
 
-_$_AudioFile _$$_AudioFileFromJson(Map<String, dynamic> json) => _$_AudioFile(
+_$AudioFileImpl _$$AudioFileImplFromJson(Map<String, dynamic> json) =>
+    _$AudioFileImpl(
       index: json['index'] as int,
       ino: json['ino'] as String,
       metadata: LibraryFileMetadata.fromJson(
@@ -159,7 +161,7 @@ _$_AudioFile _$$_AudioFileFromJson(Map<String, dynamic> json) => _$_AudioFile(
       mimeType: json['mimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_AudioFileToJson(_$_AudioFile instance) =>
+Map<String, dynamic> _$$AudioFileImplToJson(_$AudioFileImpl instance) =>
     <String, dynamic>{
       'index': instance.index,
       'ino': instance.ino,
@@ -188,14 +190,15 @@ Map<String, dynamic> _$$_AudioFileToJson(_$_AudioFile instance) =>
       'mimeType': instance.mimeType,
     };
 
-_$_Chapter _$$_ChapterFromJson(Map<String, dynamic> json) => _$_Chapter(
+_$ChapterImpl _$$ChapterImplFromJson(Map<String, dynamic> json) =>
+    _$ChapterImpl(
       id: json['id'] as int,
       start: _coerceStringToDouble(json['start']),
       end: _coerceStringToDouble(json['end']),
       title: json['title'] as String,
     );
 
-Map<String, dynamic> _$$_ChapterToJson(_$_Chapter instance) =>
+Map<String, dynamic> _$$ChapterImplToJson(_$ChapterImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'start': instance.start,
@@ -203,7 +206,8 @@ Map<String, dynamic> _$$_ChapterToJson(_$_Chapter instance) =>
       'title': instance.title,
     };
 
-_$_MetaTags _$$_MetaTagsFromJson(Map<String, dynamic> json) => _$_MetaTags(
+_$MetaTagsImpl _$$MetaTagsImplFromJson(Map<String, dynamic> json) =>
+    _$MetaTagsImpl(
       tagAlbum: json['tagAlbum'] as String?,
       tagArtist: json['tagArtist'] as String?,
       tagGenre: json['tagGenre'] as String?,
@@ -216,7 +220,7 @@ _$_MetaTags _$$_MetaTagsFromJson(Map<String, dynamic> json) => _$_MetaTags(
       tagEncoder: json['tagEncoder'] as String?,
     );
 
-Map<String, dynamic> _$$_MetaTagsToJson(_$_MetaTags instance) =>
+Map<String, dynamic> _$$MetaTagsImplToJson(_$MetaTagsImpl instance) =>
     <String, dynamic>{
       'tagAlbum': instance.tagAlbum,
       'tagArtist': instance.tagArtist,
@@ -230,8 +234,8 @@ Map<String, dynamic> _$$_MetaTagsToJson(_$_MetaTags instance) =>
       'tagEncoder': instance.tagEncoder,
     };
 
-_$_MediaMetadata _$$_MediaMetadataFromJson(Map<String, dynamic> json) =>
-    _$_MediaMetadata(
+_$MediaMetadataImpl _$$MediaMetadataImplFromJson(Map<String, dynamic> json) =>
+    _$MediaMetadataImpl(
       title: json['title'] as String?,
       subtitle: json['subtitle'] as String?,
       authors: (json['authors'] as List<dynamic>?)
@@ -240,7 +244,7 @@ _$_MediaMetadata _$$_MediaMetadataFromJson(Map<String, dynamic> json) =>
       narrators: (json['narrators'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      series: _coerceToList(json['series']),
+      seriesName: json['seriesName'] as String?,
       genres:
           (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList(),
       publishedYear: json['publishedYear'] as String?,
@@ -253,13 +257,13 @@ _$_MediaMetadata _$$_MediaMetadataFromJson(Map<String, dynamic> json) =>
       explicit: json['explicit'] as bool?,
     );
 
-Map<String, dynamic> _$$_MediaMetadataToJson(_$_MediaMetadata instance) =>
+Map<String, dynamic> _$$MediaMetadataImplToJson(_$MediaMetadataImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'subtitle': instance.subtitle,
       'authors': instance.authors,
       'narrators': instance.narrators,
-      'series': instance.series,
+      'seriesName': instance.seriesName,
       'genres': instance.genres,
       'publishedYear': instance.publishedYear,
       'publishedDate': instance.publishedDate,
@@ -271,7 +275,7 @@ Map<String, dynamic> _$$_MediaMetadataToJson(_$_MediaMetadata instance) =>
       'explicit': instance.explicit,
     };
 
-_$_Author _$$_AuthorFromJson(Map<String, dynamic> json) => _$_Author(
+_$AuthorImpl _$$AuthorImplFromJson(Map<String, dynamic> json) => _$AuthorImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       updatedAt: json['updatedAt'] as int?,
@@ -282,7 +286,8 @@ _$_Author _$$_AuthorFromJson(Map<String, dynamic> json) => _$_Author(
       addedAt: json['addedAt'] as int?,
     );
 
-Map<String, dynamic> _$$_AuthorToJson(_$_Author instance) => <String, dynamic>{
+Map<String, dynamic> _$$AuthorImplToJson(_$AuthorImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'updatedAt': instance.updatedAt,
@@ -293,13 +298,14 @@ Map<String, dynamic> _$$_AuthorToJson(_$_Author instance) => <String, dynamic>{
       'addedAt': instance.addedAt,
     };
 
-_$_Series _$$_SeriesFromJson(Map<String, dynamic> json) => _$_Series(
+_$SeriesImpl _$$SeriesImplFromJson(Map<String, dynamic> json) => _$SeriesImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       sequence: json['sequence'] as String?,
     );
 
-Map<String, dynamic> _$$_SeriesToJson(_$_Series instance) => <String, dynamic>{
+Map<String, dynamic> _$$SeriesImplToJson(_$SeriesImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'sequence': instance.sequence,

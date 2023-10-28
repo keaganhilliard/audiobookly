@@ -74,22 +74,22 @@ class _$AbsMediaProgressCopyWithImpl<$Res, $Val extends AbsMediaProgress>
 }
 
 /// @nodoc
-abstract class _$$_AbsMediaProgressCopyWith<$Res>
+abstract class _$$AbsMediaProgressImplCopyWith<$Res>
     implements $AbsMediaProgressCopyWith<$Res> {
-  factory _$$_AbsMediaProgressCopyWith(
-          _$_AbsMediaProgress value, $Res Function(_$_AbsMediaProgress) then) =
-      __$$_AbsMediaProgressCopyWithImpl<$Res>;
+  factory _$$AbsMediaProgressImplCopyWith(_$AbsMediaProgressImpl value,
+          $Res Function(_$AbsMediaProgressImpl) then) =
+      __$$AbsMediaProgressImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int timeListened, double duration, double currentTime});
 }
 
 /// @nodoc
-class __$$_AbsMediaProgressCopyWithImpl<$Res>
-    extends _$AbsMediaProgressCopyWithImpl<$Res, _$_AbsMediaProgress>
-    implements _$$_AbsMediaProgressCopyWith<$Res> {
-  __$$_AbsMediaProgressCopyWithImpl(
-      _$_AbsMediaProgress _value, $Res Function(_$_AbsMediaProgress) _then)
+class __$$AbsMediaProgressImplCopyWithImpl<$Res>
+    extends _$AbsMediaProgressCopyWithImpl<$Res, _$AbsMediaProgressImpl>
+    implements _$$AbsMediaProgressImplCopyWith<$Res> {
+  __$$AbsMediaProgressImplCopyWithImpl(_$AbsMediaProgressImpl _value,
+      $Res Function(_$AbsMediaProgressImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_AbsMediaProgressCopyWithImpl<$Res>
     Object? duration = null,
     Object? currentTime = null,
   }) {
-    return _then(_$_AbsMediaProgress(
+    return _then(_$AbsMediaProgressImpl(
       timeListened: null == timeListened
           ? _value.timeListened
           : timeListened // ignore: cast_nullable_to_non_nullable
@@ -118,14 +118,14 @@ class __$$_AbsMediaProgressCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AbsMediaProgress implements _AbsMediaProgress {
-  const _$_AbsMediaProgress(
+class _$AbsMediaProgressImpl implements _AbsMediaProgress {
+  const _$AbsMediaProgressImpl(
       {required this.timeListened,
       required this.duration,
       required this.currentTime});
 
-  factory _$_AbsMediaProgress.fromJson(Map<String, dynamic> json) =>
-      _$$_AbsMediaProgressFromJson(json);
+  factory _$AbsMediaProgressImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AbsMediaProgressImplFromJson(json);
 
   @override
   final int timeListened;
@@ -143,7 +143,7 @@ class _$_AbsMediaProgress implements _AbsMediaProgress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AbsMediaProgress &&
+            other is _$AbsMediaProgressImpl &&
             (identical(other.timeListened, timeListened) ||
                 other.timeListened == timeListened) &&
             (identical(other.duration, duration) ||
@@ -160,12 +160,13 @@ class _$_AbsMediaProgress implements _AbsMediaProgress {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AbsMediaProgressCopyWith<_$_AbsMediaProgress> get copyWith =>
-      __$$_AbsMediaProgressCopyWithImpl<_$_AbsMediaProgress>(this, _$identity);
+  _$$AbsMediaProgressImplCopyWith<_$AbsMediaProgressImpl> get copyWith =>
+      __$$AbsMediaProgressImplCopyWithImpl<_$AbsMediaProgressImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AbsMediaProgressToJson(
+    return _$$AbsMediaProgressImplToJson(
       this,
     );
   }
@@ -175,10 +176,10 @@ abstract class _AbsMediaProgress implements AbsMediaProgress {
   const factory _AbsMediaProgress(
       {required final int timeListened,
       required final double duration,
-      required final double currentTime}) = _$_AbsMediaProgress;
+      required final double currentTime}) = _$AbsMediaProgressImpl;
 
   factory _AbsMediaProgress.fromJson(Map<String, dynamic> json) =
-      _$_AbsMediaProgress.fromJson;
+      _$AbsMediaProgressImpl.fromJson;
 
   @override
   int get timeListened;
@@ -188,6 +189,6 @@ abstract class _AbsMediaProgress implements AbsMediaProgress {
   double get currentTime;
   @override
   @JsonKey(ignore: true)
-  _$$_AbsMediaProgressCopyWith<_$_AbsMediaProgress> get copyWith =>
+  _$$AbsMediaProgressImplCopyWith<_$AbsMediaProgressImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
