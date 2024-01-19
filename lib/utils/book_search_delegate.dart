@@ -1,11 +1,15 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
+import 'package:audiobookly/models/author.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BookSearchDelegate extends SearchDelegate {
@@ -61,33 +65,56 @@ class BookSearchDelegate extends SearchDelegate {
               );
             } else {
               if (results.data!.isNotEmpty) {
-                return ResponsiveGridView<MediaItem>(
-                    items: results.data!
-                        .map((item) => item.toMediaItem())
-                        .toList(),
+                return ResponsiveGridView<ModelUnion>(
+                    items: results.data!.toList(),
                     itemBuilder: (item) {
-                      return BookGridItem(
-                        onTap: () async {
-                          if (item.playable!) {
-                            Navigator.of(context).pushNamed(
-                              Routes.book,
-                              arguments: item.id,
-                            );
-                          } else {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => BooksView(
-                                        mediaId: item.id,
-                                        title: item.title,
-                                      )),
-                            );
-                          }
-                        },
-                        thumbnailUrl: item.artUri?.toString(),
-                        title: item.title,
-                        subtitle: item.artist,
-                        showTitle: !item.playable!,
-                      );
+                      return switch (item) {
+                        BookValue(
+                          value: Book(
+                            :final id,
+                            :final title,
+                            :final artPath,
+                            :final author
+                          )
+                        ) =>
+                          BookGridItem(
+                            onTap: () {
+                              context.push('/books/$id');
+                            },
+                            title: title,
+                            subtitle: author,
+                            thumbnailUrl: artPath,
+                            showTitle: false,
+                          ),
+                        AuthorValue(
+                          value: Author(:final id, :final name, :final artPath)
+                        ) =>
+                          BookGridItem(
+                            onTap: () => context.push(
+                              '/${id.replaceFirst('@', '')}',
+                              extra: name,
+                            ),
+                            title: name,
+                            thumbnailUrl: artPath,
+                            showTitle: true,
+                          ),
+                        SeriesValue(
+                          value: Series(:final id, :final name, :final artPath)
+                        ) =>
+                          BookGridItem(
+                            onTap: () => context.push(
+                              '/${id.replaceFirst('@', '')}',
+                              extra: name,
+                            ),
+                            title: name,
+                            thumbnailUrl: artPath,
+                            showTitle: true,
+                          ),
+                        _ => const BookGridItem(
+                            showTitle: true,
+                            title: 'Unknown',
+                          )
+                      };
                     });
               } else {
                 return const Column(

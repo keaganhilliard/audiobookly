@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:audiobookly/carplay.dart';
 import 'package:audiobookly/ios_ui/ios_app.dart';
 import 'package:audiobookly/mac_ui/mac_app.dart';
-import 'package:audiobookly/material_ui/material_app.dart';
+import 'package:audiobookly/material_ui/go_router_app.dart';
 import 'package:audiobookly/singletons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

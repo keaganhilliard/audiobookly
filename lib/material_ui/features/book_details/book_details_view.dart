@@ -16,7 +16,7 @@ import 'package:audiobookly/utils/utils.dart';
 
 class BookDetailsView extends HookConsumerWidget {
   final String mediaId;
-  const BookDetailsView({required this.mediaId, Key? key}) : super(key: key);
+  const BookDetailsView({required this.mediaId, super.key});
 
   Widget _loadingIndicator() =>
       const Center(child: CircularProgressIndicator());
@@ -53,6 +53,7 @@ class BookDetailsView extends HookConsumerWidget {
                 physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [
                   SliverAppBar(
+                    automaticallyImplyLeading: true,
                     backgroundColor: Theme.of(context).canvasColor,
                     centerTitle: true,
                     floating: true,

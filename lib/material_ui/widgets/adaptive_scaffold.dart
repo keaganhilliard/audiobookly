@@ -83,7 +83,7 @@ class AdaptiveScaffold extends HookWidget {
             VerticalDivider(
               width: 1,
               thickness: 1,
-              color: Colors.grey[900],
+              color: Colors.grey[800],
             ),
             Expanded(
               child: state.body!,

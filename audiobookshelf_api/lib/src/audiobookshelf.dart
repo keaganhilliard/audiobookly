@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:audiobookshelf/audiobookshelf.dart';
 import 'package:audiobookshelf/src/models/abs_media_progress.dart';
 import 'package:audiobookshelf/src/models/abs_series.dart';
@@ -245,9 +246,9 @@ class AudiobookshelfApi {
     return response.parseResult(AbsAudiobook.fromJson);
   }
 
-  Future<List<AbsCollection>> getCollections() async {
+  Future<List<AbsCollection>> getCollections(String libraryId) async {
     http.Response response = await client.get(
-      createUri(baseUrl!, '/api/collections'),
+      createUri(baseUrl!, '/api/libraries/$libraryId/collections'),
       headers: {
         'content-type': 'application/json',
         'authorization': 'Bearer $token',
@@ -342,6 +343,17 @@ class AudiobookshelfApi {
       body: jsonEncode(playRequest.toJson()),
     );
     return jsonDecode(response.body)['id'];
+  }
+
+  Future<bool> closePlaybackSession(String id) async {
+    http.Response response = await client.post(
+      createUri(baseUrl!, '/api/session/$id/close'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+    return response.statusCode == HttpStatus.ok;
   }
 
   Future markPlayed(String itemId) async {

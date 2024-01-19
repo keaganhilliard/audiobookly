@@ -1,4 +1,5 @@
 import 'package:audiobookly/material_ui/widgets/played_icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -14,7 +15,7 @@ class BookGridItem extends StatelessWidget {
   final List<String>? thumbnailUrls;
 
   const BookGridItem({
-    Key? key,
+    super.key,
     this.thumbnailUrl,
     this.thumbnailUrls,
     this.title,
@@ -22,9 +23,9 @@ class BookGridItem extends StatelessWidget {
     this.progress = 0,
     this.onTap,
     this.played = false,
-    this.placeholder = Icons.book,
+    this.placeholder = CupertinoIcons.book_fill,
     this.showTitle = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
+import 'package:audiobookly/models/author.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,8 +21,12 @@ class HomeRow extends HookConsumerWidget {
   final String? title;
   final List<ModelUnion>? items;
   final double? height;
-  const HomeRow({Key? key, this.title, this.items, this.height})
-      : super(key: key);
+  const HomeRow({
+    super.key,
+    this.title,
+    this.items,
+    this.height,
+  });
 
   Widget getListView(PlaybackController playbackController,
       NavigationService navigationService,
@@ -31,36 +39,86 @@ class HomeRow extends HookConsumerWidget {
       itemBuilder: (context, index) {
         final ModelUnion item = items![index];
 
-        return item.maybeMap(
-          orElse: () => const CoverItem(
-            title: 'Good God we have a problem',
-          ),
-          book: (book) => CoverItem(
-            onTap: () async {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return BookDetailsView(mediaId: book.value.id);
-              }));
-            },
-            height: height,
-            progress: Utils.getProgress(book: book.value),
-            thumbnailUrl: book.value.artPath,
-            title: book.value.title,
-            subtitle: book.value.author,
-            played: book.value.read,
-          ),
-          author: (author) => CoverItem(
-            onTap: () async {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return BooksView(mediaId: author.value.id);
-              }));
-            },
-            height: height,
-            thumbnailUrl: author.value.artPath,
-            title: author.value.name,
-            icon: Icons.person,
-            showTitle: true,
-          ),
-        );
+        return switch (item) {
+          BookValue(
+            value: Book(
+              :final id,
+              :final progress,
+              :final artPath,
+              :final read,
+              :final author,
+              :final title,
+            )
+          ) =>
+            CoverItem(
+              onTap: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return BookDetailsView(mediaId: id);
+                    },
+                  ),
+                );
+              },
+              height: height,
+              progress: progress,
+              thumbnailUrl: artPath,
+              title: title,
+              subtitle: author,
+              played: read,
+            ),
+          AuthorValue(
+            value: Author(
+              :final id,
+              :final name,
+              :final artPath,
+            )
+          ) =>
+            CoverItem(
+              onTap: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return BooksView(
+                      mediaId: id,
+                      title: name,
+                    );
+                  }),
+                );
+              },
+              height: height,
+              thumbnailUrl: artPath,
+              title: name,
+              icon: CupertinoIcons.person_2_fill,
+              showTitle: true,
+            ),
+          SeriesValue(
+            value: Series(
+              :final id,
+              :final name,
+              :final artPath,
+            )
+          ) =>
+            CoverItem(
+              onTap: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return BooksView(
+                      mediaId: id,
+                      title: name,
+                    );
+                  }),
+                );
+              },
+              height: height,
+              thumbnailUrl: artPath,
+              title: name,
+              icon: CupertinoIcons.person_2_fill,
+              showTitle: true,
+            ),
+          _ => const CoverItem(
+              title: 'Good God we have a problem',
+            ),
+        };
       },
     );
   }
@@ -70,16 +128,18 @@ class HomeRow extends HookConsumerWidget {
     final playbackController = GetIt.I<PlaybackController>();
     final navigationService = ref.watch(navigationServiceProvider);
     final scrollController = useScrollController(initialScrollOffset: 0.0);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
-            child: Text(
-              title!,
-              style: Theme.of(context).textTheme.headlineSmall,
-            )),
+          padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
+          child: Text(
+            title!,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 5.0),
           child: SizedBox(
@@ -87,8 +147,11 @@ class HomeRow extends HookConsumerWidget {
             child: Platform.isLinux || Platform.isWindows
                 ? Scrollbar(
                     controller: scrollController,
-                    child: getListView(playbackController, navigationService,
-                        scrollController),
+                    child: getListView(
+                      playbackController,
+                      navigationService,
+                      scrollController,
+                    ),
                   )
                 : getListView(playbackController, navigationService),
           ),
