@@ -239,7 +239,8 @@ class BookDetailsView extends HookConsumerWidget {
                                                   horizontal: 32.0,
                                                   vertical: 7.0,
                                                 ),
-                                                buttonSize: ButtonSize.large,
+                                                controlSize: ControlSize.large,
+                                                // buttonSize: ButtonSize.large,
                                                 onPressed: () {
                                                   playbackController
                                                       .playFromId(book.id);
@@ -276,7 +277,8 @@ class BookDetailsView extends HookConsumerWidget {
                                                     horizontal: 32.0,
                                                     vertical: 7.0,
                                                   ),
-                                                  buttonSize: ButtonSize.large,
+                                                  controlSize:
+                                                      ControlSize.large,
                                                   onPressed: () async {
                                                     if (!book.read) {
                                                       await ref
@@ -306,7 +308,7 @@ class BookDetailsView extends HookConsumerWidget {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 left: 6.0),
                                                         child: Text(
                                                           book.read

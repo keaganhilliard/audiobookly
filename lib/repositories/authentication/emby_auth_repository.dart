@@ -31,9 +31,10 @@ class EmbyAuthRepository extends AuthenticationRepository {
 
   @override
   Future<bool> logout() async {
-    final prefs = _ref.read(preferencesProvider.notifier);
-    prefs.savePreferences(
-      prefs.state.copyWith(
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
+    prefsNotifier.savePreferences(
+      prefs.copyWith(
         baseUrl: '',
         userToken: '',
         userId: '',
@@ -47,11 +48,12 @@ class EmbyAuthRepository extends AuthenticationRepository {
   }
 
   Future<User> login(String baseUrl, String username, String password) async {
-    final prefs = _ref.read(preferencesProvider.notifier);
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
     final embyApi = _ref.read(embyApiProvider);
     embyApi.baseUrl = baseUrl;
     final res = await embyApi.login(username, password);
-    prefs.savePreferences(prefs.state.copyWith(
+    prefsNotifier.savePreferences(prefs.copyWith(
       userId: res.user!.id!,
       baseUrl: baseUrl,
       userToken: res.accessToken!,

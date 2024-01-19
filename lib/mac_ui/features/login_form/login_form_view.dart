@@ -105,7 +105,7 @@ class LoginForm extends HookConsumerWidget {
                           : null,
                     ),
                     PushButton(
-                      buttonSize: ButtonSize.large,
+                      controlSize: ControlSize.large,
                       padding: const EdgeInsets.all(16.0),
                       color: Colors.deepPurple,
                       child: loading.value

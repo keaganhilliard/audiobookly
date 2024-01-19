@@ -32,28 +32,32 @@ class AbsAuthRepository extends AuthenticationRepository {
 
   @override
   Future<bool> logout() async {
-    final prefs = _ref.read(preferencesProvider.notifier);
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
 
-    prefs.savePreferences(prefs.state.copyWith(
-      baseUrl: '',
-      userToken: '',
-      userId: '',
-      serverId: '',
-      libraryId: '',
-      serverType: ServerType.unknown,
-    ));
+    prefsNotifier.savePreferences(
+      prefs.copyWith(
+        baseUrl: '',
+        userToken: '',
+        userId: '',
+        serverId: '',
+        libraryId: '',
+        serverType: ServerType.unknown,
+      ),
+    );
 
     return true;
   }
 
   Future<User> login(String baseUrl, String username, String password) async {
-    final prefs = _ref.read(preferencesProvider.notifier);
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
     final absApi = _ref.read(absApiProvider);
     absApi.baseUrl = baseUrl;
     final res = await absApi.login(username, password);
 
-    prefs.savePreferences(
-      prefs.state.copyWith(
+    prefsNotifier.savePreferences(
+      prefs.copyWith(
         username: res.user.username,
         userId: res.user.id,
         baseUrl: baseUrl,

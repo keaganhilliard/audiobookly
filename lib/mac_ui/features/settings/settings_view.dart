@@ -42,7 +42,7 @@ class SettingsView extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: PushButton(
-                  buttonSize: ButtonSize.large,
+                  controlSize: ControlSize.large,
                   child: const Text('Logout'),
                   onPressed: () async {
                     await auth.logout();

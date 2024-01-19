@@ -31,9 +31,10 @@ class PlexAuthRepository extends AuthenticationRepository {
 
   @override
   Future<bool> logout() async {
-    final prefs = _ref.read(preferencesProvider.notifier);
-    prefs.savePreferences(
-      prefs.state.copyWith(
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
+    prefsNotifier.savePreferences(
+      prefs.copyWith(
         baseUrl: '',
         userToken: '',
         userId: '',
