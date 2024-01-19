@@ -1,5 +1,6 @@
 import 'package:audiobookly/ios_ui/features/home/home.dart';
 import 'package:audiobookly/ios_ui/features/welcome/welcome_view.dart';
+import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/material_ui/widgets/auth_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,24 +17,24 @@ class IosApp extends HookConsumerWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    final navigationService = ref.watch(navigationServiceProvider);
-    return CupertinoApp(
-    
+    // final navigationService = ref.watch(navigationServiceProvider);
+    return CupertinoApp.router(
+      routerConfig: router,
       // showPerformanceOverlay: true,
-      navigatorKey: navigationService.navigatorKey,
+      // navigatorKey: navigationService.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: const CupertinoThemeData(
         brightness: Brightness.dark,
         primaryColor: Color.fromRGBO(103, 58, 183, 1),
       ),
-      home: AuthWidget(
-        authorizedBuilder: (context) => const Home(),
-        errorBuilder: (context, message) => Container(),
-        loadingBuilder: (context) => const CupertinoActivityIndicator(
-          radius: 30.0,
-        ),
-        unauthorizedBuilder: (context) => const WelcomeView(),
-      ),
+      // home: AuthWidget(
+      //   authorizedBuilder: (context) => const Home(),
+      //   errorBuilder: (context, message) => Container(),
+      //   loadingBuilder: (context) => const CupertinoActivityIndicator(
+      //     radius: 30.0,
+      //   ),
+      //   unauthorizedBuilder: (context) => const WelcomeView(),
+      // ),
     );
   }
 }

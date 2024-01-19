@@ -3,6 +3,7 @@ import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/material_ui/features/emby_login/emby_login.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class WelcomeView extends HookConsumerWidget {
@@ -49,8 +50,8 @@ class WelcomeView extends HookConsumerWidget {
                 backgroundColor: const Color.fromRGBO(161, 133, 67, 1),
               ),
               onPressed: () {
-                navigationService.push(
-                    MaterialPageRoute(builder: (context) => const AbsLogin()));
+                context.go('/login/abs');
+                //       MaterialPageRoute(builder: (context) => const AbsLogin()));
               },
               child: const Text('Login to Audiobookshelf'),
             ),

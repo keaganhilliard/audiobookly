@@ -1,5 +1,6 @@
 import 'package:audiobookly/material_ui/widgets/played_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CoverItem extends StatelessWidget {
@@ -13,7 +14,7 @@ class CoverItem extends StatelessWidget {
     this.height,
     this.onTap,
     this.played = false,
-    this.icon = Icons.book,
+    this.icon = CupertinoIcons.book_fill,
     this.showTitle = false,
   });
 

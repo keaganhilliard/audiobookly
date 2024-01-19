@@ -7,6 +7,7 @@ import 'package:audiobookly/domain/books/books_notifier.dart';
 import 'package:audiobookly/material_ui/widgets/ab_error_widget.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -63,7 +64,7 @@ class BooksView extends HookConsumerWidget {
                         subtitle: book.artist,
                         progress: Utils.getProgress(item: book),
                         played: book.played,
-                        placeholder: Icons.book,
+                        placeholder: CupertinoIcons.book_fill,
                       ),
                     );
                   },

@@ -1,6 +1,8 @@
 import 'package:audiobookly/domain/library_select/library_select_notifier.dart';
 import 'package:audiobookly/domain/library_select/library_select_state.dart';
+import 'package:audiobookly/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LibrarySelectView extends HookConsumerWidget {
@@ -29,7 +31,11 @@ class LibrarySelectView extends HookConsumerWidget {
               title: Text(lib.title!),
               onTap: () async {
                 notifier.setLibrary(lib.id!);
-                Navigator.pop(context, lib);
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.goEnum(Routes.home);
+                }
               },
             );
           },

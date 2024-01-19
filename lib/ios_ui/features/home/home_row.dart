@@ -16,7 +16,12 @@ class HomeRow extends HookConsumerWidget {
   final String? title;
   final List<ModelUnion> items;
   final double? height;
-  HomeRow({super.key, this.title, required this.items, this.height});
+  HomeRow({
+    super.key,
+    this.title,
+    required this.items,
+    this.height,
+  });
   final debouncer = Debouncer(milliseconds: 1);
 
   @override
@@ -36,11 +41,12 @@ class HomeRow extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
-                child: Text(
-                  title!,
-                  style: const TextStyle(fontSize: 24),
-                )),
+              padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 8.0),
+              child: Text(
+                title!,
+                style: const TextStyle(fontSize: 24),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: SizedBox(
@@ -60,6 +66,7 @@ class HomeRow extends HookConsumerWidget {
                         :final artPath,
                         :final read,
                         :final author,
+                        :final title,
                       )
                     ) =>
                       CoverItem(
@@ -88,13 +95,16 @@ class HomeRow extends HookConsumerWidget {
                     ) =>
                       CoverItem(
                         onTap: () async {
-                          Navigator.of(context)
-                              .push(CupertinoPageRoute(builder: (context) {
-                            return BooksView(
-                              mediaId: id,
-                              title: name,
-                            );
-                          }));
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) {
+                                return BooksView(
+                                  mediaId: id,
+                                  title: name,
+                                );
+                              },
+                            ),
+                          );
                         },
                         height: height,
                         thumbnailUrl: artPath,
@@ -111,13 +121,14 @@ class HomeRow extends HookConsumerWidget {
                     ) =>
                       CoverItem(
                         onTap: () async {
-                          Navigator.of(context)
-                              .push(CupertinoPageRoute(builder: (context) {
-                            return BooksView(
-                              mediaId: id,
-                              title: name,
-                            );
-                          }));
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(builder: (context) {
+                              return BooksView(
+                                mediaId: id,
+                                title: name,
+                              );
+                            }),
+                          );
                         },
                         height: height,
                         thumbnailUrl: artPath,

@@ -13,7 +13,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
 
 class SeriesView extends HookConsumerWidget {
-  const SeriesView({Key? key}) : super(key: key);
+  const SeriesView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,8 +48,10 @@ class SeriesView extends HookConsumerWidget {
                     closedElevation: 0.0,
                     closedColor: Theme.of(context).canvasColor,
                     openColor: Theme.of(context).canvasColor,
-                    openBuilder: (context, closeContainer) =>
-                        BooksView(mediaId: author.id, title: author.title),
+                    openBuilder: (context, closeContainer) => BooksView(
+                      mediaId: author.id,
+                      title: author.title,
+                    ),
                     closedBuilder: (context, openContainer) => BookGridItem(
                       onTap: openContainer,
                       thumbnailUrl: author.artUri?.toString(),

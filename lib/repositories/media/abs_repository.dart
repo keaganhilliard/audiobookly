@@ -14,6 +14,7 @@ import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
+import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart'
     hide DeviceInfo;
@@ -84,7 +85,7 @@ class AbsRepository extends MediaRepository {
       lastPlayedPosition: progress?.currentTime ?? Duration.zero,
       read: progress?.isFinished ?? false,
       lastUpdate: DateTime.now(),
-      largeArtPath: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
+      largeArtPath: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 1000)
           .toString(),
       chapters: book.media.chapters
           ?.map((chapter) => Chapter.fromJson(chapter.toJson(), book.id))
@@ -191,7 +192,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<Collection>> getCollections() async {
-    final collections = await _api.getCollections();
+    final collections = await _api.getCollections(_libraryId);
 
     return [
       for (final collection in collections)
@@ -424,8 +425,14 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future playbackFinished(String key) async {
-    _sessionId = null;
-    _lastCheckinTime = null;
+    bool closed = _sessionId == null;
+    if (_sessionId != null) {
+      closed = await _api.closePlaybackSession(_sessionId!);
+    }
+    if (closed) {
+      _sessionId = null;
+      _lastCheckinTime = null;
+    }
   }
 
   String? _sessionId;
@@ -444,7 +451,8 @@ class AbsRepository extends MediaRepository {
     _sessionId = await _api.startPlaybackSession(
         key,
         AbsPlayItemRequest(
-          mediaPlayer: 'AVPlayer',
+          mediaPlayer:
+              getPlatform() == AbsPlatform.android ? 'ExoPlayer' : 'AVPlayer',
           forceDirectPlay: true,
           forceTranscode: false,
           deviceInfo: DeviceInfo(

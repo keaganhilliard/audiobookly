@@ -490,7 +490,14 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
               );
             }
             return AudioSource.uri(
-              _repository!.getDownloadUrl(item.serverPath).uri!,
+              _repository!
+                  .getDownloadUrl(item.serverPath)
+                  .uri!
+                  .replace(queryParameters: {}),
+              headers: _repository!
+                  .getDownloadUrl(item.serverPath)
+                  .uri
+                  ?.queryParameters,
             );
           }).toList(),
         ),

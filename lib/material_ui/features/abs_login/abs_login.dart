@@ -1,8 +1,10 @@
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginState {
@@ -121,7 +123,7 @@ class AbsLogin extends HookConsumerWidget {
                                       Text('Username or password invalid')));
                             } else {
                               await auth.checkToken();
-                              navigationService.pop();
+                              // router.go(Routes.home.path);
                             }
                             loading.value = false;
                           }

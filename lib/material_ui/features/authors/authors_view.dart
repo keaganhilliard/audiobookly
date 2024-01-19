@@ -6,6 +6,7 @@ import 'package:audiobookly/domain/authors/authors_notifier.dart';
 import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -54,7 +55,7 @@ class AuthorsView extends HookConsumerWidget {
                       onTap: openContainer,
                       thumbnailUrl: author.artUri?.toString(),
                       title: author.title,
-                      placeholder: Icons.person,
+                      placeholder: CupertinoIcons.person_2_fill,
                       showTitle: true,
                     ),
                   );

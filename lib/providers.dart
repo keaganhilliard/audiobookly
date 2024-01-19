@@ -97,6 +97,7 @@ class PreferencesNotifier extends StateNotifier<Preferences> {
 
   Future savePreferences(Preferences prefs) async {
     await _db.insertPreferences(prefs);
+    state = prefs;
   }
 
   @override
