@@ -20,8 +20,8 @@ import 'package:audiobookly/services/device_info/device_info_service.dart'
     hide DeviceInfo;
 import 'package:audiobookly/singletons.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:audiobookshelf/audiobookshelf.dart'
-    hide Chapter, Author, Series;
+import 'package:audiobookshelf/audiobookshelf.dart' hide Chapter, Series;
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
@@ -75,8 +75,15 @@ class AbsRepository extends MediaRepository {
       title: book.media.metadata.title ?? 'Unknown',
       author: book.media.metadata.authors?.map((e) => e.name).join(', ') ??
           'Unknown',
+      authors: book.media.metadata.authors
+          ?.map((e) => (id: e.id, name: e.name))
+          .toList(),
+      series: book.media.metadata.series
+          ?.map((e) => (id: e.id, name: e.name, position: e.sequence ?? '1'))
+          .toList(),
       narrator: book.media.metadata.narrators?.join(', ') ?? 'Unknown',
       description: book.media.metadata.description ?? '',
+      publishedYear: book.media.metadata.publishedYear,
       artPath:
           _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt).toString(),
       duration: book.media.duration == null
@@ -98,13 +105,14 @@ class AbsRepository extends MediaRepository {
 
     return Book(
       id: book.id,
-      title: book.media.metadata.title ?? 'Unknown',
-      author: book.media.metadata.authorName ?? 'Unknown',
-      narrator: book.media.metadata.narratorName ?? 'Unknown',
-      description: book.media.metadata.description ?? '',
+      title: book.media?.metadata?.title ?? 'Unknown',
+      author: book.media?.metadata?.authorName ?? 'Unknown',
+      narrator: book.media?.metadata?.narratorName ?? 'Unknown',
+      description: book.media?.metadata?.description ?? '',
+      publishedYear: book.media?.metadata?.publishedYear,
       artPath:
           _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt).toString(),
-      duration: AbsUtils.parseDurationFromSeconds(book.media.duration)!,
+      duration: AbsUtils.parseDurationFromSeconds(book.media?.duration)!,
       lastPlayedPosition: progress?.currentTime ?? Duration.zero,
       read: progress?.isFinished ?? false,
       lastUpdate: DateTime.now(),
@@ -212,7 +220,7 @@ class AbsRepository extends MediaRepository {
   Future<List<Book>> getBooksFromSeries(String seriesId) async {
     return [
       for (final book in await _api.getBooksForSeries(_libraryId, seriesId))
-        _absBookToBook(book)
+        _absBookMinifiedToBook(book)
     ];
   }
 
@@ -248,7 +256,10 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<Library>> getLibraries() async {
     final libraries = await _api.getLibraries();
-    return libraries.map((lib) => Library(lib.id, lib.name)).toList();
+    return libraries
+        .where((lib) => lib.mediaType == 'book')
+        .map((lib) => Library(lib.id, lib.name))
+        .toList();
   }
 
   @override
@@ -451,8 +462,9 @@ class AbsRepository extends MediaRepository {
     _sessionId = await _api.startPlaybackSession(
         key,
         AbsPlayItemRequest(
-          mediaPlayer:
-              getPlatform() == AbsPlatform.android ? 'ExoPlayer' : 'AVPlayer',
+          mediaPlayer: defaultTargetPlatform == TargetPlatform.android
+              ? 'ExoPlayer'
+              : 'AVPlayer',
           forceDirectPlay: true,
           forceTranscode: false,
           deviceInfo: DeviceInfo(
@@ -498,7 +510,11 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<ModelUnion>> search(String search) async {
+    print("Searching for $search");
     final response = await _api.search(_libraryId, search);
+    print(
+      "Search response: ${response.toJson()}",
+    );
     return [
       for (final book in response.book)
         ModelUnion.book(
@@ -618,5 +634,30 @@ class AbsRepository extends MediaRepository {
           ).toString(),
         ),
     ];
+  }
+
+  @override
+  Future<Author> getAuthorDetails(String authorId) async {
+    final author = await _api.getAuthorDetails(authorId);
+    return Author(
+      id: "@authors/${author.id}",
+      name: author.name,
+      numBooks: author.libraryItems?.length ?? 0,
+      artPath: author.imagePath == null
+          ? null
+          : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+      description: author.description,
+      books: author.libraryItems?.map(_absBookMinifiedToBook).toList() ?? [],
+      series: author.series?.map((seres) {
+            return Series(
+              id: "@series/${seres.id}",
+              name: seres.name,
+              numBooks: seres.items?.length ?? 0,
+              artPath: "",
+              books: seres.items?.map(_absBookMinifiedToBook).toList() ?? [],
+            );
+          }).toList() ??
+          [],
+    );
   }
 }

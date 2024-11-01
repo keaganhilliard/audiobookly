@@ -17,9 +17,9 @@ import 'package:path/path.dart' as p;
 
 class AudiobooklyAudioHandler extends BaseAudioHandler {
   final _player = AudioPlayer(
-    audioLoadConfiguration: AudioLoadConfiguration(
+    audioLoadConfiguration: const AudioLoadConfiguration(
       darwinLoadControl: DarwinLoadControl(
-        preferredForwardBufferDuration: const Duration(seconds: 30),
+        preferredForwardBufferDuration: Duration(seconds: 30),
       ),
     ),
   );
@@ -35,6 +35,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   String? _currentMedia;
   MediaItem? _currentMediaItem;
   List<MediaItem> tracks = [];
+  bool chapterProgressBar =
+      GetIt.I<DatabaseService>().getPreferencesSync().useChapterProgressBar;
   final ProviderContainer container = ProviderContainer();
 
   MediaRepository? get _repository => container.read(mediaRepositoryProvider);
@@ -69,6 +71,12 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
             Duration.zero,
             (total, item) => (total) + (item.duration ?? Duration.zero),
           );
+  Duration get currentQueuePosition {
+    if (_player.position > currentQueueStartingPosition) {
+      return _player.position - currentQueueStartingPosition;
+    }
+    return _player.position;
+  }
 
   StreamSubscription? _positionSub;
 
@@ -169,7 +177,15 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
     // Special processing for state transitions.
     _player.processingStateStream.listen((state) {
       if (state == ProcessingState.completed) {
-        stop();
+        pause();
+      }
+    });
+
+    GetIt.I<DatabaseService>().watchPreferences().listen((event) {
+      final newVal = event?.useChapterProgressBar ?? false;
+      if (chapterProgressBar != newVal) {
+        chapterProgressBar = newVal;
+        setCurrentMediaItem();
       }
     });
 
@@ -193,7 +209,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       mediaItem.add(
         currentQueueItem!.copyWith(
           id: _currentMediaItem!.id,
-          duration: totalDuration,
+          duration:
+              chapterProgressBar ? currentQueueItem?.duration : totalDuration,
           artUri: _currentMediaItem?.artUri,
           displayDescription: _currentMediaItem?.displayDescription,
           extras: <String, dynamic>{
@@ -202,6 +219,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
             'currentTrackLength': currentQueueItem!.duration!.inMilliseconds,
             'currentTrackStartingPosition':
                 currentQueueStartingPosition.inMilliseconds,
+            'totalDuration': totalDuration.inMilliseconds,
           },
         ),
       );
@@ -260,7 +278,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         ProcessingState.completed: AudioProcessingState.completed,
       }[_player.processingState]!,
       playing: _player.playing,
-      updatePosition: currentPosition,
+      updatePosition:
+          chapterProgressBar ? currentQueuePosition : currentPosition,
       bufferedPosition: currentBufferedPosition,
       speed: _player.speed,
       queueIndex: chapterIndex ?? index,
@@ -280,7 +299,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           );
       final position = _findPostionDurationForAlbum(item.toMediaItem());
       if (position > currentPosition && !item.read) {
-        await seek(position);
+        await seek(position, ignoreChapterProgress: true);
       }
     } catch (e) {
       log(e.toString());
@@ -294,7 +313,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   Future<void> pause() async {
     await completer.future;
     await _player.pause();
-    await seek(currentPosition - const Duration(seconds: 2));
+    // await seek(currentPosition - const Duration(seconds: 2));
     await super.pause();
     await updateProgress(AudiobooklyPlaybackState.paused);
   }
@@ -324,27 +343,44 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   @override
   Future fastForward([Duration interval = const Duration(seconds: 30)]) async {
     await completer.future;
-    await seek(currentPosition + interval);
+    await seek(currentPosition + interval, ignoreChapterProgress: true);
     await super.fastForward();
   }
 
   @override
   Future rewind([Duration interval = const Duration(seconds: 15)]) async {
     await completer.future;
-    await seek(currentPosition - interval);
+    await seek(currentPosition - interval, ignoreChapterProgress: true);
     await super.rewind();
   }
 
   @override
-  Future seek(Duration position, [bool startPlaying = false]) async {
-    final queuePosition = _findPostion(position);
-    await _player.seek(
-      queuePosition.trackPosition,
-      index: queuePosition.trackIndex,
-    );
+  Future seek(Duration position,
+      {bool startPlaying = false, bool ignoreChapterProgress = false}) async {
+    log(position.toString());
+    if (chapterProgressBar && !ignoreChapterProgress) {
+      await _player.seek(currentQueueStartingPosition + position);
+    } else {
+      final queuePosition = _findPostion(position);
+      await _player.seek(
+        queuePosition.trackPosition,
+        index: queuePosition.trackIndex,
+      );
+    }
     if (startPlaying) _player.play();
     await super.seek(position);
   }
+
+  // Future seekOnTotal(Duration position, [bool startPlaying = false]) async {
+  //   log(position.toString());
+  //   final queuePosition = _findPostion(position);
+  //   await _player.seek(
+  //     queuePosition.trackPosition,
+  //     index: queuePosition.trackIndex,
+  //   );
+  //   if (startPlaying) _player.play();
+  //   await super.seek(position);
+  // }
 
   @override
   Future<void> click([MediaButton button = MediaButton.media]) async {
@@ -374,6 +410,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       await seek(
         Duration(
             milliseconds: (item.extras?['start'].toDouble() * 1000).round()),
+        ignoreChapterProgress: true,
       );
     } else {
       await _player.seek(Duration.zero, index: index);
@@ -490,10 +527,8 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
               );
             }
             return AudioSource.uri(
-              _repository!
-                  .getDownloadUrl(item.serverPath)
-                  .uri!
-                  .replace(queryParameters: {}),
+              _repository!.getDownloadUrl(item.serverPath).uri!,
+              // .replace(queryParameters: {}),
               headers: _repository!
                   .getDownloadUrl(item.serverPath)
                   .uri

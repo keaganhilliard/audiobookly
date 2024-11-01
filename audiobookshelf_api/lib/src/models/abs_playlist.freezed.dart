@@ -12,7 +12,7 @@ part of 'abs_playlist.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AbsPlaylist _$AbsPlaylistFromJson(Map<String, dynamic> json) {
   return _AbsPlaylist.fromJson(json);
@@ -28,8 +28,12 @@ mixin _$AbsPlaylist {
   String? get coverPath => throw _privateConstructorUsedError;
   List<Item> get items => throw _privateConstructorUsedError;
 
+  /// Serializes this AbsPlaylist to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AbsPlaylist
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AbsPlaylistCopyWith<AbsPlaylist> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$AbsPlaylistCopyWithImpl<$Res, $Val extends AbsPlaylist>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AbsPlaylist
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,6 +136,8 @@ class __$$AbsPlaylistImplCopyWithImpl<$Res>
       _$AbsPlaylistImpl _value, $Res Function(_$AbsPlaylistImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsPlaylist
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -216,7 +224,7 @@ class _$AbsPlaylistImpl implements _AbsPlaylist {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsPlaylistImpl &&
@@ -232,12 +240,14 @@ class _$AbsPlaylistImpl implements _AbsPlaylist {
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, libraryId, userId, name,
       description, coverPath, const DeepCollectionEquality().hash(_items));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsPlaylist
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsPlaylistImplCopyWith<_$AbsPlaylistImpl> get copyWith =>
@@ -278,8 +288,11 @@ abstract class _AbsPlaylist implements AbsPlaylist {
   String? get coverPath;
   @override
   List<Item> get items;
+
+  /// Create a copy of AbsPlaylist
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsPlaylistImplCopyWith<_$AbsPlaylistImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -294,8 +307,12 @@ mixin _$Item {
   String? get episodeId => throw _privateConstructorUsedError;
   AbsAudiobook get libraryItem => throw _privateConstructorUsedError;
 
+  /// Serializes this Item to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ItemCopyWith<Item> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -320,6 +337,8 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -343,6 +362,8 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     ) as $Val);
   }
 
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AbsAudiobookCopyWith<$Res> get libraryItem {
@@ -373,6 +394,8 @@ class __$$ItemImplCopyWithImpl<$Res>
   __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -419,7 +442,7 @@ class _$ItemImpl implements _Item {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ItemImpl &&
@@ -431,12 +454,14 @@ class _$ItemImpl implements _Item {
                 other.libraryItem == libraryItem));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, libraryItemId, episodeId, libraryItem);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
@@ -464,8 +489,11 @@ abstract class _Item implements Item {
   String? get episodeId;
   @override
   AbsAudiobook get libraryItem;
+
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

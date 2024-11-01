@@ -13,57 +13,54 @@ class LibrarySelectView extends HookConsumerWidget {
     final notifier = ref.watch(libraryStateProvider.notifier);
     final state = ref.watch(libraryStateProvider);
 
-    if (state is LibrarySelectStateLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (state is LibrarySelectStateLoaded) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Select a library'),
-          automaticallyImplyLeading: false,
+    return switch (state) {
+      LibrarySelectStateLoading() => const Center(
+          child: CircularProgressIndicator(),
         ),
-        body: ListView.builder(
-          itemCount: state.libraries!.length,
-          itemBuilder: (context, position) {
-            final lib = state.libraries![position];
-            return ListTile(
-              title: Text(lib.title!),
-              onTap: () async {
-                notifier.setLibrary(lib.id!);
-                if (context.canPop()) {
-                  context.pop();
-                } else {
-                  context.goEnum(Routes.home);
-                }
-              },
-            );
-          },
+      LibrarySelectStateLoaded() => Scaffold(
+          appBar: AppBar(
+            title: const Text('Select a library'),
+            automaticallyImplyLeading: false,
+          ),
+          body: ListView.builder(
+            itemCount: state.libraries!.length,
+            itemBuilder: (context, position) {
+              final lib = state.libraries![position];
+              return ListTile(
+                title: Text(lib.title!),
+                onTap: () async {
+                  await notifier.setLibrary(lib.id!, lib.title);
+                  if (router.canPop()) {
+                    router.pop();
+                  } else {
+                    router.goEnum(Routes.home);
+                  }
+                },
+              );
+            },
+          ),
         ),
-      );
-    } else if (state is LibrarySelectStateError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(state.message!),
-            // ElevatedButton(
-            //   onPressed: _refresher.currentState.show,
-            //   child: Text('Retry'),
-            // )
-          ],
+      LibrarySelectStateError() => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(state.message!),
+              // ElevatedButton(
+              //   onPressed: _refresher.currentState.show,
+              //   child: Text('Retry'),
+              // )
+            ],
+          ),
         ),
-      );
-    } else {
-      return Center(
-        child: ElevatedButton(
-          child: const Text('Load'),
-          onPressed: () {
-            notifier.getLibraries();
-          },
+      _ => Center(
+          child: ElevatedButton(
+            child: const Text('Load'),
+            onPressed: () {
+              notifier.getLibraries();
+            },
+          ),
         ),
-      );
-    }
+    };
   }
 }

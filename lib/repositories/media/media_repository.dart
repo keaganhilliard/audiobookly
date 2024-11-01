@@ -138,6 +138,7 @@ abstract class MediaRepository {
   Future<List<Book>> getRecentlyPlayed();
   Future<List<Book>> getAllBooks([int? page]);
   Future<List<Author>> getAuthors();
+  Future<Author> getAuthorDetails(String authorId);
   Future<List<Book>> getBooksFromAuthor(String authorId);
   Future<List<Collection>> getCollections();
   Future<List<Book>> getBooksFromCollection(String collectionId);

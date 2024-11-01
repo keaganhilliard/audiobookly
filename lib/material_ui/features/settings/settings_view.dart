@@ -10,13 +10,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SettingsView extends HookConsumerWidget {
   const SettingsView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(context, ref) {
     final state = ref.watch(settingsStateProvider);
     final prefs = ref.watch(preferencesProvider);
+    final prefsNotifier = ref.watch(preferencesProvider.notifier);
     final auth = ref.watch(authNotifierProvider.notifier);
     return state.when(
         initial: () => const Center(child: CircularProgressIndicator()),
@@ -30,9 +31,14 @@ class SettingsView extends HookConsumerWidget {
                     context: context,
                     applicationName: 'Audiobookly',
                     applicationVersion: '0.1.0',
-                    applicationIcon: Image.asset(
-                      'assets/audiobookly_icon.png',
-                      height: 50.0,
+                    applicationIcon: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                      child: Image.asset(
+                        'assets/new_ab_icon.png',
+                        height: 50.0,
+                      ),
                     ),
                     useRootNavigator: true,
                   );
@@ -42,6 +48,12 @@ class SettingsView extends HookConsumerWidget {
                 title: const Text('Account'),
                 subtitle: Text(prefs.username),
                 trailing: const Icon(Icons.person),
+              ),
+              SwitchListTile.adaptive(
+                title: const Text('Use Chapter Progress Bar'),
+                value: prefs.useChapterProgressBar,
+                onChanged: (value) => prefsNotifier.savePreferences(
+                    prefs.copyWith(useChapterProgressBar: value)),
               ),
               ListTile(
                 title: const Text('Library'),

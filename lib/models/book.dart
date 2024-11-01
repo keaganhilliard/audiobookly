@@ -7,7 +7,8 @@ class Book {
   final String id;
   final String title;
   final String author;
-  final List<String>? authorIds;
+  final List<({String id, String name})>? authors;
+  final List<({String id, String name, String position})>? series;
   final String narrator;
   final String description;
   final String artPath;
@@ -15,6 +16,7 @@ class Book {
   final Duration duration;
   final Duration lastPlayedPosition;
   final bool read;
+  final String? publishedYear;
   final DownloadStatus downloadStatus;
   final DateTime? lastUpdate;
   final DateTime? downloadedAt;
@@ -30,7 +32,9 @@ class Book {
     required this.id,
     required this.title,
     required this.author,
-    this.authorIds,
+    this.authors,
+    this.series,
+    this.publishedYear,
     required this.narrator,
     required this.description,
     required this.artPath,
@@ -48,7 +52,8 @@ class Book {
     String? id,
     String? title,
     String? author,
-    List<String>? authorIds,
+    List<({String id, String name})>? authors,
+    List<({String id, String name, String position})>? series,
     String? narrator,
     String? description,
     String? artPath,
@@ -60,12 +65,14 @@ class Book {
     DateTime? downloadedAt,
     List<Chapter>? chapters,
     DownloadStatus? downloadStatus,
+    String? publishedYear,
   }) =>
       Book(
         id: id ?? this.id,
         title: title ?? this.title,
         author: author ?? this.author,
-        authorIds: authorIds ?? this.authorIds,
+        authors: authors ?? this.authors,
+        series: series ?? this.series,
         narrator: narrator ?? this.narrator,
         description: description ?? this.description,
         artPath: artPath ?? this.artPath,
@@ -77,6 +84,7 @@ class Book {
         largeArtPath: largeArtPath ?? this.largeArtPath,
         chapters: chapters ?? this.chapters,
         downloadStatus: downloadStatus ?? this.downloadStatus,
+        publishedYear: publishedYear ?? this.publishedYear,
       );
   MediaItem toMediaItem() => MediaItem(
         id: id,

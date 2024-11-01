@@ -232,6 +232,10 @@ extension MediaHelpers on MediaItem {
       ? Duration.zero
       : Duration(milliseconds: extras?['currentTrackLength']);
 
+  Duration get totalDuration => extras?['totalDuration'] == null
+      ? Duration.zero
+      : Duration(milliseconds: extras?['totalDuration']);
+
   Uri? get largeThumbnail => (extras?['largeThumbnail'] as String?)?.uri;
   List<Chapter> get chapters {
     if (extras != null && extras!.containsKey('chapters')) {

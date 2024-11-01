@@ -1,21 +1,27 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 class Author {
   final String id;
   final String name;
-  final String description;
+  final String? description;
   final String? artPath;
   final String? largeArtPath;
   final int? numBooks;
+  final List<Book>? books;
+  final List<Series>? series;
 
   Author({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
     this.artPath,
     this.numBooks,
     this.largeArtPath,
+    this.books,
+    this.series,
   });
 
   Author copyWith({
@@ -25,6 +31,8 @@ class Author {
     String? artPath,
     String? largeArtPath,
     int? numBooks,
+    List<Book>? books,
+    List<Series>? series,
   }) =>
       Author(
         id: id ?? this.id,
@@ -33,6 +41,8 @@ class Author {
         artPath: artPath ?? this.artPath,
         largeArtPath: largeArtPath ?? this.largeArtPath,
         numBooks: numBooks ?? this.numBooks,
+        books: books ?? this.books,
+        series: series ?? this.series,
       );
   MediaItem toMediaItem() => MediaItem(
         id: id,

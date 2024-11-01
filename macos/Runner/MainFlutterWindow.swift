@@ -51,7 +51,7 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
 
     self.titleVisibility = .hidden
     self.titlebarAppearsTransparent = true
-    self.minSize = NSSize(width: 1100.0, height: 400.0)
+    // self.minSize = NSSize(width: 1100.0, height: 400.0)
     // if #available(macOS 11.0, *) {
     //   // Use .expanded if the app will have a title bar, else use .unified
     //   self.toolbarStyle = .unified

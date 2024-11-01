@@ -46,7 +46,6 @@ class BookGridItem extends StatelessWidget {
                   child: thumbnailUrl == null
                       ? Container(
                           constraints: const BoxConstraints.expand(),
-                          // color: Colors.black,
                           child: PlaceHolder(
                             title: showTitle ? null : title,
                             placeholder: placeholder,
@@ -58,18 +57,6 @@ class BookGridItem extends StatelessWidget {
                           fit: BoxFit.cover,
                           alignment: Alignment.center,
                           imageBuilder: (context, imageProvider) {
-                            // if (showTitle) {
-                            //   return LayoutBuilder(
-                            //     builder: (context, constraints) {
-                            //       return Stack(
-                            //         alignment: Alignment.bottomCenter,
-                            //         children: [
-                            //           Image(image: imageProvider),
-                            //         ],
-                            //       );
-                            //     },
-                            //   );
-                            // }
                             return Image(
                               image: imageProvider,
                             );
@@ -117,7 +104,10 @@ class BookGridItem extends StatelessWidget {
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: const TextStyle(fontSize: 11),
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],

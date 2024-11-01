@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class WelcomeView extends HookConsumerWidget {
-  const WelcomeView({Key? key}) : super(key: key);
+  const WelcomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,27 +23,27 @@ class WelcomeView extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.amber,
-              ),
-              onPressed: () async {
-                await auth.plexLogin();
-              },
-              child: const Text('Login to Plex'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.green,
-              ),
-              onPressed: () {
-                navigationService.push(
-                    MaterialPageRoute(builder: (context) => const EmbyLogin()));
-              },
-              child: const Text('Login to Emby'),
-            ),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     foregroundColor: Colors.white,
+            //     backgroundColor: Colors.amber,
+            //   ),
+            //   onPressed: () async {
+            //     await auth.plexLogin();
+            //   },
+            //   child: const Text('Login to Plex'),
+            // ),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     foregroundColor: Colors.white,
+            //     backgroundColor: Colors.green,
+            //   ),
+            //   onPressed: () {
+            //     navigationService.push(
+            //         MaterialPageRoute(builder: (context) => const EmbyLogin()));
+            //   },
+            //   child: const Text('Login to Emby'),
+            // ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,

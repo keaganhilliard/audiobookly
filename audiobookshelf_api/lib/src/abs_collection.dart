@@ -5,7 +5,6 @@ import 'package:audiobookshelf/audiobookshelf.dart';
 class AbsCollection {
   final String id;
   final String libraryId;
-  final String userId;
   final String name;
   final String? description;
   final String? cover;
@@ -16,7 +15,6 @@ class AbsCollection {
   AbsCollection({
     required this.id,
     required this.libraryId,
-    required this.userId,
     required this.name,
     required this.description,
     required this.cover,
@@ -29,7 +27,6 @@ class AbsCollection {
   AbsCollection copyWith({
     String? id,
     String? libraryId,
-    String? userId,
     String? name,
     String? description,
     String? cover,
@@ -41,7 +38,6 @@ class AbsCollection {
     return AbsCollection(
       id: id ?? this.id,
       libraryId: libraryId ?? this.libraryId,
-      userId: userId ?? this.userId,
       name: name ?? this.name,
       description: description ?? this.description,
       cover: cover ?? this.cover,
@@ -56,7 +52,6 @@ class AbsCollection {
     return {
       'id': id,
       'libraryId': libraryId,
-      'userId': userId,
       'name': name,
       'description': description,
       'cover': cover,
@@ -71,7 +66,6 @@ class AbsCollection {
     return AbsCollection(
       id: map['id'],
       libraryId: map['libraryId'],
-      userId: map['userId'],
       name: map['name'],
       description: map['description'],
       cover: map['cover'],
@@ -89,7 +83,7 @@ class AbsCollection {
 
   @override
   String toString() {
-    return 'AbsCollection(id: $id, libraryId: $libraryId, userId: $userId, name: $name, description: $description, cover: $cover, coverFullPath: $coverFullPath, books: $books, lastUpdate: $lastUpdate, createdAt: $createdAt)';
+    return 'AbsCollection(id: $id, libraryId: $libraryId, name: $name, description: $description, cover: $cover, coverFullPath: $coverFullPath, books: $books, lastUpdate: $lastUpdate, createdAt: $createdAt)';
   }
 
   @override
@@ -99,7 +93,6 @@ class AbsCollection {
     return other is AbsCollection &&
         other.id == id &&
         other.libraryId == libraryId &&
-        other.userId == userId &&
         other.name == name &&
         other.description == description &&
         other.cover == cover &&
@@ -112,7 +105,6 @@ class AbsCollection {
   int get hashCode {
     return id.hashCode ^
         libraryId.hashCode ^
-        userId.hashCode ^
         name.hashCode ^
         description.hashCode ^
         cover.hashCode ^

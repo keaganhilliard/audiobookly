@@ -36,7 +36,7 @@ _$AbsPersonalizedResponseAuthorImpl
           labelStringKey: json['labelStringKey'] as String,
           type: json['type'] as String,
           entities: (json['entities'] as List<dynamic>)
-              .map((e) => Author.fromJson(e as Map<String, dynamic>))
+              .map((e) => AbsAuthor.fromJson(e as Map<String, dynamic>))
               .toList(),
         );
 

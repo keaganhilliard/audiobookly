@@ -12,7 +12,7 @@ part of 'abs_play_item_request.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AbsPlayItemRequest _$AbsPlayItemRequestFromJson(Map<String, dynamic> json) {
   return _AbsPlayItemRequest.fromJson(json);
@@ -25,8 +25,12 @@ mixin _$AbsPlayItemRequest {
   bool get forceTranscode => throw _privateConstructorUsedError;
   DeviceInfo get deviceInfo => throw _privateConstructorUsedError;
 
+  /// Serializes this AbsPlayItemRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AbsPlayItemRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AbsPlayItemRequestCopyWith<AbsPlayItemRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$AbsPlayItemRequestCopyWithImpl<$Res, $Val extends AbsPlayItemRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AbsPlayItemRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,6 +90,8 @@ class _$AbsPlayItemRequestCopyWithImpl<$Res, $Val extends AbsPlayItemRequest>
     ) as $Val);
   }
 
+  /// Create a copy of AbsPlayItemRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DeviceInfoCopyWith<$Res> get deviceInfo {
@@ -119,6 +127,8 @@ class __$$AbsPlayItemRequestImplCopyWithImpl<$Res>
       $Res Function(_$AbsPlayItemRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsPlayItemRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -175,7 +185,7 @@ class _$AbsPlayItemRequestImpl implements _AbsPlayItemRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsPlayItemRequestImpl &&
@@ -189,12 +199,14 @@ class _$AbsPlayItemRequestImpl implements _AbsPlayItemRequest {
                 other.deviceInfo == deviceInfo));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, mediaPlayer, forceDirectPlay, forceTranscode, deviceInfo);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsPlayItemRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsPlayItemRequestImplCopyWith<_$AbsPlayItemRequestImpl> get copyWith =>
@@ -227,8 +239,11 @@ abstract class _AbsPlayItemRequest implements AbsPlayItemRequest {
   bool get forceTranscode;
   @override
   DeviceInfo get deviceInfo;
+
+  /// Create a copy of AbsPlayItemRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsPlayItemRequestImplCopyWith<_$AbsPlayItemRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -245,8 +260,12 @@ mixin _$DeviceInfo {
   String get sdkVersion => throw _privateConstructorUsedError;
   String get clientVersion => throw _privateConstructorUsedError;
 
+  /// Serializes this DeviceInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DeviceInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DeviceInfoCopyWith<DeviceInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -275,6 +294,8 @@ class _$DeviceInfoCopyWithImpl<$Res, $Val extends DeviceInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DeviceInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -333,6 +354,8 @@ class __$$DeviceInfoImplCopyWithImpl<$Res>
       _$DeviceInfoImpl _value, $Res Function(_$DeviceInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DeviceInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -397,7 +420,7 @@ class _$DeviceInfoImpl implements _DeviceInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeviceInfoImpl &&
@@ -411,12 +434,14 @@ class _$DeviceInfoImpl implements _DeviceInfo {
                 other.clientVersion == clientVersion));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, manufacturer, model, brand, sdkVersion, clientVersion);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DeviceInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DeviceInfoImplCopyWith<_$DeviceInfoImpl> get copyWith =>
@@ -451,8 +476,11 @@ abstract class _DeviceInfo implements DeviceInfo {
   String get sdkVersion;
   @override
   String get clientVersion;
+
+  /// Create a copy of DeviceInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeviceInfoImplCopyWith<_$DeviceInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:audiobookshelf/audiobookshelf.dart';
+import 'package:audiobookshelf/src/models/abs_author.dart';
 
 _listEquals(List a, List b) => a.join(',') == b.join(',');
 
 class AbsSearchResponse {
   final List<AbsAudiobookSearchResult> book;
   final List<dynamic> tags;
-  final List<Author> authors;
+  final List<AbsAuthor> authors;
   final List<AbsSeriesSearchResult> series;
   AbsSearchResponse({
     required this.book,
@@ -19,7 +20,7 @@ class AbsSearchResponse {
   AbsSearchResponse copyWith({
     List<AbsAudiobookSearchResult>? book,
     List<dynamic>? tags,
-    List<Author>? authors,
+    List<AbsAuthor>? authors,
     List<AbsSeriesSearchResult>? series,
   }) {
     return AbsSearchResponse(
@@ -40,15 +41,16 @@ class AbsSearchResponse {
   }
 
   factory AbsSearchResponse.fromMap(Map<String, dynamic> map) {
-    return AbsSearchResponse(
+    final result = AbsSearchResponse(
       book: List<AbsAudiobookSearchResult>.from(
           map['book']?.map((x) => AbsAudiobookSearchResult.fromJson(x))),
       tags: List<dynamic>.from(map['tags'] ?? []),
-      authors:
-          List<Author>.from(map['authors']?.map((x) => Author.fromJson(x))),
+      authors: List<AbsAuthor>.from(
+          map['authors']?.map((x) => AbsAuthor.fromJson(x))),
       series: List<AbsSeriesSearchResult>.from(
           map['series']?.map((x) => AbsSeriesSearchResult.fromMap(x))),
     );
+    return result;
   }
 
   String toJson() => json.encode(toMap());

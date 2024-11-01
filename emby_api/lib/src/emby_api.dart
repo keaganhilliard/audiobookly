@@ -47,7 +47,7 @@ class EmbyApi {
         return Uri.https(authority, path ?? '', queryParameters);
       }
     } else if (url.startsWith('localhost')) {
-      return createUri('http://' + url, '', queryParameters);
+      return createUri('http://$url', '', queryParameters);
     }
 
     throw Exception('Unsupported scheme');

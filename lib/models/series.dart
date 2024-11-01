@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 class Series {
@@ -8,6 +9,7 @@ class Series {
   final String artPath;
   final String? largeArtPath;
   final int numBooks;
+  final List<Book>? books;
 
   Series({
     required this.id,
@@ -16,6 +18,7 @@ class Series {
     required this.artPath,
     required this.numBooks,
     this.largeArtPath,
+    this.books,
   });
 
   Series copyWith({
@@ -25,6 +28,7 @@ class Series {
     String? artPath,
     String? largeArtPath,
     int? numBooks,
+    List<Book>? books,
   }) =>
       Series(
         id: id ?? this.id,
@@ -33,6 +37,7 @@ class Series {
         artPath: artPath ?? this.artPath,
         largeArtPath: largeArtPath ?? this.largeArtPath,
         numBooks: numBooks ?? this.numBooks,
+        books: books ?? this.books,
       );
   MediaItem toMediaItem() => MediaItem(
         id: id,

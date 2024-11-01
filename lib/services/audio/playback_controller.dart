@@ -34,7 +34,7 @@ Future<AudioHandler> initAudioHandler() async {
 
 abstract class PlaybackController {
   Future playItem(MediaItem item) async {}
-  Future playFromId(String id, [bool play = true]) async {}
+  Future playFromId(String id, [bool shouldPlay = true]) async {}
   Future handleResume() async {}
   Future stop() async {}
   Future fastForward() async {}
@@ -65,8 +65,14 @@ class AudioHandlerPlaybackController extends PlaybackController {
 
   bool ensured = false;
 
+  Stream<Duration>? _positionStream;
+
   @override
-  Stream<Duration> get positionStream => AudioService.createPositionStream();
+  Stream<Duration> get positionStream {
+    _positionStream ??= AudioService.createPositionStream();
+    return _positionStream!;
+  }
+
   @override
   ValueStream<PlaybackState> get playbackStateStream =>
       _audioHandler.playbackState;
@@ -85,20 +91,19 @@ class AudioHandlerPlaybackController extends PlaybackController {
   }
 
   @override
-  // ignore: avoid_renaming_method_parameters
-  Future playFromId(String? id, [bool shouldPlay = true]) async {
+  Future playFromId(String id, [bool shouldPlay = true]) async {
     if (id == currentItemId) {
       if (shouldPlay && !_audioHandler.playbackState.value.playing) play();
       return;
     }
 
     currentItemId = id;
-    return await _audioHandler.playFromMediaId(id!);
+    return await _audioHandler.playFromMediaId(id);
   }
 
   @override
   Future handleResume() async {
-    if (currentItemId != null) return playFromId(currentItemId, false);
+    if (currentItemId != null) return playFromId(currentItemId!, false);
   }
 
   @override

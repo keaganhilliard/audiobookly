@@ -149,7 +149,7 @@ class BookDetailsView extends HookConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                          'By ${book.author}',
+                          'Written By ${book.author}',
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -161,9 +161,11 @@ class BookDetailsView extends HookConsumerWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                      Text((book.duration) != Duration.zero
-                          ? book.duration.timeLeft
-                          : Utils.friendlyDurationFromTracks(tracks!)),
+                      Text(
+                        (book.duration) != Duration.zero
+                            ? book.duration.timeLeft
+                            : Utils.friendlyDurationFromTracks(tracks!),
+                      ),
                       const Divider(),
                     ],
                   ),
@@ -379,6 +381,7 @@ class DifferentHeader extends SliverPersistentHeaderDelegate {
   ) {
     return CupertinoNavigationBar(
       backgroundColor: const Color.fromRGBO(0, 0, 0, 0.5),
+      middle: Text(book.title),
       trailing: Builder(
         builder: (context) {
           switch (book.downloadStatus) {

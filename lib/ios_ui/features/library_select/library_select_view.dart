@@ -1,16 +1,17 @@
 import 'package:audiobookly/domain/library_select/library_select_notifier.dart';
+import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class IosLibrarySelectView extends HookConsumerWidget {
-  const IosLibrarySelectView({Key? key}) : super(key: key);
+  const IosLibrarySelectView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(libraryStateProvider.notifier);
     final state = ref.watch(libraryStateProvider);
-    final navigationService = ref.watch(navigationServiceProvider);
 
     return state.when(
       initial: () => const Center(
@@ -28,8 +29,9 @@ class IosLibrarySelectView extends HookConsumerWidget {
             return CupertinoListTile(
               title: Text(lib.title!),
               onTap: () async {
-                await notifier.setLibrary(lib.id!);
-                navigationService.pop(lib);
+                await notifier.setLibrary(lib.id!, lib.title);
+                router.goEnum(Routes.home);
+                // context.pop();
                 // Provider.of<RootViewModel>(context).init();
               },
             );

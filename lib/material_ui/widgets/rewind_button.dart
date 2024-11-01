@@ -2,6 +2,7 @@ import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -30,12 +31,16 @@ class RewindButton extends HookConsumerWidget {
 
     return IconButton(
       color: color,
-      icon: Icon(iconMap[
-          databaseService.getPreferencesSync().rewindInterval.toString()]),
+      icon: Icon(
+        iconMap[databaseService.getPreferencesSync().rewindInterval.toString()],
+      ),
       iconSize: iconSize,
       padding: padding,
       autofocus: false,
-      onPressed: playbackController.rewind,
+      onPressed: () async {
+        playbackController.rewind();
+        HapticFeedback.mediumImpact();
+      },
     );
   }
 }

@@ -2,17 +2,17 @@ import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_state.dart';
 import 'package:audiobookly/ios_ui/features/home/home.dart';
-import 'package:audiobookly/ios_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/ios_ui/widgets/sidebar_button.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/services/navigation/navigation_service.dart';
+import 'package:audiobookly/router.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SettingsView extends HookConsumerWidget {
   const SettingsView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(context, ref) {
@@ -53,11 +53,7 @@ class SettingsView extends HookConsumerWidget {
                     : prefs.libraryLabel,
               ),
               onTap: () {
-                ref.read(navigationServiceProvider).push(
-                      CupertinoPageRoute(
-                        builder: (context) => const IosLibrarySelectView(),
-                      ),
-                    );
+                context.push(Routes.selectLibrary.path);
               },
             ),
             Padding(

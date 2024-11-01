@@ -20,10 +20,13 @@ class AbsLogin extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final loading = useState(false);
-    final login =
-        useState(LoginState()..baseUrl = ref.read(preferencesProvider).baseUrl);
+    final login = useState(
+      LoginState()
+        ..baseUrl = ref.read(preferencesProvider).baseUrl
+        ..username = ''
+        ..password = '',
+    );
     final auth = ref.watch(authNotifierProvider.notifier);
-    final navigationService = ref.watch(navigationServiceProvider);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -59,6 +62,7 @@ class AbsLogin extends HookConsumerWidget {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextFormField(
                     key: const ValueKey('username-field'),
+                    initialValue: login.value.username,
                     validator: (val) =>
                         val!.isEmpty ? 'Please enter a username' : null,
                     onChanged: (val) {
@@ -74,6 +78,7 @@ class AbsLogin extends HookConsumerWidget {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextFormField(
                     key: const ValueKey('password-field'),
+                    initialValue: login.value.password,
                     validator: (value) =>
                         value!.isEmpty ? 'Please enter a password' : null,
                     onChanged: (val) {

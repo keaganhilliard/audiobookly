@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
+import 'package:audiobookly/constants/aspect_ratios.dart';
 import 'package:audiobookly/domain/books/books_notifier.dart';
 import 'package:audiobookly/material_ui/widgets/ab_error_widget.dart';
-import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
+import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
+import 'package:audiobookly/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +30,11 @@ class BooksView extends HookConsumerWidget {
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        refresher.currentState!.show();
+        booksProvider.refreshKey.currentState?.show();
       },
       title: Text(title ?? 'Books'),
       body: RefreshIndicator(
-        key: refresher,
+        key: booksProvider.refreshKey,
         onRefresh: () async {
           return booksProvider.refresh();
         },
@@ -46,26 +46,19 @@ class BooksView extends HookConsumerWidget {
               loading: () => const Center(child: CircularProgressIndicator()),
               loaded: (books, currentParent, totalItems) {
                 return ResponsiveGridView<MediaItem>(
+                  itemAspectRatio: doubleTitleGridAspectRatio,
                   items: books,
                   itemBuilder: (book) {
-                    return OpenContainer(
-                      closedElevation: 0,
-                      useRootNavigator: false,
-                      closedColor: Theme.of(context).canvasColor,
-                      openColor: Theme.of(context).canvasColor,
-                      openBuilder: (context, closeContainer) =>
-                          BookDetailsView(mediaId: book.id),
-                      closedBuilder: (context, openContainer) => BookGridItem(
-                        onTap: () async {
-                          openContainer();
-                        },
-                        thumbnailUrl: book.artUri?.toString(),
-                        title: book.title,
-                        subtitle: book.artist,
-                        progress: Utils.getProgress(item: book),
-                        played: book.played,
-                        placeholder: CupertinoIcons.book_fill,
-                      ),
+                    return CoverItem(
+                      onTap: () async {
+                        router.pushEnumWithId(Routes.book, book.id);
+                      },
+                      thumbnailUrl: book.artUri?.toString(),
+                      title: book.title,
+                      subtitle: book.artist,
+                      progress: Utils.getProgress(item: book),
+                      played: book.played,
+                      icon: CupertinoIcons.book_fill,
                     );
                   },
                 );

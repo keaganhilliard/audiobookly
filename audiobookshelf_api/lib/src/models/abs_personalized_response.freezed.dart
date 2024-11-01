@@ -12,7 +12,7 @@ part of 'abs_personalized_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AbsPersonalizedResponse _$AbsPersonalizedResponseFromJson(
     Map<String, dynamic> json) {
@@ -42,7 +42,7 @@ mixin _$AbsPersonalizedResponse {
             String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)
+            String type, List<AbsAuthor> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)
@@ -58,7 +58,7 @@ mixin _$AbsPersonalizedResponse {
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -74,7 +74,7 @@ mixin _$AbsPersonalizedResponse {
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -110,8 +110,13 @@ mixin _$AbsPersonalizedResponse {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this AbsPersonalizedResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AbsPersonalizedResponseCopyWith<AbsPersonalizedResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -136,6 +141,8 @@ class _$AbsPersonalizedResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -192,6 +199,8 @@ class __$$AbsPersonalizedResponseBookImplCopyWithImpl<$Res>
       $Res Function(_$AbsPersonalizedResponseBookImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -263,7 +272,7 @@ class _$AbsPersonalizedResponseBookImpl implements AbsPersonalizedResponseBook {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsPersonalizedResponseBookImpl &&
@@ -275,12 +284,14 @@ class _$AbsPersonalizedResponseBookImpl implements AbsPersonalizedResponseBook {
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
       const DeepCollectionEquality().hash(_entities));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsPersonalizedResponseBookImplCopyWith<_$AbsPersonalizedResponseBookImpl>
@@ -294,7 +305,7 @@ class _$AbsPersonalizedResponseBookImpl implements AbsPersonalizedResponseBook {
             String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)
+            String type, List<AbsAuthor> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)
@@ -313,7 +324,7 @@ class _$AbsPersonalizedResponseBookImpl implements AbsPersonalizedResponseBook {
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -332,7 +343,7 @@ class _$AbsPersonalizedResponseBookImpl implements AbsPersonalizedResponseBook {
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -415,8 +426,11 @@ abstract class AbsPersonalizedResponseBook implements AbsPersonalizedResponse {
   String get type;
   @override
   List<AbsAudiobookMinified> get entities;
+
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsPersonalizedResponseBookImplCopyWith<_$AbsPersonalizedResponseBookImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -435,7 +449,7 @@ abstract class _$$AbsPersonalizedResponseAuthorImplCopyWith<$Res>
       String label,
       String labelStringKey,
       String type,
-      List<Author> entities});
+      List<AbsAuthor> entities});
 }
 
 /// @nodoc
@@ -448,6 +462,8 @@ class __$$AbsPersonalizedResponseAuthorImplCopyWithImpl<$Res>
       $Res Function(_$AbsPersonalizedResponseAuthorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -477,7 +493,7 @@ class __$$AbsPersonalizedResponseAuthorImplCopyWithImpl<$Res>
       entities: null == entities
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
-              as List<Author>,
+              as List<AbsAuthor>,
     ));
   }
 }
@@ -491,7 +507,7 @@ class _$AbsPersonalizedResponseAuthorImpl
       required this.label,
       required this.labelStringKey,
       required this.type,
-      required final List<Author> entities})
+      required final List<AbsAuthor> entities})
       : _entities = entities;
 
   factory _$AbsPersonalizedResponseAuthorImpl.fromJson(
@@ -506,9 +522,9 @@ class _$AbsPersonalizedResponseAuthorImpl
   final String labelStringKey;
   @override
   final String type;
-  final List<Author> _entities;
+  final List<AbsAuthor> _entities;
   @override
-  List<Author> get entities {
+  List<AbsAuthor> get entities {
     if (_entities is EqualUnmodifiableListView) return _entities;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_entities);
@@ -520,7 +536,7 @@ class _$AbsPersonalizedResponseAuthorImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsPersonalizedResponseAuthorImpl &&
@@ -532,12 +548,14 @@ class _$AbsPersonalizedResponseAuthorImpl
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
       const DeepCollectionEquality().hash(_entities));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsPersonalizedResponseAuthorImplCopyWith<
@@ -552,7 +570,7 @@ class _$AbsPersonalizedResponseAuthorImpl
             String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)
+            String type, List<AbsAuthor> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)
@@ -571,7 +589,7 @@ class _$AbsPersonalizedResponseAuthorImpl
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -590,7 +608,7 @@ class _$AbsPersonalizedResponseAuthorImpl
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -658,7 +676,7 @@ abstract class AbsPersonalizedResponseAuthor
           required final String label,
           required final String labelStringKey,
           required final String type,
-          required final List<Author> entities}) =
+          required final List<AbsAuthor> entities}) =
       _$AbsPersonalizedResponseAuthorImpl;
 
   factory AbsPersonalizedResponseAuthor.fromJson(Map<String, dynamic> json) =
@@ -673,9 +691,12 @@ abstract class AbsPersonalizedResponseAuthor
   @override
   String get type;
   @override
-  List<Author> get entities;
+  List<AbsAuthor> get entities;
+
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsPersonalizedResponseAuthorImplCopyWith<
           _$AbsPersonalizedResponseAuthorImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -708,6 +729,8 @@ class __$$AbsPersonalizedResponseSeriesImplCopyWithImpl<$Res>
       $Res Function(_$AbsPersonalizedResponseSeriesImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -780,7 +803,7 @@ class _$AbsPersonalizedResponseSeriesImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsPersonalizedResponseSeriesImpl &&
@@ -792,12 +815,14 @@ class _$AbsPersonalizedResponseSeriesImpl
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
       const DeepCollectionEquality().hash(_entities));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsPersonalizedResponseSeriesImplCopyWith<
@@ -812,7 +837,7 @@ class _$AbsPersonalizedResponseSeriesImpl
             String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)
+            String type, List<AbsAuthor> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)
@@ -831,7 +856,7 @@ class _$AbsPersonalizedResponseSeriesImpl
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -850,7 +875,7 @@ class _$AbsPersonalizedResponseSeriesImpl
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -934,8 +959,11 @@ abstract class AbsPersonalizedResponseSeries
   String get type;
   @override
   List<AbsSeries> get entities;
+
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsPersonalizedResponseSeriesImplCopyWith<
           _$AbsPersonalizedResponseSeriesImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -968,6 +996,8 @@ class __$$AbsPersonalizedResponseUnknownImplCopyWithImpl<$Res>
       $Res Function(_$AbsPersonalizedResponseUnknownImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1040,7 +1070,7 @@ class _$AbsPersonalizedResponseUnknownImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsPersonalizedResponseUnknownImpl &&
@@ -1052,12 +1082,14 @@ class _$AbsPersonalizedResponseUnknownImpl
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, label, labelStringKey, type,
       const DeepCollectionEquality().hash(_entities));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsPersonalizedResponseUnknownImplCopyWith<
@@ -1072,7 +1104,7 @@ class _$AbsPersonalizedResponseUnknownImpl
             String type, List<AbsAudiobookMinified> entities)
         book,
     required TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)
+            String type, List<AbsAuthor> entities)
         authors,
     required TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)
@@ -1091,7 +1123,7 @@ class _$AbsPersonalizedResponseUnknownImpl
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult? Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult? Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -1110,7 +1142,7 @@ class _$AbsPersonalizedResponseUnknownImpl
             String type, List<AbsAudiobookMinified> entities)?
         book,
     TResult Function(String id, String label, String labelStringKey,
-            String type, List<Author> entities)?
+            String type, List<AbsAuthor> entities)?
         authors,
     TResult Function(String id, String label, String labelStringKey,
             String type, List<AbsSeries> entities)?
@@ -1194,8 +1226,11 @@ abstract class AbsPersonalizedResponseUnknown
   String get type;
   @override
   List<Map<String, dynamic>> get entities;
+
+  /// Create a copy of AbsPersonalizedResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsPersonalizedResponseUnknownImplCopyWith<
           _$AbsPersonalizedResponseUnknownImpl>
       get copyWith => throw _privateConstructorUsedError;

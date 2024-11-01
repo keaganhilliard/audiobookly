@@ -16,7 +16,7 @@ _$AbsSeriesImpl _$$AbsSeriesImplFromJson(Map<String, dynamic> json) =>
       books: (json['books'] as List<dynamic>)
           .map((e) => AbsAudiobookMinified.fromJson(e as Map<String, dynamic>))
           .toList(),
-      addedAt: json['addedAt'] as int,
+      addedAt: (json['addedAt'] as num).toInt(),
       totalDuration: (json['totalDuration'] as num?)?.toDouble(),
     );
 

@@ -4,6 +4,7 @@ import 'package:audiobookly/material_ui/features/player/player_view.dart';
 import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -97,17 +98,21 @@ class MiniPlayer extends HookConsumerWidget {
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                         ),
                         IconButton(
-                          color: Colors.white,
-                          icon: state.playing
-                              ? const Icon(Icons.pause)
-                              : const Icon(Icons.play_arrow),
-                          iconSize: 25,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          autofocus: false,
-                          onPressed: state.playing
-                              ? playbackController.pause
-                              : playbackController.play,
-                        ),
+                            color: Colors.white,
+                            icon: state.playing
+                                ? const Icon(Icons.pause)
+                                : const Icon(Icons.play_arrow),
+                            iconSize: 25,
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            autofocus: false,
+                            onPressed: () {
+                              if (state.playing) {
+                                playbackController.pause();
+                              } else {
+                                playbackController.play();
+                              }
+                              HapticFeedback.mediumImpact();
+                            }),
                         IconButton(
                           color: Colors.white,
                           icon: const Icon(Icons.close),

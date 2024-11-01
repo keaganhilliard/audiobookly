@@ -1,8 +1,15 @@
+import 'dart:async';
+
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final playbackPositionStateProvider =
+    StateNotifierProvider<PlaybackPostionState, Duration?>((ref) {
+  final playbackController = GetIt.I<PlaybackController>();
+  return PlaybackPostionState(playbackController.positionStream);
+});
 
 class PlaybackPosition extends HookConsumerWidget {
   final Widget Function(BuildContext context, Duration? position) builder;
@@ -10,8 +17,23 @@ class PlaybackPosition extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playbackController = GetIt.I<PlaybackController>();
-    final position = useStream(playbackController.positionStream);
-    return builder(context, position.data);
+    final position = ref.watch(playbackPositionStateProvider);
+    return builder(context, position);
+  }
+}
+
+class PlaybackPostionState extends StateNotifier<Duration?> {
+  late StreamSubscription<Duration> positionStreamSub;
+
+  PlaybackPostionState(Stream<Duration> positionStream) : super(null) {
+    positionStreamSub = positionStream.listen((position) {
+      state = position;
+    });
+  }
+
+  @override
+  void dispose() {
+    positionStreamSub.cancel();
+    super.dispose();
   }
 }

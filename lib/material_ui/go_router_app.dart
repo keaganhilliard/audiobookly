@@ -1,26 +1,11 @@
 // import 'package:audiobookly/domain/auth/auth_notifier.dart';
 // import 'package:audiobookly/material_ui/features/offline/offline_view.dart';
 import 'package:audiobookly/router.dart';
-import 'package:audiobookly/services/database/database_service.dart';
-import 'package:audiobookly/material_ui/features/player/mini_player.dart';
-import 'package:audiobookly/material_ui/widgets/adaptive_scaffold.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookly/models/preferences.dart';
 
 class AbMaterialApp extends HookConsumerWidget {
-  final routeMap = [
-    Routes.home,
-    Routes.authors,
-    Routes.books,
-    Routes.series,
-    Routes.playlists,
-  ];
-
-  AbMaterialApp({super.key});
+  const AbMaterialApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

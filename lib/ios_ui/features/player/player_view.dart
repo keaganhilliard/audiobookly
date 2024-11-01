@@ -29,6 +29,7 @@ class PlayerView extends HookConsumerWidget {
       int durationLeft = duration - currentPosition;
       String durationLeftText =
           Duration(milliseconds: (durationLeft / rate).round()).timeLeft;
+      if (durationLeftText.isEmpty) return '';
       text =
           '${(currentPosition / duration * 100).toStringAsFixed(0)}% ($durationLeftText left)';
     }
@@ -47,9 +48,9 @@ class PlayerView extends HookConsumerWidget {
     final MediaItem? item = mediaItem.data;
     final sleepService = GetIt.I<SleepService>();
 
-    if (state?.processingState == AudioProcessingState.completed) {
-      Navigator.of(context).pop();
-    }
+    // if (state?.processingState == AudioProcessingState.completed) {
+    //   Navigator.of(context).pop();
+    // }
 
     final primaryColor = CupertinoTheme.of(context).primaryColor;
 
@@ -210,24 +211,24 @@ class PlayerView extends HookConsumerWidget {
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 8.0,
-                                      right: 8.0,
-                                    ),
-                                    child: PlaybackPosition(
-                                        builder: (context, position) {
-                                      return SeekBar(
-                                          duration: item.duration,
-                                          position: position,
-                                          onChangeEnd: (val) async {
-                                            await playbackController
-                                                .seek(val.inMilliseconds);
-                                          });
-                                    }),
-                                  ),
-                                ),
+                                // Expanded(
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.only(
+                                //       left: 8.0,
+                                //       right: 8.0,
+                                //     ),
+                                //     child: PlaybackPosition(
+                                //         builder: (context, position) {
+                                //       return SeekBar(
+                                //           duration: item.duration,
+                                //           position: position,
+                                //           onChangeEnd: (val) async {
+                                //             await playbackController
+                                //                 .seek(val.inMilliseconds);
+                                //           });
+                                //     }),
+                                //   ),
+                                // ),
                               ],
                             ),
                             Row(

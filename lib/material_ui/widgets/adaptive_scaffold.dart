@@ -64,21 +64,31 @@ class AdaptiveScaffold extends HookWidget {
       return Scaffold(
         body: Row(
           children: [
-            NavigationRail(
-              elevation: 10.0,
-              backgroundColor: Theme.of(context).canvasColor,
-              leading: state.floatingActionButton,
-              destinations: [
-                for (var destination in state.destinations)
-                  NavigationRailDestination(
-                    icon: Icon(destination.icon),
-                    label: Text(destination.title),
+            Column(
+              children: [
+                Container(
+                  height: 20,
+                ),
+                Expanded(
+                  child: NavigationRail(
+                    elevation: 10.0,
+                    backgroundColor: Theme.of(context).canvasColor,
+                    leading: state.floatingActionButton,
+                    destinations: [
+                      for (var destination in state.destinations)
+                        NavigationRailDestination(
+                          icon: Icon(destination.icon),
+                          label: Text(destination.title),
+                        ),
+                    ],
+                    labelType: NavigationRailLabelType.all,
+                    trailing: state.trailing,
+                    selectedIndex: state.currentIndex,
+                    onDestinationSelected:
+                        state.onNavigationIndexChange ?? (_) {},
                   ),
+                ),
               ],
-              labelType: NavigationRailLabelType.all,
-              trailing: state.trailing,
-              selectedIndex: state.currentIndex,
-              onDestinationSelected: state.onNavigationIndexChange ?? (_) {},
             ),
             VerticalDivider(
               width: 1,
@@ -95,20 +105,19 @@ class AdaptiveScaffold extends HookWidget {
 
     return Scaffold(
       body: state.body,
-      bottomNavigationBar: BottomNavigationBar(
-        showUnselectedLabels: true,
-        unselectedItemColor: Theme.of(context).textTheme.titleLarge!.color,
-        selectedItemColor: Colors.deepPurpleAccent,
+      bottomNavigationBar: NavigationBar(
+        // unselectedItemColor: Theme.of(context).textTheme.titleLarge!.color,
+        // selectedItemColor: Colors.deepPurpleAccent,
         elevation: 40.0,
-        items: [
+        destinations: [
           for (var destination in state.destinations)
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(destination.icon),
               label: destination.title,
             ),
         ],
-        currentIndex: state.currentIndex,
-        onTap: state.onNavigationIndexChange,
+        selectedIndex: state.currentIndex,
+        onDestinationSelected: state.onNavigationIndexChange,
       ),
       floatingActionButton: state.floatingActionButton,
     );

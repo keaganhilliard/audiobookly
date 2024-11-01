@@ -7,7 +7,6 @@ import 'package:audiobookly/material_ui/features/player/mini_player.dart';
 import 'package:audiobookly/material_ui/features/welcome_view/welcome_view.dart';
 import 'package:audiobookly/material_ui/widgets/adaptive_scaffold.dart';
 import 'package:audiobookly/material_ui/widgets/auth_widget.dart';
-import 'package:audiobookly/material_ui/widgets/router.dart' as r;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -36,8 +35,8 @@ class AbMaterialApp extends HookConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'Audiobookly',
       navigatorKey: navigationService.navigatorKey,
-      onGenerateRoute: r.Router.generateRoute,
-      themeMode: ThemeMode.dark,
+      // onGenerateRoute: r.Router.generateRoute,
+      // themeMode: ThemeMode.dark,
       theme: ThemeData(
         useMaterial3: true,
         primaryColor: Colors.deepPurple,
@@ -98,7 +97,7 @@ class AbMaterialApp extends HookConsumerWidget {
                     Expanded(
                       child: Navigator(
                         key: _navigatorKey,
-                        onGenerateRoute: r.Router.generateRoute,
+                        // onGenerateRoute: r.Router.generateRoute,
                         initialRoute: Routes.home,
                       ),
                     ),
@@ -127,7 +126,7 @@ class AbMaterialApp extends HookConsumerWidget {
                     icon: CupertinoIcons.person_2_fill,
                   ),
                   const Destination(
-                    title: 'Books',
+                    title: 'Library',
                     icon: CupertinoIcons.book_solid,
                   ),
                   if (db.getPreferencesSync().serverType ==

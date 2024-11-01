@@ -22,33 +22,34 @@ class AuthorsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(authorsStateProvider);
-    return AbScaffold(
-        child: state.when(
-      initial: () => const SliverToBoxAdapter(),
-      loaded: (authors, total, page) => AbGrid(
-        childCount: authors!.length,
-        childBuilder: (context, index) {
-          final author = authors[index];
-          return GridItem(
-            onTap: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => BooksView(
-                    mediaId: author.id,
-                  ),
-                ),
-              );
-            },
-            thumbnailUrl: author.artUri?.toString(),
-            title: author.title,
-            placeholder: CupertinoIcons.person_2_fill,
-            showTitle: true,
-          );
-        },
-      ),
-      loading: () => const AbSliverActivityIndicator(),
-      error: (message) => const SliverToBoxAdapter(),
-    ));
+    return Container();
+    // return AbScaffold(
+    //     child: state.when(
+    //   initial: () => const SliverToBoxAdapter(),
+    //   loaded: (authors, total, page) => AbGrid(
+    //     childCount: authors!.length,
+    //     childBuilder: (context, index) {
+    //       final author = authors[index];
+    //       return GridItem(
+    //         onTap: () {
+    //           Navigator.push(
+    //             context,
+    //             CupertinoPageRoute(
+    //               builder: (context) => BooksView(
+    //                 mediaId: author.id,
+    //               ),
+    //             ),
+    //           );
+    //         },
+    //         thumbnailUrl: author.artUri?.toString(),
+    //         title: author.title,
+    //         placeholder: CupertinoIcons.person_2_fill,
+    //         showTitle: true,
+    //       );
+    //     },
+    //   ),
+    //   loading: () => const AbSliverActivityIndicator(),
+    //   error: (message) => const SliverToBoxAdapter(),
+    // ));
   }
 }

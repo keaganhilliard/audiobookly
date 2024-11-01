@@ -19,21 +19,15 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
     getLibraries();
   }
 
-  Future<void> setLibrary(String id) async {
-    state.whenOrNull(loaded: (libraries) {
-      final lib = libraries?.firstWhere((lib) => lib.id == id);
-      if (lib != null) {
-        debugPrint('Library chosen: ${lib.title}');
-        _preferencesNotifier.savePreferences(
-          _preferencesNotifier.state.copyWith(
-            libraryId: id,
-            libraryLabel: (lib.title ?? ''),
-          ),
-        );
-        _repository!.setLibraryId(id);
-        _repository!.getServerAndLibrary();
-      }
-    });
+  Future setLibrary(String id, String? title) async {
+    await _preferencesNotifier.savePreferences(
+      _preferencesNotifier.state.copyWith(
+        libraryId: id,
+        libraryLabel: (title ?? ''),
+      ),
+    );
+    _repository!.setLibraryId(id);
+    await _repository!.getServerAndLibrary();
   }
 
   Future<void> getLibraries() async {

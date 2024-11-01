@@ -72,28 +72,28 @@ class PlexLibrary {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['allowSync'] = this.allowSync;
-    data['art'] = this.art;
-    data['composite'] = this.composite;
-    data['filters'] = this.filters;
-    data['refreshing'] = this.refreshing;
-    data['thumb'] = this.thumb;
-    data['key'] = this.key;
-    data['type'] = this.type;
-    data['title'] = this.title;
-    data['agent'] = this.agent;
-    data['scanner'] = this.scanner;
-    data['language'] = this.language;
-    data['uuid'] = this.uuid;
-    data['updatedAt'] = this.updatedAt;
-    data['createdAt'] = this.createdAt;
-    data['scannedAt'] = this.scannedAt;
-    data['content'] = this.content;
-    data['directory'] = this.directory;
-    data['contentChangedAt'] = this.contentChangedAt;
-    if (this.location != null) {
-      data['Location'] = this.location!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['allowSync'] = allowSync;
+    data['art'] = art;
+    data['composite'] = composite;
+    data['filters'] = filters;
+    data['refreshing'] = refreshing;
+    data['thumb'] = thumb;
+    data['key'] = key;
+    data['type'] = type;
+    data['title'] = title;
+    data['agent'] = agent;
+    data['scanner'] = scanner;
+    data['language'] = language;
+    data['uuid'] = uuid;
+    data['updatedAt'] = updatedAt;
+    data['createdAt'] = createdAt;
+    data['scannedAt'] = scannedAt;
+    data['content'] = content;
+    data['directory'] = directory;
+    data['contentChangedAt'] = contentChangedAt;
+    if (location != null) {
+      data['Location'] = location!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -116,8 +116,8 @@ class Location {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['path'] = this.path;
+    data['id'] = id;
+    data['path'] = path;
     return data;
   }
 }

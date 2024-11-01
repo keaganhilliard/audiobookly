@@ -6,13 +6,13 @@ class PlexLoginResponse {
   PlexLoginResponse({this.user});
 
   PlexLoginResponse.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new PlexUser.fromJson(json['user']) : null;
+    user = json['user'] != null ? PlexUser.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }

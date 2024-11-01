@@ -10,23 +10,25 @@ _$AbsAudiobookMinifiedImpl _$$AbsAudiobookMinifiedImplFromJson(
         Map<String, dynamic> json) =>
     _$AbsAudiobookMinifiedImpl(
       id: json['id'] as String,
-      ino: json['ino'] as String,
-      libraryId: json['libraryId'] as String,
-      folderId: json['folderId'] as String,
-      path: json['path'] as String,
-      relPath: json['relPath'] as String,
-      isFile: json['isFile'] as bool,
-      mtimeMs: json['mtimeMs'] as int,
-      ctimeMs: json['ctimeMs'] as int,
-      birthtimeMs: json['birthtimeMs'] as int,
-      addedAt: json['addedAt'] as int,
-      updatedAt: json['updatedAt'] as int,
-      isMissing: json['isMissing'] as bool,
-      isInvalid: json['isInvalid'] as bool,
-      mediaType: json['mediaType'] as String,
-      media: MinifiedMedia.fromJson(json['media'] as Map<String, dynamic>),
-      numFiles: json['numFiles'] as int,
-      size: json['size'] as int?,
+      ino: json['ino'] as String?,
+      libraryId: json['libraryId'] as String?,
+      folderId: json['folderId'] as String?,
+      path: json['path'] as String?,
+      relPath: json['relPath'] as String?,
+      isFile: json['isFile'] as bool?,
+      mtimeMs: (json['mtimeMs'] as num?)?.toInt(),
+      ctimeMs: (json['ctimeMs'] as num?)?.toInt(),
+      birthtimeMs: (json['birthtimeMs'] as num?)?.toInt(),
+      addedAt: (json['addedAt'] as num?)?.toInt(),
+      updatedAt: (json['updatedAt'] as num?)?.toInt(),
+      isMissing: json['isMissing'] as bool?,
+      isInvalid: json['isInvalid'] as bool?,
+      mediaType: json['mediaType'] as String?,
+      media: json['media'] == null
+          ? null
+          : MinifiedMedia.fromJson(json['media'] as Map<String, dynamic>),
+      numFiles: (json['numFiles'] as num?)?.toInt(),
+      size: (json['size'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$AbsAudiobookMinifiedImplToJson(
@@ -53,16 +55,18 @@ Map<String, dynamic> _$$AbsAudiobookMinifiedImplToJson(
     };
 
 _$MediaImpl _$$MediaImplFromJson(Map<String, dynamic> json) => _$MediaImpl(
-      metadata: Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
+      metadata: json['metadata'] == null
+          ? null
+          : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
       coverPath: json['coverPath'] as String?,
-      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      numTracks: json['numTracks'] as int,
-      numAudioFiles: json['numAudioFiles'] as int,
-      numChapters: json['numChapters'] as int,
-      numMissingParts: json['numMissingParts'] as int,
-      numInvalidAudioFiles: json['numInvalidAudioFiles'] as int,
-      duration: (json['duration'] as num).toDouble(),
-      size: json['size'] as int?,
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      numTracks: (json['numTracks'] as num?)?.toInt(),
+      numAudioFiles: (json['numAudioFiles'] as num?)?.toInt(),
+      numChapters: (json['numChapters'] as num?)?.toInt(),
+      numMissingParts: (json['numMissingParts'] as num?)?.toInt(),
+      numInvalidAudioFiles: (json['numInvalidAudioFiles'] as num?)?.toInt(),
+      duration: (json['duration'] as num?)?.toDouble(),
+      size: (json['size'] as num?)?.toInt(),
       ebookFormat: json['ebookFormat'] as String?,
     );
 

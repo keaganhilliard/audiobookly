@@ -12,7 +12,7 @@ part of 'abs_item_results.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AbsItemResults _$AbsItemResultsFromJson(Map<String, dynamic> json) {
   return _AbsItemResults.fromJson(json);
@@ -22,8 +22,12 @@ AbsItemResults _$AbsItemResultsFromJson(Map<String, dynamic> json) {
 mixin _$AbsItemResults {
   List<AbsAudiobook> get results => throw _privateConstructorUsedError;
 
+  /// Serializes this AbsItemResults to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AbsItemResults
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AbsItemResultsCopyWith<AbsItemResults> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -47,6 +51,8 @@ class _$AbsItemResultsCopyWithImpl<$Res, $Val extends AbsItemResults>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AbsItemResults
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -80,6 +86,8 @@ class __$$AbsItemResultsImplCopyWithImpl<$Res>
       _$AbsItemResultsImpl _value, $Res Function(_$AbsItemResultsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsItemResults
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -117,19 +125,21 @@ class _$AbsItemResultsImpl implements _AbsItemResults {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsItemResultsImpl &&
             const DeepCollectionEquality().equals(other._results, _results));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_results));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsItemResults
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsItemResultsImplCopyWith<_$AbsItemResultsImpl> get copyWith =>
@@ -153,8 +163,11 @@ abstract class _AbsItemResults implements AbsItemResults {
 
   @override
   List<AbsAudiobook> get results;
+
+  /// Create a copy of AbsItemResults
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsItemResultsImplCopyWith<_$AbsItemResultsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

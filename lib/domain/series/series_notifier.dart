@@ -2,6 +2,7 @@ import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/series/series_state.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/utils/refresher_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final seriesStateProvider =
@@ -9,12 +10,10 @@ final seriesStateProvider =
   return SeriesNotifier(ref.watch(mediaRepositoryProvider));
 });
 
-class SeriesNotifier extends StateNotifier<SeriesState> {
+class SeriesNotifier extends RefresherStateNotifier<SeriesState> {
   final MediaRepository? _repository;
 
-  SeriesNotifier(this._repository) : super(const SeriesState.initial()) {
-    getSeries();
-  }
+  SeriesNotifier(this._repository) : super(const SeriesState.initial());
 
   Future<void> refresh() async {
     try {

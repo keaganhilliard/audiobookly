@@ -1,18 +1,25 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'package:audiobookly/utils/interactive_slider/interactive_slider.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:audiobookly/material_ui/features/tracks/tracks_view.dart';
 import 'package:audiobookly/material_ui/widgets/forward_button.dart';
 import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
-import 'package:audiobookly/material_ui/widgets/seek_bar.dart';
+import 'package:audiobookly/ios_ui/widgets/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:cast/cast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_to_airplay/flutter_to_airplay.dart';
 
 class PlayerView extends HookConsumerWidget {
   final MediaItem? book;
@@ -30,13 +37,16 @@ class PlayerView extends HookConsumerWidget {
     return text;
   }
 
-  const PlayerView({this.book, Key? key}) : super(key: key);
+  const PlayerView({this.book, super.key});
+
+  final playerDim = 40.0;
 
   @override
   Widget build(context, ref) {
     final playbackController = GetIt.I<PlaybackController>();
     final playbackState = useStream(playbackController.playbackStateStream);
     final mediaItem = useStream(playbackController.currentMediaItemStream);
+    final prefs = ref.watch(preferencesProvider);
 
     final PlaybackState? state = playbackState.data;
     final MediaItem? item = mediaItem.data;
@@ -66,22 +76,57 @@ class PlayerView extends HookConsumerWidget {
                         children: [
                           Align(
                             alignment: Alignment.center,
-                            child: Container(
-                              // height: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              child: CachedNetworkImage(
-                                fit: BoxFit.cover,
-                                errorWidget: (context, error, child) =>
-                                    const Icon(Icons.book),
-                                imageUrl: (book?.largeThumbnail?.toString() ??
-                                    book?.artUri?.toString())!,
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    // height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    clipBehavior: Clip.antiAlias,
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      errorWidget: (context, error, child) =>
+                                          const Icon(Icons.book),
+                                      imageUrl:
+                                          (book?.largeThumbnail?.toString() ??
+                                              book?.artUri?.toString())!,
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                if (defaultTargetPlatform == TargetPlatform.iOS)
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 300.0,
+                                        right: 8.0,
+                                      ),
+                                      child: Container(
+                                        width: playerDim,
+                                        height: playerDim,
+                                        padding: EdgeInsets.all(0),
+                                        margin: EdgeInsets.all(0),
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          borderRadius: BorderRadius.circular(
+                                              playerDim / 2),
+                                        ),
+                                        child: AirPlayIconButton(
+                                          constraints: BoxConstraints.expand(),
+                                          // color: Colors.deepPurple,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ],
                             ),
                           ),
                           Container(
@@ -145,12 +190,19 @@ class PlayerView extends HookConsumerWidget {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 16.0, bottom: 16.0, right: 16.0),
+                            left: 16.0,
+                            bottom: 16.0,
+                            right: 16.0,
+                          ),
                           child: PlaybackPosition(builder: (context, position) {
                             return Text(
                               getDurationLeftText(
-                                position?.inMilliseconds,
-                                item.duration?.inMilliseconds,
+                                (prefs.useChapterProgressBar
+                                        ? item.currentTrackStartingPosition
+                                            .inMilliseconds
+                                        : 0) +
+                                    (position?.inMilliseconds ?? 0),
+                                item.totalDuration.inMilliseconds,
                                 state?.speed ?? 1.0,
                               ),
                             );
@@ -188,13 +240,14 @@ class PlayerView extends HookConsumerWidget {
                             right: 8.0,
                           ),
                           child: PlaybackPosition(builder: (context, position) {
-                            return SeekBar(
-                                duration: item.duration,
-                                position: position,
-                                onChangeEnd: (val) async {
-                                  await playbackController
-                                      .seek(val.inMilliseconds);
-                                });
+                            return SeekBar2(
+                              duration: item.duration,
+                              position: position,
+                              onChangeEnd: (val) async {
+                                await playbackController
+                                    .seek(val.inMilliseconds);
+                              },
+                            );
                           }),
                         ),
                         Row(
@@ -251,7 +304,7 @@ class PlayerView extends HookConsumerWidget {
                                     if (time == Duration.zero) {
                                       sleepService.cancelTimer();
                                     } else if (time ==
-                                        const Duration(milliseconds: 1)) {
+                                        const Duration(minutes: 1)) {
                                       sleepService.endOfChapter();
                                     } else if (time != null) {
                                       sleepService.beginTimer(time);
@@ -279,14 +332,20 @@ class PlayerView extends HookConsumerWidget {
                                                   AudioProcessingState.buffering
                                       ? const Icon(Icons.pause_circle_filled)
                                       : const Icon(Icons.play_circle_filled),
-                                  onPressed: state?.playing ??
-                                          false ||
-                                              state?.processingState ==
-                                                  AudioProcessingState.buffering
-                                      ? playbackController.pause
-                                      : playbackController.play,
-                                  color: Theme.of(context).colorScheme.primary,
+                                  onPressed: () async {
+                                    if (state?.playing ??
+                                        false ||
+                                            state?.processingState ==
+                                                AudioProcessingState
+                                                    .buffering) {
+                                      playbackController.pause();
+                                    } else {
+                                      playbackController.play();
+                                    }
+                                    HapticFeedback.mediumImpact();
+                                  },
                                   size: 60,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ],
                             ),
@@ -305,31 +364,64 @@ class PlayerView extends HookConsumerWidget {
                                     ),
                                     context: context,
                                     builder: (context) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 40.0,
-                                          bottom: 40.0,
-                                          left: 16.0,
-                                          right: 16.0,
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            const Text('Playback Speed'),
-                                            ValueSlider(
-                                              prefix: const Text('1.00'),
-                                              value: state?.speed ?? 1.0,
-                                              onChangeEnd: (val) {
-                                                playbackController
-                                                    .setSpeed(val);
-                                              },
-                                              min: 1.0,
-                                              max: 3.0,
-                                              postfix: const Text('3.00'),
-                                            )
-                                          ],
-                                        ),
-                                      );
+                                      return HookBuilder(builder: (context) {
+                                        final state = useStream(
+                                            playbackController
+                                                .playbackStateStream);
+                                        final dragState =
+                                            useState<double?>(null);
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 40.0,
+                                            bottom: 40.0,
+                                            left: 16.0,
+                                            right: 16.0,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              const Text('Playback Speed'),
+                                              if (state.hasData)
+                                                InteractiveSlider(
+                                                  unfocusedOpacity: 0.8,
+                                                  foregroundColor:
+                                                      Colors.deepPurple,
+                                                  segmentDividerColor:
+                                                      Colors.grey.shade800,
+                                                  initialProgress:
+                                                      ((state.data?.speed ??
+                                                                  1) -
+                                                              1) /
+                                                          2,
+                                                  onChanged: (value) {
+                                                    dragState.value = value;
+                                                  },
+                                                  onProgressUpdated: (val) {
+                                                    playbackController
+                                                        .setSpeed(val);
+                                                  },
+                                                  numberOfSegments: 40,
+                                                  min: 1.0,
+                                                  max: 3.0,
+                                                  startIcon: const Text(
+                                                    '1.00',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  endIcon: const Text(
+                                                    '3.00',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              Text(
+                                                  "${dragState.value?.toStringAsFixed(2) ?? state.data?.speed.toStringAsFixed(2)}x")
+                                            ],
+                                          ),
+                                        );
+                                      });
                                     })
                               },
                               icon: Text(
@@ -339,8 +431,10 @@ class PlayerView extends HookConsumerWidget {
                                   // color: Colors.white,
                                   fontSize: 9.0,
                                 ),
-                              ), //............
+                              ),
                             ),
+                            // if (defaultTargetPlatform == TargetPlatform.iOS)
+                            //   AirPlayIconButton()
                           ],
                         ),
                       ],

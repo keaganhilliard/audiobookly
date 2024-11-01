@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'package:audiobookshelf/src/models/abs_author.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'abs_audiobook.freezed.dart';
@@ -93,9 +94,9 @@ class AudioFile with _$AudioFile {
     dynamic discNumFromMeta,
     dynamic trackNumFromFilename,
     dynamic discNumFromFilename,
-    required bool manuallyVerified,
-    required bool invalid,
-    required bool exclude,
+    bool? manuallyVerified,
+    bool? invalid,
+    bool? exclude,
     dynamic error,
     String? format,
     double? duration,
@@ -133,9 +134,14 @@ double _coerceStringToDouble(dynamic shouldBeADouble) =>
         ? double.parse(shouldBeADouble)
         : shouldBeADouble.toDouble();
 
-// List<Series> _coerceToList(dynamic series) => series is Map
-//     ? [Series.fromJson(series as Map<String, dynamic>)]
-//     : [for (final serie in series) Series.fromJson(serie)];
+List<Series> _coerceToList(dynamic series) {
+  if (series == null) {
+    return [];
+  }
+  return series is Map
+      ? [Series.fromJson(series as Map<String, dynamic>)]
+      : [for (final serie in series) Series.fromJson(serie)];
+}
 
 @freezed
 class MetaTags with _$MetaTags {
@@ -161,9 +167,9 @@ class MediaMetadata with _$MediaMetadata {
   const factory MediaMetadata({
     String? title,
     String? subtitle,
-    List<Author>? authors,
+    List<AbsAuthor>? authors,
     List<String>? narrators,
-    // @JsonKey(fromJson: _coerceToList) List<Series>? series,
+    @JsonKey(fromJson: _coerceToList) List<Series>? series,
     String? seriesName,
     List<String>? genres,
     String? publishedYear,
@@ -180,21 +186,21 @@ class MediaMetadata with _$MediaMetadata {
       _$MediaMetadataFromJson(json);
 }
 
-@freezed
-class Author with _$Author {
-  const factory Author({
-    required String id,
-    required String name,
-    int? updatedAt,
-    String? imagePath,
-    String? description,
-    String? asin,
-    int? numBooks,
-    int? addedAt,
-  }) = _Author;
+// @freezed
+// class Author with _$Author {
+//   const factory Author({
+//     required String id,
+//     required String name,
+//     int? updatedAt,
+//     String? imagePath,
+//     String? description,
+//     String? asin,
+//     int? numBooks,
+//     int? addedAt,
+//   }) = _Author;
 
-  factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
-}
+//   factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
+// }
 
 @freezed
 class Series with _$Series {

@@ -7,6 +7,7 @@ class AbsLibrary {
     this.icon,
     this.createdAt,
     this.lastUpdate,
+    this.mediaType,
   });
 
   String? id;
@@ -16,6 +17,7 @@ class AbsLibrary {
   String? icon;
   int? createdAt;
   int? lastUpdate;
+  String? mediaType;
 
   factory AbsLibrary.fromJson(Map<String, dynamic> json) => AbsLibrary(
         id: json["id"],
@@ -25,6 +27,7 @@ class AbsLibrary {
         icon: json["icon"],
         createdAt: json["createdAt"],
         lastUpdate: json["lastUpdate"],
+        mediaType: json["mediaType"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,6 +38,7 @@ class AbsLibrary {
         "icon": icon,
         "createdAt": createdAt,
         "lastUpdate": lastUpdate,
+        "mediaType": mediaType,
       };
 }
 

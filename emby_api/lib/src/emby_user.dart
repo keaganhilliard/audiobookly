@@ -49,18 +49,18 @@ class EmbyUser {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Name'] = this.name;
-    data['ServerId'] = this.serverId;
-    data['Id'] = this.id;
-    data['ConnectUserName'] = this.connectUserName;
-    data['ConnectLinkType'] = this.connectLinkType;
-    data['HasPassword'] = this.hasPassword;
-    data['HasConfiguredPassword'] = this.hasConfiguredPassword;
-    data['HasConfiguredEasyPassword'] = this.hasConfiguredEasyPassword;
-    data['LastLoginDate'] = this.lastLoginDate?.toIso8601String();
-    data['LastActivityDate'] = this.lastActivityDate?.toIso8601String();
-    data['Configuration'] = this.configuration?.toJson();
-    data['Policy'] = this.policy?.toJson();
+    data['Name'] = name;
+    data['ServerId'] = serverId;
+    data['Id'] = id;
+    data['ConnectUserName'] = connectUserName;
+    data['ConnectLinkType'] = connectLinkType;
+    data['HasPassword'] = hasPassword;
+    data['HasConfiguredPassword'] = hasConfiguredPassword;
+    data['HasConfiguredEasyPassword'] = hasConfiguredEasyPassword;
+    data['LastLoginDate'] = lastLoginDate?.toIso8601String();
+    data['LastActivityDate'] = lastActivityDate?.toIso8601String();
+    data['Configuration'] = configuration?.toJson();
+    data['Policy'] = policy?.toJson();
     return data;
   }
 }
@@ -117,20 +117,20 @@ class Configuration {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['AudioLanguagePreference'] = this.audioLanguagePreference;
-    data['PlayDefaultAudioTrack'] = this.playDefaultAudioTrack;
-    data['SubtitleLanguagePreference'] = this.subtitleLanguagePreference;
-    data['DisplayMissingEpisodes'] = this.displayMissingEpisodes;
-    data['SubtitleMode'] = this.subtitleMode;
-    data['DisplayCollectionsView'] = this.displayCollectionsView;
-    data['EnableLocalPassword'] = this.enableLocalPassword;
-    data['OrderedViews'] = this.orderedViews;
-    data['LatestItemsExcludes'] = this.latestItemsExcludes;
-    data['MyMediaExcludes'] = this.myMediaExcludes;
-    data['HidePlayedInLatest'] = this.hidePlayedInLatest;
-    data['RememberAudioSelections'] = this.rememberAudioSelections;
-    data['RememberSubtitleSelections'] = this.rememberSubtitleSelections;
-    data['EnableNextEpisodeAutoPlay'] = this.enableNextEpisodeAutoPlay;
+    data['AudioLanguagePreference'] = audioLanguagePreference;
+    data['PlayDefaultAudioTrack'] = playDefaultAudioTrack;
+    data['SubtitleLanguagePreference'] = subtitleLanguagePreference;
+    data['DisplayMissingEpisodes'] = displayMissingEpisodes;
+    data['SubtitleMode'] = subtitleMode;
+    data['DisplayCollectionsView'] = displayCollectionsView;
+    data['EnableLocalPassword'] = enableLocalPassword;
+    data['OrderedViews'] = orderedViews;
+    data['LatestItemsExcludes'] = latestItemsExcludes;
+    data['MyMediaExcludes'] = myMediaExcludes;
+    data['HidePlayedInLatest'] = hidePlayedInLatest;
+    data['RememberAudioSelections'] = rememberAudioSelections;
+    data['RememberSubtitleSelections'] = rememberSubtitleSelections;
+    data['EnableNextEpisodeAutoPlay'] = enableNextEpisodeAutoPlay;
     return data;
   }
 }
@@ -258,49 +258,44 @@ class Policy {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['IsAdministrator'] = this.isAdministrator;
-    data['IsHidden'] = this.isHidden;
-    data['IsHiddenRemotely'] = this.isHiddenRemotely;
-    data['IsDisabled'] = this.isDisabled;
-    data['BlockedTags'] = this.blockedTags;
-    data['IsTagBlockingModeInclusive'] = this.isTagBlockingModeInclusive;
-    data['EnableUserPreferenceAccess'] = this.enableUserPreferenceAccess;
-    data['AccessSchedules'] =
-        this.accessSchedules?.map((v) => v.toJson()).toList();
-    data['BlockUnratedItems'] = this.blockUnratedItems;
-    data['EnableRemoteControlOfOtherUsers'] =
-        this.enableRemoteControlOfOtherUsers;
-    data['EnableSharedDeviceControl'] = this.enableSharedDeviceControl;
-    data['EnableRemoteAccess'] = this.enableRemoteAccess;
-    data['EnableLiveTvManagement'] = this.enableLiveTvManagement;
-    data['EnableLiveTvAccess'] = this.enableLiveTvAccess;
-    data['EnableMediaPlayback'] = this.enableMediaPlayback;
-    data['EnableAudioPlaybackTranscoding'] =
-        this.enableAudioPlaybackTranscoding;
-    data['EnableVideoPlaybackTranscoding'] =
-        this.enableVideoPlaybackTranscoding;
-    data['EnablePlaybackRemuxing'] = this.enablePlaybackRemuxing;
-    data['EnableContentDeletion'] = this.enableContentDeletion;
-    data['EnableContentDeletionFromFolders'] =
-        this.enableContentDeletionFromFolders;
-    data['EnableContentDownloading'] = this.enableContentDownloading;
-    data['EnableSubtitleDownloading'] = this.enableSubtitleDownloading;
-    data['EnableSubtitleManagement'] = this.enableSubtitleManagement;
-    data['EnableSyncTranscoding'] = this.enableSyncTranscoding;
-    data['EnableMediaConversion'] = this.enableMediaConversion;
-    data['EnabledDevices'] = this.enabledDevices;
-    data['EnableAllDevices'] = this.enableAllDevices;
-    data['EnabledChannels'] = this.enabledChannels;
-    data['EnableAllChannels'] = this.enableAllChannels;
-    data['EnabledFolders'] = this.enabledFolders;
-    data['EnableAllFolders'] = this.enableAllFolders;
-    data['InvalidLoginAttemptCount'] = this.invalidLoginAttemptCount;
-    data['EnablePublicSharing'] = this.enablePublicSharing;
-    data['RemoteClientBitrateLimit'] = this.remoteClientBitrateLimit;
-    data['AuthenticationProviderId'] = this.authenticationProviderId;
-    data['ExcludedSubFolders'] = this.excludedSubFolders;
-    data['SimultaneousStreamLimit'] = this.simultaneousStreamLimit;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['IsAdministrator'] = isAdministrator;
+    data['IsHidden'] = isHidden;
+    data['IsHiddenRemotely'] = isHiddenRemotely;
+    data['IsDisabled'] = isDisabled;
+    data['BlockedTags'] = blockedTags;
+    data['IsTagBlockingModeInclusive'] = isTagBlockingModeInclusive;
+    data['EnableUserPreferenceAccess'] = enableUserPreferenceAccess;
+    data['AccessSchedules'] = accessSchedules?.map((v) => v.toJson()).toList();
+    data['BlockUnratedItems'] = blockUnratedItems;
+    data['EnableRemoteControlOfOtherUsers'] = enableRemoteControlOfOtherUsers;
+    data['EnableSharedDeviceControl'] = enableSharedDeviceControl;
+    data['EnableRemoteAccess'] = enableRemoteAccess;
+    data['EnableLiveTvManagement'] = enableLiveTvManagement;
+    data['EnableLiveTvAccess'] = enableLiveTvAccess;
+    data['EnableMediaPlayback'] = enableMediaPlayback;
+    data['EnableAudioPlaybackTranscoding'] = enableAudioPlaybackTranscoding;
+    data['EnableVideoPlaybackTranscoding'] = enableVideoPlaybackTranscoding;
+    data['EnablePlaybackRemuxing'] = enablePlaybackRemuxing;
+    data['EnableContentDeletion'] = enableContentDeletion;
+    data['EnableContentDeletionFromFolders'] = enableContentDeletionFromFolders;
+    data['EnableContentDownloading'] = enableContentDownloading;
+    data['EnableSubtitleDownloading'] = enableSubtitleDownloading;
+    data['EnableSubtitleManagement'] = enableSubtitleManagement;
+    data['EnableSyncTranscoding'] = enableSyncTranscoding;
+    data['EnableMediaConversion'] = enableMediaConversion;
+    data['EnabledDevices'] = enabledDevices;
+    data['EnableAllDevices'] = enableAllDevices;
+    data['EnabledChannels'] = enabledChannels;
+    data['EnableAllChannels'] = enableAllChannels;
+    data['EnabledFolders'] = enabledFolders;
+    data['EnableAllFolders'] = enableAllFolders;
+    data['InvalidLoginAttemptCount'] = invalidLoginAttemptCount;
+    data['EnablePublicSharing'] = enablePublicSharing;
+    data['RemoteClientBitrateLimit'] = remoteClientBitrateLimit;
+    data['AuthenticationProviderId'] = authenticationProviderId;
+    data['ExcludedSubFolders'] = excludedSubFolders;
+    data['SimultaneousStreamLimit'] = simultaneousStreamLimit;
     return data;
   }
 }
@@ -324,9 +319,9 @@ class AccessSchedule {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['DayOfWeek'] = this.dayOfWeek;
-    data['StartHour'] = this.startHour;
-    data['EndHour'] = this.endHour;
+    data['DayOfWeek'] = dayOfWeek;
+    data['StartHour'] = startHour;
+    data['EndHour'] = endHour;
     return data;
   }
 }

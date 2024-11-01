@@ -32,7 +32,7 @@ class MacosLibrarySelectView extends HookConsumerWidget {
                 return CupertinoListTile(
                   title: Text(lib.title!),
                   onTap: () async {
-                    await notifier.setLibrary(lib.id!);
+                    await notifier.setLibrary(lib.id!, lib.title);
                     navigationService.pop(lib);
                     // Provider.of<RootViewModel>(context).init();
                   },

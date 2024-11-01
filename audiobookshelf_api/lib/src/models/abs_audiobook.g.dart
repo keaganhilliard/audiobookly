@@ -15,12 +15,12 @@ _$AbsAudiobookImpl _$$AbsAudiobookImplFromJson(Map<String, dynamic> json) =>
       path: json['path'] as String,
       relPath: json['relPath'] as String,
       isFile: json['isFile'] as bool,
-      mtimeMs: json['mtimeMs'] as int?,
-      ctimeMs: json['ctimeMs'] as int?,
-      birthtimeMs: json['birthtimeMs'] as int?,
-      addedAt: json['addedAt'] as int?,
-      updatedAt: json['updatedAt'] as int?,
-      lastScan: json['lastScan'] as int?,
+      mtimeMs: (json['mtimeMs'] as num?)?.toInt(),
+      ctimeMs: (json['ctimeMs'] as num?)?.toInt(),
+      birthtimeMs: (json['birthtimeMs'] as num?)?.toInt(),
+      addedAt: (json['addedAt'] as num?)?.toInt(),
+      updatedAt: (json['updatedAt'] as num?)?.toInt(),
+      lastScan: (json['lastScan'] as num?)?.toInt(),
       scanVersion: json['scanVersion'] as String?,
       isMissing: json['isMissing'] as bool,
       isInvalid: json['isInvalid'] as bool,
@@ -59,8 +59,8 @@ _$LibraryFileImpl _$$LibraryFileImplFromJson(Map<String, dynamic> json) =>
       ino: json['ino'] as String,
       metadata: LibraryFileMetadata.fromJson(
           json['metadata'] as Map<String, dynamic>),
-      addedAt: json['addedAt'] as int,
-      updatedAt: json['updatedAt'] as int,
+      addedAt: (json['addedAt'] as num).toInt(),
+      updatedAt: (json['updatedAt'] as num).toInt(),
       fileType: json['fileType'] as String,
     );
 
@@ -80,10 +80,10 @@ _$LibraryFileMetadataImpl _$$LibraryFileMetadataImplFromJson(
       ext: json['ext'] as String,
       path: json['path'] as String,
       relPath: json['relPath'] as String,
-      size: json['size'] as int,
-      mtimeMs: json['mtimeMs'] as int?,
-      ctimeMs: json['ctimeMs'] as int?,
-      birthtimeMs: json['birthtimeMs'] as int?,
+      size: (json['size'] as num).toInt(),
+      mtimeMs: (json['mtimeMs'] as num?)?.toInt(),
+      ctimeMs: (json['ctimeMs'] as num?)?.toInt(),
+      birthtimeMs: (json['birthtimeMs'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$LibraryFileMetadataImplToJson(
@@ -131,27 +131,27 @@ Map<String, dynamic> _$$MediaImplToJson(_$MediaImpl instance) =>
 
 _$AudioFileImpl _$$AudioFileImplFromJson(Map<String, dynamic> json) =>
     _$AudioFileImpl(
-      index: json['index'] as int,
+      index: (json['index'] as num).toInt(),
       ino: json['ino'] as String,
       metadata: LibraryFileMetadata.fromJson(
           json['metadata'] as Map<String, dynamic>),
-      addedAt: json['addedAt'] as int?,
-      updatedAt: json['updatedAt'] as int?,
-      trackNumFromMeta: json['trackNumFromMeta'] as int?,
+      addedAt: (json['addedAt'] as num?)?.toInt(),
+      updatedAt: (json['updatedAt'] as num?)?.toInt(),
+      trackNumFromMeta: (json['trackNumFromMeta'] as num?)?.toInt(),
       discNumFromMeta: json['discNumFromMeta'],
       trackNumFromFilename: json['trackNumFromFilename'],
       discNumFromFilename: json['discNumFromFilename'],
-      manuallyVerified: json['manuallyVerified'] as bool,
-      invalid: json['invalid'] as bool,
-      exclude: json['exclude'] as bool,
+      manuallyVerified: json['manuallyVerified'] as bool?,
+      invalid: json['invalid'] as bool?,
+      exclude: json['exclude'] as bool?,
       error: json['error'],
       format: json['format'] as String?,
       duration: (json['duration'] as num?)?.toDouble(),
-      bitRate: json['bitRate'] as int?,
+      bitRate: (json['bitRate'] as num?)?.toInt(),
       language: json['language'] as String?,
       codec: json['codec'] as String?,
       timeBase: json['timeBase'] as String?,
-      channels: json['channels'] as int?,
+      channels: (json['channels'] as num?)?.toInt(),
       channelLayout: json['channelLayout'] as String?,
       chapters: (json['chapters'] as List<dynamic>?)
           ?.map((e) => Chapter.fromJson(e as Map<String, dynamic>))
@@ -192,7 +192,7 @@ Map<String, dynamic> _$$AudioFileImplToJson(_$AudioFileImpl instance) =>
 
 _$ChapterImpl _$$ChapterImplFromJson(Map<String, dynamic> json) =>
     _$ChapterImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       start: _coerceStringToDouble(json['start']),
       end: _coerceStringToDouble(json['end']),
       title: json['title'] as String,
@@ -239,16 +239,17 @@ _$MediaMetadataImpl _$$MediaMetadataImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String?,
       subtitle: json['subtitle'] as String?,
       authors: (json['authors'] as List<dynamic>?)
-          ?.map((e) => Author.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => AbsAuthor.fromJson(e as Map<String, dynamic>))
           .toList(),
       narrators: (json['narrators'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      series: _coerceToList(json['series']),
       seriesName: json['seriesName'] as String?,
       genres:
           (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList(),
       publishedYear: json['publishedYear'] as String?,
-      publishedDate: json['publishedDate'] as int?,
+      publishedDate: (json['publishedDate'] as num?)?.toInt(),
       publisher: json['publisher'] as String?,
       description: json['description'] as String?,
       isbn: json['isbn'] as String?,
@@ -263,6 +264,7 @@ Map<String, dynamic> _$$MediaMetadataImplToJson(_$MediaMetadataImpl instance) =>
       'subtitle': instance.subtitle,
       'authors': instance.authors,
       'narrators': instance.narrators,
+      'series': instance.series,
       'seriesName': instance.seriesName,
       'genres': instance.genres,
       'publishedYear': instance.publishedYear,
@@ -273,29 +275,6 @@ Map<String, dynamic> _$$MediaMetadataImplToJson(_$MediaMetadataImpl instance) =>
       'asin': instance.asin,
       'language': instance.language,
       'explicit': instance.explicit,
-    };
-
-_$AuthorImpl _$$AuthorImplFromJson(Map<String, dynamic> json) => _$AuthorImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      updatedAt: json['updatedAt'] as int?,
-      imagePath: json['imagePath'] as String?,
-      description: json['description'] as String?,
-      asin: json['asin'] as String?,
-      numBooks: json['numBooks'] as int?,
-      addedAt: json['addedAt'] as int?,
-    );
-
-Map<String, dynamic> _$$AuthorImplToJson(_$AuthorImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'updatedAt': instance.updatedAt,
-      'imagePath': instance.imagePath,
-      'description': instance.description,
-      'asin': instance.asin,
-      'numBooks': instance.numBooks,
-      'addedAt': instance.addedAt,
     };
 
 _$SeriesImpl _$$SeriesImplFromJson(Map<String, dynamic> json) => _$SeriesImpl(

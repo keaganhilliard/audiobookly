@@ -1,5 +1,8 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/material_ui/widgets/playback_position.dart';
+import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'package:audiobookly/services/database/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,7 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TracksView extends HookConsumerWidget {
-  TracksView({Key? key}) : super(key: key);
+  TracksView({super.key});
 
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
@@ -47,37 +50,46 @@ class TracksView extends HookConsumerWidget {
                       child: LayoutBuilder(builder: (context, constraints) {
                         return Align(
                           alignment: Alignment.centerLeft,
-                          child: HookBuilder(
-                            builder: (context) {
-                              final position =
-                                  useStream(playbackController.positionStream);
-                              double scalar = 0;
-                              if (position.hasData && position.data != null) {
-                                final currentTrackPosition = position.data! -
-                                    item!.currentTrackStartingPosition;
-                                scalar = currentTrackPosition.inMilliseconds /
-                                    item.currentTrackLength.inMilliseconds;
-                              }
-                              return Container(
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0)),
-                                ),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    height: constraints.maxHeight,
-                                    width: constraints.maxWidth *
-                                        (scalar > 0 ? scalar : 0),
-                                    color:
-                                        const Color.fromRGBO(103, 58, 183, 0.3),
+                          child: PlaybackPosition(builder: (context, position) {
+                            return Consumer(
+                              builder: (context, ref, child) {
+                                final useChapterProgressBar = ref.watch(
+                                  preferencesProvider.select(
+                                    (prefs) => prefs.useChapterProgressBar,
                                   ),
-                                ),
-                              );
-                            },
-                          ),
+                                );
+                                double scalar = 0;
+                                if (position != null) {
+                                  final currentTrackPosition =
+                                      useChapterProgressBar
+                                          ? position
+                                          : position -
+                                              item!
+                                                  .currentTrackStartingPosition;
+                                  scalar = currentTrackPosition.inMilliseconds /
+                                      item!.currentTrackLength.inMilliseconds;
+                                }
+                                return Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      height: constraints.maxHeight,
+                                      width: constraints.maxWidth *
+                                          (scalar > 0 ? scalar : 0),
+                                      color: const Color.fromRGBO(
+                                          103, 58, 183, 0.3),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }),
                         );
                       }),
                     ),

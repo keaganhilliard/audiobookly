@@ -1,19 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiobookly/ios_ui/features/home/home.dart';
 import 'package:audiobookly/ios_ui/ios_ui.dart' as ios;
 import 'package:audiobookly/mac_ui/mac_ui.dart' as mac;
 import 'package:audiobookly/material_ui/material_ui.dart' as material;
 import 'package:audiobookly/material_ui/widgets/adaptive_scaffold.dart';
+import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
 import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/database/database_service.dart';
-import 'package:audiobookly/services/database/isar_database_service.dart';
 import 'package:audiobookly/singletons.dart';
+import 'package:audiobookly/utils/book_search_delegate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_adaptive_ui/flutter_adaptive_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,7 +22,11 @@ enum Routes {
   home('/'),
   login('/login'),
   absLogin('/login/abs'),
-  library('/library'),
+  libraryBooks('/library/books'),
+  libraryAuthors('/library/authors'),
+  librarySeries('/library/series'),
+  libraryPlaylists('/library/playlists'),
+  libraryCollections('/library/collections'),
   books('/books'),
   book('/books/:id'),
   authors('/authors'),
@@ -33,6 +38,9 @@ enum Routes {
   series('/series'),
   serie('/series/:id'),
   selectLibrary('/select-library'),
+  settings('/settings'),
+  downloads('/downloads'),
+  search('/search'),
   formLogin('/form-login');
 
   const Routes(this.path);
@@ -58,13 +66,16 @@ class GoRouterRefreshStream extends ChangeNotifier {
 
 // GoRouter configuration
 // state.pathParameters['id']
+final rootKey = GlobalKey<NavigatorState>();
+final homeKey = GlobalKey<NavigatorState>();
+final authorsKey = GlobalKey<NavigatorState>();
 final prefsNotifier = PreferencesNotifier();
 final router = GoRouter(
+  navigatorKey: rootKey,
   refreshListenable: GoRouterRefreshStream(
     getIt<DatabaseService>().watchPreferences(),
   ),
   redirect: (context, state) {
-    print(state.fullPath);
     final db = getIt<DatabaseService>();
     final prefs = db.getPreferencesSync();
     if (((state.fullPath ?? '').contains(Routes.login.path) ||
@@ -80,108 +91,76 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: Routes.login.path,
-      builder: (context, state) => const PlatformAwareBuilder(
-        material: material.WelcomeView(),
-        ios: ios.WelcomeView(),
-        mac: mac.WelcomeView(),
-      ),
+      builder: (context, state) => const material.WelcomeView(),
     ),
     GoRoute(
       path: Routes.absLogin.path,
-      builder: (context, state) => const PlatformAwareBuilder(
-        material: material.AbsLogin(),
-        ios: ios.AbsLogin(),
-        mac: mac.LoginForm(
-          serverType: ServerType.audiobookshelf,
-        ),
-      ),
+      builder: (context, state) => const material.AbsLogin(),
     ),
     GoRoute(
       path: Routes.selectLibrary.path,
-      builder: (context, state) => const PlatformAwareBuilder(
-        ios: ios.IosLibrarySelectView(),
-        mac: mac.MacosLibrarySelectView(),
-        material: material.LibrarySelectView(),
-      ),
+      builder: (context, state) => const material.LibrarySelectView(),
     ),
     ShellRoute(
       routes: [
         GoRoute(
           path: Routes.home.path,
-          builder: (context, state) => PlatformAwareBuilder(
-            material: const material.HomeView(),
-            mac: mac.Home(),
-            ios: const ios.Home(),
-          ),
+          builder: (context, state) => const material.HomeView(),
         ),
         GoRoute(
           path: Routes.authors.path,
-          builder: (context, state) => PlatformAwareBuilder(
-            material: const material.AuthorsView(),
-            mac: mac.AuthorsView(),
-            ios: const ios.AuthorsView(),
-          ),
+          builder: (context, state) => const material.AuthorsView(),
         ),
         GoRoute(
-          path: Routes.library.path,
-          builder: (context, state) => PlatformAwareBuilder(
-            material: const material.LibraryView(),
-            mac: mac.AuthorsView(),
-            ios: const ios.AuthorsView(),
+          path: Routes.settings.path,
+          builder: (context, state) => const ScaffoldWithoutFooter(
+            title: Text('Settings'),
+            body: material.SettingsView(),
           ),
         ),
         GoRoute(
           path: Routes.books.path,
-          builder: (context, state) => PlatformAwareBuilder(
-            material: const material.BooksView(),
-            mac: mac.BooksView(),
-            ios: const ios.BooksView(),
-          ),
+          builder: (context, state) => const material.LibraryView(),
         ),
         GoRoute(
           path: Routes.series.path,
-          builder: (context, state) => PlatformAwareBuilder(
-            material: const material.SeriesView(),
-            mac: mac.SeriesView(),
-            ios: const ios.SeriesView(),
-          ),
+          builder: (context, state) => const material.SeriesView(),
         ),
         GoRoute(
           path: Routes.playlists.path,
-          builder: (context, state) => PlatformAwareBuilder(
-            material: const material.PlaylistsView(),
-            mac: mac.PlaylistsView(),
-            ios: const ios.PlaylistsView(),
-          ),
+          builder: (context, state) => const material.PlaylistsComponent(),
         ),
+        GoRoute(
+            path: Routes.playlist.path,
+            builder: (context, state) {
+              final id = state.pathParameters['id'];
+              return material.BooksView(
+                mediaId: "@playlists/$id",
+                title: '${state.extra}',
+              );
+            }),
+        GoRoute(
+            path: Routes.collection.path,
+            builder: (context, state) {
+              final id = state.pathParameters['id'];
+              return material.BooksView(
+                mediaId: "@collections/$id",
+                title: '${state.extra}',
+              );
+            }),
         GoRoute(
           path: Routes.book.path,
           builder: (context, state) {
             final id = state.pathParameters['id'];
-            return PlatformAwareBuilder(
-              ios: ios.BookDetailsView(mediaId: id!),
-              mac: mac.BookDetailsView(mediaId: id),
-              material: material.BookDetailsView(mediaId: id),
-            );
+            return material.BookDetailsView(mediaId: "$id");
           },
         ),
         GoRoute(
           path: Routes.author.path,
           builder: (context, state) {
             final id = state.pathParameters['id'];
-            return PlatformAwareBuilder(
-              ios: ios.BooksView(
-                mediaId: '@authors/$id',
-                title: '${state.extra}',
-              ),
-              mac: mac.BooksView(
-                mediaId: '@authors/$id',
-                title: '${state.extra}',
-              ),
-              material: material.BooksView(
-                mediaId: '@authors/$id',
-                title: '${state.extra}',
-              ),
+            return material.AuthorView(
+              authorId: '$id',
             );
           },
         ),
@@ -189,34 +168,43 @@ final router = GoRouter(
           path: Routes.serie.path,
           builder: (context, state) {
             final id = state.pathParameters['id'];
-            return PlatformAwareBuilder(
-              ios: ios.BooksView(
-                mediaId: '@series/$id',
-                title: '${state.extra}',
-              ),
-              mac: mac.BooksView(
-                mediaId: '@series/$id',
-                title: '${state.extra}',
-              ),
-              material: material.BooksView(
-                mediaId: '@series/$id',
-                title: '${state.extra}',
-              ),
+            return material.BooksView(
+              mediaId: '@series/$id',
+              title: '${state.extra}',
             );
+          },
+        ),
+        GoRoute(
+          path: Routes.search.path,
+          builder: (context, state) {
+            return HookBuilder(builder: (context) {
+              final shouldShowSearch = useState(false);
+              if (!shouldShowSearch.value) {
+                shouldShowSearch.value = true;
+                Future.delayed(
+                  const Duration(milliseconds: 1),
+                  () => showSearch(
+                    // ignore: use_build_context_synchronously
+                    context: context,
+                    delegate: BookSearchDelegate(),
+                  ),
+                );
+              }
+              return Container();
+            });
+          },
+        ),
+        GoRoute(
+          path: Routes.downloads.path,
+          builder: (context, state) {
+            return const material.Downloads();
           },
         ),
       ],
       builder: (context, state, child) {
-        return PlatformAwareBuilder(
-            ios: AbCupertinoApp(
-              child: child,
-            ),
-            mac: AbMaterialApp(
-              child: child,
-            ),
-            material: AbMaterialApp(
-              child: child,
-            ));
+        return AbMaterialApp(
+          child: child,
+        );
       },
     ),
   ],
@@ -224,59 +212,23 @@ final router = GoRouter(
 
 final routeMap = [
   Routes.home,
-  Routes.library,
   Routes.books,
-  Routes.series,
-  Routes.playlists,
+  Routes.downloads,
+  Routes.settings,
+  Routes.search,
 ];
 
 extension GoRouterEnums on BuildContext {
   goEnum(Routes route, {Object? extra}) => go(route.path, extra: extra);
 }
 
-class PlatformAwareBuilder extends StatelessWidget {
-  final Widget ios;
-  final Widget mac;
-  final Widget material;
-
-  const PlatformAwareBuilder({
-    super.key,
-    required this.ios,
-    required this.mac,
-    required this.material,
-  });
-
-  @override
-  Widget build(BuildContext context) => switch (getPlatform()) {
-        AbsPlatform.mac => mac,
-        AbsPlatform.ios => ios,
-        _ => material
-      };
-}
-
-enum AbsPlatform { mac, windows, linux, ios, android, web, unknown }
-
-AbsPlatform? _platform;
-
-AbsPlatform getPlatform() {
-  if (_platform == null) {
-    if (kIsWeb) {
-      _platform = AbsPlatform.web;
-    } else if (Platform.isMacOS) {
-      _platform = AbsPlatform.mac;
-    } else if (Platform.isIOS) {
-      _platform = AbsPlatform.ios;
-    } else if (Platform.isWindows) {
-      _platform = AbsPlatform.windows;
-    } else if (Platform.isLinux) {
-      _platform = AbsPlatform.linux;
-    } else if (Platform.isAndroid) {
-      _platform = AbsPlatform.android;
-    } else {
-      _platform = AbsPlatform.unknown;
-    }
-  }
-  return _platform!;
+extension GoEnum on GoRouter {
+  goEnum(Routes route, {Object? extra}) => go(route.path, extra: extra);
+  pushEnum(Routes route, {Object? extra}) => push(route.path, extra: extra);
+  pushId(String id, {Object? extra}) =>
+      push(id.replaceAll("@", "/"), extra: extra);
+  pushEnumWithId(Routes route, String id, {Object? extra}) =>
+      push(route.path.replaceAll(":id", id), extra: extra);
 }
 
 class AbMaterialApp extends HookWidget {
@@ -286,7 +238,6 @@ class AbMaterialApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex = useState(0);
-    final db = getIt<DatabaseService>();
     return AdaptiveScaffold(
       title: const Text('Audiobookly'),
       body: Column(
@@ -307,41 +258,22 @@ class AbMaterialApp extends HookWidget {
           context.goEnum(newRoute);
         }
       },
-      destinations: [
-        const Destination(
+      destinations: const [
+        Destination(
           title: 'Home',
           icon: CupertinoIcons.house_fill,
         ),
-        const Destination(
-          title: 'Authors',
-          icon: CupertinoIcons.person_2_fill,
-        ),
-        const Destination(
-          title: 'Books',
+        Destination(
+          title: 'Library',
           icon: CupertinoIcons.book_solid,
         ),
-        if (db.getPreferencesSync().serverType == ServerType.audiobookshelf)
-          const Destination(
-            title: 'Series',
-            icon: CupertinoIcons.rectangle_fill_on_rectangle_angled_fill,
-          ),
-        const Destination(
-          title: 'Playlists',
-          icon: CupertinoIcons.music_note_list,
+        Destination(
+          title: 'Downloads',
+          icon: Icons.download_done_rounded,
         ),
+        Destination(title: 'Settings', icon: CupertinoIcons.settings),
+        Destination(title: 'Search', icon: CupertinoIcons.search),
       ],
     );
-  }
-}
-
-class AbCupertinoApp extends HookWidget {
-  final Widget child;
-
-  const AbCupertinoApp({required this.child, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

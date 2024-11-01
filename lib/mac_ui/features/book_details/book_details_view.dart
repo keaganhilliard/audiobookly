@@ -27,12 +27,16 @@ String getListenText(double progress, Book book) {
 
 class BookDetailsView extends HookConsumerWidget {
   final String mediaId;
-  const BookDetailsView({required this.mediaId, Key? key}) : super(key: key);
+  const BookDetailsView({
+    required this.mediaId,
+    super.key,
+  });
 
   Widget _loadingIndicator() => const Center(
-          child: CupertinoActivityIndicator(
-        radius: 40,
-      ));
+        child: CupertinoActivityIndicator(
+          radius: 40,
+        ),
+      );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +66,10 @@ class BookDetailsView extends HookConsumerWidget {
             dividerColor: MacosColors.transparent,
           ),
           children: [
-            ContentArea(builder: (context, scrollController) {
+            ContentArea(builder: (
+              context,
+              scrollController,
+            ) {
               return CustomScrollView(
                 key: const PageStorageKey('book-details'),
                 physics: const AlwaysScrollableScrollPhysics(),

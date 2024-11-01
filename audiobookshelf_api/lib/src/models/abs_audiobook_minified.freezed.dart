@@ -12,7 +12,7 @@ part of 'abs_audiobook_minified.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AbsAudiobookMinified _$AbsAudiobookMinifiedFromJson(Map<String, dynamic> json) {
   return _AbsAudiobookMinified.fromJson(json);
@@ -21,26 +21,30 @@ AbsAudiobookMinified _$AbsAudiobookMinifiedFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AbsAudiobookMinified {
   String get id => throw _privateConstructorUsedError;
-  String get ino => throw _privateConstructorUsedError;
-  String get libraryId => throw _privateConstructorUsedError;
-  String get folderId => throw _privateConstructorUsedError;
-  String get path => throw _privateConstructorUsedError;
-  String get relPath => throw _privateConstructorUsedError;
-  bool get isFile => throw _privateConstructorUsedError;
-  int get mtimeMs => throw _privateConstructorUsedError;
-  int get ctimeMs => throw _privateConstructorUsedError;
-  int get birthtimeMs => throw _privateConstructorUsedError;
-  int get addedAt => throw _privateConstructorUsedError;
-  int get updatedAt => throw _privateConstructorUsedError;
-  bool get isMissing => throw _privateConstructorUsedError;
-  bool get isInvalid => throw _privateConstructorUsedError;
-  String get mediaType => throw _privateConstructorUsedError;
-  MinifiedMedia get media => throw _privateConstructorUsedError;
-  int get numFiles => throw _privateConstructorUsedError;
+  String? get ino => throw _privateConstructorUsedError;
+  String? get libraryId => throw _privateConstructorUsedError;
+  String? get folderId => throw _privateConstructorUsedError;
+  String? get path => throw _privateConstructorUsedError;
+  String? get relPath => throw _privateConstructorUsedError;
+  bool? get isFile => throw _privateConstructorUsedError;
+  int? get mtimeMs => throw _privateConstructorUsedError;
+  int? get ctimeMs => throw _privateConstructorUsedError;
+  int? get birthtimeMs => throw _privateConstructorUsedError;
+  int? get addedAt => throw _privateConstructorUsedError;
+  int? get updatedAt => throw _privateConstructorUsedError;
+  bool? get isMissing => throw _privateConstructorUsedError;
+  bool? get isInvalid => throw _privateConstructorUsedError;
+  String? get mediaType => throw _privateConstructorUsedError;
+  MinifiedMedia? get media => throw _privateConstructorUsedError;
+  int? get numFiles => throw _privateConstructorUsedError;
   int? get size => throw _privateConstructorUsedError;
 
+  /// Serializes this AbsAudiobookMinified to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AbsAudiobookMinified
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AbsAudiobookMinifiedCopyWith<AbsAudiobookMinified> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,25 +57,25 @@ abstract class $AbsAudiobookMinifiedCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String ino,
-      String libraryId,
-      String folderId,
-      String path,
-      String relPath,
-      bool isFile,
-      int mtimeMs,
-      int ctimeMs,
-      int birthtimeMs,
-      int addedAt,
-      int updatedAt,
-      bool isMissing,
-      bool isInvalid,
-      String mediaType,
-      MinifiedMedia media,
-      int numFiles,
+      String? ino,
+      String? libraryId,
+      String? folderId,
+      String? path,
+      String? relPath,
+      bool? isFile,
+      int? mtimeMs,
+      int? ctimeMs,
+      int? birthtimeMs,
+      int? addedAt,
+      int? updatedAt,
+      bool? isMissing,
+      bool? isInvalid,
+      String? mediaType,
+      MinifiedMedia? media,
+      int? numFiles,
       int? size});
 
-  $MinifiedMediaCopyWith<$Res> get media;
+  $MinifiedMediaCopyWith<$Res>? get media;
 }
 
 /// @nodoc
@@ -85,26 +89,28 @@ class _$AbsAudiobookMinifiedCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AbsAudiobookMinified
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
-    Object? ino = null,
-    Object? libraryId = null,
-    Object? folderId = null,
-    Object? path = null,
-    Object? relPath = null,
-    Object? isFile = null,
-    Object? mtimeMs = null,
-    Object? ctimeMs = null,
-    Object? birthtimeMs = null,
-    Object? addedAt = null,
-    Object? updatedAt = null,
-    Object? isMissing = null,
-    Object? isInvalid = null,
-    Object? mediaType = null,
-    Object? media = null,
-    Object? numFiles = null,
+    Object? ino = freezed,
+    Object? libraryId = freezed,
+    Object? folderId = freezed,
+    Object? path = freezed,
+    Object? relPath = freezed,
+    Object? isFile = freezed,
+    Object? mtimeMs = freezed,
+    Object? ctimeMs = freezed,
+    Object? birthtimeMs = freezed,
+    Object? addedAt = freezed,
+    Object? updatedAt = freezed,
+    Object? isMissing = freezed,
+    Object? isInvalid = freezed,
+    Object? mediaType = freezed,
+    Object? media = freezed,
+    Object? numFiles = freezed,
     Object? size = freezed,
   }) {
     return _then(_value.copyWith(
@@ -112,70 +118,70 @@ class _$AbsAudiobookMinifiedCopyWithImpl<$Res,
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      ino: null == ino
+      ino: freezed == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
-              as String,
-      libraryId: null == libraryId
+              as String?,
+      libraryId: freezed == libraryId
           ? _value.libraryId
           : libraryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      folderId: null == folderId
+              as String?,
+      folderId: freezed == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      path: null == path
+              as String?,
+      path: freezed == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
-      relPath: null == relPath
+              as String?,
+      relPath: freezed == relPath
           ? _value.relPath
           : relPath // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFile: null == isFile
+              as String?,
+      isFile: freezed == isFile
           ? _value.isFile
           : isFile // ignore: cast_nullable_to_non_nullable
-              as bool,
-      mtimeMs: null == mtimeMs
+              as bool?,
+      mtimeMs: freezed == mtimeMs
           ? _value.mtimeMs
           : mtimeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      ctimeMs: null == ctimeMs
+              as int?,
+      ctimeMs: freezed == ctimeMs
           ? _value.ctimeMs
           : ctimeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      birthtimeMs: null == birthtimeMs
+              as int?,
+      birthtimeMs: freezed == birthtimeMs
           ? _value.birthtimeMs
           : birthtimeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      addedAt: null == addedAt
+              as int?,
+      addedAt: freezed == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
-              as int,
-      updatedAt: null == updatedAt
+              as int?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as int,
-      isMissing: null == isMissing
+              as int?,
+      isMissing: freezed == isMissing
           ? _value.isMissing
           : isMissing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isInvalid: null == isInvalid
+              as bool?,
+      isInvalid: freezed == isInvalid
           ? _value.isInvalid
           : isInvalid // ignore: cast_nullable_to_non_nullable
-              as bool,
-      mediaType: null == mediaType
+              as bool?,
+      mediaType: freezed == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
-              as String,
-      media: null == media
+              as String?,
+      media: freezed == media
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
-              as MinifiedMedia,
-      numFiles: null == numFiles
+              as MinifiedMedia?,
+      numFiles: freezed == numFiles
           ? _value.numFiles
           : numFiles // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -183,10 +189,16 @@ class _$AbsAudiobookMinifiedCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of AbsAudiobookMinified
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $MinifiedMediaCopyWith<$Res> get media {
-    return $MinifiedMediaCopyWith<$Res>(_value.media, (value) {
+  $MinifiedMediaCopyWith<$Res>? get media {
+    if (_value.media == null) {
+      return null;
+    }
+
+    return $MinifiedMediaCopyWith<$Res>(_value.media!, (value) {
       return _then(_value.copyWith(media: value) as $Val);
     });
   }
@@ -202,26 +214,26 @@ abstract class _$$AbsAudiobookMinifiedImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String ino,
-      String libraryId,
-      String folderId,
-      String path,
-      String relPath,
-      bool isFile,
-      int mtimeMs,
-      int ctimeMs,
-      int birthtimeMs,
-      int addedAt,
-      int updatedAt,
-      bool isMissing,
-      bool isInvalid,
-      String mediaType,
-      MinifiedMedia media,
-      int numFiles,
+      String? ino,
+      String? libraryId,
+      String? folderId,
+      String? path,
+      String? relPath,
+      bool? isFile,
+      int? mtimeMs,
+      int? ctimeMs,
+      int? birthtimeMs,
+      int? addedAt,
+      int? updatedAt,
+      bool? isMissing,
+      bool? isInvalid,
+      String? mediaType,
+      MinifiedMedia? media,
+      int? numFiles,
       int? size});
 
   @override
-  $MinifiedMediaCopyWith<$Res> get media;
+  $MinifiedMediaCopyWith<$Res>? get media;
 }
 
 /// @nodoc
@@ -232,26 +244,28 @@ class __$$AbsAudiobookMinifiedImplCopyWithImpl<$Res>
       $Res Function(_$AbsAudiobookMinifiedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AbsAudiobookMinified
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
-    Object? ino = null,
-    Object? libraryId = null,
-    Object? folderId = null,
-    Object? path = null,
-    Object? relPath = null,
-    Object? isFile = null,
-    Object? mtimeMs = null,
-    Object? ctimeMs = null,
-    Object? birthtimeMs = null,
-    Object? addedAt = null,
-    Object? updatedAt = null,
-    Object? isMissing = null,
-    Object? isInvalid = null,
-    Object? mediaType = null,
-    Object? media = null,
-    Object? numFiles = null,
+    Object? ino = freezed,
+    Object? libraryId = freezed,
+    Object? folderId = freezed,
+    Object? path = freezed,
+    Object? relPath = freezed,
+    Object? isFile = freezed,
+    Object? mtimeMs = freezed,
+    Object? ctimeMs = freezed,
+    Object? birthtimeMs = freezed,
+    Object? addedAt = freezed,
+    Object? updatedAt = freezed,
+    Object? isMissing = freezed,
+    Object? isInvalid = freezed,
+    Object? mediaType = freezed,
+    Object? media = freezed,
+    Object? numFiles = freezed,
     Object? size = freezed,
   }) {
     return _then(_$AbsAudiobookMinifiedImpl(
@@ -259,70 +273,70 @@ class __$$AbsAudiobookMinifiedImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      ino: null == ino
+      ino: freezed == ino
           ? _value.ino
           : ino // ignore: cast_nullable_to_non_nullable
-              as String,
-      libraryId: null == libraryId
+              as String?,
+      libraryId: freezed == libraryId
           ? _value.libraryId
           : libraryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      folderId: null == folderId
+              as String?,
+      folderId: freezed == folderId
           ? _value.folderId
           : folderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      path: null == path
+              as String?,
+      path: freezed == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
-      relPath: null == relPath
+              as String?,
+      relPath: freezed == relPath
           ? _value.relPath
           : relPath // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFile: null == isFile
+              as String?,
+      isFile: freezed == isFile
           ? _value.isFile
           : isFile // ignore: cast_nullable_to_non_nullable
-              as bool,
-      mtimeMs: null == mtimeMs
+              as bool?,
+      mtimeMs: freezed == mtimeMs
           ? _value.mtimeMs
           : mtimeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      ctimeMs: null == ctimeMs
+              as int?,
+      ctimeMs: freezed == ctimeMs
           ? _value.ctimeMs
           : ctimeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      birthtimeMs: null == birthtimeMs
+              as int?,
+      birthtimeMs: freezed == birthtimeMs
           ? _value.birthtimeMs
           : birthtimeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      addedAt: null == addedAt
+              as int?,
+      addedAt: freezed == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
-              as int,
-      updatedAt: null == updatedAt
+              as int?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as int,
-      isMissing: null == isMissing
+              as int?,
+      isMissing: freezed == isMissing
           ? _value.isMissing
           : isMissing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isInvalid: null == isInvalid
+              as bool?,
+      isInvalid: freezed == isInvalid
           ? _value.isInvalid
           : isInvalid // ignore: cast_nullable_to_non_nullable
-              as bool,
-      mediaType: null == mediaType
+              as bool?,
+      mediaType: freezed == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
-              as String,
-      media: null == media
+              as String?,
+      media: freezed == media
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
-              as MinifiedMedia,
-      numFiles: null == numFiles
+              as MinifiedMedia?,
+      numFiles: freezed == numFiles
           ? _value.numFiles
           : numFiles // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -336,22 +350,22 @@ class __$$AbsAudiobookMinifiedImplCopyWithImpl<$Res>
 class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
   const _$AbsAudiobookMinifiedImpl(
       {required this.id,
-      required this.ino,
-      required this.libraryId,
-      required this.folderId,
-      required this.path,
-      required this.relPath,
-      required this.isFile,
-      required this.mtimeMs,
-      required this.ctimeMs,
-      required this.birthtimeMs,
-      required this.addedAt,
-      required this.updatedAt,
-      required this.isMissing,
-      required this.isInvalid,
-      required this.mediaType,
-      required this.media,
-      required this.numFiles,
+      this.ino,
+      this.libraryId,
+      this.folderId,
+      this.path,
+      this.relPath,
+      this.isFile,
+      this.mtimeMs,
+      this.ctimeMs,
+      this.birthtimeMs,
+      this.addedAt,
+      this.updatedAt,
+      this.isMissing,
+      this.isInvalid,
+      this.mediaType,
+      this.media,
+      this.numFiles,
       this.size});
 
   factory _$AbsAudiobookMinifiedImpl.fromJson(Map<String, dynamic> json) =>
@@ -360,37 +374,37 @@ class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
   @override
   final String id;
   @override
-  final String ino;
+  final String? ino;
   @override
-  final String libraryId;
+  final String? libraryId;
   @override
-  final String folderId;
+  final String? folderId;
   @override
-  final String path;
+  final String? path;
   @override
-  final String relPath;
+  final String? relPath;
   @override
-  final bool isFile;
+  final bool? isFile;
   @override
-  final int mtimeMs;
+  final int? mtimeMs;
   @override
-  final int ctimeMs;
+  final int? ctimeMs;
   @override
-  final int birthtimeMs;
+  final int? birthtimeMs;
   @override
-  final int addedAt;
+  final int? addedAt;
   @override
-  final int updatedAt;
+  final int? updatedAt;
   @override
-  final bool isMissing;
+  final bool? isMissing;
   @override
-  final bool isInvalid;
+  final bool? isInvalid;
   @override
-  final String mediaType;
+  final String? mediaType;
   @override
-  final MinifiedMedia media;
+  final MinifiedMedia? media;
   @override
-  final int numFiles;
+  final int? numFiles;
   @override
   final int? size;
 
@@ -400,7 +414,7 @@ class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AbsAudiobookMinifiedImpl &&
@@ -432,7 +446,7 @@ class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
             (identical(other.size, size) || other.size == size));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -455,7 +469,9 @@ class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
       numFiles,
       size);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AbsAudiobookMinified
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AbsAudiobookMinifiedImplCopyWith<_$AbsAudiobookMinifiedImpl>
@@ -474,22 +490,22 @@ class _$AbsAudiobookMinifiedImpl implements _AbsAudiobookMinified {
 abstract class _AbsAudiobookMinified implements AbsAudiobookMinified {
   const factory _AbsAudiobookMinified(
       {required final String id,
-      required final String ino,
-      required final String libraryId,
-      required final String folderId,
-      required final String path,
-      required final String relPath,
-      required final bool isFile,
-      required final int mtimeMs,
-      required final int ctimeMs,
-      required final int birthtimeMs,
-      required final int addedAt,
-      required final int updatedAt,
-      required final bool isMissing,
-      required final bool isInvalid,
-      required final String mediaType,
-      required final MinifiedMedia media,
-      required final int numFiles,
+      final String? ino,
+      final String? libraryId,
+      final String? folderId,
+      final String? path,
+      final String? relPath,
+      final bool? isFile,
+      final int? mtimeMs,
+      final int? ctimeMs,
+      final int? birthtimeMs,
+      final int? addedAt,
+      final int? updatedAt,
+      final bool? isMissing,
+      final bool? isInvalid,
+      final String? mediaType,
+      final MinifiedMedia? media,
+      final int? numFiles,
       final int? size}) = _$AbsAudiobookMinifiedImpl;
 
   factory _AbsAudiobookMinified.fromJson(Map<String, dynamic> json) =
@@ -498,41 +514,44 @@ abstract class _AbsAudiobookMinified implements AbsAudiobookMinified {
   @override
   String get id;
   @override
-  String get ino;
+  String? get ino;
   @override
-  String get libraryId;
+  String? get libraryId;
   @override
-  String get folderId;
+  String? get folderId;
   @override
-  String get path;
+  String? get path;
   @override
-  String get relPath;
+  String? get relPath;
   @override
-  bool get isFile;
+  bool? get isFile;
   @override
-  int get mtimeMs;
+  int? get mtimeMs;
   @override
-  int get ctimeMs;
+  int? get ctimeMs;
   @override
-  int get birthtimeMs;
+  int? get birthtimeMs;
   @override
-  int get addedAt;
+  int? get addedAt;
   @override
-  int get updatedAt;
+  int? get updatedAt;
   @override
-  bool get isMissing;
+  bool? get isMissing;
   @override
-  bool get isInvalid;
+  bool? get isInvalid;
   @override
-  String get mediaType;
+  String? get mediaType;
   @override
-  MinifiedMedia get media;
+  MinifiedMedia? get media;
   @override
-  int get numFiles;
+  int? get numFiles;
   @override
   int? get size;
+
+  /// Create a copy of AbsAudiobookMinified
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AbsAudiobookMinifiedImplCopyWith<_$AbsAudiobookMinifiedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -543,20 +562,24 @@ MinifiedMedia _$MinifiedMediaFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MinifiedMedia {
-  Metadata get metadata => throw _privateConstructorUsedError;
+  Metadata? get metadata => throw _privateConstructorUsedError;
   String? get coverPath => throw _privateConstructorUsedError;
-  List<String> get tags => throw _privateConstructorUsedError;
-  int get numTracks => throw _privateConstructorUsedError;
-  int get numAudioFiles => throw _privateConstructorUsedError;
-  int get numChapters => throw _privateConstructorUsedError;
-  int get numMissingParts => throw _privateConstructorUsedError;
-  int get numInvalidAudioFiles => throw _privateConstructorUsedError;
-  double get duration => throw _privateConstructorUsedError;
+  List<String>? get tags => throw _privateConstructorUsedError;
+  int? get numTracks => throw _privateConstructorUsedError;
+  int? get numAudioFiles => throw _privateConstructorUsedError;
+  int? get numChapters => throw _privateConstructorUsedError;
+  int? get numMissingParts => throw _privateConstructorUsedError;
+  int? get numInvalidAudioFiles => throw _privateConstructorUsedError;
+  double? get duration => throw _privateConstructorUsedError;
   int? get size => throw _privateConstructorUsedError;
   String? get ebookFormat => throw _privateConstructorUsedError;
 
+  /// Serializes this MinifiedMedia to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MinifiedMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MinifiedMediaCopyWith<MinifiedMedia> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -568,19 +591,19 @@ abstract class $MinifiedMediaCopyWith<$Res> {
       _$MinifiedMediaCopyWithImpl<$Res, MinifiedMedia>;
   @useResult
   $Res call(
-      {Metadata metadata,
+      {Metadata? metadata,
       String? coverPath,
-      List<String> tags,
-      int numTracks,
-      int numAudioFiles,
-      int numChapters,
-      int numMissingParts,
-      int numInvalidAudioFiles,
-      double duration,
+      List<String>? tags,
+      int? numTracks,
+      int? numAudioFiles,
+      int? numChapters,
+      int? numMissingParts,
+      int? numInvalidAudioFiles,
+      double? duration,
       int? size,
       String? ebookFormat});
 
-  $MetadataCopyWith<$Res> get metadata;
+  $MetadataCopyWith<$Res>? get metadata;
 }
 
 /// @nodoc
@@ -593,58 +616,60 @@ class _$MinifiedMediaCopyWithImpl<$Res, $Val extends MinifiedMedia>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MinifiedMedia
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? metadata = null,
+    Object? metadata = freezed,
     Object? coverPath = freezed,
-    Object? tags = null,
-    Object? numTracks = null,
-    Object? numAudioFiles = null,
-    Object? numChapters = null,
-    Object? numMissingParts = null,
-    Object? numInvalidAudioFiles = null,
-    Object? duration = null,
+    Object? tags = freezed,
+    Object? numTracks = freezed,
+    Object? numAudioFiles = freezed,
+    Object? numChapters = freezed,
+    Object? numMissingParts = freezed,
+    Object? numInvalidAudioFiles = freezed,
+    Object? duration = freezed,
     Object? size = freezed,
     Object? ebookFormat = freezed,
   }) {
     return _then(_value.copyWith(
-      metadata: null == metadata
+      metadata: freezed == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
-              as Metadata,
+              as Metadata?,
       coverPath: freezed == coverPath
           ? _value.coverPath
           : coverPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      tags: null == tags
+      tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      numTracks: null == numTracks
+              as List<String>?,
+      numTracks: freezed == numTracks
           ? _value.numTracks
           : numTracks // ignore: cast_nullable_to_non_nullable
-              as int,
-      numAudioFiles: null == numAudioFiles
+              as int?,
+      numAudioFiles: freezed == numAudioFiles
           ? _value.numAudioFiles
           : numAudioFiles // ignore: cast_nullable_to_non_nullable
-              as int,
-      numChapters: null == numChapters
+              as int?,
+      numChapters: freezed == numChapters
           ? _value.numChapters
           : numChapters // ignore: cast_nullable_to_non_nullable
-              as int,
-      numMissingParts: null == numMissingParts
+              as int?,
+      numMissingParts: freezed == numMissingParts
           ? _value.numMissingParts
           : numMissingParts // ignore: cast_nullable_to_non_nullable
-              as int,
-      numInvalidAudioFiles: null == numInvalidAudioFiles
+              as int?,
+      numInvalidAudioFiles: freezed == numInvalidAudioFiles
           ? _value.numInvalidAudioFiles
           : numInvalidAudioFiles // ignore: cast_nullable_to_non_nullable
-              as int,
-      duration: null == duration
+              as int?,
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -656,10 +681,16 @@ class _$MinifiedMediaCopyWithImpl<$Res, $Val extends MinifiedMedia>
     ) as $Val);
   }
 
+  /// Create a copy of MinifiedMedia
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $MetadataCopyWith<$Res> get metadata {
-    return $MetadataCopyWith<$Res>(_value.metadata, (value) {
+  $MetadataCopyWith<$Res>? get metadata {
+    if (_value.metadata == null) {
+      return null;
+    }
+
+    return $MetadataCopyWith<$Res>(_value.metadata!, (value) {
       return _then(_value.copyWith(metadata: value) as $Val);
     });
   }
@@ -674,20 +705,20 @@ abstract class _$$MediaImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Metadata metadata,
+      {Metadata? metadata,
       String? coverPath,
-      List<String> tags,
-      int numTracks,
-      int numAudioFiles,
-      int numChapters,
-      int numMissingParts,
-      int numInvalidAudioFiles,
-      double duration,
+      List<String>? tags,
+      int? numTracks,
+      int? numAudioFiles,
+      int? numChapters,
+      int? numMissingParts,
+      int? numInvalidAudioFiles,
+      double? duration,
       int? size,
       String? ebookFormat});
 
   @override
-  $MetadataCopyWith<$Res> get metadata;
+  $MetadataCopyWith<$Res>? get metadata;
 }
 
 /// @nodoc
@@ -698,58 +729,60 @@ class __$$MediaImplCopyWithImpl<$Res>
       _$MediaImpl _value, $Res Function(_$MediaImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MinifiedMedia
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? metadata = null,
+    Object? metadata = freezed,
     Object? coverPath = freezed,
-    Object? tags = null,
-    Object? numTracks = null,
-    Object? numAudioFiles = null,
-    Object? numChapters = null,
-    Object? numMissingParts = null,
-    Object? numInvalidAudioFiles = null,
-    Object? duration = null,
+    Object? tags = freezed,
+    Object? numTracks = freezed,
+    Object? numAudioFiles = freezed,
+    Object? numChapters = freezed,
+    Object? numMissingParts = freezed,
+    Object? numInvalidAudioFiles = freezed,
+    Object? duration = freezed,
     Object? size = freezed,
     Object? ebookFormat = freezed,
   }) {
     return _then(_$MediaImpl(
-      metadata: null == metadata
+      metadata: freezed == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
-              as Metadata,
+              as Metadata?,
       coverPath: freezed == coverPath
           ? _value.coverPath
           : coverPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      tags: null == tags
+      tags: freezed == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      numTracks: null == numTracks
+              as List<String>?,
+      numTracks: freezed == numTracks
           ? _value.numTracks
           : numTracks // ignore: cast_nullable_to_non_nullable
-              as int,
-      numAudioFiles: null == numAudioFiles
+              as int?,
+      numAudioFiles: freezed == numAudioFiles
           ? _value.numAudioFiles
           : numAudioFiles // ignore: cast_nullable_to_non_nullable
-              as int,
-      numChapters: null == numChapters
+              as int?,
+      numChapters: freezed == numChapters
           ? _value.numChapters
           : numChapters // ignore: cast_nullable_to_non_nullable
-              as int,
-      numMissingParts: null == numMissingParts
+              as int?,
+      numMissingParts: freezed == numMissingParts
           ? _value.numMissingParts
           : numMissingParts // ignore: cast_nullable_to_non_nullable
-              as int,
-      numInvalidAudioFiles: null == numInvalidAudioFiles
+              as int?,
+      numInvalidAudioFiles: freezed == numInvalidAudioFiles
           ? _value.numInvalidAudioFiles
           : numInvalidAudioFiles // ignore: cast_nullable_to_non_nullable
-              as int,
-      duration: null == duration
+              as int?,
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       size: freezed == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -766,15 +799,15 @@ class __$$MediaImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MediaImpl implements _Media {
   const _$MediaImpl(
-      {required this.metadata,
+      {this.metadata,
       this.coverPath,
-      required final List<String> tags,
-      required this.numTracks,
-      required this.numAudioFiles,
-      required this.numChapters,
-      required this.numMissingParts,
-      required this.numInvalidAudioFiles,
-      required this.duration,
+      final List<String>? tags,
+      this.numTracks,
+      this.numAudioFiles,
+      this.numChapters,
+      this.numMissingParts,
+      this.numInvalidAudioFiles,
+      this.duration,
       this.size,
       this.ebookFormat})
       : _tags = tags;
@@ -783,29 +816,31 @@ class _$MediaImpl implements _Media {
       _$$MediaImplFromJson(json);
 
   @override
-  final Metadata metadata;
+  final Metadata? metadata;
   @override
   final String? coverPath;
-  final List<String> _tags;
+  final List<String>? _tags;
   @override
-  List<String> get tags {
+  List<String>? get tags {
+    final value = _tags;
+    if (value == null) return null;
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tags);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  final int numTracks;
+  final int? numTracks;
   @override
-  final int numAudioFiles;
+  final int? numAudioFiles;
   @override
-  final int numChapters;
+  final int? numChapters;
   @override
-  final int numMissingParts;
+  final int? numMissingParts;
   @override
-  final int numInvalidAudioFiles;
+  final int? numInvalidAudioFiles;
   @override
-  final double duration;
+  final double? duration;
   @override
   final int? size;
   @override
@@ -817,7 +852,7 @@ class _$MediaImpl implements _Media {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MediaImpl &&
@@ -843,7 +878,7 @@ class _$MediaImpl implements _Media {
                 other.ebookFormat == ebookFormat));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -859,7 +894,9 @@ class _$MediaImpl implements _Media {
       size,
       ebookFormat);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MinifiedMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MediaImplCopyWith<_$MediaImpl> get copyWith =>
@@ -875,44 +912,47 @@ class _$MediaImpl implements _Media {
 
 abstract class _Media implements MinifiedMedia {
   const factory _Media(
-      {required final Metadata metadata,
+      {final Metadata? metadata,
       final String? coverPath,
-      required final List<String> tags,
-      required final int numTracks,
-      required final int numAudioFiles,
-      required final int numChapters,
-      required final int numMissingParts,
-      required final int numInvalidAudioFiles,
-      required final double duration,
+      final List<String>? tags,
+      final int? numTracks,
+      final int? numAudioFiles,
+      final int? numChapters,
+      final int? numMissingParts,
+      final int? numInvalidAudioFiles,
+      final double? duration,
       final int? size,
       final String? ebookFormat}) = _$MediaImpl;
 
   factory _Media.fromJson(Map<String, dynamic> json) = _$MediaImpl.fromJson;
 
   @override
-  Metadata get metadata;
+  Metadata? get metadata;
   @override
   String? get coverPath;
   @override
-  List<String> get tags;
+  List<String>? get tags;
   @override
-  int get numTracks;
+  int? get numTracks;
   @override
-  int get numAudioFiles;
+  int? get numAudioFiles;
   @override
-  int get numChapters;
+  int? get numChapters;
   @override
-  int get numMissingParts;
+  int? get numMissingParts;
   @override
-  int get numInvalidAudioFiles;
+  int? get numInvalidAudioFiles;
   @override
-  double get duration;
+  double? get duration;
   @override
   int? get size;
   @override
   String? get ebookFormat;
+
+  /// Create a copy of MinifiedMedia
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MediaImplCopyWith<_$MediaImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -940,8 +980,12 @@ mixin _$Metadata {
   String? get language => throw _privateConstructorUsedError;
   bool? get explicit => throw _privateConstructorUsedError;
 
+  /// Serializes this Metadata to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Metadata
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MetadataCopyWith<Metadata> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -980,6 +1024,8 @@ class _$MetadataCopyWithImpl<$Res, $Val extends Metadata>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Metadata
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1104,6 +1150,8 @@ class __$$MetadataImplCopyWithImpl<$Res>
       _$MetadataImpl _value, $Res Function(_$MetadataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Metadata
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1265,7 +1313,7 @@ class _$MetadataImpl implements _Metadata {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MetadataImpl &&
@@ -1299,7 +1347,7 @@ class _$MetadataImpl implements _Metadata {
                 other.explicit == explicit));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1320,7 +1368,9 @@ class _$MetadataImpl implements _Metadata {
       language,
       explicit);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Metadata
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MetadataImplCopyWith<_$MetadataImpl> get copyWith =>
@@ -1388,8 +1438,11 @@ abstract class _Metadata implements Metadata {
   String? get language;
   @override
   bool? get explicit;
+
+  /// Create a copy of Metadata
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MetadataImplCopyWith<_$MetadataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

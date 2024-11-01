@@ -2,6 +2,7 @@ import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -29,14 +30,16 @@ class ForwardButton extends HookConsumerWidget {
     final prefs = ref.watch(preferencesProvider);
 
     return IconButton(
-      color: color,
-      icon: Icon(
-        iconMap[prefs.fastForwardInterval.toString()],
-      ),
-      iconSize: iconSize,
-      padding: padding,
-      autofocus: false,
-      onPressed: playbackController.fastForward,
-    );
+        color: color,
+        icon: Icon(
+          iconMap[prefs.fastForwardInterval.toString()],
+        ),
+        iconSize: iconSize,
+        padding: padding,
+        autofocus: false,
+        onPressed: () {
+          playbackController.fastForward();
+          HapticFeedback.mediumImpact();
+        });
   }
 }

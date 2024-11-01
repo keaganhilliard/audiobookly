@@ -9,8 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeView extends HookConsumerWidget {
-  const HomeView({super.key, required this.showOpenSidebar});
-  final bool showOpenSidebar;
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

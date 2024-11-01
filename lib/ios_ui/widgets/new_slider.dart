@@ -24,7 +24,7 @@ class BetterCupertinoSlider extends StatefulWidget {
   /// * [onChangeEnd] is called when the user is done selecting a new value for
   ///   the slider.
   const BetterCupertinoSlider({
-    Key? key,
+    super.key,
     required this.value,
     required this.configure,
     this.onTapDown,
@@ -34,8 +34,7 @@ class BetterCupertinoSlider extends StatefulWidget {
     this.onChangeEnd,
     this.min = 0.0,
     this.max = 1.0,
-  })  : assert(value >= min && value <= max),
-        super(key: key);
+  }) : assert(value >= min && value <= max);
 
   final double value;
 

@@ -3,6 +3,7 @@ import 'package:audiobookly/constants/app_constants.dart';
 import 'package:audiobookly/domain/books/books_state.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/utils/refresher_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final StateNotifierProviderFamily<BooksNotifier, BooksState, String?>
@@ -13,16 +14,14 @@ final StateNotifierProviderFamily<BooksNotifier, BooksState, String?>
   },
 );
 
-class BooksNotifier extends StateNotifier<BooksState> {
+class BooksNotifier extends RefresherStateNotifier<BooksState> {
   final MediaRepository? _repository;
   final String? _parentId;
   var books = <MediaItem>[];
   var totalItems = 0;
 
   BooksNotifier(this._repository, this._parentId)
-      : super(const BooksState.initial()) {
-    getBooks();
-  }
+      : super(const BooksState.initial());
 
   Future<void> getBooks() async {
     try {

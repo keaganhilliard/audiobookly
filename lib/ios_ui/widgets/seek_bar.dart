@@ -1,12 +1,13 @@
-import 'package:audiobookly/ios_ui/widgets/new_slider.dart';
+import 'dart:async';
+
 import 'package:audiobookly/utils/utils.dart';
 // import 'package:better_cupertino_slider/better_cupertino_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Colors;
-import 'dart:math';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:audiobookly/utils/interactive_slider/interactive_slider.dart';
 
-class SeekBar extends HookWidget {
+class SeekBar2 extends StatefulWidget {
   final Duration? duration;
   final Duration? position;
   final Future<void> Function(Duration)? onChanged;
@@ -14,7 +15,7 @@ class SeekBar extends HookWidget {
   final Color primaryColor;
   final Color secondaryColor;
 
-  const SeekBar({
+  const SeekBar2({
     super.key,
     required this.duration,
     required this.position,
@@ -25,67 +26,74 @@ class SeekBar extends HookWidget {
   });
 
   @override
+  State<SeekBar2> createState() => _SeekBar2State();
+}
+
+class _SeekBar2State extends State<SeekBar2> {
+  final InteractiveSliderController _controller =
+      InteractiveSliderController(0.0);
+  Duration? _dragValue;
+  bool _isDragging = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.value = (widget.position?.inMilliseconds.toDouble() ?? 0.0) /
+        (widget.duration?.inMilliseconds.toDouble() ?? 1.0);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final dragValue = useState<Duration?>(null);
-    return Stack(
-      children: [
-        Container(
-          constraints: const BoxConstraints.expand(height: 60),
-          child: BetterCupertinoSlider(
-            configure: BetterCupertinoSliderConfigure(
-                useRelative: true,
-                thumbRadius: 5.0,
-                trackHeight: 10.0,
-                thumbPainter: (canvas, rect) {},
-                trackLeftColor: primaryColor,
-                trackRightColor: secondaryColor.withOpacity(0.15)),
-            // thumbColor: Colors.deepPurple,
-            // activeColor: Colors.deepPurple,
-            min: 0.0,
-            max: duration!.inMilliseconds.toDouble(),
-            value: min(
-              dragValue.value?.inMilliseconds.toDouble() ??
-                  position?.inMilliseconds.toDouble() ??
-                  0,
-              duration!.inMilliseconds.toDouble(),
-            ),
-            onChanged: (value) {
-              dragValue.value = Duration(milliseconds: value.round());
-              if (onChanged != null) {
-                onChanged!(Duration(milliseconds: value.round()));
-              }
-            },
-            onChangeEnd: (value) async {
-              if (onChangeEnd != null && dragValue.value != null) {
-                await onChangeEnd!(Duration(milliseconds: value.round()));
-              }
-              dragValue.value = null;
-            },
-          ),
+    if (widget.duration != null && !_isDragging) {
+      _controller.value = (widget.position?.inMilliseconds.toDouble() ?? 0.0) /
+          widget.duration!.inMilliseconds.toDouble();
+    }
+    return InteractiveSlider(
+      min: 0.0,
+      max: widget.duration!.inMilliseconds.toDouble(),
+      unfocusedMargin: EdgeInsets.all(0),
+      unfocusedOpacity: 0.8,
+      foregroundColor: widget.primaryColor,
+      backgroundColor: Colors.grey.withOpacity(0.1),
+      iconColor: Colors.white,
+      controller: _controller,
+      onDragStart: () {
+        setState(() {
+          _isDragging = true;
+        });
+      },
+      onDragStop: () {
+        setState(() {
+          _isDragging = false;
+          _dragValue = null;
+        });
+      },
+      onChanged: (value) {
+        if (_isDragging) {
+          setState(() {
+            _dragValue = Duration(milliseconds: (value.round()));
+          });
+        }
+        widget.onChanged?.call(Duration(milliseconds: (value.round())));
+      },
+      onProgressUpdated: (value) async {
+        await widget.onChangeEnd?.call(Duration(milliseconds: (value).round()));
+      },
+      iconPosition: IconPosition.below,
+      startIcon: Text(
+        Utils.getTimeValue(_dragValue ?? widget.position),
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Colors.grey.shade300,
         ),
-        Positioned(
-          right: 8.0,
-          bottom: 0.0,
-          child: Text(
-            Utils.getTimeValue(duration),
-            style: TextStyle(
-              fontSize: 15.0,
-              color: secondaryColor,
-            ),
-          ),
+      ),
+      endIcon: Text(
+        "-${Utils.getTimeValue((widget.duration ?? Duration.zero) - ((_dragValue ?? widget.position) ?? Duration.zero))}",
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Colors.grey.shade300,
         ),
-        Positioned(
-          left: 8.0,
-          bottom: 0.0,
-          child: Text(
-            Utils.getTimeValue(dragValue.value ?? position),
-            style: TextStyle(
-              fontSize: 15.0,
-              color: secondaryColor,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

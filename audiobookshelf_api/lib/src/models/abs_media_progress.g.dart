@@ -9,7 +9,7 @@ part of 'abs_media_progress.dart';
 _$AbsMediaProgressImpl _$$AbsMediaProgressImplFromJson(
         Map<String, dynamic> json) =>
     _$AbsMediaProgressImpl(
-      timeListened: json['timeListened'] as int,
+      timeListened: (json['timeListened'] as num).toInt(),
       duration: (json['duration'] as num).toDouble(),
       currentTime: (json['currentTime'] as num).toDouble(),
     );

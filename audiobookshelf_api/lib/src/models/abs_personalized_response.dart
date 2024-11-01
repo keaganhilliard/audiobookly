@@ -1,4 +1,5 @@
 import 'package:audiobookshelf/audiobookshelf.dart';
+import 'package:audiobookshelf/src/models/abs_author.dart';
 import 'package:audiobookshelf/src/models/abs_series.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -20,7 +21,7 @@ class AbsPersonalizedResponse with _$AbsPersonalizedResponse {
     required String label,
     required String labelStringKey,
     required String type,
-    required List<Author> entities,
+    required List<AbsAuthor> entities,
   }) = AbsPersonalizedResponseAuthor;
 
   const factory AbsPersonalizedResponse.series({

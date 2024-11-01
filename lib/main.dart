@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:audiobookly/carplay.dart';
-import 'package:audiobookly/ios_ui/ios_app.dart';
-import 'package:audiobookly/mac_ui/mac_app.dart';
 import 'package:audiobookly/material_ui/go_router_app.dart';
 import 'package:audiobookly/singletons.dart';
 import 'package:flutter/foundation.dart';
@@ -19,22 +17,22 @@ Future<void> main() async {
 
   runApp(
     const ProviderScope(
-      child: AudiobooklyApp(),
+      child: AbMaterialApp(),
     ),
   );
 }
 
-class AudiobooklyApp extends HookConsumerWidget {
-  const AudiobooklyApp({super.key});
+// class AudiobooklyApp extends HookConsumerWidget {
+//   const AudiobooklyApp({super.key});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (!kIsWeb && Platform.isIOS) {
-      return const IosApp();
-    }
-    if (!kIsWeb && Platform.isMacOS) {
-      return const MacApp();
-    }
-    return AbMaterialApp();
-  }
-}
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     if (!kIsWeb && Platform.isIOS) {
+//       return const IosApp();
+//     }
+//     if (!kIsWeb && Platform.isMacOS) {
+//       return const MacApp();
+//     }
+//     return const AbMaterialApp();
+//   }
+// }

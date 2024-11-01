@@ -6,6 +6,7 @@ import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/series.dart';
+import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
@@ -76,14 +77,7 @@ class HomeRow extends HookConsumerWidget {
           ) =>
             CoverItem(
               onTap: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return BooksView(
-                      mediaId: id,
-                      title: name,
-                    );
-                  }),
-                );
+                router.pushId(id, extra: name);
               },
               height: height,
               thumbnailUrl: artPath,
@@ -100,19 +94,12 @@ class HomeRow extends HookConsumerWidget {
           ) =>
             CoverItem(
               onTap: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return BooksView(
-                      mediaId: id,
-                      title: name,
-                    );
-                  }),
-                );
+                router.pushId(id, extra: name);
               },
               height: height,
               thumbnailUrl: artPath,
               title: name,
-              icon: CupertinoIcons.person_2_fill,
+              icon: CupertinoIcons.rectangle_fill_on_rectangle_angled_fill,
               showTitle: true,
             ),
           _ => const CoverItem(

@@ -1,5 +1,3 @@
-import 'package:audio_service/audio_service.dart';
-import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
@@ -7,8 +5,9 @@ import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
+import 'package:audiobookly/material_ui/widgets/cover_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:audiobookly/constants/app_constants.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -29,13 +28,8 @@ class BookSearchDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
+  Widget? buildLeading(BuildContext context) {
+    return Container();
   }
 
   @override
@@ -77,7 +71,7 @@ class BookSearchDelegate extends SearchDelegate {
                             :final author
                           )
                         ) =>
-                          BookGridItem(
+                          CoverItem(
                             onTap: () {
                               context.push('/books/$id');
                             },
@@ -89,28 +83,33 @@ class BookSearchDelegate extends SearchDelegate {
                         AuthorValue(
                           value: Author(:final id, :final name, :final artPath)
                         ) =>
-                          BookGridItem(
+                          CoverItem(
                             onTap: () => context.push(
                               '/${id.replaceFirst('@', '')}',
                               extra: name,
                             ),
                             title: name,
+                            subtitle: "Author",
                             thumbnailUrl: artPath,
                             showTitle: true,
+                            icon: CupertinoIcons.person_2_fill,
                           ),
                         SeriesValue(
                           value: Series(:final id, :final name, :final artPath)
                         ) =>
-                          BookGridItem(
+                          CoverItem(
                             onTap: () => context.push(
                               '/${id.replaceFirst('@', '')}',
                               extra: name,
                             ),
                             title: name,
+                            subtitle: "Series",
                             thumbnailUrl: artPath,
                             showTitle: true,
+                            icon: CupertinoIcons
+                                .rectangle_fill_on_rectangle_angled_fill,
                           ),
-                        _ => const BookGridItem(
+                        _ => const CoverItem(
                             showTitle: true,
                             title: 'Unknown',
                           )
