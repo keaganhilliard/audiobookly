@@ -7,14 +7,14 @@ class PlexSections {
 
   PlexSections.fromJson(Map<String, dynamic> json) {
     mediaContainer = json['MediaContainer'] != null
-        ? new MediaContainer.fromJson(json['MediaContainer'])
+        ? MediaContainer.fromJson(json['MediaContainer'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.mediaContainer != null) {
-      data['MediaContainer'] = this.mediaContainer!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (mediaContainer != null) {
+      data['MediaContainer'] = mediaContainer!.toJson();
     }
     return data;
   }
@@ -48,21 +48,21 @@ class MediaContainer {
     if (json['Directory'] != null) {
       directory = [];
       json['Directory'].forEach((v) {
-        directory!.add(new PlexLibrary.fromJson(v));
+        directory!.add(PlexLibrary.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['size'] = this.size;
-    data['allowSync'] = this.allowSync;
-    data['identifier'] = this.identifier;
-    data['mediaTagPrefix'] = this.mediaTagPrefix;
-    data['mediaTagVersion'] = this.mediaTagVersion;
-    data['title1'] = this.title1;
-    if (this.directory != null) {
-      data['Directory'] = this.directory!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['size'] = size;
+    data['allowSync'] = allowSync;
+    data['identifier'] = identifier;
+    data['mediaTagPrefix'] = mediaTagPrefix;
+    data['mediaTagVersion'] = mediaTagVersion;
+    data['title1'] = title1;
+    if (directory != null) {
+      data['Directory'] = directory!.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -41,14 +41,13 @@ class EmbyUser {
         ? null
         : DateTime.parse(json['LastActivityDate']);
     configuration = json['Configuration'] != null
-        ? new Configuration.fromJson(json['Configuration'])
+        ? Configuration.fromJson(json['Configuration'])
         : null;
-    policy =
-        json['Policy'] != null ? new Policy.fromJson(json['Policy']) : null;
+    policy = json['Policy'] != null ? Policy.fromJson(json['Policy']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['Name'] = name;
     data['ServerId'] = serverId;
     data['Id'] = id;
@@ -116,7 +115,7 @@ class Configuration {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['AudioLanguagePreference'] = audioLanguagePreference;
     data['PlayDefaultAudioTrack'] = playDefaultAudioTrack;
     data['SubtitleLanguagePreference'] = subtitleLanguagePreference;
@@ -318,7 +317,7 @@ class AccessSchedule {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['DayOfWeek'] = dayOfWeek;
     data['StartHour'] = startHour;
     data['EndHour'] = endHour;

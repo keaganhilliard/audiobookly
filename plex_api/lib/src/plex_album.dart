@@ -27,24 +27,25 @@ class PlexAlbum extends PlexMetadata {
     if (json['Genre'] != null) {
       genre = [];
       json['Genre'].forEach((v) {
-        genre!.add(new PlexTag.fromJson(v));
+        genre!.add(PlexTag.fromJson(v));
       });
     }
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = super.toJson();
-    data['parentRatingKey'] = this.parentRatingKey;
-    data['parentGuid'] = this.parentGuid;
-    data['titleSort'] = this.titleSort;
-    data['parentKey'] = this.parentKey;
-    data['parentTitle'] = this.parentTitle;
-    data['year'] = this.year;
-    data['parentThumb'] = this.parentThumb;
-    data['originallyAvailableAt'] = this.originallyAvailableAt;
-    data['viewOffset'] = this.viewOffset;
-    if (this.genre != null) {
-      data['Genre'] = this.genre!.map((v) => v.toJson()).toList();
+    data['parentRatingKey'] = parentRatingKey;
+    data['parentGuid'] = parentGuid;
+    data['titleSort'] = titleSort;
+    data['parentKey'] = parentKey;
+    data['parentTitle'] = parentTitle;
+    data['year'] = year;
+    data['parentThumb'] = parentThumb;
+    data['originallyAvailableAt'] = originallyAvailableAt;
+    data['viewOffset'] = viewOffset;
+    if (genre != null) {
+      data['Genre'] = genre!.map((v) => v.toJson()).toList();
     }
     return data;
   }

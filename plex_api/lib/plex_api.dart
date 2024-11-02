@@ -1,4 +1,4 @@
-library plex_api;
+library;
 
 export 'src/plex_api.dart';
 export 'src/plex_album.dart';

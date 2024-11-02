@@ -1,9 +1,7 @@
 import 'package:audiobookly/domain/auth/auth_notifier.dart';
 import 'package:audiobookly/domain/settings/settings_notifier.dart';
-import 'package:audiobookly/material_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/router.dart';
-import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

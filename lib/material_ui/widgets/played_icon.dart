@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PlayedIcon extends StatelessWidget {
-  const PlayedIcon({Key? key}) : super(key: key);
+  const PlayedIcon({super.key});
 
   @override
   Widget build(BuildContext context) {

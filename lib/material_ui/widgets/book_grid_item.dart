@@ -144,11 +144,11 @@ class PlaceHolder extends StatelessWidget {
   final String? title;
   final String? subtitle;
   const PlaceHolder({
-    Key? key,
+    super.key,
     required this.placeholder,
     this.title,
     this.subtitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

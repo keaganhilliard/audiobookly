@@ -4,13 +4,12 @@ import 'dart:io';
 
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/models/track.dart';
-import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:path/path.dart' as p;
 
 class DesktopDownloader extends Downloader {
-  DesktopDownloader(DatabaseService db) : super(db);
+  DesktopDownloader(super.db);
 
   @override
   Future downloadFile(

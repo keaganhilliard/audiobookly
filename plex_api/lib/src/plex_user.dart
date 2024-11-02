@@ -46,9 +46,9 @@ class PlexUser {
     authToken = json['authToken'];
     authenticationToken = json['authentication_token'];
     subscription = json['subscription'] != null
-        ? new Subscription.fromJson(json['subscription'])
+        ? Subscription.fromJson(json['subscription'])
         : null;
-    roles = json['roles'] != null ? new Roles.fromJson(json['roles']) : null;
+    roles = json['roles'] != null ? Roles.fromJson(json['roles']) : null;
     entitlements = json['entitlements'].cast<String>();
     confirmedAt = json['confirmedAt'];
     forumId = json['forumId'];
@@ -56,27 +56,27 @@ class PlexUser {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['uuid'] = this.uuid;
-    data['email'] = this.email;
-    data['joined_at'] = this.joinedAt;
-    data['username'] = this.username;
-    data['title'] = this.title;
-    data['thumb'] = this.thumb;
-    data['hasPassword'] = this.hasPassword;
-    data['authToken'] = this.authToken;
-    data['authentication_token'] = this.authenticationToken;
-    if (this.subscription != null) {
-      data['subscription'] = this.subscription!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['uuid'] = uuid;
+    data['email'] = email;
+    data['joined_at'] = joinedAt;
+    data['username'] = username;
+    data['title'] = title;
+    data['thumb'] = thumb;
+    data['hasPassword'] = hasPassword;
+    data['authToken'] = authToken;
+    data['authentication_token'] = authenticationToken;
+    if (subscription != null) {
+      data['subscription'] = subscription!.toJson();
     }
-    if (this.roles != null) {
-      data['roles'] = this.roles!.toJson();
+    if (roles != null) {
+      data['roles'] = roles!.toJson();
     }
-    data['entitlements'] = this.entitlements;
-    data['confirmedAt'] = this.confirmedAt;
-    data['forumId'] = this.forumId;
-    data['rememberMe'] = this.rememberMe;
+    data['entitlements'] = entitlements;
+    data['confirmedAt'] = confirmedAt;
+    data['forumId'] = forumId;
+    data['rememberMe'] = rememberMe;
     return data;
   }
 }
@@ -97,11 +97,11 @@ class Subscription {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['active'] = this.active;
-    data['status'] = this.status;
-    data['plan'] = this.plan;
-    data['features'] = this.features;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['active'] = active;
+    data['status'] = status;
+    data['plan'] = plan;
+    data['features'] = features;
     return data;
   }
 }
@@ -116,8 +116,8 @@ class Roles {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['roles'] = this.roles;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['roles'] = roles;
     return data;
   }
 }

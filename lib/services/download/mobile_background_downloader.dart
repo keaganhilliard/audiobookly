@@ -5,6 +5,7 @@ import 'package:audiobookly/models/track.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/downloader.dart';
 import 'package:background_downloader/background_downloader.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
 import 'package:rxdart/rxdart.dart';
@@ -44,8 +45,10 @@ class MobileBackgroundDownloader extends Downloader {
     ).withSuggestedFilename();
 
     final enqueued = await FileDownloader().enqueue(task);
-    print('Filename: ${task.filename}');
-    print('Enqueued?: $enqueued');
+    if (kDebugMode) {
+      print('Filename: ${task.filename}');
+      print('Enqueued?: $enqueued');
+    }
     await db.insertTrack(
       track.copyWith(
         downloadTaskId: task.taskId,
@@ -86,7 +89,9 @@ class MobileBackgroundDownloader extends Downloader {
 void downloadStatusCallback(TaskStatusUpdate statusUpdate) {
   final task = statusUpdate.task;
   final status = statusUpdate.status;
-  print('downloadStatusCallback for $task with status $status');
+  if (kDebugMode) {
+    print('downloadStatusCallback for $task with status $status');
+  }
   DatabaseService db = GetIt.I();
   switch (status) {
     case TaskStatus.failed:
@@ -101,6 +106,8 @@ void downloadProgressCallback(TaskProgressUpdate progressUpdate) {
   final task = progressUpdate.task;
   final progress = progressUpdate.progress;
   DatabaseService db = GetIt.I();
-  print('downloadProgressCallback for $task with progress $progress');
+  if (kDebugMode) {
+    print('downloadProgressCallback for $task with progress $progress');
+  }
   db.updateTrackDownloadProgress(task.taskId, progress, progress == 1);
 }

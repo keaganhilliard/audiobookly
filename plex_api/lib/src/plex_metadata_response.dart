@@ -10,14 +10,14 @@ class PlexMetadataResponse {
 
   PlexMetadataResponse.fromJson(Map<String, dynamic> json) {
     mediaContainer = json['MediaContainer'] != null
-        ? new MediaContainer.fromJson(json['MediaContainer'])
+        ? MediaContainer.fromJson(json['MediaContainer'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.mediaContainer != null) {
-      data['MediaContainer'] = this.mediaContainer!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (mediaContainer != null) {
+      data['MediaContainer'] = mediaContainer!.toJson();
     }
     return data;
   }
@@ -66,25 +66,25 @@ class MediaContainer {
           case 'track':
             metadata = [];
             jsonMetadata.forEach((v) {
-              metadata!.add(new PlexTrack.fromJson(v));
+              metadata!.add(PlexTrack.fromJson(v));
             });
             break;
           case 'album':
             metadata = [];
             jsonMetadata.forEach((v) {
-              metadata!.add(new PlexAlbum.fromJson(v));
+              metadata!.add(PlexAlbum.fromJson(v));
             });
             break;
           case 'artist':
             metadata = [];
             jsonMetadata.forEach((v) {
-              metadata!.add(new PlexArtist.fromJson(v));
+              metadata!.add(PlexArtist.fromJson(v));
             });
             break;
           default:
             metadata = [];
             jsonMetadata.forEach((v) {
-              metadata!.add(new PlexMetadata.fromJson(v));
+              metadata!.add(PlexMetadata.fromJson(v));
             });
         }
       });
@@ -92,23 +92,23 @@ class MediaContainer {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['size'] = this.size;
-    data['totalSize'] = this.totalSize;
-    data['allowSync'] = this.allowSync;
-    data['art'] = this.art;
-    data['key'] = this.key;
-    data['librarySectionID'] = this.librarySectionID;
-    data['librarySectionTitle'] = this.librarySectionTitle;
-    data['librarySectionUUID'] = this.librarySectionUUID;
-    data['mediaTagPrefix'] = this.mediaTagPrefix;
-    data['mediaTagVersion'] = this.mediaTagVersion;
-    data['nocache'] = this.nocache;
-    data['thumb'] = this.thumb;
-    data['title1'] = this.title1;
-    data['title2'] = this.title2;
-    data['viewGroup'] = this.viewGroup;
-    data['viewMode'] = this.viewMode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['size'] = size;
+    data['totalSize'] = totalSize;
+    data['allowSync'] = allowSync;
+    data['art'] = art;
+    data['key'] = key;
+    data['librarySectionID'] = librarySectionID;
+    data['librarySectionTitle'] = librarySectionTitle;
+    data['librarySectionUUID'] = librarySectionUUID;
+    data['mediaTagPrefix'] = mediaTagPrefix;
+    data['mediaTagVersion'] = mediaTagVersion;
+    data['nocache'] = nocache;
+    data['thumb'] = thumb;
+    data['title1'] = title1;
+    data['title2'] = title2;
+    data['viewGroup'] = viewGroup;
+    data['viewMode'] = viewMode;
     return data;
   }
 }

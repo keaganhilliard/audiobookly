@@ -1,22 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:audiobookly/domain/server_select/server_select.dart';
-import 'package:audiobookly/ios_ui/features/library_select/library_select_view.dart';
-import 'package:audiobookly/mac_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/models/preferences.dart';
 import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/repositories/authentication/abs_auth_repository.dart';
 import 'package:audiobookly/repositories/authentication/plex_auth_repository.dart';
+import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/navigation/navigation_service.dart';
 import 'package:audiobookly/repositories/authentication/emby_auth_repository.dart';
 import 'package:audiobookly/domain/auth/auth_state.dart';
 import 'package:audiobookly/material_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plex_api/plex_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -169,19 +166,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
     try {
       state = const AuthStateLoading();
-      final navigationService = _ref.read(navigationServiceProvider);
-      log('Checking token: ${prefs.userToken}');
-
       User? user;
       if (prefs.serverType == ServerType.emby) {
         final userRepo = _ref.read(embyAuthRepoProvider);
         user = await userRepo.getUser(prefs.userToken);
         if (prefs.libraryId.isEmpty) {
-          await navigationService.push(
-            MaterialPageRoute(builder: (context) {
-              return const LibrarySelectView();
-            }),
-          );
+          router.goEnum(Routes.selectLibrary);
         }
       } else if (prefs.serverType == ServerType.plex) {
         final userRepo = _ref.read(plexAuthRepoProvider);
@@ -207,25 +197,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         final userRepo = _ref.read(absAuthRepoProvider);
         user = await userRepo.getUser(prefs.userToken);
         if (prefs.libraryId.isEmpty) {
-          if (Platform.isIOS) {
-            await navigationService.push(
-              CupertinoPageRoute(builder: (context) {
-                return const IosLibrarySelectView();
-              }),
-            );
-          } else if (Platform.isMacOS) {
-            await navigationService.push(
-              CupertinoPageRoute(builder: (context) {
-                return const MacosLibrarySelectView();
-              }),
-            );
-          } else {
-            await navigationService.push(
-              MaterialPageRoute(builder: (context) {
-                return const LibrarySelectView();
-              }),
-            );
-          }
+          router.goEnum(Routes.selectLibrary);
         }
       }
 

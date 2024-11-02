@@ -29,14 +29,14 @@ class PlexPin {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['code'] = this.code;
-    data['clientIdentifier'] = this.clientIdentifier;
-    data['expiresIn'] = this.expiresIn;
-    data['createdAt'] = this.createdAt;
-    data['expiresAt'] = this.expiresAt;
-    data['authToken'] = this.authToken;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['code'] = code;
+    data['clientIdentifier'] = clientIdentifier;
+    data['expiresIn'] = expiresIn;
+    data['createdAt'] = createdAt;
+    data['expiresAt'] = expiresAt;
+    data['authToken'] = authToken;
     return data;
   }
 }

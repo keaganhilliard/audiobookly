@@ -1,7 +1,3 @@
-import 'package:audiobookly/material_ui/features/abs_login/abs_login.dart';
-import 'package:audiobookly/domain/auth/auth_notifier.dart';
-import 'package:audiobookly/services/navigation/navigation_service.dart';
-import 'package:audiobookly/material_ui/features/emby_login/emby_login.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,9 +7,6 @@ class WelcomeView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authNotifierProvider.notifier);
-    final navigationService = ref.watch(navigationServiceProvider);
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

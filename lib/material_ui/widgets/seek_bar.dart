@@ -1,64 +1,96 @@
+import 'dart:async';
+
 import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:audiobookly/utils/interactive_slider/interactive_slider.dart';
 
-class SeekBar extends HookWidget {
+class SeekBar extends StatefulWidget {
   final Duration? duration;
   final Duration? position;
   final Future<void> Function(Duration)? onChanged;
   final Future<void> Function(Duration)? onChangeEnd;
+  final Color primaryColor;
+  final Color secondaryColor;
 
   const SeekBar({
     super.key,
     required this.duration,
     required this.position,
+    this.primaryColor = Colors.deepPurple,
+    this.secondaryColor = const Color.fromRGBO(128, 128, 128, 1.0),
     this.onChanged,
     this.onChangeEnd,
   });
 
   @override
+  State<SeekBar> createState() => _SeekBarState();
+}
+
+class _SeekBarState extends State<SeekBar> {
+  final InteractiveSliderController _controller =
+      InteractiveSliderController(0.0);
+  Duration? _dragValue;
+  bool _isDragging = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.value = (widget.position?.inMilliseconds.toDouble() ?? 0.0) /
+        (widget.duration?.inMilliseconds.toDouble() ?? 1.0);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final dragValue = useState<Duration?>(null);
-    final dragPosition = dragValue.value ?? position;
-    return Stack(
-      children: [
-        Slider(
-          activeColor: Theme.of(context).colorScheme.primary,
-          min: 0.0,
-          label: Utils.getTimeValue(dragValue.value),
-          max: duration!.inMilliseconds.toDouble(),
-          value: min(
-              dragValue.value?.inMilliseconds.toDouble() ??
-                  position?.inMilliseconds.toDouble() ??
-                  0,
-              duration!.inMilliseconds.toDouble()),
-          onChanged: (value) {
-            dragValue.value = Duration(milliseconds: value.round());
-            if (onChanged != null) {
-              onChanged!(Duration(milliseconds: value.round()));
-            }
-          },
-          onChangeEnd: (value) async {
-            if (onChangeEnd != null && dragValue.value != null) {
-              await onChangeEnd!(Duration(milliseconds: value.round()));
-            }
-            dragValue.value = null;
-          },
+    if (widget.duration != null && !_isDragging) {
+      _controller.value = (widget.position?.inMilliseconds.toDouble() ?? 0.0) /
+          widget.duration!.inMilliseconds.toDouble();
+    }
+    return InteractiveSlider(
+      min: 0.0,
+      max: widget.duration!.inMilliseconds.toDouble(),
+      unfocusedMargin: EdgeInsets.all(0),
+      unfocusedOpacity: 0.8,
+      foregroundColor: widget.primaryColor,
+      backgroundColor: Colors.grey.withOpacity(0.1),
+      iconColor: Colors.white,
+      controller: _controller,
+      onDragStart: () {
+        setState(() {
+          _isDragging = true;
+        });
+      },
+      onDragStop: () {
+        setState(() {
+          _isDragging = false;
+          _dragValue = null;
+        });
+      },
+      onChanged: (value) {
+        if (_isDragging) {
+          setState(() {
+            _dragValue = Duration(milliseconds: (value.round()));
+          });
+        }
+        widget.onChanged?.call(Duration(milliseconds: (value.round())));
+      },
+      onProgressUpdated: (value) async {
+        await widget.onChangeEnd?.call(Duration(milliseconds: (value).round()));
+      },
+      iconPosition: IconPosition.below,
+      startIcon: Text(
+        Utils.getTimeValue(_dragValue ?? widget.position),
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Colors.grey.shade300,
         ),
-        Positioned(
-          right: 16.0,
-          bottom: 0.0,
-          child: Text(Utils.getTimeValue(duration),
-              style: Theme.of(context).textTheme.bodySmall),
+      ),
+      endIcon: Text(
+        "-${Utils.getTimeValue((widget.duration ?? Duration.zero) - ((_dragValue ?? widget.position) ?? Duration.zero))}",
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Colors.grey.shade300,
         ),
-        Positioned(
-          left: 16.0,
-          bottom: 0.0,
-          child: Text(Utils.getTimeValue(dragPosition),
-              style: Theme.of(context).textTheme.bodySmall),
-        ),
-      ],
+      ),
     );
   }
 }

@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 class Offline extends HookConsumerWidget {
-  const Offline({Key? key}) : super(key: key);
+  const Offline({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

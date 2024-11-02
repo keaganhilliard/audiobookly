@@ -11,8 +11,8 @@ class PlexMediaItem extends AudiobooklyMediaItem {
       : key = track.ratingKey,
         super(
           serverKey: track.ratingKey,
-          id: track.ratingKey,
-          title: track.title,
+          id: "${track.ratingKey}",
+          title: "${track.title}",
           album: track.parentTitle,
           artist: track.grandparentTitle,
           artUri: server.getThumbnailUrl(track.parentThumb!),
@@ -32,7 +32,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
         super(
           serverKey: artist.ratingKey,
           id: '${MediaIds.authorsId}/${artist.ratingKey}',
-          title: artist.title,
+          title: "${artist.title}",
           album: '',
           artUri: server.getThumbnailUrl(artist.thumb ?? ''),
           playable: false,
@@ -44,8 +44,8 @@ class PlexMediaItem extends AudiobooklyMediaItem {
   ])  : key = album.ratingKey,
         super(
           serverKey: album.ratingKey,
-          id: album.ratingKey,
-          title: album.title,
+          id: "${album.ratingKey}",
+          title: "${album.title}",
           album: album.title,
           artist: album.parentTitle,
           artUri: server.getThumbnailUrl(album.thumb ?? ''),
@@ -63,7 +63,7 @@ class PlexMediaItem extends AudiobooklyMediaItem {
         super(
           serverKey: collection.key,
           id: '${MediaIds.collectionsId}/${collection.key}',
-          title: collection.title,
+          title: "${collection.title}",
           album: '',
           artist: '',
           playable: false,

@@ -1,20 +1,12 @@
-import 'dart:io';
-
-import 'package:animations/animations.dart';
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/aspect_ratios.dart';
 import 'package:audiobookly/domain/authors/authors_notifier.dart';
 import 'package:audiobookly/domain/authors/authors_state.dart';
-import 'package:audiobookly/material_ui/features/books/books_view.dart';
-import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/router.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
 
@@ -51,7 +43,7 @@ class AuthorsComponent extends HookConsumerWidget {
             AuthorsStateLoading() => const Center(
                 child: CircularProgressIndicator(),
               ),
-            AuthorsStateError(:final message) => Column(
+            AuthorsStateError() => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

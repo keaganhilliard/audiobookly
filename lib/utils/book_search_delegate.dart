@@ -3,7 +3,6 @@ import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/models/series.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:flutter/cupertino.dart';

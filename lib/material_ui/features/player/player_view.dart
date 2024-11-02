@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookly/material_ui/widgets/seek_bar.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
@@ -10,7 +9,6 @@ import 'package:audiobookly/material_ui/features/tracks/tracks_view.dart';
 import 'package:audiobookly/material_ui/widgets/forward_button.dart';
 import 'package:audiobookly/material_ui/widgets/playback_position.dart';
 import 'package:audiobookly/material_ui/widgets/rewind_button.dart';
-import 'package:audiobookly/ios_ui/widgets/seek_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 // import 'package:cast/cast.dart';
@@ -240,7 +238,7 @@ class PlayerView extends HookConsumerWidget {
                             right: 8.0,
                           ),
                           child: PlaybackPosition(builder: (context, position) {
-                            return SeekBar2(
+                            return SeekBar(
                               duration: item.duration,
                               position: position,
                               onChangeEnd: (val) async {
@@ -459,60 +457,6 @@ class PlayerView extends HookConsumerWidget {
       iconSize: size,
       onPressed: onPressed as void Function()?,
       color: color,
-    );
-  }
-}
-
-class ValueSlider extends HookWidget {
-  final double min;
-  final double max;
-  final double? value;
-  final ValueChanged<double>? onChangeEnd;
-  final Widget? prefix;
-  final Widget? postfix;
-
-  const ValueSlider({
-    super.key,
-    this.min = 0,
-    this.max = 100,
-    this.value,
-    this.onChangeEnd,
-    this.prefix,
-    this.postfix,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final currentProgress = useState(value);
-    final seeking = useState(false);
-
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        prefix!,
-        Expanded(
-          child: Slider(
-            label: currentProgress.value!.toStringAsFixed(2),
-            value: currentProgress.value!,
-            onChangeStart: (val) {
-              seeking.value = true;
-            },
-            onChanged: (newVal) {
-              currentProgress.value = newVal;
-            },
-            onChangeEnd: (val) {
-              seeking.value = false;
-              onChangeEnd!(val);
-            },
-            min: min,
-            max: max,
-            divisions: 40,
-            activeColor: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        postfix!,
-      ],
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/domain/book_details/book_details_notifier.dart';
+import 'package:audiobookly/domain/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,24 +44,23 @@ class BookDetailsView extends HookConsumerWidget {
     final downloadService = ref.watch(downloadServiceProvider);
     final playbackController = GetIt.I<PlaybackController>();
     final group = AutoSizeGroup();
-    final refreshState = GlobalKey<RefreshIndicatorState>();
 
-    return state.when(
-      initial: _loadingIndicator,
-      loading: _loadingIndicator,
-      error: (message) => Center(child: Text('Something went wrong $message')),
-      loaded: (book, tracks) {
-        final progress = Utils.getProgress(book: book);
-
-        return Scaffold(
-          body: SafeArea(
-            child: RefreshIndicator(
-              key: refreshState,
-              onRefresh: () async {
-                await bookDetails.refreshForDownloads();
-                await tracksDetails.refreshForDownloads();
-              },
-              child: CustomScrollView(
+    return Scaffold(
+      body: SafeArea(
+        child: RefreshIndicator(
+          key: bookDetails.refreshKey,
+          onRefresh: () async {
+            await bookDetails.refreshForDownloads();
+            await tracksDetails.refreshForDownloads();
+          },
+          child: switch (state) {
+            BookDetailsStateInitial() => CustomScrollView(),
+            BookDetailsStateLoading() => _loadingIndicator(),
+            BookDetailsStateError(:final message) =>
+              Center(child: Text('Something went wrong $message')),
+            BookDetailsStateLoaded(:final book, :final tracks) =>
+              // final progress = Utils.getProgress(book: book);
+              CustomScrollView(
                 key: const PageStorageKey('book-details'),
                 physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [
@@ -77,7 +77,8 @@ class BookDetailsView extends HookConsumerWidget {
                     actions: [
                       if (kIsWeb || (!Platform.isIOS && !Platform.isAndroid))
                         IconButton(
-                          onPressed: () => refreshState.currentState?.show(),
+                          onPressed: () =>
+                              bookDetails.refreshKey.currentState?.show(),
                           icon: const Icon(Icons.refresh),
                         ),
                       switch (book.downloadStatus) {
@@ -167,7 +168,7 @@ class BookDetailsView extends HookConsumerWidget {
                                     return const Icon(Icons.book);
                                   },
                                 ),
-                                if (progress > 0)
+                                if (Utils.getProgress(book: book) > 0)
                                   Positioned.fill(
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
@@ -513,10 +514,9 @@ class BookDetailsView extends HookConsumerWidget {
                   ),
                 ],
               ),
-            ),
-          ),
-        );
-      },
+          },
+        ),
+      ),
     );
   }
 }

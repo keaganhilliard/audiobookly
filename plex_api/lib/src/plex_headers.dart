@@ -47,17 +47,17 @@ class PlexHeaders {
   }) : assert(clientIdentifier != '');
 
   Map<String, String> toMap({String? overrideToken}) => {
-        'X-Plex-Platform': this.platform,
-        'X-Plex-Platform-Version': this.platformVersion,
-        'X-Plex-Provides': this.provides,
-        'X-Plex-Client-Identifier': this.clientIdentifier,
-        'X-Plex-Product': this.product,
-        if (this.version.isNotEmpty) 'X-Plex-Version': this.version,
-        if (this.device.isNotEmpty) 'X-Plex-Device': this.device,
-        if (this.containerSize.isNotEmpty)
-          'X-Plex-Container-Size': this.containerSize,
-        'X-Plex-Token': overrideToken ?? this.token ?? '',
-        'Accept': this.accept,
-        'Content-Type': this.contentType
+        'X-Plex-Platform': platform,
+        'X-Plex-Platform-Version': platformVersion,
+        'X-Plex-Provides': provides,
+        'X-Plex-Client-Identifier': clientIdentifier,
+        'X-Plex-Product': product,
+        if (version.isNotEmpty) 'X-Plex-Version': version,
+        if (device.isNotEmpty) 'X-Plex-Device': device,
+        if (containerSize.isNotEmpty)
+          'X-Plex-Container-Size': containerSize,
+        'X-Plex-Token': overrideToken ?? token ?? '',
+        'Accept': accept,
+        'Content-Type': contentType
       };
 }

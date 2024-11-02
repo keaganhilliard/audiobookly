@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthWidget extends ConsumerWidget {
   const AuthWidget({
-    Key? key,
+    super.key,
     required this.authorizedBuilder,
     required this.unauthorizedBuilder,
     required this.loadingBuilder,
     required this.errorBuilder,
-  }) : super(key: key);
+  });
   final WidgetBuilder unauthorizedBuilder;
   final WidgetBuilder authorizedBuilder;
   final WidgetBuilder loadingBuilder;

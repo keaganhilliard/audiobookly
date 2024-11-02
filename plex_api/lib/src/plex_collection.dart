@@ -12,10 +12,10 @@ class PlexCollection {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['fastKey'] = this.fastKey;
-    data['key'] = this.key;
-    data['title'] = this.title;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['fastKey'] = fastKey;
+    data['key'] = key;
+    data['title'] = title;
     return data;
   }
 }

@@ -1,11 +1,8 @@
 import 'dart:io';
 
-import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/aspect_ratios.dart';
-import 'package:audiobookly/material_ui/features/books/books_view.dart';
 import 'package:audiobookly/domain/series/series_notifier.dart';
-import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/router.dart';
@@ -49,9 +46,7 @@ class SeriesView extends HookConsumerWidget {
                 itemBuilder: (book) {
                   return CoverItem(
                     onTap: () {
-                      print("BookID: /${book.id.replaceAll("@", "")}");
-                      // router.push("/${book.id.replaceAll("@", "")}",
-                      //     extra: book.title);
+                      router.pushId(book.id, extra: book.title);
                     },
                     thumbnailUrl: book.artUri?.toString(),
                     title: book.title,
@@ -115,7 +110,6 @@ class SeriesComponent extends HookConsumerWidget {
               itemBuilder: (serie) {
                 return CoverItem(
                   onTap: () {
-                    print(serie.id);
                     router.pushId(serie.id, extra: serie.title);
                   },
                   thumbnailUrl: serie.artUri?.toString(),

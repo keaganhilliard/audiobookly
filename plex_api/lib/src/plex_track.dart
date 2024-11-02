@@ -42,7 +42,7 @@ class PlexTrack extends PlexMetadata {
     if (json['Media'] != null) {
       media = [];
       json['Media'].forEach((v) {
-        media!.add(new Media.fromJson(v));
+        media!.add(Media.fromJson(v));
       });
     }
     if (json['Chapter'] != null) {
@@ -50,27 +50,28 @@ class PlexTrack extends PlexMetadata {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = super.toJson();
-    data['parentRatingKey'] = this.parentRatingKey;
-    data['grandparentRatingKey'] = this.grandparentRatingKey;
-    data['parentGuid'] = this.parentGuid;
-    data['grandparentGuid'] = this.grandparentGuid;
-    data['titleSort'] = this.titleSort;
-    data['grandparentKey'] = this.grandparentKey;
-    data['parentKey'] = this.parentKey;
-    data['grandparentTitle'] = this.grandparentTitle;
-    data['parentTitle'] = this.parentTitle;
-    data['originalTitle'] = this.originalTitle;
-    data['parentIndex'] = this.parentIndex;
-    data['parentThumb'] = this.parentThumb;
-    data['grandparentThumb'] = this.grandparentThumb;
-    data['grandparentArt'] = this.grandparentArt;
-    data['duration'] = this.duration;
-    data['chapterSource'] = this.chapterSource;
-    data['viewOffset'] = this.viewOffset;
-    if (this.media != null) {
-      data['Media'] = this.media!.map((v) => v.toJson()).toList();
+    data['parentRatingKey'] = parentRatingKey;
+    data['grandparentRatingKey'] = grandparentRatingKey;
+    data['parentGuid'] = parentGuid;
+    data['grandparentGuid'] = grandparentGuid;
+    data['titleSort'] = titleSort;
+    data['grandparentKey'] = grandparentKey;
+    data['parentKey'] = parentKey;
+    data['grandparentTitle'] = grandparentTitle;
+    data['parentTitle'] = parentTitle;
+    data['originalTitle'] = originalTitle;
+    data['parentIndex'] = parentIndex;
+    data['parentThumb'] = parentThumb;
+    data['grandparentThumb'] = grandparentThumb;
+    data['grandparentArt'] = grandparentArt;
+    data['duration'] = duration;
+    data['chapterSource'] = chapterSource;
+    data['viewOffset'] = viewOffset;
+    if (media != null) {
+      data['Media'] = media!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -95,21 +96,21 @@ class Media {
     if (json['Part'] != null) {
       part = [];
       json['Part'].forEach((v) {
-        part!.add(new Part.fromJson(v));
+        part!.add(Part.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['duration'] = this.duration;
-    data['bitrate'] = this.bitrate;
-    data['audioChannels'] = this.audioChannels;
-    data['audioCodec'] = this.audioCodec;
-    data['container'] = this.container;
-    if (this.part != null) {
-      data['Part'] = this.part!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['duration'] = duration;
+    data['bitrate'] = bitrate;
+    data['audioChannels'] = audioChannels;
+    data['audioCodec'] = audioCodec;
+    data['container'] = container;
+    if (part != null) {
+      data['Part'] = part!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -135,14 +136,14 @@ class Part {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['key'] = this.key;
-    data['duration'] = this.duration;
-    data['file'] = this.file;
-    data['size'] = this.size;
-    data['container'] = this.container;
-    data['hasThumbnail'] = this.hasThumbnail;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['key'] = key;
+    data['duration'] = duration;
+    data['file'] = file;
+    data['size'] = size;
+    data['container'] = container;
+    data['hasThumbnail'] = hasThumbnail;
     return data;
   }
 }
@@ -176,13 +177,13 @@ class Chapter {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['filter'] = this.filter;
-    data['tag'] = this.tag;
-    data['index'] = this.index;
-    data['startTimeOffset'] = this.startTimeOffset;
-    data['endTimeOffset'] = this.endTimeOffset;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['filter'] = filter;
+    data['tag'] = tag;
+    data['index'] = index;
+    data['startTimeOffset'] = startTimeOffset;
+    data['endTimeOffset'] = endTimeOffset;
     return data;
   }
 }

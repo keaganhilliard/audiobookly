@@ -238,11 +238,11 @@ class PlexRepository extends MediaRepository {
         position,
         duration,
         {
-          AudiobooklyPlaybackState.buffering: PlexPlaybackState.BUFFERING,
-          AudiobooklyPlaybackState.completed: PlexPlaybackState.STOPPED,
-          AudiobooklyPlaybackState.paused: PlexPlaybackState.PAUSED,
-          AudiobooklyPlaybackState.stopped: PlexPlaybackState.STOPPED,
-          AudiobooklyPlaybackState.playing: PlexPlaybackState.PLAYING
+          AudiobooklyPlaybackState.buffering: PlexPlaybackState.buffering,
+          AudiobooklyPlaybackState.completed: PlexPlaybackState.stopped,
+          AudiobooklyPlaybackState.paused: PlexPlaybackState.paused,
+          AudiobooklyPlaybackState.stopped: PlexPlaybackState.stopped,
+          AudiobooklyPlaybackState.playing: PlexPlaybackState.playing
         }[state]!);
   }
 

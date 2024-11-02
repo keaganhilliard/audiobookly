@@ -1,21 +1,49 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
-part 'books_state.freezed.dart';
-
-@freezed
-sealed class BooksState with _$BooksState {
+sealed class BooksState {
+  const BooksState();
   const factory BooksState.initial() = BooksStateInitial;
-  const factory BooksState.loaded({
+  factory BooksState.loaded({
     List<MediaItem>? books,
     String? currentParent,
-    @Default(0) int totalItems,
+    int totalItems,
   }) = BooksStateLoaded;
   const factory BooksState.loading() = BooksStateLoading;
-  const factory BooksState.error([
+  const factory BooksState.error({
     String? message,
     String? errorDetails,
     String? stackTrace,
-  ]) = BooksStateError;
+  }) = BooksStateError;
+}
+
+class BooksStateInitial extends BooksState {
+  const BooksStateInitial();
+}
+
+class BooksStateLoading extends BooksState {
+  const BooksStateLoading();
+}
+
+class BooksStateLoaded extends BooksState {
+  List<MediaItem>? books;
+  String? currentParent;
+  int totalItems;
+
+  BooksStateLoaded({
+    this.books,
+    this.currentParent,
+    this.totalItems = 0,
+  });
+}
+
+class BooksStateError extends BooksState {
+  final String? message;
+  final String? errorDetails;
+  final String? stackTrace;
+
+  const BooksStateError({
+    this.message,
+    this.errorDetails,
+    this.stackTrace,
+  });
 }

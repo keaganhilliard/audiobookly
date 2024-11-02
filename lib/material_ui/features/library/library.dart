@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/aspect_ratios.dart';
 import 'package:audiobookly/domain/books/books_notifier.dart';
+import 'package:audiobookly/domain/books/books_state.dart';
 import 'package:audiobookly/material_ui/material_ui.dart';
 import 'package:audiobookly/material_ui/widgets/ab_error_widget.dart';
-import 'package:audiobookly/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
@@ -57,12 +56,26 @@ class LibraryView extends HookConsumerWidget {
             child: Consumer(
               builder: (context, ref, child) {
                 final state = ref.watch(booksStateProvider(mediaId));
-                return state.maybeWhen(
-                  orElse: () => CustomScrollView(),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  loaded: (books, currentParent, totalItems) {
-                    return Center(
+                return switch (state) {
+                  BooksStateInitial() => CustomScrollView(),
+                  BooksStateLoading() => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  BooksStateError(
+                    :final message,
+                    :final errorDetails,
+                    :final stackTrace
+                  ) =>
+                    ABErrorWidget(
+                      message: message,
+                      error: errorDetails,
+                      stack: stackTrace,
+                      retry: booksProvider.refresh,
+                    ),
+                  BooksStateLoaded(
+                    :final books,
+                  ) =>
+                    Center(
                       child: ResponsiveGridView<MediaItem>(
                         itemAspectRatio: doubleTitleGridAspectRatio,
                         items: books,
@@ -80,17 +93,8 @@ class LibraryView extends HookConsumerWidget {
                           );
                         },
                       ),
-                    );
-                  },
-                  error: (message, error, stack) {
-                    return ABErrorWidget(
-                      message: message,
-                      error: error,
-                      stack: stack,
-                      retry: booksProvider.refresh,
-                    );
-                  },
-                );
+                    ),
+                };
               },
             ),
           ),

@@ -8,8 +8,8 @@ class PlexTag {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tag'] = this.tag;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['tag'] = tag;
     return data;
   }
 }

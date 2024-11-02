@@ -66,7 +66,7 @@ class PlexLibrary {
     if (json['Location'] != null) {
       location = [];
       json['Location'].forEach((v) {
-        location!.add(new Location.fromJson(v));
+        location!.add(Location.fromJson(v));
       });
     }
   }
@@ -98,6 +98,7 @@ class PlexLibrary {
     return data;
   }
 
+  @override
   String toString() {
     return "Title: $title";
   }
@@ -115,7 +116,7 @@ class Location {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['path'] = path;
     return data;

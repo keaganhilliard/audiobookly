@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/aspect_ratios.dart';
 import 'package:audiobookly/domain/books/books_notifier.dart';
+import 'package:audiobookly/domain/books/books_state.dart';
 import 'package:audiobookly/material_ui/widgets/ab_error_widget.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
@@ -22,9 +23,6 @@ class BooksView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> refresher =
-        GlobalKey<RefreshIndicatorState>();
-
     final booksProvider = ref.watch(booksStateProvider(mediaId).notifier);
 
     return ScaffoldWithoutFooter(
@@ -41,11 +39,25 @@ class BooksView extends HookConsumerWidget {
         child: Consumer(
           builder: (context, ref, child) {
             final state = ref.watch(booksStateProvider(mediaId));
-            return state.maybeWhen(
-              orElse: () => Container(),
-              loading: () => const Center(child: CircularProgressIndicator()),
-              loaded: (books, currentParent, totalItems) {
-                return ResponsiveGridView<MediaItem>(
+            return switch (state) {
+              BooksStateInitial() => Container(),
+              BooksStateLoading() =>
+                const Center(child: CircularProgressIndicator()),
+              BooksStateError(
+                :final message,
+                :final stackTrace,
+                :final errorDetails
+              ) =>
+                ABErrorWidget(
+                  message: message,
+                  error: errorDetails,
+                  stack: stackTrace,
+                  retry: booksProvider.refresh,
+                ),
+              BooksStateLoaded(
+                :final books,
+              ) =>
+                ResponsiveGridView<MediaItem>(
                   itemAspectRatio: doubleTitleGridAspectRatio,
                   items: books,
                   itemBuilder: (book) {
@@ -61,17 +73,8 @@ class BooksView extends HookConsumerWidget {
                       icon: CupertinoIcons.book_fill,
                     );
                   },
-                );
-              },
-              error: (message, error, stack) {
-                return ABErrorWidget(
-                  message: message,
-                  error: error,
-                  stack: stack,
-                  retry: booksProvider.refresh,
-                );
-              },
-            );
+                ),
+            };
           },
         ),
       ),

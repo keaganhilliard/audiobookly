@@ -230,7 +230,9 @@ class EmbyApi {
 
   Future<EmbyItem> getItem(String itemId) async {
     http.Response response = await makeGet('/Users/$userId/Items/$itemId', {});
-    print(response.body);
+    if (kDebugMode) {
+      print(response.body);
+    }
     return EmbyItem.fromJson(jsonDecode(
       utf8.decode(response.bodyBytes),
     ));
@@ -238,7 +240,9 @@ class EmbyApi {
 
   Future<EmbyUser> getUser() async {
     http.Response response = await makeGet('/Users/$userId', {});
-    print(response.body);
+    if (kDebugMode) {
+      print(response.body);
+    }
     return EmbyUser.fromJson(jsonDecode(
       utf8.decode(response.bodyBytes),
     ));
@@ -253,14 +257,16 @@ class EmbyApi {
   }) {
     Map<String, String> params = {};
 
-    if (height != null)
+    if (height != null) {
       params.putIfAbsent('height', () => '$height');
-    else
+    } else {
       params.putIfAbsent('maxHeight', () => '$maxHeight');
-    if (width != null)
+    }
+    if (width != null) {
       params.putIfAbsent('width', () => '$width');
-    else
+    } else {
       params.putIfAbsent('maxWidth', () => '$maxWidth');
+    }
     return createUri(baseUrl!, '/Items/$itemId/Images/Primary', params)
         .toString();
   }
@@ -374,7 +380,6 @@ class EmbyApi {
         'mp4',
       ].join(',')
     }).toString();
-    print('The URI!: $uri');
     return uri;
   }
 
@@ -410,18 +415,15 @@ class EmbyApi {
     double playbackRate = 1.0,
     bool paused = false,
   ]) async {
-    print(
-        'Checking in bitches ${position.inMinutes}: Event ${describeEnum(event)} Paused: $paused');
-    final res = await makePost('/Sessions/Playing/Progress', {}, {
+    await makePost('/Sessions/Playing/Progress', {}, {
       'ItemId': itemId,
       'CanSeek': true,
       'PlaySessionId': playSessions[itemId],
-      'EventName': describeEnum(event).toLowerCase(),
+      'EventName': event.name.toLowerCase(),
       'IsPaused': paused,
       'PositionTicks': position.inMicroseconds * 10,
       'PlaybackRate': playbackRate,
     });
-    print('PlaybackCheckin response: ${res.body}');
   }
 
   Future<void> playbackStopped(
@@ -441,14 +443,11 @@ class EmbyApi {
 
   ///Users/{UserId}/PlayedItems/{Id}
   Future<void> markPlayed(String itemId) async {
-    final response =
-        await makePost('/Users/$userId/PlayedItems/$itemId', {}, {});
-    print(response.statusCode);
+    await makePost('/Users/$userId/PlayedItems/$itemId', {}, {});
   }
 
   Future<void> markUnplayed(String itemId) async {
-    final response = await makeDelete('/Users/$userId/PlayedItems/$itemId', {});
-    print(response.statusCode);
+    await makeDelete('/Users/$userId/PlayedItems/$itemId', {});
   }
 
   Future<List<EmbyItem>> getLibraries() async {
@@ -461,4 +460,4 @@ class EmbyApi {
   }
 }
 
-enum EmbyEvent { TimeUpdate, Pause, Unpause, PlaybackRateChange }
+enum EmbyEvent { timeUpdate, pause, unpause, playbackRateChange }

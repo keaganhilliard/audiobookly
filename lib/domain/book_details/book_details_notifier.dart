@@ -9,6 +9,7 @@ import 'package:audiobookly/domain/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/download_service.dart';
+import 'package:audiobookly/utils/refresher_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final bookDetailsStateProvider =
@@ -18,7 +19,7 @@ final bookDetailsStateProvider =
       ref.watch(databaseServiceProvider), ref.watch(downloadServiceProvider));
 });
 
-class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
+class BookDetailsNotifier extends RefresherStateNotifier<BookDetailsState> {
   final MediaRepository? _repository;
   final DatabaseService? _databaseService;
   final DownloadService? _downloadService;
@@ -30,7 +31,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   BookDetailsNotifier(this._repository, this._mediaId, this._databaseService,
       this._downloadService)
       : super(const BookDetailsState.initial()) {
-    getBook();
+    // getBook();
   }
 
   Future<void> markPlayed() async {
@@ -107,7 +108,7 @@ class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   }
 
   Future<void> getBook() async {
-    state = const BookDetailsState.loading();
+    // state = const BookDetailsState.loading();
     getDetails();
   }
 

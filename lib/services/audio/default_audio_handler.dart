@@ -355,18 +355,22 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future seek(Duration position,
-      {bool startPlaying = false, bool ignoreChapterProgress = false}) async {
+  Future seek(
+    Duration position, {
+    bool startPlaying = false,
+    bool ignoreChapterProgress = false,
+  }) async {
     log(position.toString());
+    var searchPosition = position;
     if (chapterProgressBar && !ignoreChapterProgress) {
-      await _player.seek(currentQueueStartingPosition + position);
-    } else {
-      final queuePosition = _findPostion(position);
-      await _player.seek(
-        queuePosition.trackPosition,
-        index: queuePosition.trackIndex,
-      );
+      searchPosition = currentQueueStartingPosition + position;
     }
+
+    final queuePosition = _findPostion(searchPosition);
+    await _player.seek(
+      queuePosition.trackPosition,
+      index: queuePosition.trackIndex,
+    );
     if (startPlaying) _player.play();
     await super.seek(position);
   }

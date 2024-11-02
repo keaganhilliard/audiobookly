@@ -30,7 +30,10 @@ class BooksNotifier extends RefresherStateNotifier<BooksState> {
       state = BooksState.loaded(books: books, currentParent: _parentId);
     } catch (e, stack) {
       state = BooksState.error(
-          "Could not fetch books, is the device online?", "$e", "$stack");
+        message: "Could not fetch books, is the device online?",
+        errorDetails: "$e",
+        stackTrace: "$stack",
+      );
     }
   }
 
@@ -47,7 +50,10 @@ class BooksNotifier extends RefresherStateNotifier<BooksState> {
       );
     } catch (e, stack) {
       state = BooksState.error(
-          "Could not fetch books, is the device online?", "$e", "$stack");
+        message: "Could not fetch books, is the device online?",
+        errorDetails: "$e",
+        stackTrace: "$stack",
+      );
     }
   }
 

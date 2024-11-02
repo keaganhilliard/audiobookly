@@ -3,7 +3,6 @@ import 'package:audiobookly/domain/author/author_state.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/router.dart';
-import 'package:audiobookly/utils/refresh_indicator_key.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ class AuthorView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(authorStateProvider(authorId).notifier);
     final state = ref.watch(authorStateProvider(authorId));
-    final refreshState = useRefreshIndicatorKey();
 
     return Scaffold(
       body: SafeArea(

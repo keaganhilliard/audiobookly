@@ -18,12 +18,12 @@ class EmbyLoginResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sessionInfo != null) {
-      data['SessionInfo'] = this.sessionInfo!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (sessionInfo != null) {
+      data['SessionInfo'] = sessionInfo!.toJson();
     }
-    data['AccessToken'] = this.accessToken;
-    data['ServerId'] = this.serverId;
+    data['AccessToken'] = accessToken;
+    data['ServerId'] = serverId;
     return data;
   }
 }
@@ -69,7 +69,7 @@ class SessionInfo {
 
   SessionInfo.fromJson(Map<String, dynamic> json) {
     playState = json['PlayState'] != null
-        ? new PlayState.fromJson(json['PlayState'])
+        ? PlayState.fromJson(json['PlayState'])
         : null;
     if (json['AdditionalUsers'] != null) {
       additionalUsers = json['AdditionalUsers'].map<SessionUserInfo>((v) {
@@ -94,29 +94,29 @@ class SessionInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.playState != null) {
-      data['PlayState'] = this.playState!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (playState != null) {
+      data['PlayState'] = playState!.toJson();
     }
-    if (this.additionalUsers != null) {
+    if (additionalUsers != null) {
       data['AdditionalUsers'] =
-          this.additionalUsers!.map((v) => v.toJson()).toList();
+          additionalUsers!.map((v) => v.toJson()).toList();
     }
-    data['RemoteEndPoint'] = this.remoteEndPoint;
-    data['PlayableMediaTypes'] = this.playableMediaTypes;
-    data['PlaylistIndex'] = this.playlistIndex;
-    data['PlaylistLength'] = this.playlistLength;
-    data['Id'] = this.id;
-    data['ServerId'] = this.serverId;
-    data['UserId'] = this.userId;
-    data['UserName'] = this.userName;
-    data['Client'] = this.client;
-    data['LastActivityDate'] = this.lastActivityDate;
-    data['DeviceName'] = this.deviceName;
-    data['DeviceId'] = this.deviceId;
-    data['ApplicationVersion'] = this.applicationVersion;
-    data['SupportedCommands'] = this.supportedCommands;
-    data['SupportsRemoteControl'] = this.supportsRemoteControl;
+    data['RemoteEndPoint'] = remoteEndPoint;
+    data['PlayableMediaTypes'] = playableMediaTypes;
+    data['PlaylistIndex'] = playlistIndex;
+    data['PlaylistLength'] = playlistLength;
+    data['Id'] = id;
+    data['ServerId'] = serverId;
+    data['UserId'] = userId;
+    data['UserName'] = userName;
+    data['Client'] = client;
+    data['LastActivityDate'] = lastActivityDate;
+    data['DeviceName'] = deviceName;
+    data['DeviceId'] = deviceId;
+    data['ApplicationVersion'] = applicationVersion;
+    data['SupportedCommands'] = supportedCommands;
+    data['SupportsRemoteControl'] = supportsRemoteControl;
     return data;
   }
 }
@@ -148,13 +148,13 @@ class PlayState {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CanSeek'] = this.canSeek;
-    data['IsPaused'] = this.isPaused;
-    data['IsMuted'] = this.isMuted;
-    data['RepeatMode'] = this.repeatMode;
-    data['SubtitleOffset'] = this.subtitleOffset;
-    data['PlaybackRate'] = this.playbackRate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['CanSeek'] = canSeek;
+    data['IsPaused'] = isPaused;
+    data['IsMuted'] = isMuted;
+    data['RepeatMode'] = repeatMode;
+    data['SubtitleOffset'] = subtitleOffset;
+    data['PlaybackRate'] = playbackRate;
     return data;
   }
 }
@@ -177,10 +177,10 @@ class SessionUserInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['UserName'] = this.userName;
-    data['UserInternalId'] = this.userInternalId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['UserName'] = userName;
+    data['UserInternalId'] = userInternalId;
     return data;
   }
 }

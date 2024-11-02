@@ -14,7 +14,6 @@ import 'package:audiobookly/models/user.dart';
 import 'package:audiobookly/models/library.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/repositories/media/media_repository.dart';
-import 'package:audiobookly/router.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/device_info/device_info_service.dart'
     hide DeviceInfo;
@@ -510,11 +509,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<ModelUnion>> search(String search) async {
-    print("Searching for $search");
     final response = await _api.search(_libraryId, search);
-    print(
-      "Search response: ${response.toJson()}",
-    );
     return [
       for (final book in response.book)
         ModelUnion.book(

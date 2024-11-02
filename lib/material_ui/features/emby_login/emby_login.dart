@@ -11,7 +11,7 @@ class LoginState {
 }
 
 class EmbyLogin extends HookConsumerWidget {
-  const EmbyLogin({Key? key}) : super(key: key);
+  const EmbyLogin({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

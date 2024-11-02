@@ -39,18 +39,18 @@ class PlexMetadata {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ratingKey'] = this.ratingKey;
-    data['key'] = this.key;
-    data['guid'] = this.guid;
-    data['type'] = this.type;
-    data['title'] = this.title;
-    data['summary'] = this.summary;
-    data['index'] = this.index;
-    data['thumb'] = this.thumb;
-    data['art'] = this.art;
-    data['addedAt'] = this.addedAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ratingKey'] = ratingKey;
+    data['key'] = key;
+    data['guid'] = guid;
+    data['type'] = type;
+    data['title'] = title;
+    data['summary'] = summary;
+    data['index'] = index;
+    data['thumb'] = thumb;
+    data['art'] = art;
+    data['addedAt'] = addedAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

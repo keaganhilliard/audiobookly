@@ -102,44 +102,44 @@ class PlexServer {
     if (json['connections'] != null) {
       connections = [];
       json['connections'].forEach((v) {
-        connections!.add(new PlexConnection.fromJson(v));
+        connections!.add(PlexConnection.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['product'] = this.product;
-    data['productVersion'] = this.productVersion;
-    data['platform'] = this.platform;
-    data['platformVersion'] = this.platformVersion;
-    data['device'] = this.device;
-    data['clientIdentifier'] = this.clientIdentifier;
-    data['createdAt'] = this.createdAt;
-    data['lastSeenAt'] = this.lastSeenAt;
-    data['provides'] = this.provides;
-    data['ownerId'] = this.ownerId;
-    data['sourceTitle'] = this.sourceTitle;
-    data['publicAddress'] = this.publicAddress;
-    data['accessToken'] = this.accessToken;
-    data['owned'] = this.owned;
-    data['home'] = this.home;
-    data['synced'] = this.synced;
-    data['relay'] = this.relay;
-    data['presence'] = this.presence;
-    data['httpsRequired'] = this.httpsRequired;
-    data['publicAddressMatches'] = this.publicAddressMatches;
-    data['dnsRebindingProtection'] = this.dnsRebindingProtection;
-    data['natLoopbackSupported'] = this.natLoopbackSupported;
-    if (this.connections != null) {
-      data['connections'] = this.connections!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['product'] = product;
+    data['productVersion'] = productVersion;
+    data['platform'] = platform;
+    data['platformVersion'] = platformVersion;
+    data['device'] = device;
+    data['clientIdentifier'] = clientIdentifier;
+    data['createdAt'] = createdAt;
+    data['lastSeenAt'] = lastSeenAt;
+    data['provides'] = provides;
+    data['ownerId'] = ownerId;
+    data['sourceTitle'] = sourceTitle;
+    data['publicAddress'] = publicAddress;
+    data['accessToken'] = accessToken;
+    data['owned'] = owned;
+    data['home'] = home;
+    data['synced'] = synced;
+    data['relay'] = relay;
+    data['presence'] = presence;
+    data['httpsRequired'] = httpsRequired;
+    data['publicAddressMatches'] = publicAddressMatches;
+    data['dnsRebindingProtection'] = dnsRebindingProtection;
+    data['natLoopbackSupported'] = natLoopbackSupported;
+    if (connections != null) {
+      data['connections'] = connections!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 
   void setCurrentIP() async {
-    this.currentIp = await api!.getCurrentIP();
+    currentIp = await api!.getCurrentIP();
   }
 
   Future<PlexUser?> getUser() async {
@@ -246,14 +246,14 @@ class PlexConnection {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['protocol'] = this.protocol;
-    data['address'] = this.address;
-    data['port'] = this.port;
-    data['uri'] = this.uri;
-    data['local'] = this.local;
-    data['relay'] = this.relay;
-    data['IPv6'] = this.iPv6;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['protocol'] = protocol;
+    data['address'] = address;
+    data['port'] = port;
+    data['uri'] = uri;
+    data['local'] = local;
+    data['relay'] = relay;
+    data['IPv6'] = iPv6;
     return data;
   }
 }

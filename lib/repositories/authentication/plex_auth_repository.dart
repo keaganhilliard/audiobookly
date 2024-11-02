@@ -11,7 +11,7 @@ final plexAuthRepoProvider = Provider<PlexAuthRepository>((ref) {
 });
 
 class PlexAuthRepository extends AuthenticationRepository {
-  final ProviderRef _ref;
+  final Ref _ref;
   PlexAuthRepository(this._ref);
   @override
   Future<User?> getUser(String token) async {

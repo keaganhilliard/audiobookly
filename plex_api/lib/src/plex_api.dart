@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:plex_api/plex_api.dart';
 import 'package:plex_api/src/plex_collections_response.dart';
 import 'package:plex_api/src/plex_metadata_response.dart';
 import 'package:plex_api/src/plex_sections_response.dart';
 import 'package:http/http.dart' as http;
 
-enum PlexPlaybackState { PLAYING, STOPPED, PAUSED, BUFFERING }
+enum PlexPlaybackState { playing, stopped, paused, buffering }
 
 class PlexApi {
   String? authToken;
@@ -16,11 +17,11 @@ class PlexApi {
   PlexServer? server;
 
   PlexApi({required this.headers}) {
-    this.authToken = headers.token;
+    authToken = headers.token;
   }
 
   bool isAuthorized() {
-    return this.user != null;
+    return user != null;
   }
 
   Future<PlexUser?> authenticate(String authToken) async {
@@ -38,8 +39,8 @@ class PlexApi {
     headers.token = authToken;
     http.Response response = await http.get(
         Uri.https('plex.tv', '/users/account.json'),
-        headers: headers.toMap(
-            overrideToken: server?.accessToken ?? this.headers.token));
+        headers:
+            headers.toMap(overrideToken: server?.accessToken ?? headers.token));
     PlexLoginResponse plexLoginResponse =
         PlexLoginResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     user = plexLoginResponse.user;
@@ -87,16 +88,13 @@ class PlexApi {
       http.Response response = await http.get(
           Uri.parse('${server.mainConnection!.uri}/library/sections'),
           headers: headers.toMap(overrideToken: server.accessToken));
-      print('SERVER URI: ${server.mainConnection!.uri}/library/sections}');
-      print(
-          'SERVER HEADERS: ${headers.toMap(overrideToken: server.accessToken)}');
       PlexSections sections =
           PlexSections.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       return sections.mediaContainer!.directory!
           .where((lib) => lib.type == 'artist')
           .toList();
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
     return null;
   }
@@ -189,7 +187,6 @@ class PlexApi {
         headers: headers.toMap(overrideToken: server.accessToken));
     PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
         jsonDecode(utf8.decode(response.bodyBytes)));
-    sections.mediaContainer!.metadata!.forEach((f) {});
     return sections.mediaContainer!.metadata!.getRange(0, 3).toList().cast();
   }
 
@@ -199,8 +196,8 @@ class PlexApi {
         Uri.parse(
             '${server.mainConnection!.uri}/library/metadata/$artistRatingKey/children'),
         headers: headers.toMap(overrideToken: server.accessToken));
-    print('Getting albums for $artistRatingKey');
-    print(response.body);
+    log('Getting albums for $artistRatingKey');
+    log(response.body);
     PlexMetadataResponse sections = PlexMetadataResponse.fromJson(
         jsonDecode(utf8.decode(response.bodyBytes)));
     return sections.mediaContainer!.metadata?.cast();
@@ -272,11 +269,11 @@ class PlexApi {
 
   String playbackStateToString(PlexPlaybackState state) {
     switch (state) {
-      case PlexPlaybackState.PAUSED:
+      case PlexPlaybackState.paused:
         return 'paused';
-      case PlexPlaybackState.PLAYING:
+      case PlexPlaybackState.playing:
         return 'playing';
-      case PlexPlaybackState.BUFFERING:
+      case PlexPlaybackState.buffering:
         return 'buffering';
       default:
         return 'stopped';
@@ -289,9 +286,8 @@ class PlexApi {
         Uri.parse(
             '${server.mainConnection!.uri}/:/timeline?ratingKey=$key&key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime'),
         headers: headers.toMap());
-    print('Save position response: ${response.body}');
-    print(
-        'Url: ${server.mainConnection!.uri}/:/timeline?ratingKey=$key&key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime');
+    log('Save position response: ${response.body}');
+    log('Url: ${server.mainConnection!.uri}/:/timeline?ratingKey=$key&key=${Uri.encodeComponent("/library/metadata/")}$key&state=${playbackStateToString(state)}&duration=$duration&time=$currentTime');
   }
 
   ///:/timeline?ratingKey=26117&key=%2Flibrary%2Fmetadata%2F26117&state=stopped&hasMDE=1&time=1650000&duration=46141000
