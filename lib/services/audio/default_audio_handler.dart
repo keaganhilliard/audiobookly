@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:audio_session/audio_session.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/model_union.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/singletons.dart';
@@ -472,17 +473,16 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
       tracks = dbTracks.map((track) {
         return MediaHelpers.fromTrack(track, dbBook);
       }).toList();
-      _currentMediaItem = MediaHelpers.fromBook(dbBook);
-      final chapters = await db.getChaptersForBook(dbBook.id);
+      _currentMediaItem = dbBook.toMediaItem();
+      if (dbBook.chapters == null || dbBook.chapters!.isEmpty) {
+        dbBook.copyWith(chapters: await db.getChaptersForBook(dbBook.id));
+      }
+      final chapters = dbBook.chapters ?? <Chapter>[];
       if (chapters.isNotEmpty) {
         chapterIndex = 0;
         queue.add([
           for (final chapter in chapters)
-            Utils.chapterToItem(chapter).copyWith(
-              album: _currentMediaItem!.album,
-              artist: _currentMediaItem!.artist,
-              artUri: _currentMediaItem!.artUri,
-            )
+            Utils.makeChapterItem(_currentMediaItem!, chapter)
         ]..sort((a, b) => a.start.compareTo(b.start))); //;
       } else {
         queue.add(tracks);
@@ -501,11 +501,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
         chapterIndex = 0;
         queue.add([
           for (final chapter in _currentMediaItem!.chapters)
-            Utils.chapterToItem(chapter).copyWith(
-              album: _currentMediaItem!.album,
-              artist: _currentMediaItem!.artist,
-              artUri: _currentMediaItem!.artUri,
-            )
+            Utils.makeChapterItem(_currentMediaItem!, chapter)
         ]..sort((a, b) => a.start.compareTo(b.start)));
       } else {
         log('No chapters');

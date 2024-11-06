@@ -25,6 +25,7 @@ enum Routes {
   book('/books/:id'),
   authors('/authors'),
   author('/authors/:id'),
+  narrator('/narrators/:name'),
   playlists('/playlists'),
   playlist('/playlists/:id'),
   collections('/collections'),
@@ -131,6 +132,15 @@ final router = GoRouter(
               return material.BooksView(
                 mediaId: "@playlists/$id",
                 title: '${state.extra}',
+              );
+            }),
+        GoRoute(
+            path: Routes.narrator.path,
+            builder: (context, state) {
+              final name = state.pathParameters['name'];
+              return material.BooksView(
+                mediaId: "@narrators/$name",
+                title: '$name',
               );
             }),
         GoRoute(

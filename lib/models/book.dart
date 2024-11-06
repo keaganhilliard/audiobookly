@@ -8,6 +8,7 @@ class Book {
   final String title;
   final String author;
   final List<({String id, String name})>? authors;
+  final List<String>? narrators;
   final List<({String id, String name, String position})>? series;
   final String narrator;
   final String description;
@@ -33,6 +34,7 @@ class Book {
     required this.title,
     required this.author,
     this.authors,
+    this.narrators,
     this.series,
     this.publishedYear,
     required this.narrator,
@@ -54,6 +56,7 @@ class Book {
     String? author,
     List<({String id, String name})>? authors,
     List<({String id, String name, String position})>? series,
+    List<String>? narrators,
     String? narrator,
     String? description,
     String? artPath,
@@ -74,6 +77,7 @@ class Book {
         authors: authors ?? this.authors,
         series: series ?? this.series,
         narrator: narrator ?? this.narrator,
+        narrators: narrators ?? this.narrators,
         description: description ?? this.description,
         artPath: artPath ?? this.artPath,
         duration: duration ?? this.duration,

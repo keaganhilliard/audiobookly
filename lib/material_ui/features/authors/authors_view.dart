@@ -16,7 +16,9 @@ class AuthorsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ScaffoldWithoutFooter(
-        title: const Text('Authors'), body: AuthorsComponent());
+      title: const Text('Authors'),
+      body: AuthorsComponent(),
+    );
   }
 }
 
@@ -31,19 +33,22 @@ class AuthorsComponent extends HookConsumerWidget {
     final authorsProvider = ref.watch(authorsStateProvider.notifier);
 
     return RefreshIndicator(
-      key: authorsProvider.refreshKey,
+      key: refresher,
       onRefresh: () async {
         return authorsProvider.refresh();
       },
       child: Consumer(
         builder: (context, ref, child) {
           final state = ref.watch(authorsStateProvider);
-          return switch (state) {
-            AuthorsStateInitial() => CustomScrollView(),
-            AuthorsStateLoading() => const Center(
+          switch (state) {
+            case AuthorsStateInitial():
+              refresher.currentState?.show();
+            case AuthorsStateLoading():
+              return const Center(
                 child: CircularProgressIndicator(),
-              ),
-            AuthorsStateError() => Column(
+              );
+            case AuthorsStateError():
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -59,10 +64,14 @@ class AuthorsComponent extends HookConsumerWidget {
                     child: const Text('Retry'),
                   )
                 ],
-              ),
-            AuthorsStateLoaded(:final authors) => ResponsiveGridView<Author>(
+              );
+            case AuthorsStateLoaded(:final authors):
+              return ResponsiveGridView<Author>(
                 itemAspectRatio: singleTitleGridAspectRatio,
                 items: authors,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
                 itemBuilder: (author) {
                   return CoverItem(
                     onTap: () async {
@@ -72,10 +81,12 @@ class AuthorsComponent extends HookConsumerWidget {
                     title: author.name,
                     icon: CupertinoIcons.person_2_fill,
                     showTitle: true,
+                    circle: true,
                   );
                 },
-              ),
-          };
+              );
+          }
+          return CustomScrollView();
         },
       ),
     );

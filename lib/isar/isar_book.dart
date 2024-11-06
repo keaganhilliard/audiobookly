@@ -1,4 +1,5 @@
 import 'package:audiobookly/models/book.dart';
+import 'package:audiobookly/models/chapter.dart';
 import 'package:audiobookly/models/download_status.dart';
 import 'package:audiobookly/utils/utils.dart';
 import 'package:isar/isar.dart';
@@ -16,6 +17,9 @@ class IsarBook {
   final List<IsarAuthor> authors;
   final List<IsarSeries> series;
   final String narrator;
+  final List<String> narrators;
+  final List<EmbeddedIsarChapter> chapters;
+
   final String description;
   final String artPath;
   @ignore
@@ -58,6 +62,16 @@ class IsarBook {
         lastUpdate: lastUpdate,
         downloadStatus: downloadStatus,
         downloadedAt: downloadedAt,
+        narrators: narrators,
+        chapters: chapters
+            .map((e) => Chapter(
+                  id: "${e.id}",
+                  start: e.start!,
+                  end: e.end!,
+                  title: e.title!,
+                  bookId: exId,
+                ))
+            .toList(),
       );
 
   IsarBook(
@@ -75,6 +89,8 @@ class IsarBook {
     this.isarLastUpdate,
     this.downloadedAt, [
     this.downloadStatus = DownloadStatus.none,
+    this.narrators = const [],
+    this.chapters = const [],
   ]);
 
   IsarBook copyWith({
@@ -85,6 +101,7 @@ class IsarBook {
     List<IsarAuthor>? authors,
     List<IsarSeries>? series,
     String? narrator,
+    List<String>? narrators,
     String? description,
     String? artPath,
     Duration? duration,
@@ -93,6 +110,7 @@ class IsarBook {
     DateTime? lastUpdate,
     DateTime? downloadedAt,
     DownloadStatus? downloadStatus,
+    List<EmbeddedIsarChapter>? chapters,
   }) =>
       IsarBook(
         exId ?? this.exId,
@@ -109,6 +127,8 @@ class IsarBook {
         lastUpdate?.millisecondsSinceEpoch ?? isarLastUpdate,
         downloadedAt ?? this.downloadedAt,
         downloadStatus ?? this.downloadStatus,
+        narrators ?? this.narrators,
+        chapters ?? this.chapters,
       );
 
   factory IsarBook.fromBook(Book book) => IsarBook(
@@ -131,6 +151,18 @@ class IsarBook {
         book.lastUpdate?.millisecondsSinceEpoch,
         book.downloadedAt,
         book.downloadStatus,
+        book.narrators ?? [],
+        book.chapters
+                ?.map(
+                  (e) => EmbeddedIsarChapter(
+                    id: e.id,
+                    start: e.start,
+                    end: e.end,
+                    title: e.title,
+                  ),
+                )
+                .toList() ??
+            [],
       );
 }
 
@@ -149,4 +181,19 @@ class IsarSeries {
   String? position;
 
   IsarSeries({this.id, this.name, this.position});
+}
+
+@embedded
+class EmbeddedIsarChapter {
+  EmbeddedIsarChapter({
+    this.id,
+    this.start,
+    this.end,
+    this.title,
+  });
+
+  String? id;
+  double? start;
+  double? end;
+  String? title;
 }

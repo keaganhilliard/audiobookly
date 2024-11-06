@@ -17,6 +17,7 @@ class CoverItem extends StatelessWidget {
     this.played = false,
     this.icon = CupertinoIcons.book_fill,
     this.showTitle = false,
+    this.circle = false,
   });
 
   final double? progress;
@@ -29,6 +30,7 @@ class CoverItem extends StatelessWidget {
   final bool played;
   final IconData icon;
   final bool showTitle;
+  final bool circle;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +48,13 @@ class CoverItem extends StatelessWidget {
                 elevation: 2.0,
                 color: Colors.black,
                 clipBehavior: Clip.antiAlias,
+                shape: circle ? const CircleBorder() : null,
                 child: InkWell(
                   onTap: onTap,
                   child: Stack(
                     children: [
-                      Align(
-                        alignment: Alignment.center,
+                      Positioned.fill(
+                        // alignment: Alignment.center,
                         child: thumbnailUrl == null
                             ? Container(
                                 color: Colors.black,
@@ -64,7 +67,7 @@ class CoverItem extends StatelessWidget {
                               )
                             : CachedNetworkImage(
                                 imageUrl: thumbnailUrl!,
-                                fit: BoxFit.fitHeight,
+                                fit: circle ? BoxFit.cover : BoxFit.fitHeight,
                                 alignment: Alignment.center,
                                 errorWidget: (context, error, child) =>
                                     Container(
@@ -100,7 +103,7 @@ class CoverItem extends StatelessWidget {
                       Positioned(
                         child: Align(
                           alignment: Alignment.bottomCenter,
-                          child: progress! > 0
+                          child: progress! > 0 || played
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
@@ -110,7 +113,7 @@ class CoverItem extends StatelessWidget {
                                     ),
                                     child: LinearProgressIndicator(
                                       minHeight: 6,
-                                      value: progress,
+                                      value: played ? 1 : progress,
                                       color: Colors.deepPurple,
                                       backgroundColor:
                                           Colors.grey.withOpacity(0.2),
@@ -126,21 +129,30 @@ class CoverItem extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 6.0),
-              child: Text(
-                title ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Align(
+              alignment: circle ? Alignment.center : Alignment.centerLeft,
+              child: Padding(
+                padding: circle
+                    ? const EdgeInsets.all(0)
+                    : const EdgeInsets.only(left: 6.0),
+                child: Text(
+                  title ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: circle ? TextAlign.center : null,
+                ),
               ),
             ),
             if (subtitle != null && subtitle!.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(left: 6.0),
-                child: Text(subtitle ?? '',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.grey)),
+              Align(
+                alignment: circle ? Alignment.center : Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 6.0),
+                  child: Text(subtitle ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.grey)),
+                ),
               ),
           ],
         ));

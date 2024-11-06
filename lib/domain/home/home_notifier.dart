@@ -20,7 +20,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
   StreamSubscription<List<Book>>? booksSub;
 
   HomeNotifier(this._repository) : super(const HomeState.initial()) {
-    getBooks();
+    // getBooks();
   }
 
   Future refresh() async {
@@ -30,7 +30,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
       for (final value in await _repository!.getDownloads())
         ModelUnion.book(value)
     ];
-    state = HomeState.loaded(downloaded: downloaded);
+    // state = HomeState.loaded(downloaded: downloaded);
 
     try {
       rowsData = await _repository!.getHomeData();

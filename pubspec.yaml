@@ -31,7 +31,6 @@ dependencies:
   hooks_riverpod: ^2.0.2
   expandable: ^5.0.1
   cached_network_image: ^3.0.0
-  socket_io_client: ^3.0.0
   audio_session: ^0.1.6+1
   audio_service: ^0.18.4
   just_audio: any
@@ -52,13 +51,11 @@ dependencies:
   reorderable_grid_view: ^2.2.1
   isar: ^3.0.0
   isar_flutter_libs: ^3.0.0 # contains the binaries
-  macos_ui:
   cupertino_icons:
   modal_bottom_sheet: ^3.0.0-pre
   clickup_fading_scroll:
     git:
       url: https://github.com/clickup/clickup_fading_scroll
-  better_cupertino_slider: ^1.0.0
   background_downloader: ^8.0.5
   declarative_refresh_indicator: ^0.1.0
   adaptive_navigation: ^0.0.7

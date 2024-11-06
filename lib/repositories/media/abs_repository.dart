@@ -46,6 +46,7 @@ class AbsRepository extends MediaRepository {
   @override
   Future<Book> getAlbumFromId(String? mediaId) async {
     final book = await _api.getBookInfo(mediaId!);
+
     try {
       final progress = await _api.getItemProgress(mediaId);
       if (progress != null) {
@@ -78,9 +79,14 @@ class AbsRepository extends MediaRepository {
           ?.map((e) => (id: e.id, name: e.name))
           .toList(),
       series: book.media.metadata.series
-          ?.map((e) => (id: e.id, name: e.name, position: e.sequence ?? '1'))
+          ?.map((e) => (
+                id: e.id,
+                name: e.name,
+                position: e.sequence ?? '1',
+              ))
           .toList(),
       narrator: book.media.metadata.narrators?.join(', ') ?? 'Unknown',
+      narrators: book.media.metadata.narrators,
       description: book.media.metadata.description ?? '',
       publishedYear: book.media.metadata.publishedYear,
       artPath:
@@ -90,7 +96,9 @@ class AbsRepository extends MediaRepository {
           : AbsUtils.parseDurationFromSeconds(book.media.duration)!,
       lastPlayedPosition: progress?.currentTime ?? Duration.zero,
       read: progress?.isFinished ?? false,
-      lastUpdate: DateTime.now(),
+      lastUpdate: book.updatedAt != null
+          ? DateTime.fromMillisecondsSinceEpoch(book.updatedAt!)
+          : null,
       largeArtPath: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 1000)
           .toString(),
       chapters: book.media.chapters
@@ -114,7 +122,9 @@ class AbsRepository extends MediaRepository {
       duration: AbsUtils.parseDurationFromSeconds(book.media?.duration)!,
       lastPlayedPosition: progress?.currentTime ?? Duration.zero,
       read: progress?.isFinished ?? false,
-      lastUpdate: DateTime.now(),
+      lastUpdate: book.updatedAt != null
+          ? DateTime.fromMillisecondsSinceEpoch(book.updatedAt!)
+          : null,
       largeArtPath: _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
           .toString(),
     );
@@ -145,12 +155,38 @@ class AbsRepository extends MediaRepository {
   }
 
   @override
+  Future<List<Author>> getNarrators() async {
+    return [
+      for (final author in await _api.getNarrators(_libraryId))
+        Author(
+          id: '@narrators/${author.name}',
+          name: author.name,
+          description: author.description ?? '',
+          numBooks: author.numBooks,
+          artPath: author.imagePath == null
+              ? null
+              : '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}',
+        ),
+    ];
+  }
+
+  @override
   Future<List<Book>> getBooksFromAuthor(String authorId) async {
     return [
       for (final book
           in (await _api.getBooksForAuthor(_libraryId, authorId)).toList()
             ..sort(_sortBooks))
         _absBookToBook(book)
+    ];
+  }
+
+  @override
+  Future<List<Book>> getBooksFromNarrator(String narratorName) async {
+    return [
+      for (final book
+          in (await _api.getBooksForNarrator(_libraryId, narratorName))
+              .toList())
+        _absBookMinifiedToBook(book)
     ];
   }
 
@@ -270,7 +306,6 @@ class AbsRepository extends MediaRepository {
     return [for (final book in books) _absBookToBook(book)];
   }
 
-  // TODO: this is bad... DON'T DO THIS
   @override
   Future<List<Book>> getRecentlyPlayed() async {
     final books = await _api.getRecentlyPlayed();
@@ -350,7 +385,7 @@ class AbsRepository extends MediaRepository {
           await _db.insertBook(
             book.copyWith(
               read: progress.isFinished,
-              lastPlayedPosition: Duration.zero,
+              lastPlayedPosition: book.duration,
             ),
           );
         } else if (progress.currentTime! > book.lastPlayedPosition) {
@@ -374,7 +409,7 @@ class AbsRepository extends MediaRepository {
     final book = await _db.getBookById(itemId);
     if (book != null) {
       await _db.insertBook(
-        book.copyWith(lastPlayedPosition: Duration.zero, read: true),
+        book.copyWith(lastPlayedPosition: book.duration, read: true),
       );
     }
     await getUser();
@@ -393,8 +428,14 @@ class AbsRepository extends MediaRepository {
   }
 
   @override
-  Future playbackCheckin(String key, Duration position, Duration duration,
-      double playbackRate, AudiobooklyEvent event, bool playing) async {
+  Future playbackCheckin(
+    String key,
+    Duration position,
+    Duration duration,
+    double playbackRate,
+    AudiobooklyEvent event,
+    bool playing,
+  ) async {
     final progress = userProgress.putIfAbsent(
         key,
         () => AbsAudiobookProgress(

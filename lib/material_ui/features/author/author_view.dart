@@ -17,22 +17,29 @@ class AuthorView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final GlobalKey<RefreshIndicatorState> refresher =
+        GlobalKey<RefreshIndicatorState>();
     final notifier = ref.watch(authorStateProvider(authorId).notifier);
     final state = ref.watch(authorStateProvider(authorId));
 
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-            key: notifier.refreshState,
-            onRefresh: () async {
-              await notifier.refresh();
-            },
-            child: switch (state) {
-              AuthorStateInitial() => _loadingIndicator(),
-              AuthorStateLoading() => _loadingIndicator(),
-              AuthorStateError(:final message) =>
-                Center(child: Text('Something went wrong $message')),
-              AuthorStateLoaded(:final author) => CustomScrollView(
+          key: refresher,
+          onRefresh: () async {
+            await notifier.refresh();
+          },
+          child: Builder(builder: (context) {
+            switch (state) {
+              case AuthorStateInitial():
+                refresher.currentState?.show();
+                return CustomScrollView();
+              case AuthorStateLoading():
+                return _loadingIndicator();
+              case AuthorStateError(:final message):
+                return Center(child: Text('Something went wrong $message'));
+              case AuthorStateLoaded(:final author):
+                return CustomScrollView(
                   key: const PageStorageKey('author-details'),
                   physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
@@ -62,15 +69,16 @@ class AuthorView extends HookConsumerWidget {
                                 author.artPath != null)
                               Container(
                                 height: 200,
+                                width: 200,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderRadius: BorderRadius.circular(100),
                                 ),
                                 clipBehavior: Clip.antiAlias,
                                 child: CachedNetworkImage(
                                   imageUrl: author.largeArtPath ??
                                       author.artPath ??
                                       '',
-                                  fit: BoxFit.scaleDown,
+                                  fit: BoxFit.cover,
                                   errorWidget: (context, string, stack) {
                                     return const Icon(
                                         CupertinoIcons.person_2_fill);
@@ -157,8 +165,10 @@ class AuthorView extends HookConsumerWidget {
                           )
                         ]
                   ],
-                ),
-            }),
+                );
+            }
+          }),
+        ),
       ),
     );
   }

@@ -65,9 +65,6 @@ class DownloadService {
     if (toDownload.any((req) => req.book.id == book.id)) return;
     await _db
         .insertBook(book.copyWith(downloadStatus: DownloadStatus.downloading));
-    if (book.chapters?.isNotEmpty ?? false) {
-      await _db.insertChapters(book.chapters!);
-    }
     toDownload.add(DownloadRequest(book, tracks));
     // if (!_isDownloading)
     processNextBook();

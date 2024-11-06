@@ -14,4 +14,4 @@ export 'features/series/series_view.dart';
 export 'features/settings/settings_view.dart';
 export 'features/welcome_view/welcome_view.dart';
 export 'features/abs_login/abs_login.dart';
-export 'features/library/library.dart';
+export 'features/library/library_view.dart';

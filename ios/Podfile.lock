@@ -5,8 +5,6 @@ PODS:
     - Flutter
   - background_downloader (0.0.1):
     - Flutter
-  - better_cupertino_slider (0.0.3):
-    - Flutter
   - device_info (0.0.1):
     - Flutter
   - device_info_plus (0.0.1):
@@ -37,7 +35,6 @@ DEPENDENCIES:
   - audio_service (from `.symlinks/plugins/audio_service/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - background_downloader (from `.symlinks/plugins/background_downloader/ios`)
-  - better_cupertino_slider (from `.symlinks/plugins/better_cupertino_slider/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
@@ -61,8 +58,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/audio_session/ios"
   background_downloader:
     :path: ".symlinks/plugins/background_downloader/ios"
-  better_cupertino_slider:
-    :path: ".symlinks/plugins/better_cupertino_slider/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   device_info_plus:
@@ -88,7 +83,6 @@ SPEC CHECKSUMS:
   audio_service: f509d65da41b9521a61f1c404dd58651f265a567
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   background_downloader: 9f788ffc5de45acf87d6380e91ca0841066c18cf
-  better_cupertino_slider: 60c77e62d1b1aca409e682542518bdceda9af33f
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7

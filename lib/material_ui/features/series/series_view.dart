@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/aspect_ratios.dart';
 import 'package:audiobookly/domain/series/series_notifier.dart';
+import 'package:audiobookly/domain/series/series_state.dart';
+import 'package:audiobookly/material_ui/widgets/ab_error_widget.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/router.dart';
@@ -17,66 +19,15 @@ class SeriesView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> refresher =
-        GlobalKey<RefreshIndicatorState>();
-
     final seriesProvider = ref.watch(seriesStateProvider.notifier);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        refresher.currentState!.show();
+        seriesProvider.refresh();
       },
       title: const Text('Series'),
-      body: RefreshIndicator(
-        key: refresher,
-        onRefresh: () async {
-          return seriesProvider.refresh();
-        },
-        child: Consumer(
-          builder: (context, ref, child) {
-            final state = ref.watch(seriesStateProvider);
-            return state.maybeWhen(
-              orElse: () => Container(),
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              loaded: (series) => ResponsiveGridView<MediaItem>(
-                items: series,
-                itemBuilder: (book) {
-                  return CoverItem(
-                    onTap: () {
-                      router.pushId(book.id, extra: book.title);
-                    },
-                    thumbnailUrl: book.artUri?.toString(),
-                    title: book.title,
-                    icon:
-                        CupertinoIcons.rectangle_fill_on_rectangle_angled_fill,
-                    showTitle: true,
-                  );
-                },
-              ),
-              error: (message) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Center(
-                    child: Text(
-                      'Could not fetch series, is the device online?',
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      refresher.currentState!.show();
-                    },
-                    child: const Text('Retry'),
-                  )
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+      body: SeriesComponent(),
     );
   }
 }
@@ -92,51 +43,42 @@ class SeriesComponent extends HookConsumerWidget {
     final seriesProvider = ref.watch(seriesStateProvider.notifier);
 
     return RefreshIndicator(
-      key: seriesProvider.refreshKey,
+      key: refresher,
       onRefresh: () async {
         return seriesProvider.refresh();
       },
       child: Consumer(
         builder: (context, ref, child) {
           final state = ref.watch(seriesStateProvider);
-          return state.maybeWhen(
-            orElse: () => CustomScrollView(),
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
-            loaded: (series) => ResponsiveGridView<MediaItem>(
-              itemAspectRatio: singleTitleGridAspectRatio,
-              items: series,
-              itemBuilder: (serie) {
-                return CoverItem(
-                  onTap: () {
-                    router.pushId(serie.id, extra: serie.title);
-                  },
-                  thumbnailUrl: serie.artUri?.toString(),
-                  title: serie.title,
-                  icon: CupertinoIcons.rectangle_fill_on_rectangle_angled_fill,
-                  showTitle: true,
-                );
-              },
-            ),
-            error: (message) => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Center(
-                  child: Text(
-                    'Could not fetch series, is the device online?',
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    refresher.currentState!.show();
-                  },
-                  child: const Text('Retry'),
-                )
-              ],
-            ),
-          );
+          switch (state) {
+            case SeriesStateInitial():
+              refresher.currentState?.show();
+            case SeriesStateLoaded(:final series):
+              return ResponsiveGridView<MediaItem>(
+                itemAspectRatio: singleTitleGridAspectRatio,
+                items: series,
+                itemBuilder: (serie) {
+                  return CoverItem(
+                    onTap: () {
+                      router.pushId(serie.id, extra: serie.title);
+                    },
+                    thumbnailUrl: serie.artUri?.toString(),
+                    title: serie.title,
+                    icon:
+                        CupertinoIcons.rectangle_fill_on_rectangle_angled_fill,
+                    showTitle: true,
+                  );
+                },
+              );
+            case SeriesStateErrorDetails(:final message):
+              return ABErrorWidget(
+                message: message,
+                retry: () {
+                  refresher.currentState!.show();
+                },
+              );
+          }
+          return CustomScrollView();
         },
       ),
     );

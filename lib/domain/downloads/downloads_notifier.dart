@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/utils/utils.dart';
 
 final downloadsStateProvider =
-    StateNotifierProvider.autoDispose<DownloadsNotifier, DownloadsState>(
+    StateNotifierProvider<DownloadsNotifier, DownloadsState>(
   (ref) => DownloadsNotifier(),
 );
 
@@ -14,7 +14,7 @@ class DownloadsNotifier extends StateNotifier<DownloadsState> {
   final DatabaseService _databaseService = getIt();
 
   DownloadsNotifier() : super(const DownloadsState.initial()) {
-    getBooks();
+    // getBooks();
   }
 
   Future getBooks() async {

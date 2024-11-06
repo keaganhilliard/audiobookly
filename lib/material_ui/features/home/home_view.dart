@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:audiobookly/domain/home/home_notifier.dart';
+import 'package:audiobookly/domain/home/home_state.dart';
 import 'package:audiobookly/material_ui/features/home/home_row.dart';
-import 'package:audiobookly/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -39,38 +39,40 @@ class HomeView extends HookConsumerWidget {
                   constraints.maxHeight > constraints.maxWidth
                       ? math.min(((constraints.maxHeight - 120) / 2), 250)
                       : 225;
-
-              return state.maybeWhen(
-                orElse: () => Container(),
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                loaded: (rowsData, downloaded) => SingleChildScrollView(
-                  // padding: EdgeInsets.only(bottom: 40),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (rowsData != null) ...[
-                        for (final entry in rowsData.entries)
+              switch (state) {
+                case HomeStateInitial():
+                  refresher.currentState?.show();
+                case HomeStateLoaded(:final rowsData, :final downloaded):
+                  return SingleChildScrollView(
+                    // padding: EdgeInsets.only(bottom: 40),
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (rowsData != null) ...[
+                          for (final entry in rowsData.entries)
+                            HomeRow(
+                              height: entry.key == "Newest Authors"
+                                  ? rowHeight / 2
+                                  : rowHeight,
+                              title: entry.key,
+                              items: entry.value,
+                            )
+                        ],
+                        if (downloaded?.isNotEmpty == true)
                           HomeRow(
                             height: rowHeight,
-                            title: entry.key,
-                            items: entry.value,
-                          )
+                            title: 'Downloaded',
+                            items: downloaded,
+                          ),
                       ],
-                      if (!nullOrEmpty(downloaded))
-                        HomeRow(
-                          height: rowHeight,
-                          title: 'Downloaded',
-                          items: downloaded,
-                        ),
-                    ],
-                  ),
-                ),
-              );
+                    ),
+                  );
+                default:
+              }
+              return SingleChildScrollView();
             },
           ),
         ),

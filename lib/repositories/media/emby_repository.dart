@@ -218,8 +218,14 @@ class EmbyRepository extends MediaRepository {
   }
 
   @override
-  Future playbackCheckin(String key, Duration position, Duration duration,
-      double playbackRate, AudiobooklyEvent event, bool playing) async {
+  Future playbackCheckin(
+    String key,
+    Duration position,
+    Duration duration,
+    double playbackRate,
+    AudiobooklyEvent event,
+    bool playing,
+  ) async {
     final book = await _db.getBookById(key);
     if (book != null) {
       await _db.insertBook(book.copyWith(lastPlayedPosition: position));
@@ -354,6 +360,18 @@ class EmbyRepository extends MediaRepository {
   @override
   Future<Author> getAuthorDetails(String authorId) {
     // TODO: implement getAuthorDetails
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Book>> getBooksFromNarrator(String narratorName) {
+    // TODO: implement getBooksFromNarrator
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Author>> getNarrators() {
+    // TODO: implement getNarrators
     throw UnimplementedError();
   }
 }

@@ -45,6 +45,22 @@ class Utils {
     );
   }
 
+  static MediaItem makeChapterItem(MediaItem item, Chapter chapter) {
+    return item.copyWith(
+      id: chapter.id,
+      title: chapter.title,
+      duration: chapter.duration,
+      extras: {
+        ...item.extras ?? {},
+        ...{
+          'start': chapter.start,
+          'end': chapter.end,
+          'cached': false,
+        }
+      },
+    );
+  }
+
   static String? getNarrator(EmbyItem item) {
     if (item.composers?.isNotEmpty ?? false) {
       return item.composers!.map((artist) => artist.name).join(', ');

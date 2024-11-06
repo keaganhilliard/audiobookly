@@ -24,6 +24,7 @@ class MediaIds {
   static const String recentlyAdded = '@recentlyAdded';
   static const String downloads = '@downloads';
   static const String playlistsId = '@playlists';
+  static const String narratorsId = '@narrators';
 }
 
 class PlexSettings {

@@ -13,6 +13,14 @@ class Chapter {
   final String title;
   final String bookId;
 
+  Duration get duration =>
+      Duration(
+        milliseconds: (end * 1000).round(),
+      ) -
+      Duration(
+        milliseconds: (start * 1000).round(),
+      );
+
   factory Chapter.fromJson(Map<String, dynamic> json, String bookId) => Chapter(
         id: json["id"].toString(),
         start: json["start"].toDouble(),

@@ -5,13 +5,19 @@ class ResponsiveGridView<T> extends StatelessWidget {
   final List<T>? items;
   final Widget Function(T item) itemBuilder;
   final double itemAspectRatio;
+  final SliverGridDelegate _gridDelegate;
 
   ResponsiveGridView({
     this.items,
     required this.itemBuilder,
     this.itemAspectRatio = 0.84,
     super.key,
-  });
+    SliverGridDelegate? gridDelegate,
+  }) : _gridDelegate = gridDelegate ??
+            SliverGridDelegateWithMaxCrossAxisExtent(
+              childAspectRatio: itemAspectRatio,
+              maxCrossAxisExtent: 250,
+            );
 
   @override
   Widget build(context) {
@@ -26,10 +32,7 @@ class ResponsiveGridView<T> extends StatelessWidget {
             key: const PageStorageKey('responsive-grid'),
             controller: _controller,
             itemCount: items!.length,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              childAspectRatio: itemAspectRatio,
-              maxCrossAxisExtent: 250,
-            ),
+            gridDelegate: _gridDelegate,
             itemBuilder: (context, index) {
               return itemBuilder(items![index]);
             },

@@ -16,7 +16,12 @@ import 'package:rxdart/subjects.dart';
 
 Future<Isar> initIsar() async {
   return await Isar.open(
-    [IsarBookSchema, IsarChapterSchema, IsarTrackSchema, IsarPreferencesSchema],
+    [
+      IsarBookSchema,
+      IsarChapterSchema,
+      IsarTrackSchema,
+      IsarPreferencesSchema,
+    ],
     directory: (await getApplicationSupportDirectory()).path,
     inspector: true,
   );
@@ -173,11 +178,19 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Future<List<Chapter>> getChaptersForBook(String bookId) async {
-    return _db.isarChapters
-        .filter()
-        .bookIdEqualTo(bookId)
-        .sortByStart()
-        .findAll();
+    return (await _db.isarBooks.getByExId(bookId))
+            ?.chapters
+            .map(
+              (e) => Chapter(
+                id: "${e.id}",
+                start: e.start ?? 0,
+                end: e.end ?? 0,
+                title: e.title ?? '',
+                bookId: bookId,
+              ),
+            )
+            .toList() ??
+        [];
   }
 
   @override

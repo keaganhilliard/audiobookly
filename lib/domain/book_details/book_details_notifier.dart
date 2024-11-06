@@ -9,28 +9,33 @@ import 'package:audiobookly/domain/book_details/book_details_state.dart';
 import 'package:audiobookly/providers.dart';
 import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/services/download/download_service.dart';
-import 'package:audiobookly/utils/refresher_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final bookDetailsStateProvider =
     StateNotifierProvider.family<BookDetailsNotifier, BookDetailsState, String>(
         (ref, mediaId) {
-  return BookDetailsNotifier(ref.watch(mediaRepositoryProvider), mediaId,
-      ref.watch(databaseServiceProvider), ref.watch(downloadServiceProvider));
+  return BookDetailsNotifier(
+    ref.watch(mediaRepositoryProvider),
+    mediaId,
+    ref.watch(databaseServiceProvider),
+    ref.watch(downloadServiceProvider),
+  );
 });
 
-class BookDetailsNotifier extends RefresherStateNotifier<BookDetailsState> {
+class BookDetailsNotifier extends StateNotifier<BookDetailsState> {
   final MediaRepository? _repository;
   final DatabaseService? _databaseService;
   final DownloadService? _downloadService;
   final String _mediaId;
 
   StreamSubscription? _dbBookListener;
-  StreamSubscription? _tracksListener;
 
-  BookDetailsNotifier(this._repository, this._mediaId, this._databaseService,
-      this._downloadService)
-      : super(const BookDetailsState.initial()) {
+  BookDetailsNotifier(
+    this._repository,
+    this._mediaId,
+    this._databaseService,
+    this._downloadService,
+  ) : super(const BookDetailsState.initial()) {
     // getBook();
   }
 
@@ -41,8 +46,8 @@ class BookDetailsNotifier extends RefresherStateNotifier<BookDetailsState> {
 
   Future<void> downloadBook() async {
     state.whenOrNull(
-      loaded: (book, chapters) async {
-        await _downloadService!.downloadBook(book!, chapters!);
+      loaded: (book, tracks) async {
+        await _downloadService!.downloadBook(book!, tracks!);
       },
     );
   }
@@ -55,10 +60,22 @@ class BookDetailsNotifier extends RefresherStateNotifier<BookDetailsState> {
           List<Chapter>? chapters =
               await _databaseService!.getChaptersForBook(book.id);
           checkBook ??= book.copyWith(chapters: chapters);
-          state = state.maybeMap(
-            orElse: () => BookDetailsState.loaded(book: book),
-            loaded: (loaded) => loaded.copyWith(book: book),
-          );
+          switch (state) {
+            case BookDetailsStateLoaded(book: var loadedBook):
+              state = (state as BookDetailsStateLoaded).copyWith(
+                book: loadedBook?.copyWith(
+                  downloadStatus: checkBook.downloadStatus,
+                  downloadedAt: checkBook.downloadedAt,
+                  lastPlayedPosition: checkBook.lastPlayedPosition >
+                          loadedBook.lastPlayedPosition
+                      ? checkBook.lastPlayedPosition
+                      : loadedBook.lastPlayedPosition,
+                ),
+              );
+              break;
+            default:
+              state = BookDetailsState.loaded(book: checkBook);
+          }
         }
       },
     );
@@ -96,6 +113,16 @@ class BookDetailsNotifier extends RefresherStateNotifier<BookDetailsState> {
       book: book?.copyWith(downloadStatus: dbBook?.downloadStatus) ?? dbBook,
       tracks: tracks,
     );
+
+    if (book != null && dbBook != null) {
+      await _databaseService!.insertBook(book.copyWith(
+        downloadStatus: dbBook.downloadStatus,
+        downloadedAt: dbBook.downloadedAt,
+        lastPlayedPosition: dbBook.lastPlayedPosition > book.lastPlayedPosition
+            ? dbBook.lastPlayedPosition
+            : book.lastPlayedPosition,
+      ));
+    }
   }
 
   Future refreshForDownloads() async {
@@ -115,7 +142,6 @@ class BookDetailsNotifier extends RefresherStateNotifier<BookDetailsState> {
   @override
   void dispose() {
     _dbBookListener?.cancel();
-    _tracksListener?.cancel();
     super.dispose();
   }
 }

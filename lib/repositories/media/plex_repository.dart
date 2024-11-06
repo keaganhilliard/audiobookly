@@ -367,4 +367,16 @@ class PlexRepository extends MediaRepository {
     // TODO: implement getAuthorDetails
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<Book>> getBooksFromNarrator(String narratorName) {
+    // TODO: implement getBooksFromNarrator
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Author>> getNarrators() {
+    // TODO: implement getNarrators
+    throw UnimplementedError();
+  }
 }

@@ -84,6 +84,15 @@ abstract class MediaRepository {
             for (final author in await getAuthors()) author.toMediaItem()
           ];
         }
+      case MediaIds.narratorsId:
+        if (pieces.length > 1) {
+          return [
+            for (final book in await getBooksFromNarrator(pieces[1]))
+              book.toMediaItem()
+          ];
+        } else {
+          return [];
+        }
       case MediaIds.booksId:
         return [for (final book in await getAllBooks(page)) book.toMediaItem()];
       case MediaIds.downloads:
@@ -138,8 +147,10 @@ abstract class MediaRepository {
   Future<List<Book>> getRecentlyPlayed();
   Future<List<Book>> getAllBooks([int? page]);
   Future<List<Author>> getAuthors();
+  Future<List<Author>> getNarrators();
   Future<Author> getAuthorDetails(String authorId);
   Future<List<Book>> getBooksFromAuthor(String authorId);
+  Future<List<Book>> getBooksFromNarrator(String narratorName);
   Future<List<Collection>> getCollections();
   Future<List<Book>> getBooksFromCollection(String collectionId);
   Future<List<Playlist>> getPlaylists();

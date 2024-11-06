@@ -1,7 +1,6 @@
 import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:audiobookly/domain/authors/authors_state.dart';
 import 'package:audiobookly/providers.dart';
-import 'package:audiobookly/utils/refresher_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authorsStateProvider =
@@ -9,7 +8,7 @@ final authorsStateProvider =
   return AuthorsNotifier(ref.watch(mediaRepositoryProvider));
 });
 
-class AuthorsNotifier extends RefresherStateNotifier<AuthorsState> {
+class AuthorsNotifier extends StateNotifier<AuthorsState> {
   final MediaRepository? _repository;
 
   AuthorsNotifier(this._repository) : super(const AuthorsState.initial());
