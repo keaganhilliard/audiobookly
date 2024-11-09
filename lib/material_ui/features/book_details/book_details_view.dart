@@ -12,6 +12,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -46,6 +47,7 @@ class BookDetailsView extends HookConsumerWidget {
     final downloadService = ref.watch(downloadServiceProvider);
     final playbackController = GetIt.I<PlaybackController>();
     final group = AutoSizeGroup();
+    final expandableController = useState(ExpandableController());
 
     return Scaffold(
       body: SafeArea(
@@ -348,6 +350,7 @@ class BookDetailsView extends HookConsumerWidget {
                             vertical: 0.0,
                           ),
                           child: ExpandableNotifier(
+                            controller: expandableController.value,
                             child: Column(
                               children: [
                                 Expandable(

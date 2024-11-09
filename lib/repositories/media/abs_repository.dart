@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:audiobookly/constants/app_constants.dart';
+import 'package:audiobookly/domain/media_progress/media_progress.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/chapter.dart';
@@ -40,6 +41,7 @@ class AbsRepository extends MediaRepository {
 
   String get _libraryId => _db.getPreferencesSync().libraryId;
   final DatabaseService _db = getIt();
+  final MediaProgress _mediaProgress = getIt();
 
   AbsRepository(this._api) : super(true);
 
@@ -50,7 +52,13 @@ class AbsRepository extends MediaRepository {
     try {
       final progress = await _api.getItemProgress(mediaId);
       if (progress != null) {
-        userProgress[mediaId] = progress;
+        _mediaProgress.updateProgress(
+          mediaId,
+          Progress(
+            duration: progress.duration,
+            currentTime: progress.currentTime,
+          ),
+        );
       }
     } catch (e) {
       log('No progress: $e');
@@ -68,7 +76,7 @@ class AbsRepository extends MediaRepository {
   }
 
   Book _absBookToBook(AbsAudiobook book) {
-    final progress = userProgress[book.id];
+    final progress = _mediaProgress.getProgress(book.id);
     Duration? totalDuration = progress?.duration;
     return Book(
       id: book.id,
@@ -108,7 +116,7 @@ class AbsRepository extends MediaRepository {
   }
 
   Book _absBookMinifiedToBook(AbsAudiobookMinified book) {
-    final progress = userProgress[book.id];
+    final progress = _mediaProgress.getProgress(book.id);
 
     return Book(
       id: book.id,
@@ -283,9 +291,27 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<Book>> getDownloads() async {
-    return (await _db.getBooks().first)
+    final downloadedBooks = (await _db.getBooks().first)
         .where((book) => book.downloadStatus == DownloadStatus.succeeded)
         .toList();
+
+    for (final book in downloadedBooks) {
+      final progress = _mediaProgress.getProgress(book.id);
+      if (progress == null ||
+          (progress.currentTime != null &&
+              progress.currentTime! < book.lastPlayedPosition)) {
+        _mediaProgress.updateProgress(
+          book.id,
+          Progress(
+            duration: book.duration,
+            currentTime: book.lastPlayedPosition,
+            isFinished: book.read,
+          ),
+        );
+      }
+    }
+
+    return downloadedBooks;
   }
 
   @override
@@ -309,7 +335,18 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<Book>> getRecentlyPlayed() async {
     final books = await _api.getRecentlyPlayed();
-    userProgress = books;
+
+    for (final book in books.values) {
+      _mediaProgress.updateProgress(
+        book.id,
+        Progress(
+          duration: book.duration,
+          currentTime: book.currentTime,
+          isFinished: book.isFinished,
+        ),
+      );
+    }
+
     return [
       for (final book
           in books.values
@@ -371,14 +408,18 @@ class AbsRepository extends MediaRepository {
     ];
   }
 
-  Map<String, AbsAudiobookProgress> userProgress = {};
-
   @override
   Future<User> getUser() async {
     final apiUser = await _api.getUser();
-    userProgress = apiUser.mediaProgress;
-
-    for (final progress in userProgress.values) {
+    for (final progress in apiUser.mediaProgress.values) {
+      _mediaProgress.updateProgress(
+        progress.id,
+        Progress(
+          duration: progress.duration,
+          currentTime: progress.currentTime,
+          isFinished: progress.isFinished,
+        ),
+      );
       final book = await _db.getBookById(progress.id);
       if (book != null && progress.currentTime != null) {
         if (progress.isFinished && !book.read) {
@@ -436,15 +477,16 @@ class AbsRepository extends MediaRepository {
     AudiobooklyEvent event,
     bool playing,
   ) async {
-    final progress = userProgress.putIfAbsent(
-        key,
-        () => AbsAudiobookProgress(
-              id: key,
-              isFinished: false,
-            ));
-    progress.progress = position.inMilliseconds / duration.inMilliseconds;
-    progress.currentTime = position;
-    progress.duration = duration;
+    final percentage = position.inMilliseconds / duration.inMilliseconds;
+    _mediaProgress.updateProgress(
+      key,
+      Progress(
+        duration: duration,
+        currentTime: position,
+        // percentage: percentage,
+        isFinished: false,
+      ),
+    );
 
     final book = await _db.getBookById(key);
     if (book != null) {
@@ -470,7 +512,15 @@ class AbsRepository extends MediaRepository {
       );
       _lastCheckinTime = DateTime.now();
     } else {
-      await _api.updateProgress(progress);
+      await _api.updateProgress(
+        AbsAudiobookProgress(
+          id: key,
+          progress: percentage,
+          isFinished: false,
+          currentTime: position,
+          duration: duration,
+        ),
+      );
     }
   }
 
@@ -526,14 +576,19 @@ class AbsRepository extends MediaRepository {
   @override
   Future savePosition(String key, int position, int duration,
       AudiobooklyPlaybackState state) async {
-    final progress = userProgress.putIfAbsent(
-        key,
-        () => AbsAudiobookProgress(
-              id: key,
-              isFinished: false,
-            ));
-    progress.progress = position / duration;
-    progress.currentTime = Duration(milliseconds: position);
+    final percentage = position / duration;
+
+    final progress = Progress(
+      duration: Duration(milliseconds: duration),
+      currentTime: Duration(milliseconds: position),
+      // percentage: percentage,
+      isFinished: false,
+    );
+
+    _mediaProgress.updateProgress(
+      key,
+      progress,
+    );
 
     if (_sessionId != null && _lastCheckinTime != null) {
       await _api.playbackSessionCheckin(
@@ -544,7 +599,15 @@ class AbsRepository extends MediaRepository {
               microseconds: DateTime.now().microsecondsSinceEpoch -
                   _lastCheckinTime!.microsecondsSinceEpoch));
     } else {
-      _api.updateProgress(progress);
+      _api.updateProgress(
+        AbsAudiobookProgress(
+          id: key,
+          progress: percentage,
+          isFinished: false,
+          currentTime: progress.currentTime,
+          duration: progress.duration,
+        ),
+      );
     }
   }
 
@@ -590,7 +653,22 @@ class AbsRepository extends MediaRepository {
   @override
   Future<Map<String, List<ModelUnion>>> getHomeData() async {
     final books = await _api.getRecentlyPlayed();
-    userProgress = books;
+
+    for (final MapEntry(:key, value: book) in books.entries) {
+      _mediaProgress.updateProgress(
+        key,
+        Progress(
+          duration: book.duration,
+          currentTime: book.currentTime,
+          isFinished: book.isFinished,
+        ),
+      );
+    }
+
+    // print(_mediaProgress.getProgress("08107038-6868-4d63-a47a-d7e0a4f2b97d"));
+
+    // _mediaProgress.printProgresses();
+
     final personalized = await _api.getPersonalized(_libraryId);
     Map<String, List<ModelUnion>> outMap = {};
     for (final p in personalized) {

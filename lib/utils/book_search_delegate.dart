@@ -76,6 +76,7 @@ class BookSearchDelegate extends SearchDelegate {
                             },
                             title: title,
                             subtitle: author,
+                            itemId: id,
                             thumbnailUrl: artPath,
                             showTitle: false,
                           ),

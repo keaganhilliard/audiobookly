@@ -7,6 +7,7 @@ import 'package:audiobookly/domain/downloads/downloads_state.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
+import 'package:audiobookly/models/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class Downloads extends HookConsumerWidget {
                         ),
                       );
                     case DownloadsStateLoaded(:final books):
-                      return ResponsiveGridView<MediaItem>(
+                      return ResponsiveGridView(
                         itemAspectRatio: doubleTitleGridAspectRatio,
                         items: books,
                         itemBuilder: (book) {
@@ -69,11 +70,10 @@ class Downloads extends HookConsumerWidget {
                             onTap: () async {
                               context.push('/books/${book.id}');
                             },
-                            thumbnailUrl: book.artUri?.toString(),
+                            thumbnailUrl: book.artPath,
                             title: book.title,
-                            subtitle: book.artist,
-                            progress: Utils.getProgress(item: book),
-                            played: book.played,
+                            subtitle: book.author,
+                            itemId: book.id,
                             icon: CupertinoIcons.book_fill,
                           );
                         },

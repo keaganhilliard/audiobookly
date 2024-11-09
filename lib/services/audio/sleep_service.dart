@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:audiobookly/services/audio/playback_controller.dart';
+import 'package:audiobookly/services/database/database_service.dart';
 import 'package:audiobookly/utils/utils.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart/subjects.dart';
 
 class SleepService {
@@ -17,7 +19,7 @@ class SleepService {
   StreamSubscription? playbackState;
 
   watchPlaybackState() {
-    playbackState = _pb.playbackStateStream.listen((state) {
+    playbackState ??= _pb.playbackStateStream.listen((state) {
       if (!state.playing) {
         cancelTimer();
       }
@@ -25,6 +27,7 @@ class SleepService {
   }
 
   beginTimer(Duration time) {
+    cancelTimer();
     _timer = Timer(time, () {
       _pb.pause();
       cancelTimer();
@@ -49,20 +52,26 @@ class SleepService {
   }
 
   endOfChapter() async {
-    if (_pb.currentMediaItem != null) {
+    final theCurrentTrack = _pb.currentMediaItem?.copyWith();
+    if (theCurrentTrack != null) {
       resetTimeRunning();
-      final theCurrentTrack = _pb.currentMediaItem!.copyWith();
+      cancelTimer();
       positionStream = _pb.positionStream.listen((currentPosition) async {
+        final useChapter = GetIt.I<DatabaseService>()
+            .getPreferencesSync()
+            .useChapterProgressBar;
         final playbackRate = _pb.playbackStateStream.value.speed;
-        final currentPositionInTrack =
-            currentPosition - theCurrentTrack.currentTrackStartingPosition;
+        final currentPositionInTrack = useChapter
+            ? currentPosition
+            : currentPosition - theCurrentTrack.currentTrackStartingPosition;
         final timeLeftInTrack =
             theCurrentTrack.currentTrackLength - currentPositionInTrack;
         final scaledTimeLeftInTrack = Duration(
             milliseconds:
                 (timeLeftInTrack.inMilliseconds / playbackRate).ceil());
         _timeLeft.add(scaledTimeLeftInTrack);
-        if (timeLeftInTrack <= Duration.zero) {
+        if (timeLeftInTrack <= Duration.zero ||
+            theCurrentTrack.id != _pb.currentMediaItem?.id) {
           _pb.pause();
           cancelTimer();
         }
@@ -74,6 +83,7 @@ class SleepService {
   cancelTimer() {
     _timer?.cancel();
     _timer = null;
+    watcher?.cancel();
     watcher = null;
     positionStream?.cancel();
     positionStream = null;

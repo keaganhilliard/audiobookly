@@ -19,7 +19,7 @@ mixin _$DownloadsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books) loaded,
+    required TResult Function(List<Book>? books) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$DownloadsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function(List<Book>? books)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$DownloadsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function(List<Book>? books)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -135,7 +135,7 @@ class _$DownloadsStateInitialImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books) loaded,
+    required TResult Function(List<Book>? books) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -146,7 +146,7 @@ class _$DownloadsStateInitialImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function(List<Book>? books)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -157,7 +157,7 @@ class _$DownloadsStateInitialImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function(List<Book>? books)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -216,7 +216,7 @@ abstract class _$$DownloadsStateLoadedImplCopyWith<$Res> {
           $Res Function(_$DownloadsStateLoadedImpl) then) =
       __$$DownloadsStateLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MediaItem>? books});
+  $Res call({List<Book>? books});
 }
 
 /// @nodoc
@@ -236,7 +236,7 @@ class __$$DownloadsStateLoadedImplCopyWithImpl<$Res>
       books: freezed == books
           ? _value._books
           : books // ignore: cast_nullable_to_non_nullable
-              as List<MediaItem>?,
+              as List<Book>?,
     ));
   }
 }
@@ -246,12 +246,11 @@ class __$$DownloadsStateLoadedImplCopyWithImpl<$Res>
 class _$DownloadsStateLoadedImpl
     with DiagnosticableTreeMixin
     implements DownloadsStateLoaded {
-  const _$DownloadsStateLoadedImpl({final List<MediaItem>? books})
-      : _books = books;
+  const _$DownloadsStateLoadedImpl({final List<Book>? books}) : _books = books;
 
-  final List<MediaItem>? _books;
+  final List<Book>? _books;
   @override
-  List<MediaItem>? get books {
+  List<Book>? get books {
     final value = _books;
     if (value == null) return null;
     if (_books is EqualUnmodifiableListView) return _books;
@@ -296,7 +295,7 @@ class _$DownloadsStateLoadedImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books) loaded,
+    required TResult Function(List<Book>? books) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -307,7 +306,7 @@ class _$DownloadsStateLoadedImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function(List<Book>? books)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -318,7 +317,7 @@ class _$DownloadsStateLoadedImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function(List<Book>? books)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -368,10 +367,10 @@ class _$DownloadsStateLoadedImpl
 }
 
 abstract class DownloadsStateLoaded implements DownloadsState {
-  const factory DownloadsStateLoaded({final List<MediaItem>? books}) =
+  const factory DownloadsStateLoaded({final List<Book>? books}) =
       _$DownloadsStateLoadedImpl;
 
-  List<MediaItem>? get books;
+  List<Book>? get books;
   @JsonKey(ignore: true)
   _$$DownloadsStateLoadedImplCopyWith<_$DownloadsStateLoadedImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -426,7 +425,7 @@ class _$DownloadsStateLoadingImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books) loaded,
+    required TResult Function(List<Book>? books) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -437,7 +436,7 @@ class _$DownloadsStateLoadingImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function(List<Book>? books)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -448,7 +447,7 @@ class _$DownloadsStateLoadingImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function(List<Book>? books)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -577,7 +576,7 @@ class _$DownloadsStateErrorImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MediaItem>? books) loaded,
+    required TResult Function(List<Book>? books) loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -588,7 +587,7 @@ class _$DownloadsStateErrorImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MediaItem>? books)? loaded,
+    TResult? Function(List<Book>? books)? loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -599,7 +598,7 @@ class _$DownloadsStateErrorImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MediaItem>? books)? loaded,
+    TResult Function(List<Book>? books)? loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),

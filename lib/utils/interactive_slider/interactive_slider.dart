@@ -7,6 +7,7 @@ import 'package:audiobookly/utils/interactive_slider/interactive_slider_painter.
 export 'package:audiobookly/utils/interactive_slider/interactive_slider_controller.dart';
 
 enum IconPosition {
+  above,
   below,
   inline,
   inside,
@@ -326,7 +327,16 @@ class _InteractiveSliderState extends State<InteractiveSlider> {
         widget.endIcon != null) {
       slider = Column(
         children: [
+          if (widget.iconPosition == IconPosition.above)
+            Row(
+              crossAxisAlignment: widget.iconCrossAxisAlignment,
+              children: _iconChildren,
+            ),
           switch (widget.iconPosition) {
+            IconPosition.above => Padding(
+                padding: EdgeInsets.only(top: widget.iconGap),
+                child: slider,
+              ),
             IconPosition.below => Padding(
                 padding: EdgeInsets.only(bottom: widget.iconGap),
                 child: slider,

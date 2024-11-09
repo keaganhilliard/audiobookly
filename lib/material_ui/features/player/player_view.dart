@@ -31,7 +31,7 @@ class PlayerView extends HookConsumerWidget {
       String durationLeftText =
           Duration(milliseconds: (durationLeft / rate).round()).timeLeft;
       text =
-          '${(currentPosition / duration * 100).toStringAsFixed(0)}% ($durationLeftText left)';
+          '${(currentPosition / duration * 100).toStringAsFixed(0)}% ${durationLeftText.isNotEmpty ? '($durationLeftText left)' : ''}';
     }
     return text;
   }
@@ -270,6 +270,27 @@ class PlayerView extends HookConsumerWidget {
                               ),
                             ],
                           ),
+                          // if (prefs.useChapterProgressBar)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(
+                          //       left: 8.0,
+                          //       right: 8.0,
+                          //     ),
+                          //     child: PlaybackPosition(
+                          //         builder: (context, position) {
+                          //       return SeekBar(
+                          //         padding: EdgeInsets.all(8.0),
+                          //         duration: item.totalDuration,
+                          //         position: item.currentTrackStartingPosition +
+                          //             (position ?? Duration.zero),
+                          //         enabled: false,
+                          //         // onChangeEnd: (val) async {
+                          //         //   await playbackController
+                          //         //       .seek(val.inMilliseconds);
+                          //         // },
+                          //       );
+                          //     }),
+                          //   ),
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 8.0,
@@ -278,6 +299,7 @@ class PlayerView extends HookConsumerWidget {
                             child:
                                 PlaybackPosition(builder: (context, position) {
                               return SeekBar(
+                                padding: EdgeInsets.all(8.0),
                                 duration: item.duration,
                                 position: position,
                                 onChangeEnd: (val) async {
@@ -295,7 +317,7 @@ class PlayerView extends HookConsumerWidget {
                                 builder: (context) {
                                   final timeLeft = useStream(
                                       sleepService.getTimeLeftStream());
-                                  return getIconButton(
+                                  return AbIconButton(
                                     icon: timeLeft.hasData &&
                                             timeLeft.data != null
                                         ? Text(
@@ -311,29 +333,37 @@ class PlayerView extends HookConsumerWidget {
                                       final time = await showDialog<Duration?>(
                                         context: context,
                                         builder: (context) {
-                                          Widget createOption(
-                                            String label,
-                                            int minutes,
-                                          ) =>
-                                              SimpleDialogOption(
-                                                child: Text(label),
-                                                onPressed: () {
-                                                  Navigator.pop(
-                                                    context,
-                                                    Duration(minutes: minutes),
-                                                  );
-                                                },
-                                              );
                                           return SimpleDialog(
                                             title: const Text('Start timer'),
                                             children: [
-                                              createOption('Stop timer', 0),
-                                              createOption('End of chapter', 1),
-                                              createOption('10 minutes', 10),
-                                              createOption('15 minutes', 15),
-                                              createOption('30 minutes', 30),
-                                              createOption('45 minutes', 45),
-                                              createOption('1 hour', 60),
+                                              AbDialogOption(
+                                                label: 'Stop timer',
+                                                minutes: 0,
+                                              ),
+                                              AbDialogOption(
+                                                label: 'End of chapter',
+                                                minutes: 1,
+                                              ),
+                                              AbDialogOption(
+                                                label: '10 minutes',
+                                                minutes: 10,
+                                              ),
+                                              AbDialogOption(
+                                                label: '15 minutes',
+                                                minutes: 15,
+                                              ),
+                                              AbDialogOption(
+                                                label: '30 minutes',
+                                                minutes: 30,
+                                              ),
+                                              AbDialogOption(
+                                                label: '45 minutes',
+                                                minutes: 45,
+                                              ),
+                                              AbDialogOption(
+                                                label: '1 hour',
+                                                minutes: 60,
+                                              ),
                                             ],
                                           );
                                         },
@@ -351,6 +381,12 @@ class PlayerView extends HookConsumerWidget {
                                   );
                                 },
                               ),
+                              // AbIconButton(
+                              //   icon: const Icon(Icons.skip_previous),
+                              //   onPressed: () {
+                              //     playbackController.skipToPrevious();
+                              //   },
+                              // ),
                               RewindButton(iconSize: 35),
                               Stack(
                                 children: [
@@ -360,10 +396,12 @@ class PlayerView extends HookConsumerWidget {
                                                     .buffering ||
                                             state?.processingState ==
                                                 AudioProcessingState.loading
-                                        ? const CircularProgressIndicator()
+                                        ? const CircularProgressIndicator(
+                                            strokeWidth: 8.0,
+                                          )
                                         : Container(),
                                   ),
-                                  getIconButton(
+                                  AbIconButton(
                                     icon: state?.playing ??
                                             false ||
                                                 state?.processingState ==
@@ -390,6 +428,12 @@ class PlayerView extends HookConsumerWidget {
                                 ],
                               ),
                               ForwardButton(iconSize: 35),
+                              // AbIconButton(
+                              //   icon: const Icon(Icons.skip_next),
+                              //   onPressed: () {
+                              //     playbackController.skipToNext();
+                              //   },
+                              // ),
                               IconButton(
                                 onPressed: () => {
                                   showModalBottomSheet(
@@ -488,18 +532,52 @@ class PlayerView extends HookConsumerWidget {
       ),
     );
   }
+}
 
-  IconButton getIconButton({
-    required Widget icon,
-    Function? onPressed,
-    double size = 35.0,
-    Color? color,
-  }) {
+class AbIconButton extends StatelessWidget {
+  const AbIconButton({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    this.size = 35,
+    this.color,
+  });
+  final Widget icon;
+  final VoidCallback onPressed;
+  final double size;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
     return IconButton(
       icon: icon,
       iconSize: size,
-      onPressed: onPressed as void Function()?,
+      onPressed: onPressed,
       color: color,
+    );
+  }
+}
+
+class AbDialogOption extends StatelessWidget {
+  const AbDialogOption({
+    super.key,
+    required this.label,
+    required this.minutes,
+  });
+
+  final String label;
+  final int minutes;
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialogOption(
+      child: Text(label),
+      onPressed: () {
+        Navigator.pop(
+          context,
+          Duration(minutes: minutes),
+        );
+      },
     );
   }
 }

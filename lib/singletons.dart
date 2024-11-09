@@ -1,3 +1,4 @@
+import 'package:audiobookly/domain/media_progress/media_progress.dart';
 import 'package:audiobookly/services/audio/playback_controller.dart';
 import 'package:audiobookly/services/audio/sleep_service.dart';
 import 'package:audiobookly/services/database/database_service.dart';
@@ -24,6 +25,7 @@ Future<void> registerSingletons() async {
   );
   // clear db
   // await isar.writeTxn(() => isar.clear());
+  getIt.registerSingleton(MediaProgress());
 
   PlaybackController controller;
   Downloader downloader;

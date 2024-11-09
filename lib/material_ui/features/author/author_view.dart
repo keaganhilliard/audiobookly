@@ -215,9 +215,8 @@ class BooksScrollView extends StatelessWidget {
                 },
                 thumbnailUrl: book.artPath,
                 title: book.title,
+                itemId: book.id,
                 subtitle: book.publishedYear,
-                progress: book.progress,
-                played: book.read,
               );
             }),
       ),

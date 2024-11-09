@@ -1,33 +1,33 @@
 import 'package:audiobookly/constants/aspect_ratios.dart';
+import 'package:audiobookly/domain/media_progress/media_progress.dart';
 import 'package:audiobookly/material_ui/widgets/played_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CoverItem extends StatelessWidget {
   const CoverItem({
     super.key,
-    this.progress = 0,
+    this.itemId,
     this.subtitle,
     this.title,
     this.thumbnailUrl,
     this.width,
     this.height,
     this.onTap,
-    this.played = false,
     this.icon = CupertinoIcons.book_fill,
     this.showTitle = false,
     this.circle = false,
   });
 
-  final double? progress;
+  final String? itemId;
   final String? title;
   final String? subtitle;
   final String? thumbnailUrl;
   final double? width;
   final double? height;
   final VoidCallback? onTap;
-  final bool played;
   final IconData icon;
   final bool showTitle;
   final bool circle;
@@ -100,30 +100,52 @@ class CoverItem extends StatelessWidget {
                                 ),
                               ),
                       ),
-                      Positioned(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: progress! > 0 || played
-                              ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                    child: LinearProgressIndicator(
-                                      minHeight: 6,
-                                      value: played ? 1 : progress,
-                                      color: Colors.deepPurple,
-                                      backgroundColor:
-                                          Colors.grey.withOpacity(0.2),
-                                    ),
+                      if (itemId != null)
+                        Positioned(
+                          child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Consumer(builder: (context, ref, child) {
+                                final progress = ref.watch(
+                                  mediaProgressProvider.select(
+                                    (state) => state.getProgress(itemId!),
                                   ),
-                                )
-                              : Container(),
+                                );
+                                return (progress?.isFinished == true) ||
+                                        (progress?.percentage ?? 0) > 0
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6.0),
+                                          ),
+                                          child: LinearProgressIndicator(
+                                            minHeight: 6,
+                                            value: progress?.isFinished == true
+                                                ? 1
+                                                : (progress?.percentage ?? 0),
+                                            color: Colors.deepPurple,
+                                            backgroundColor:
+                                                Colors.grey.withOpacity(0.2),
+                                          ),
+                                        ),
+                                      )
+                                    : Container();
+                              })),
                         ),
-                      ),
-                      if (played) const PlayedIcon(),
+                      if (itemId != null)
+                        Consumer(builder: (context, ref, child) {
+                          final progress = ref.watch(
+                            mediaProgressProvider.select(
+                              (state) => state.getProgress(itemId ?? ''),
+                            ),
+                          );
+                          if (progress?.isFinished == true) {
+                            return const PlayedIcon();
+                          }
+                          return const SizedBox.shrink();
+                        }),
                     ],
                   ),
                 ),

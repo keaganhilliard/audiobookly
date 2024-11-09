@@ -118,7 +118,7 @@ class AudiobooklyAudioHandler extends BaseAudioHandler {
           (currentQueueItem?.extras?.containsKey('end') ?? false)) {
         try {
           int newIndex = queue.value.indexWhere((item) =>
-              item.start <= currentPosition && item.end > currentPosition);
+              item.start <= currentPosition && item.end >= currentPosition);
           if (newIndex != chapterIndex) {
             chapterIndex = newIndex;
             setCurrentMediaItem();

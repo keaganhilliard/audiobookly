@@ -37,29 +37,20 @@ class HomeRow extends HookConsumerWidget {
           BookValue(
             value: Book(
               :final id,
-              :final progress,
               :final artPath,
-              :final read,
               :final author,
               :final title,
             )
           ) =>
             CoverItem(
               onTap: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return BookDetailsView(mediaId: id);
-                    },
-                  ),
-                );
+                router.pushEnumWithId(Routes.book, id);
               },
               height: height,
-              progress: progress,
               thumbnailUrl: artPath,
               title: title,
+              itemId: id,
               subtitle: author,
-              played: read,
             ),
           AuthorValue(
             value: Author(

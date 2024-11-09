@@ -1,29 +1,24 @@
 import 'package:audiobookly/domain/downloads/downloads_state.dart';
-import 'package:audiobookly/models/download_status.dart';
-import 'package:audiobookly/services/database/database_service.dart';
-import 'package:audiobookly/singletons.dart';
+import 'package:audiobookly/providers.dart';
+import 'package:audiobookly/repositories/media/media_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookly/utils/utils.dart';
 
 final downloadsStateProvider =
     StateNotifierProvider<DownloadsNotifier, DownloadsState>(
-  (ref) => DownloadsNotifier(),
+  (ref) => DownloadsNotifier(ref.watch(mediaRepositoryProvider)),
 );
 
 class DownloadsNotifier extends StateNotifier<DownloadsState> {
-  final DatabaseService _databaseService = getIt();
+  final MediaRepository? _mediaRepository;
 
-  DownloadsNotifier() : super(const DownloadsState.initial()) {
-    // getBooks();
-  }
+  DownloadsNotifier(this._mediaRepository)
+      : super(const DownloadsState.initial());
 
   Future getBooks() async {
     try {
       state = const DownloadsState.loading();
-      final books = (await _databaseService.getBooks().first)
-          .where((book) => book.downloadStatus == DownloadStatus.succeeded)
-          .map((book) => MediaHelpers.fromBook(book))
-          .toList();
+      final books = await _mediaRepository?.getDownloads() ?? [];
+
       state = DownloadsState.loaded(
         books: books,
       );

@@ -86,8 +86,7 @@ class BooksComponent extends HookConsumerWidget {
                     thumbnailUrl: book.artUri?.toString(),
                     title: book.title,
                     subtitle: book.artist,
-                    progress: Utils.getProgress(item: book),
-                    played: book.played,
+                    itemId: book.id,
                     icon: CupertinoIcons.book_fill,
                   );
                 },
