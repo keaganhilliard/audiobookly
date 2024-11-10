@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:audiobookly/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookly/models/author.dart';
 import 'package:audiobookly/models/book.dart';
 import 'package:audiobookly/models/model_union.dart';

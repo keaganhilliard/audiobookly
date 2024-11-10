@@ -1,19 +1,16 @@
 import 'dart:io';
 
-import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/constants/aspect_ratios.dart';
 import 'package:audiobookly/domain/downloads/downloads_notifier.dart';
 import 'package:audiobookly/domain/downloads/downloads_state.dart';
 import 'package:audiobookly/material_ui/widgets/cover_item.dart';
 import 'package:audiobookly/material_ui/widgets/responsive_grid_view.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
-import 'package:audiobookly/models/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookly/utils/utils.dart';
 
 class Downloads extends HookConsumerWidget {
   const Downloads({super.key});

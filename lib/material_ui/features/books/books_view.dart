@@ -13,7 +13,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookly/material_ui/widgets/scaffold_without_footer.dart';
-import 'package:audiobookly/utils/utils.dart';
 
 class BooksView extends HookConsumerWidget {
   final String? mediaId;

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookly/services/audio/default_audio_handler.dart';
+// import 'package:audiobookly/services/audio/s_audio_handler.dart';
 // import 'package:audiobookly/services/audio/media_kit_audio_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -24,10 +25,17 @@ Future<AudioHandler> initAudioHandler() async {
 
 // Future<AudioHandler> initDesktopAudioHandler() async {
 //   return await AudioService.init(
-//     builder: () => DesktopAudioHandler(),
+//     builder: () => AudioPlayersAudioHandler(),
 //     config: const AudioServiceConfig(
-//       rewindInterval: Duration(seconds: 30),
+//       androidNotificationChannelId: 'com.azothforgotten.audibookly.audio',
+//       androidNotificationChannelName: 'Audiobookly',
+//       androidNotificationChannelDescription: 'Audio playback notification',
+//       androidNotificationOngoing: true,
+//       androidNotificationClickStartsActivity: true,
+//       androidStopForegroundOnPause: true,
+//       rewindInterval: Duration(seconds: 15),
 //       fastForwardInterval: Duration(seconds: 30),
+//       androidNotificationIcon: 'mipmap/audiobookly_launcher',
 //     ),
 //   );
 // }
